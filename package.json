@@ -1,0 +1,85 @@
+{
+  "name": "vsc-workspace-sidebar",
+  "description": "Lists workspaces to make it easier to re-open them",
+  "displayName": "Workspace Sidebar",
+  "version": "0.0.1",
+  "activationEvents": [
+    "*"
+  ],
+  "bugs": {
+    "url": "https://github.com/sketchbuch/vsc-workspace-sidebar/issues"
+  },
+  "categories": [
+    "Other"
+  ],
+  "contributes": {
+    "views": {
+      "vsc-workspace-sidebar": [
+        {
+          "id": "vsc-workspace-sidebar-list",
+          "name": "Workspaces"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "icon": "./resources/images/light/activitybar-light.svg",
+          "id": "vsc-workspace-sidebar",
+          "title": "Workspaces"
+        }
+      ]
+    }
+  },
+  "engines": {
+    "vscode": "^1.45.0"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "lint-staged",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "icon": "./logo.png",
+  "keywords": [],
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "lint-staged": {
+    "{src, resources/js}/**/*.{js,ts}": [
+      "yarn lint:ts",
+      "yarn lint:prettier",
+      "git add"
+    ]
+  },
+  "main": "./out/extension.js",
+  "publisher": "sketchbuch",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sketchbuch/vsc-workspace-sidebar"
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "lint:prettier": "prettier --write --config ./.prettierrc.js './{src, resources/js}/**/*.{js,ts}'",
+    "lint:ts": "eslint src --ext ts",
+    "pretest": "yarn run compile && yarn run lint",
+    "test": "node ./out/test/runTest.js",
+    "vscode:prepublish": "yarn run compile",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.11.0",
+    "@types/vscode": "^1.45.0",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "eslint": "^6.8.0",
+    "glob": "^7.1.6",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.8",
+    "mocha": "^7.1.2",
+    "prettier": "^2.0.5",
+    "typescript": "^3.8.3",
+    "vscode-test": "^1.3.0"
+  }
+}

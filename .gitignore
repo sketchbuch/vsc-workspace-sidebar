@@ -1,0 +1,10 @@
+# Folders
+out
+node_modules
+.vscode-test/
+
+# Files
+*.vsix
+*.code-workspace
+yarn-error.log
+Temp.txt
