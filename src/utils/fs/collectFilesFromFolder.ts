@@ -8,7 +8,7 @@ export const collectFilesFromFolder = async (
   maxDepth: number,
   curDepth: number
 ): Promise<WsFiles> => {
-  if (curDepth < maxDepth) {
+  if (curDepth <= maxDepth) {
     try {
       const filenames = await fs.promises.readdir(folder).then((files) => {
         return files.filter((file) => !isHiddenFile(file));

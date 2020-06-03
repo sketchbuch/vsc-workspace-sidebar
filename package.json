@@ -16,10 +16,25 @@
     "configuration": {
       "title": "Workspace Sidebar",
       "properties": {
+        "cleanupWorkspaceLabel": {
+          "default": true,
+          "description": "Should workspace filenames be displayed as is or cleaned up to look nicer? If enabled the file name 'my-workspace_file' will be shown in the sidebar as 'My Workspace File'.",
+          "scope": "application",
+          "type": "boolean"
+        },
+        "workspaceFolderDepth": {
+          "default": 0,
+          "description": "What depth of subfolders should also be looked in.",
+          "maximum": 5,
+          "minimum": 0,
+          "scope": "application",
+          "type": "number"
+        },
         "workspaceFolder": {
-          "type": "string",
           "default": "",
-          "description": "Folder to look in for workspace files - leave blank to default to your home folder"
+          "description": "The folder to look in for workspace files - leave blank to default to your home folder.",
+          "scope": "application",
+          "type": "string"
         }
       }
     },

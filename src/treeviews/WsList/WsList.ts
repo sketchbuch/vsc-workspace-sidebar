@@ -9,22 +9,35 @@ export class WsList implements vscode.TreeDataProvider<WsListItem> {
     WsListItem | undefined
   >();
   onDidChangeTreeData: vscode.Event<WsListItem | undefined> = this._onDidChangeTreeData.event;
-  wsFiles: WsFiles = [];
+
+  isFolderInvalid: boolean = false;
   loading: boolean = true;
+  wsFiles: WsFiles = [];
 
   constructor(private context: vscode.ExtensionContext) {
     this.getWorkspaceFiles();
   }
 
   refresh(): void {
-    this.loading = true;
-    this.getWorkspaceFiles();
+    if (!this.loading) {
+      this.loading = true;
+      this.isFolderInvalid = false;
+      this.getWorkspaceFiles();
+    }
   }
 
   getWorkspaceFiles(): void {
-    findWorkspaceFiles().then((wsFiles) => {
+    const folder: string = vscode.workspace.getConfiguration().get('workspaceFolder') || '';
+    const depth: number = vscode.workspace.getConfiguration().get('workspaceFolderDepth') || 0;
+
+    findWorkspaceFiles(folder, depth).then((wsFiles) => {
       this.loading = false;
-      this.wsFiles = wsFiles;
+
+      if (wsFiles === false) {
+        this.isFolderInvalid = true;
+      } else {
+        this.wsFiles = wsFiles;
+      }
       this._onDidChangeTreeData.fire(undefined);
     });
   }
@@ -41,21 +54,34 @@ export class WsList implements vscode.TreeDataProvider<WsListItem> {
     const children: WsListItem[] = [];
 
     if (this.loading) {
-      const loading = new WsListItem(
-        'Collecting workspaces...',
-        this.context.extensionPath,
-        vscode.TreeItemCollapsibleState.None
+      children.push(
+        new WsListItem(
+          'Collecting workspaces...',
+          this.context.extensionPath,
+          vscode.TreeItemCollapsibleState.None
+        )
       );
-      children.push(loading);
+    } else if (this.isFolderInvalid) {
+      children.push(
+        new WsListItem(
+          'Folder path is not a directory',
+          this.context.extensionPath,
+          vscode.TreeItemCollapsibleState.None
+        )
+      );
     } else if (this.wsFiles.length < 1) {
-      const none = new WsListItem(
-        'No workspaces found',
-        this.context.extensionPath,
-        vscode.TreeItemCollapsibleState.None
+      children.push(
+        new WsListItem(
+          'No workspaces found',
+          this.context.extensionPath,
+          vscode.TreeItemCollapsibleState.None
+        )
       );
-      children.push(none);
     } else {
-      const shouldCleanup = true;
+      const shouldCleanup: boolean = !!vscode.workspace
+        .getConfiguration()
+        .get('cleanupWorkspaceLabel');
+
       const labels = this.wsFiles
         .map((file) => {
           const label = file.substring(file.lastIndexOf('/') + 1).replace(`.${FS_WS_FILETYPE}`, '');
@@ -64,6 +90,7 @@ export class WsList implements vscode.TreeDataProvider<WsListItem> {
             return label
               .toLowerCase()
               .replace(/[-|_]/g, ' ')
+              .replace(/  +/g, ' ') // Multiple spaces to single
               .split(' ')
               .map((word) => capitalise(word))
               .join(' ');
@@ -74,12 +101,9 @@ export class WsList implements vscode.TreeDataProvider<WsListItem> {
         .sort();
 
       labels.forEach((label) => {
-        const item = new WsListItem(
-          label,
-          this.context.extensionPath,
-          vscode.TreeItemCollapsibleState.None
+        children.push(
+          new WsListItem(label, this.context.extensionPath, vscode.TreeItemCollapsibleState.None)
         );
-        children.push(item);
       });
     }
 
