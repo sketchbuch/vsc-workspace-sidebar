@@ -13,6 +13,16 @@
     "Other"
   ],
   "contributes": {
+    "configuration": {
+      "title": "Workspace Sidebar",
+      "properties": {
+        "workspaceFolder": {
+          "type": "string",
+          "default": "",
+          "description": "Folder to look in for workspace files - leave blank to default to your home folder"
+        }
+      }
+    },
     "views": {
       "vsc-workspace-sidebar": [
         {
