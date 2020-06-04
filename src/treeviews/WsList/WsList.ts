@@ -78,9 +78,10 @@ export class WsList implements vscode.TreeDataProvider<WsListItem> {
         )
       );
     } else {
-      const shouldCleanup: boolean = !!vscode.workspace
+      /* const shouldCleanup: boolean = !!vscode.workspace
         .getConfiguration()
-        .get('cleanupWorkspaceLabel');
+        .get('cleanupWorkspaceLabel'); */
+      const shouldCleanup = true;
 
       const labels = this.wsFiles
         .map((file) => {

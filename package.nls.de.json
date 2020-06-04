@@ -1,0 +1,7 @@
+{
+  "config.title": "Workspace Sidebar",
+  "config.workspaceFolder.description": "The folder to look in for workspace files - leave blank to default to your home folder.",
+  "config.workspaceFolderDepth.description": "What depth of subfolders should also be looked in.",
+  "views.title": "Arbeitsbereich Sidebar",
+  "viewsContainers.activitybar.title": "Arbeitsbereich Sidebar"
+}

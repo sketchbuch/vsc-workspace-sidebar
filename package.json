@@ -14,17 +14,11 @@
   ],
   "contributes": {
     "configuration": {
-      "title": "Workspace Sidebar",
+      "title": "%config.title%",
       "properties": {
-        "cleanupWorkspaceLabel": {
-          "default": true,
-          "description": "Should workspace filenames be displayed as is or cleaned up to look nicer? If enabled the file name 'my-workspace_file' will be shown in the sidebar as 'My Workspace File'.",
-          "scope": "application",
-          "type": "boolean"
-        },
         "workspaceFolderDepth": {
           "default": 0,
-          "description": "What depth of subfolders should also be looked in.",
+          "description": "%config.workspaceFolderDepth.description%",
           "maximum": 5,
           "minimum": 0,
           "scope": "application",
@@ -32,7 +26,7 @@
         },
         "workspaceFolder": {
           "default": "",
-          "description": "The folder to look in for workspace files - leave blank to default to your home folder.",
+          "description": "%config.workspaceFolder.description%",
           "scope": "application",
           "type": "string"
         }
@@ -42,7 +36,7 @@
       "vsc-workspace-sidebar": [
         {
           "id": "vsc-workspace-sidebar-list",
-          "name": "Workspaces"
+          "name": "%views.title%"
         }
       ]
     },
@@ -51,7 +45,7 @@
         {
           "icon": "./resources/images/light/activitybar-light.svg",
           "id": "vsc-workspace-sidebar",
-          "title": "Workspaces"
+          "title": "%viewsContainers.activitybar.title%"
         }
       ]
     }
