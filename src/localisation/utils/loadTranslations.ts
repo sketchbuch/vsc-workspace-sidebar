@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { FS_UTF8 } from '../../constants';
 import { getLangFileName } from './getLangFileName';
 import { Translations } from '../localisation.interface';
 
@@ -18,8 +19,7 @@ export const loadTranslations = (lang: string, extensionPath: string): void => {
   }
 
   try {
-    const fileContent = fs.readFileSync(langFile, 'utf-8');
-    translations = JSON.parse(fileContent);
+    translations = JSON.parse(fs.readFileSync(langFile, FS_UTF8));
   } catch (error) {
     throw Error(`Unable to read translation file (${langFileName}) - ${error}`);
   }

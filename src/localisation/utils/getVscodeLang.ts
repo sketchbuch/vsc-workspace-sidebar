@@ -1,4 +1,4 @@
-export const getVscodeLang = (vscodeLangConfig: string): string => {
+export const getVscodeLang = (vscodeLangConfig: string | undefined): string => {
   let lang = 'en';
 
   if (vscodeLangConfig) {

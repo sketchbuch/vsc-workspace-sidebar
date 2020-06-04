@@ -8,5 +8,5 @@ export const setupExt = (context: vscode.ExtensionContext, lang: string) => {
 };
 
 export const activate = (context: vscode.ExtensionContext): void => {
-  setupExt(context, getVscodeLang(process.env.VSCODE_NLS_CONFIG || ''));
+  setupExt(context, getVscodeLang(process.env.VSCODE_NLS_CONFIG));
 };
