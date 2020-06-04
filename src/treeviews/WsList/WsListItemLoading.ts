@@ -1,12 +1,12 @@
 import * as vscode from 'vscode';
 import {
-  EXT_WSLIST_ITEM_CTX,
+  EXT_WSLIST_ITEM_ERROR_CTX,
   FS_FOLDER_IMAGES_DARK,
   FS_FOLDER_IMAGES_LIGHT,
 } from '../../constants';
 import { getImagePath } from '../../utils';
 
-export class WsListItem extends vscode.TreeItem {
+export class WsListItemLoading extends vscode.TreeItem {
   constructor(
     public readonly label: string,
     public readonly subLabel: string,
@@ -18,11 +18,11 @@ export class WsListItem extends vscode.TreeItem {
   }
 
   get tooltip(): string {
-    return `${this.subLabel}`;
+    return `${this.label}`;
   }
 
   get description(): string {
-    return '';
+    return `${this.subLabel}`;
   }
 
   iconPath = {
@@ -30,5 +30,5 @@ export class WsListItem extends vscode.TreeItem {
     dark: getImagePath(this.extensionPath, FS_FOLDER_IMAGES_DARK, 'folder-dark.svg'),
   };
 
-  contextValue = EXT_WSLIST_ITEM_CTX;
+  contextValue = EXT_WSLIST_ITEM_ERROR_CTX;
 }

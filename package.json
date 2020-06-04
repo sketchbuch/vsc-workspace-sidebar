@@ -13,6 +13,24 @@
     "Other"
   ],
   "contributes": {
+    "commands": [
+      {
+        "command": "vsc-workspace-sidebar-open-cur-win",
+        "icon": {
+          "light": "./resources/images/light/activitybar-light.svg",
+          "dark": "./resources/images/dark/activitybar-dark.svg"
+        },
+        "title": "%ext.wsListItem.open.curWindow%"
+      },
+      {
+        "command": "vsc-workspace-sidebar-open-new-win",
+        "icon": {
+          "light": "./resources/images/light/activitybar-light.svg",
+          "dark": "./resources/images/dark/activitybar-dark.svg"
+        },
+        "title": "%ext.wsListItem.open.newWindow%"
+      }
+    ],
     "configuration": {
       "title": "%config.title%",
       "properties": {
@@ -31,6 +49,15 @@
           "type": "string"
         }
       }
+    },
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "vsc-workspace-sidebar-open-new-win",
+          "group": "inline",
+          "when": "view == vsc-workspace-sidebar-list && viewItem == vsc-workspace-sidebar-list-item"
+        }
+      ]
     },
     "views": {
       "vsc-workspace-sidebar": [

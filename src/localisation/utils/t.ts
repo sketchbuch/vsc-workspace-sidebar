@@ -7,7 +7,7 @@ export const t = (key: string, placeholders: Placeholders | null = null): string
 
     if (placeholders !== null) {
       for (const [k, v] of Object.entries(placeholders)) {
-        translation = translation.replace(`%${k}%`, v);
+        translation = translation.replace(`{{${k}}}`, v);
       }
     }
 

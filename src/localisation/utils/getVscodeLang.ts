@@ -1,5 +1,7 @@
+import { DEFAULT_LANG } from '..';
+
 export const getVscodeLang = (vscodeLangConfig: string | undefined): string => {
-  let lang = 'en';
+  let lang = DEFAULT_LANG;
 
   if (vscodeLangConfig) {
     const { locale } = JSON.parse(vscodeLangConfig);

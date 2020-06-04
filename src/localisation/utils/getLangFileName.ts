@@ -1,5 +1,7 @@
+import { DEFAULT_LANG } from '..';
+
 export const getLangFileName = (lang: string): string => {
-  if (lang === 'en') {
+  if (lang === DEFAULT_LANG) {
     return 'package.nls.json';
   }
 
