@@ -3,6 +3,7 @@ import { capitalise, findWorkspaceFiles } from '../../utils';
 import { FS_WS_FILETYPE } from '../../constants';
 import { WsFiles } from '../../types';
 import { WsListItem } from '.';
+import { t } from '../../localisation';
 
 export class WsList implements vscode.TreeDataProvider<WsListItem> {
   _onDidChangeTreeData: vscode.EventEmitter<WsListItem | undefined> = new vscode.EventEmitter<
@@ -56,7 +57,7 @@ export class WsList implements vscode.TreeDataProvider<WsListItem> {
     if (this.loading) {
       children.push(
         new WsListItem(
-          'Collecting workspaces...',
+          t('ext.wsListItem.loading'),
           this.context.extensionPath,
           vscode.TreeItemCollapsibleState.None
         )
@@ -64,7 +65,7 @@ export class WsList implements vscode.TreeDataProvider<WsListItem> {
     } else if (this.isFolderInvalid) {
       children.push(
         new WsListItem(
-          'Folder path is not a directory',
+          t('ext.wsListItem.inValid'),
           this.context.extensionPath,
           vscode.TreeItemCollapsibleState.None
         )
@@ -72,7 +73,7 @@ export class WsList implements vscode.TreeDataProvider<WsListItem> {
     } else if (this.wsFiles.length < 1) {
       children.push(
         new WsListItem(
-          'No workspaces found',
+          t('ext.wsListItem.none'),
           this.context.extensionPath,
           vscode.TreeItemCollapsibleState.None
         )
