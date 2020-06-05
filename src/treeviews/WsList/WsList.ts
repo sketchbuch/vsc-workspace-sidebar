@@ -32,8 +32,8 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
   }
 
   getWorkspaceFiles(): void {
-    const folder: string = vscode.workspace.getConfiguration().get('workspaceFolder') || '';
-    const depth: number = vscode.workspace.getConfiguration().get('workspaceFolderDepth') || 0;
+    const folder: string = vscode.workspace.getConfiguration().get('workspaceSidebar.folder') || '';
+    const depth: number = vscode.workspace.getConfiguration().get('workspaceSidebar.depth') || 0;
 
     findWorkspaceFiles(folder, depth).then((wsFiles) => {
       this.loading = false;

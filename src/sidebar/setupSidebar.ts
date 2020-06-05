@@ -13,9 +13,9 @@ export const setupSidebar = (context: vscode.ExtensionContext): void => {
     /* if (event.affectsConfiguration('cleanupWorkspaceLabel')) {
       wsListDataProvider.refresh();
     } else  */
-    if (event.affectsConfiguration('workspaceFolderDepth')) {
+    if (event.affectsConfiguration('workspaceSidebar.depth')) {
       wsListDataProvider.refresh();
-    } else if (event.affectsConfiguration('workspaceFolder')) {
+    } else if (event.affectsConfiguration('workspaceSidebar.folder')) {
       wsListDataProvider.refresh();
     }
   });
