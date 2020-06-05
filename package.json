@@ -1,6 +1,6 @@
 {
   "name": "vsc-workspace-sidebar",
-  "description": "Lists workspaces to make it easier to re-open them",
+  "description": "Adds a sidebar to VSCode that lists Workspaces and lets you open them in the current window or a new window.",
   "displayName": "Workspace Sidebar",
   "version": "0.0.1",
   "activationEvents": [
@@ -21,8 +21,8 @@
       {
         "command": "vsc-workspace-sidebar-open-new-win",
         "icon": {
-          "light": "./resources/images/activitybar-light.svg",
-          "dark": "./resources/images/activitybar-dark.svg"
+          "light": "./resources/images/light/new-window.svg",
+          "dark": "./resources/images/dark/new-window.svg"
         },
         "title": "%ext.wsListItem.open.newWindow%"
       },
@@ -88,7 +88,9 @@
     }
   },
   "icon": "./logo.png",
-  "keywords": [],
+  "keywords": [
+    "workspaces"
+  ],
   "license": "SEE LICENSE IN LICENSE.txt",
   "lint-staged": {
     "{src, resources/js}/**/*.{js,ts}": [

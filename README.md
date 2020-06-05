@@ -4,6 +4,8 @@
 
 Adds a sidebar to VSCode that lists Workspaces and lets you open them in the current window or a new window.
 
+![alt text](https://raw.githubusercontent.com/sketchbuch/vsc-wokspace-sidebar/master/docs/images/preview.gif 'Workspace Sidebar Preview')
+
 ## Settings
 
 | Setting | Description                                                                                                                             | Default Value                        | Type       |
