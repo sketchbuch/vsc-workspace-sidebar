@@ -1,1 +1,1 @@
-export * from './sortFilesByLabel';
+export * from './sortByLabel';

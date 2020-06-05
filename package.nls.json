@@ -8,6 +8,6 @@
   "ext.wsListItem.none": "No workspaces found",
   "ext.wsListItem.open.curWindow": "Open in this window",
   "ext.wsListItem.open.newWindow": "Open in a new window",
-  "views.title": "Workspace Sidebar",
-  "viewsContainers.activitybar.title": "Workspace Sidebar"
+  "views.title": "Workspaces",
+  "viewsContainers.activitybar.title": "Workspaces"
 }

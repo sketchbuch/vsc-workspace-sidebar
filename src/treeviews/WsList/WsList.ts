@@ -1,11 +1,12 @@
 import * as vscode from 'vscode';
-import { capitalise, findWorkspaceFiles, sortFilesByLabel } from '../../utils';
-import { Files, WsListItems, File } from './WsList.interface';
-import { FS_WS_FILETYPE, CMD_OPEN_CUR_WIN } from '../../constants';
+import { capitalise, findWorkspaceFiles, sortByLabel } from '../../utils';
+import { CMD_OPEN_CUR_WIN, CMD_OPEN_SETTINGS, FS_WS_FILETYPE } from '../../constants';
+import { Files, WsListItems } from './WsList.interface';
 import { t } from '../../localisation';
 import { WsFiles } from '../../types';
 import { WsListItem } from '.';
 import { WsListItemError } from './WsListItemError';
+import { WsListItemErrorSub } from './WsListItemErrorSub';
 import { WsListItemLoading } from './WsListItemLoading';
 
 export class WsList implements vscode.TreeDataProvider<WsListItems> {
@@ -73,7 +74,12 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
             t('ext.wsListItem.inValid'),
             '',
             this.context.extensionPath,
-            vscode.TreeItemCollapsibleState.None
+            vscode.TreeItemCollapsibleState.None,
+            {
+              command: CMD_OPEN_SETTINGS,
+              title: t('ext.wsListItem.checkSettings'),
+              arguments: [],
+            }
           )
         );
       } else {
@@ -82,17 +88,27 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
             t('ext.wsListItem.none'),
             '',
             this.context.extensionPath,
-            vscode.TreeItemCollapsibleState.None
+            vscode.TreeItemCollapsibleState.None,
+            {
+              command: CMD_OPEN_SETTINGS,
+              title: t('ext.wsListItem.checkSettings'),
+              arguments: [],
+            }
           )
         );
       }
 
       children.push(
-        new WsListItemError(
+        new WsListItemErrorSub(
           '',
           t('ext.wsListItem.checkSettings'),
           this.context.extensionPath,
-          vscode.TreeItemCollapsibleState.None
+          vscode.TreeItemCollapsibleState.None,
+          {
+            command: CMD_OPEN_SETTINGS,
+            title: t('ext.wsListItem.checkSettings'),
+            arguments: [],
+          }
         )
       );
     } else {
@@ -120,7 +136,7 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
 
           return { file, label };
         })
-        .sort(sortFilesByLabel);
+        .sort(sortByLabel);
 
       files.forEach((item) => {
         const { file, label } = item;

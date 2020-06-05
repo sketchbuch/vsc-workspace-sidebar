@@ -16,25 +16,25 @@
     "commands": [
       {
         "command": "vsc-workspace-sidebar-open-cur-win",
-        "icon": {
-          "light": "./resources/images/light/activitybar-light.svg",
-          "dark": "./resources/images/dark/activitybar-dark.svg"
-        },
         "title": "%ext.wsListItem.open.curWindow%"
       },
       {
         "command": "vsc-workspace-sidebar-open-new-win",
         "icon": {
-          "light": "./resources/images/light/activitybar-light.svg",
-          "dark": "./resources/images/dark/activitybar-dark.svg"
+          "light": "./resources/images/activitybar-light.svg",
+          "dark": "./resources/images/activitybar-dark.svg"
         },
         "title": "%ext.wsListItem.open.newWindow%"
+      },
+      {
+        "command": "vsc-workspace-sidebar-settings",
+        "title": "%ext.wsListItem.checkSettings%"
       }
     ],
     "configuration": {
       "title": "%config.title%",
       "properties": {
-        "workspaceFolderDepth": {
+        "workspaceSidebar.depth": {
           "default": 0,
           "description": "%config.workspaceFolderDepth.description%",
           "maximum": 5,
@@ -42,7 +42,7 @@
           "scope": "application",
           "type": "number"
         },
-        "workspaceFolder": {
+        "workspaceSidebar.folder": {
           "default": "",
           "description": "%config.workspaceFolder.description%",
           "scope": "application",
@@ -70,7 +70,7 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "icon": "./resources/images/light/activitybar-light.svg",
+          "icon": "./resources/images/activitybar.svg",
           "id": "vsc-workspace-sidebar",
           "title": "%viewsContainers.activitybar.title%"
         }

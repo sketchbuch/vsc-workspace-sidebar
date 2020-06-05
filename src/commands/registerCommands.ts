@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { CMD_OPEN_CUR_WIN, CMD_OPEN_NEW_WIN } from '../constants';
+import { CMD_OPEN_CUR_WIN, CMD_OPEN_NEW_WIN, CMD_OPEN_SETTINGS, EXT } from '../constants';
 import { cmsOpenCurWindow, cmsOpenNewWindow } from './cmds';
 import { WsListItemCmd } from '../treeviews/WsList/WsList.interface';
 
@@ -23,6 +23,12 @@ export const registerCommands = (context: vscode.ExtensionContext): void => {
       if (args[0]) {
         cmsOpenNewWindow(args[0]);
       }
+    })
+  );
+
+  context.subscriptions.push(
+    registerCommand(CMD_OPEN_SETTINGS, (): void => {
+      vscode.commands.executeCommand('workbench.action.openSettings', 'workspaceSidebar');
     })
   );
 };

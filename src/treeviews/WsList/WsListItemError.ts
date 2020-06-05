@@ -26,8 +26,8 @@ export class WsListItemError extends vscode.TreeItem {
   }
 
   iconPath = {
-    light: getImagePath(this.extensionPath, FS_FOLDER_IMAGES_LIGHT, 'folder-light.svg'),
-    dark: getImagePath(this.extensionPath, FS_FOLDER_IMAGES_DARK, 'folder-dark.svg'),
+    light: getImagePath(this.extensionPath, FS_FOLDER_IMAGES_LIGHT, 'error.svg'),
+    dark: getImagePath(this.extensionPath, FS_FOLDER_IMAGES_DARK, 'error.svg'),
   };
 
   contextValue = EXT_WSLIST_ITEM_ERROR_CTX;

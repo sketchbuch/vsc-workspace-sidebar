@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import {
-  EXT_WSLIST_ITEM_ERROR_CTX,
+  EXT_WSLIST_ITEM_LOADING_CTX,
   FS_FOLDER_IMAGES_DARK,
   FS_FOLDER_IMAGES_LIGHT,
 } from '../../constants';
@@ -26,9 +26,9 @@ export class WsListItemLoading extends vscode.TreeItem {
   }
 
   iconPath = {
-    light: getImagePath(this.extensionPath, FS_FOLDER_IMAGES_LIGHT, 'folder-light.svg'),
-    dark: getImagePath(this.extensionPath, FS_FOLDER_IMAGES_DARK, 'folder-dark.svg'),
+    light: getImagePath(this.extensionPath, FS_FOLDER_IMAGES_LIGHT, 'loading.svg'),
+    dark: getImagePath(this.extensionPath, FS_FOLDER_IMAGES_DARK, 'loading.svg'),
   };
 
-  contextValue = EXT_WSLIST_ITEM_ERROR_CTX;
+  contextValue = EXT_WSLIST_ITEM_LOADING_CTX;
 }
