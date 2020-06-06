@@ -1,9 +1,14 @@
 # Change Log
 
-All notable changes to the "vsc-wokspace-sidebar" extension will be documented in this file.
+All notable changes to the "vsc-workspace-sidebar" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [Unreleased]
+## [1.0.3](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.0.0...v1.0.3) (2020-06-06)
+
+- New icon
+- Updated readme
+
+## [1.0.0](2020-06-05)
 
 - Initial release
