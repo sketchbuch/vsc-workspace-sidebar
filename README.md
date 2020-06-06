@@ -19,6 +19,6 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-#### [1.0.6](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.0.4...v1.0.6) (2020-06-06)
+#### [1.0.7](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.0.6...v1.0.7) (2020-06-06)
 
-- New icon
+- Tweak of translation loading
