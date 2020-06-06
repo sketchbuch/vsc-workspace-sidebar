@@ -5,6 +5,7 @@ export * from './utils/getVscodeLang';
 export * from './utils/loadTranslations';
 
 export const DEFAULT_LANG = 'en';
+export const FS_UTF8 = 'utf-8';
 
 export const t = (key: string, placeholders: Placeholders | null = null): string => {
   if (translations.hasOwnProperty(key)) {
