@@ -5,3 +5,7 @@ export interface Placeholders {
 export interface Translations {
   [key: string]: string;
 }
+
+export interface DeepTranslations {
+  [key: string]: string | DeepTranslations;
+}

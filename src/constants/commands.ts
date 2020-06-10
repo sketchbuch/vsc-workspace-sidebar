@@ -4,6 +4,7 @@ import { EXT } from './ext';
 export const CMD_OPEN_CUR_WIN = `${EXT}-open-cur-win`;
 export const CMD_OPEN_NEW_WIN = `${EXT}-open-new-win`;
 export const CMD_OPEN_SETTINGS = `${EXT}-settings`;
+export const CMD_REFRESH = `${EXT}-refresh`;
 
 // VS Code
 export const CMD_VSC_OPEN_WS = 'vscode.openFolder';

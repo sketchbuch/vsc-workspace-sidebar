@@ -1,12 +1,14 @@
 import * as vscode from 'vscode';
 import { getVscodeLang, loadTranslations } from '../localisation';
-import { setupSidebar } from '../sidebar';
 import { registerCommands } from '../commands';
+import { setupSidebar } from '../sidebar';
+import { WsList } from '../treeviews';
 
 export const setupExt = (context: vscode.ExtensionContext, lang: string) => {
   loadTranslations(lang, context.extensionPath);
-  registerCommands(context);
-  setupSidebar(context);
+  const wsListDataProvider = new WsList(context);
+  registerCommands(context, wsListDataProvider);
+  setupSidebar(context, wsListDataProvider);
 };
 
 export const activate = (context: vscode.ExtensionContext): void => {

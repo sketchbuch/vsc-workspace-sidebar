@@ -27,6 +27,14 @@
         "title": "%ext.wsListItem.open.newWindow%"
       },
       {
+        "command": "vsc-workspace-sidebar-refresh",
+        "icon": {
+          "light": "./resources/images/light/refresh.svg",
+          "dark": "./resources/images/dark/refresh.svg"
+        },
+        "title": "%ext.wsList.refresh%"
+      },
+      {
         "command": "vsc-workspace-sidebar-settings",
         "title": "%ext.wsListItem.checkSettings%"
       }
@@ -56,6 +64,13 @@
           "command": "vsc-workspace-sidebar-open-new-win",
           "group": "inline",
           "when": "view == vsc-workspace-sidebar-list && viewItem == vsc-workspace-sidebar-list-item"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "vsc-workspace-sidebar-refresh",
+          "group": "navigation",
+          "when": "view == vsc-workspace-sidebar-list && vsc-workspace-sidebar-list-loaded"
         }
       ]
     },

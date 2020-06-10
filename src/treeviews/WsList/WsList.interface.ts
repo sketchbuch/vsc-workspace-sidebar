@@ -1,8 +1,9 @@
 import * as vscode from 'vscode';
+import { WsFiles } from '../../types';
 import { WsListItem } from './WsListItem';
 import { WsListItemError } from './WsListItemError';
-import { WsListItemLoading } from './WsListItemLoading';
 import { WsListItemErrorSub } from './WsListItemErrorSub';
+import { WsListItemLoading } from './WsListItemLoading';
 
 export interface File {
   file: string;
@@ -24,4 +25,9 @@ export interface WsListItemCmd extends WsListItem {
     light: string;
   };
   contextValue: string;
+}
+
+export interface WsListCache {
+  files: WsFiles;
+  timestamp: number;
 }

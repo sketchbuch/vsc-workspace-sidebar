@@ -1,7 +1,14 @@
 import * as vscode from 'vscode';
 import { capitalise, findWorkspaceFiles, sortByLabel } from '../../utils';
-import { CMD_OPEN_CUR_WIN, CMD_OPEN_SETTINGS, FS_WS_FILETYPE } from '../../constants';
-import { Files, WsListItems } from './WsList.interface';
+import {
+  CMD_OPEN_CUR_WIN,
+  CMD_OPEN_SETTINGS,
+  EXT_LOADED,
+  EXT_WSSTATE_CACHE_DURATION,
+  EXT_WSSTATE_CACHE,
+  FS_WS_FILETYPE,
+} from '../../constants';
+import { Files, WsListItems, WsListCache } from './WsList.interface';
 import { t } from '../../localisation';
 import { WsFiles } from '../../types';
 import { WsListItem } from '.';
@@ -27,6 +34,9 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
     if (!this.loading) {
       this.loading = true;
       this.isFolderInvalid = false;
+      vscode.commands.executeCommand('setContext', EXT_LOADED, false);
+      this.context.globalState.update(EXT_WSSTATE_CACHE, undefined);
+      this._onDidChangeTreeData.fire(undefined);
       this.getWorkspaceFiles();
     }
   }
@@ -34,17 +44,47 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
   getWorkspaceFiles(): void {
     const folder: string = vscode.workspace.getConfiguration().get('workspaceSidebar.folder') || '';
     const depth: number = vscode.workspace.getConfiguration().get('workspaceSidebar.depth') || 0;
+    const cachedData = this.context.globalState.get<WsListCache>(EXT_WSSTATE_CACHE);
 
-    findWorkspaceFiles(folder, depth).then((wsFiles) => {
-      this.loading = false;
+    if (cachedData) {
+      const { files, timestamp } = cachedData;
 
-      if (wsFiles === false) {
-        this.isFolderInvalid = true;
-      } else {
-        this.wsFiles = wsFiles;
+      if (files && timestamp) {
+        const timestampNow = Math.floor(Date.now() / 1000);
+        const timestampExpired = timestamp + EXT_WSSTATE_CACHE_DURATION;
+
+        if (timestampNow < timestampExpired) {
+          this.loaded(files);
+          vscode.commands.executeCommand('setContext', EXT_LOADED, true);
+          return;
+        } else {
+          this.context.globalState.update(EXT_WSSTATE_CACHE, undefined);
+        }
       }
-      this._onDidChangeTreeData.fire(undefined);
-    });
+    }
+
+    findWorkspaceFiles(folder, depth)
+      .then((wsFiles) => {
+        this.loaded(wsFiles);
+      })
+      .finally(() => {
+        vscode.commands.executeCommand('setContext', EXT_LOADED, true);
+      });
+  }
+
+  loaded(wsFiles: false | WsFiles): void {
+    this.loading = false;
+
+    if (wsFiles === false) {
+      this.isFolderInvalid = true;
+    } else {
+      this.wsFiles = wsFiles;
+      this.context.globalState.update(EXT_WSSTATE_CACHE, {
+        files: wsFiles,
+        timestamp: Math.floor(Date.now() / 1000),
+      });
+    }
+    this._onDidChangeTreeData.fire(undefined);
   }
 
   getTreeItem(element: WsListItems): vscode.TreeItem {
