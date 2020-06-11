@@ -8,10 +8,10 @@ Adds a sidebar to VSCode that lists Workspaces and lets you open them in the cur
 
 ## Settings
 
-| Setting | Description                                                                                                                             | Default Value                        | Type       |
-| ------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ---------- |
-| Folder  | The folder to look for workspace files in. If empty, your home folder will be used. **~/** will also be replaced with your home folder. | None (your home folder will be used) | String     |
-| Depth   | The depth of subfolders to include in the search.                                                                                       | 0                                    | Number 0-5 |
+| Setting | Description                                                                                                                                       | Default Value                        | Type       |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ---------- |
+| Folder  | The folder to look for workspace files in. If Folder is empty, your home folder will be used. **~/** will also be replaced with your home folder. | None (your home folder will be used) | String     |
+| Depth   | The depth of subfolders to include in the search.                                                                                                 | 0                                    | Number 0-5 |
 
 ## Translations
 
@@ -19,7 +19,6 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-#### [1.1.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.0.9...v1.1.1) (2020-06-06)
+#### [1.1.2](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.1...v1.1.2) (2020-06-10)
 
-- Added cache to store data for 12 hours
-- Added refresh button to view that will clear the cache and rescan for workspaces
+- The active workspace is now indicated by an icon

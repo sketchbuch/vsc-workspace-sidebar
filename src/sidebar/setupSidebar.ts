@@ -11,9 +11,6 @@ export const setupSidebar = (
   );
 
   vscode.workspace.onDidChangeConfiguration((event: vscode.ConfigurationChangeEvent) => {
-    /* if (event.affectsConfiguration('cleanupWorkspaceLabel')) {
-      wsListDataProvider.refresh();
-    } else  */
     if (event.affectsConfiguration('workspaceSidebar.depth')) {
       wsListDataProvider.refresh();
     } else if (event.affectsConfiguration('workspaceSidebar.folder')) {

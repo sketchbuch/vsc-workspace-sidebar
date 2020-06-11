@@ -4,7 +4,11 @@ All notable changes to the "vsc-workspace-sidebar" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [1.1.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.0.9...v1.1.1) (2020-06-06)
+## [1.1.2](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.1...v1.1.2) (2020-06-10)
+
+- The active workspace is now indicated by an icon
+
+## [1.1.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.0.9...v1.1.1) (2020-06-10)
 
 - Added cache to store data for 12 hours
 - Added refresh button to view that will clear the cache and rescan for workspaces

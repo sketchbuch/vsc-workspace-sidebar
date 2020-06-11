@@ -12,6 +12,7 @@ import { Files, WsListItems, WsListCache } from './WsList.interface';
 import { t } from '../../localisation';
 import { WsFiles } from '../../types';
 import { WsListItem } from '.';
+import { WsListItemActive } from './WsListItemActive';
 import { WsListItemError } from './WsListItemError';
 import { WsListItemErrorSub } from './WsListItemErrorSub';
 import { WsListItemLoading } from './WsListItemLoading';
@@ -42,8 +43,6 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
   }
 
   getWorkspaceFiles(): void {
-    const folder: string = vscode.workspace.getConfiguration().get('workspaceSidebar.folder') || '';
-    const depth: number = vscode.workspace.getConfiguration().get('workspaceSidebar.depth') || 0;
     const cachedData = this.context.globalState.get<WsListCache>(EXT_WSSTATE_CACHE);
 
     if (cachedData) {
@@ -62,6 +61,9 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
         }
       }
     }
+
+    const folder: string = vscode.workspace.getConfiguration().get('workspaceSidebar.folder') || '';
+    const depth: number = vscode.workspace.getConfiguration().get('workspaceSidebar.depth') || 0;
 
     findWorkspaceFiles(folder, depth)
       .then((wsFiles) => {
@@ -152,9 +154,6 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
         )
       );
     } else {
-      /* const shouldCleanup: boolean = !!vscode.workspace
-        .getConfiguration()
-        .get('cleanupWorkspaceLabel'); */
       const shouldCleanup = true;
 
       const files: Files = this.wsFiles
@@ -180,20 +179,33 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
 
       files.forEach((item) => {
         const { file, label } = item;
+        const isActive =
+          !!vscode.workspace.workspaceFile && vscode.workspace.workspaceFile.fsPath === file;
 
-        children.push(
-          new WsListItem(
-            label,
-            t('ext.wsListItem.open.curWindow'),
-            this.context.extensionPath,
-            vscode.TreeItemCollapsibleState.None,
-            {
-              command: CMD_OPEN_CUR_WIN,
-              title: '',
-              arguments: [file],
-            }
-          )
-        );
+        if (isActive) {
+          children.push(
+            new WsListItemActive(
+              label,
+              t('ext.wsListItem.open.curWindow'),
+              this.context.extensionPath,
+              vscode.TreeItemCollapsibleState.None
+            )
+          );
+        } else {
+          children.push(
+            new WsListItem(
+              label,
+              t('ext.wsListItem.open.curWindow'),
+              this.context.extensionPath,
+              vscode.TreeItemCollapsibleState.None,
+              {
+                command: CMD_OPEN_CUR_WIN,
+                title: '',
+                arguments: [file],
+              }
+            )
+          );
+        }
       });
     }
 
