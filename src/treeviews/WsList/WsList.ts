@@ -4,11 +4,13 @@ import {
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_SETTINGS,
   EXT_LOADED,
+  EXT_SORT,
   EXT_WSSTATE_CACHE_DURATION,
   EXT_WSSTATE_CACHE,
   FS_WS_FILETYPE,
 } from '../../constants';
 import { Files, WsListItems, WsListCache } from './WsList.interface';
+import { SortIds } from '../../commands/registerCommands.interface';
 import { t } from '../../localisation';
 import { WsFiles } from '../../types';
 import { WsListItem } from '.';
@@ -31,14 +33,18 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
     this.getWorkspaceFiles();
   }
 
-  refresh(): void {
+  refresh(sortOnly = false): void {
     if (!this.loading) {
-      this.loading = true;
-      this.isFolderInvalid = false;
-      vscode.commands.executeCommand('setContext', EXT_LOADED, false);
-      this.context.globalState.update(EXT_WSSTATE_CACHE, undefined);
-      this._onDidChangeTreeData.fire(undefined);
-      this.getWorkspaceFiles();
+      if (sortOnly) {
+        this._onDidChangeTreeData.fire(undefined);
+      } else {
+        this.loading = true;
+        this.isFolderInvalid = false;
+        vscode.commands.executeCommand('setContext', EXT_LOADED, false);
+        this.context.globalState.update(EXT_WSSTATE_CACHE, undefined);
+        this._onDidChangeTreeData.fire(undefined);
+        this.getWorkspaceFiles();
+      }
     }
   }
 
@@ -104,7 +110,6 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
       children.push(
         new WsListItemLoading(
           t('ext.wsListItem.loading'),
-          '',
           this.context.extensionPath,
           vscode.TreeItemCollapsibleState.None
         )
@@ -114,7 +119,6 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
         children.push(
           new WsListItemError(
             t('ext.wsListItem.inValid'),
-            '',
             this.context.extensionPath,
             vscode.TreeItemCollapsibleState.None,
             {
@@ -128,7 +132,6 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
         children.push(
           new WsListItemError(
             t('ext.wsListItem.none'),
-            '',
             this.context.extensionPath,
             vscode.TreeItemCollapsibleState.None,
             {
@@ -154,28 +157,27 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
         )
       );
     } else {
-      const shouldCleanup = true;
+      const sort = this.context.globalState.get<SortIds>(EXT_SORT);
 
       const files: Files = this.wsFiles
         .map((file) => {
           const label = file.substring(file.lastIndexOf('/') + 1).replace(`.${FS_WS_FILETYPE}`, '');
-
-          if (shouldCleanup) {
-            return {
-              file,
-              label: label
-                .toLowerCase()
-                .replace(/[-|_]/g, ' ')
-                .replace(/  +/g, ' ') // Multiple spaces to single
-                .split(' ')
-                .map((word) => capitalise(word))
-                .join(' '),
-            };
-          }
-
-          return { file, label };
+          return {
+            file,
+            label: label
+              .toLowerCase()
+              .replace(/[-|_]/g, ' ')
+              .replace(/  +/g, ' ') // Multiple spaces to single
+              .split(' ')
+              .map((word) => capitalise(word))
+              .join(' '),
+          };
         })
         .sort(sortByLabel);
+
+      if (sort === 'descending') {
+        files.reverse();
+      }
 
       files.forEach((item) => {
         const { file, label } = item;

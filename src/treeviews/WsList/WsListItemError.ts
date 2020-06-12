@@ -9,7 +9,6 @@ import { getImagePath } from '../../utils';
 export class WsListItemError extends vscode.TreeItem {
   constructor(
     public readonly label: string,
-    public readonly subLabel: string,
     public readonly extensionPath: string,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
     public readonly command?: vscode.Command
@@ -22,7 +21,7 @@ export class WsListItemError extends vscode.TreeItem {
   }
 
   get description(): string {
-    return `${this.subLabel}`;
+    return ``;
   }
 
   iconPath = {

@@ -37,6 +37,14 @@
       {
         "command": "vsc-workspace-sidebar-settings",
         "title": "%ext.wsListItem.checkSettings%"
+      },
+      {
+        "command": "vsc-workspace-sidebar-sort",
+        "icon": {
+          "light": "./resources/images/light/sort.svg",
+          "dark": "./resources/images/dark/sort.svg"
+        },
+        "title": "%ext.wsList.sort%"
       }
     ],
     "configuration": {
@@ -69,6 +77,11 @@
       "view/title": [
         {
           "command": "vsc-workspace-sidebar-refresh",
+          "group": "navigation",
+          "when": "view == vsc-workspace-sidebar-list && vsc-workspace-sidebar-list-loaded"
+        },
+        {
+          "command": "vsc-workspace-sidebar-sort",
           "group": "navigation",
           "when": "view == vsc-workspace-sidebar-list && vsc-workspace-sidebar-list-loaded"
         }

@@ -3,6 +3,7 @@
   "config.workspaceFolder.description": "Der Ordnerpfad, in dem nach Arbeitsbereiche gesucht werden soll. Falls leer, wird Ihren Home-Ordner benutzt.",
   "config.workspaceFolderDepth.description": "In welcher Tiefe von Unterordnern sollte auch gesucht werden.",
   "ext.wsList.refresh": "Arbeitsbereiche neu laden",
+  "ext.wsList.sort": "Arbeitsbereiche sortieren",
   "ext.wsListItem.checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",
   "ext.wsListItem.inValid": "Der Ordnerpfad ist kein Verzeichnis",
   "ext.wsListItem.loading": "Arbeitsbereiche finden...",
@@ -10,5 +11,15 @@
   "ext.wsListItem.open.curWindow": "In aktuellem fenster öffnen",
   "ext.wsListItem.open.newWindow": "In neuem fenster öffnen",
   "views.title": "Arbeitsbereiche",
-  "viewsContainers.activitybar.title": "Arbeitsbereiche"
+  "viewsContainers.activitybar.title": "Arbeitsbereiche",
+  "sort": {
+    "ascending": {
+      "description": "Sortieren von a-z",
+      "label": "Aufsteigend"
+    },
+    "descending": {
+      "description": "Sortieren von z-a",
+      "label": "Absteigen"
+    }
+  }
 }

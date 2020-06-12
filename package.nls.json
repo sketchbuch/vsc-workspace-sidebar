@@ -3,6 +3,7 @@
   "config.workspaceFolder.description": "The folder to look in for workspace files - leave blank to default to your home folder.",
   "config.workspaceFolderDepth.description": "What depth of subfolders should also be looked in.",
   "ext.wsList.refresh": "Reload Workspaces",
+  "ext.wsList.sort": "Sort Workspaces",
   "ext.wsListItem.checkSettings": "Check the extension settings",
   "ext.wsListItem.inValid": "Folder path is not a directory",
   "ext.wsListItem.loading": "Collecting workspaces...",
@@ -10,5 +11,15 @@
   "ext.wsListItem.open.curWindow": "Open in this window",
   "ext.wsListItem.open.newWindow": "Open in a new window",
   "views.title": "Workspaces",
-  "viewsContainers.activitybar.title": "Workspaces"
+  "viewsContainers.activitybar.title": "Workspaces",
+  "sort": {
+    "ascending": {
+      "description": "Sort from a-z",
+      "label": "Ascending"
+    },
+    "descending": {
+      "description": "Sort from z-a",
+      "label": "Descending"
+    }
+  }
 }

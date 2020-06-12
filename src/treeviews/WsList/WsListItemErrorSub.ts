@@ -13,7 +13,7 @@ export class WsListItemErrorSub extends vscode.TreeItem {
   }
 
   get tooltip(): string {
-    return `${this.label}`;
+    return `${this.subLabel}`;
   }
 
   get description(): string {
