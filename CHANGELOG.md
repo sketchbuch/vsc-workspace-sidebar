@@ -4,6 +4,10 @@ All notable changes to the "vsc-workspace-sidebar" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.1.4](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.3...v1.1.4) (2020-06-14)
+
+- Finding workspaces is now faster
+
 ## [1.1.3](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.2...v1.1.3) (2020-06-12)
 
 - Added sorting option

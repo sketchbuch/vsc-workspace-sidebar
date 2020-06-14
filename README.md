@@ -2,7 +2,7 @@
 
 **(vsc-workspace-sidebar)**
 
-Adds a sidebar to VSCode that lists Workspaces and lets you open them in the current window or a new window.
+Adds a sidebar to VSCode that lists Workspaces and lets you open them in the current window or a new window. The results are cached for 12 Hours but there is a refresh button that you can click to refind workspaces at any time. Workspaces can also be sorted ascending or descending and the currently loaded workspace is highlighted with a check mark.
 
 ![alt text](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/preview.gif 'Workspace Sidebar Preview')
 
@@ -19,6 +19,6 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-#### [1.1.3](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.2...v1.1.3) (2020-06-12)
+#### [1.1.4](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.3...v1.1.4) (2020-06-14)
 
-- Added sorting option
+- Finding workspaces is now faster
