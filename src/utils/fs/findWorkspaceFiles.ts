@@ -1,8 +1,7 @@
-import * as fs from 'fs';
 import * as os from 'os';
 import { FS_WS_FILETYPE } from '../../constants';
 import { WsFiles } from '../../types';
-import { collectFilesFromFolder } from '.';
+import { collectFilesFromFolder, checkFile } from '.';
 
 export const findWorkspaceFiles = async (
   folder: string,
@@ -10,8 +9,9 @@ export const findWorkspaceFiles = async (
 ): Promise<WsFiles | false> => {
   const homeFolder = os.homedir();
   const baseFolder = folder.replace('~/', `${homeFolder}/`) || homeFolder;
+  const { isFolder } = checkFile(baseFolder);
 
-  if (fs.existsSync(baseFolder) && fs.lstatSync(baseFolder).isDirectory()) {
+  if (isFolder) {
     return await collectFilesFromFolder(baseFolder, FS_WS_FILETYPE, maxDepth, 0);
   }
 

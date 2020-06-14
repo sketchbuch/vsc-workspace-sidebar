@@ -1,4 +1,4 @@
-import { processFile } from '.';
+import { checkFile } from '.';
 import { WsFiles } from '../../types';
 
 export const getFilenamesOfType = (
@@ -9,17 +9,15 @@ export const getFilenamesOfType = (
 ) => {
   return filenames.reduce((allFiles, curFile) => {
     const curPath = `${folder}/${curFile}`;
-    const { isError, isFile } = processFile(`${folder}/${curFile}`);
+    const { isFile, isFolder } = checkFile(`${folder}/${curFile}`);
 
-    if (!isError) {
-      if (isFile && requiredType === 'files') {
-        var fileExtension = curFile.substring(curFile.lastIndexOf('.') + 1);
-        if (fileExtension === fileType) {
-          return [...allFiles, curPath];
-        }
-      } else if (!isFile && requiredType === 'folders') {
+    if (isFile && requiredType === 'files') {
+      var fileExtension = curFile.substring(curFile.lastIndexOf('.') + 1);
+      if (fileExtension === fileType) {
         return [...allFiles, curPath];
       }
+    } else if (isFolder && requiredType === 'folders') {
+      return [...allFiles, curPath];
     }
 
     return allFiles;

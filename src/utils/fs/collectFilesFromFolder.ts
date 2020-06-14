@@ -2,6 +2,8 @@ import * as fs from 'fs';
 import { getFilenamesOfType, isHiddenFile } from '.';
 import { WsFiles } from '../../types';
 
+const foldersToIgnore = ['node_modules', 'out', 'dist', 'build'];
+
 export const collectFilesFromFolder = async (
   folder: string,
   fileType: string,
@@ -11,7 +13,13 @@ export const collectFilesFromFolder = async (
   if (curDepth <= maxDepth) {
     try {
       const filenames = await fs.promises.readdir(folder).then((files) => {
-        return files.filter((file) => !isHiddenFile(file));
+        return files.reduce((allFiles: string[], curFile) => {
+          if (!isHiddenFile(curFile) && !foldersToIgnore.includes(curFile)) {
+            return [...allFiles, curFile];
+          }
+
+          return allFiles;
+        }, []);
       });
 
       const folders = getFilenamesOfType('folders', filenames, folder, fileType);
