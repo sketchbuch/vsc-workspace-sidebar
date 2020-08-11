@@ -1,10 +1,11 @@
 # Folders
-out
-node_modules
 .vscode-test/
+node_modules
+out
 
 # Files
-*.vsix
 *.code-workspace
-yarn-error.log
+*.DS_Store
+*.vsix
 Temp.txt
+yarn-error.log

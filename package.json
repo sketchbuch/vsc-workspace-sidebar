@@ -142,6 +142,9 @@
     "vscode:prepublish": "yarn run compile",
     "watch": "tsc -watch -p ./"
   },
+  "dependencies": {
+    "vscode-ext-localisation": "^1.0.1"
+  },
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",
     "@types/glob": "^7.1.1",

@@ -1,8 +1,8 @@
 # Change Log
 
-All notable changes to the "vsc-workspace-sidebar" extension will be documented in this file.
+## [1.1.5](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.4...v1.1.5) (2020-08-11)
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+- Replaced localisation code with "vscode-ext-localisation"
 
 ## [1.1.4](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.3...v1.1.4) (2020-06-14)
 

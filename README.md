@@ -19,6 +19,6 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-#### [1.1.4](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.3...v1.1.4) (2020-06-14)
+#### [1.1.5](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.4...v1.1.5) (2020-08-11)
 
-- Finding workspaces is now faster
+- Replaced localisation code with "vscode-ext-localisation"

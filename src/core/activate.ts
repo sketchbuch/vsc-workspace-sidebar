@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { getVscodeLang, loadTranslations } from '../localisation';
+import { getVscodeLang, loadTranslations } from 'vscode-ext-localisation';
 import { registerCommands } from '../commands';
 import { setupSidebar } from '../sidebar';
 import { WsList } from '../treeviews';
