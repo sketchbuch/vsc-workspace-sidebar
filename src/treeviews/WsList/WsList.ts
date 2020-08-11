@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { t } from 'vscode-ext-localisation';
 import { capitalise, findWorkspaceFiles, sortByLabel } from '../../utils';
 import {
   CMD_OPEN_CUR_WIN,
@@ -11,7 +12,6 @@ import {
 } from '../../constants';
 import { Files, WsListItems, WsListCache } from './WsList.interface';
 import { SortIds } from '../../commands/registerCommands.interface';
-import { t } from '../../localisation';
 import { WsFiles } from '../../types';
 import { WsListItem } from '.';
 import { WsListItemActive } from './WsListItemActive';

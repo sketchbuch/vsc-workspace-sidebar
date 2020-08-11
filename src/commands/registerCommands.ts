@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { t } from 'vscode-ext-localisation';
 import {
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,
@@ -10,7 +11,6 @@ import {
 import { cmsOpenCurWindow, cmsOpenNewWindow } from './cmds';
 import { WsList } from '../treeviews';
 import { WsListItemCmd } from '../treeviews/WsList/WsList.interface';
-import { t } from '../localisation';
 import { SortOptions, SortIds } from './registerCommands.interface';
 
 export const registerCommands = (
