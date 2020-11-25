@@ -8,10 +8,11 @@ Adds a sidebar to VSCode that lists Workspaces and lets you open them in the cur
 
 ## Settings
 
-| Setting | Description                                                                                                                                       | Default Value                        | Type       |
-| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ---------- |
-| Folder  | The folder to look for workspace files in. If Folder is empty, your home folder will be used. **~/** will also be replaced with your home folder. | None (your home folder will be used) | String     |
-| Depth   | The depth of subfolders to include in the search.                                                                                                 | 0                                    | Number 0-5 |
+| Setting   | Description                                                                                                                                       | Default Value                        | Type       |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ---------- |
+| Folder    | The folder to look for workspace files in. If Folder is empty, your home folder will be used. **~/** will also be replaced with your home folder. | None (your home folder will be used) | String     |
+| Depth     | The depth of subfolders to include in the search.                                                                                                 | 0                                    | Number 0-5 |
+| Show Path | Show the path to the WS file in the sidebar.                                                                                                      | false                                | Boolean    |
 
 ## Translations
 
@@ -19,6 +20,6 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-#### [1.1.6](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.4...v1.1.6) (2020-08-11)
+#### [1.1.7](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.6...v1.1.7) (2020-11-25)
 
-- Replaced localisation code with "vscode-ext-localisation"
+- Added setting to display path to workspace file in the sidebar (defaults to off)

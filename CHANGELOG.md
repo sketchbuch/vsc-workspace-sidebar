@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.1.7](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.6...v1.1.7) (2020-11-25)
+
+- Added setting to display path to workspace file in the sidebar (defaults to off)
+
 ## [1.1.6](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.4...v1.1.6) (2020-08-11)
 
 - Replaced localisation code with "vscode-ext-localisation"
