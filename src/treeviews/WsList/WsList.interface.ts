@@ -8,6 +8,7 @@ import { WsListItemLoading } from './WsListItemLoading';
 export interface File {
   file: string;
   label: string;
+  path: string;
 }
 
 export type Files = File[];

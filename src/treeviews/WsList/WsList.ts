@@ -1,19 +1,20 @@
+import * as os from 'os';
 import * as vscode from 'vscode';
 import { t } from 'vscode-ext-localisation';
-import { capitalise, findWorkspaceFiles, sortByLabel } from '../../utils';
+import { WsListItem } from '.';
+import { SortIds } from '../../commands/registerCommands.interface';
 import {
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_SETTINGS,
   EXT_LOADED,
   EXT_SORT,
-  EXT_WSSTATE_CACHE_DURATION,
   EXT_WSSTATE_CACHE,
+  EXT_WSSTATE_CACHE_DURATION,
   FS_WS_FILETYPE,
 } from '../../constants';
-import { Files, WsListItems, WsListCache } from './WsList.interface';
-import { SortIds } from '../../commands/registerCommands.interface';
 import { WsFiles } from '../../types';
-import { WsListItem } from '.';
+import { capitalise, findWorkspaceFiles, sortByLabel } from '../../utils';
+import { Files, WsListCache, WsListItems } from './WsList.interface';
 import { WsListItemActive } from './WsListItemActive';
 import { WsListItemError } from './WsListItemError';
 import { WsListItemErrorSub } from './WsListItemErrorSub';
@@ -157,11 +158,14 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
         )
       );
     } else {
+      const showPath: boolean =
+        vscode.workspace.getConfiguration().get('workspaceSidebar.showPath') || false;
       const sort = this.context.globalState.get<SortIds>(EXT_SORT);
-
       const files: Files = this.wsFiles
         .map((file) => {
-          const label = file.substring(file.lastIndexOf('/') + 1).replace(`.${FS_WS_FILETYPE}`, '');
+          const lastFolder = file.lastIndexOf('/');
+          const label = file.substring(lastFolder + 1).replace(`.${FS_WS_FILETYPE}`, '');
+          const path = showPath ? file.substring(0, lastFolder).replace(os.homedir(), '~') : '';
           return {
             file,
             label: label
@@ -171,6 +175,7 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
               .split(' ')
               .map((word) => capitalise(word))
               .join(' '),
+            path,
           };
         })
         .sort(sortByLabel);
@@ -180,7 +185,7 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
       }
 
       files.forEach((item) => {
-        const { file, label } = item;
+        const { file, label, path } = item;
         const isActive =
           !!vscode.workspace.workspaceFile && vscode.workspace.workspaceFile.fsPath === file;
 
@@ -189,6 +194,7 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
             new WsListItemActive(
               label,
               t('ext.wsListItem.open.curWindow'),
+              path,
               this.context.extensionPath,
               vscode.TreeItemCollapsibleState.None
             )
@@ -198,6 +204,7 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
             new WsListItem(
               label,
               t('ext.wsListItem.open.curWindow'),
+              path,
               this.context.extensionPath,
               vscode.TreeItemCollapsibleState.None,
               {
