@@ -5,19 +5,14 @@ export class WsListItem extends vscode.TreeItem {
   constructor(
     public readonly label: string,
     public readonly subLabel: string,
+    public readonly description: string,
     public readonly extensionPath: string,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
     public readonly command?: vscode.Command
   ) {
     super(label, collapsibleState);
-  }
-
-  get tooltip(): string {
-    return `${this.subLabel}`;
-  }
-
-  get description(): string {
-    return '';
+    this.tooltip = this.subLabel;
+    this.description = this.description;
   }
 
   iconPath = {

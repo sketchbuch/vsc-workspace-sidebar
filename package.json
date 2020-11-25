@@ -63,6 +63,12 @@
           "description": "%config.workspaceFolder.description%",
           "scope": "application",
           "type": "string"
+        },
+        "workspaceSidebar.showPath": {
+          "default": false,
+          "description": "%config.workspaceShowPath.description%",
+          "scope": "application",
+          "type": "boolean"
         }
       }
     },

@@ -15,6 +15,8 @@ export const setupSidebar = (
       wsListDataProvider.refresh();
     } else if (event.affectsConfiguration('workspaceSidebar.folder')) {
       wsListDataProvider.refresh();
+    } else if (event.affectsConfiguration('workspaceSidebar.showPath')) {
+      wsListDataProvider.refresh();
     }
   });
 };

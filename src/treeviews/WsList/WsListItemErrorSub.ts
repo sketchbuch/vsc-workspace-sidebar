@@ -10,14 +10,8 @@ export class WsListItemErrorSub extends vscode.TreeItem {
     public readonly command?: vscode.Command
   ) {
     super(label, collapsibleState);
-  }
-
-  get tooltip(): string {
-    return `${this.subLabel}`;
-  }
-
-  get description(): string {
-    return `${this.subLabel}`;
+    this.tooltip = this.subLabel;
+    this.description = this.subLabel;
   }
 
   iconPath = {
