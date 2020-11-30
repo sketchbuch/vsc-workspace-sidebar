@@ -14,11 +14,11 @@ import {
 } from '../../constants';
 import { WsFiles } from '../../types';
 import { capitalise, findWorkspaceFiles, sortByLabel } from '../../utils';
+import { WsListItemActive } from './items/WsListItemActive';
+import { WsListItemError } from './items/WsListItemError';
+import { WsListItemErrorSub } from './items/WsListItemErrorSub';
+import { WsListItemLoading } from './items/WsListItemLoading';
 import { Files, WsListCache, WsListItems } from './WsList.interface';
-import { WsListItemActive } from './WsListItemActive';
-import { WsListItemError } from './WsListItemError';
-import { WsListItemErrorSub } from './WsListItemErrorSub';
-import { WsListItemLoading } from './WsListItemLoading';
 
 export class WsList implements vscode.TreeDataProvider<WsListItems> {
   _onDidChangeTreeData: vscode.EventEmitter<WsListItems | undefined> = new vscode.EventEmitter<

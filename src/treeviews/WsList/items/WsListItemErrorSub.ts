@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { EXT_WSLIST_ITEM_ERROR_SUB_CTX } from '../../constants';
+import { EXT_WSLIST_ITEM_ERROR_SUB_CTX } from '../../../constants';
 
 export class WsListItemErrorSub extends vscode.TreeItem {
   constructor(

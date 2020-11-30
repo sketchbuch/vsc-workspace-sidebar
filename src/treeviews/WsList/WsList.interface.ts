@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
 import { WsFiles } from '../../types';
-import { WsListItem } from './WsListItem';
-import { WsListItemError } from './WsListItemError';
-import { WsListItemErrorSub } from './WsListItemErrorSub';
-import { WsListItemLoading } from './WsListItemLoading';
+import { WsListItem } from './items/WsListItem';
+import { WsListItemError } from './items/WsListItemError';
+import { WsListItemErrorSub } from './items/WsListItemErrorSub';
+import { WsListItemLoading } from './items/WsListItemLoading';
 
 export interface File {
   file: string;

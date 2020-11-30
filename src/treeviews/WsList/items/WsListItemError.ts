@@ -3,8 +3,8 @@ import {
   EXT_WSLIST_ITEM_ERROR_CTX,
   FS_FOLDER_IMAGES_DARK,
   FS_FOLDER_IMAGES_LIGHT,
-} from '../../constants';
-import { getImagePath } from '../../utils';
+} from '../../../constants';
+import { getImagePath } from '../../../utils';
 
 export class WsListItemError extends vscode.TreeItem {
   constructor(
