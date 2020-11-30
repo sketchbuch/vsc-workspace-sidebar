@@ -10,7 +10,7 @@ import {
   EXT_SORT,
   EXT_WSSTATE_CACHE,
   EXT_WSSTATE_CACHE_DURATION,
-  FS_WS_FILETYPE,
+  FS_WS_EXT,
 } from '../../constants';
 import { WsFiles } from '../../types';
 import { capitalise, findWorkspaceFiles, sortByLabel } from '../../utils';
@@ -168,7 +168,7 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
       const files: Files = this.wsFiles
         .map((file) => {
           const lastFolder = file.lastIndexOf('/');
-          const label = file.substring(lastFolder + 1).replace(`.${FS_WS_FILETYPE}`, '');
+          const label = file.substring(lastFolder + 1).replace(FS_WS_EXT, '');
           const path = showPath
             ? file.substring(0, lastFolder).replace(os.homedir(), '~').replace(cleanedFolder, '…')
             : '';
