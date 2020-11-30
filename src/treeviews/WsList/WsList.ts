@@ -34,9 +34,9 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
     this.getWorkspaceFiles();
   }
 
-  refresh(sortOnly = false): void {
+  refresh(isUiRefesh = false): void {
     if (!this.loading) {
-      if (sortOnly) {
+      if (isUiRefesh) {
         this._onDidChangeTreeData.fire(undefined);
       } else {
         this.loading = true;
@@ -160,12 +160,18 @@ export class WsList implements vscode.TreeDataProvider<WsListItems> {
     } else {
       const showPath: boolean =
         vscode.workspace.getConfiguration().get('workspaceSidebar.showPath') || false;
+      const folder: string =
+        vscode.workspace.getConfiguration().get('workspaceSidebar.folder') || '';
+      const cleanedFolder = folder.replace(os.homedir(), '~');
       const sort = this.context.globalState.get<SortIds>(EXT_SORT);
+
       const files: Files = this.wsFiles
         .map((file) => {
           const lastFolder = file.lastIndexOf('/');
           const label = file.substring(lastFolder + 1).replace(`.${FS_WS_FILETYPE}`, '');
-          const path = showPath ? file.substring(0, lastFolder).replace(os.homedir(), '~') : '';
+          const path = showPath
+            ? file.substring(0, lastFolder).replace(os.homedir(), '~').replace(cleanedFolder, '…')
+            : '';
           return {
             file,
             label: label
