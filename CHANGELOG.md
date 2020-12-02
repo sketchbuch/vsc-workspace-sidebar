@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.1.8](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.7...v1.1.8) (2020-12-02)
+
+- Detect .code-workspace file creation and recollect worksapce files
+- Enabling the setting to display paths no longer dumps the cache and recollects workspace files, instead the UI is just updated
+- Displayed paths now have the Folder in settings replaced with ellipsis (…)
+
 ## [1.1.7](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.6...v1.1.7) (2020-11-25)
 
 - Added setting to display path to workspace file in the sidebar (defaults to off)
