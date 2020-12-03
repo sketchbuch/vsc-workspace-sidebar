@@ -12,12 +12,11 @@ export class WsListItemErrorSub extends vscode.TreeItem {
     super(label, collapsibleState);
     this.tooltip = this.subLabel;
     this.description = this.subLabel;
+    this.iconPath = {
+      light: '',
+      dark: '',
+    };
   }
-
-  iconPath = {
-    light: '',
-    dark: '',
-  };
 
   contextValue = EXT_WSLIST_ITEM_ERROR_SUB_CTX;
 }

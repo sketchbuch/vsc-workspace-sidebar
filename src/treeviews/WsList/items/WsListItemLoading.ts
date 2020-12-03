@@ -16,12 +16,11 @@ export class WsListItemLoading extends vscode.TreeItem {
     super(label, collapsibleState);
     this.tooltip = this.label;
     this.description = '';
+    this.iconPath = {
+      light: getImagePath(extensionPath, FS_FOLDER_IMAGES_LIGHT, 'loading.svg'),
+      dark: getImagePath(extensionPath, FS_FOLDER_IMAGES_DARK, 'loading.svg'),
+    };
   }
-
-  iconPath = {
-    light: getImagePath(this.extensionPath, FS_FOLDER_IMAGES_LIGHT, 'loading.svg'),
-    dark: getImagePath(this.extensionPath, FS_FOLDER_IMAGES_DARK, 'loading.svg'),
-  };
 
   contextValue = EXT_WSLIST_ITEM_LOADING_CTX;
 }

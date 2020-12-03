@@ -18,12 +18,11 @@ export class WsListItemActive extends vscode.TreeItem {
     super(label, collapsibleState);
     this.tooltip = this.subLabel;
     this.description = this.description;
+    this.iconPath = {
+      light: getImagePath(extensionPath, FS_FOLDER_IMAGES_LIGHT, 'success.svg'),
+      dark: getImagePath(extensionPath, FS_FOLDER_IMAGES_DARK, 'success.svg'),
+    };
   }
-
-  iconPath = {
-    light: getImagePath(this.extensionPath, FS_FOLDER_IMAGES_LIGHT, 'success.svg'),
-    dark: getImagePath(this.extensionPath, FS_FOLDER_IMAGES_DARK, 'success.svg'),
-  };
 
   contextValue = EXT_WSLIST_ITEM_ACTIVE_CTX;
 }

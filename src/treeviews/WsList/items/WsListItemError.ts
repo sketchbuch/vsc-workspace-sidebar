@@ -16,12 +16,11 @@ export class WsListItemError extends vscode.TreeItem {
     super(label, collapsibleState);
     this.tooltip = this.label;
     this.description = '';
+    this.iconPath = {
+      light: getImagePath(extensionPath, FS_FOLDER_IMAGES_LIGHT, 'error.svg'),
+      dark: getImagePath(extensionPath, FS_FOLDER_IMAGES_DARK, 'error.svg'),
+    };
   }
-
-  iconPath = {
-    light: getImagePath(this.extensionPath, FS_FOLDER_IMAGES_LIGHT, 'error.svg'),
-    dark: getImagePath(this.extensionPath, FS_FOLDER_IMAGES_DARK, 'error.svg'),
-  };
 
   contextValue = EXT_WSLIST_ITEM_ERROR_CTX;
 }
