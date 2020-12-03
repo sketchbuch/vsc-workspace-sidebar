@@ -20,8 +20,6 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-#### [1.1.8](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.7...v1.1.8) (2020-12-02)
+#### [1.1.9](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.8...v1.1.9) (2020-12-03)
 
-- Detect .code-workspace file creation and recollect worksapce files
-- Enabling the setting to display paths no longer dumps the cache and recollects workspace files, instead the UI is just updated
-- Displayed paths now have the Folder in settings replaced with ellipsis (…)
+- Update tree items icon path
