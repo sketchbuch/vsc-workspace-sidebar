@@ -45,6 +45,43 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     return null;
   }
 
+  private render(state: WorkspaceState) {
+    if (this._view) {
+      const htmlData: HtmlData<WorkspaceData> = {
+        data: { ...state },
+        webview: this._view.webview,
+      };
+
+      this._view.webview.html = getHtml<WorkspaceData>({
+        extensionPath: this._extensionUri,
+        template,
+        htmlData,
+      });
+    }
+  }
+
+  private stateChanged(context: WorkspaceContext) {
+    const { files, state } = context;
+
+    switch (state) {
+      case 'error':
+        vscode.commands.executeCommand('setContext', EXT_LOADED, true);
+        break;
+
+      case 'list':
+        vscode.commands.executeCommand('setContext', EXT_LOADED, true);
+
+        this._globalState.update(EXT_WSSTATE_CACHE, {
+          files,
+          timestamp: Math.floor(Date.now() / 1000),
+        });
+        break;
+
+      default:
+        break;
+    }
+  }
+
   public resolveWebviewView(
     webviewView: vscode.WebviewView,
     webviewContext: vscode.WebviewViewResolveContext,
@@ -75,43 +112,6 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
       this._state.send('USE_CACHE', { cachedFiles });
     } else {
       this._state.send('FETCH');
-    }
-  }
-
-  private stateChanged(context: WorkspaceContext) {
-    const { files, state } = context;
-
-    switch (state) {
-      case 'error':
-        vscode.commands.executeCommand('setContext', EXT_LOADED, true);
-        break;
-
-      case 'list':
-        vscode.commands.executeCommand('setContext', EXT_LOADED, true);
-
-        this._globalState.update(EXT_WSSTATE_CACHE, {
-          files,
-          timestamp: Math.floor(Date.now() / 1000),
-        });
-        break;
-
-      default:
-        break;
-    }
-  }
-
-  private render(state: WorkspaceState) {
-    if (this._view) {
-      const htmlData: HtmlData<WorkspaceData> = {
-        data: { ...state },
-        webview: this._view.webview,
-      };
-
-      this._view.webview.html = getHtml<WorkspaceData>({
-        extensionPath: this._extensionUri,
-        template,
-        htmlData,
-      });
     }
   }
 }

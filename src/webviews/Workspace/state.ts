@@ -3,7 +3,7 @@ import { assign, interpret, Machine } from 'xstate';
 import { findWorkspaceFiles } from '../../utils';
 import { WorkspaceContext, WorkspaceEvents, WorkspaceStateSchema } from './state.interface';
 
-const getWorkspaceFiles = () => {
+export const getWorkspaceFiles = () => {
   const folder: string = vscode.workspace.getConfiguration().get('workspaceSidebar.folder') || '';
   const depth: number = vscode.workspace.getConfiguration().get('workspaceSidebar.depth') || 0;
 
