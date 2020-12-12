@@ -96,7 +96,8 @@
     "views": {
       "vsc-workspace-sidebar": [
         {
-          "id": "vsc-workspace-sidebar-list",
+          "type": "webview",
+          "id": "vsc-workspace-sidebar-webview-workspace",
           "name": "%views.title%"
         }
       ]
@@ -149,14 +150,15 @@
     "watch": "tsc -watch -p ./"
   },
   "dependencies": {
-    "vscode-ext-localisation": "^1.0.1"
+    "vscode-ext-localisation": "^1.0.1",
+    "xstate": "^4.15.1"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",
     "@types/glob": "^7.1.1",
     "@types/mocha": "^7.0.2",
     "@types/node": "^13.11.0",
-    "@types/vscode": "^1.45.0",
+    "@types/vscode": "^1.50.0",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
     "commitlint": "^8.3.5",

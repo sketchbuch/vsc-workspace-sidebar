@@ -22,5 +22,9 @@
       "description": "Sort from z-a",
       "label": "Descending"
     }
+  },
+  "webViews": {
+    "workspace": {
+    }
   }
 }
