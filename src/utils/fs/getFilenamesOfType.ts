@@ -1,5 +1,5 @@
 import { checkFile } from '.';
-import { WsFiles } from '../../types';
+import { WsFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
 
 export const getFilenamesOfType = (
   requiredType: 'folders' | 'files',

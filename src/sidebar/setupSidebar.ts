@@ -1,17 +1,7 @@
 import * as vscode from 'vscode';
-import { EXT_WSLIST_VIEW_ID } from '../constants';
-import { WsList } from '../treeviews';
-import { isWorkspacefile } from '../utils/fs/isWorkspacefile';
 
-export const setupSidebar = (
-  context: vscode.ExtensionContext,
-  wsListDataProvider: WsList
-): void => {
-  context.subscriptions.push(
-    vscode.window.registerTreeDataProvider(EXT_WSLIST_VIEW_ID, wsListDataProvider)
-  );
-
-  vscode.workspace.onDidChangeConfiguration((event: vscode.ConfigurationChangeEvent) => {
+export const setupSidebar = (context: vscode.ExtensionContext): void => {
+  /*   vscode.workspace.onDidChangeConfiguration((event: vscode.ConfigurationChangeEvent) => {
     if (event.affectsConfiguration('workspaceSidebar.depth')) {
       wsListDataProvider.refresh();
     } else if (event.affectsConfiguration('workspaceSidebar.folder')) {
@@ -29,5 +19,5 @@ export const setupSidebar = (
         wsListDataProvider.refresh();
       }
     }
-  });
+  }); */
 };

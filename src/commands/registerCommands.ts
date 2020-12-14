@@ -1,23 +1,5 @@
-import * as vscode from 'vscode';
-import { t } from 'vscode-ext-localisation';
-import {
-  CMD_OPEN_CUR_WIN,
-  CMD_OPEN_NEW_WIN,
-  CMD_OPEN_SETTINGS,
-  CMD_REFRESH,
-  CMD_SORT,
-  EXT_SORT,
-} from '../constants';
-import { cmsOpenCurWindow, cmsOpenNewWindow } from './cmds';
-import { WsList } from '../treeviews';
-import { WsListItemCmd } from '../treeviews/WsList/WsList.interface';
-import { SortOptions, SortIds } from './registerCommands.interface';
-
-export const registerCommands = (
-  context: vscode.ExtensionContext,
-  wsListDataProvider: WsList
-): void => {
-  const { registerCommand } = vscode.commands;
+export const registerCommands = (): void => {
+  /* const { registerCommand } = vscode.commands;
 
   context.subscriptions.push(
     registerCommand(CMD_OPEN_CUR_WIN, (file: string): void => {
@@ -78,5 +60,5 @@ export const registerCommands = (
         }
       }
     )
-  );
+  ); */
 };

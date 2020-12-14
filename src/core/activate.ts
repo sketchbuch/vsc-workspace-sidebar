@@ -5,10 +5,10 @@ import { registerWebviews } from '../webviews';
 export const setupExt = (context: vscode.ExtensionContext, lang: string) => {
   loadTranslations(lang, context.extensionPath);
 
-  /* const wsListDataProvider = new WsList(context);
-
-  registerCommands(context, wsListDataProvider);
-  setupSidebar(context, wsListDataProvider); */
+  /*
+    registerCommands(context);
+    setupSidebar(context);
+  */
   registerWebviews(context);
 };
 

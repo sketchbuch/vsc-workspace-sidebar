@@ -1,6 +1,6 @@
 import { Interpreter } from 'xstate';
-import { GenericObject, WsFiles } from '../../types';
-import { WorkspaceErrors, WorkspaceStates } from './WorkspaceViewProvider.interface';
+import { GenericObject } from '../../types';
+import { WorkspaceErrors, WorkspaceStates, WsFiles } from './WorkspaceViewProvider.interface';
 
 export interface WorkspaceStateSchema {
   states: {

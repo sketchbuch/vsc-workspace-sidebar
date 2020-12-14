@@ -1,4 +1,10 @@
-import { WsFiles } from '../../types';
+export interface File {
+  file: string;
+  label: string;
+  path: string;
+}
+
+export type Files = File[];
 
 export type WorkspaceErrors = '' | 'FETCH';
 
@@ -13,4 +19,11 @@ export interface WorkspaceState {
 
 export type WorkspaceData = WorkspaceState;
 
+export interface WorkspaceCache {
+  files: WsFiles;
+  timestamp: number;
+}
+
 export type WorkspaceStates = 'error' | 'invalid' | 'list' | 'loading';
+
+export type WsFiles = string[];

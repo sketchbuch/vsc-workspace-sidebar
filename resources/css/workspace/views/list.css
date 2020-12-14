@@ -1,0 +1,98 @@
+.list {
+  height: 100%;
+  position: relative;
+  user-select: none;
+}
+
+.list__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list__item {
+  cursor: pointer;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  touch-action: none;
+}
+
+.list__element {
+  color: var(--vscode-editorWidget-foreground);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 0;
+  min-width: 0;
+  padding: 0.3rem 20px;
+  text-decoration: none;
+  touch-action: none;
+}
+
+@media (min-width: 300px) {
+  .list__element {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.list__element:hover {
+  background: var(--vscode-list-hoverBackground);
+  color: var(--vscode-editorWidget-foreground);
+}
+
+.list__element:focus {
+  outline: none;
+  background: var(--vscode-list-focusBackground);
+  color: var(--vscode-editorWidget-foreground);
+}
+
+.list__element:active {
+  color: var(--vscode-editorWidget-foreground);
+}
+
+.list__title {
+  display: block;
+  margin: 0;
+  margin-bottom: 0.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 300px) {
+  .list__title {
+    display: inline;
+    margin-bottom: 0;
+    margin-right: 3px;
+    overflow: unset;
+    text-overflow: unset;
+  }
+}
+
+.list__description {
+  color: var(--vscode-list-deemphasizedForeground);
+  display: block;
+  margin: 0;
+  opacity: 0.75;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 300px) {
+  .list__description {
+    display: inline;
+  }
+}
+
+.list__element:hover .list__description,
+.list__element:focus .list__description,
+.list__element:active .list__description {
+  opacity: 1;
+}

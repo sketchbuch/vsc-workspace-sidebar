@@ -1,7 +1,7 @@
 import * as os from 'os';
+import { checkFile, collectFilesFromFolder } from '.';
 import { FS_WS_FILETYPE } from '../../constants';
-import { WsFiles } from '../../types';
-import { collectFilesFromFolder, checkFile } from '.';
+import { WsFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
 
 export const findWorkspaceFiles = async (
   folder: string,

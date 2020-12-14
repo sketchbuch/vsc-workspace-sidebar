@@ -7,12 +7,11 @@ import {
 } from '../../constants';
 import { getHtml } from '../../templates';
 import { defaultTemplate as template } from '../../templates/workspace';
-import { WsListCache } from '../../treeviews/WsList/WsList.interface';
 import { GlobalState } from '../../types';
 import { HtmlData } from '../webviews.interface';
 import { workspaceState } from './state';
 import { WorkspaceContext, WorkspaceMachine } from './state.interface';
-import { WorkspaceData, WorkspaceState } from './WorkspaceViewProvider.interface';
+import { WorkspaceCache, WorkspaceData, WorkspaceState } from './WorkspaceViewProvider.interface';
 
 export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   public static readonly viewType = EXT_WEBVIEW_WS;
@@ -25,7 +24,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   ) {}
 
   private getCacheFiles() {
-    const cachedData = this._globalState.get<WsListCache>(EXT_WSSTATE_CACHE);
+    const cachedData = this._globalState.get<WorkspaceCache>(EXT_WSSTATE_CACHE);
 
     if (cachedData) {
       const { files, timestamp } = cachedData;
