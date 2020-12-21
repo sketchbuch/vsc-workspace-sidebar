@@ -1,4 +1,4 @@
-export const metaTagsSnippet = (nonce: string, cspSource: string): string => {
+export const metaTags = (nonce: string, cspSource: string): string => {
   return `
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" 

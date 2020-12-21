@@ -3,7 +3,7 @@ import { listView, loadingView } from '..';
 import { FS_WEBVIEW_WORKSPACE_CSS, FS_WEBVIEW_WORKSPACE_JS } from '../../../constants';
 import { GetTemplate } from '../../../webviews/webviews.interface';
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
-import { metaTagsSnippet } from '../../shared';
+import { metaTags } from '../../common';
 
 export const defaultTemplate = (
   { cspSource, cssFolderUri, nonce, scriptFolderUri }: GetTemplate,
@@ -21,7 +21,7 @@ export const defaultTemplate = (
     <!DOCTYPE html>
     <html lang="en">
       <head>
-        ${metaTagsSnippet(nonce, cspSource)}
+        ${metaTags(nonce, cspSource)}
         <title>${t('views.title')}</title>
         <link href="${cssFolderUri}/${FS_WEBVIEW_WORKSPACE_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
       </head>
