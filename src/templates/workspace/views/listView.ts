@@ -4,7 +4,7 @@ import { WsFiles } from '../../../webviews/Workspace/WorkspaceViewProvider.inter
 export const listView = (files: WsFiles | false): string => {
   if (files) {
     return `
-    <section class="list view">
+    <section class="view list">
       ${list(files)}
     </section>`;
   }
