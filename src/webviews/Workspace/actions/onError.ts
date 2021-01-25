@@ -1,9 +1,10 @@
 import { DoneInvokeEvent } from 'xstate';
+import { WorkspaceErrors } from '../..';
 import { WorkspaceContext } from '../state.interface';
 
 export const onError = (
   context: WorkspaceContext,
-  event: DoneInvokeEvent<any>
+  event: DoneInvokeEvent<WorkspaceErrors>
 ): WorkspaceContext => {
   console.log('### onError...');
   return {

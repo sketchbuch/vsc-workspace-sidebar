@@ -1,9 +1,10 @@
 import { DoneInvokeEvent } from 'xstate';
+import { WsFiles } from '../..';
 import { WorkspaceContext } from '../state.interface';
 
 export const onDone = (
   context: WorkspaceContext,
-  event: DoneInvokeEvent<any>
+  event: DoneInvokeEvent<WsFiles>
 ): WorkspaceContext => {
   if (event.data) {
     console.log('### onDone - list...');

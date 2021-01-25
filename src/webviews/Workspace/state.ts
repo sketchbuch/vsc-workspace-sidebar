@@ -1,15 +1,7 @@
-import * as vscode from 'vscode';
 import { assign, interpret, Machine } from 'xstate';
-import { findWorkspaceFiles } from '../../utils';
 import { load, onDone, onError, useCache } from './actions';
+import { getWorkspaceFiles } from './helpers';
 import { WorkspaceContext, WorkspaceEvents, WorkspaceStateSchema } from './state.interface';
-
-export const getWorkspaceFiles = () => {
-  const folder: string = vscode.workspace.getConfiguration().get('workspaceSidebar.folder') || '';
-  const depth: number = vscode.workspace.getConfiguration().get('workspaceSidebar.depth') || 0;
-
-  return findWorkspaceFiles(folder, depth).then((wsFiles) => wsFiles);
-};
 
 const LOAD = {
   actions: 'load',

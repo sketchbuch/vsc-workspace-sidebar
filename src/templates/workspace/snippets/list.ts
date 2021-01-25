@@ -1,6 +1,6 @@
 import { listItem } from '..';
 import { sortFilesByLabel } from '../../../utils';
-import { convertWsFiles } from '../../../webviews/Workspace/helpers/convertWsFiles';
+import { convertWsFiles } from '../../../webviews/Workspace/helpers';
 import { WsFiles } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 
 export const list = (wsFiles: WsFiles) => {
