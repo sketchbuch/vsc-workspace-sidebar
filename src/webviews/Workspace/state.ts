@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { assign, interpret, Machine } from 'xstate';
 import { findWorkspaceFiles } from '../../utils';
+import { load, onDone, onError, useCache } from './actions';
 import { WorkspaceContext, WorkspaceEvents, WorkspaceStateSchema } from './state.interface';
 
 export const getWorkspaceFiles = () => {
@@ -34,41 +35,15 @@ export const workspaceMachine = Machine<WorkspaceContext, WorkspaceStateSchema, 
       fetch: {
         invoke: {
           id: 'fetch-workspaces',
-          src: getWorkspaceFiles,
           onDone: {
+            actions: assign(onDone),
             target: 'list',
-            actions: assign((context, event) => {
-              if (event.data) {
-                console.log('### onDone - list...');
-                return {
-                  error: '',
-                  files: event.data,
-                  isFolderInvalid: false,
-                  state: 'list',
-                };
-              }
-
-              console.log('### onDone - invalid...');
-              return {
-                error: '',
-                files: false,
-                isFolderInvalid: true,
-                state: 'invalid',
-              };
-            }),
           },
           onError: {
+            actions: assign(onError),
             target: 'error',
-            actions: assign((context, event) => {
-              console.log('### onError...');
-              return {
-                error: event.data,
-                files: false,
-                isFolderInvalid: false,
-                state: 'error',
-              };
-            }),
           },
+          src: getWorkspaceFiles,
         },
       },
       invalid: {
@@ -94,27 +69,8 @@ export const workspaceMachine = Machine<WorkspaceContext, WorkspaceStateSchema, 
   },
   {
     actions: {
-      load: assign((context, event) => {
-        console.log('### load...');
-        return {
-          error: '',
-          files: false,
-          isFolderInvalid: false,
-          state: 'loading',
-        };
-      }),
-      useCache: assign((context, event) => {
-        if (event.type === 'USE_CACHE') {
-          return {
-            error: '',
-            files: event.cachedFiles,
-            isFolderInvalid: false,
-            state: 'list',
-          };
-        }
-
-        return context;
-      }),
+      load: assign(load),
+      useCache: assign(useCache),
     },
   }
 );
