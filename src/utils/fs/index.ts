@@ -4,3 +4,4 @@ export * from './findWorkspaceFiles';
 export * from './getFilenamesOfType';
 export * from './getImagePath';
 export * from './isHiddenFile';
+export * from './isWorkspacefile';
