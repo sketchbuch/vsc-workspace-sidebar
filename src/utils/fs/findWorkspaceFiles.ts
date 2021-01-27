@@ -8,6 +8,7 @@ export const findWorkspaceFiles = async (
   maxDepth: number
 ): Promise<WsFiles | false> => {
   const homeFolder = os.homedir();
+  // TODO - make sure OS safe
   const baseFolder = folder.replace('~/', `${homeFolder}/`) || homeFolder;
   const { isFolder } = checkFile(baseFolder);
 

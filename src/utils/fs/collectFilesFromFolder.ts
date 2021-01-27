@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import { getFilenamesOfType, isHiddenFile } from '.';
 import { WsFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
 
-const foldersToIgnore = ['node_modules', 'out', 'dist', 'build'];
+const foldersToIgnore = ['node_modules', 'out', 'dist', 'build', 'public'];
 
 export const collectFilesFromFolder = async (
   folder: string,
