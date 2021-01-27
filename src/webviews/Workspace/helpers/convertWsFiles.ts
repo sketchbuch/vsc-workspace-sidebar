@@ -4,7 +4,7 @@ import { FS_WS_EXT } from '../../../constants';
 import { capitalise } from '../../../utils';
 import { File, WsFiles } from '../WorkspaceViewProvider.interface';
 
-export const convertWsFiles = (wsFiles: WsFiles) => {
+export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
   const showPath: boolean = workspace.getConfiguration().get('workspaceSidebar.showPath') || false;
   const folder: string = workspace.getConfiguration().get('workspaceSidebar.folder') || '';
   const cleanedFolder = folder.replace(os.homedir(), '~');
@@ -27,6 +27,7 @@ export const convertWsFiles = (wsFiles: WsFiles) => {
           .map((word) => capitalise(word))
           .join(' '),
         path,
+        selected: file === selected,
       };
     }
   );

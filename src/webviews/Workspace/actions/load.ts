@@ -6,6 +6,7 @@ export const load = (context: WorkspaceContext, event: WorkspaceEvents): Workspa
     error: '',
     files: false,
     isFolderInvalid: false,
+    selected: context.selected,
     state: 'loading',
   };
 };

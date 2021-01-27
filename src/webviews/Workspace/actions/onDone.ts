@@ -12,6 +12,7 @@ export const onDone = (
       error: '',
       files: event.data,
       isFolderInvalid: false,
+      selected: context.selected,
       state: 'list',
     };
   }
@@ -21,6 +22,7 @@ export const onDone = (
     error: '',
     files: false,
     isFolderInvalid: true,
+    selected: context.selected,
     state: 'invalid',
   };
 };

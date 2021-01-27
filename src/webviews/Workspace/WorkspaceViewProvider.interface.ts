@@ -2,6 +2,7 @@ export interface File {
   file: string;
   label: string;
   path: string;
+  selected: boolean;
 }
 
 export type Files = File[];
@@ -16,15 +17,6 @@ export enum WorkspacePmActions {
 export type WorkspacePmPayload = {
   file?: string;
 };
-
-export interface WorkspaceState {
-  error: WorkspaceErrors;
-  files: false | WsFiles;
-  isFolderInvalid: boolean;
-  state: WorkspaceStates;
-}
-
-export type WorkspaceData = WorkspaceState;
 
 export interface WorkspaceCache {
   files: WsFiles;

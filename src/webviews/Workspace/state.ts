@@ -1,3 +1,4 @@
+import * as vscode from 'vscode';
 import { assign, interpret, Machine } from 'xstate';
 import { load, onDone, onError, useCache } from './actions';
 import { getWorkspaceFiles } from './helpers';
@@ -8,6 +9,8 @@ const LOAD = {
   target: 'loading',
 };
 
+const { workspaceFile } = vscode.workspace;
+
 export const workspaceMachine = Machine<WorkspaceContext, WorkspaceStateSchema, WorkspaceEvents>(
   {
     id: 'workspaceMachine',
@@ -15,6 +18,7 @@ export const workspaceMachine = Machine<WorkspaceContext, WorkspaceStateSchema, 
       error: '',
       files: false,
       isFolderInvalid: false,
+      selected: workspaceFile ? workspaceFile.fsPath : '',
       state: 'loading',
     },
     initial: 'loading',

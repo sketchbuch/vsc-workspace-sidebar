@@ -6,6 +6,7 @@ export const useCache = (context: WorkspaceContext, event: WorkspaceEvents): Wor
       error: '',
       files: event.cachedFiles,
       isFolderInvalid: false,
+      selected: context.selected,
       state: 'list',
     };
   }

@@ -11,6 +11,7 @@ export const onError = (
     error: event.data,
     files: false,
     isFolderInvalid: false,
+    selected: context.selected,
     state: 'error',
   };
 };

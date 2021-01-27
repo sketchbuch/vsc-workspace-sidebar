@@ -5,7 +5,7 @@ import * as snippets from '../../../../../templates/workspace/snippets/listItem'
 
 suite('Templates > Workspace > Snippets: list()', () => {
   test('Renders correctly if there are no files', () => {
-    const result = list([]);
+    const result = list([], '');
 
     expect(result).to.be.a('string');
     expect(result).to.equal('');
@@ -13,7 +13,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
 
   test('Renders correctly if there are files', () => {
     const spy = sinon.spy(snippets, 'listItem');
-    const result = list(['one', 'two']);
+    const result = list(['one', 'two'], '');
 
     expect(result).to.be.a('string');
     expect(result).not.to.equal('');

@@ -15,11 +15,11 @@ import { workspaceState } from './state';
 import { WorkspaceContext, WorkspaceMachine } from './state.interface';
 import {
   WorkspaceCache,
-  WorkspaceData,
   WorkspacePmActions as Actions,
   WorkspacePmPayload as Payload,
-  WorkspaceState,
 } from './WorkspaceViewProvider.interface';
+
+// const isActive = !!vscode.workspace.workspaceFile && vscode.workspace.workspaceFile.fsPath === file;
 
 const { executeCommand } = vscode.commands;
 
@@ -54,14 +54,14 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     return null;
   }
 
-  private render(state: WorkspaceState) {
+  private render(state: WorkspaceContext) {
     if (this._view) {
-      const htmlData: HtmlData<WorkspaceData> = {
+      const htmlData: HtmlData<WorkspaceContext> = {
         data: { ...state },
         webview: this._view.webview,
       };
 
-      this._view.webview.html = getHtml<WorkspaceData>({
+      this._view.webview.html = getHtml<WorkspaceContext>({
         extensionPath: this._extensionUri,
         template,
         htmlData,

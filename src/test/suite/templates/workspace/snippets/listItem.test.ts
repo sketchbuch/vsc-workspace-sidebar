@@ -8,6 +8,7 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
       file: 'file-1',
       label: 'File 1',
       path: `/some/folder/file-1.${FS_WS_FILETYPE}`,
+      selected: false,
     };
     const result = listItem(file);
 

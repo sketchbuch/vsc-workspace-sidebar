@@ -6,11 +6,13 @@ suite('Utils > sortFilesByLabel()', () => {
     file: '/a/file/to/compare-1.txt',
     label: 'File A',
     path: '/a/file/to',
+    selected: false,
   };
   const fileB = {
     file: '/a/file/to/compare-2.txt',
     label: 'File B',
     path: '/a/file/to',
+    selected: false,
   };
 
   test('Returns -1 if A is less than B', () => {

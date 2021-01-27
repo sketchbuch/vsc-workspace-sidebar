@@ -23,6 +23,7 @@ export type WorkspaceContext = {
   error: WorkspaceErrors;
   files: false | WsFiles;
   isFolderInvalid: boolean;
+  selected: string;
   state: WorkspaceStates;
 };
 
