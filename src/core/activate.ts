@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { getVscodeLang, loadTranslations } from 'vscode-ext-localisation';
+import { registerCommands } from '../commands';
 import { registerWebviews } from '../webviews';
 
 export const setupExt = (context: vscode.ExtensionContext, lang: string) => {
@@ -9,6 +10,7 @@ export const setupExt = (context: vscode.ExtensionContext, lang: string) => {
     registerCommands(context);
     setupSidebar(context);
   */
+  registerCommands(context);
   registerWebviews(context);
 };
 

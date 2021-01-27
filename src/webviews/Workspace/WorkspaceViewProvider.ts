@@ -1,5 +1,7 @@
 import * as vscode from 'vscode';
 import {
+  CMD_OPEN_CUR_WIN,
+  CMD_OPEN_NEW_WIN,
   EXT_LOADED,
   EXT_WEBVIEW_WS,
   EXT_WSSTATE_CACHE,
@@ -8,10 +10,18 @@ import {
 import { getHtml } from '../../templates';
 import { defaultTemplate as template } from '../../templates/workspace';
 import { GlobalState } from '../../types';
-import { HtmlData } from '../webviews.interface';
+import { HtmlData, PostMessage } from '../webviews.interface';
 import { workspaceState } from './state';
 import { WorkspaceContext, WorkspaceMachine } from './state.interface';
-import { WorkspaceCache, WorkspaceData, WorkspaceState } from './WorkspaceViewProvider.interface';
+import {
+  WorkspaceCache,
+  WorkspaceData,
+  WorkspacePmActions as Actions,
+  WorkspacePmPayload as Payload,
+  WorkspaceState,
+} from './WorkspaceViewProvider.interface';
+
+const { executeCommand } = vscode.commands;
 
 export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   public static readonly viewType = EXT_WEBVIEW_WS;
@@ -64,11 +74,11 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
 
     switch (state) {
       case 'error':
-        vscode.commands.executeCommand('setContext', EXT_LOADED, true);
+        executeCommand('setContext', EXT_LOADED, true);
         break;
 
       case 'list':
-        vscode.commands.executeCommand('setContext', EXT_LOADED, true);
+        executeCommand('setContext', EXT_LOADED, true);
 
         this._globalState.update(EXT_WSSTATE_CACHE, {
           files,
@@ -93,6 +103,25 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
       enableScripts: true,
       localResourceRoots: [this._extensionUri],
     };
+
+    webviewView.webview.onDidReceiveMessage((message: PostMessage<Payload, Actions>) => {
+      const { action, payload } = message;
+
+      if (payload) {
+        switch (action) {
+          case Actions.OPEN_CUR_WINDOW:
+            executeCommand(CMD_OPEN_CUR_WIN, payload.file, true);
+            break;
+
+          case Actions.OPEN_NEW_WINDOW:
+            executeCommand(CMD_OPEN_NEW_WIN, payload.file, true);
+            break;
+
+          default:
+            break;
+        }
+      }
+    });
 
     if (!this._state.initialized) {
       this._state

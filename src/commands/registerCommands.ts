@@ -1,15 +1,14 @@
-export const registerCommands = (): void => {
-  /* const { registerCommand } = vscode.commands;
+import * as vscode from 'vscode';
+import { CMD_OPEN_CUR_WIN, CMD_OPEN_NEW_WIN } from '../constants';
+import { cmsOpenCurWindow, cmsOpenNewWindow } from './cmds';
 
-  context.subscriptions.push(
-    registerCommand(CMD_OPEN_CUR_WIN, (file: string): void => {
-      if (file) {
-        cmsOpenCurWindow(file);
-      }
-    })
-  );
+export const registerCommands = (context: vscode.ExtensionContext): void => {
+  const { registerCommand } = vscode.commands;
 
-  context.subscriptions.push(
+  context.subscriptions.push(registerCommand(CMD_OPEN_CUR_WIN, cmsOpenCurWindow));
+  context.subscriptions.push(registerCommand(CMD_OPEN_NEW_WIN, cmsOpenNewWindow));
+
+  /* context.subscriptions.push(
     registerCommand(CMD_OPEN_NEW_WIN, (wsListItem: WsListItemCmd): void => {
       const {
         command: { arguments: args = [] },
@@ -25,15 +24,15 @@ export const registerCommands = (): void => {
     registerCommand(CMD_OPEN_SETTINGS, (): void => {
       vscode.commands.executeCommand('workbench.action.openSettings', 'workspaceSidebar');
     })
-  );
+  ); */
 
-  context.subscriptions.push(
+  /*   context.subscriptions.push(
     registerCommand(CMD_REFRESH, (): void => {
       wsListDataProvider.refresh();
     })
-  );
+  ); */
 
-  context.subscriptions.push(
+  /*  context.subscriptions.push(
     registerCommand(
       CMD_SORT,
       async (): Promise<void> => {

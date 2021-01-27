@@ -1,6 +1,4 @@
-import * as path from 'path';
-
-export const extensionPath = path.resolve(`${__dirname}/../../..`);
+export * from './mockContext';
 
 export const mockFsStructure = {
   'check-file': {

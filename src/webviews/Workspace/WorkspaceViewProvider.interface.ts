@@ -8,7 +8,14 @@ export type Files = File[];
 
 export type WorkspaceErrors = '' | 'FETCH';
 
-export type WorkspacePmPayload = {};
+export enum WorkspacePmActions {
+  OPEN_CUR_WINDOW = 'OPEN_CUR_WINDOW',
+  OPEN_NEW_WINDOW = 'OPEN_NEW_WINDOW',
+}
+
+export type WorkspacePmPayload = {
+  file?: string;
+};
 
 export interface WorkspaceState {
   error: WorkspaceErrors;
