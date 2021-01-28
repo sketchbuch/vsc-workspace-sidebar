@@ -26,13 +26,14 @@
   flex: 1;
   margin: 0;
   min-width: 0;
-  padding: 0.3rem 20px;
+  padding: 0.5rem 20px;
   text-decoration: none;
   touch-action: none;
 }
 
 .list__element--selected {
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--vscode-list-activeSelectionBackground);
+  color: var(--vscode-list-activeSelectionForeground);
 }
 
 @media (min-width: 300px) {
@@ -40,6 +41,7 @@
     flex-direction: row;
     flex-wrap: nowrap;
     overflow: hidden;
+    padding: 0.3rem 20px;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -69,6 +71,10 @@
   white-space: nowrap;
 }
 
+.list__element--selected .list__title {
+  font-weight: bold;
+}
+
 @media (min-width: 300px) {
   .list__title {
     display: inline;
@@ -87,6 +93,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.list__element--selected .list__description {
+  color: var(--vscode-list-activeSelectionForeground);
+  opacity: 1;
 }
 
 @media (min-width: 300px) {
