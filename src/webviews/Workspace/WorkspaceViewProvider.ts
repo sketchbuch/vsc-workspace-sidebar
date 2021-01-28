@@ -69,6 +69,45 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     }
   }
 
+  private setupState() {
+    if (this._state && !this._state.initialized) {
+      this._state
+        .onTransition((state) => {
+          this.render(state.context);
+        })
+        .onChange((context) => {
+          this.stateChanged(context);
+        })
+        .start();
+    }
+  }
+
+  private setupWebview(webviewView: vscode.WebviewView) {
+    webviewView.webview.options = {
+      enableScripts: true,
+      localResourceRoots: [this._extensionUri],
+    };
+
+    webviewView.webview.onDidReceiveMessage((message: PostMessage<Payload, Actions>) => {
+      const { action, payload } = message;
+
+      if (payload) {
+        switch (action) {
+          case Actions.OPEN_CUR_WINDOW:
+            executeCommand(CMD_OPEN_CUR_WIN, payload.file, true);
+            break;
+
+          case Actions.OPEN_NEW_WINDOW:
+            executeCommand(CMD_OPEN_NEW_WIN, payload.file, true);
+            break;
+
+          default:
+            break;
+        }
+      }
+    });
+  }
+
   private stateChanged(context: WorkspaceContext) {
     const { files, state } = context;
 
@@ -99,40 +138,8 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     this._view = webviewView;
     this._state = workspaceState;
 
-    webviewView.webview.options = {
-      enableScripts: true,
-      localResourceRoots: [this._extensionUri],
-    };
-
-    webviewView.webview.onDidReceiveMessage((message: PostMessage<Payload, Actions>) => {
-      const { action, payload } = message;
-
-      if (payload) {
-        switch (action) {
-          case Actions.OPEN_CUR_WINDOW:
-            executeCommand(CMD_OPEN_CUR_WIN, payload.file, true);
-            break;
-
-          case Actions.OPEN_NEW_WINDOW:
-            executeCommand(CMD_OPEN_NEW_WIN, payload.file, true);
-            break;
-
-          default:
-            break;
-        }
-      }
-    });
-
-    if (!this._state.initialized) {
-      this._state
-        .onTransition((state) => {
-          this.render(state.context);
-        })
-        .onChange((context) => {
-          this.stateChanged(context);
-        })
-        .start();
-    }
+    this.setupWebview(webviewView);
+    this.setupState();
 
     const cachedFiles = this.getCacheFiles();
 
