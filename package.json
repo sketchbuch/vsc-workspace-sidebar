@@ -64,11 +64,15 @@
           "scope": "application",
           "type": "string"
         },
-        "workspaceSidebar.showPath": {
-          "default": false,
+        "workspaceSidebar.showPaths": {
+          "type": "string",
+          "default": "Never",
           "description": "%config.workspaceShowPath.description%",
-          "scope": "application",
-          "type": "boolean"
+          "enum": [
+            "Always",
+            "As needed",
+            "Never"
+          ]
         }
       }
     },
@@ -144,9 +148,9 @@
     "compile": "tsc -p ./",
     "lint:prettier": "prettier --write --config ./.prettierrc.js './{src, resources/js}/**/*.{js,ts}'",
     "lint:ts": "eslint src --ext ts",
-    "pretest": "yarn run compile && yarn run lint",
+    "pretest": "yarn compile && yarn lint",
     "test": "node ./out/test/runTest.js",
-    "vscode:prepublish": "yarn run compile",
+    "vscode:prepublish": "yarn compile",
     "watch": "tsc -watch -p ./"
   },
   "dependencies": {

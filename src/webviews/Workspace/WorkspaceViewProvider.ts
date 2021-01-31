@@ -54,6 +54,12 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     return null;
   }
 
+  public refresh() {
+    if (this._state?.state.context) {
+      this.render(this._state?.state.context);
+    }
+  }
+
   private render(state: WorkspaceContext) {
     if (this._view) {
       const htmlData: HtmlData<WorkspaceContext> = {
@@ -66,6 +72,26 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
         template,
         htmlData,
       });
+    }
+  }
+
+  public resolveWebviewView(
+    webviewView: vscode.WebviewView,
+    webviewContext: vscode.WebviewViewResolveContext,
+    _token: vscode.CancellationToken
+  ) {
+    this._view = webviewView;
+    this._state = workspaceState;
+
+    this.setupWebview(webviewView);
+    this.setupState();
+
+    const cachedFiles = this.getCacheFiles();
+
+    if (cachedFiles) {
+      this._state.send('USE_CACHE', { cachedFiles });
+    } else {
+      this._state.send('FETCH');
     }
   }
 
@@ -127,26 +153,6 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
 
       default:
         break;
-    }
-  }
-
-  public resolveWebviewView(
-    webviewView: vscode.WebviewView,
-    webviewContext: vscode.WebviewViewResolveContext,
-    _token: vscode.CancellationToken
-  ) {
-    this._view = webviewView;
-    this._state = workspaceState;
-
-    this.setupWebview(webviewView);
-    this.setupState();
-
-    const cachedFiles = this.getCacheFiles();
-
-    if (cachedFiles) {
-      this._state.send('USE_CACHE', { cachedFiles });
-    } else {
-      this._state.send('FETCH');
     }
   }
 }

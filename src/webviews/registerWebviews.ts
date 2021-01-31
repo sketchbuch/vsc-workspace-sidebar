@@ -10,4 +10,14 @@ export const registerWebviews = (context: vscode.ExtensionContext): void => {
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider(WorkspaceViewProvider.viewType, workspaceViewProvider)
   );
+
+  vscode.workspace.onDidChangeConfiguration((event: vscode.ConfigurationChangeEvent) => {
+    if (event.affectsConfiguration('workspaceSidebar.depth')) {
+      workspaceViewProvider.refresh();
+    } else if (event.affectsConfiguration('workspaceSidebar.folder')) {
+      workspaceViewProvider.refresh();
+    } else if (event.affectsConfiguration('workspaceSidebar.showPaths')) {
+      workspaceViewProvider.refresh();
+    }
+  });
 };

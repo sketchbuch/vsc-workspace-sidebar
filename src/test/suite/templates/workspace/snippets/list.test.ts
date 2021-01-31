@@ -18,8 +18,18 @@ suite('Templates > Workspace > Snippets: list()', () => {
     expect(result).to.be.a('string');
     expect(result).not.to.equal('');
     sinon.assert.calledTwice(spy);
-    expect(spy.getCalls()[0].args[0]).to.eql({ file: 'one', label: 'One', path: '' });
-    expect(spy.getCalls()[1].args[0]).to.eql({ file: 'two', label: 'Two', path: '' });
+    expect(spy.getCalls()[0].args[0]).to.eql({
+      file: 'one',
+      label: 'One',
+      path: '',
+      selected: false,
+    });
+    expect(spy.getCalls()[1].args[0]).to.eql({
+      file: 'two',
+      label: 'Two',
+      path: '',
+      selected: false,
+    });
 
     spy.restore();
   });
