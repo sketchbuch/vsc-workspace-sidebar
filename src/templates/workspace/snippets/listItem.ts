@@ -9,7 +9,7 @@ export const listItem = (file: File) => {
         selected ? ' list__element--selected' : ''
       }" data-file="${dataFile}" tabindex="0" title="${label} (${path})">
         <span class="list__title">${label}</span>
-        <span class="list__description">${path}</span>
+        ${path && `<span class="list__description">${path}</span>`}
       </span>
     </li>
   `;

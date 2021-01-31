@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { WorkspaceViewProvider } from '.';
+import { isWorkspacefile } from '../utils';
 
 export const registerWebviews = (context: vscode.ExtensionContext): void => {
   const workspaceViewProvider = new WorkspaceViewProvider(
@@ -18,6 +19,16 @@ export const registerWebviews = (context: vscode.ExtensionContext): void => {
       workspaceViewProvider.refresh();
     } else if (event.affectsConfiguration('workspaceSidebar.showPaths')) {
       workspaceViewProvider.refresh();
+    }
+  });
+
+  vscode.workspace.onDidCreateFiles((event: vscode.FileCreateEvent) => {
+    if (event.files) {
+      const isWorkspace = event.files.some((file) => isWorkspacefile(file.path, file.scheme));
+
+      if (isWorkspace) {
+        workspaceViewProvider.refresh();
+      }
     }
   });
 };
