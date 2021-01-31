@@ -55,13 +55,11 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   }
 
   public refresh() {
-    if (this._state?.state.context) {
-      this.render(this._state?.state.context);
-    }
+    this.render(this._state?.state.context);
   }
 
-  private render(state: WorkspaceContext) {
-    if (this._view) {
+  private render(state: WorkspaceContext | undefined) {
+    if (state && this._view) {
       const htmlData: HtmlData<WorkspaceContext> = {
         data: { ...state },
         webview: this._view.webview,
