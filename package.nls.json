@@ -23,8 +23,11 @@
       "label": "Descending"
     }
   },
-  "webViews": {
-    "workspace": {
+  "workspace": {
+    "listItem": {
+      "openCurWin": "Open in this window",
+      "openNewWin": "Open in a new window",
+      "iconAlt": "New window icon"
     }
   }
 }

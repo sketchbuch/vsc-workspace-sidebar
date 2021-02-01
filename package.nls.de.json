@@ -22,5 +22,12 @@
       "description": "Sortieren von z-a",
       "label": "Absteigen"
     }
+  },
+  "workspace": {
+    "listItem": {
+      "openCurWin": "In aktuellem fenster öffnen",
+      "openNewWin": "In neuem fenster öffnen",
+      "iconAlt": "Neues Fenster icon"
+    }
   }
 }
