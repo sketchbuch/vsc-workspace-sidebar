@@ -19,6 +19,16 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
       authority: 'localhost',
       path: '/resources/css',
     } as Uri,
+    imgDarkFolderUri: {
+      scheme: 'file',
+      authority: 'localhost',
+      path: '/resources/imgages/dark',
+    } as Uri,
+    imgLightFolderUri: {
+      scheme: 'file',
+      authority: 'localhost',
+      path: '/resources/imgages/light',
+    } as Uri,
     nonce: 'test-nonce',
     scriptFolderUri: {
       scheme: 'file',

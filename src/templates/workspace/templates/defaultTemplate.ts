@@ -6,7 +6,14 @@ import { WorkspaceContext } from '../../../webviews/Workspace/state.interface';
 import { metaTags } from '../../common';
 
 export const defaultTemplate = (
-  { cspSource, cssFolderUri, nonce, scriptFolderUri }: GetTemplate,
+  {
+    cspSource,
+    cssFolderUri,
+    imgDarkFolderUri,
+    imgLightFolderUri,
+    nonce,
+    scriptFolderUri,
+  }: GetTemplate,
   { files, selected, state }: WorkspaceContext
 ): string => {
   let content = '';
@@ -14,7 +21,7 @@ export const defaultTemplate = (
   if (state === 'loading') {
     content = loadingView();
   } else if (state === 'list') {
-    content = listView(files, selected);
+    content = listView(files, selected, imgDarkFolderUri, imgLightFolderUri);
   }
 
   return `

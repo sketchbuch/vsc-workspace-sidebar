@@ -10,6 +10,8 @@ export interface PostMessage<Payload, Actions> {
 export interface GetTemplate {
   cspSource: string;
   cssFolderUri: vscode.Uri;
+  imgDarkFolderUri: vscode.Uri;
+  imgLightFolderUri: vscode.Uri;
   nonce: string;
   scriptFolderUri: vscode.Uri;
 }

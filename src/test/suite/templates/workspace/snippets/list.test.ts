@@ -1,11 +1,23 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import * as vscode from 'vscode';
 import { list } from '../../../../../templates/workspace';
 import * as snippets from '../../../../../templates/workspace/snippets/listItem';
 
 suite('Templates > Workspace > Snippets: list()', () => {
+  const imgDarkFolderUri = {
+    scheme: 'file',
+    authority: 'localhost',
+    path: '/resources/imgages/dark',
+  } as vscode.Uri;
+  const imgLightFolderUri = {
+    scheme: 'file',
+    authority: 'localhost',
+    path: '/resources/imgages/light',
+  } as vscode.Uri;
+
   test('Renders correctly if there are no files', () => {
-    const result = list([], '');
+    const result = list([], '', imgDarkFolderUri, imgLightFolderUri);
 
     expect(result).to.be.a('string');
     expect(result).to.equal('');
@@ -13,7 +25,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
 
   test('Renders correctly if there are files', () => {
     const spy = sinon.spy(snippets, 'listItem');
-    const result = list(['one', 'two'], '');
+    const result = list(['one', 'two'], '', imgDarkFolderUri, imgLightFolderUri);
 
     expect(result).to.be.a('string');
     expect(result).not.to.equal('');
