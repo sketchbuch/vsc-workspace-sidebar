@@ -7,26 +7,25 @@ import {
   EXT_WSSTATE_CACHE,
   EXT_WSSTATE_CACHE_DURATION,
 } from '../../constants';
+import { store } from '../../store/store';
 import { getHtml } from '../../templates';
 import { defaultTemplate as template } from '../../templates/workspace';
 import { GlobalState } from '../../types';
 import { HtmlData, PostMessage } from '../webviews.interface';
-import { workspaceState } from './state';
-import { WorkspaceContext, WorkspaceMachine } from './state.interface';
+import { getWorkspaceFiles } from './helpers';
+import { workspaceSlice } from './store/workspaceSlice';
 import {
   WorkspaceCache,
   WorkspacePmActions as Actions,
   WorkspacePmPayload as Payload,
+  WorkspaceState,
 } from './WorkspaceViewProvider.interface';
-
-// const isActive = !!vscode.workspace.workspaceFile && vscode.workspace.workspaceFile.fsPath === file;
 
 const { executeCommand } = vscode.commands;
 
 export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   public static readonly viewType = EXT_WEBVIEW_WS;
   private _view?: vscode.WebviewView;
-  private _state?: WorkspaceMachine;
 
   constructor(
     private readonly _extensionUri: vscode.Uri,
@@ -55,17 +54,17 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   }
 
   public refresh() {
-    this.render(this._state?.state.context);
+    this.render();
   }
 
-  private render(state: WorkspaceContext | undefined) {
-    if (state && this._view) {
-      const htmlData: HtmlData<WorkspaceContext> = {
-        data: { ...state },
+  private render() {
+    if (this._view) {
+      const htmlData: HtmlData<WorkspaceState> = {
+        data: { ...store.getState().ws },
         webview: this._view.webview,
       };
 
-      this._view.webview.html = getHtml<WorkspaceContext>({
+      this._view.webview.html = getHtml<WorkspaceState>({
         extensionPath: this._extensionUri,
         template,
         htmlData,
@@ -73,36 +72,36 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     }
   }
 
-  public resolveWebviewView(
-    webviewView: vscode.WebviewView,
-    webviewContext: vscode.WebviewViewResolveContext,
-    _token: vscode.CancellationToken
-  ) {
+  public resolveWebviewView(webviewView: vscode.WebviewView) {
     this._view = webviewView;
-    this._state = workspaceState;
+    const { error, invalid, list } = workspaceSlice.actions;
 
     this.setupWebview(webviewView);
-    this.setupState();
+    this.render();
 
     const cachedFiles = this.getCacheFiles();
 
     if (cachedFiles) {
-      this._state.send('USE_CACHE', { cachedFiles });
+      store.dispatch(list(cachedFiles));
+      this.stateChanged(store.getState().ws);
+      this.render();
     } else {
-      this._state.send('FETCH');
-    }
-  }
+      getWorkspaceFiles()
+        .then((files) => {
+          if (files === false) {
+            store.dispatch(invalid());
+          } else {
+            store.dispatch(list(files));
+          }
 
-  private setupState() {
-    if (this._state && !this._state.initialized) {
-      this._state
-        .onTransition((state) => {
-          this.render(state.context);
+          this.stateChanged(store.getState().ws);
         })
-        .onChange((context) => {
-          this.stateChanged(context);
+        .catch((err) => {
+          store.dispatch(error(err));
         })
-        .start();
+        .finally(() => {
+          this.render();
+        });
     }
   }
 
@@ -132,11 +131,12 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     });
   }
 
-  private stateChanged(context: WorkspaceContext) {
-    const { files, state } = context;
+  private stateChanged(newState: WorkspaceState) {
+    const { files, state } = newState;
 
     switch (state) {
       case 'error':
+      case 'invalid':
         executeCommand('setContext', EXT_LOADED, true);
         break;
 

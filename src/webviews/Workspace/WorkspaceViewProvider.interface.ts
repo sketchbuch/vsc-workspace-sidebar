@@ -7,6 +7,11 @@ export interface File {
 
 export type Files = File[];
 
+export interface WorkspaceCache {
+  files: WsFiles;
+  timestamp: number;
+}
+
 export type WorkspaceErrors = '' | 'FETCH';
 
 export enum WorkspacePmActions {
@@ -18,11 +23,17 @@ export type WorkspacePmPayload = {
   file?: string;
 };
 
-export interface WorkspaceCache {
-  files: WsFiles;
-  timestamp: number;
-}
+export type WsFiles = string[];
 
 export type WorkspaceStates = 'error' | 'invalid' | 'list' | 'loading';
 
-export type WsFiles = string[];
+export type WorkspaceState = {
+  error: WorkspaceErrors;
+  files: false | WsFiles;
+  isFolderInvalid: boolean;
+  selected: string;
+  state: WorkspaceStates;
+};
+
+export type WorkspaceListPayload = false | WsFiles;
+export type WorkspaceErrorPayload = WorkspaceErrors;

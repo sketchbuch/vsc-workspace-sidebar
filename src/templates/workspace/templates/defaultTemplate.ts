@@ -1,8 +1,8 @@
 import { t } from 'vscode-ext-localisation';
 import { listView, loadingView } from '..';
 import { FS_WEBVIEW_WORKSPACE_CSS, FS_WEBVIEW_WORKSPACE_JS } from '../../../constants';
+import { WorkspaceState } from '../../../webviews';
 import { GetTemplate } from '../../../webviews/webviews.interface';
-import { WorkspaceContext } from '../../../webviews/Workspace/state.interface';
 import { metaTags } from '../../common';
 
 export const defaultTemplate = (
@@ -14,7 +14,7 @@ export const defaultTemplate = (
     nonce,
     scriptFolderUri,
   }: GetTemplate,
-  { files, selected, state }: WorkspaceContext
+  { files, selected, state }: WorkspaceState
 ): string => {
   let content = '';
 

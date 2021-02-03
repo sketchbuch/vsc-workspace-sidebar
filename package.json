@@ -154,6 +154,7 @@
     "watch": "tsc -watch -p ./"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.5.0",
     "@types/chai": "^4.2.14",
     "@types/sinon": "^9.0.9",
     "chai": "^4.2.0",

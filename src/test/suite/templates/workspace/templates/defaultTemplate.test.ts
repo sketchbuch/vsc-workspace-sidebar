@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 import { Uri } from 'vscode';
 import { defaultTemplate } from '../../../../../templates/workspace';
+import { WorkspaceState } from '../../../../../webviews';
 import { GetTemplate } from '../../../../../webviews/webviews.interface';
-import { WorkspaceContext } from '../../../../../webviews/Workspace/state.interface';
 
 suite('Templates > Workspace > Templates: defaultTemplate()', () => {
-  const state: WorkspaceContext = {
+  const state: WorkspaceState = {
     error: '',
     files: false,
     isFolderInvalid: false,
