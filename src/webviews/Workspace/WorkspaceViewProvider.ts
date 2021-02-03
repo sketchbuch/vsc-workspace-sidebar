@@ -1,9 +1,11 @@
 import { Unsubscribe } from '@reduxjs/toolkit';
 import * as vscode from 'vscode';
+import { SortIds } from '../../commands/registerCommands.interface';
 import {
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,
   EXT_LOADED,
+  EXT_SORT,
   EXT_WEBVIEW_WS,
   EXT_WSSTATE_CACHE,
   EXT_WSSTATE_CACHE_DURATION,
@@ -56,7 +58,9 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   }
 
   public refresh() {
-    this.render();
+    vscode.commands.executeCommand('setContext', EXT_LOADED, false);
+    this._globalState.update(EXT_WSSTATE_CACHE, undefined);
+    store.dispatch(fetch());
   }
 
   private render() {
@@ -74,9 +78,19 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     }
   }
 
+  public rerender() {
+    this.render();
+  }
+
+  public updateSort() {
+    const { setPersistedState } = workspaceSlice.actions;
+    const sort = this._globalState.get<SortIds>(EXT_SORT) ?? 'ascending';
+    store.dispatch(setPersistedState({ sort }));
+  }
+
   public resolveWebviewView(webviewView: vscode.WebviewView) {
     this._view = webviewView;
-    const { list } = workspaceSlice.actions;
+    const { list, setPersistedState } = workspaceSlice.actions;
 
     if (this._unsubscribe === undefined) {
       this._unsubscribe = store.subscribe(() => {
@@ -86,7 +100,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     }
 
     this.setupWebview(webviewView);
-    this.render();
+    this.updateSort();
 
     const cachedFiles = this.getCacheFiles();
 
@@ -109,11 +123,15 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
       if (payload) {
         switch (action) {
           case Actions.OPEN_CUR_WINDOW:
-            executeCommand(CMD_OPEN_CUR_WIN, payload.file, true);
+            if (payload.file) {
+              executeCommand(CMD_OPEN_CUR_WIN, payload.file, true);
+            }
             break;
 
           case Actions.OPEN_NEW_WINDOW:
-            executeCommand(CMD_OPEN_NEW_WIN, payload.file, true);
+            if (payload.file) {
+              executeCommand(CMD_OPEN_NEW_WIN, payload.file, true);
+            }
             break;
 
           default:

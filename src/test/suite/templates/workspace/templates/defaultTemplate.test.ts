@@ -10,6 +10,7 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
     files: false,
     isFolderInvalid: false,
     selected: '',
+    sort: 'ascending',
     state: 'loading',
   };
   const props: GetTemplate = {

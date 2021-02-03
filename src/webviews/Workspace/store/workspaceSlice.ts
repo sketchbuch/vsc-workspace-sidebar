@@ -6,6 +6,7 @@ import { fetch, fetchFulfilled, fetchPending, fetchRejected } from './fetch';
 import { invalid } from './invalid';
 import { list } from './list';
 import { loading } from './loading';
+import { setPersistedState } from './setPersistedState';
 
 export const workspaceSlice = createSlice({
   initialState: {
@@ -14,6 +15,7 @@ export const workspaceSlice = createSlice({
     isFolderInvalid: false,
     selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',
     state: 'loading',
+    sort: 'ascending',
   } as WorkspaceState,
   name: 'ws',
   extraReducers: (builder) => {
@@ -26,5 +28,6 @@ export const workspaceSlice = createSlice({
     invalid,
     list,
     loading,
+    setPersistedState,
   },
 });

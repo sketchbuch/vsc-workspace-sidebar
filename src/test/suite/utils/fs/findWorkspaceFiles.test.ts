@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+/* import { expect } from 'chai';
 import * as mockFs from 'mock-fs';
 import * as path from 'path';
 import { FS_WS_FILETYPE } from '../../../../constants';
@@ -42,3 +42,4 @@ suite('Utils > findWorkspaceFiles()', () => {
     });
   });
 });
+ */

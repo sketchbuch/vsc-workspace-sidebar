@@ -1,4 +1,4 @@
-import * as sinon from 'sinon';
+/* import * as sinon from 'sinon';
 import * as trans from 'vscode-ext-localisation';
 import * as commands from '../../../commands';
 import { setupExt } from '../../../core';
@@ -29,3 +29,4 @@ suite.skip('Core > activate()', function () {
     transLoadStub.restore();
   });
 });
+ */

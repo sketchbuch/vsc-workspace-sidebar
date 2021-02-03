@@ -1,17 +1,16 @@
 import * as vscode from 'vscode';
 import { list } from '..';
-import { WsFiles } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 
 export const listView = (
-  files: WsFiles | false,
-  selected: string,
+  state: WorkspaceState,
   imgDarkFolderUri: vscode.Uri,
   imgLightFolderUri: vscode.Uri
 ): string => {
-  if (files) {
+  if (state.files) {
     return `
     <section class="view list">
-      ${list(files, selected, imgDarkFolderUri, imgLightFolderUri)}
+      ${list(state, imgDarkFolderUri, imgLightFolderUri)}
     </section>`;
   }
 

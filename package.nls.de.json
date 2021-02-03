@@ -26,8 +26,8 @@
   "workspace": {
     "listItem": {
       "iconAlt": "Neues Fenster icon",
-      "openCurWin": "In aktuellem fenster öffnen: {{label}}",
-      "openNewWin": "In neuem fenster öffnen: {{label}}",
+      "openCurWin": "Öffnen '{{label}}' in diesem Fenster",
+      "openNewWin": "Öffnen '{{label}}' in einem neuen Fenster",
       "selected": "Current workspace"
     }
   }

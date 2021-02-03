@@ -1,4 +1,6 @@
-export const loadingView = (): string => {
+import { WorkspaceState } from '../../../webviews';
+
+export const loadingView = (state: WorkspaceState): string => {
   return `
     <section class="view loading">
     Loading

@@ -81,19 +81,19 @@
         {
           "command": "vsc-workspace-sidebar-open-new-win",
           "group": "inline",
-          "when": "view == vsc-workspace-sidebar-list && viewItem == vsc-workspace-sidebar-list-item"
+          "when": "view == vsc-workspace-sidebar-webview-workspace && viewItem == vsc-workspace-sidebar-list-item"
         }
       ],
       "view/title": [
         {
           "command": "vsc-workspace-sidebar-refresh",
           "group": "navigation",
-          "when": "view == vsc-workspace-sidebar-list && vsc-workspace-sidebar-list-loaded"
+          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded"
         },
         {
           "command": "vsc-workspace-sidebar-sort",
           "group": "navigation",
-          "when": "view == vsc-workspace-sidebar-list && vsc-workspace-sidebar-list-loaded"
+          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded"
         }
       ]
     },

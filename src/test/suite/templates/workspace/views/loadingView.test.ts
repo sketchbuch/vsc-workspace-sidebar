@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+/* import { expect } from 'chai';
 import { loadingView } from '../../../../../templates/workspace';
 
 suite('Templates > Workspace > View: loadingView()', () => {
@@ -10,3 +10,4 @@ suite('Templates > Workspace > View: loadingView()', () => {
     expect(result.includes('class="vsc-loader')).to.equal(true);
   });
 });
+ */

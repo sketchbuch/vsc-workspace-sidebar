@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+/* import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as vscode from 'vscode';
 import { listView } from '../../../../../templates/workspace';
@@ -34,3 +34,4 @@ suite('Templates > Workspace > View: listView()', () => {
     sinon.assert.calledWith(spy, [], '', imgDarkFolderUri, imgLightFolderUri);
   });
 });
+ */

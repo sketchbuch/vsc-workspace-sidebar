@@ -1,17 +1,22 @@
 import * as vscode from 'vscode';
 import { listItem } from '..';
 import { sortFilesByLabel } from '../../../utils';
-import { convertWsFiles } from '../../../webviews/Workspace/helpers';
-import { WsFiles } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { WorkspaceState } from '../../../webviews';
+import { convertWsFiles } from '../../../webviews/Workspace/helpers/convertWsFiles';
 
 export const list = (
-  wsFiles: WsFiles,
-  selected: string,
+  state: WorkspaceState,
   imgDarkFolderUri: vscode.Uri,
   imgLightFolderUri: vscode.Uri
 ) => {
-  if (wsFiles.length) {
-    const listFiles = convertWsFiles(wsFiles, selected).sort(sortFilesByLabel);
+  const { files, selected, sort } = state;
+
+  if (files !== false && files.length) {
+    const listFiles = convertWsFiles(files, selected).sort(sortFilesByLabel);
+
+    if (sort === 'descending') {
+      listFiles.reverse();
+    }
 
     return `<ul class="list__list">${listFiles
       .map((file) => listItem(file, imgDarkFolderUri, imgLightFolderUri))

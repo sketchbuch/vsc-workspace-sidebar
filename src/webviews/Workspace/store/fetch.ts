@@ -1,13 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { WorkspaceFiles, WorkspaceState, WorkspaceThunkAction } from '../..';
-import { getWorkspaceFiles } from '../helpers';
+import { findWorkspaceFiles } from '../../../utils';
 
-export const fetch = createAsyncThunk('getFiles', async () => {
-  return await getWorkspaceFiles();
-});
+export const fetch = createAsyncThunk('fetch', findWorkspaceFiles);
 
 export const fetchPending = (state: WorkspaceState) => {
   state.state = 'loading';
+  state.isFolderInvalid = false;
 };
 
 export const fetchRejected = (state: WorkspaceState) => {

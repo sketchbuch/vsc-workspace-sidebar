@@ -1,4 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
+import { SortIds } from '../../commands/registerCommands.interface';
 
 export interface File {
   file: string;
@@ -25,23 +26,26 @@ export type WorkspacePmPayload = {
   file?: string;
 };
 
-export type WorkspaceStates = 'error' | 'invalid' | 'list' | 'loading';
+export interface WorkspacePersistedState {
+  sort: SortIds;
+}
 
 export type WorkspaceState = {
   error: WorkspaceErrors;
   files: WorkspaceFiles;
   isFolderInvalid: boolean;
   selected: string;
+  sort: SortIds;
   state: WorkspaceStates;
 };
+
+export type WorkspaceStates = 'error' | 'invalid' | 'list' | 'loading';
 
 export type WsFiles = string[];
 
 export type WorkspaceFiles = false | WsFiles;
 
 // Redux
-export type WorkspaceListPayload = WorkspaceFiles;
-export type WorkspaceErrorPayload = WorkspaceErrors;
 export type WorkspaceThunkAction<Payload> = PayloadAction<
   Payload,
   string,

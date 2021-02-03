@@ -2,12 +2,10 @@ import * as vscode from 'vscode';
 import { WorkspaceViewProvider } from '.';
 import { isWorkspacefile } from '../utils';
 
-export const registerWebviews = (context: vscode.ExtensionContext): void => {
-  const workspaceViewProvider = new WorkspaceViewProvider(
-    context.extensionUri,
-    context.globalState
-  );
-
+export const registerWebviews = (
+  context: vscode.ExtensionContext,
+  workspaceViewProvider: WorkspaceViewProvider
+): void => {
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider(WorkspaceViewProvider.viewType, workspaceViewProvider)
   );
@@ -18,7 +16,7 @@ export const registerWebviews = (context: vscode.ExtensionContext): void => {
     } else if (event.affectsConfiguration('workspaceSidebar.folder')) {
       workspaceViewProvider.refresh();
     } else if (event.affectsConfiguration('workspaceSidebar.showPaths')) {
-      workspaceViewProvider.refresh();
+      workspaceViewProvider.rerender();
     }
   });
 

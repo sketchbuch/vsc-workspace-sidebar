@@ -14,14 +14,15 @@ export const defaultTemplate = (
     nonce,
     scriptFolderUri,
   }: GetTemplate,
-  { files, selected, state }: WorkspaceState
+  state: WorkspaceState
 ): string => {
+  const { state: view } = state;
   let content = '';
 
-  if (state === 'loading') {
-    content = loadingView();
-  } else if (state === 'list') {
-    content = listView(files, selected, imgDarkFolderUri, imgLightFolderUri);
+  if (view === 'loading') {
+    content = loadingView(state);
+  } else if (view === 'list') {
+    content = listView(state, imgDarkFolderUri, imgLightFolderUri);
   }
 
   return `
