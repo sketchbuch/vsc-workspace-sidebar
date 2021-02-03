@@ -1,16 +1,11 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import * as vscode from 'vscode';
 import { WorkspaceState } from '../..';
-import { getWorkspaceFiles } from '../helpers';
 import { error } from './error';
-import { fetchFulfilled, fetchPending, fetchRejected } from './fetch';
+import { fetch, fetchFulfilled, fetchPending, fetchRejected } from './fetch';
 import { invalid } from './invalid';
 import { list } from './list';
 import { loading } from './loading';
-
-export const fetch = createAsyncThunk('getFiles', async (thunkAPI) => {
-  return await getWorkspaceFiles();
-});
 
 export const workspaceSlice = createSlice({
   initialState: {

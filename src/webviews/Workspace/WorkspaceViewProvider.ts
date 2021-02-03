@@ -13,7 +13,8 @@ import { getHtml } from '../../templates';
 import { defaultTemplate as template } from '../../templates/workspace';
 import { GlobalState } from '../../types';
 import { HtmlData, PostMessage } from '../webviews.interface';
-import { fetch, workspaceSlice } from './store/workspaceSlice';
+import { fetch } from './store/fetch';
+import { workspaceSlice } from './store/workspaceSlice';
 import {
   WorkspaceCache,
   WorkspacePmActions as Actions,
