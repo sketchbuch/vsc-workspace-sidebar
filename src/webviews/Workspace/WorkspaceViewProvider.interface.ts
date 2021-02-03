@@ -1,4 +1,4 @@
-import { Action, ThunkAction } from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 export interface File {
   file: string;
@@ -42,4 +42,13 @@ export type WorkspaceFiles = false | WsFiles;
 // Redux
 export type WorkspaceListPayload = WorkspaceFiles;
 export type WorkspaceErrorPayload = WorkspaceErrors;
-export type WorkspaceThunk = ThunkAction<void, WorkspaceState, unknown, Action<string>>;
+export type WorkspaceThunkAction<Payload> = PayloadAction<
+  Payload,
+  string,
+  {
+    arg: void;
+    requestId: string;
+    requestStatus: 'fulfilled';
+  },
+  never
+>;
