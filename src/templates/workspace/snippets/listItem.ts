@@ -1,7 +1,7 @@
-import * as pathLib from 'path';
 import * as vscode from 'vscode';
 import { t } from 'vscode-ext-localisation';
 import { File } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { listItemIcon } from './listItemIcon';
 
 export const listItem = (
   file: File,
@@ -9,24 +9,18 @@ export const listItem = (
   imgLightFolderUri: vscode.Uri
 ) => {
   const { file: dataFile, isSelected, label, path } = file;
-  const darkImgSrc = `${imgDarkFolderUri}${pathLib.sep}new-window.svg`;
-  const lightImgSrc = `${imgLightFolderUri}${pathLib.sep}new-window.svg`;
-  const baseTrans = 'webViews.workspace.listItem';
+  const tooltip = isSelected
+    ? t('webViews.workspace.listItem.selected')
+    : t('webViews.workspace.listItem.openCurWin', { label });
 
   return `
     <li class="list__item">
       <span class="list__element${
-        isSelected ? ' list__element--selected' : ''
-      }" data-file="${dataFile}" tabindex="0" title="${t(`${baseTrans}.openCurWin`)}">
+        isSelected ? ' list__element--selected' : ' list__element--unselected'
+      }" data-file="${dataFile}" tabindex="0" title="${tooltip}">
         <span class="list__title">${label}</span>
-        ${path && `<span class="list__description">${path}</span>`}
-        
-        <span class="list__icon" data-file="${dataFile}" data-type="new-window" title="${t(
-    `${baseTrans}.openNewWin`
-  )}">
-          <img alt="${t(`${baseTrans}.iconAlt`)}" data-theme="dark" src="${darkImgSrc}" />
-          <img alt="${t(`${baseTrans}.iconAlt`)}" data-theme="light" src="${lightImgSrc}" />
-        </span>
+        ${path ? `<span class="list__description">${path}</span>` : ''}
+        ${!isSelected ? listItemIcon(dataFile, label, imgDarkFolderUri, imgLightFolderUri) : ''}
       </span>
     </li>
   `;

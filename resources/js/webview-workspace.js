@@ -1,7 +1,7 @@
 (function () {
   const vscode = acquireVsCodeApi();
   const newWinIcons = Array.from(document.getElementsByClassName('list__icon'));
-  const wsElements = Array.from(document.getElementsByClassName('list__element'));
+  const wsElements = Array.from(document.getElementsByClassName('list__element--unselected'));
 
   const sendMessage = (action, file) => {
     if (file) {
