@@ -1,8 +1,10 @@
+import { Action, ThunkAction } from '@reduxjs/toolkit';
+
 export interface File {
   file: string;
+  isSelected: boolean;
   label: string;
   path: string;
-  selected: boolean;
 }
 
 export type Files = File[];
@@ -23,17 +25,21 @@ export type WorkspacePmPayload = {
   file?: string;
 };
 
-export type WsFiles = string[];
-
 export type WorkspaceStates = 'error' | 'invalid' | 'list' | 'loading';
 
 export type WorkspaceState = {
   error: WorkspaceErrors;
-  files: false | WsFiles;
+  files: WorkspaceFiles;
   isFolderInvalid: boolean;
   selected: string;
   state: WorkspaceStates;
 };
 
-export type WorkspaceListPayload = false | WsFiles;
+export type WsFiles = string[];
+
+export type WorkspaceFiles = false | WsFiles;
+
+// Redux
+export type WorkspaceListPayload = WorkspaceFiles;
 export type WorkspaceErrorPayload = WorkspaceErrors;
+export type WorkspaceThunk = ThunkAction<void, WorkspaceState, unknown, Action<string>>;

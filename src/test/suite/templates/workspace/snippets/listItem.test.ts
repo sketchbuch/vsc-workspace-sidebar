@@ -18,9 +18,9 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
   test('Renders correctly if there are no files', () => {
     const file = {
       file: 'file-1',
+      isSelected: false,
       label: 'File 1',
       path: `/some/folder/file-1.${FS_WS_FILETYPE}`,
-      selected: false,
     };
     const result = listItem(file, imgDarkFolderUri, imgLightFolderUri);
 

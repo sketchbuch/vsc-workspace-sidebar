@@ -31,9 +31,9 @@ export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
 
       return {
         file,
+        isSelected: file === selected,
         label,
         path,
-        selected: file === selected,
       };
     }
   );

@@ -8,7 +8,7 @@ export const listItem = (
   imgDarkFolderUri: vscode.Uri,
   imgLightFolderUri: vscode.Uri
 ) => {
-  const { file: dataFile, label, path, selected } = file;
+  const { file: dataFile, isSelected, label, path } = file;
   const darkImgSrc = `${imgDarkFolderUri}${pathLib.sep}new-window.svg`;
   const lightImgSrc = `${imgLightFolderUri}${pathLib.sep}new-window.svg`;
   const baseTrans = 'webViews.workspace.listItem';
@@ -16,7 +16,7 @@ export const listItem = (
   return `
     <li class="list__item">
       <span class="list__element${
-        selected ? ' list__element--selected' : ''
+        isSelected ? ' list__element--selected' : ''
       }" data-file="${dataFile}" tabindex="0" title="${t(`${baseTrans}.openCurWin`)}">
         <span class="list__title">${label}</span>
         ${path && `<span class="list__description">${path}</span>`}

@@ -1,3 +1,4 @@
+import { Unsubscribe } from '@reduxjs/toolkit';
 import * as vscode from 'vscode';
 import {
   CMD_OPEN_CUR_WIN,
@@ -12,8 +13,7 @@ import { getHtml } from '../../templates';
 import { defaultTemplate as template } from '../../templates/workspace';
 import { GlobalState } from '../../types';
 import { HtmlData, PostMessage } from '../webviews.interface';
-import { getWorkspaceFiles } from './helpers';
-import { workspaceSlice } from './store/workspaceSlice';
+import { fetch, workspaceSlice } from './store/workspaceSlice';
 import {
   WorkspaceCache,
   WorkspacePmActions as Actions,
@@ -26,6 +26,7 @@ const { executeCommand } = vscode.commands;
 export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   public static readonly viewType = EXT_WEBVIEW_WS;
   private _view?: vscode.WebviewView;
+  private _unsubscribe?: Unsubscribe;
 
   constructor(
     private readonly _extensionUri: vscode.Uri,
@@ -74,7 +75,14 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
 
   public resolveWebviewView(webviewView: vscode.WebviewView) {
     this._view = webviewView;
-    const { error, invalid, list } = workspaceSlice.actions;
+    const { list } = workspaceSlice.actions;
+
+    if (this._unsubscribe === undefined) {
+      this._unsubscribe = store.subscribe(() => {
+        this.render();
+        this.stateChanged(store.getState().ws);
+      });
+    }
 
     this.setupWebview(webviewView);
     this.render();
@@ -83,25 +91,8 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
 
     if (cachedFiles) {
       store.dispatch(list(cachedFiles));
-      this.stateChanged(store.getState().ws);
-      this.render();
     } else {
-      getWorkspaceFiles()
-        .then((files) => {
-          if (files === false) {
-            store.dispatch(invalid());
-          } else {
-            store.dispatch(list(files));
-          }
-
-          this.stateChanged(store.getState().ws);
-        })
-        .catch((err) => {
-          store.dispatch(error(err));
-        })
-        .finally(() => {
-          this.render();
-        });
+      store.dispatch(fetch());
     }
   }
 
@@ -143,10 +134,12 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
       case 'list':
         executeCommand('setContext', EXT_LOADED, true);
 
-        this._globalState.update(EXT_WSSTATE_CACHE, {
-          files,
-          timestamp: Math.floor(Date.now() / 1000),
-        });
+        if (files) {
+          this._globalState.update(EXT_WSSTATE_CACHE, {
+            files,
+            timestamp: Math.floor(Date.now() / 1000),
+          });
+        }
         break;
 
       default:
