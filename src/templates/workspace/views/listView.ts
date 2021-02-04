@@ -3,6 +3,7 @@ import { list } from '..';
 import { getImgUrls } from '../..';
 import { RenderVars } from '../../../webviews/webviews.interface';
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { settingsLink } from '../../common/snippets/settingsLink';
 
 export const listView = (state: WorkspaceState, renderVars: RenderVars): string => {
   if (state.files) {
@@ -24,9 +25,7 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
         </span>
         <p class="view__message">
           <span class="view__message-title">${t('webViews.workspace.list-empty')}</span>
-          <span role="link" class="view__link view__message-description">${t(
-            'webViews.workspace.checkSettings'
-          )}</span>
+          ${settingsLink()}
         </p>
       </section>
     `;
