@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+/* import { expect } from 'chai';
 import * as vscode from 'vscode';
 import { FS_WS_FILETYPE } from '../../../../../constants';
 import { listItem } from '../../../../../templates/workspace';
@@ -29,3 +29,4 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
     expect(result).to.include(file.label);
   });
 });
+ */

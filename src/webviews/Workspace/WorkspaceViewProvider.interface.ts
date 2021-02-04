@@ -20,12 +20,10 @@ export type WorkspaceErrors = '' | 'FETCH';
 export enum WorkspacePmActions {
   OPEN_CUR_WINDOW = 'OPEN_CUR_WINDOW',
   OPEN_NEW_WINDOW = 'OPEN_NEW_WINDOW',
+  SHOW_SETTINGS = 'SHOW_SETTINGS',
 }
 
-export type WorkspacePmPayload = {
-  file?: string;
-};
-
+export type WorkspacePmPayload = string;
 export interface WorkspacePersistedState {
   sort: SortIds;
 }

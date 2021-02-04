@@ -1,6 +1,7 @@
+@import './workspace/views/error.css';
+@import './workspace/views/invalid.css';
 @import './workspace/views/list.css';
 @import './workspace/views/loading.css';
-@import './workspace/views/error.css';
 
 body {
   padding: 0;
@@ -30,4 +31,31 @@ body.vscode-dark img[data-theme='light'] {
   position: absolute;
   white-space: nowrap;
   width: 20px;
+}
+
+.view__message {
+  color: var(--vscode-editorWidget-foreground);
+  margin: 0;
+}
+
+.view__message-title {
+  display: block;
+  margin: 0;
+}
+
+.view__message-description {
+  color: var(--vscode-list-deemphasizedForeground);
+  display: block;
+  margin: 0;
+  margin-top: 0.2rem;
+}
+
+.view__link {
+  cursor: pointer;
+  color: var(--vscode-textLink-foreground);
+  text-decoration: none;
+}
+
+.view__link:active {
+  color: var(--vscode-textLink-activeForeground);
 }

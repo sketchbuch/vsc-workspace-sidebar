@@ -4,6 +4,14 @@
   padding: 0;
 }
 
+.list--empty {
+  padding: 0.3rem 20px;
+}
+
+.list--empty .list__icon {
+  top: 0.3rem;
+}
+
 .list__item {
   display: flex;
   margin: 0;

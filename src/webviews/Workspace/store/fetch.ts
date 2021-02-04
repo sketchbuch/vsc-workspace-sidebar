@@ -19,5 +19,12 @@ export const fetchFulfilled = (
   action: WorkspaceThunkAction<WorkspaceFiles>
 ) => {
   state.files = action.payload;
-  state.state = 'list';
+
+  if (action.payload === false) {
+    state.isFolderInvalid = true;
+    state.state = 'invalid';
+  } else {
+    state.isFolderInvalid = false;
+    state.state = 'list';
+  }
 };

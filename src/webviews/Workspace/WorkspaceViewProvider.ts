@@ -114,23 +114,25 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     webviewView.webview.onDidReceiveMessage((message: PostMessage<Payload, Actions>) => {
       const { action, payload } = message;
 
-      if (payload) {
-        switch (action) {
-          case Actions.OPEN_CUR_WINDOW:
-            if (payload.file) {
-              executeCommand(CMD_OPEN_CUR_WIN, payload.file, true);
-            }
-            break;
+      switch (action) {
+        case Actions.OPEN_CUR_WINDOW:
+          if (payload) {
+            executeCommand(CMD_OPEN_CUR_WIN, payload, true);
+          }
+          break;
 
-          case Actions.OPEN_NEW_WINDOW:
-            if (payload.file) {
-              executeCommand(CMD_OPEN_NEW_WIN, payload.file, true);
-            }
-            break;
+        case Actions.OPEN_NEW_WINDOW:
+          if (payload) {
+            executeCommand(CMD_OPEN_NEW_WIN, payload, true);
+          }
+          break;
 
-          default:
-            break;
-        }
+        case Actions.SHOW_SETTINGS:
+          executeCommand('workbench.action.openSettings', 'workspaceSidebar');
+          break;
+
+        default:
+          break;
       }
     });
   }

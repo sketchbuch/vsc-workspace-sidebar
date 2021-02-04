@@ -21,14 +21,18 @@
     }
   },
   "workspace": {
+    "checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",
+    "error": "Ein unbekannter Fehler ist aufgetreten",
+    "error-fetch": "Beim Sammeln von Arbeitsbereiche ist ein Fehler aufgetreten",
     "inValid": "Der Ordnerpfad ist kein Verzeichnis",
+    "list-empty": "Keine Arbeitsbereichse gefunden",
     "listItem": {
       "iconAlt": "Neues Fenster icon",
       "openCurWin": "Öffnen '{{label}}' in diesem Fenster",
       "openNewWin": "Öffnen '{{label}}' in einem neuen Fenster",
-      "selected": "Current workspace"
+      "selected": "Aktueller Arbeitsbereich"
     },
-    "loading": "Arbeitsbereiche finden...",
+    "loading": "Sammeln von Arbeitsbereiche...",
     "none": "Keine Arbeitsbereiche gefunden"
   }
 }

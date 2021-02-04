@@ -1,14 +1,10 @@
-import * as vscode from 'vscode';
 import { listItem } from '..';
 import { sortFilesByLabel } from '../../../utils';
 import { WorkspaceState } from '../../../webviews';
+import { RenderVars } from '../../../webviews/webviews.interface';
 import { convertWsFiles } from '../../../webviews/Workspace/helpers/convertWsFiles';
 
-export const list = (
-  state: WorkspaceState,
-  imgDarkFolderUri: vscode.Uri,
-  imgLightFolderUri: vscode.Uri
-) => {
+export const list = (state: WorkspaceState, renderVars: RenderVars) => {
   const { files, selected, sort } = state;
 
   if (files !== false && files.length) {
@@ -19,7 +15,7 @@ export const list = (
     }
 
     return `<ul class="list__list">${listFiles
-      .map((file) => listItem(file, imgDarkFolderUri, imgLightFolderUri))
+      .map((file) => listItem(file, renderVars))
       .join('')}</ul>`;
   }
 

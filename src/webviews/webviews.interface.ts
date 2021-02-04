@@ -5,7 +5,12 @@ export interface PostMessage<Payload, Actions> {
   payload: Payload;
 }
 
-export interface GetTemplate {
+export interface RenderVars {
+  imgDarkFolderUri: vscode.Uri;
+  imgLightFolderUri: vscode.Uri;
+}
+
+export interface TemplateVars {
   cspSource: string;
   cssFolderUri: vscode.Uri;
   imgDarkFolderUri: vscode.Uri;
@@ -16,7 +21,7 @@ export interface GetTemplate {
 
 export interface GetHtml<TState> {
   extensionPath: vscode.Uri;
-  template: (args: GetTemplate, data: TState) => string;
+  template: (templateVars: TemplateVars, state: TState) => string;
   htmlData: HtmlData<TState>;
 }
 

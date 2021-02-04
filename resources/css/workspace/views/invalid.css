@@ -1,7 +1,7 @@
-.error {
+.invalid {
   padding: 0.3rem 20px;
 }
 
-.error__icon {
+.invalid__icon {
   top: 0.3rem;
 }

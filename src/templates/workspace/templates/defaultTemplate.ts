@@ -2,8 +2,10 @@ import { t } from 'vscode-ext-localisation';
 import { listView, loadingView } from '..';
 import { FS_WEBVIEW_WORKSPACE_CSS, FS_WEBVIEW_WORKSPACE_JS } from '../../../constants';
 import { WorkspaceState } from '../../../webviews';
-import { GetTemplate } from '../../../webviews/webviews.interface';
+import { RenderVars, TemplateVars } from '../../../webviews/webviews.interface';
 import { metaTags } from '../../common';
+import { errorView } from '../views/errorView';
+import { invalidView } from '../views/invalidView';
 
 export const defaultTemplate = (
   {
@@ -13,16 +15,23 @@ export const defaultTemplate = (
     imgLightFolderUri,
     nonce,
     scriptFolderUri,
-  }: GetTemplate,
+  }: TemplateVars,
   state: WorkspaceState
 ): string => {
   const { state: view } = state;
+  const renderVars: RenderVars = { imgDarkFolderUri, imgLightFolderUri };
+
   let content = '';
+  console.log('### view', view);
 
   if (view === 'loading') {
-    content = loadingView(state, imgDarkFolderUri, imgLightFolderUri);
+    content = loadingView(state, renderVars);
   } else if (view === 'list') {
-    content = listView(state, imgDarkFolderUri, imgLightFolderUri);
+    content = listView(state, renderVars);
+  } else if (view === 'invalid') {
+    content = invalidView(state, renderVars);
+  } else if (view === 'error') {
+    content = errorView(state, renderVars);
   }
 
   return `

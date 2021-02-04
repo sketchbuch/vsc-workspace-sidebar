@@ -21,7 +21,11 @@
     }
   },
   "workspace": {
+    "checkSettings": "Check the extension settings",
+    "error": "An unknown error occured",
+    "error-fetch": "An error occured whilst collecting workspace files",
     "inValid": "Folder path is not a directory",
+    "list-empty": "No workspace files found",
     "listItem": {
       "iconAlt": "New window icon",
       "openCurWin": "Open '{{label}}' in this window",
