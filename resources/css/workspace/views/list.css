@@ -114,10 +114,9 @@
   opacity: 1;
 }
 
-.list__icon {
+.list__buttons {
   align-items: center;
   background: var(--vscode-list-hoverBackground);
-  display: inline-flex;
   display: none;
   height: 100%;
   justify-content: center;
@@ -125,14 +124,35 @@
   padding-left: 10px;
   padding-right: 10px;
   position: absolute;
-  right: 0px;
+  right: 0;
   top: 0;
   white-space: nowrap;
   width: 20px;
 }
 
-.list__element:hover .list__icon {
+.list__element:hover .list__buttons {
   display: inline-flex;
+}
+
+body.vscode-light .list__buttons img[data-theme='dark'] {
+  display: none;
+}
+
+body.vscode-dark .list__buttons img[data-theme='light'] {
+  display: none;
+}
+
+.list__icon {
+  align-items: flex-start;
+  display: inline-flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  line-height: 100%;
+  position: absolute;
+  top: 0.2rem;
+  white-space: nowrap;
+  width: 20px;
 }
 
 body.vscode-light .list__icon img[data-theme='dark'] {
