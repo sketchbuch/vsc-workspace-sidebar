@@ -11,24 +11,21 @@ import {
 import { getNonce } from '../utils';
 import { GetHtml } from '../webviews/webviews.interface';
 
+const { joinPath } = vscode.Uri;
+
 export const getHtml = <T>({ extensionPath, template, htmlData }: GetHtml<T>): string => {
   const { data, webview } = htmlData;
   const cssFolderUri = webview.asWebviewUri(
-    vscode.Uri.joinPath(extensionPath, FS_FOLDER_RESOURCES, FS_FOLDER_CSS)
+    joinPath(extensionPath, FS_FOLDER_RESOURCES, FS_FOLDER_CSS)
   );
   const imgDarkFolderUri = webview.asWebviewUri(
-    vscode.Uri.joinPath(extensionPath, FS_FOLDER_RESOURCES, FS_FOLDER_IMAGES, FS_FOLDER_IMAGES_DARK)
+    joinPath(extensionPath, FS_FOLDER_RESOURCES, FS_FOLDER_IMAGES, FS_FOLDER_IMAGES_DARK)
   );
   const imgLightFolderUri = webview.asWebviewUri(
-    vscode.Uri.joinPath(
-      extensionPath,
-      FS_FOLDER_RESOURCES,
-      FS_FOLDER_IMAGES,
-      FS_FOLDER_IMAGES_LIGHT
-    )
+    joinPath(extensionPath, FS_FOLDER_RESOURCES, FS_FOLDER_IMAGES, FS_FOLDER_IMAGES_LIGHT)
   );
   const scriptFolderUri = webview.asWebviewUri(
-    vscode.Uri.joinPath(extensionPath, FS_FOLDER_RESOURCES, FS_FOLDER_JS)
+    joinPath(extensionPath, FS_FOLDER_RESOURCES, FS_FOLDER_JS)
   );
 
   return template(

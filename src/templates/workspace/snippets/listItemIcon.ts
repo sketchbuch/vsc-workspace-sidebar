@@ -1,9 +1,9 @@
-import * as pathLib from 'path';
 import * as vscode from 'vscode';
+import { getImgSrc } from '../../../utils';
 
 export const listItemIcon = (imgDarkFolderUri: vscode.Uri, imgLightFolderUri: vscode.Uri) => {
-  const darkImgSrc = `${imgDarkFolderUri}${pathLib.sep}success.svg`;
-  const lightImgSrc = `${imgLightFolderUri}${pathLib.sep}success.svg`;
+  const darkImgSrc = getImgSrc(imgDarkFolderUri, 'success');
+  const lightImgSrc = getImgSrc(imgLightFolderUri, 'success');
 
   return `
     <span class="view__icon list__icon">

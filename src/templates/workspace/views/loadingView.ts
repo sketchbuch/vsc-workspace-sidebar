@@ -1,6 +1,6 @@
-import * as pathLib from 'path';
 import * as vscode from 'vscode';
 import { t } from 'vscode-ext-localisation';
+import { getImgSrc } from '../../../utils';
 import { WorkspaceState } from '../../../webviews';
 
 export const loadingView = (
@@ -8,8 +8,8 @@ export const loadingView = (
   imgDarkFolderUri: vscode.Uri,
   imgLightFolderUri: vscode.Uri
 ): string => {
-  const darkImgSrc = `${imgDarkFolderUri}${pathLib.sep}loading.svg`;
-  const lightImgSrc = `${imgLightFolderUri}${pathLib.sep}loading.svg`;
+  const darkImgSrc = getImgSrc(imgDarkFolderUri, 'loading');
+  const lightImgSrc = getImgSrc(imgLightFolderUri, 'loading');
 
   return `
     <section class="view loading">

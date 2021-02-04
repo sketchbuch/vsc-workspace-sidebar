@@ -1,6 +1,6 @@
-import * as pathLib from 'path';
 import * as vscode from 'vscode';
 import { t } from 'vscode-ext-localisation';
+import { getImgSrc } from '../../../utils';
 
 export const listItemButtons = (
   file: string,
@@ -8,8 +8,8 @@ export const listItemButtons = (
   imgDarkFolderUri: vscode.Uri,
   imgLightFolderUri: vscode.Uri
 ) => {
-  const darkImgSrc = `${imgDarkFolderUri}${pathLib.sep}new-window.svg`;
-  const lightImgSrc = `${imgLightFolderUri}${pathLib.sep}new-window.svg`;
+  const darkImgSrc = getImgSrc(imgDarkFolderUri, 'new-window');
+  const lightImgSrc = getImgSrc(imgLightFolderUri, 'new-window');
   const tooltip = t('webViews.workspace.listItem.openNewWin', { label });
 
   return `
