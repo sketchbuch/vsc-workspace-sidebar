@@ -1,0 +1,16 @@
+.loading {
+  padding: 0.3rem 20px;
+}
+
+.loading__icon {
+  align-items: flex-start;
+  display: inline-flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  line-height: 100%;
+  position: absolute;
+  top: 0.45rem;
+  white-space: nowrap;
+  width: 20px;
+}

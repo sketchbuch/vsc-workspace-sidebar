@@ -1,5 +1,20 @@
 @import './workspace/views/list.css';
+@import './workspace/views/loading.css';
 
 body {
   padding: 0;
+}
+
+body.vscode-light img[data-theme='dark'] {
+  display: none;
+}
+
+body.vscode-dark img[data-theme='light'] {
+  display: none;
+}
+
+.view {
+  height: 100%;
+  position: relative;
+  user-select: none;
 }

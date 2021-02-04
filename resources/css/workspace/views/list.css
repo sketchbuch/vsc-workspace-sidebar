@@ -1,9 +1,3 @@
-.list {
-  height: 100%;
-  position: relative;
-  user-select: none;
-}
-
 .list__list {
   list-style: none;
   margin: 0;
@@ -134,14 +128,6 @@
   display: inline-flex;
 }
 
-body.vscode-light .list__buttons img[data-theme='dark'] {
-  display: none;
-}
-
-body.vscode-dark .list__buttons img[data-theme='light'] {
-  display: none;
-}
-
 .list__icon {
   align-items: flex-start;
   display: inline-flex;
@@ -153,12 +139,4 @@ body.vscode-dark .list__buttons img[data-theme='light'] {
   top: 0.2rem;
   white-space: nowrap;
   width: 20px;
-}
-
-body.vscode-light .list__icon img[data-theme='dark'] {
-  display: none;
-}
-
-body.vscode-dark .list__icon img[data-theme='light'] {
-  display: none;
 }

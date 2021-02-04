@@ -6,9 +6,6 @@
   "ext.wsList.refresh": "Reload Workspaces",
   "ext.wsList.sort": "Sort Workspaces",
   "ext.wsListItem.checkSettings": "Check the extension settings",
-  "ext.wsListItem.inValid": "Folder path is not a directory",
-  "ext.wsListItem.loading": "Collecting workspaces...",
-  "ext.wsListItem.none": "No workspaces found",
   "ext.wsListItem.open.curWindow": "Open in this window",
   "ext.wsListItem.open.newWindow": "Open in a new window",
   "views.title": "Workspaces",
@@ -24,11 +21,14 @@
     }
   },
   "workspace": {
+    "inValid": "Folder path is not a directory",
     "listItem": {
       "iconAlt": "New window icon",
       "openCurWin": "Open '{{label}}' in this window",
       "openNewWin": "Open '{{label}}' in a new window",
       "selected": "Current workspace"
-    }
+    },
+    "loading": "Collecting workspaces...",
+    "none": "No workspaces found"
   }
 }

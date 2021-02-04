@@ -20,7 +20,7 @@ export const defaultTemplate = (
   let content = '';
 
   if (view === 'loading') {
-    content = loadingView(state);
+    content = loadingView(state, imgDarkFolderUri, imgLightFolderUri);
   } else if (view === 'list') {
     content = listView(state, imgDarkFolderUri, imgLightFolderUri);
   }
