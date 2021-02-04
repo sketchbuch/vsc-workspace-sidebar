@@ -6,7 +6,7 @@ export const listItemIcon = (imgDarkFolderUri: vscode.Uri, imgLightFolderUri: vs
   const lightImgSrc = `${imgLightFolderUri}${pathLib.sep}success.svg`;
 
   return `
-    <span class="list__icon">
+    <span class="view__icon list__icon">
       <img alt="" data-theme="dark" src="${darkImgSrc}" />
       <img alt="" data-theme="light" src="${lightImgSrc}" />
     </span>

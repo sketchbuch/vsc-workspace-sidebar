@@ -13,7 +13,7 @@ export const loadingView = (
 
   return `
     <section class="view loading">
-      <span class="loading__icon">
+      <span class="view__icon loading__icon">
         <img alt="" data-theme="dark" src="${darkImgSrc}" />
         <img alt="" data-theme="light" src="${lightImgSrc}" />
       </span>

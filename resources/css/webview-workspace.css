@@ -1,5 +1,6 @@
 @import './workspace/views/list.css';
 @import './workspace/views/loading.css';
+@import './workspace/views/error.css';
 
 body {
   padding: 0;
@@ -17,4 +18,16 @@ body.vscode-dark img[data-theme='light'] {
   height: 100%;
   position: relative;
   user-select: none;
+}
+
+.view__icon {
+  align-items: flex-start;
+  display: inline-flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  line-height: 100%;
+  position: absolute;
+  white-space: nowrap;
+  width: 20px;
 }
