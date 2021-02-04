@@ -1,2 +1,2 @@
 export * from './ext';
-export * from './workspace';
+export * from './strings';

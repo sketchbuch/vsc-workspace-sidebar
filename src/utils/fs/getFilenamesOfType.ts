@@ -1,5 +1,6 @@
+import * as path from 'path';
 import { checkFile } from '.';
-import { WsFiles } from '../../types';
+import { WsFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
 
 export const getFilenamesOfType = (
   requiredType: 'folders' | 'files',
@@ -8,8 +9,8 @@ export const getFilenamesOfType = (
   fileType: string
 ) => {
   return filenames.reduce((allFiles, curFile) => {
-    const curPath = `${folder}/${curFile}`;
-    const { isFile, isFolder } = checkFile(`${folder}/${curFile}`);
+    const curPath = path.join(folder, curFile);
+    const { isFile, isFolder } = checkFile(curPath);
 
     if (isFile && requiredType === 'files') {
       var fileExtension = curFile.substring(curFile.lastIndexOf('.') + 1);

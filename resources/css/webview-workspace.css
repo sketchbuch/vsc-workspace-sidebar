@@ -1,0 +1,61 @@
+@import './workspace/views/error.css';
+@import './workspace/views/invalid.css';
+@import './workspace/views/list.css';
+@import './workspace/views/loading.css';
+
+body {
+  padding: 0;
+}
+
+body.vscode-light img[data-theme='dark'] {
+  display: none;
+}
+
+body.vscode-dark img[data-theme='light'] {
+  display: none;
+}
+
+.view {
+  height: 100%;
+  position: relative;
+  user-select: none;
+}
+
+.view__icon {
+  align-items: flex-start;
+  display: inline-flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  line-height: 100%;
+  position: absolute;
+  white-space: nowrap;
+  width: 20px;
+}
+
+.view__message {
+  color: var(--vscode-editorWidget-foreground);
+  margin: 0;
+}
+
+.view__message-title {
+  display: block;
+  margin: 0;
+}
+
+.view__message-description {
+  color: var(--vscode-list-deemphasizedForeground);
+  display: block;
+  margin: 0;
+  margin-top: 0.2rem;
+}
+
+.view__link {
+  cursor: pointer;
+  color: var(--vscode-textLink-foreground);
+  text-decoration: none;
+}
+
+.view__link:active {
+  color: var(--vscode-textLink-activeForeground);
+}

@@ -1,0 +1,7 @@
+.loading {
+  padding: 0.3rem 20px;
+}
+
+.loading__icon {
+  top: 0.5rem;
+}

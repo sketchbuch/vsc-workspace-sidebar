@@ -3,51 +3,39 @@ import { t } from 'vscode-ext-localisation';
 import {
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,
-  CMD_OPEN_SETTINGS,
   CMD_REFRESH,
   CMD_SORT,
+  CMD_VSC_OPEN_WS,
   EXT_SORT,
 } from '../constants';
-import { cmsOpenCurWindow, cmsOpenNewWindow } from './cmds';
-import { WsList } from '../treeviews';
-import { WsListItemCmd } from '../treeviews/WsList/WsList.interface';
-import { SortOptions, SortIds } from './registerCommands.interface';
+import { WorkspaceViewProvider } from '../webviews';
+import { SortIds, SortOptions } from './registerCommands.interface';
 
 export const registerCommands = (
   context: vscode.ExtensionContext,
-  wsListDataProvider: WsList
+  workspaceViewProvider: WorkspaceViewProvider
 ): void => {
   const { registerCommand } = vscode.commands;
 
   context.subscriptions.push(
     registerCommand(CMD_OPEN_CUR_WIN, (file: string): void => {
       if (file) {
-        cmsOpenCurWindow(file);
+        vscode.commands.executeCommand(CMD_VSC_OPEN_WS, vscode.Uri.file(file), false);
       }
     })
   );
 
   context.subscriptions.push(
-    registerCommand(CMD_OPEN_NEW_WIN, (wsListItem: WsListItemCmd): void => {
-      const {
-        command: { arguments: args = [] },
-      } = wsListItem;
-
-      if (args[0]) {
-        cmsOpenNewWindow(args[0]);
+    registerCommand(CMD_OPEN_NEW_WIN, (file: string): void => {
+      if (file) {
+        vscode.commands.executeCommand(CMD_VSC_OPEN_WS, vscode.Uri.file(file), true);
       }
-    })
-  );
-
-  context.subscriptions.push(
-    registerCommand(CMD_OPEN_SETTINGS, (): void => {
-      vscode.commands.executeCommand('workbench.action.openSettings', 'workspaceSidebar');
     })
   );
 
   context.subscriptions.push(
     registerCommand(CMD_REFRESH, (): void => {
-      wsListDataProvider.refresh();
+      workspaceViewProvider.refresh();
     })
   );
 
@@ -74,7 +62,7 @@ export const registerCommands = (
         if (selection && selection.id !== sort) {
           context.globalState
             .update(EXT_SORT, selection.id)
-            .then(() => wsListDataProvider.refresh(true));
+            .then(() => workspaceViewProvider.updateSort());
         }
       }
     )

@@ -64,11 +64,15 @@
           "scope": "application",
           "type": "string"
         },
-        "workspaceSidebar.showPath": {
-          "default": false,
+        "workspaceSidebar.showPaths": {
+          "type": "string",
+          "default": "Never",
           "description": "%config.workspaceShowPath.description%",
-          "scope": "application",
-          "type": "boolean"
+          "enum": [
+            "Always",
+            "As needed",
+            "Never"
+          ]
         }
       }
     },
@@ -77,26 +81,27 @@
         {
           "command": "vsc-workspace-sidebar-open-new-win",
           "group": "inline",
-          "when": "view == vsc-workspace-sidebar-list && viewItem == vsc-workspace-sidebar-list-item"
+          "when": "view == vsc-workspace-sidebar-webview-workspace && viewItem == vsc-workspace-sidebar-list-item"
         }
       ],
       "view/title": [
         {
           "command": "vsc-workspace-sidebar-refresh",
           "group": "navigation",
-          "when": "view == vsc-workspace-sidebar-list && vsc-workspace-sidebar-list-loaded"
+          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded"
         },
         {
           "command": "vsc-workspace-sidebar-sort",
           "group": "navigation",
-          "when": "view == vsc-workspace-sidebar-list && vsc-workspace-sidebar-list-loaded"
+          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded"
         }
       ]
     },
     "views": {
       "vsc-workspace-sidebar": [
         {
-          "id": "vsc-workspace-sidebar-list",
+          "type": "webview",
+          "id": "vsc-workspace-sidebar-webview-workspace",
           "name": "%views.title%"
         }
       ]
@@ -143,20 +148,27 @@
     "compile": "tsc -p ./",
     "lint:prettier": "prettier --write --config ./.prettierrc.js './{src, resources/js}/**/*.{js,ts}'",
     "lint:ts": "eslint src --ext ts",
-    "pretest": "yarn run compile && yarn run lint",
+    "pretest": "yarn compile && yarn lint",
     "test": "node ./out/test/runTest.js",
-    "vscode:prepublish": "yarn run compile",
+    "vscode:prepublish": "yarn compile",
     "watch": "tsc -watch -p ./"
   },
   "dependencies": {
-    "vscode-ext-localisation": "^1.0.1"
+    "@reduxjs/toolkit": "^1.5.0",
+    "@types/chai": "^4.2.14",
+    "@types/sinon": "^9.0.9",
+    "chai": "^4.2.0",
+    "sinon": "^9.2.2",
+    "vscode-ext-localisation": "^1.0.1",
+    "xstate": "^4.15.1"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",
     "@types/glob": "^7.1.1",
     "@types/mocha": "^7.0.2",
+    "@types/mock-fs": "^4.13.0",
     "@types/node": "^13.11.0",
-    "@types/vscode": "^1.45.0",
+    "@types/vscode": "^1.50.0",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
     "commitlint": "^8.3.5",
@@ -165,6 +177,7 @@
     "husky": "^4.2.3",
     "lint-staged": "^10.0.8",
     "mocha": "^7.1.2",
+    "mock-fs": "^4.13.0",
     "prettier": "^2.0.5",
     "ts-node": "^8.10.2",
     "typescript": "^3.8.3",
