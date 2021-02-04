@@ -1,4 +1,3 @@
-import { Unsubscribe } from '@reduxjs/toolkit';
 import * as vscode from 'vscode';
 import { SortIds } from '../../commands/registerCommands.interface';
 import {
@@ -25,11 +24,15 @@ import {
 } from './WorkspaceViewProvider.interface';
 
 const { executeCommand } = vscode.commands;
+const { list, setPersistedState } = workspaceSlice.actions;
 
 export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   public static readonly viewType = EXT_WEBVIEW_WS;
   private _view?: vscode.WebviewView;
-  private _unsubscribe?: Unsubscribe;
+  private _unsubscribe = store.subscribe(() => {
+    this.render();
+    this.stateChanged(store.getState().ws);
+  });
 
   constructor(
     private readonly _extensionUri: vscode.Uri,
@@ -57,10 +60,14 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     return null;
   }
 
-  public refresh() {
-    vscode.commands.executeCommand('setContext', EXT_LOADED, false);
-    this._globalState.update(EXT_WSSTATE_CACHE, undefined);
-    store.dispatch(fetch());
+  public refresh(isRerender = false) {
+    if (isRerender) {
+      this.render();
+    } else {
+      vscode.commands.executeCommand('setContext', EXT_LOADED, false);
+      this._globalState.update(EXT_WSSTATE_CACHE, undefined);
+      store.dispatch(fetch());
+    }
   }
 
   private render() {
@@ -78,26 +85,13 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     }
   }
 
-  public rerender() {
-    this.render();
-  }
-
   public updateSort() {
-    const { setPersistedState } = workspaceSlice.actions;
     const sort = this._globalState.get<SortIds>(EXT_SORT) ?? 'ascending';
     store.dispatch(setPersistedState({ sort }));
   }
 
   public resolveWebviewView(webviewView: vscode.WebviewView) {
     this._view = webviewView;
-    const { list, setPersistedState } = workspaceSlice.actions;
-
-    if (this._unsubscribe === undefined) {
-      this._unsubscribe = store.subscribe(() => {
-        this.render();
-        this.stateChanged(store.getState().ws);
-      });
-    }
 
     this.setupWebview(webviewView);
     this.updateSort();

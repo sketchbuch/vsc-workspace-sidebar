@@ -1,7 +1,5 @@
 import * as vscode from 'vscode';
 
-export type WebviewTypes = 'vsc-workspace-sidebar-webview-workspace';
-
 export interface PostMessage<Payload, Actions> {
   action: Actions;
   payload: Payload;

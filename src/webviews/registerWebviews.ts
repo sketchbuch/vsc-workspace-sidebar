@@ -16,7 +16,7 @@ export const registerWebviews = (
     } else if (event.affectsConfiguration('workspaceSidebar.folder')) {
       workspaceViewProvider.refresh();
     } else if (event.affectsConfiguration('workspaceSidebar.showPaths')) {
-      workspaceViewProvider.rerender();
+      workspaceViewProvider.refresh(true);
     }
   });
 
