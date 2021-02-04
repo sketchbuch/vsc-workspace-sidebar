@@ -1,11 +1,17 @@
 # Folders
 .vscode-test/
+/.parcel-cache
+/.cache
+/dist
+/out
+/test
 node_modules
-out
 
 # Files
 *.code-workspace
+*.DS_Store
 *.vsix
-*DS_Store
+audit-report.html
+Colours.css
 Temp.txt
 yarn-error.log

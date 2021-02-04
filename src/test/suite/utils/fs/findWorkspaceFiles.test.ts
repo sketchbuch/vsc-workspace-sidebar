@@ -1,5 +1,5 @@
 /* import { expect } from 'chai';
-import * as mockFs from 'mock-fs';
+import mockFs from 'mock-fs';
 import * as path from 'path';
 import { FS_WS_FILETYPE } from '../../../../constants';
 import { findWorkspaceFiles } from '../../../../utils';

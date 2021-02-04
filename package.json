@@ -138,20 +138,30 @@
       "git add"
     ]
   },
-  "main": "./out/extension.js",
+  "main": "./dist/extension.js",
   "publisher": "sketchbuch",
   "repository": {
     "type": "git",
     "url": "https://github.com/sketchbuch/vsc-workspace-sidebar"
   },
   "scripts": {
+    "audit-html": "yarn audit --json | yarn-audit-html --output audit-report.html",
+    "build:dev": "parcel build ./src/extension.ts --target=dev",
+    "build:release": "parcel build ./src/extension.ts --target=release",
+    "clean:cache": "rimraf ./.parcel-cache/*",
+    "clean:dist": "rimraf ./dist/*",
+    "clean:test": "rimraf ./test/*",
+    "clean": "yarn clean:cache && yarn clean:dist && yarn clean:test",
     "compile": "tsc -p ./",
+    "dev": "yarn clean:dist && yarn build:dev",
+    "lint:css": "stylelint --config=.stylelintrc './resources/css/**/*.css'",
+    "lint:js": "eslint ./resources/js --ext js --fix",
     "lint:prettier": "prettier --write --config ./.prettierrc.js './{src, resources/js}/**/*.{js,ts}'",
-    "lint:ts": "eslint src --ext ts",
-    "pretest": "yarn compile && yarn lint",
-    "test": "node ./out/test/runTest.js",
-    "vscode:prepublish": "yarn compile",
-    "watch": "tsc -watch -p ./"
+    "lint:ts": "eslint ./src --ext ts --fix",
+    "lint": "yarn lint:js && yarn lint:ts && yarn lint:prettier && yarn lint:css",
+    "pretest": "yarn clean:dist && yarn build:dev && yarn lint",
+    "test": "yarn clean:test && yarn compile",
+    "vscode:prepublish": "yarn clean:dist && yarn build:release"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.0",
@@ -159,8 +169,7 @@
     "@types/sinon": "^9.0.9",
     "chai": "^4.2.0",
     "sinon": "^9.2.2",
-    "vscode-ext-localisation": "^1.0.1",
-    "xstate": "^4.15.1"
+    "vscode-ext-localisation": "^1.0.1"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",
@@ -168,6 +177,7 @@
     "@types/mocha": "^7.0.2",
     "@types/mock-fs": "^4.13.0",
     "@types/node": "^13.11.0",
+    "@types/stylelint": "^9.10.1",
     "@types/vscode": "^1.50.0",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
@@ -178,7 +188,10 @@
     "lint-staged": "^10.0.8",
     "mocha": "^7.1.2",
     "mock-fs": "^4.13.0",
+    "parcel": "^1.12.4",
     "prettier": "^2.0.5",
+    "stylelint": "^13.9.0",
+    "stylelint-config-recommended": "^3.0.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.8.3",
     "vscode-test": "^1.3.0"

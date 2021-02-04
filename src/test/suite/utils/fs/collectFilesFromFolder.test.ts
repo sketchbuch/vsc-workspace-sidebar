@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import * as mockFs from 'mock-fs';
+import mockFs from 'mock-fs';
 import { collectFilesFromFolder } from '../../../../utils';
 import * as fn from '../../../../utils/fs/getFilenamesOfType';
 import * as hidden from '../../../../utils/fs/isHiddenFile';

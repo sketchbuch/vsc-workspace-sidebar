@@ -21,6 +21,7 @@ export const mockContext = {
   globalStorageUri: {} as vscode.Uri,
   logPath: '',
   logUri: {} as vscode.Uri,
+  secrets: {} as vscode.SecretStorage,
   storagePath: '',
   storageUri: undefined,
   subscriptions: [],

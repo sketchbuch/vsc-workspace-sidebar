@@ -29,10 +29,6 @@ const { list, setPersistedState } = workspaceSlice.actions;
 export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   public static readonly viewType = EXT_WEBVIEW_WS;
   private _view?: vscode.WebviewView;
-  private _unsubscribe = store.subscribe(() => {
-    this.render();
-    this.stateChanged(store.getState().ws);
-  });
 
   constructor(
     private readonly _extensionUri: vscode.Uri,
@@ -92,6 +88,11 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
 
   public resolveWebviewView(webviewView: vscode.WebviewView) {
     this._view = webviewView;
+
+    store.subscribe(() => {
+      this.render();
+      this.stateChanged(store.getState().ws);
+    });
 
     this.setupWebview(webviewView);
     this.updateSort();

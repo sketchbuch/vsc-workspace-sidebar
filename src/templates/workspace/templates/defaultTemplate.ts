@@ -22,7 +22,6 @@ export const defaultTemplate = (
   const renderVars: RenderVars = { imgDarkFolderUri, imgLightFolderUri };
 
   let content = '';
-  console.log('### view', view);
 
   if (view === 'loading') {
     content = loadingView(state, renderVars);
