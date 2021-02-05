@@ -40,7 +40,4 @@ export const mockFsStructure = {
     'test-subfolder1': {},
     'test-subfolder2': {},
   },
-  'moc-extension-uri': {
-    'some.code-workspace': '',
-  },
 };

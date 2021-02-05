@@ -6,7 +6,7 @@ import { mockRenderVars } from '../../mocks';
 suite('Templates > getImgUrls()', () => {
   const iconName = 'success';
 
-  test('Returns expected dark and light URL', () => {
+  test('Returns expected dark and light URLs', () => {
     expect(getImgUrls(mockRenderVars, iconName)).to.eql({
       dark: `${mockRenderVars.imgDarkFolderUri}${path.sep}${iconName}.svg`,
       light: `${mockRenderVars.imgLightFolderUri}${path.sep}${iconName}.svg`,
