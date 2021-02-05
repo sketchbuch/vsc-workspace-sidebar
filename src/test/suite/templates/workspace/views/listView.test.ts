@@ -19,6 +19,7 @@ suite('Templates > Workspace > View: listView()', () => {
     const result = listView(mockState, mockRenderVars);
 
     expect(result).to.be.a('string');
+    expect(result).not.to.equal('');
     expect(result.includes('class="view list list--empty"')).to.equal(true);
     expect(result).not.to.equal('');
 
@@ -32,6 +33,7 @@ suite('Templates > Workspace > View: listView()', () => {
     const result = listView(mockState, mockRenderVars);
 
     expect(result).to.be.a('string');
+    expect(result).not.to.equal('');
     expect(result.includes('class="view list"')).to.equal(true);
     expect(result).not.to.equal('');
 
