@@ -1,4 +1,6 @@
 export * from './mockContext';
+export * from './mockRenderVars';
+export * from './mockState';
 
 export const mockFsStructure = {
   'check-file': {
