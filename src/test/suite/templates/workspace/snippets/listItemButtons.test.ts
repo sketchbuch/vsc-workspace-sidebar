@@ -3,16 +3,10 @@ import * as sinon from 'sinon';
 import { t } from 'vscode-ext-localisation';
 import * as icons from '../../../../../templates/getImgUrls';
 import { listItemButtons } from '../../../../../templates/workspace/snippets/listItemButtons';
-import { File } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface';
-import { mockRenderVars } from '../../../../mocks';
+import { getMockFiles, mockRenderVars } from '../../../../mocks';
 
 suite('Templates > Workspace > Snippets: listItemButtons()', () => {
-  const file: File = {
-    file: 'file-1',
-    isSelected: false,
-    label: 'File 1',
-    path: ``,
-  };
+  const [file] = getMockFiles(1);
 
   test('Renders correctly', () => {
     const spy = sinon.spy(icons, 'getImgUrls');

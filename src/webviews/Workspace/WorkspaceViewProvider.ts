@@ -8,11 +8,13 @@ import {
   EXT_WEBVIEW_WS,
   EXT_WSSTATE_CACHE,
   EXT_WSSTATE_CACHE_DURATION,
+  NONCE_CHARS,
 } from '../../constants';
 import { store } from '../../store/store';
 import { getHtml } from '../../templates';
 import { defaultTemplate as template } from '../../templates/workspace';
 import { GlobalState } from '../../types';
+import { getNonce } from '../../utils/security/getNonce';
 import { HtmlData, PostMessage } from '../webviews.interface';
 import { fetch } from './store/fetch';
 import { workspaceSlice } from './store/workspaceSlice';
@@ -73,11 +75,14 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
         webview: this._view.webview,
       };
 
-      this._view.webview.html = getHtml<WorkspaceState>({
-        extensionPath: this._extensionUri,
-        template,
-        htmlData,
-      });
+      this._view.webview.html = getHtml<WorkspaceState>(
+        {
+          extensionPath: this._extensionUri,
+          template,
+          htmlData,
+        },
+        getNonce(NONCE_CHARS, Math.random())
+      );
     }
   }
 

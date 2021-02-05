@@ -19,9 +19,11 @@ export interface TemplateVars {
   scriptFolderUri: vscode.Uri;
 }
 
+export type GetHtmlTemplateFunc<TState> = (templateVars: TemplateVars, state: TState) => string;
+
 export interface GetHtml<TState> {
   extensionPath: vscode.Uri;
-  template: (templateVars: TemplateVars, state: TState) => string;
+  template: GetHtmlTemplateFunc<TState>;
   htmlData: HtmlData<TState>;
 }
 
