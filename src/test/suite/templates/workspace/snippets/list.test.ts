@@ -52,11 +52,11 @@ suite('Templates > Workspace > Snippets: list()', () => {
     expect(result).to.equal('');
   });
 
-  test('Renders correctly if there are files', () => {
-    testRendering({ files: ['one', 'two'] });
+  test('Renders the files in "ascending" order', () => {
+    testRendering({ files: ['one', 'two'], sort: 'ascending' });
   });
 
-  test('Sorting the files in "descending" order', () => {
+  test('Renders the files in "desscending" order', () => {
     testRendering({ files: ['one', 'two'], sort: 'descending' });
   });
 });
