@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import * as mockFs from 'mock-fs';
+import mockFs from 'mock-fs';
 import * as path from 'path';
 import { checkFile } from '../../../../utils';
 import { mockFsStructure } from '../../../mocks';
