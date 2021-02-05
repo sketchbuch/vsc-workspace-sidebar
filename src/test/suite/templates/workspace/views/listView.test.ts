@@ -5,7 +5,7 @@ import { listView } from '../../../../../templates/workspace';
 import * as list from '../../../../../templates/workspace/snippets/list';
 import { getMockState, mockRenderVars } from '../../../../mocks';
 
-suite.only('Templates > Workspace > View: listView()', () => {
+suite('Templates > Workspace > View: listView()', () => {
   test('Renders correctly if files is false', () => {
     const result = listView(getMockState(), mockRenderVars);
 
@@ -19,9 +19,11 @@ suite.only('Templates > Workspace > View: listView()', () => {
     const result = listView(mockState, mockRenderVars);
 
     expect(result).to.be.a('string');
-    expect(result.includes('class="view')).to.equal(true);
+    expect(result.includes('class="view list list--empty"')).to.equal(true);
     expect(result).not.to.equal('');
+
     sinon.assert.callCount(spy, 1);
+    spy.restore();
   });
 
   test('Renders correctly if there are files', () => {
@@ -30,9 +32,11 @@ suite.only('Templates > Workspace > View: listView()', () => {
     const result = listView(mockState, mockRenderVars);
 
     expect(result).to.be.a('string');
-    expect(result.includes('class="view')).to.equal(true);
+    expect(result.includes('class="view list"')).to.equal(true);
     expect(result).not.to.equal('');
+
     sinon.assert.callCount(spy, 1);
     sinon.assert.calledWith(spy, mockState, mockRenderVars);
+    spy.restore();
   });
 });
