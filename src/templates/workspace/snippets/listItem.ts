@@ -19,7 +19,7 @@ export const listItem = (file: File, renderVars: RenderVars) => {
         ${isSelected ? listItemIcon(renderVars) : ''}
         <span class="list__title">${label}</span>
         ${path ? `<span class="list__description">${path}</span>` : ''}
-        ${!isSelected ? listItemButtons(dataFile, label, renderVars) : ''}
+        ${!isSelected ? listItemButtons(file, renderVars) : ''}
       </span>
     </li>
   `;

@@ -68,7 +68,7 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
     ).to.equal(true);
 
     sinon.assert.callCount(btnSpy, 1);
-    sinon.assert.calledWith(btnSpy, file.file, file.label, mockRenderVars);
+    sinon.assert.calledWith(btnSpy, file, mockRenderVars);
     sinon.assert.callCount(iconSpy, 0);
     btnSpy.restore();
     iconSpy.restore();
