@@ -56,7 +56,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
     testRendering({ files: ['one', 'two'], sort: 'ascending' });
   });
 
-  test('Renders the files in "desscending" order', () => {
+  test('Renders the files in "descending" order', () => {
     testRendering({ files: ['one', 'two'], sort: 'descending' });
   });
 });
