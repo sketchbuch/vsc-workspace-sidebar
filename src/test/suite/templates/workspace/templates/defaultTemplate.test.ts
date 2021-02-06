@@ -1,10 +1,14 @@
-/* import { expect } from 'chai';
+import { expect } from 'chai';
 import { Uri } from 'vscode';
 import { defaultTemplate } from '../../../../../templates/workspace';
 import { WorkspaceState } from '../../../../../webviews';
-import { GetTemplate } from '../../../../../webviews/webviews.interface';
+import { TemplateVars } from '../../../../../webviews/webviews.interface';
 
 suite('Templates > Workspace > Templates: defaultTemplate()', () => {
+  const baseUri = {
+    scheme: 'file',
+    authority: 'localhost',
+  };
   const state: WorkspaceState = {
     error: '',
     files: false,
@@ -13,29 +17,13 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
     sort: 'ascending',
     state: 'loading',
   };
-  const props: GetTemplate = {
+  const props: TemplateVars = {
     cspSource: 'test-cspSource',
-    cssFolderUri: {
-      scheme: 'file',
-      authority: 'localhost',
-      path: '/resources/css',
-    } as Uri,
-    imgDarkFolderUri: {
-      scheme: 'file',
-      authority: 'localhost',
-      path: '/resources/imgages/dark',
-    } as Uri,
-    imgLightFolderUri: {
-      scheme: 'file',
-      authority: 'localhost',
-      path: '/resources/imgages/light',
-    } as Uri,
+    cssFolderUri: { ...baseUri, path: '/resources/css' } as Uri,
+    imgDarkFolderUri: { ...baseUri, path: '/resources/imgages/dark' } as Uri,
+    imgLightFolderUri: { ...baseUri, path: '/resources/imgages/light' } as Uri,
     nonce: 'test-nonce',
-    scriptFolderUri: {
-      scheme: 'file',
-      authority: 'localhost',
-      path: '/resources/js',
-    } as Uri,
+    scriptFolderUri: { ...baseUri, path: '/resources/js' } as Uri,
   };
 
   test('Renders correctly', () => {
@@ -91,4 +79,3 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
     });
   });
 });
- */

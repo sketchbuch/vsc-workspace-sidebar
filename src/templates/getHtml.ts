@@ -6,14 +6,15 @@ import {
   FS_FOLDER_IMAGES_LIGHT,
   FS_FOLDER_JS,
   FS_FOLDER_RESOURCES,
-  NONCE_CHARS,
 } from '../constants';
-import { getNonce } from '../utils';
 import { GetHtml } from '../webviews/webviews.interface';
 
 const { joinPath } = vscode.Uri;
 
-export const getHtml = <T>({ extensionPath, template, htmlData }: GetHtml<T>): string => {
+export const getHtml = <T>(
+  { extensionPath, template, htmlData }: GetHtml<T>,
+  nonce: string
+): string => {
   const { data, webview } = htmlData;
   const cssFolderUri = webview.asWebviewUri(
     joinPath(extensionPath, FS_FOLDER_RESOURCES, FS_FOLDER_CSS)
@@ -34,7 +35,7 @@ export const getHtml = <T>({ extensionPath, template, htmlData }: GetHtml<T>): s
       cssFolderUri,
       imgDarkFolderUri,
       imgLightFolderUri,
-      nonce: getNonce(NONCE_CHARS, Math.random()),
+      nonce,
       scriptFolderUri,
     },
     data

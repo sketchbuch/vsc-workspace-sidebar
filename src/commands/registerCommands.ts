@@ -19,17 +19,13 @@ export const registerCommands = (
 
   context.subscriptions.push(
     registerCommand(CMD_OPEN_CUR_WIN, (file: string): void => {
-      if (file) {
-        vscode.commands.executeCommand(CMD_VSC_OPEN_WS, vscode.Uri.file(file), false);
-      }
+      vscode.commands.executeCommand(CMD_VSC_OPEN_WS, vscode.Uri.file(file), false);
     })
   );
 
   context.subscriptions.push(
     registerCommand(CMD_OPEN_NEW_WIN, (file: string): void => {
-      if (file) {
-        vscode.commands.executeCommand(CMD_VSC_OPEN_WS, vscode.Uri.file(file), true);
-      }
+      vscode.commands.executeCommand(CMD_VSC_OPEN_WS, vscode.Uri.file(file), true);
     })
   );
 
@@ -60,7 +56,7 @@ export const registerCommands = (
         const selection = await vscode.window.showQuickPick(items);
 
         if (selection && selection.id !== sort) {
-          context.globalState
+          await context.globalState
             .update(EXT_SORT, selection.id)
             .then(() => workspaceViewProvider.updateSort());
         }

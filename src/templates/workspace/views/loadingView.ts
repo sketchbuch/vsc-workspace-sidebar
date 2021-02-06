@@ -13,7 +13,7 @@ export const loadingView = (state: WorkspaceState, renderVars: RenderVars): stri
         <img alt="" data-theme="light" src="${light}" />
       </span>
       <p class="view__message">
-        <span class="view__message--title">${t('webViews.workspace.loading')}</span>
+        <span class="view__message-title">${t('webViews.workspace.loading')}</span>
       </p>
     </section>`;
 };

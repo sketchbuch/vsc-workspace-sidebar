@@ -1,37 +1,44 @@
-/* import { expect } from 'chai';
+import { expect } from 'chai';
 import * as sinon from 'sinon';
-import * as vscode from 'vscode';
+import * as settings from '../../../../../templates/common/snippets/settingsLink';
 import { listView } from '../../../../../templates/workspace';
-import * as snippets from '../../../../../templates/workspace/snippets/list';
+import * as list from '../../../../../templates/workspace/snippets/list';
+import { getMockState, mockRenderVars } from '../../../../mocks';
 
 suite('Templates > Workspace > View: listView()', () => {
-  const imgDarkFolderUri = {
-    scheme: 'file',
-    authority: 'localhost',
-    path: '/resources/imgages/dark',
-  } as vscode.Uri;
-  const imgLightFolderUri = {
-    scheme: 'file',
-    authority: 'localhost',
-    path: '/resources/imgages/light',
-  } as vscode.Uri;
-
-  test('Renders correctly if there are no files', () => {
-    const result = listView(false, '', imgDarkFolderUri, imgLightFolderUri);
+  test('Renders correctly if files is false', () => {
+    const result = listView(getMockState(), mockRenderVars);
 
     expect(result).to.be.a('string');
     expect(result).to.equal('');
   });
 
-  test('Renders correctly if there are files', () => {
-    const spy = sinon.spy(snippets, 'list');
-    const result = listView([], '', imgDarkFolderUri, imgLightFolderUri);
+  test('Renders correctly if there are no files', () => {
+    const mockState = getMockState({ files: [] });
+    const spy = sinon.spy(settings, 'settingsLink');
+    const result = listView(mockState, mockRenderVars);
 
     expect(result).to.be.a('string');
-    expect(result.includes('class="view')).to.equal(true);
     expect(result).not.to.equal('');
+    expect(result.includes('class="view list list--empty"')).to.equal(true);
+    expect(result).not.to.equal('');
+
     sinon.assert.callCount(spy, 1);
-    sinon.assert.calledWith(spy, [], '', imgDarkFolderUri, imgLightFolderUri);
+    spy.restore();
+  });
+
+  test('Renders correctly if there are files', () => {
+    const mockState = getMockState({ files: ['/a/path/to/a-file'] });
+    const spy = sinon.spy(list, 'list');
+    const result = listView(mockState, mockRenderVars);
+
+    expect(result).to.be.a('string');
+    expect(result).not.to.equal('');
+    expect(result.includes('class="view list"')).to.equal(true);
+    expect(result).not.to.equal('');
+
+    sinon.assert.callCount(spy, 1);
+    sinon.assert.calledWith(spy, mockState, mockRenderVars);
+    spy.restore();
   });
 });
- */

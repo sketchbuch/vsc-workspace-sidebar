@@ -1,49 +1,62 @@
-/* import { expect } from 'chai';
+import { expect } from 'chai';
 import * as sinon from 'sinon';
-import * as vscode from 'vscode';
 import { list } from '../../../../../templates/workspace';
 import * as snippets from '../../../../../templates/workspace/snippets/listItem';
+import { WorkspaceState } from '../../../../../webviews';
+import { getMockState, mockRenderVars } from '../../../../mocks';
 
 suite('Templates > Workspace > Snippets: list()', () => {
-  const imgDarkFolderUri = {
-    scheme: 'file',
-    authority: 'localhost',
-    path: '/resources/imgages/dark',
-  } as vscode.Uri;
-  const imgLightFolderUri = {
-    scheme: 'file',
-    authority: 'localhost',
-    path: '/resources/imgages/light',
-  } as vscode.Uri;
+  const testRendering = (state: Partial<WorkspaceState>) => {
+    const spy = sinon.spy(snippets, 'listItem');
+    const result = list(getMockState(state), mockRenderVars);
 
-  test('Renders correctly if there are no files', () => {
-    const result = list([], '', imgDarkFolderUri, imgLightFolderUri);
+    expect(result).to.be.a('string');
+    expect(result).not.to.equal('');
+    sinon.assert.calledTwice(spy);
+
+    let oneOrder = 0;
+    let twoOrder = 1;
+
+    if (state.sort === 'descending') {
+      oneOrder = 1;
+      twoOrder = 0;
+    }
+
+    expect(spy.getCalls()[oneOrder].args[0]).to.eql({
+      file: 'one',
+      isSelected: false,
+      label: 'One',
+      path: '',
+    });
+    expect(spy.getCalls()[twoOrder].args[0]).to.eql({
+      file: 'two',
+      isSelected: false,
+      label: 'Two',
+      path: '',
+    });
+
+    spy.restore();
+  };
+
+  test('Renders correctly if files is false', () => {
+    const result = list(getMockState(), mockRenderVars);
 
     expect(result).to.be.a('string');
     expect(result).to.equal('');
   });
 
-  test('Renders correctly if there are files', () => {
-    const spy = sinon.spy(snippets, 'listItem');
-    const result = list(['one', 'two'], '', imgDarkFolderUri, imgLightFolderUri);
+  test('Renders correctly if there are no files', () => {
+    const result = list(getMockState({ files: [] }), mockRenderVars);
 
     expect(result).to.be.a('string');
-    expect(result).not.to.equal('');
-    sinon.assert.calledTwice(spy);
-    expect(spy.getCalls()[0].args[0]).to.eql({
-      file: 'one',
-      label: 'One',
-      path: '',
-      selected: false,
-    });
-    expect(spy.getCalls()[1].args[0]).to.eql({
-      file: 'two',
-      label: 'Two',
-      path: '',
-      selected: false,
-    });
+    expect(result).to.equal('');
+  });
 
-    spy.restore();
+  test('Renders the files in "ascending" order', () => {
+    testRendering({ files: ['one', 'two'], sort: 'ascending' });
+  });
+
+  test('Renders the files in "descending" order', () => {
+    testRendering({ files: ['one', 'two'], sort: 'descending' });
   });
 });
- */

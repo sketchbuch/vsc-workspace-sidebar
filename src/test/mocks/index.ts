@@ -1,4 +1,10 @@
 export * from './mockContext';
+export * from './mockExtensionUri';
+export * from './mockFiles';
+export * from './mockRenderVars';
+export * from './mockState';
+export * from './mockTemplateVars';
+export * from './mockWebview';
 
 export const mockFsStructure = {
   'check-file': {
