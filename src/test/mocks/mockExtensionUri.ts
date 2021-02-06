@@ -1,12 +1,10 @@
 import * as vscode from 'vscode';
 
-const mockExtensionUriPath = '/moc-extension-uri';
-
 export const mockExtensionUri = {
   authority: 'localhost',
   fragment: '',
-  fsPath: mockExtensionUriPath,
-  path: mockExtensionUriPath,
+  fsPath: 'file://moc-extension-uri',
+  path: '/moc-extension-uri',
   query: '',
   scheme: 'file',
   toJSON: () => '',
@@ -14,3 +12,18 @@ export const mockExtensionUri = {
     return {} as vscode.Uri;
   },
 } as vscode.Uri;
+
+export const getMockUri = (extension: string = '') => {
+  return {
+    authority: 'localhost',
+    fragment: '',
+    fsPath: `file://moc-extension-uri/test${extension}`,
+    path: `/moc-extension-uri/test${extension}`,
+    query: '',
+    scheme: 'file',
+    toJSON: () => '',
+    with: () => {
+      return {} as vscode.Uri;
+    },
+  } as vscode.Uri;
+};

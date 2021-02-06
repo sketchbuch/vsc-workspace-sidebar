@@ -1,10 +1,19 @@
 import { File } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
 
-export const getMockFiles = (
-  numOfFiles: number,
-  hasPath: boolean = false,
-  isSelected: boolean = false
-): File[] => {
+interface Config {
+  hasPath: boolean;
+  isSelected: boolean;
+}
+const defaultConfig = {
+  hasPath: false,
+  isSelected: false,
+};
+
+export const getMockFiles = (numOfFiles: number, config: Partial<Config> = {}): File[] => {
+  const { hasPath, isSelected }: Config = {
+    ...defaultConfig,
+    ...config,
+  };
   let files: File[] = [];
 
   for (let index = 0; index < numOfFiles; index++) {

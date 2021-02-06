@@ -21,7 +21,7 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
   });
 
   test('Renders description if path is not empty', () => {
-    const [fileWithPath] = getMockFiles(1, true);
+    const [fileWithPath] = getMockFiles(1, { hasPath: true });
     const result = listItem(fileWithPath, mockRenderVars);
 
     expect(result.includes('class="list__description"')).to.equal(true);
@@ -29,7 +29,7 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
   });
 
   test('Renders selected files correctly', () => {
-    const [fileSelected] = getMockFiles(1, false, true);
+    const [fileSelected] = getMockFiles(1, { hasPath: false, isSelected: true });
     const btnSpy = sinon.spy(buttons, 'listItemButtons');
     const iconSpy = sinon.spy(icons, 'listItemIcon');
     const result = listItem(fileSelected, mockRenderVars);
