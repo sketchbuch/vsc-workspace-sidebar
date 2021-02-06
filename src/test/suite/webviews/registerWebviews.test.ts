@@ -3,15 +3,17 @@ import * as sinon from 'sinon';
 import * as vscode from 'vscode';
 import { FS_WS_EXT } from '../../../constants';
 import { registerWebviews, WorkspaceViewProvider } from '../../../webviews';
-import { getMockUri, mockContext } from '../../mocks';
+import { getMockContext, getMockUri } from '../../mocks';
 
-suite.only('Webviews > registerWebviews()', () => {
+suite('Webviews > registerWebviews()', () => {
+  let configStub: sinon.SinonStub;
+  let mockContext = getMockContext();
   let regWebviewStub: sinon.SinonStub;
   let ws: WorkspaceViewProvider;
-  let configStub: sinon.SinonStub;
 
   setup(() => {
     configStub = sinon.stub(vscode.workspace, 'onDidChangeConfiguration');
+    mockContext = getMockContext();
     regWebviewStub = sinon.stub(vscode.window, 'registerWebviewViewProvider');
     ws = new WorkspaceViewProvider(mockContext.extensionUri, mockContext.globalState);
   });
