@@ -4,16 +4,6 @@ import { findWorkspaceFiles } from '../../../utils';
 
 export const fetch = createAsyncThunk('fetch', findWorkspaceFiles);
 
-export const fetchPending = (state: WorkspaceState) => {
-  state.state = 'loading';
-  state.isFolderInvalid = false;
-};
-
-export const fetchRejected = (state: WorkspaceState) => {
-  state.error = 'FETCH';
-  state.state = 'error';
-};
-
 export const fetchFulfilled = (
   state: WorkspaceState,
   action: WorkspaceThunkAction<WorkspaceFiles>
@@ -27,4 +17,14 @@ export const fetchFulfilled = (
     state.isFolderInvalid = false;
     state.state = 'list';
   }
+};
+
+export const fetchPending = (state: WorkspaceState) => {
+  state.state = 'loading';
+  state.isFolderInvalid = false;
+};
+
+export const fetchRejected = (state: WorkspaceState) => {
+  state.error = 'FETCH';
+  state.state = 'error';
 };

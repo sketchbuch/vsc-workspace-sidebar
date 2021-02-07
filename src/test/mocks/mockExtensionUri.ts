@@ -13,7 +13,7 @@ export const mockExtensionUri = {
   },
 } as vscode.Uri;
 
-export const getMockUri = (extension: string = '') => {
+export const getMockUri = (extension: string = '', uri: Partial<vscode.Uri> = {}) => {
   return {
     authority: 'localhost',
     fragment: '',
@@ -25,5 +25,6 @@ export const getMockUri = (extension: string = '') => {
     with: () => {
       return {} as vscode.Uri;
     },
+    ...uri,
   } as vscode.Uri;
 };

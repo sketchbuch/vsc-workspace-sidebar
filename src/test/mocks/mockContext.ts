@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
+import { getMockUri } from '.';
 
 export const extensionPath = path.resolve(`${__dirname}/../../..`);
 
@@ -9,7 +10,7 @@ export const getMockContext = () => {
     extensionPath,
     environmentVariableCollection: {} as vscode.EnvironmentVariableCollection,
     extensionMode: vscode.ExtensionMode.Test,
-    extensionUri: {} as vscode.Uri,
+    extensionUri: getMockUri(),
     globalState: {
       get: (key: string) => {
         // Do nothing...

@@ -1,7 +1,7 @@
 import * as os from 'os';
 import { workspace } from 'vscode';
 import { CONFIG_PATHS_AS_NEEEDED, CONFIG_PATHS_NEVER, FS_WS_EXT } from '../../../constants';
-import { capitalise } from '../../../utils';
+import { capitalise, isWorkspacefile } from '../../../utils';
 import { File, WsFiles } from '../WorkspaceViewProvider.interface';
 
 export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
@@ -10,33 +10,35 @@ export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
   const folder: string = workspace.getConfiguration().get('workspaceSidebar.folder') || '';
   const cleanedFolder = folder.replace(os.homedir(), '~');
   const labels: string[] = [];
-  const convertedFiles = wsFiles.map(
-    (file): File => {
-      const lastFolder = file.lastIndexOf('/');
-      const label = file
-        .substring(lastFolder + 1)
-        .replace(FS_WS_EXT, '')
-        .toLowerCase()
-        .replace(/[-|_]/g, ' ')
-        .replace(/  +/g, ' ') // Multiple spaces to single
-        .split(' ')
-        .map((word) => capitalise(word))
-        .join(' ');
-      const path =
-        showPaths === CONFIG_PATHS_NEVER
-          ? ''
-          : file.substring(0, lastFolder).replace(os.homedir(), '~').replace(cleanedFolder, '…');
+  const convertedFiles = wsFiles
+    .filter((file) => isWorkspacefile(file, 'file'))
+    .map(
+      (file): File => {
+        const lastFolder = file.lastIndexOf('/');
+        const label = file
+          .substring(lastFolder + 1)
+          .replace(FS_WS_EXT, '')
+          .toLowerCase()
+          .replace(/[-|_]/g, ' ')
+          .replace(/  +/g, ' ') // Multiple spaces to single
+          .split(' ')
+          .map((word) => capitalise(word))
+          .join(' ');
+        const path =
+          showPaths === CONFIG_PATHS_NEVER
+            ? ''
+            : file.substring(0, lastFolder).replace(os.homedir(), '~').replace(cleanedFolder, '…');
 
-      labels.push(label);
+        labels.push(label);
 
-      return {
-        file,
-        isSelected: file === selected,
-        label,
-        path,
-      };
-    }
-  );
+        return {
+          file,
+          isSelected: file === selected,
+          label,
+          path,
+        };
+      }
+    );
 
   if (showPaths === CONFIG_PATHS_AS_NEEEDED) {
     const findDuplicates = (arr: string[]) =>

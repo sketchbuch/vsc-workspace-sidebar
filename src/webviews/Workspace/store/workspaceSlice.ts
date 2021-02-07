@@ -17,12 +17,12 @@ export const workspaceSlice = createSlice({
     state: 'loading',
     sort: 'ascending',
   } as WorkspaceState,
-  name: 'ws',
   extraReducers: (builder) => {
     builder.addCase(fetch.pending, fetchPending);
     builder.addCase(fetch.rejected, fetchRejected);
     builder.addCase(fetch.fulfilled, fetchFulfilled);
   },
+  name: 'ws',
   reducers: {
     error,
     invalid,

@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import { FS_WS_FILETYPE } from '../../../../../constants';
 import { list } from '../../../../../templates/workspace';
 import * as snippets from '../../../../../templates/workspace/snippets/listItem';
 import { WorkspaceState } from '../../../../../webviews';
@@ -23,13 +24,13 @@ suite('Templates > Workspace > Snippets: list()', () => {
     }
 
     expect(spy.getCalls()[oneOrder].args[0]).to.eql({
-      file: 'one',
+      file: `one.${FS_WS_FILETYPE}`,
       isSelected: false,
       label: 'One',
       path: '',
     });
     expect(spy.getCalls()[twoOrder].args[0]).to.eql({
-      file: 'two',
+      file: `two.${FS_WS_FILETYPE}`,
       isSelected: false,
       label: 'Two',
       path: '',
@@ -53,10 +54,13 @@ suite('Templates > Workspace > Snippets: list()', () => {
   });
 
   test('Renders the files in "ascending" order', () => {
-    testRendering({ files: ['one', 'two'], sort: 'ascending' });
+    testRendering({ files: [`one.${FS_WS_FILETYPE}`, `two.${FS_WS_FILETYPE}`], sort: 'ascending' });
   });
 
   test('Renders the files in "descending" order', () => {
-    testRendering({ files: ['one', 'two'], sort: 'descending' });
+    testRendering({
+      files: [`one.${FS_WS_FILETYPE}`, `two.${FS_WS_FILETYPE}`],
+      sort: 'descending',
+    });
   });
 });

@@ -1,5 +1,5 @@
 import { Uri } from 'vscode';
-import { mockRenderVars } from '.';
+import { getMockUri, mockRenderVars } from '.';
 import { TemplateVars } from '../../webviews/webviews.interface';
 
 const { imgDarkFolderUri, imgLightFolderUri } = mockRenderVars;
@@ -12,21 +12,21 @@ export const getMockTemplateVars = (
     cspSource: '34fdg5654dsf',
     cssFolderUri: isEmpty
       ? ({} as Uri)
-      : ({
+      : getMockUri('', {
           scheme: 'file',
           authority: 'localhost',
           path: '/resources/css',
-        } as Uri),
-    imgDarkFolderUri: isEmpty ? ({} as Uri) : imgDarkFolderUri,
-    imgLightFolderUri: isEmpty ? ({} as Uri) : imgLightFolderUri,
+        }),
+    imgDarkFolderUri: isEmpty ? ({} as Uri) : getMockUri('', { ...imgDarkFolderUri }),
+    imgLightFolderUri: isEmpty ? ({} as Uri) : getMockUri('', { ...imgLightFolderUri }),
     nonce: 'test-nonce',
     scriptFolderUri: isEmpty
       ? ({} as Uri)
-      : ({
+      : getMockUri('', {
           scheme: 'file',
           authority: 'localhost',
           path: '/resources/js',
-        } as Uri),
+        }),
     ...templateVars,
   };
 };
