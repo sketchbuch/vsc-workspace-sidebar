@@ -1,5 +1,5 @@
 import { t } from 'vscode-ext-localisation';
-import { list } from '..';
+import { list, searchBox } from '..';
 import { getImgUrls } from '../..';
 import { RenderVars } from '../../../webviews/webviews.interface';
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
@@ -10,6 +10,9 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
     if (state.files.length > 0) {
       return `
         <section class="view list">
+          <form id="searchWorkspacesForm" role="search" class="list__search">
+            ${searchBox(state)}
+          </form>
           ${list(state, renderVars)}
         </section>
       `;

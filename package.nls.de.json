@@ -22,8 +22,8 @@
   },
   "workspace": {
     "checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",
-    "error": "Ein unbekannter Fehler ist aufgetreten",
     "error-fetch": "Beim Sammeln von Arbeitsbereiche ist ein Fehler aufgetreten",
+    "error": "Ein unbekannter Fehler ist aufgetreten",
     "inValid": "Der Ordnerpfad ist kein Verzeichnis",
     "list-empty": "Keine Arbeitsbereichse gefunden",
     "listItem": {
@@ -33,6 +33,7 @@
       "selected": "Aktueller Arbeitsbereich"
     },
     "loading": "Sammeln von Arbeitsbereiche...",
-    "none": "Keine Arbeitsbereiche gefunden"
+    "none": "Keine Arbeitsbereiche gefunden",
+    "searchedOut": "Keine Arbeitsbereiche stimmten mit Ihren Suchbegriffen überein"
   }
 }

@@ -15,17 +15,21 @@ export const defaultTemplate = (
     imgLightFolderUri,
     nonce,
     scriptFolderUri,
+    title,
   }: TemplateVars,
   state: WorkspaceState
 ): string => {
   const { state: view } = state;
   const renderVars: RenderVars = { imgDarkFolderUri, imgLightFolderUri };
 
+  let titleAttr = t('views.title');
   let content = '';
 
   if (view === 'loading') {
     content = loadingView(state, renderVars);
   } else if (view === 'list') {
+    titleAttr = t('webViews.workspace.viewTitle', { title });
+
     content = listView(state, renderVars);
   } else if (view === 'invalid') {
     content = invalidView(state, renderVars);
@@ -38,7 +42,7 @@ export const defaultTemplate = (
     <html lang="en">
       <head>
         ${metaTags(nonce, cspSource)}
-        <title>${t('views.title')}</title>
+        <title>${titleAttr}</title>
         <link href="${cssFolderUri}/${FS_WEBVIEW_WORKSPACE_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
       </head>
 

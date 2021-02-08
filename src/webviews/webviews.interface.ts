@@ -17,6 +17,7 @@ export interface TemplateVars {
   imgLightFolderUri: vscode.Uri;
   nonce: string;
   scriptFolderUri: vscode.Uri;
+  title: string;
 }
 
 export type GetHtmlTemplateFunc<TState> = (templateVars: TemplateVars, state: TState) => string;
@@ -29,5 +30,6 @@ export interface GetHtml<TState> {
 
 export interface HtmlData<TState> {
   data: TState;
+  title: string;
   webview: vscode.Webview;
 }

@@ -1,7 +1,12 @@
+.list {
+  position: relative;
+}
+
 .list__list {
   list-style: none;
   margin: 0;
   padding: 0;
+  padding-top: 30px;
 }
 
 .list--empty {
@@ -138,4 +143,37 @@
 
 .list--empty .list__icon {
   top: 0.3rem;
+}
+
+.list__search {
+  align-items: flex-start;
+  background: var(--vscode-sideBar-background);
+  box-sizing: border-box;
+  display: flex;
+  height: 30px;
+  justify-content: flex-start;
+  left: 0;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.list__search .ibwrapper {
+  width: 100%;
+}
+
+.list__search input {
+  width: 100%;
+}
+
+.list__list-searchedout {
+  color: var(--vscode-editorWidget-foreground);
+  padding: 0.3rem 20px;
+  padding-top: 30px;
+}
+
+.list__list-searchedout p {
+  margin: 0;
 }

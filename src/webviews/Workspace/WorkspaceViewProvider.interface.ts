@@ -20,6 +20,7 @@ export type WorkspaceErrors = '' | 'FETCH';
 export enum WorkspacePmActions {
   OPEN_CUR_WINDOW = 'OPEN_CUR_WINDOW',
   OPEN_NEW_WINDOW = 'OPEN_NEW_WINDOW',
+  SEARCH = 'SEARCH',
   SHOW_SETTINGS = 'SHOW_SETTINGS',
 }
 
@@ -27,11 +28,14 @@ export type WorkspacePmPayload = string;
 export interface WorkspacePersistedState {
   sort: SortIds;
 }
+export type WorkspacePmPayloadSearchTerm = string;
 
 export type WorkspaceState = {
   error: WorkspaceErrors;
   files: WorkspaceFiles;
+  visibleFiles: Files;
   isFolderInvalid: boolean;
+  search: string;
   selected: string;
   sort: SortIds;
   state: WorkspaceStates;
@@ -43,7 +47,6 @@ export type WsFiles = string[];
 
 export type WorkspaceFiles = false | WsFiles;
 
-// Redux
 export type WorkspaceThunkAction<Payload> = PayloadAction<
   Payload,
   string,

@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { t } from 'vscode-ext-localisation';
 import { SortIds } from '../../commands/registerCommands.interface';
 import {
   CMD_OPEN_CUR_WIN,
@@ -26,7 +27,7 @@ import {
 } from './WorkspaceViewProvider.interface';
 
 const { executeCommand } = vscode.commands;
-const { list, setPersistedState } = workspaceSlice.actions;
+const { list, setPersistedState, setSearchTerm } = workspaceSlice.actions;
 
 export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   public static readonly viewType = EXT_WEBVIEW_WS;
@@ -58,6 +59,22 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     return null;
   }
 
+  private getViewTitle({ files, visibleFiles, search, state: view }: WorkspaceState) {
+    let viewTitle = t('views.title');
+
+    if (view === 'list' && files !== false) {
+      viewTitle = t(
+        search ? 'webViews.workspace.titleListSearched' : 'webViews.workspace.titleList',
+        {
+          matches: visibleFiles.length.toString(),
+          total: files.length.toString(),
+        }
+      );
+    }
+
+    return viewTitle;
+  }
+
   public refresh(isRerender = false) {
     if (isRerender) {
       this.render();
@@ -70,8 +87,12 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
 
   private render() {
     if (this._view) {
+      const state = store.getState().ws;
+      this._view.title = this.getViewTitle(state);
+
       const htmlData: HtmlData<WorkspaceState> = {
-        data: { ...store.getState().ws },
+        data: { ...state },
+        title: this._view.title,
         webview: this._view.webview,
       };
 
@@ -130,6 +151,12 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
         case Actions.OPEN_NEW_WINDOW:
           if (payload) {
             executeCommand(CMD_OPEN_NEW_WIN, payload, true);
+          }
+          break;
+
+        case Actions.SEARCH:
+          if (payload !== undefined) {
+            store.dispatch(setSearchTerm(payload));
           }
           break;
 

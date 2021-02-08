@@ -7,15 +7,18 @@ import { invalid } from './invalid';
 import { list } from './list';
 import { loading } from './loading';
 import { setPersistedState } from './setPersistedState';
+import { setSearchTerm } from './setSearchTerm';
 
 export const workspaceSlice = createSlice({
   initialState: {
     error: '',
     files: false,
     isFolderInvalid: false,
+    search: '',
     selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',
-    state: 'loading',
     sort: 'ascending',
+    state: 'loading',
+    visibleFiles: [],
   } as WorkspaceState,
   extraReducers: (builder) => {
     builder.addCase(fetch.pending, fetchPending);
@@ -29,5 +32,6 @@ export const workspaceSlice = createSlice({
     list,
     loading,
     setPersistedState,
+    setSearchTerm,
   },
 });

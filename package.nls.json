@@ -22,8 +22,8 @@
   },
   "workspace": {
     "checkSettings": "Check the extension settings",
-    "error": "An unknown error occured",
     "error-fetch": "An error occured whilst collecting workspace files",
+    "error": "An unknown error occured",
     "inValid": "Folder path is not a directory",
     "list-empty": "No workspace files found",
     "listItem": {
@@ -33,6 +33,10 @@
       "selected": "Current workspace"
     },
     "loading": "Collecting workspaces...",
-    "none": "No workspaces found"
+    "none": "No workspaces found",
+    "searchedOut": "No workspaces matched your search terms",
+    "viewTitle": "Workspaces: {{title}}",
+    "titleList": "{{total}}",
+    "titleListSearched": "{{matches}}/{{total}}"
   }
 }
