@@ -5,9 +5,11 @@ export const getMockState = (state: Partial<WorkspaceState> = {}): WorkspaceStat
     error: '',
     files: false,
     isFolderInvalid: false,
+    search: '',
     selected: '',
     sort: 'ascending',
     state: 'loading',
+    visibleFiles: [],
     ...state,
   };
 };

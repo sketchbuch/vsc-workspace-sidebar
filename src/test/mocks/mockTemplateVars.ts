@@ -27,6 +27,7 @@ export const getMockTemplateVars = (
           authority: 'localhost',
           path: '/resources/js',
         }),
+    title: 'Workspaces',
     ...templateVars,
   };
 };

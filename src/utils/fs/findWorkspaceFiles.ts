@@ -1,12 +1,14 @@
 import * as os from 'os';
-import * as vscode from 'vscode';
+import { workspace } from 'vscode';
 import { checkFile, collectFilesFromFolder } from '.';
-import { FS_WS_FILETYPE } from '../../constants';
+import { CONFIG_DEPTH, CONFIG_FOLDER, FS_WS_FILETYPE } from '../../constants';
 import { WsFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
 
 export const findWorkspaceFiles = async (): Promise<WsFiles | false> => {
-  const folder: string = vscode.workspace.getConfiguration().get('workspaceSidebar.folder') || '';
-  const maxDepth: number = vscode.workspace.getConfiguration().get('workspaceSidebar.depth') || 0;
+  const folder: string =
+    workspace.getConfiguration().get('workspaceSidebar.folder') || CONFIG_FOLDER;
+  const maxDepth: number =
+    workspace.getConfiguration().get('workspaceSidebar.depth') || CONFIG_DEPTH;
   const homeFolder = os.homedir();
   // TODO - make sure OS safe
   const baseFolder = folder.replace('~/', `${homeFolder}/`) || homeFolder;

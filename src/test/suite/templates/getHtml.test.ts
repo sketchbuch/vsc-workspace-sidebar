@@ -1,9 +1,7 @@
 import { expect } from 'chai';
 import mockFs from 'mock-fs';
 import * as sinon from 'sinon';
-import { NONCE_CHARS } from '../../../constants';
 import { getHtml } from '../../../templates/getHtml';
-import { getNonce } from '../../../utils';
 import { WorkspaceState } from '../../../webviews';
 import { GetHtml, GetHtmlTemplateFunc } from '../../../webviews/webviews.interface';
 import {
@@ -17,7 +15,7 @@ import {
 suite('Templates > getHtml()', () => {
   const mockState = getMockState();
   const mockTemplateReturn = 'this is the content';
-  const nonce = getNonce(NONCE_CHARS, Math.random());
+  const nonce = 'testnonce';
 
   const getGetHtml = (template: GetHtmlTemplateFunc<WorkspaceState>): GetHtml<WorkspaceState> => {
     return {
@@ -25,6 +23,7 @@ suite('Templates > getHtml()', () => {
       template,
       htmlData: {
         data: mockState,
+        title: 'Workspaces',
         webview: mockWebView,
       },
     };

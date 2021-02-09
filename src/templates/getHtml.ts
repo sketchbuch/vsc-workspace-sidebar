@@ -15,7 +15,7 @@ export const getHtml = <T>(
   { extensionPath, template, htmlData }: GetHtml<T>,
   nonce: string
 ): string => {
-  const { data, webview } = htmlData;
+  const { data, title, webview } = htmlData;
   const cssFolderUri = webview.asWebviewUri(
     joinPath(extensionPath, FS_FOLDER_RESOURCES, FS_FOLDER_CSS)
   );
@@ -37,6 +37,7 @@ export const getHtml = <T>(
       imgLightFolderUri,
       nonce,
       scriptFolderUri,
+      title,
     },
     data
   );

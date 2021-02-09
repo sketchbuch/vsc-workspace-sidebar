@@ -1,13 +1,19 @@
 import * as os from 'os';
 import { workspace } from 'vscode';
-import { CONFIG_PATHS_AS_NEEEDED, CONFIG_PATHS_NEVER, FS_WS_EXT } from '../../../constants';
+import {
+  CONFIG_FOLDER,
+  CONFIG_PATHS_AS_NEEEDED,
+  CONFIG_PATHS_NEVER,
+  FS_WS_EXT,
+} from '../../../constants';
 import { capitalise, isWorkspacefile } from '../../../utils';
 import { File, WsFiles } from '../WorkspaceViewProvider.interface';
 
 export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
   const showPaths: string =
     workspace.getConfiguration().get('workspaceSidebar.showPaths') || CONFIG_PATHS_NEVER;
-  const folder: string = workspace.getConfiguration().get('workspaceSidebar.folder') || '';
+  const folder: string =
+    workspace.getConfiguration().get('workspaceSidebar.folder') || CONFIG_FOLDER;
   const cleanedFolder = folder.replace(os.homedir(), '~');
   const labels: string[] = [];
   const convertedFiles = wsFiles

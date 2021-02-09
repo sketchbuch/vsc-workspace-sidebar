@@ -1,33 +1,14 @@
 import { expect } from 'chai';
-import { Uri } from 'vscode';
+import { t } from 'vscode-ext-localisation';
 import { defaultTemplate } from '../../../../../templates/workspace';
-import { WorkspaceState } from '../../../../../webviews';
-import { TemplateVars } from '../../../../../webviews/webviews.interface';
+import { getMockState, getMockTemplateVars } from '../../../../mocks';
 
 suite('Templates > Workspace > Templates: defaultTemplate()', () => {
-  const baseUri = {
-    scheme: 'file',
-    authority: 'localhost',
-  };
-  const state: WorkspaceState = {
-    error: '',
-    files: false,
-    isFolderInvalid: false,
-    selected: '',
-    sort: 'ascending',
-    state: 'loading',
-  };
-  const props: TemplateVars = {
-    cspSource: 'test-cspSource',
-    cssFolderUri: { ...baseUri, path: '/resources/css' } as Uri,
-    imgDarkFolderUri: { ...baseUri, path: '/resources/imgages/dark' } as Uri,
-    imgLightFolderUri: { ...baseUri, path: '/resources/imgages/light' } as Uri,
-    nonce: 'test-nonce',
-    scriptFolderUri: { ...baseUri, path: '/resources/js' } as Uri,
-  };
+  const state = getMockState();
+  const templateVars = getMockTemplateVars();
 
   test('Renders correctly', () => {
-    const result = defaultTemplate(props, state);
+    const result = defaultTemplate(templateVars, state);
     expect(result).to.be.a('string');
     expect(result).contains('<!DOCTYPE html>');
     expect(result).contains('<html');
@@ -38,32 +19,43 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
     expect(result).contains('</body>');
   });
 
+  // TODO - Add title tests
   suite('<head>', () => {
     test('Contains a <title> tag', () => {
-      const result = defaultTemplate(props, state);
-      expect(result).contains('<title');
-      expect(result).contains('</title>');
+      const result = defaultTemplate(templateVars, state);
+      result.includes(`<title>${t('views.title')}</title>`);
+    });
+
+    test('Renders the <title> tag correctly if list view', () => {
+      const TITLE = '2/10';
+      const result = defaultTemplate(
+        getMockTemplateVars({ title: TITLE }),
+        getMockState({ state: 'list' })
+      );
+      expect(
+        result.includes(`<title>${t('webViews.workspace.viewTitle', { title: TITLE })}</title>`)
+      ).to.equal(true);
     });
 
     test('Contains the correct Content-Security-Policy meta tag', () => {
-      const result = defaultTemplate(props, state);
+      const result = defaultTemplate(templateVars, state);
       expect(result).contains('<meta http-equiv="Content-Security-Policy"');
       expect(result).contains(
-        `content="default-src ${props.cspSource} vscode-resource: 'nonce-${props.nonce}`
+        `content="default-src ${templateVars.cspSource} vscode-resource: 'nonce-${templateVars.nonce}`
       );
       expect(result).contains(
-        `img-src ${props.cspSource} vscode-resource: data: 'nonce-${props.nonce}`
+        `img-src ${templateVars.cspSource} vscode-resource: data: 'nonce-${templateVars.nonce}`
       );
       expect(result).contains(
-        `script-src ${props.cspSource} vscode-resource: 'nonce-${props.nonce}`
+        `script-src ${templateVars.cspSource} vscode-resource: 'nonce-${templateVars.nonce}`
       );
       expect(result).contains(
-        `style-src ${props.cspSource} vscode-resource: 'nonce-${props.nonce}`
+        `style-src ${templateVars.cspSource} vscode-resource: 'nonce-${templateVars.nonce}`
       );
     });
 
     test('Contains other expected meta tags', () => {
-      const result = defaultTemplate(props, state);
+      const result = defaultTemplate(templateVars, state);
       expect(result).contains('<meta charset="UTF-8">');
       expect(result).contains(
         'meta name="viewport" content="width=device-width, initial-scale=1.0">'
@@ -73,8 +65,8 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
 
   suite('<body>', () => {
     test('Contains a <script> tag', () => {
-      const result = defaultTemplate(props, state);
-      expect(result).contains(`<script nonce="${props.nonce}" `);
+      const result = defaultTemplate(templateVars, state);
+      expect(result).contains(`<script nonce="${templateVars.nonce}" `);
       expect(result).contains('</script>');
     });
   });
