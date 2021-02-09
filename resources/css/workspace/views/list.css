@@ -160,7 +160,7 @@
   z-index: 1;
 }
 
-.list__search .ibwrapper {
+.list__search div {
   width: 100%;
 }
 

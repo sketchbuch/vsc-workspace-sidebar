@@ -2,12 +2,12 @@ import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvide
 
 export const searchBox = (state: WorkspaceState): string => {
   return `
-    <div class="ibwrapper">
+    <div class="searchBox">
       <input 
         aria-label="Search Workspaces"
         autocapitalize="off"
         autocorrect="off"
-        class="input setting-control-focus-target"
+        class="searchBox__input"
         id="searchWorkspaces"
         name="search"
         placeholder="Search..."

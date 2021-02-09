@@ -140,6 +140,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
 
     webviewView.webview.onDidReceiveMessage((message: PostMessage<Payload, Actions>) => {
       const { action, payload } = message;
+      console.log('### message', message);
 
       switch (action) {
         case Actions.OPEN_CUR_WINDOW:

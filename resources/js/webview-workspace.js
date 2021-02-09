@@ -49,6 +49,13 @@
     }
   };
 
+  const handleSearch = (event) => {
+    if (event.target.value === '') {
+      searchTerm = '';
+      handleSearchSubmit();
+    }
+  };
+
   document.addEventListener('DOMContentLoaded', () => {
     newWinIcons.forEach((element) => {
       element.addEventListener('click', handleIconClick);
@@ -61,6 +68,7 @@
     if (searchInput) {
       searchInput.addEventListener('change', handleSearchChange);
       searchInput.addEventListener('keyup', handleSearchKeyUp);
+      searchInput.addEventListener('search', handleSearch);
     }
 
     viewLinks.forEach((element) => {
@@ -84,6 +92,7 @@
     if (searchInput) {
       searchInput.removeEventListener('change', handleSearchChange);
       searchInput.removeEventListener('keyup', handleSearchKeyUp);
+      searchInput.removeEventListener('search', handleSearch);
     }
 
     viewLinks.forEach((element) => {
