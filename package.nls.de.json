@@ -2,6 +2,7 @@
   "config.title": "Workspace Sidebar",
   "config.workspaceFolder.description": "Der Ordnerpfad, in dem nach Arbeitsbereiche gesucht werden soll. Falls leer, wird Ihren Home-Ordner benutzt.",
   "config.workspaceFolderDepth.description": "In welcher Tiefe von Unterordnern sollte auch gesucht werden.",
+  "config.workspaceSearchMinimum.description": "Die Mindestanzahl von Arbeitsbereiche, die für die Anzeige der Suchfeld erforderlich sind.",
   "config.workspaceShowPath.description": "Zeigen Sie den Pfad zur Arbeitsbereiche in der Seitenleiste an",
   "ext.wsList.refresh": "Arbeitsbereiche neu laden",
   "ext.wsList.sort": "Arbeitsbereiche sortieren",

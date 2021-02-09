@@ -65,14 +65,23 @@
           "type": "string"
         },
         "workspaceSidebar.showPaths": {
-          "type": "string",
           "default": "Never",
           "description": "%config.workspaceShowPath.description%",
           "enum": [
             "Always",
             "As needed",
             "Never"
-          ]
+          ],
+          "scope": "application",
+          "type": "string"
+        },
+        "workspaceSidebar.searchMinimum": {
+          "default": 15,
+          "description": "%config.workspaceSearchMinimum.description%",
+          "maximum": 100,
+          "minimum": 0,
+          "scope": "application",
+          "type": "number"
         }
       }
     },

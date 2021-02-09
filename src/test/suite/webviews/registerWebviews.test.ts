@@ -79,6 +79,22 @@ suite('Webviews > registerWebviews()', () => {
       expect(wsSpy.getCalls()[0].args[0]).to.equal(undefined);
     });
 
+    test('workspaceSidebar.searchMinimum', () => {
+      const affectsConfigSpy = sinon.spy(
+        (configPath: string) => configPath === 'workspaceSidebar.searchMinimum'
+      );
+
+      registerWebviews(mockContext, ws);
+      const eventCallback = configStub.getCalls()[0].args[0];
+      eventCallback({
+        affectsConfiguration: affectsConfigSpy,
+      } as vscode.ConfigurationChangeEvent);
+
+      sinon.assert.callCount(affectsConfigSpy, 4);
+      sinon.assert.callCount(wsSpy, 1);
+      expect(wsSpy.getCalls()[0].args[0]).to.equal(true);
+    });
+
     test('workspaceSidebar.showPaths', () => {
       const affectsConfigSpy = sinon.spy(
         (configPath: string) => configPath === 'workspaceSidebar.showPaths'

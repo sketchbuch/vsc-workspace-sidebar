@@ -3,6 +3,7 @@ export * from './snippets/listItem';
 export * from './snippets/listItemButtons';
 export * from './snippets/listItemIcon';
 export * from './snippets/searchBox';
+export * from './snippets/searchForm';
 export * from './templates/defaultTemplate';
 export * from './views/errorView';
 export * from './views/invalidView';
