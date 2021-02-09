@@ -27,7 +27,7 @@ import {
 } from './WorkspaceViewProvider.interface';
 
 const { executeCommand } = vscode.commands;
-const { list, setPersistedState, setSearchTerm } = workspaceSlice.actions;
+const { list, setPersistedState, setSearchTerm, setShowPaths } = workspaceSlice.actions;
 
 export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   public static readonly viewType = EXT_WEBVIEW_WS;
@@ -110,6 +110,10 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   public updateSort() {
     const sort = this._globalState.get<SortIds>(EXT_SORT) ?? 'ascending';
     store.dispatch(setPersistedState({ sort }));
+  }
+
+  public updatePaths() {
+    store.dispatch(setShowPaths());
   }
 
   public resolveWebviewView(webviewView: vscode.WebviewView) {

@@ -1,17 +1,12 @@
 import * as os from 'os';
 import { workspace } from 'vscode';
-import {
-  CONFIG_FOLDER,
-  CONFIG_PATHS_AS_NEEEDED,
-  CONFIG_PATHS_NEVER,
-  FS_WS_EXT,
-} from '../../../constants';
+import { ConfigShowPaths, CONFIG_FOLDER, FS_WS_EXT } from '../../../constants';
 import { capitalise, isWorkspacefile } from '../../../utils';
 import { File, WsFiles } from '../WorkspaceViewProvider.interface';
 
 export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
   const showPaths: string =
-    workspace.getConfiguration().get('workspaceSidebar.showPaths') || CONFIG_PATHS_NEVER;
+    workspace.getConfiguration().get('workspaceSidebar.showPaths') || ConfigShowPaths.NEVER;
   const folder: string =
     workspace.getConfiguration().get('workspaceSidebar.folder') || CONFIG_FOLDER;
   const cleanedFolder = folder.replace(os.homedir(), '~');
@@ -31,7 +26,7 @@ export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
           .map((word) => capitalise(word))
           .join(' ');
         const path =
-          showPaths === CONFIG_PATHS_NEVER
+          showPaths === ConfigShowPaths.NEVER
             ? ''
             : file.substring(0, lastFolder).replace(os.homedir(), '~').replace(cleanedFolder, '…');
 
@@ -46,7 +41,7 @@ export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
       }
     );
 
-  if (showPaths === CONFIG_PATHS_AS_NEEEDED) {
+  if (showPaths === ConfigShowPaths.AS_NEEEDED) {
     const findDuplicates = (arr: string[]) =>
       arr.filter((item, index) => arr.indexOf(item) !== index);
 

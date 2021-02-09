@@ -11,7 +11,8 @@ import { list } from '../../../../webviews/Workspace/store/list';
 import { loading } from '../../../../webviews/Workspace/store/loading';
 import { setPersistedState } from '../../../../webviews/Workspace/store/setPersistedState';
 import { setSearchTerm } from '../../../../webviews/Workspace/store/setSearchTerm';
-import { getMockState } from '../../../mocks';
+import { setShowPaths } from '../../../../webviews/Workspace/store/setShowPaths';
+import { getMockFiles, getMockState } from '../../../mocks';
 
 suite('Webviews > Workspace > reducers:', () => {
   const files = [`/a/file.${FS_WS_FILETYPE}`, `/another/file.${FS_WS_FILETYPE}`];
@@ -248,6 +249,21 @@ suite('Webviews > Workspace > reducers:', () => {
 
     expect(state).not.to.eql(expectedState);
     setSearchTerm(state, { payload: TERM, type: 'ws/setSearchTerm' });
+    expect(state).to.eql(expectedState);
+  });
+
+  test('setShowPaths()', () => {
+    const state = getMockState({
+      files: [`file-1.${FS_WS_FILETYPE}`],
+      visibleFiles: [],
+    });
+    const expectedState = getMockState({
+      files: [`file-1.${FS_WS_FILETYPE}`],
+      visibleFiles: getMockFiles(1, { hasPath: false, fileType: FS_WS_FILETYPE }),
+    });
+
+    expect(state).not.to.eql(expectedState);
+    setShowPaths(state);
     expect(state).to.eql(expectedState);
   });
 });

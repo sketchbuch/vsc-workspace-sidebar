@@ -8,6 +8,7 @@ import { list } from './list';
 import { loading } from './loading';
 import { setPersistedState } from './setPersistedState';
 import { setSearchTerm } from './setSearchTerm';
+import { setShowPaths } from './setShowPaths';
 
 export const workspaceSlice = createSlice({
   initialState: {
@@ -33,5 +34,6 @@ export const workspaceSlice = createSlice({
     loading,
     setPersistedState,
     setSearchTerm,
+    setShowPaths,
   },
 });

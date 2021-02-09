@@ -37,13 +37,16 @@ suite('Webviews > registerWebviews()', () => {
   });
 
   suite('Configuration changes call refresh() correctly:', () => {
+    let wsPathsSpy: sinon.SinonSpy;
     let wsSpy: sinon.SinonSpy;
 
     setup(() => {
+      wsPathsSpy = sinon.spy(ws, 'updatePaths');
       wsSpy = sinon.spy(ws, 'refresh');
     });
 
     teardown(() => {
+      wsPathsSpy.restore();
       wsSpy.restore();
     });
 
@@ -107,8 +110,8 @@ suite('Webviews > registerWebviews()', () => {
       } as vscode.ConfigurationChangeEvent);
 
       sinon.assert.callCount(affectsConfigSpy, 3);
-      sinon.assert.callCount(wsSpy, 1);
-      expect(wsSpy.getCalls()[0].args[0]).to.equal(true);
+      sinon.assert.callCount(wsPathsSpy, 1);
+      expect(wsPathsSpy.getCalls()[0].args[0]).to.equal(undefined);
     });
   });
 
