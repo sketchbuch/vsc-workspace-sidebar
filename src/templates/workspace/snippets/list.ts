@@ -4,14 +4,22 @@ import { WorkspaceState } from '../../../webviews';
 import { RenderVars } from '../../../webviews/webviews.interface';
 
 export const list = (state: WorkspaceState, renderVars: RenderVars) => {
-  const { search, visibleFiles } = state;
+  const { files, search, visibleFiles } = state;
 
-  if (visibleFiles.length < 1 && search) {
-    return `
-        <div class="list__list-searchedout">
-          <p>${t('webViews.workspace.searchedOut')}</p>
-        </div>
-      `;
+  if (files === false) {
+    return '';
+  }
+
+  if (visibleFiles.length < 1) {
+    if (search) {
+      return `
+          <div class="list__list-searchedout">
+            <p>${t('webViews.workspace.searchedOut')}</p>
+          </div>
+        `;
+    } else {
+      return '';
+    }
   }
 
   return `

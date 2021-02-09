@@ -1,66 +1,58 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import { t } from 'vscode-ext-localisation';
 import { FS_WS_FILETYPE } from '../../../../../constants';
 import { list } from '../../../../../templates/workspace';
 import * as snippets from '../../../../../templates/workspace/snippets/listItem';
-import { WorkspaceState } from '../../../../../webviews';
-import { getMockState, mockRenderVars } from '../../../../mocks';
+import { getMockFiles, getMockState, mockRenderVars } from '../../../../mocks';
 
 suite('Templates > Workspace > Snippets: list()', () => {
-  const testRendering = (state: Partial<WorkspaceState>) => {
-    const spy = sinon.spy(snippets, 'listItem');
-    const result = list(getMockState(state), mockRenderVars);
-
-    expect(result).to.be.a('string');
-    expect(result).not.to.equal('');
-    sinon.assert.calledTwice(spy);
-
-    let oneOrder = 0;
-    let twoOrder = 1;
-
-    if (state.sort === 'descending') {
-      oneOrder = 1;
-      twoOrder = 0;
-    }
-
-    expect(spy.getCalls()[oneOrder].args[0]).to.eql({
-      file: `one.${FS_WS_FILETYPE}`,
-      isSelected: false,
-      label: 'One',
-      path: '',
-    });
-    expect(spy.getCalls()[twoOrder].args[0]).to.eql({
-      file: `two.${FS_WS_FILETYPE}`,
-      isSelected: false,
-      label: 'Two',
-      path: '',
-    });
-
-    spy.restore();
-  };
-
-  test('Renders correctly if files is false', () => {
+  test('Renders nothing if files is false', () => {
     const result = list(getMockState(), mockRenderVars);
 
     expect(result).to.be.a('string');
     expect(result).to.equal('');
   });
 
-  test('Renders correctly if there are no files', () => {
-    const result = list(getMockState({ files: [] }), mockRenderVars);
+  test('Renders nothing if there are no files', () => {
+    const result = list(getMockState({ files: [], visibleFiles: [] }), mockRenderVars);
 
     expect(result).to.be.a('string');
     expect(result).to.equal('');
   });
 
-  test('Renders the files in "ascending" order', () => {
-    testRendering({ files: [`one.${FS_WS_FILETYPE}`, `two.${FS_WS_FILETYPE}`], sort: 'ascending' });
+  test('Renders "no match" message if searching and no visible files.', () => {
+    const result = list(
+      getMockState({ files: [], visibleFiles: [], search: 'flutter' }),
+      mockRenderVars
+    );
+
+    expect(result).to.be.a('string');
+    expect(result).not.to.equal('');
+    expect(result.includes('class="list__list-searchedout"')).to.equal(true);
+    expect(result.includes(t('webViews.workspace.searchedOut'))).to.equal(true);
   });
 
-  test('Renders the files in "descending" order', () => {
-    testRendering({
-      files: [`one.${FS_WS_FILETYPE}`, `two.${FS_WS_FILETYPE}`],
-      sort: 'descending',
-    });
+  test('Renders the files', () => {
+    const spy = sinon.spy(snippets, 'listItem');
+    const mockFiles = getMockFiles(2);
+    const result = list(
+      getMockState({
+        files: [`file-1.${FS_WS_FILETYPE}`, `file-2.${FS_WS_FILETYPE}`],
+        sort: 'ascending',
+        visibleFiles: mockFiles,
+      }),
+      mockRenderVars
+    );
+
+    expect(result).to.be.a('string');
+    expect(result).not.to.equal('');
+    expect(result.includes('class="list__list"')).to.equal(true);
+    sinon.assert.calledTwice(spy);
+
+    expect(spy.getCalls()[0].args[0]).to.eql(mockFiles[0]);
+    expect(spy.getCalls()[1].args[0]).to.eql(mockFiles[1]);
+
+    spy.restore();
   });
 });

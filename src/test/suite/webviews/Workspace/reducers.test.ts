@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { FS_WS_FILETYPE } from '../../../../constants';
 import { error } from '../../../../webviews/Workspace/store/error';
 import {
   fetchFulfilled,
@@ -9,9 +10,27 @@ import { invalid } from '../../../../webviews/Workspace/store/invalid';
 import { list } from '../../../../webviews/Workspace/store/list';
 import { loading } from '../../../../webviews/Workspace/store/loading';
 import { setPersistedState } from '../../../../webviews/Workspace/store/setPersistedState';
+import { setSearchTerm } from '../../../../webviews/Workspace/store/setSearchTerm';
 import { getMockState } from '../../../mocks';
 
 suite('Webviews > Workspace > reducers:', () => {
+  const files = [`/a/file.${FS_WS_FILETYPE}`, `/another/file.${FS_WS_FILETYPE}`];
+  const TERM = 'file';
+  const visibleFiles = [
+    {
+      file: '/a/file.code-workspace',
+      isSelected: false,
+      label: 'File',
+      path: '/a',
+    },
+    {
+      file: '/another/file.code-workspace',
+      isSelected: false,
+      label: 'File',
+      path: '/another',
+    },
+  ];
+
   test('error()', () => {
     const state = getMockState({
       error: '',
@@ -36,17 +55,19 @@ suite('Webviews > Workspace > reducers:', () => {
       files: false,
       isFolderInvalid: false,
       state: 'loading',
+      visibleFiles: [],
     });
     const expectedState = getMockState({
-      files: ['/a/file', '/another/file'],
+      files,
       isFolderInvalid: false,
       state: 'list',
+      visibleFiles,
     });
 
     expect(state).not.to.eql(expectedState);
     fetchFulfilled(state, {
       meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-      payload: ['/a/file', '/another/file'],
+      payload: files,
       type: 'ws/list',
     });
     expect(state).to.eql(expectedState);
@@ -57,11 +78,13 @@ suite('Webviews > Workspace > reducers:', () => {
       files: false,
       isFolderInvalid: false,
       state: 'loading',
+      visibleFiles,
     });
     const expectedState = getMockState({
       files: false,
       isFolderInvalid: true,
       state: 'invalid',
+      visibleFiles: [],
     });
 
     expect(state).not.to.eql(expectedState);
@@ -125,11 +148,13 @@ suite('Webviews > Workspace > reducers:', () => {
       files: false,
       isFolderInvalid: false,
       state: 'loading',
+      visibleFiles,
     });
     const expectedState = getMockState({
       files: false,
       isFolderInvalid: true,
       state: 'invalid',
+      visibleFiles: [],
     });
 
     expect(state).not.to.eql(expectedState);
@@ -142,15 +167,20 @@ suite('Webviews > Workspace > reducers:', () => {
       files: false,
       isFolderInvalid: false,
       state: 'loading',
+      visibleFiles: [],
     });
     const expectedState = getMockState({
-      files: ['/a/file', '/another/file'],
+      files,
       isFolderInvalid: false,
       state: 'list',
+      visibleFiles,
     });
 
     expect(state).not.to.eql(expectedState);
-    list(state, { payload: ['/a/file', '/another/file'], type: 'ws/list' });
+    list(state, {
+      payload: files,
+      type: 'ws/list',
+    });
     expect(state).to.eql(expectedState);
   });
 
@@ -185,6 +215,39 @@ suite('Webviews > Workspace > reducers:', () => {
 
     expect(state).not.to.eql(expectedState);
     setPersistedState(state, { payload: { sort: 'ascending' }, type: 'ws/setPersistedState' });
+    expect(state).to.eql(expectedState);
+  });
+
+  test('setSearchTerm() - Invalid folder', () => {
+    const state = getMockState({
+      files: false,
+      search: '',
+      visibleFiles,
+    });
+    const expectedState = getMockState({
+      search: TERM,
+      visibleFiles: [],
+    });
+
+    expect(state).not.to.eql(expectedState);
+    setSearchTerm(state, { payload: TERM, type: 'ws/setSearchTerm' });
+    expect(state).to.eql(expectedState);
+  });
+
+  test('setSearchTerm() - Valid folder', () => {
+    const state = getMockState({
+      files,
+      search: '',
+      visibleFiles: [],
+    });
+    const expectedState = getMockState({
+      files,
+      search: TERM,
+      visibleFiles,
+    });
+
+    expect(state).not.to.eql(expectedState);
+    setSearchTerm(state, { payload: TERM, type: 'ws/setSearchTerm' });
     expect(state).to.eql(expectedState);
   });
 });
