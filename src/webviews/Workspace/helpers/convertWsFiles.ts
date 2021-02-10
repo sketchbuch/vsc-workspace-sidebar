@@ -1,4 +1,5 @@
 import * as os from 'os';
+import * as pathLib from 'path';
 import { workspace } from 'vscode';
 import { ConfigShowPaths, CONFIG_FOLDER, FS_WS_EXT } from '../../../constants';
 import { capitalise, isWorkspacefile } from '../../../utils';
@@ -15,7 +16,7 @@ export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
     .filter((file) => isWorkspacefile(file, 'file'))
     .map(
       (file): File => {
-        const lastFolder = file.lastIndexOf('/');
+        const lastFolder = file.lastIndexOf(pathLib.sep);
         const label = file
           .substring(lastFolder + 1)
           .replace(FS_WS_EXT, '')
@@ -28,7 +29,11 @@ export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
         const path =
           showPaths === ConfigShowPaths.NEVER
             ? ''
-            : file.substring(0, lastFolder).replace(os.homedir(), '~').replace(cleanedFolder, '…');
+            : file
+                .substring(0, lastFolder)
+                .replace(os.homedir(), '~')
+                .replace(cleanedFolder, '')
+                .slice(1);
 
         labels.push(label);
 

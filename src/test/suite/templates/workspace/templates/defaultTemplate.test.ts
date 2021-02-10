@@ -19,7 +19,6 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
     expect(result).contains('</body>');
   });
 
-  // TODO - Add title tests
   suite('<head>', () => {
     test('Contains a <title> tag', () => {
       const result = defaultTemplate(templateVars, state);

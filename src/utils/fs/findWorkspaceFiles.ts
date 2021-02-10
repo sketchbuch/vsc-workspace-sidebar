@@ -9,9 +9,7 @@ export const findWorkspaceFiles = async (): Promise<WsFiles | false> => {
     workspace.getConfiguration().get('workspaceSidebar.folder') || CONFIG_FOLDER;
   const maxDepth: number =
     workspace.getConfiguration().get('workspaceSidebar.depth') || CONFIG_DEPTH;
-  const homeFolder = os.homedir();
-  // TODO - make sure OS safe
-  const baseFolder = folder.replace('~/', `${homeFolder}/`) || homeFolder;
+  const baseFolder = folder.replace(`~`, os.homedir());
   const { isFolder } = checkFile(baseFolder);
 
   if (isFolder) {

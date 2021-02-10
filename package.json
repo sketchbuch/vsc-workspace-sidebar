@@ -65,7 +65,7 @@
           "type": "string"
         },
         "workspaceSidebar.showPaths": {
-          "default": "Never",
+          "default": "As needed",
           "description": "%config.workspaceShowPath.description%",
           "enum": [
             "Always",
@@ -126,7 +126,7 @@
     }
   },
   "engines": {
-    "vscode": "^1.45.0"
+    "vscode": "^1.53.0"
   },
   "husky": {
     "hooks": {

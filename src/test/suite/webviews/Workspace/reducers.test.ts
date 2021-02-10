@@ -22,13 +22,13 @@ suite('Webviews > Workspace > reducers:', () => {
       file: '/a/file.code-workspace',
       isSelected: false,
       label: 'File',
-      path: '/a',
+      path: 'a',
     },
     {
       file: '/another/file.code-workspace',
       isSelected: false,
       label: 'File',
-      path: '/another',
+      path: 'another',
     },
   ];
 
