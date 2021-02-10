@@ -85,7 +85,7 @@
 @media (min-width: 300px) {
   .list__title {
     display: inline;
-    margin-right: 3px;
+    margin-right: 0.5rem;
     overflow: unset;
     text-overflow: unset;
   }

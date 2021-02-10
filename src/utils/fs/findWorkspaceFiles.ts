@@ -1,5 +1,4 @@
 import * as os from 'os';
-import * as path from 'path';
 import { workspace } from 'vscode';
 import { checkFile, collectFilesFromFolder } from '.';
 import { CONFIG_DEPTH, CONFIG_FOLDER, FS_WS_FILETYPE } from '../../constants';
@@ -10,8 +9,7 @@ export const findWorkspaceFiles = async (): Promise<WsFiles | false> => {
     workspace.getConfiguration().get('workspaceSidebar.folder') || CONFIG_FOLDER;
   const maxDepth: number =
     workspace.getConfiguration().get('workspaceSidebar.depth') || CONFIG_DEPTH;
-  const homeFolder = os.homedir();
-  const baseFolder = folder.replace(`~${path.sep}`, `${homeFolder}${path.sep}`) || homeFolder;
+  const baseFolder = folder.replace(`~`, os.homedir());
   const { isFolder } = checkFile(baseFolder);
 
   if (isFolder) {

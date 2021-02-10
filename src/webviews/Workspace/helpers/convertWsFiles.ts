@@ -29,7 +29,11 @@ export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
         const path =
           showPaths === ConfigShowPaths.NEVER
             ? ''
-            : file.substring(0, lastFolder).replace(os.homedir(), '~').replace(cleanedFolder, '…');
+            : file
+                .substring(0, lastFolder)
+                .replace(os.homedir(), '~')
+                .replace(cleanedFolder, '')
+                .slice(1);
 
         labels.push(label);
 
