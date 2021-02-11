@@ -1,10 +1,13 @@
 {
   "config.title": "Workspace Sidebar",
-  "config.workspaceFolder.description": "Der Ordnerpfad, in dem nach Arbeitsbereiche gesucht werden soll. Falls leer, wird Ihren Home-Ordner benutzt.",
-  "config.workspaceFolderDepth.description": "In welcher Tiefe von Unterordnern sollte auch gesucht werden.",
-  "config.workspaceSearchMinimum.description": "Die Mindestanzahl von Arbeitsbereiche, die für die Anzeige der Suchfeld erforderlich sind. 0 wird immer das Suchfeld anzeigen.",
-  "config.workspaceShowPath.description": "Zeigen Sie den Pfad zur Arbeitsbereiche in der Seitenleiste an",
-  "ext.wsList.refresh": "Arbeitsbereiche neu laden",
+  "config.workspaceFolder.description": "Der Ordnerpfad, in dem nach Arbeitsbereiche gesucht werden soll. Falls leer, wird Ihren Home-Ordner benutzt. '~' wird auch unter Windows durch Ihren Home-Ordner ersetzt.",
+  "config.workspaceFolderDepth.description": "In welcher Tiefe von Unterordnern sollte auch gesucht werden. Rang: 0-5",
+  "config.workspaceSearchMinimum.description": "Die Mindestanzahl von Arbeitsbereiche, die für die Anzeige der Suchfeld erforderlich sind. Bei 0 wird das Suchfeld immer anzeigt. Rang: 0-100",
+  "config.workspaceShowPath.description": "Zeigen Sie Pfade zu den Arbeitsbereichsdateien an. Entweder: 'Immer', 'Nie', oder 'Nach Bedarf' (zeigt nur Pfade für Arbeitsbereiche mit derselben Bezeichnung an).",
+  "config.workspaceShowPath.always": "Immer",
+  "config.workspaceShowPath.never": "Nie",
+  "config.workspaceShowPath.asneeded": "Nach Bedarf",
+   "ext.wsList.refresh": "Arbeitsbereiche neu laden",
   "ext.wsList.sort": "Arbeitsbereiche sortieren",
   "ext.wsListItem.checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",
   "ext.wsListItem.open.curWindow": "In aktuellem fenster öffnen",
@@ -35,6 +38,9 @@
     },
     "loading": "Sammeln von Arbeitsbereiche...",
     "none": "Keine Arbeitsbereiche gefunden",
-    "searchedOut": "Keine Arbeitsbereiche stimmten mit Ihren Suchbegriffen überein"
+    "searchedOut": "Keine Arbeitsbereiche stimmten mit Ihren Suchbegriffen überein",
+    "viewTitle": "Arbeitsbereiche: {{title}}",
+    "titleList": "{{total}}",
+    "titleListSearched": "{{matches}}/{{total}}"
   }
 }
