@@ -12,6 +12,5 @@ node_modules
 *.DS_Store
 *.vsix
 audit-report.html
-Colours.css
 Temp.txt
 yarn-error.log

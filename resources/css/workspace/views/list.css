@@ -168,11 +168,20 @@
 }
 
 .list__search input {
+  background: var(--vscode-input-background);
+  border: 1px solid transparent;
+  color: var(--vscode-input-foreground);
+  font-size: var(--vscode-font-size);
+  padding: 4px;
   width: 100%;
 }
 
+.list__search input:focus {
+  outline-color: var(--vscode-focusBorder);
+}
+
 .list__list-searchedout {
-  color: var(--vscode-editorWidget-foreground);
+  color: var(--vscode-foreground);
   padding: 0.3rem 20px;
   padding-top: 30px;
 }
