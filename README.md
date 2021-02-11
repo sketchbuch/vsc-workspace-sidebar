@@ -20,6 +20,11 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-#### [1.1.9](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.8...v1.1.9) (2020-12-03)
+#### [1.2.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.9...1.2.0) (2021-02-11)
 
-- Update tree items icon path
+- Switched from TreeView to WebView to allow for more customisation of the UI and to facilitate future feature changes.
+- Added better highlighting of the selected Workspace
+- Added a search field
+- Show paths has a new option: "As needed" and is a dropdown rather than a checkbox. "As needed" will only show the paths when there are duplicate Workspace labels and this is now the default show paths option.
+- Bundled extension with Parcel
+- Added unit tests
