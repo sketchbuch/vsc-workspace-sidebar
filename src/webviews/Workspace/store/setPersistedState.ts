@@ -6,4 +6,5 @@ export const setPersistedState = (
   action: PayloadAction<WorkspacePersistedState>
 ): void => {
   state.sort = action.payload.sort;
+  state.visibleFiles.reverse();
 };
