@@ -8,7 +8,7 @@ export const findWorkspaceFiles = async (): Promise<WsFiles | false> => {
   const folder: string =
     workspace.getConfiguration().get('workspaceSidebar.folder') || CONFIG_FOLDER;
   const maxDepth: number =
-    workspace.getConfiguration().get('workspaceSidebar.depth') || CONFIG_DEPTH;
+    workspace.getConfiguration().get('workspaceSidebar.depth') ?? CONFIG_DEPTH;
   const baseFolder = folder.replace(`~`, os.homedir());
   const { isFolder } = checkFile(baseFolder);
 

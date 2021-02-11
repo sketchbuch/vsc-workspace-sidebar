@@ -11,6 +11,6 @@ export const setSearchTerm = (
   if (state.files === false) {
     state.visibleFiles = [];
   } else {
-    state.visibleFiles = getVisibleFiles(state.files, state.selected, state.search, state.sort);
+    state.visibleFiles = getVisibleFiles([...state.files], state.selected, state.search, state.sort);
   }
 };

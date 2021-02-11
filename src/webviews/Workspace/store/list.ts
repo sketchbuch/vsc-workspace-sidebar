@@ -12,6 +12,6 @@ export const list = (state: WorkspaceState, action: PayloadAction<WorkspaceFiles
   } else {
     state.isFolderInvalid = false;
     state.state = 'list';
-    state.visibleFiles = getVisibleFiles(action.payload, state.selected, state.search, state.sort);
+    state.visibleFiles = getVisibleFiles([...action.payload], state.selected, state.search, state.sort);
   }
 };

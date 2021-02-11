@@ -12,7 +12,7 @@ export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
     workspace.getConfiguration().get('workspaceSidebar.folder') || CONFIG_FOLDER;
   const cleanedFolder = folder.replace(os.homedir(), '~');
   const labels: string[] = [];
-  const convertedFiles = wsFiles
+  const convertedFiles = [...wsFiles]
     .filter((file) => isWorkspacefile(file, 'file'))
     .map(
       (file): File => {

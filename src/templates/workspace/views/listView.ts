@@ -11,8 +11,8 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
   if (state.files) {
     if (state.files.length > 0) {
       const searchMinimum: number =
-        workspace.getConfiguration().get('workspaceSidebar.searchMinimum') || CONFIG_SEARCH_MINIMUM;
-      const showSearch = state.files.length >= searchMinimum || searchMinimum === 0;
+        workspace.getConfiguration().get('workspaceSidebar.searchMinimum') ?? CONFIG_SEARCH_MINIMUM;
+      const showSearch = searchMinimum === 0 || state.files.length >= searchMinimum;
 
       return `
         <section class="view list" data-showsearch=${showSearch}>

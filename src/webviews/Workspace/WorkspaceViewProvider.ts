@@ -45,11 +45,11 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
       const { files, timestamp } = cachedData;
 
       if (files && timestamp) {
-        const timestampNow = Math.floor(Date.now() / 1000);
+        const timestampNow = this.getTimestamp();
         const timestampExpired = timestamp + EXT_WSSTATE_CACHE_DURATION;
 
         if (timestampNow < timestampExpired) {
-          return files;
+          return [...files];
         } else {
           this._globalState.update(EXT_WSSTATE_CACHE, undefined);
         }
@@ -57,6 +57,10 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     }
 
     return null;
+  }
+
+  private getTimestamp() {
+    return Math.floor(Date.now() / 1000);
   }
 
   private getViewTitle({ files, visibleFiles, search, state: view }: WorkspaceState) {
@@ -189,7 +193,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
         if (files) {
           this._globalState.update(EXT_WSSTATE_CACHE, {
             files,
-            timestamp: Math.floor(Date.now() / 1000),
+            timestamp: this.getTimestamp(),
           });
         }
         break;
