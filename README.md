@@ -8,11 +8,12 @@ Adds a sidebar to VSCode that lists Workspaces and lets you open them in the cur
 
 ## Settings
 
-| Setting   | Description                                                                                                                                       | Default Value                        | Type       |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ---------- |
-| Folder    | The folder to look for workspace files in. If Folder is empty, your home folder will be used. **~/** will also be replaced with your home folder. | None (your home folder will be used) | String     |
-| Depth     | The depth of subfolders to include in the search.                                                                                                 | 0                                    | Number 0-5 |
-| Show Path | Show the path to the WS file in the sidebar.                                                                                                      | false                                | Boolean    |
+| Setting        | Description                                                                                                                                                         | Default Value                        | Type          |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ------------- |
+| Folder         | The folder to look for workspace files in. If Folder is empty, your home folder will be used. **~/** will also be replaced with your home folder.                   | None (your home folder will be used) | String        |
+| Depth          | The depth of subfolders to include in the search.                                                                                                                   | 0                                    | Number 0-5    |
+| Search minimum | The minimum number of workspaces required before the search box is displayed. 0 Will always display the search box.                                                 | 15                                   | Number 0-100  |
+| Show Paths     | Show the paths to the workspaces in the sidebar. Available options are: Always, As needed, Never . As needed will only display paths if there are duplicate labels. | As Needed                            | Dropdown List |
 
 ## Translations
 
