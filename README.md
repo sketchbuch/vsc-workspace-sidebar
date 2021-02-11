@@ -25,7 +25,7 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-#### [1.2.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.9...1.2.1) (2021-02-11)
+#### [1.2.2](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.9...1.2.2) (2021-02-11)
 
 - Switched from TreeView to WebView to allow for more customisation of the UI and to facilitate future feature changes
 - Added better highlighting of the selected Workspace
@@ -35,3 +35,4 @@ This extension is localised, if you want it in your language please send me a tr
 - Added unit tests
 - Updated docs
 - Fixed isues on Windows
+- Updated some translations

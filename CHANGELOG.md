@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.2.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.9...1.2.1) (2021-02-11)
+## [1.2.2](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.9...1.2.2) (2021-02-11)
 
 - Switched from TreeView to WebView to allow for more customisation of the UI and to facilitate future feature changes
 - Added better highlighting of the selected Workspace
@@ -10,6 +10,7 @@
 - Added unit tests
 - Updated docs
 - Fixed isues on Windows
+- Updated some translations
 
 ## [1.1.9](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.8...v1.1.9) (2020-12-03)
 
