@@ -154,14 +154,12 @@
     "url": "https://github.com/sketchbuch/vsc-workspace-sidebar"
   },
   "scripts": {
-    "audit-html": "yarn audit --json | yarn-audit-html --output audit-report.html",
     "build:dev": "parcel build ./src/extension.ts --target=dev",
     "build:release": "parcel build ./src/extension.ts --target=release",
     "clean:cache": "rimraf ./.parcel-cache/*",
     "clean:dist": "rimraf ./dist/*",
     "clean:test": "rimraf ./test/*",
     "clean": "yarn clean:cache && yarn clean:dist && yarn clean:test",
-    "compile": "tsc -p ./",
     "dev": "yarn clean:dist && yarn build:dev",
     "lint:css": "stylelint --config=.stylelintrc './resources/css/**/*.css'",
     "lint:js": "eslint ./resources/js --ext js --fix",
@@ -169,7 +167,7 @@
     "lint:ts": "eslint ./src --ext ts --fix",
     "lint": "yarn lint:js && yarn lint:ts && yarn lint:prettier && yarn lint:css",
     "pretest": "yarn clean:dist && yarn build:dev && yarn lint",
-    "test": "yarn clean:test && yarn compile",
+    "test": "yarn clean:test && tsc -p ./",
     "vscode:prepublish": "yarn clean:dist && yarn build:release"
   },
   "dependencies": {
