@@ -13,4 +13,4 @@ node_modules
 *.vsix
 audit-report.html
 Temp.txt
-yarn-error.log
+pnpm run-error.log
