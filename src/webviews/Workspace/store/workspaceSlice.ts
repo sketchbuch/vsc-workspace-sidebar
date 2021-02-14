@@ -12,6 +12,7 @@ import { setShowPaths } from './setShowPaths';
 
 export const workspaceSlice = createSlice({
   initialState: {
+    convertedFiles: [],
     error: '',
     files: false,
     isFolderInvalid: false,

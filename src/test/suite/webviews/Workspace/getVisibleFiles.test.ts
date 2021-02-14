@@ -1,62 +1,81 @@
 import { expect } from 'chai';
-import { FS_WS_FILETYPE } from '../../../../constants';
+import * as sinon from 'sinon';
+import * as vscode from 'vscode';
+import { ConfigShowPaths } from '../../../../constants';
 import { getVisibleFiles } from '../../../../webviews/Workspace/helpers/getVisibleFiles';
+import { getMockFiles } from '../../../mocks';
 
 suite('Webviews > Workspace > getVisibleFiles():', () => {
-  test('Returns file array sorted ascended', () => {
-    const files = [`file-2.${FS_WS_FILETYPE}`, `file-1.${FS_WS_FILETYPE}`];
-    const expectedFiles = [
-      {
-        file: `file-1.${FS_WS_FILETYPE}`,
-        isSelected: false,
-        label: 'File 1',
-        path: '',
-      },
-      {
-        file: `file-2.${FS_WS_FILETYPE}`,
-        isSelected: false,
-        label: 'File 2',
-        path: '',
-      },
-    ];
-    const result = getVisibleFiles(files, '', '', 'ascending');
+  const options = { hasPath: true };
 
-    expect(result).to.eql(expectedFiles);
+  test('Search correctly filters', () => {
+    const files = getMockFiles(2);
+    const result = getVisibleFiles(files, '2', 'ascending');
+
+    expect(result).to.eql([files[1]]);
   });
 
-  test('Returns file array sorted descended', () => {
-    const files = [`file-1.${FS_WS_FILETYPE}`, `file-2.${FS_WS_FILETYPE}`];
-    const expectedFiles = [
-      {
-        file: `file-2.${FS_WS_FILETYPE}`,
-        isSelected: false,
-        label: 'File 2',
-        path: '',
-      },
-      {
-        file: `file-1.${FS_WS_FILETYPE}`,
-        isSelected: false,
-        label: 'File 1',
-        path: '',
-      },
-    ];
-    const result = getVisibleFiles(files, '', '', 'descending');
+  suite('Sorting:', () => {
+    test('Corectly sorts "ascending"', () => {
+      const files = getMockFiles(2).reverse();
+      const expectedFiles = getMockFiles(2);
+      const result = getVisibleFiles(files, '', 'ascending');
 
-    expect(result).to.eql(expectedFiles);
+      expect(result).to.eql(expectedFiles);
+    });
+
+    test('Corectly sorts "descending"', () => {
+      const files = getMockFiles(2);
+      const expectedFiles = getMockFiles(2).reverse();
+      const result = getVisibleFiles(files, '', 'descending');
+
+      expect(result).to.eql(expectedFiles);
+    });
   });
 
-  test('Returns file array with matching search results', () => {
-    const files = [`file-2.${FS_WS_FILETYPE}`, `file-1.${FS_WS_FILETYPE}`];
-    const expectedFiles = [
-      {
-        file: `file-1.${FS_WS_FILETYPE}`,
-        isSelected: false,
-        label: 'File 1',
-        path: '',
-      },
-    ];
-    const result = getVisibleFiles(files, '', 'file 1', 'ascending');
+  suite('Show paths:', () => {
+    test('"Never" returns file array without paths', () => {
+      const stub = sinon.stub(vscode.workspace, 'getConfiguration');
+      stub.returns({
+        get: (config: string): string | number => ConfigShowPaths.NEVER,
+      } as vscode.WorkspaceConfiguration);
 
-    expect(result).to.eql(expectedFiles);
+      const files = getMockFiles(2, options);
+      const expectedFiles = getMockFiles(2);
+      const result = getVisibleFiles(files, '', 'ascending');
+
+      expect(result).to.eql(expectedFiles);
+      stub.restore();
+    });
+
+    test('"Always" returns file array with paths', () => {
+      const stub = sinon.stub(vscode.workspace, 'getConfiguration');
+      stub.returns({
+        get: (config: string): string | number => ConfigShowPaths.ALWAYS,
+      } as vscode.WorkspaceConfiguration);
+
+      const files = getMockFiles(2, options);
+      const result = getVisibleFiles(files, '', 'ascending');
+
+      expect(result).to.eql(files);
+      stub.restore();
+    });
+
+    test('"As needed" returns file array with paths', () => {
+      const stub = sinon.stub(vscode.workspace, 'getConfiguration');
+      stub.returns({
+        get: (config: string): string | number => ConfigShowPaths.AS_NEEEDED,
+      } as vscode.WorkspaceConfiguration);
+
+      const files = getMockFiles(3, options);
+      files[2].label = files[0].label;
+      const expectedFiles = getMockFiles(3, options);
+      expectedFiles[2].label = expectedFiles[0].label;
+      expectedFiles[1].path = '';
+      const result = getVisibleFiles(files, '', 'ascending');
+
+      expect(result).to.eql([expectedFiles[0], expectedFiles[2], expectedFiles[1]]);
+      stub.restore();
+    });
   });
 });

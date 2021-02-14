@@ -5,7 +5,7 @@ import * as templates from '../../../../templates/getHtml';
 import { WorkspaceViewProvider } from '../../../../webviews';
 import { getMockContext, getMockWebviewView } from '../../../mocks';
 
-suite.only('Webviews > Workspace > WorkspaceViewProvider():', () => {
+suite('Webviews > Workspace > WorkspaceViewProvider():', () => {
   let mockContext = getMockContext();
   let ws: WorkspaceViewProvider;
   let getHtmlSpy: sinon.SinonSpy;

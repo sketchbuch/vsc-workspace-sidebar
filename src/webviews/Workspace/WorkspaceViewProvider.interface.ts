@@ -31,14 +31,15 @@ export interface WorkspacePersistedState {
 export type WorkspacePmPayloadSearchTerm = string;
 
 export type WorkspaceState = {
+  convertedFiles: Files;
   error: WorkspaceErrors;
   files: WorkspaceFiles;
-  visibleFiles: Files;
   isFolderInvalid: boolean;
   search: string;
   selected: string;
   sort: SortIds;
   state: WorkspaceStates;
+  visibleFiles: Files;
 };
 
 export type WorkspaceStates = 'error' | 'invalid' | 'list' | 'loading';
