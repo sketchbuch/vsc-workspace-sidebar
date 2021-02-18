@@ -65,13 +65,17 @@
           "type": "string"
         },
         "workspaceSidebar.showPaths": {
-          "default": "%config.workspaceShowPath.asneeded%",
+          "default": "As needed",
           "description": "%config.workspaceShowPath.description%",
           "enum": [
+            "Always",
+            "As needed",
+            "Never"
+          ],
+          "enumDescriptions": [
             "%config.workspaceShowPath.always%",
             "%config.workspaceShowPath.asneeded%",
-            "%config.workspaceShowPath.never%"
-          ],
+            "%config.workspaceShowPath.never%"],
           "scope": "application",
           "type": "string"
         },
