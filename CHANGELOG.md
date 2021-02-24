@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.2.3](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.2...1.2.3) (2021-02-11)
+
+- Switched from yarn to pnpm
+- Fixed a bug with the configuration due to translations
+- Optimised getting visible files
+
 ## [1.2.2](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.9...1.2.2) (2021-02-11)
 
 - Switched from TreeView to WebView to allow for more customisation of the UI and to facilitate future feature changes
