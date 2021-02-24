@@ -11,7 +11,7 @@ import {
   EXT_WSSTATE_CACHE_DURATION,
   NONCE_CHARS,
 } from '../../constants';
-import { store } from '../../store/store';
+import { store } from '../../store/redux';
 import { getHtml } from '../../templates';
 import { defaultTemplate as template } from '../../templates/workspace';
 import { GlobalState } from '../../types';

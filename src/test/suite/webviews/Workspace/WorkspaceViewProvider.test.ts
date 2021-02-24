@@ -1,6 +1,6 @@
 /* import sinon from 'sinon';
 import * as vscode from 'vscode';
-import { store } from '../../../../store/store';
+import { store } from '../../../../store/redux';
 import * as templates from '../../../../templates/getHtml';
 import { WorkspaceViewProvider } from '../../../../webviews';
 import { getMockContext, getMockWebviewView } from '../../../mocks';
