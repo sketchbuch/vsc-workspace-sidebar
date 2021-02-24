@@ -25,8 +25,7 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-#### [1.2.3](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.2...1.2.3) (2021-02-11)
+#### [1.2.4](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.2...1.2.4) (2021-02-11)
 
-- Switched from yarn to pnpm
 - Fixed a bug with the configuration due to translations
 - Optimised getting visible files

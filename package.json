@@ -147,8 +147,8 @@
   "license": "SEE LICENSE IN LICENSE.txt",
   "lint-staged": {
     "{src, resources/js}/**/*.{js,ts}": [
-      "pnpm run lint:ts",
-      "pnpm run lint:prettier",
+      "yarn lint:ts",
+      "yarn lint:prettier",
       "git add"
     ]
   },
@@ -164,16 +164,16 @@
     "clean:cache": "rimraf ./.parcel-cache/*",
     "clean:dist": "rimraf ./dist/*",
     "clean:test": "rimraf ./test/*",
-    "clean": "pnpm run clean:cache && pnpm run clean:dist && pnpm run clean:test",
-    "dev": "pnpm run clean:dist && pnpm run build:dev",
+    "clean": "yarn clean:cache && yarn clean:dist && yarn clean:test",
+    "dev": "yarn clean:dist && yarn build:dev",
     "lint:css": "stylelint --config=.stylelintrc './resources/css/**/*.css'",
     "lint:js": "eslint ./resources/js --ext js --fix",
     "lint:prettier": "prettier --write --config ./.prettierrc.js './{src, resources/js}/**/*.{js,ts}'",
     "lint:ts": "eslint ./src --ext ts --fix",
-    "lint": "pnpm run lint:js && pnpm run lint:ts && pnpm run lint:prettier && pnpm run lint:css",
-    "pretest": "pnpm run clean:dist && pnpm run build:dev && pnpm run lint",
-    "test": "pnpm run clean:test && tsc -p ./",
-    "vscode:prepublish": "pnpm run clean:dist && pnpm run build:release"
+    "lint": "yarn lint:js && yarn lint:ts && yarn lint:prettier && yarn lint:css",
+    "pretest": "yarn clean:dist && yarn build:dev && yarn lint",
+    "test": "yarn clean:test && tsc -p ./",
+    "vscode:prepublish": "yarn clean:dist && yarn build:release"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.0",
