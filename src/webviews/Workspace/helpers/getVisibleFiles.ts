@@ -23,10 +23,12 @@ export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) =
     const labels = visibleFiles.map((file) => file.label);
     const dups = findDuplicates(labels);
 
-    visibleFiles.forEach((file: File) => {
+    visibleFiles = visibleFiles.map((file: File) => {
       if (!dups.includes(file.label)) {
-        file.path = '';
+        return { ...file, path: '' };
       }
+
+      return file;
     });
   } else if (showPaths === ConfigShowPaths.NEVER) {
     visibleFiles = visibleFiles.map(
