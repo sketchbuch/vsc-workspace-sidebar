@@ -25,7 +25,7 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-#### [1.2.4](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.2...1.2.4) (2021-02-11)
+#### [1.2.5](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.4...1.2.5) (2021-02-25)
 
-- Fixed a bug with the configuration due to translations
-- Optimised getting visible files
+- Fixed an issue where workspaces were not found in .vscode
+- Fixed an issue on Windows wih highlighting the active Workspace due to inconsistent drive letter case.
