@@ -4,6 +4,7 @@ import { workspace } from 'vscode';
 import { CONFIG_FOLDER, FS_WS_EXT } from '../../../constants';
 import { capitalise, isWorkspacefile } from '../../../utils';
 import { File, WsFiles } from '../WorkspaceViewProvider.interface';
+import { isSelected } from './isSelected';
 
 export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
   const folder: string =
@@ -34,7 +35,7 @@ export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
 
         return {
           file,
-          isSelected: file === selected,
+          isSelected: isSelected(file, selected, process.platform),
           label,
           path,
         };
