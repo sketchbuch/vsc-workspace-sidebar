@@ -55,13 +55,13 @@
           "description": "%config.workspaceFolderDepth.description%",
           "maximum": 5,
           "minimum": 0,
-          "scope": "machine-overridable",
+          "scope": "application",
           "type": "number"
         },
         "workspaceSidebar.folder": {
           "default": "",
           "description": "%config.workspaceFolder.description%",
-          "scope": "machine-overridable",
+          "scope": "application",
           "type": "string"
         },
         "workspaceSidebar.showPaths": {
@@ -77,7 +77,7 @@
             "%config.workspaceShowPath.asneeded%",
             "%config.workspaceShowPath.never%"
           ],
-          "scope": "machine-overridable",
+          "scope": "application",
           "type": "string"
         },
         "workspaceSidebar.searchMinimum": {
@@ -85,7 +85,7 @@
           "description": "%config.workspaceSearchMinimum.description%",
           "maximum": 100,
           "minimum": 0,
-          "scope": "machine-overridable",
+          "scope": "application",
           "type": "number"
         }
       }
