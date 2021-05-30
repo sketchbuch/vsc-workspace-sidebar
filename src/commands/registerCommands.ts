@@ -17,6 +17,19 @@ export const registerCommands = (
 ): void => {
   const { registerCommand } = vscode.commands;
 
+  const items: SortOptions = [
+    {
+      description: t('sort.ascending.description'),
+      id: 'ascending',
+      label: t('sort.ascending.label'),
+    },
+    {
+      description: t('sort.descending.description'),
+      id: 'descending',
+      label: t('sort.descending.label'),
+    },
+  ];
+
   context.subscriptions.push(
     registerCommand(CMD_OPEN_CUR_WIN, (file: string): void => {
       vscode.commands.executeCommand(CMD_VSC_OPEN_WS, vscode.Uri.file(file), false);
@@ -40,19 +53,6 @@ export const registerCommands = (
       CMD_SORT,
       async (): Promise<void> => {
         const sort = context.globalState.get<SortIds>(EXT_SORT) || 'ascending';
-        const items: SortOptions = [
-          {
-            description: t('sort.ascending.description'),
-            id: 'ascending',
-            label: t('sort.ascending.label'),
-          },
-          {
-            description: t('sort.descending.description'),
-            id: 'descending',
-            label: t('sort.descending.label'),
-          },
-        ];
-
         const selection = await vscode.window.showQuickPick(items);
 
         if (selection && selection.id !== sort) {
