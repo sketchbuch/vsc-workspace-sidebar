@@ -25,7 +25,6 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-#### [1.2.5](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.4...1.2.5) (2021-02-25)
+#### [1.2.6](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.5...1.2.6) (2021-05-30)
 
-- Fixed an issue where workspaces were not found in .vscode
-- Fixed an issue on Windows wih highlighting the active Workspace due to inconsistent drive letter case.
+- Fixed [#22](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/22) - First char from paths in the sidebar was always cropped even if not a slash

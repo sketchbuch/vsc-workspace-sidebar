@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.2.6](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.5...1.2.6) (2021-05-30)
+
+- Fixed [#22](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/22) - First char from paths in the sidebar was always cropped even if not a slash
+
 ## [1.2.5](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.4...1.2.5) (2021-02-25)
 
 - Fixed an issue where workspaces were not found in .vscode
