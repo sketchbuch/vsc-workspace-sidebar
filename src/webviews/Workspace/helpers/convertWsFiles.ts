@@ -10,7 +10,6 @@ export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
   const folder: string =
     workspace.getConfiguration().get('workspaceSidebar.folder') || CONFIG_FOLDER;
   const cleanedFolder = folder.replace(os.homedir(), '~');
-  const labels: string[] = [];
   const convertedFiles = [...wsFiles]
     .filter((file) => isWorkspacefile(file, 'file'))
     .map(
@@ -29,9 +28,7 @@ export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
           .substring(0, lastFolder)
           .replace(os.homedir(), '~')
           .replace(cleanedFolder, '')
-          .slice(1);
-
-        labels.push(label);
+          .replace(/^\//, ''); // Remove leading slash if there is one
 
         return {
           file,
