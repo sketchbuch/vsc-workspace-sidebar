@@ -8,6 +8,7 @@
   const wsElements = Array.from(document.getElementsByClassName('list__element--unselected'));
   let searchTerm = '';
 
+  vscode
 
   const sendMessage = (action, payload) => {
     const message = { action };
@@ -78,7 +79,26 @@
     wsElements.forEach((element) => {
       element.addEventListener('click', handleElementClick);
     });
+
+    if (searchInput && document.activeElement.id !== 'searchWorkspaces') {
+      searchInput.focus();
+    }
   });
+
+  window.addEventListener('message', event => {
+    const message = event.data;
+
+    switch (message.action) {
+      case 'FOCUS_SEARCH':
+        if (searchInput && document.activeElement.id !== 'searchWorkspaces') {
+          searchInput.focus();
+        }
+        break;
+
+      default:
+        break;
+    }
+  })
 
   window.addEventListener('unload', () => {
     newWinIcons.forEach((element) => {

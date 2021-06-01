@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { SortIds } from '../../commands/registerCommands.interface';
+import { SortIds } from '../../commands/registerCommands';
 
 export interface File {
   file: string;
@@ -18,6 +18,7 @@ export interface WorkspaceCache {
 export type WorkspaceErrors = '' | 'FETCH';
 
 export enum WorkspacePmActions {
+  FOCUS_SEARCH = 'FOCUS_SEARCH',
   OPEN_CUR_WINDOW = 'OPEN_CUR_WINDOW',
   OPEN_NEW_WINDOW = 'OPEN_NEW_WINDOW',
   SEARCH = 'SEARCH',

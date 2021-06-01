@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { t } from 'vscode-ext-localisation';
-import { SortIds } from '../../commands/registerCommands.interface';
+import { SortIds } from '../../commands/registerCommands';
 import {
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,
@@ -37,6 +37,12 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     private readonly _extensionUri: vscode.Uri,
     private readonly _globalState: GlobalState
   ) {}
+
+  public focusInput() {
+    if (this._view?.visible) {
+      this._view.webview.postMessage({ action: Actions.FOCUS_SEARCH });
+    }
+  }
 
   private getCacheFiles() {
     const cachedData = this._globalState.get<WorkspaceCache>(EXT_WSSTATE_CACHE);

@@ -25,6 +25,6 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-#### [1.2.6](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.5...1.2.6) (2021-05-30)
+#### [1.2.7](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.6...1.2.7) (2021-06-01)
 
-- Fixed [#22](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/22) - First char from paths in the sidebar was always cropped even if not a slash
+- Resolves [#21](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/21) - Search box is focused. Also a keyboard shortcut is provided to focus the search box.

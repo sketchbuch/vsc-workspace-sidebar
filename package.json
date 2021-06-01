@@ -16,7 +16,7 @@
     "commands": [
       {
         "command": "vsc-workspace-sidebar-open-cur-win",
-        "title": "%ext.wsListItem.open.curWindow%"
+        "title": "%ext.cmd.wsListItem.open.curWindow%"
       },
       {
         "command": "vsc-workspace-sidebar-open-new-win",
@@ -24,7 +24,7 @@
           "light": "./resources/images/light/new-window.svg",
           "dark": "./resources/images/dark/new-window.svg"
         },
-        "title": "%ext.wsListItem.open.newWindow%"
+        "title": "%ext.cmd.wsListItem.open.newWindow%"
       },
       {
         "command": "vsc-workspace-sidebar-refresh",
@@ -32,11 +32,11 @@
           "light": "./resources/images/light/refresh.svg",
           "dark": "./resources/images/dark/refresh.svg"
         },
-        "title": "%ext.wsList.refresh%"
+        "title": "%ext.cmd.wsList.refresh%"
       },
       {
         "command": "vsc-workspace-sidebar-settings",
-        "title": "%ext.wsListItem.checkSettings%"
+        "title": "%ext.cmd.wsListItem.checkSettings%"
       },
       {
         "command": "vsc-workspace-sidebar-sort",
@@ -44,7 +44,7 @@
           "light": "./resources/images/light/sort.svg",
           "dark": "./resources/images/dark/sort.svg"
         },
-        "title": "%ext.wsList.sort%"
+        "title": "%ext.cmd.wsList.sort%"
       }
     ],
     "configuration": {
@@ -90,11 +90,20 @@
         }
       }
     },
+    "keybindings": [
+      {
+        "command": "vsc-workspace-sidebar-focus-search",
+        "key": "ctrl+shift+q",
+        "mac": "cmd+shift+q",
+        "when": "sideBarVisible && focusedView == vsc-workspace-sidebar-webview-workspace"
+      }
+    ],
     "menus": {
       "view/item/context": [
         {
           "command": "vsc-workspace-sidebar-open-new-win",
           "group": "inline",
+          "name": "TESTTEST",
           "when": "view == vsc-workspace-sidebar-webview-workspace && viewItem == vsc-workspace-sidebar-list-item"
         }
       ],

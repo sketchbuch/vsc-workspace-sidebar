@@ -1,6 +1,6 @@
 import { workspace } from 'vscode';
 import { File, Files } from '../..';
-import { SortIds } from '../../../commands/registerCommands.interface';
+import { SortIds } from '../../../commands/registerCommands';
 import { ConfigShowPaths } from '../../../constants';
 import { findDuplicates, sortFilesByLabel } from '../../../utils';
 
