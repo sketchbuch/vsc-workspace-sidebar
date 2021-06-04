@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import * as vscode from 'vscode';
 import { t } from 'vscode-ext-localisation';
 import { SortIds } from '../../commands/registerCommands';
@@ -9,13 +10,11 @@ import {
   EXT_WEBVIEW_WS,
   EXT_WSSTATE_CACHE,
   EXT_WSSTATE_CACHE_DURATION,
-  NONCE_CHARS,
 } from '../../constants';
 import { store } from '../../store/redux';
 import { getHtml } from '../../templates';
 import { defaultTemplate as template } from '../../templates/workspace';
 import { GlobalState } from '../../types';
-import { getNonce } from '../../utils/security/getNonce';
 import { HtmlData, PostMessage } from '../webviews.interface';
 import { fetch } from './store/fetch';
 import { workspaceSlice } from './store/workspaceSlice';
@@ -96,9 +95,12 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   }
 
   private render() {
+    console.log('### render 1');
     if (this._view) {
+      console.log('### render 2');
       const state = store.getState().ws;
       this._view.title = this.getViewTitle(state);
+      console.log('### render 2.2', this._view.title);
 
       const htmlData: HtmlData<WorkspaceState> = {
         data: { ...state },
@@ -112,8 +114,10 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
           template,
           htmlData,
         },
-        getNonce(NONCE_CHARS, Math.random())
+        crypto.randomBytes(16).toString('hex')
       );
+    } else {
+      console.log('### render 3');
     }
   }
 
@@ -154,6 +158,8 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
 
     webviewView.webview.onDidReceiveMessage((message: PostMessage<Payload, Actions>) => {
       const { action, payload } = message;
+
+      console.log('### message', action, payload);
 
       switch (action) {
         case Actions.OPEN_CUR_WINDOW:

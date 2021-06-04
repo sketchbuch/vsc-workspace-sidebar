@@ -8,7 +8,7 @@
   const wsElements = Array.from(document.getElementsByClassName('list__element--unselected'));
   let searchTerm = '';
 
-  vscode
+  vscode;
 
   const sendMessage = (action, payload) => {
     const message = { action };
@@ -98,7 +98,7 @@
       default:
         break;
     }
-  })
+  });
 
   window.addEventListener('unload', () => {
     newWinIcons.forEach((element) => {

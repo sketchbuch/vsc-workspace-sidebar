@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.2.7](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.6...1.2.7) (2021-06-01)
+
+- Resolves [#21](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/21) - Search box is focused. Also a keyboard shortcut is provided to focus the search box.
+
 ## [1.2.6](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.5...1.2.6) (2021-05-30)
 
 - Fixed [#22](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/22) - First char from paths in the sidebar was always cropped even if not a slash
