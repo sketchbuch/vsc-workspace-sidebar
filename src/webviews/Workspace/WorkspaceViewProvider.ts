@@ -95,12 +95,9 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   }
 
   private render() {
-    console.log('### render 1');
     if (this._view) {
-      console.log('### render 2');
       const state = store.getState().ws;
       this._view.title = this.getViewTitle(state);
-      console.log('### render 2.2', this._view.title);
 
       const htmlData: HtmlData<WorkspaceState> = {
         data: { ...state },
@@ -117,7 +114,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
         crypto.randomBytes(16).toString('hex')
       );
     } else {
-      console.log('### render 3');
+      vscode.window.showErrorMessage(t('errors.viewNotFound'));
     }
   }
 

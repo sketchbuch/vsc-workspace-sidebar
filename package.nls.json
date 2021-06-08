@@ -14,6 +14,9 @@
   "ext.cmd.wsListItem.open.newWindow": "Open in a new window",
   "views.title": "Workspaces",
   "viewsContainers.activitybar.title": "Workspaces",
+  "errors": {
+    "viewNotFound": "Workspace Sidebar: WebviewView not found"
+  },
   "sort": {
     "ascending": {
       "description": "Sort from a-z",

@@ -35,8 +35,14 @@
     sendMessage('SHOW_SETTINGS');
   };
 
-  const handleSearchSubmit = () => {
+  const handleSearchSubmit = (event) => {
     sendMessage('SEARCH', searchTerm);
+
+    // Stop submit navigating: https://github.com/microsoft/vscode/issues/125485
+    // Should be done after sending message otherwise the message is not dispatched
+    if (event) {
+      event.preventDefault();
+    }
   };
 
   const handleSearchChange = (event) => {

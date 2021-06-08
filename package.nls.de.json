@@ -14,6 +14,9 @@
   "ext.cmd.wsListItem.open.newWindow": "In neuem fenster öffnen",
   "views.title": "Arbeitsbereiche",
   "viewsContainers.activitybar.title": "Arbeitsbereiche",
+  "errors": {
+    "viewNotFound": "Workspace Sidebar: WebviewView nicht gefunden"
+  },
   "sort": {
     "ascending": {
       "description": "Sortieren von a-z",
@@ -36,7 +39,7 @@
       "openNewWin": "Öffnen '{{label}}' in einem neuen Fenster",
       "selected": "Aktueller Arbeitsbereich"
     },
-    "loading": "Sammeln von Arbeitsbereiche...",
+    "loading": "Arbeitsbereiche wird gesucht...",
     "none": "Keine Arbeitsbereiche gefunden",
     "searchedOut": "Keine Arbeitsbereiche stimmten mit Ihren Suchbegriffen überein",
     "viewTitle": "Arbeitsbereiche: {{title}}",

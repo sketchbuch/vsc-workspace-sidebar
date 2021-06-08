@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.2.8](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.7...1.2.8) (2021-06-08)
+
+- Resolves [#26](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/26) - Webview shows 404 due to navigation being caused by search form - navigation is not supported in webviews. See also: https://github.com/microsoft/vscode/issues/125485
+
 ## [1.2.7](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.6...1.2.7) (2021-06-01)
 
 - Resolves [#21](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/21) - Search box is focused. Also a keyboard shortcut is provided to focus the search box.
