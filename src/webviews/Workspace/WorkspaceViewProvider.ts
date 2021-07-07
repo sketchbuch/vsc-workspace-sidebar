@@ -5,6 +5,7 @@ import { SortIds } from '../../commands/registerCommands';
 import {
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,
+  ConfigActions,
   EXT_LOADED,
   EXT_SORT,
   EXT_WEBVIEW_WS,
@@ -156,18 +157,21 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     webviewView.webview.onDidReceiveMessage((message: PostMessage<Payload, Actions>) => {
       const { action, payload } = message;
 
-      console.log('### message', action, payload);
-
       switch (action) {
-        case Actions.OPEN_CUR_WINDOW:
+        case Actions.MAIN_CLICK:
+        case Actions.ICON_CLICK:
           if (payload) {
-            executeCommand(CMD_OPEN_CUR_WIN, payload, true);
-          }
-          break;
+            const clickAction: string =
+              vscode.workspace.getConfiguration().get('workspaceSidebar.actions') ??
+              ConfigActions.CURRENT_WINDOW;
+            let cmd =
+              clickAction === ConfigActions.NEW_WINDOW ? CMD_OPEN_NEW_WIN : CMD_OPEN_CUR_WIN;
 
-        case Actions.OPEN_NEW_WINDOW:
-          if (payload) {
-            executeCommand(CMD_OPEN_NEW_WIN, payload, true);
+            if (action === Actions.ICON_CLICK) {
+              cmd = clickAction === ConfigActions.NEW_WINDOW ? CMD_OPEN_CUR_WIN : CMD_OPEN_NEW_WIN;
+            }
+
+            executeCommand(cmd, payload, true);
           }
           break;
 

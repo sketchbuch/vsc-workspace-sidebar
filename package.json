@@ -50,6 +50,20 @@
     "configuration": {
       "title": "%config.title%",
       "properties": {
+        "workspaceSidebar.actions": {
+          "default": "Current Window",
+          "description": "%config.workspaceActions.description%",
+          "enum": [
+            "Current Window",
+            "New Window"
+          ],
+          "enumDescriptions": [
+            "%config.workspaceActions.cur-window%",
+            "%config.workspaceActions.new-window%"
+          ],
+          "scope": "application",
+          "type": "string"
+        },
         "workspaceSidebar.depth": {
           "default": 0,
           "description": "%config.workspaceFolderDepth.description%",
@@ -63,6 +77,14 @@
           "description": "%config.workspaceFolder.description%",
           "scope": "application",
           "type": "string"
+        },
+        "workspaceSidebar.searchMinimum": {
+          "default": 15,
+          "description": "%config.workspaceSearchMinimum.description%",
+          "maximum": 100,
+          "minimum": 0,
+          "scope": "application",
+          "type": "number"
         },
         "workspaceSidebar.showPaths": {
           "default": "As needed",
@@ -79,14 +101,6 @@
           ],
           "scope": "application",
           "type": "string"
-        },
-        "workspaceSidebar.searchMinimum": {
-          "default": 15,
-          "description": "%config.workspaceSearchMinimum.description%",
-          "maximum": 100,
-          "minimum": 0,
-          "scope": "application",
-          "type": "number"
         }
       }
     },
