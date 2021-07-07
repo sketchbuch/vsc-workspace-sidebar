@@ -1,5 +1,8 @@
 {
   "config.title": "Workspace Sidebar",
+  "config.workspaceActions.cur-window": "Current window, icon clicks will open in a new window.",
+  "config.workspaceActions.description": "What action should be taken when clicking on a workspace in the sidebar?",
+  "config.workspaceActions.new-window": "New window, icon clicks will open in the current window.",
   "config.workspaceFolder.description": "The folder to look in for workspace files - leave blank to default to your home folder. '~' will be replaced with your home folder even on windows.",
   "config.workspaceFolderDepth.description": "What depth of subfolders should also be looked in. Range: 0-5",
   "config.workspaceSearchMinimum.description": "The minimum number of workspace files required for the search box to be displayed. 0 will always show the search box. Range: 0-100",

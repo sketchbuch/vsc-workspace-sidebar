@@ -19,8 +19,8 @@ export type WorkspaceErrors = '' | 'FETCH';
 
 export enum WorkspacePmActions {
   FOCUS_SEARCH = 'FOCUS_SEARCH',
-  OPEN_CUR_WINDOW = 'OPEN_CUR_WINDOW',
-  OPEN_NEW_WINDOW = 'OPEN_NEW_WINDOW',
+  ICON_CLICK = 'ICON_CLICK',
+  MAIN_CLICK = 'MAIN_CLICK',
   SEARCH = 'SEARCH',
   SHOW_SETTINGS = 'SHOW_SETTINGS',
 }

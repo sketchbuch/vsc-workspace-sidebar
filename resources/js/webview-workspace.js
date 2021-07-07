@@ -22,12 +22,12 @@
 
   const handleIconClick = (event) => {
     event.stopPropagation();
-    sendMessage('OPEN_NEW_WINDOW', event.currentTarget.dataset.file);
+    sendMessage('ICON_CLICK', event.currentTarget.dataset.file);
   };
 
   const handleElementClick = (event) => {
     event.stopPropagation();
-    sendMessage('OPEN_CUR_WINDOW', event.currentTarget.dataset.file);
+    sendMessage('MAIN_CLICK', event.currentTarget.dataset.file);
   };
 
   const handleViewLInkClick = (event) => {
