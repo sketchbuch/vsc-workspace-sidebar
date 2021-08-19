@@ -9,4 +9,7 @@ export const CMD_SORT = `${EXT}-sort`;
 export const CMD_FOCUS_SEARCH = `${EXT}-focus-search`;
 
 // VS Code
+export const CMD_VSC_OPEN_SETTINGS = 'workbench.action.openSettings';
 export const CMD_VSC_OPEN_WS = 'vscode.openFolder';
+export const CMD_VSC_SAVE_WS_AS = 'workbench.action.saveWorkspaceAs';
+export const CMD_VSC_SET_CTX = 'setContext';

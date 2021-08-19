@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import * as vscode from 'vscode';
 import { WorkspaceState } from '../..';
+import { getWsType } from '../helpers/getWsType';
 import { error } from './error';
 import { fetch, fetchFulfilled, fetchPending, fetchRejected } from './fetch';
 import { invalid } from './invalid';
@@ -21,6 +22,7 @@ export const workspaceSlice = createSlice({
     sort: 'ascending',
     state: 'loading',
     visibleFiles: [],
+    wsType: getWsType(vscode.workspace.workspaceFile, vscode.workspace.workspaceFolders),
   } as WorkspaceState,
   extraReducers: (builder) => {
     builder.addCase(fetch.pending, fetchPending);

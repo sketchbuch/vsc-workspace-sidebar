@@ -21,6 +21,7 @@ export enum WorkspacePmActions {
   FOCUS_SEARCH = 'FOCUS_SEARCH',
   ICON_CLICK = 'ICON_CLICK',
   MAIN_CLICK = 'MAIN_CLICK',
+  SAVE_WS = 'SAVE_WS',
   SEARCH = 'SEARCH',
   SHOW_SETTINGS = 'SHOW_SETTINGS',
 }
@@ -41,9 +42,11 @@ export type WorkspaceState = {
   sort: SortIds;
   state: WorkspaceStates;
   visibleFiles: Files;
+  wsType: WsType;
 };
 
 export type WorkspaceStates = 'error' | 'invalid' | 'list' | 'loading';
+export type WsType = 'none' | 'ws' | 'folder';
 
 export type WsFiles = string[];
 

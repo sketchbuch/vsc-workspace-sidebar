@@ -34,6 +34,11 @@
     "checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",
     "error-fetch": "Beim Sammeln von Arbeitsbereiche ist ein Fehler aufgetreten",
     "error": "Ein unbekannter Fehler ist aufgetreten",
+    "folder": {
+      "open-plural": "DE - Current open folders:",
+      "open": "DE - Current open folder:",
+      "saveButton": "DE - Save as new Workspace"
+    },
     "inValid": "Der Ordnerpfad ist kein Verzeichnis",
     "list-empty": "Keine Arbeitsbereichse gefunden",
     "listItem": {
