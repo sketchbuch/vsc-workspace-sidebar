@@ -11,6 +11,7 @@ export const getMockState = (state: Partial<WorkspaceState> = {}): WorkspaceStat
     sort: 'ascending',
     state: 'loading',
     visibleFiles: [],
+    wsType: 'ws',
     ...state,
   };
 };

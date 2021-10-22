@@ -6,6 +6,7 @@
   const searchInput = document.getElementById('searchWorkspaces');
   const viewLinks = Array.from(document.getElementsByClassName('view__link'));
   const wsElements = Array.from(document.getElementsByClassName('list__element--unselected'));
+  const folderSaveBtn = document.getElementById('saveFolderAsWorkspace');
   let searchTerm = '';
 
   vscode;
@@ -20,19 +21,18 @@
     vscode.postMessage(message);
   };
 
-  const handleIconClick = (event) => {
-    event.stopPropagation();
-    sendMessage('ICON_CLICK', event.currentTarget.dataset.file);
-  };
-
   const handleElementClick = (event) => {
     event.stopPropagation();
     sendMessage('MAIN_CLICK', event.currentTarget.dataset.file);
   };
 
-  const handleViewLInkClick = (event) => {
+  const handleIconClick = (event) => {
     event.stopPropagation();
-    sendMessage('SHOW_SETTINGS');
+    sendMessage('ICON_CLICK', event.currentTarget.dataset.file);
+  };
+
+  const handleSaveFolderClick = () => {
+    sendMessage('SAVE_WS');
   };
 
   const handleSearchSubmit = (event) => {
@@ -63,6 +63,11 @@
     }
   };
 
+  const handleViewLInkClick = (event) => {
+    event.stopPropagation();
+    sendMessage('SHOW_SETTINGS');
+  };
+
   document.addEventListener('DOMContentLoaded', () => {
     newWinIcons.forEach((element) => {
       element.addEventListener('click', handleIconClick);
@@ -85,6 +90,10 @@
     wsElements.forEach((element) => {
       element.addEventListener('click', handleElementClick);
     });
+
+    if (folderSaveBtn) {
+      folderSaveBtn.addEventListener('click', handleSaveFolderClick);
+    }
 
     if (searchInput && document.activeElement.id !== 'searchWorkspaces') {
       searchInput.focus();
@@ -128,5 +137,9 @@
     wsElements.forEach((element) => {
       element.removeEventListener('click', handleElementClick);
     });
+
+    if (folderSaveBtn) {
+      folderSaveBtn.removeEventListener('click', handleSaveFolderClick);
+    }
   });
 })();

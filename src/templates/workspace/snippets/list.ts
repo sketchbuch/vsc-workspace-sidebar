@@ -23,7 +23,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
   }
 
   return `
-      <ul class="list__list">
+      <ul class="list__list list__styled-list">
         ${visibleFiles.map((file) => listItem(file, renderVars)).join('')}
       </ul>
     `;

@@ -5,6 +5,9 @@ import { SortIds } from '../../commands/registerCommands';
 import {
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,
+  CMD_VSC_OPEN_SETTINGS,
+  CMD_VSC_SAVE_WS_AS,
+  CMD_VSC_SET_CTX,
   ConfigActions,
   EXT_LOADED,
   EXT_SORT,
@@ -89,7 +92,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     if (isRerender) {
       this.render();
     } else {
-      vscode.commands.executeCommand('setContext', EXT_LOADED, false);
+      vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false);
       this._globalState.update(EXT_WSSTATE_CACHE, undefined);
       store.dispatch(fetch());
     }
@@ -158,8 +161,8 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
       const { action, payload } = message;
 
       switch (action) {
-        case Actions.MAIN_CLICK:
         case Actions.ICON_CLICK:
+        case Actions.MAIN_CLICK:
           if (payload) {
             const clickAction: string =
               vscode.workspace.getConfiguration().get('workspaceSidebar.actions') ??
@@ -175,6 +178,10 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
           }
           break;
 
+        case Actions.SAVE_WS:
+          executeCommand(CMD_VSC_SAVE_WS_AS);
+          break;
+
         case Actions.SEARCH:
           if (payload !== undefined) {
             store.dispatch(setSearchTerm(payload));
@@ -182,7 +189,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
           break;
 
         case Actions.SHOW_SETTINGS:
-          executeCommand('workbench.action.openSettings', 'workspaceSidebar');
+          executeCommand(CMD_VSC_OPEN_SETTINGS, 'workspaceSidebar');
           break;
 
         default:
@@ -197,11 +204,11 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     switch (state) {
       case 'error':
       case 'invalid':
-        executeCommand('setContext', EXT_LOADED, true);
+        executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, true);
         break;
 
       case 'list':
-        executeCommand('setContext', EXT_LOADED, true);
+        executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, true);
 
         if (files) {
           this._globalState.update(EXT_WSSTATE_CACHE, {

@@ -34,6 +34,11 @@
     "checkSettings": "Check the extension settings",
     "error-fetch": "An error occured whilst collecting workspace files",
     "error": "An unknown error occured",
+    "folder": {
+      "open-plural": "Current open folders:",
+      "open": "Current open folder:",
+      "saveButton": "Save as new Workspace"
+    },
     "inValid": "Folder path is not a directory",
     "list-empty": "No workspace files found",
     "listItem": {
