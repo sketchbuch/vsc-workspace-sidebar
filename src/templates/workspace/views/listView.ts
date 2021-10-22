@@ -28,7 +28,6 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
   }
 
   const { dark, light } = getImgUrls(renderVars, 'error');
-  console.log('### template - list 2');
 
   return `
     <section class="view list list--empty">
