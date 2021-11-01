@@ -202,6 +202,7 @@
     "@reduxjs/toolkit": "^1.5.0",
     "@types/chai": "^4.2.14",
     "@types/sinon": "^9.0.9",
+    "@vscode/webview-ui-toolkit": "^0.8.3",
     "chai": "^4.2.0",
     "crypto": "^1.0.1",
     "rimraf": "^3.0.2",

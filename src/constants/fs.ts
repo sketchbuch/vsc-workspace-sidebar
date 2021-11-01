@@ -8,3 +8,4 @@ export const FS_WS_FILETYPE = 'code-workspace';
 export const FS_WS_EXT = `.${FS_WS_FILETYPE}`;
 export const FS_WEBVIEW_WORKSPACE_CSS = 'webview-workspace.css';
 export const FS_WEBVIEW_WORKSPACE_JS = 'webview-workspace.js';
+export const FS_WEBVIEW_UI_TOOLKIT_JS = 'toolkit.js';

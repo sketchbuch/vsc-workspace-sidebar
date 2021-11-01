@@ -18,6 +18,7 @@ export interface TemplateVars {
   nonce: string;
   scriptFolderUri: vscode.Uri;
   title: string;
+  uiFolderUri: vscode.Uri;
 }
 
 export type GetHtmlTemplateFunc<TState> = (templateVars: TemplateVars, state: TState) => string;

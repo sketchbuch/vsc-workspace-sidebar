@@ -28,6 +28,9 @@ export const getHtml = <T>(
   const scriptFolderUri = webview.asWebviewUri(
     joinPath(extensionPath, FS_FOLDER_RESOURCES, FS_FOLDER_JS)
   );
+  const uiFolderUri = webview.asWebviewUri(
+    joinPath(extensionPath, 'node_modules', '@vscode', 'webview-ui-toolkit', 'dist')
+  );
 
   return template(
     {
@@ -38,6 +41,7 @@ export const getHtml = <T>(
       nonce,
       scriptFolderUri,
       title,
+      uiFolderUri,
     },
     data
   );
