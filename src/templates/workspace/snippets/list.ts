@@ -2,13 +2,16 @@ import { t } from 'vscode-ext-localisation';
 import { listItem } from '..';
 import { WorkspaceState } from '../../../webviews';
 import { RenderVars } from '../../../webviews/webviews.interface';
+import { getFileTree } from '../../../webviews/Workspace/helpers/getFileTree';
 
 export const list = (state: WorkspaceState, renderVars: RenderVars) => {
-  const { files, search, visibleFiles } = state;
+  const { convertedFiles, files, search, visibleFiles } = state;
 
   if (files === false) {
     return '';
   }
+
+  const fileTree = getFileTree(convertedFiles);
 
   if (visibleFiles.length < 1) {
     if (search) {
