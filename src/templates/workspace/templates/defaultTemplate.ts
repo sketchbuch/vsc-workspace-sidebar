@@ -1,6 +1,10 @@
 import { t } from 'vscode-ext-localisation';
 import { listView, loadingView } from '..';
-import { FS_WEBVIEW_WORKSPACE_CSS, FS_WEBVIEW_WORKSPACE_JS } from '../../../constants';
+import {
+  FS_WEBVIEW_UI_TOOLKIT_JS,
+  FS_WEBVIEW_WORKSPACE_CSS,
+  FS_WEBVIEW_WORKSPACE_JS,
+} from '../../../constants';
 import { WorkspaceState } from '../../../webviews';
 import { RenderVars, TemplateVars } from '../../../webviews/webviews.interface';
 import { metaTags } from '../../common';
@@ -16,6 +20,7 @@ export const defaultTemplate = (
     nonce,
     scriptFolderUri,
     title,
+    uiFolderUri,
   }: TemplateVars,
   state: WorkspaceState
 ): string => {
@@ -29,11 +34,10 @@ export const defaultTemplate = (
     content = loadingView(state, renderVars);
   } else if (view === 'list') {
     titleAttr = t('webViews.workspace.viewTitle', { title });
-
     content = listView(state, renderVars);
   } else if (view === 'invalid') {
     content = invalidView(state, renderVars);
-  } else if (view === 'error') {
+  } else {
     content = errorView(state, renderVars);
   }
 
@@ -49,6 +53,7 @@ export const defaultTemplate = (
       <body>
         ${content}
         <script nonce="${nonce}" src="${scriptFolderUri}/${FS_WEBVIEW_WORKSPACE_JS}"></script>
+        <script nonce="${nonce}" src="${uiFolderUri}/${FS_WEBVIEW_UI_TOOLKIT_JS}" type="module"></script>
       </body>
     </html>`;
 };

@@ -2,8 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as vscode from 'vscode';
 import { t } from 'vscode-ext-localisation';
-import { registerCommands } from '../../../commands';
-import { SortIds } from '../../../commands/registerCommands.interface';
+import { registerCommands, SortIds } from '../../../commands';
 import {
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,

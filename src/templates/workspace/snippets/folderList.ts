@@ -14,14 +14,21 @@ export const folderList = (state: WorkspaceState) => {
 
     return `
       <div class="list__folder">
-        <p>${t(title)}</p>
+        <p class="list__folder-title">
+          <strong>
+            ${t(title)}
+          </strong>
+        </p>
 
         <ul class="list__folder-list list__styled-list">
           ${workspaceFolders.map((folder) => folderListItem(folder)).join('')}
         </ul>
-        <button class="list__folder-save" id="saveFolderAsWorkspace" type="button">${t(
-          'webViews.workspace.folder.saveButton'
-        )}</button>
+
+        <div class="list__folder-controls">
+          <vscode-button class="list__folder-save" id="saveFolderAsWorkspace">
+            ${t('webViews.workspace.folder.saveButton')}
+          </vscode-button>
+        </div>
       </div>
     `;
   }
