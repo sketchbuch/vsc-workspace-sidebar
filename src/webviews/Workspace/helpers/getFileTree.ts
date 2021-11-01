@@ -2,11 +2,11 @@ import * as pathLib from 'path';
 import { Files } from '../WorkspaceViewProvider.interface';
 
 export interface FileTree {
-  [key: string]: FileTree;
+  [key: string]: FileTree | null;
 }
 
 export const getFileTree = (files: Files): FileTree => {
-  let tree: FileTree = {};
+  let tree: FileTree | null = {};
 
   files.forEach((file) => {
     const { path } = file;
@@ -17,16 +17,22 @@ export const getFileTree = (files: Files): FileTree => {
       let part = parts.shift();
 
       if (part) {
+        if (branch === null) {
+          branch = {};
+        }
+
         if (branch[part] === undefined) {
-          branch[part] = {};
+          if (parts.length < 1) {
+            branch[part] = null;
+          } else {
+            branch[part] = {};
+          }
         }
 
         branch = branch[part];
       }
     }
   });
-
-  console.log('### tree', tree);
 
   return tree;
 };
