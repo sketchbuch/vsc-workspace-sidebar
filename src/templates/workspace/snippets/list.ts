@@ -2,7 +2,26 @@ import { t } from 'vscode-ext-localisation';
 import { listItem } from '..';
 import { WorkspaceState } from '../../../webviews';
 import { RenderVars } from '../../../webviews/webviews.interface';
-import { getFileTree } from '../../../webviews/Workspace/helpers/getFileTree';
+import { FileTree, getFileTree } from '../../../webviews/Workspace/helpers/getFileTree';
+
+const getTreeBranches = (tree: FileTree): string => {
+  return Object.entries(tree)
+    .map(([key, value]) => {
+      if (value !== null) {
+        return `
+        <li>
+          ${key}<br>
+          <ul>
+            ${getTreeBranches(value)}
+          </ul>
+        </li>
+        `;
+      }
+
+      return `<li>${key}</li>`;
+    })
+    .join('');
+};
 
 export const list = (state: WorkspaceState, renderVars: RenderVars) => {
   const { convertedFiles, files, search, visibleFiles } = state;
@@ -11,7 +30,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
     return '';
   }
 
-  const fileTree = getFileTree(convertedFiles);
+  const showTree = true;
 
   if (visibleFiles.length < 1) {
     if (search) {
@@ -27,7 +46,11 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
 
   return `
       <ul class="list__list list__styled-list">
-        ${visibleFiles.map((file) => listItem(file, renderVars)).join('')}
+        ${
+          showTree
+            ? getTreeBranches(getFileTree(convertedFiles))
+            : visibleFiles.map((file) => listItem(file, renderVars)).join('')
+        }
       </ul>
     `;
 };
