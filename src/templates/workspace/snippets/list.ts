@@ -3,22 +3,27 @@ import { listItem } from '..';
 import { WorkspaceState } from '../../../webviews';
 import { RenderVars } from '../../../webviews/webviews.interface';
 import { FileTree, getFileTree } from '../../../webviews/Workspace/helpers/getFileTree';
+import { File } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 
-const getTreeBranches = (tree: FileTree): string => {
+export const isFile = (branch: FileTree | File): branch is File => {
+  return (branch as File).isSelected !== undefined;
+};
+
+const treeBranches = (tree: FileTree, renderVars: RenderVars): string => {
   return Object.entries(tree)
     .map(([key, value]) => {
-      if (value !== null) {
-        return `
+      if (isFile(value)) {
+        return listItem(value, renderVars);
+      }
+
+      return `
         <li>
           ${key}<br>
           <ul>
-            ${getTreeBranches(value)}
+            ${treeBranches(value, renderVars)}
           </ul>
         </li>
-        `;
-      }
-
-      return `<li>${key}</li>`;
+      `;
     })
     .join('');
 };
@@ -48,7 +53,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
       <ul class="list__list list__styled-list">
         ${
           showTree
-            ? getTreeBranches(getFileTree(convertedFiles))
+            ? treeBranches(getFileTree(convertedFiles), renderVars)
             : visibleFiles.map((file) => listItem(file, renderVars)).join('')
         }
       </ul>

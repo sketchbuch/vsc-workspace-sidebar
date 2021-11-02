@@ -28,6 +28,13 @@ export const getMockTemplateVars = (
           path: '/resources/js',
         }),
     title: 'Workspaces',
+    uiFolderUri: isEmpty
+      ? ({} as Uri)
+      : getMockUri('', {
+          scheme: 'file',
+          authority: 'localhost',
+          path: '/resources/js/toolkit',
+        }),
     ...templateVars,
   };
 };

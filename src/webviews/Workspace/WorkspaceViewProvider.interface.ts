@@ -36,7 +36,6 @@ export type WorkspaceState = {
   convertedFiles: Files;
   error: WorkspaceErrors;
   files: WorkspaceFiles;
-  fileTree: any[];
   isFolderInvalid: boolean;
   search: string;
   selected: string;

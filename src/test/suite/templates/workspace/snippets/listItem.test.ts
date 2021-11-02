@@ -13,7 +13,7 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
     const result = listItem(file, mockRenderVars);
 
     expect(result).to.be.a('string');
-    expect(result.includes('class="list__item"')).to.equal(true);
+    expect(result.includes('class="list__item')).to.equal(true);
     expect(result.includes('class="list__title"')).to.equal(true);
     expect(result).to.include(file.label);
     expect(result.includes('class="list__description"')).to.equal(false);

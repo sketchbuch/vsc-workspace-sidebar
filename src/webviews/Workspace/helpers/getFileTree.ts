@@ -1,7 +1,7 @@
 import * as pathLib from 'path';
-import { Files } from '../WorkspaceViewProvider.interface';
+import { File, Files } from '../WorkspaceViewProvider.interface';
 
-export type FileTreeBranch = FileTree | null;
+export type FileTreeBranch = FileTree | File;
 
 export interface FileTree {
   [key: string]: FileTreeBranch;
@@ -19,19 +19,15 @@ export const getFileTree = (files: Files): FileTree => {
       let part = parts.shift();
 
       if (part) {
-        if (branch === null) {
-          branch = {};
-        }
-
         if (branch[part] === undefined) {
           if (parts.length < 1) {
-            branch[part] = null;
+            branch[part] = { ...file } as File;
           } else {
-            branch[part] = {};
+            branch[part] = {} as FileTree;
           }
         }
 
-        branch = branch[part];
+        branch = branch[part] as FileTree;
       }
     }
   });
