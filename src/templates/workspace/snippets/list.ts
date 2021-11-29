@@ -9,19 +9,21 @@ export const isFile = (branch: FileTree | File): branch is File => {
   return (branch as File).isSelected !== undefined;
 };
 
-const treeBranches = (tree: FileTree, renderVars: RenderVars): string => {
-  return Object.entries(tree)
+const renderTree = (branch: FileTree, renderVars: RenderVars): string => {
+  return Object.entries(branch)
     .map(([key, value]) => {
       if (isFile(value)) {
         return listItem(value, renderVars);
       }
 
       return `
-        <li>
-          ${key}<br>
-          <ul>
-            ${treeBranches(value, renderVars)}
-          </ul>
+        <li class="list__branch-list-item list__styled-item">
+          <span class="list__element" title="${key}">
+            <span class="list__title">${key}</span>
+            <ul>
+              ${renderTree(value, renderVars)}
+            </ul>
+          </span>
         </li>
       `;
     })
@@ -50,10 +52,10 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
   }
 
   return `
-      <ul class="list__list list__styled-list">
+      <ul class="list__list list__styled-list${showTree ? ' list__styled-list--tree' : ''}">
         ${
           showTree
-            ? treeBranches(getFileTree(convertedFiles), renderVars)
+            ? renderTree(getFileTree(convertedFiles), renderVars)
             : visibleFiles.map((file) => listItem(file, renderVars)).join('')
         }
       </ul>

@@ -2,7 +2,8 @@
   position: relative;
 }
 
-.list__styled-list {
+.list__styled-list,
+.list__styled-list ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -25,6 +26,7 @@
   margin: 0;
   padding: 0;
   touch-action: none;
+  position: relative;
 }
 
 .list__element {
@@ -107,7 +109,7 @@
   white-space: nowrap;
 }
 
-.list__element--selected .list__description {
+.list__element--selected > .list__description {
   color: var(--vscode-list-activeSelectionForeground);
   opacity: 1;
 }
@@ -119,9 +121,9 @@
   }
 }
 
-.list__element:hover .list__description,
-.list__element:focus .list__description,
-.list__element:active .list__description {
+.list__element:hover > .list__description,
+.list__element:focus > .list__description,
+.list__element:active > .list__description {
   opacity: 1;
 }
 
@@ -141,7 +143,7 @@
   width: 20px;
 }
 
-.list__element:hover .list__buttons {
+.list__element:hover > .list__buttons {
   display: inline-flex;
 }
 
@@ -216,12 +218,56 @@
   text-align: center;
 }
 
+.list__branch-list-item .list__item::before {
+  background: rgba(169, 169, 169, 0.4);
+  content: '';
+  display: inline-block;
+  height: 100%;
+  left: 10px;
+  position: absolute;
+  top: 0;
+  width: 1px;
+  z-index: 2;
+}
+
+.list__branch-list-item .list__item:last-child::before {
+  height: 50%;
+}
+
+.list__branch-list-item > .list__element {
+  padding-bottom: 0;
+}
+
+.list__branch-list-item > .list__element > .list__title {
+  padding-bottom: 0.3rem;
+}
+
+.list__branch-list-item > .list__element .list__element {
+  padding-right: 0;
+}
+
 .list__folder .list__element:hover {
   background: unset;
 }
 
-.list__folder .list__element:hover .list__description,
-.list__folder .list__element:focus .list__description,
-.list__folder .list__element:active .list__description {
+.list__folder .list__element:hover > .list__description,
+.list__folder .list__element:focus > .list__description,
+.list__folder .list__element:active > .list__description {
   opacity: 0.75;
+}
+
+.list__styled-list--tree {
+  position: relative;
+}
+
+.list__branch-list-item {
+  position: relative;
+}
+
+.list__branch-list-item > .list__element:hover {
+  background: unset;
+}
+
+.list__branch-list-item > .list__element:focus {
+  background: unset;
 }
