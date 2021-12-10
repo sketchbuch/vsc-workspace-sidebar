@@ -31,6 +31,9 @@ export const getHtml = <T>(
   const uiFolderUri = webview.asWebviewUri(
     joinPath(extensionPath, 'node_modules', '@vscode', 'webview-ui-toolkit', 'dist')
   );
+  const codiconsFolderUri = webview.asWebviewUri(
+    joinPath(extensionPath, 'node_modules', '@vscode/codicons', 'dist')
+  );
 
   return template(
     {
@@ -38,6 +41,7 @@ export const getHtml = <T>(
       cssFolderUri,
       imgDarkFolderUri,
       imgLightFolderUri,
+      codiconsFolderUri,
       nonce,
       scriptFolderUri,
       title,

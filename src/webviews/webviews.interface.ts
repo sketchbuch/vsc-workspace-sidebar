@@ -11,6 +11,7 @@ export interface RenderVars {
 }
 
 export interface TemplateVars {
+  codiconsFolderUri: vscode.Uri;
   cspSource: string;
   cssFolderUri: vscode.Uri;
   imgDarkFolderUri: vscode.Uri;

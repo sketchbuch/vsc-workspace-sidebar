@@ -1,6 +1,7 @@
 import { t } from 'vscode-ext-localisation';
 import { listView, loadingView } from '..';
 import {
+  FS_WEBVIEW_CODICONS_CSS,
   FS_WEBVIEW_UI_TOOLKIT_JS,
   FS_WEBVIEW_WORKSPACE_CSS,
   FS_WEBVIEW_WORKSPACE_JS,
@@ -13,6 +14,7 @@ import { invalidView } from '../views/invalidView';
 
 export const defaultTemplate = (
   {
+    codiconsFolderUri,
     cspSource,
     cssFolderUri,
     imgDarkFolderUri,
@@ -48,6 +50,7 @@ export const defaultTemplate = (
         ${metaTags(nonce, cspSource)}
         <title>${titleAttr}</title>
         <link href="${cssFolderUri}/${FS_WEBVIEW_WORKSPACE_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
+        <link href="${codiconsFolderUri}/${FS_WEBVIEW_CODICONS_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
       </head>
 
       <body>

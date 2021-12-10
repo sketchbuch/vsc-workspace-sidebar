@@ -1,0 +1,29 @@
+.list__folder {
+  position: relative;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.list[data-showsearch='true'] .list__folder {
+  padding-top: 30px;
+}
+
+.list__folder-title {
+  margin: 0.7rem 0;
+  padding: 0 20px;
+}
+
+.list__folder-controls {
+  padding-bottom: 0.7rem;
+  padding-top: 0.3rem;
+  text-align: center;
+}
+
+.list__folder .list__element:hover {
+  background: unset;
+}
+
+.list__folder .list__element:hover > .list__description,
+.list__folder .list__element:focus > .list__description,
+.list__folder .list__element:active > .list__description {
+  opacity: 0.75;
+}

@@ -1,0 +1,65 @@
+.list__branch-list-item .list__item::before {
+  background: rgba(169, 169, 169, 0.4);
+  content: '';
+  display: inline-block;
+  height: 100%;
+  left: 10px;
+  position: absolute;
+  top: 0;
+  width: 1px;
+  z-index: 2;
+}
+
+.list__branch-list-item .list__item:last-child::before {
+  height: 50%;
+}
+
+.list__branch-list-item {
+  position: relative;
+}
+
+.list__branch-list-item > .list__element {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
+}
+
+.list__branch-list-item > .list__element:hover {
+  background: unset;
+}
+
+.list__branch-list-item > .list__element .list__element {
+  padding-right: 0;
+}
+
+.list__branch-list-item > .list__element > .list__title {
+  padding-bottom: 0.3rem;
+  padding-left: 20px;
+}
+
+.list__branch-list-item > .list__element:focus {
+  background: unset;
+}
+
+.list_branch-arrow {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  font: normal normal normal 16px/1 sans-serif, codicon;
+  height: 16px;
+  justify-content: center;
+  text-align: right;
+  transform: translateX(3px);
+  width: 16px;
+  position: absolute;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.list_branch-arrow:before {
+  border-radius: 20px;
+  content: '\eab4';
+}

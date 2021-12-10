@@ -1,0 +1,42 @@
+.list__search {
+  align-items: flex-start;
+  background: var(--vscode-sideBar-background);
+  box-sizing: border-box;
+  display: flex;
+  height: 30px;
+  justify-content: flex-start;
+  left: 0;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.list__search div {
+  width: 100%;
+}
+
+.list__search input {
+  background: var(--vscode-input-background);
+  border: 1px solid transparent;
+  color: var(--vscode-input-foreground);
+  font-size: var(--vscode-font-size);
+  padding: 4px;
+  width: 100%;
+}
+
+.list__search input:focus {
+  outline-color: var(--vscode-focusBorder);
+}
+
+.list__styled-list-searchedout {
+  color: var(--vscode-foreground);
+  padding: 0.3rem 20px;
+  padding-top: 30px;
+}
+
+.list__styled-list-searchedout p {
+  margin: 0;
+  padding: 0.3rem 0;
+}
