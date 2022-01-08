@@ -1,13 +1,13 @@
 {
   "config.title": "Workspace Sidebar",
-  "config.workspaceActions.cur-window": "Im aktuelles Fenster öffnen, Iconklicks werden in einem neuen Fenster geöffnet.",
-  "config.workspaceActions.description": "Welche Aktion sollte beim Anklickung auf eine Arbeitsbereich ausgeführt?",
-  "config.workspaceActions.new-window": "Im neues Fenster öffnen, Iconklicks werden im aktuellen Fenster geöffnet.",
-  "config.workspaceFolder.description": "Der Ordnerpfad, in dem nach Arbeitsbereiche gesucht werden soll. Falls leer, wird Ihren Home-Ordner benutzt. '~' wird auch unter Windows durch Ihren Home-Ordner ersetzt.",
-  "config.workspaceFolderDepth.description": "In welcher Tiefe von Unterordnern sollte auch gesucht werden. Rang: 0-5",
-  "config.workspaceSearchMinimum.description": "Die Mindestanzahl von Arbeitsbereiche, die für die Anzeige der Suchfeld erforderlich sind. Bei 0 wird das Suchfeld immer anzeigt. Rang: 0-100",
+  "config.workspaceActions.cur-window": "Im aktuellen Fenster öffnen, Iconklicks werden in einem neuen Fenster geöffnet.",
+  "config.workspaceActions.description": "Welche Aktion sollte beim Anklicken auf einen Arbeitsbereich ausgeführt werden?",
+  "config.workspaceActions.new-window": "Im neuen Fenster öffnen, Iconklicks werden im aktuellen Fenster geöffnet.",
+  "config.workspaceFolder.description": "Der Ordnerpfad, in dem nach Arbeitsbereichen gesucht werden soll. Falls leer, wird Ihr Home-Ordner benutzt. '~' wird auch unter Windows durch Ihren Home-Ordner ersetzt.",
+  "config.workspaceFolderDepth.description": "Wie weit Unterordner auch durchsucht werden. -1 für keine Einschrängung",
+  "config.workspaceSearchMinimum.description": "Die Mindestanzahl von Arbeitsbereichen, die für die Anzeige des Suchfeldes erforderlich ist. Bei 0 wird das Suchfeld immer anzeigt. Skala: 0-100",
   "config.workspaceShowPath.always": "Pfade immer anzeigen",
-  "config.workspaceShowPath.asneeded": "Pfade anzeigen, wenn eine Arbeitsbereich dieselbe Bezeichnung als eine andere hat",
+  "config.workspaceShowPath.asneeded": "Pfade anzeigen, wenn ein Arbeitsbereich dieselbe Bezeichnung wie eine anderer hat",
   "config.workspaceShowPath.description": "Zeigen Sie Pfade zu den Arbeitsbereichsdateien an. Entweder: 'Immer', 'Nie', oder 'Nach Bedarf' (zeigt nur Pfade für Arbeitsbereiche mit derselben Bezeichnung an).",
   "config.workspaceShowPath.never": "Pfade nie anzeigen",
   "ext.cmd.wsList.refresh": "Arbeitsbereiche neu laden",
@@ -27,24 +27,24 @@
     },
     "descending": {
       "description": "Sortieren von z-a",
-      "label": "Absteigen"
+      "label": "Absteigend"
     }
   },
   "workspace": {
     "checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",
-    "error-fetch": "Beim Sammeln von Arbeitsbereiche ist ein Fehler aufgetreten",
+    "error-fetch": "Beim Suchen nach Arbeitsbereichen ist ein Fehler aufgetreten",
     "error": "Ein unbekannter Fehler ist aufgetreten",
     "folder": {
-      "open-plural": "DE - Current open folders:",
-      "open": "DE - Current open folder:",
-      "saveButton": "DE - Save as new Workspace"
+      "open-plural": "Derzeit geöffnete Ordner:",
+      "open": "Derzeit offener Ordner:",
+      "saveButton": "Als neuen Arbeitsbereich speichern"
     },
     "inValid": "Der Ordnerpfad ist kein Verzeichnis",
-    "list-empty": "Keine Arbeitsbereichse gefunden",
+    "list-empty": "Keine Arbeitsbereiche gefunden",
     "listItem": {
       "iconAlt": "Neues Fenster icon",
-      "openCurWin": "Öffnen '{{label}}' in diesem Fenster",
-      "openNewWin": "Öffnen '{{label}}' in einem neuen Fenster",
+      "openCurWin": "'{{label}}' in diesem Fenster öffnen",
+      "openNewWin": "'{{label}}' in einem neuen Fenster öffnen",
       "selected": "Aktueller Arbeitsbereich"
     },
     "loading": "Arbeitsbereiche wird gesucht...",
