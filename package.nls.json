@@ -4,7 +4,7 @@
   "config.workspaceActions.description": "What action should be taken when clicking on a workspace in the sidebar?",
   "config.workspaceActions.new-window": "Open in a new window, icon clicks will open in the current window.",
   "config.workspaceFolder.description": "The folder to look in for workspace files - leave blank to default to your home folder. '~' will be replaced with your home folder even on windows.",
-  "config.workspaceFolderDepth.description": "What depth of subfolders should also be looked in. Range: 0-5",
+  "config.workspaceFolderDepth.description": "What depth of subfolders should also be looked in. -1 for no limit",
   "config.workspaceSearchMinimum.description": "The minimum number of workspace files required for the search box to be displayed. 0 will always show the search box. Range: 0-100",
   "config.workspaceShowPath.always": "Always show paths",
   "config.workspaceShowPath.asneeded": "Show paths when a workspace has the same label as another",
