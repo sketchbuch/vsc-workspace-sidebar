@@ -9,6 +9,7 @@ import {
 import { WorkspaceState } from '../../../webviews';
 import { RenderVars, TemplateVars } from '../../../webviews/webviews.interface';
 import { metaTags } from '../../common';
+import { dynamicCss } from '../../common/snippets/dynamicCss';
 import { errorView } from '../views/errorView';
 import { invalidView } from '../views/invalidView';
 
@@ -51,6 +52,9 @@ export const defaultTemplate = (
         <title>${titleAttr}</title>
         <link href="${cssFolderUri}/${FS_WEBVIEW_WORKSPACE_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
         <link href="${codiconsFolderUri}/${FS_WEBVIEW_CODICONS_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
+        <style nonce="${nonce}">
+          ${dynamicCss(5)}
+        </style>
       </head>
 
       <body>

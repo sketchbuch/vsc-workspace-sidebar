@@ -22,6 +22,7 @@
   display: flex;
   flex-direction: column;
   padding-bottom: 0;
+  padding-right: 0;
 }
 
 .list__branch-list-item > .list__element:hover {
@@ -41,25 +42,39 @@
   background: unset;
 }
 
-.list_branch-arrow {
+.list_branch-icon {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+
   align-items: center;
   display: flex;
   flex-shrink: 0;
   font: normal normal normal 16px/1 sans-serif, codicon;
   height: 16px;
   justify-content: center;
+  position: absolute;
   text-align: right;
   transform: translateX(3px);
   width: 16px;
-  position: absolute;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
 }
 
-.list_branch-arrow:before {
-  border-radius: 20px;
-  content: '\eab4';
+.list_branch-indent-box {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding-left: 30px;
+  position: relative;
+}
+
+.list_branch-indent {
+  border-left: 1px solid red;
+  box-sizing: border-box;
+  display: inline-block;
+  height: 100%;
+  transition: border-color 0.1s linear;
+  width: 8px;
 }
