@@ -1,4 +1,4 @@
-.list__branch-list-item .list__item::before {
+/* .list__branch-list-item .list__item::before {
   background: rgba(169, 169, 169, 0.4);
   content: '';
   display: inline-block;
@@ -8,10 +8,6 @@
   top: 0;
   width: 1px;
   z-index: 2;
-}
-
-.list__branch-list-item .list__item:last-child::before {
-  height: 50%;
 }
 
 .list__branch-list-item {
@@ -78,3 +74,4 @@
   transition: border-color 0.1s linear;
   width: 8px;
 }
+ */

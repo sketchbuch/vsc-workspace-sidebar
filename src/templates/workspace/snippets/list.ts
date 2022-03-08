@@ -12,8 +12,6 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
     return '';
   }
 
-  const showTree = true;
-
   if (visibleFiles.length < 1) {
     if (search) {
       return `
@@ -26,11 +24,14 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
     }
   }
 
+  const showTree = true;
+  const fileTree = getFileTree(convertedFiles);
+
   return `
       <ul class="list__list list__styled-list${showTree ? ' list__styled-list--tree' : ''}">
         ${
           showTree
-            ? tree(getFileTree(convertedFiles), renderVars, 0)
+            ? tree(fileTree, renderVars, 0)
             : visibleFiles.map((file) => listItem(file, renderVars)).join('')
         }
       </ul>

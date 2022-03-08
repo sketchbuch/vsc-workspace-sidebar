@@ -1,7 +1,7 @@
 import { RenderVars } from '../../../webviews/webviews.interface';
 import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree';
 import { File } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
-import { treeArrow, emptyArrow } from './treeIcons';
+import { emptyArrow, treeArrow } from './treeIcons';
 
 export const isFile = (branch: FileTree | File): branch is File => {
   return (branch as File).isSelected !== undefined;
