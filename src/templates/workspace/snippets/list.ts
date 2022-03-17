@@ -25,13 +25,12 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
   }
 
   const showTree = true;
-  const fileTree = getFileTree(convertedFiles);
 
   return `
       <ul class="list__list list__styled-list${showTree ? ' list__styled-list--tree' : ''}">
         ${
           showTree
-            ? tree(fileTree, renderVars, 0)
+            ? tree(getFileTree(convertedFiles), renderVars, 0)
             : visibleFiles.map((file) => listItem(file, renderVars)).join('')
         }
       </ul>

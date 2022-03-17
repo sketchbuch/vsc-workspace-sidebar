@@ -1,3 +1,33 @@
+.list__styled-list--tree {
+  position: relative;
+}
+
+.list_branch-indent-box {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  left: 28px;
+  position: relative;
+}
+
+.list_branch-indent {
+  border-left: 1px solid var(--vscode-tree-indentGuidesStroke);
+  box-sizing: border-box;
+  display: inline-block;
+  height: 100%;
+  opacity: 0.5;
+  transition: border-color 0.1s linear;
+  width: 10px;
+}
+
+.list__branch-list-item > .list__element {
+  flex-direction: row;
+}
+
+.list_branch-icon-empty {
+  width: 16px;
+}
+
 /* .list__branch-list-item .list__item::before {
   background: rgba(169, 169, 169, 0.4);
   content: '';

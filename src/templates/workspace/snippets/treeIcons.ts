@@ -1,6 +1,6 @@
 export const emptyArrow = () => {
   return `
-      <div class="list_branch-icon codicon"></div>
+      <div class="list_branch-icon list_branch-icon-empty codicon"></div>
     `;
 };
 

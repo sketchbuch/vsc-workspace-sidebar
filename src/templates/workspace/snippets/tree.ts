@@ -13,10 +13,10 @@ export const treeIndent = (depth: number) => {
   }
 
   const indents = [...Array(depth).keys()]
-    .map((count) => {
+    .map(() => {
       return `
-      <div class="list_branch-indent"></div>
-    `;
+        <div class="list_branch-indent"></div>
+      `;
     })
     .join('')
     .trim();
@@ -31,7 +31,7 @@ export const tree = (branch: FileTree, renderVars: RenderVars, depth: number): s
 
       if (!isFile(value) && hasSubtree) {
         return `
-          <li class="list__branch-list-item list__styled-item" data-depth="${depth}">
+          <li class="list__branch-list-item list__branch-list-item--sub list__styled-item" data-depth="${depth}">
             ${treeIndent(depth)}
             <span class="list__element" title="${key}">
               ${treeArrow()}
