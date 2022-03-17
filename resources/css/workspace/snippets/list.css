@@ -85,7 +85,7 @@
   white-space: nowrap;
 }
 
-.list__element--selected .list__title {
+.list__styled-item--selected .list__title {
   font-weight: bold;
 }
 
@@ -109,7 +109,7 @@
   white-space: nowrap;
 }
 
-.list__element--selected > .list__description {
+.list__styled-item--selected .list__element > .list__description {
   color: var(--vscode-list-activeSelectionForeground);
   opacity: 1;
 }

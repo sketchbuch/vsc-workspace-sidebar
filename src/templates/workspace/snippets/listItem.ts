@@ -9,13 +9,13 @@ export const listItem = (file: File, renderVars: RenderVars) => {
   const tooltip = isSelected
     ? t('webViews.workspace.listItem.selected')
     : t('webViews.workspace.listItem.openCurWin', { label });
-  const classes = `list__element ${
-    isSelected ? 'list__element--selected' : 'list__element--unselected'
+  const classes = `list__styled-item ${
+    isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
   }`;
 
   return `
-    <li class="list__item list__list-styled-item list__styled-item">
-      <span class="${classes}" data-file="${dataFile}" tabindex="0" title="${tooltip}">
+    <li class="list__item list__list-styled-item ${classes}">
+      <span class="list__element" data-file="${dataFile}" tabindex="0" title="${tooltip}">
         ${isSelected ? listItemIcon(renderVars) : ''}
         <span class="list__title">${label}</span>
         ${path ? `<span class="list__description">${path}</span>` : ''}

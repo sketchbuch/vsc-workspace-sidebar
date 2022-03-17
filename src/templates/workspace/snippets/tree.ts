@@ -1,6 +1,8 @@
 import { RenderVars } from '../../../webviews/webviews.interface';
 import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree';
 import { File } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { listItemButtons } from './listItemButtons';
+import { listItemIcon } from './listItemIcon';
 import { emptyArrow, treeArrow } from './treeIcons';
 
 export const isFile = (branch: FileTree | File): branch is File => {
@@ -28,8 +30,9 @@ export const tree = (branch: FileTree, renderVars: RenderVars, depth: number): s
   return Object.entries(branch)
     .map(([key, value]) => {
       const hasSubtree = Object.entries(value).length > 0;
+      const valueIsFile = isFile(value);
 
-      if (!isFile(value) && hasSubtree) {
+      if (!valueIsFile && hasSubtree) {
         return `
           <li class="list__branch-list-item list__branch-list-item--sub list__styled-item" data-depth="${depth}">
             ${treeIndent(depth)}
@@ -42,12 +45,20 @@ export const tree = (branch: FileTree, renderVars: RenderVars, depth: number): s
         `;
       }
 
+      const { isSelected, path } = value;
+      const classes = `list__styled-item ${
+        isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
+      }`;
+
       return `
-        <li class="list__branch-list-item list__styled-item" data-depth="${depth}">
+        <li class="list__branch-list-item ${classes}" data-depth="${depth}">
+          ${isSelected ? listItemIcon(renderVars) : ''}
           ${treeIndent(depth)}
           <span class="list__element" title="${key}">
-          ${emptyArrow()}
+            ${emptyArrow()}
             <span class="list__title">${key}</span>
+            ${path ? `<span class="list__description">${path}</span>` : ''}
+            ${valueIsFile && !isSelected ? listItemButtons(value, renderVars) : ''}
           </span>
         </li>
       `;
