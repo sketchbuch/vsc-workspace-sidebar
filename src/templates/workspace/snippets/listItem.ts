@@ -17,8 +17,10 @@ export const listItem = (file: File, renderVars: RenderVars) => {
     <li class="list__item list__list-styled-item ${classes}">
       <span class="list__element" data-file="${dataFile}" tabindex="0" title="${tooltip}">
         ${isSelected ? listItemIcon(renderVars) : ''}
-        <span class="list__title">${label}</span>
-        ${path ? `<span class="list__description">${path}</span>` : ''}
+        <span class="list__text">
+          <span class="list__title">${label}</span>
+          ${path ? `<span class="list__description">${path}</span>` : ''}
+        </span>
         ${!isSelected ? listItemButtons(file, renderVars) : ''}
       </span>
     </li>

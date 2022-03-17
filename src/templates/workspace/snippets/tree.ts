@@ -38,7 +38,9 @@ export const tree = (branch: FileTree, renderVars: RenderVars, depth: number): s
             ${treeIndent(depth)}
             <span class="list__element" title="${key}">
               ${treeArrow()}
-              <span class="list__title">${key}</span>
+              <span class="list__text">
+                <span class="list__title">${key}</span>
+              </span>
             </span>
           </li>
           ${tree(value, renderVars, depth + 1)}
@@ -56,8 +58,10 @@ export const tree = (branch: FileTree, renderVars: RenderVars, depth: number): s
           ${treeIndent(depth)}
           <span class="list__element" title="${key}">
             ${emptyArrow()}
-            <span class="list__title">${key}</span>
-            ${path ? `<span class="list__description">${path}</span>` : ''}
+            <span class="list__text">
+              <span class="list__title">${key}</span>
+              ${path ? `<span class="list__description">${path}</span>` : ''}
+            </span>
             ${valueIsFile && !isSelected ? listItemButtons(value, renderVars) : ''}
           </span>
         </li>

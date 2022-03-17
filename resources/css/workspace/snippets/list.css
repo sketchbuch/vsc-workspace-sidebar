@@ -52,8 +52,18 @@
   color: var(--vscode-list-activeSelectionForeground);
 }
 
+.list__text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-left: 18px;
+  position: relative;
+  text-decoration: none;
+  touch-action: none;
+}
+
 @media (min-width: 300px) {
-  .list__element {
+  .list__text {
     flex-direction: row;
     flex-wrap: nowrap;
     overflow: hidden;
