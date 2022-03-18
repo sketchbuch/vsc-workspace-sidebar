@@ -2,7 +2,7 @@ import { workspace } from 'vscode';
 import { File, Files } from '../..';
 import { SortIds } from '../../../commands/registerCommands';
 import { ConfigShowPaths } from '../../../constants';
-import { findDuplicates, sortFilesByLabel, sortFilesByFile } from '../../../utils';
+import { findDuplicates, sortFilesByProp } from '../../../utils';
 
 export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) => {
   const showTree = true;
@@ -11,10 +11,11 @@ export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) =
   let visibleFiles = [...wsFiles];
 
   if (search) {
+    // TODO - Maybe store the lowercased value in converted files?
     visibleFiles = visibleFiles.filter((file) => file.label.toLowerCase().includes(search));
   }
 
-  visibleFiles.sort(showTree ? sortFilesByFile : sortFilesByLabel);
+  visibleFiles.sort(showTree ? sortFilesByProp('file') : sortFilesByProp('label'));
 
   if (sort === 'descending') {
     visibleFiles.reverse();

@@ -7,6 +7,7 @@ export interface File {
   label: string;
   path: string;
   showPath: boolean;
+  [key: string]: string | boolean;
 }
 
 export type Files = File[];

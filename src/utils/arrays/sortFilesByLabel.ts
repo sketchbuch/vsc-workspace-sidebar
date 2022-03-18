@@ -23,3 +23,20 @@ export const sortFilesByFile = (a: File, b: File): number => {
 
   return 0;
 };
+
+export const sortFilesByProp = (prop: 'label' | 'file') => (a: File, b: File): number => {
+  if (prop === 'label' || prop === 'file') {
+    if (a.hasOwnProperty(prop) && b.hasOwnProperty(prop)) {
+      const aVal = String(a[prop]).toLowerCase();
+      const bVal = String(b[prop]).toLowerCase();
+
+      if (aVal > bVal) {
+        return 1;
+      } else if (aVal < bVal) {
+        return -1;
+      }
+    }
+  }
+
+  return 0;
+};

@@ -4,26 +4,10 @@ import { File } from '../../../webviews/Workspace/WorkspaceViewProvider.interfac
 import { listItemButtons } from './listItemButtons';
 import { listItemIcon } from './listItemIcon';
 import { emptyArrow, treeArrow } from './treeIcons';
+import { treeIndent } from './treeIndent';
 
 export const isFile = (branch: FileTree | File): branch is File => {
   return (branch as File).isSelected !== undefined;
-};
-
-export const treeIndent = (depth: number) => {
-  if (depth === 0) {
-    return '';
-  }
-
-  const indents = [...Array(depth).keys()]
-    .map(() => {
-      return `
-        <div class="list_branch-indent"></div>
-      `;
-    })
-    .join('')
-    .trim();
-
-  return `<div class="list_branch-indent-box">${indents}</div>`;
 };
 
 export const tree = (branch: FileTree, renderVars: RenderVars, depth: number): string => {
