@@ -20,10 +20,6 @@
   width: 10px;
 }
 
-/* .list__branch-list-item > .list__element {
-  flex-direction: row;
-} */
-
 .list_branch-icon {
   left: 20px;
   position: absolute;
@@ -33,4 +29,8 @@
 .list_branch-icon-empty {
   min-width: 16px;
   width: 16px;
+}
+
+.list__branch-list-item--sub {
+  background: rgba(0, 0, 0, 0.04);
 }

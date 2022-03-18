@@ -38,6 +38,7 @@ export const defaultTemplate = (
     content = loadingView(state, renderVars);
   } else if (view === 'list') {
     titleAttr = t('webViews.workspace.viewTitle', { title });
+    console.log('### state', state);
     content = listView(state, renderVars);
   } else if (view === 'invalid') {
     content = invalidView(state, renderVars);

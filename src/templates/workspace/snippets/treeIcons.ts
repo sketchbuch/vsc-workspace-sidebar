@@ -1,11 +1,11 @@
-export const emptyArrow = () => {
+export const treeIconArrow = () => {
   return `
-      <div class="list_branch-icon list_branch-icon-empty codicon"></div>
+      <div class="list_branch-icon codicon codicon-chevron-down"></div>
     `;
 };
 
-export const treeArrow = () => {
+export const treeIconFile = () => {
   return `
-      <div class="list_branch-icon codicon codicon-chevron-down"></div>
+      <div class="list_branch-icon codicon codicon-record-small"></div>
     `;
 };

@@ -1,4 +1,5 @@
 import * as pathLib from 'path';
+import { isFile } from '../../../templates/workspace/snippets/tree';
 import { File, Files } from '../WorkspaceViewProvider.interface';
 
 export type FileTreeBranch = FileTree | File;
@@ -32,5 +33,37 @@ export const getFileTree = (files: Files): FileTree => {
     }
   });
 
-  return tree;
+  return sortFileTreeRoot(tree);
+};
+
+const sortFileTreeRoot = (tree: FileTree) => {
+  const newTree: FileTree = {};
+
+  Object.entries(tree)
+    .sort(([aKey, aValue], [bKey, bValue]) => {
+      let aVal = aKey.toLowerCase();
+      let bVal = bKey.toLowerCase();
+
+      if (isFile(aValue) && isFile(bValue)) {
+        aVal = aValue.label.toLowerCase();
+        bVal = bValue.label.toLowerCase();
+      } else if (isFile(aValue) && !isFile(bValue)) {
+        aVal = aValue.label.toLowerCase();
+      } else if (!isFile(aValue) && isFile(bValue)) {
+        bVal = bValue.label.toLowerCase();
+      }
+
+      if (aVal > bVal) {
+        return 1;
+      } else if (aVal < bVal) {
+        return -1;
+      } else {
+        return 0;
+      }
+    })
+    .forEach(([key, value]) => {
+      newTree[key] = value;
+    });
+
+  return newTree;
 };

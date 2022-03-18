@@ -1,4 +1,4 @@
-import { t } from 'vscode-ext-localisation';
+import { getFileTooltip } from '../../../utils/strings/getFileTooltip';
 import { RenderVars } from '../../../webviews/webviews.interface';
 import { File } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 import { listItemButtons } from './listItemButtons';
@@ -6,9 +6,7 @@ import { listItemIcon } from './listItemIcon';
 
 export const listItem = (file: File, renderVars: RenderVars) => {
   const { file: dataFile, isSelected, label, path, showPath } = file;
-  const tooltip = isSelected
-    ? t('webViews.workspace.listItem.selected')
-    : t('webViews.workspace.listItem.openCurWin', { label });
+  const tooltip = getFileTooltip(file, 'cur-win');
   const classes = `list__styled-item ${
     isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
   }`;
