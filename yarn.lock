@@ -1319,10 +1319,10 @@
     semver "^7.3.2"
     tsutils "^3.17.1"
 
-"@vscode/codicons@^0.0.26":
-  version "0.0.26"
-  resolved "https://registry.yarnpkg.com/@vscode/codicons/-/codicons-0.0.26.tgz#affdbc4499d3bd0db1156e4c9d323f885d299e03"
-  integrity sha512-GrYFJPbZ+hRM3NUVdAIpDepWkYCizVb13a6pJDAhckElDvaf4UCmNpuBS4MSydXNK63Ccts0XpvJ6JOW+/aU1g==
+"@vscode/codicons@^0.0.29":
+  version "0.0.29"
+  resolved "https://registry.yarnpkg.com/@vscode/codicons/-/codicons-0.0.29.tgz#587e6ce4be8de55d9d11e5297ea55a3dbab08ccf"
+  integrity sha512-AXhTv1nl3r4W5DqAfXXKiawQNW+tLBNlXn/GcsnFCL0j17sQ2AY+az9oB9K6wjkibq1fndNJvmT8RYN712Fdww==
 
 "@vscode/webview-ui-toolkit@^0.8.3":
   version "0.8.3"
