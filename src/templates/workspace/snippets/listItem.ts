@@ -5,7 +5,7 @@ import { listItemButtons } from './listItemButtons';
 import { listItemIcon } from './listItemIcon';
 
 export const listItem = (file: File, renderVars: RenderVars) => {
-  const { file: dataFile, isSelected, label, path } = file;
+  const { file: dataFile, isSelected, label, path, showPath } = file;
   const tooltip = isSelected
     ? t('webViews.workspace.listItem.selected')
     : t('webViews.workspace.listItem.openCurWin', { label });
@@ -19,7 +19,7 @@ export const listItem = (file: File, renderVars: RenderVars) => {
         ${isSelected ? listItemIcon(renderVars) : ''}
         <span class="list__text">
           <span class="list__title">${label}</span>
-          ${path ? `<span class="list__description">${path}</span>` : ''}
+          ${showPath ? `<span class="list__description">${path}</span>` : ''}
         </span>
         ${!isSelected ? listItemButtons(file, renderVars) : ''}
       </span>

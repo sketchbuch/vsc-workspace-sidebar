@@ -47,7 +47,7 @@ export const tree = (branch: FileTree, renderVars: RenderVars, depth: number): s
         `;
       }
 
-      const { isSelected, path } = value;
+      const { isSelected, path, showPath } = value;
       const classes = `list__styled-item ${
         isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
       }`;
@@ -60,7 +60,7 @@ export const tree = (branch: FileTree, renderVars: RenderVars, depth: number): s
             ${emptyArrow()}
             <span class="list__text">
               <span class="list__title">${key}</span>
-              ${path ? `<span class="list__description">${path}</span>` : ''}
+              ${showPath ? `<span class="list__description">${path}</span>` : ''}
             </span>
             ${valueIsFile && !isSelected ? listItemButtons(value, renderVars) : ''}
           </span>

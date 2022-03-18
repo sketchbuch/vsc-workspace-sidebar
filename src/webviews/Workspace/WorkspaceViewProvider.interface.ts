@@ -6,6 +6,7 @@ export interface File {
   isSelected: boolean;
   label: string;
   path: string;
+  showPath: boolean;
 }
 
 export type Files = File[];

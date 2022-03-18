@@ -2,9 +2,10 @@ import { workspace } from 'vscode';
 import { File, Files } from '../..';
 import { SortIds } from '../../../commands/registerCommands';
 import { ConfigShowPaths } from '../../../constants';
-import { findDuplicates, sortFilesByLabel } from '../../../utils';
+import { findDuplicates, sortFilesByLabel, sortFilesByFile } from '../../../utils';
 
 export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) => {
+  const showTree = true;
   const showPaths: string =
     workspace.getConfiguration().get('workspaceSidebar.showPaths') || ConfigShowPaths.NEVER;
   let visibleFiles = [...wsFiles];
@@ -13,7 +14,7 @@ export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) =
     visibleFiles = visibleFiles.filter((file) => file.label.toLowerCase().includes(search));
   }
 
-  visibleFiles.sort(sortFilesByLabel);
+  visibleFiles.sort(showTree ? sortFilesByFile : sortFilesByLabel);
 
   if (sort === 'descending') {
     visibleFiles.reverse();
@@ -25,7 +26,7 @@ export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) =
 
     visibleFiles = visibleFiles.map((file: File) => {
       if (!dups.includes(file.label)) {
-        return { ...file, path: '' };
+        return { ...file, showPath: false };
       }
 
       return file;
@@ -33,7 +34,7 @@ export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) =
   } else if (showPaths === ConfigShowPaths.NEVER) {
     visibleFiles = visibleFiles.map(
       (file): File => {
-        return { ...file, path: '' };
+        return { ...file, showPath: false };
       }
     );
   }

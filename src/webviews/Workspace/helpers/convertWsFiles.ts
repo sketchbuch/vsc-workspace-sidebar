@@ -35,6 +35,7 @@ export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
           isSelected: isSelected(file, selected, process.platform),
           label,
           path,
+          showPath: true,
         };
       }
     );

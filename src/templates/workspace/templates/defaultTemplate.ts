@@ -32,6 +32,7 @@ export const defaultTemplate = (
 
   let titleAttr = t('views.title');
   let content = '';
+  console.log('### state', state);
 
   if (view === 'loading') {
     content = loadingView(state, renderVars);
