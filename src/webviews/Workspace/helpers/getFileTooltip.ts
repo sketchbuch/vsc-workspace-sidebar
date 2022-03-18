@@ -1,5 +1,5 @@
 import { t } from 'vscode-ext-localisation';
-import { File } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { File } from '../WorkspaceViewProvider.interface';
 
 type TooltipType = 'cur-win' | 'new-win';
 

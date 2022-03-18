@@ -1,5 +1,5 @@
-import { getFileTooltip } from '../../../utils/strings/getFileTooltip';
 import { RenderVars } from '../../../webviews/webviews.interface';
+import { getFileTooltip } from '../../../webviews/Workspace/helpers/getFileTooltip';
 import { File } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 import { listItemButtons } from './listItemButtons';
 import { listItemIcon } from './listItemIcon';
