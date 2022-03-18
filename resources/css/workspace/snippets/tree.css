@@ -11,13 +11,17 @@
 }
 
 .list_branch-indent {
-  border-left: 1px solid var(--vscode-tree-indentGuidesStroke);
+  border-left: 1px solid transparent;
   box-sizing: border-box;
   display: inline-block;
   height: 100%;
   opacity: 0.5;
   transition: border-color 0.1s linear;
   width: 10px;
+}
+
+.list__styled-list--tree:hover .list_branch-indent {
+  border-left-color: var(--vscode-tree-indentGuidesStroke);
 }
 
 .list_branch-icon {
@@ -32,5 +36,5 @@
 }
 
 .list__branch-list-item-folder .list__title {
-  opacity: 0.75;
+  opacity: 0.66;
 }

@@ -21,6 +21,7 @@ export type WorkspaceErrors = '' | 'FETCH';
 
 export enum WorkspacePmActions {
   FOCUS_SEARCH = 'FOCUS_SEARCH',
+  FOLDER_CLICK = 'FOLDER_CLICK',
   ICON_CLICK = 'ICON_CLICK',
   MAIN_CLICK = 'MAIN_CLICK',
   SAVE_WS = 'SAVE_WS',

@@ -19,7 +19,7 @@ export const tree = (branch: FileTree, renderVars: RenderVars, depth: number): s
 
       if (!valueIsFile && hasSubtree) {
         return `
-          <li class="list__branch-list-item list__branch-list-item-folder list__styled-item" data-depth="${depth}">
+          <li class="list__branch-list-item list__branch-list-item-folder list__styled-item" data-folder="${key}" data-depth="${depth}">
             ${treeIndent(depth)}
             <span class="list__element" title="${key}">
               ${treeIconArrow()}
@@ -32,7 +32,7 @@ export const tree = (branch: FileTree, renderVars: RenderVars, depth: number): s
         `;
       }
 
-      const { isSelected, label, path, showPath } = value;
+      const { file, isSelected, label, path, showPath } = value;
       const classes = `list__styled-item ${
         isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
       }`;
@@ -40,7 +40,7 @@ export const tree = (branch: FileTree, renderVars: RenderVars, depth: number): s
       const itemLabel = valueIsFile ? label : key;
 
       return `
-        <li class="list__branch-list-item list__branch-list-item-file ${classes}" data-depth="${depth}">
+        <li class="list__branch-list-item list__branch-list-item-file ${classes}" data-file="${file}" data-depth="${depth}">
           ${isSelected ? listItemIcon(renderVars) : ''}
           ${treeIndent(depth)}
           <span class="list__element" title="${tooltip}">

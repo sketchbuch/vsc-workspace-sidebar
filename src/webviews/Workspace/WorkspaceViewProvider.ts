@@ -178,6 +178,10 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
           }
           break;
 
+        case Actions.FOLDER_CLICK:
+          console.log('### FOLDER_CLICK', message);
+          break;
+
         case Actions.SAVE_WS:
           executeCommand(CMD_VSC_SAVE_WS_AS);
           break;
