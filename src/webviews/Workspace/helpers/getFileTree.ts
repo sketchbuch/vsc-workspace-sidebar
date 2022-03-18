@@ -1,6 +1,6 @@
 import * as pathLib from 'path';
 import { File, Files } from '../WorkspaceViewProvider.interface';
-import { sortFileTreeRoot } from './sortFileTreeRoot';
+import { sortFileTree } from './sortFileTree';
 
 export type FileTreeBranch = FileTree | File;
 
@@ -35,7 +35,5 @@ export const getFileTree = (files: Files): FileTree => {
     }
   });
 
-  console.log('### tree', tree);
-
-  return sortFileTreeRoot(tree);
+  return sortFileTree(tree);
 };

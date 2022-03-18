@@ -31,6 +31,6 @@
   width: 16px;
 }
 
-.list__branch-list-item--sub {
-  background: rgba(0, 0, 0, 0.04);
+.list__branch-list-item-folder .list__title {
+  opacity: 0.75;
 }
