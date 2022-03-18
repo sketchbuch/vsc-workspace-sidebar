@@ -37,33 +37,27 @@ export const getFileTree = (files: Files): FileTree => {
 };
 
 const sortFileTreeRoot = (tree: FileTree) => {
-  const newTree: FileTree = {};
+  const newTree = Object.entries(tree).sort(([aKey, aValue], [bKey, bValue]) => {
+    let aVal = aKey.toLowerCase();
+    let bVal = bKey.toLowerCase();
 
-  Object.entries(tree)
-    .sort(([aKey, aValue], [bKey, bValue]) => {
-      let aVal = aKey.toLowerCase();
-      let bVal = bKey.toLowerCase();
+    if (isFile(aValue) && isFile(bValue)) {
+      aVal = aValue.label.toLowerCase();
+      bVal = bValue.label.toLowerCase();
+    } else if (isFile(aValue) && !isFile(bValue)) {
+      aVal = aValue.label.toLowerCase();
+    } else if (!isFile(aValue) && isFile(bValue)) {
+      bVal = bValue.label.toLowerCase();
+    }
 
-      if (isFile(aValue) && isFile(bValue)) {
-        aVal = aValue.label.toLowerCase();
-        bVal = bValue.label.toLowerCase();
-      } else if (isFile(aValue) && !isFile(bValue)) {
-        aVal = aValue.label.toLowerCase();
-      } else if (!isFile(aValue) && isFile(bValue)) {
-        bVal = bValue.label.toLowerCase();
-      }
+    if (aVal > bVal) {
+      return 1;
+    } else if (aVal < bVal) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
 
-      if (aVal > bVal) {
-        return 1;
-      } else if (aVal < bVal) {
-        return -1;
-      } else {
-        return 0;
-      }
-    })
-    .forEach(([key, value]) => {
-      newTree[key] = value;
-    });
-
-  return newTree;
+  return Object.fromEntries(newTree);
 };
