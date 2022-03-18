@@ -45,6 +45,22 @@
           "dark": "./resources/images/dark/sort.svg"
         },
         "title": "%ext.cmd.wsList.sort%"
+      },
+      {
+        "command": "vsc-workspace-sidebar-collapse-all",
+        "icon": {
+          "light": "./resources/images/light/sort.svg",
+          "dark": "./resources/images/dark/sort.svg"
+        },
+        "title": "%ext.cmd.wsList.collapse-all%"
+      },
+      {
+        "command": "vsc-workspace-sidebar-expand-all",
+        "icon": {
+          "light": "./resources/images/light/sort.svg",
+          "dark": "./resources/images/dark/sort.svg"
+        },
+        "title": "%ext.cmd.wsList.expand-all%"
       }
     ],
     "configuration": {
@@ -86,6 +102,12 @@
           "scope": "application",
           "type": "number"
         },
+        "workspaceSidebar.showFolderHierarchy": {
+          "default": false,
+          "description": "%config.workspaceShowFolderHierarchy.description%",
+          "scope": "application",
+          "type": "boolean"
+        },
         "workspaceSidebar.showPaths": {
           "default": "As needed",
           "description": "%config.workspaceShowPath.description%",
@@ -122,6 +144,16 @@
         }
       ],
       "view/title": [
+        {
+          "command": "vsc-workspace-sidebar-collapse-all",
+          "group": "navigation",
+          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded && config.workspaceSidebar.showFolderHierarchy"
+        },
+        {
+          "command": "vsc-workspace-sidebar-expand-all",
+          "group": "navigation",
+          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded && config.workspaceSidebar.showFolderHierarchy"
+        },
         {
           "command": "vsc-workspace-sidebar-refresh",
           "group": "navigation",

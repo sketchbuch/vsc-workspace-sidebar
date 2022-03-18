@@ -10,7 +10,7 @@ import { loading } from './loading';
 import { setClosedFolders } from './setClosedFolders';
 import { setPersistedState } from './setPersistedState';
 import { setSearchTerm } from './setSearchTerm';
-import { setShowPaths } from './setShowPaths';
+import { setVisibleFiles } from './setVisibleFiles';
 
 export const workspaceSlice = createSlice({
   initialState: {
@@ -40,6 +40,6 @@ export const workspaceSlice = createSlice({
     setClosedFolders,
     setPersistedState,
     setSearchTerm,
-    setShowPaths,
+    setVisibleFiles,
   },
 });

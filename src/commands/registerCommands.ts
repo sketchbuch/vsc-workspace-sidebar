@@ -2,6 +2,8 @@ import * as vscode from 'vscode';
 import { QuickPickItem } from 'vscode';
 import { t } from 'vscode-ext-localisation';
 import {
+  CMD_COLLAPSE,
+  CMD_EXPAND,
   CMD_FOCUS_SEARCH,
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,
@@ -54,6 +56,18 @@ export const registerCommands = (
   context.subscriptions.push(
     registerCommand(CMD_REFRESH, (): void => {
       workspaceViewProvider.refresh();
+    })
+  );
+
+  context.subscriptions.push(
+    registerCommand(CMD_COLLAPSE, (): void => {
+      console.log('### CMD_COLLAPSE');
+    })
+  );
+
+  context.subscriptions.push(
+    registerCommand(CMD_EXPAND, (): void => {
+      console.log('### CMD_EXPAND');
     })
   );
 

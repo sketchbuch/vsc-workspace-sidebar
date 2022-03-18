@@ -1,5 +1,7 @@
+import { workspace } from 'vscode';
 import { t } from 'vscode-ext-localisation';
 import { listItem } from '..';
+import { CONFIG_SHOW_HIERARCHY } from '../../../constants/config';
 import { WorkspaceState } from '../../../webviews';
 import { RenderVars } from '../../../webviews/webviews.interface';
 import { getFileTreeNew } from '../../../webviews/Workspace/helpers/getFileTree';
@@ -24,7 +26,9 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
     }
   }
 
-  const showTree = true;
+  const showTree: boolean =
+    workspace.getConfiguration().get('workspaceSidebar.showFolderHierarchy') ??
+    CONFIG_SHOW_HIERARCHY;
 
   return `
       <ul class="list__list list__styled-list${showTree ? ' list__styled-list--tree' : ''}">

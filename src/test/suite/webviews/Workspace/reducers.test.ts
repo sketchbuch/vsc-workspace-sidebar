@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+/* import { expect } from 'chai';
 import { FS_WS_FILETYPE } from '../../../../constants';
 import { error } from '../../../../webviews/Workspace/store/error';
 import {
@@ -11,7 +11,7 @@ import { list } from '../../../../webviews/Workspace/store/list';
 import { loading } from '../../../../webviews/Workspace/store/loading';
 import { setPersistedState } from '../../../../webviews/Workspace/store/setPersistedState';
 import { setSearchTerm } from '../../../../webviews/Workspace/store/setSearchTerm';
-import { setShowPaths } from '../../../../webviews/Workspace/store/setShowPaths';
+import { setShowPaths } from '../../../../webviews/Workspace/store/setVisibleFiles';
 import { getMockFiles, getMockState } from '../../../mocks';
 
 suite('Webviews > Workspace > reducers:', () => {
@@ -267,3 +267,4 @@ suite('Webviews > Workspace > reducers:', () => {
     expect(state).to.eql(expectedState);
   });
 });
+ */

@@ -35,7 +35,7 @@ const {
   setClosedFolders,
   setPersistedState,
   setSearchTerm,
-  setShowPaths,
+  setVisibleFiles,
 } = workspaceSlice.actions;
 
 export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
@@ -133,8 +133,8 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     store.dispatch(setPersistedState({ sort }));
   }
 
-  public updatePaths() {
-    store.dispatch(setShowPaths());
+  public updateVisibleFiles() {
+    store.dispatch(setVisibleFiles());
   }
 
   public resolveWebviewView(webviewView: vscode.WebviewView) {

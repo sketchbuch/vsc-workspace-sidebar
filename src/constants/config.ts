@@ -1,6 +1,7 @@
 export const CONFIG_DEPTH = 0;
 export const CONFIG_FOLDER = '';
 export const CONFIG_SEARCH_MINIMUM = 15;
+export const CONFIG_SHOW_HIERARCHY = false;
 
 export enum ConfigActions {
   CURRENT_WINDOW = 'Current Window',
