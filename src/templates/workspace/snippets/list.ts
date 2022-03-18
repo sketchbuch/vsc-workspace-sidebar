@@ -4,8 +4,8 @@ import { listItem } from '..';
 import { CONFIG_SHOW_HIERARCHY } from '../../../constants/config';
 import { WorkspaceState } from '../../../webviews';
 import { RenderVars } from '../../../webviews/webviews.interface';
-import { getFileTreeNew } from '../../../webviews/Workspace/helpers/getFileTree';
-import { treeNew } from './tree';
+import { getFileTree } from '../../../webviews/Workspace/helpers/getFileTree';
+import { tree } from './tree';
 
 export const list = (state: WorkspaceState, renderVars: RenderVars) => {
   const { files, search, visibleFiles } = state;
@@ -34,7 +34,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
       <ul class="list__list list__styled-list${showTree ? ' list__styled-list--tree' : ''}">
         ${
           showTree
-            ? treeNew(getFileTreeNew(visibleFiles), renderVars, state, 0)
+            ? tree(getFileTree(visibleFiles), renderVars, state, 0)
             : visibleFiles.map((file) => listItem(file, renderVars)).join('')
         }
       </ul>

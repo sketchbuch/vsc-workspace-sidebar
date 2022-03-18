@@ -1,8 +1,8 @@
-import { isFile } from '../../../templates/workspace/snippets/tree';
+/* import { isFile } from '../../../templates/workspace/snippets/tree';
 import { FileTree, FileTreeBranch } from './getFileTree';
 
 type FileTreeEntries = [string, FileTreeBranch][];
-
+ */
 /**
  * Recursively sorts the file tree, making sure that folders/files on the same level are sorted alphabetically.
  *
@@ -34,7 +34,7 @@ type FileTreeEntries = [string, FileTreeBranch][];
  *  subfolder
  *    Tests
  */
-export const sortFileTree = (tree: FileTree) => {
+/* export const sortFileTree = (tree: FileTree) => {
   const sortedTreeEntries: FileTreeEntries = Object.entries(tree)
     .sort(([aKey, aValue], [bKey, bValue]) => {
       const aIsFile = isFile(aValue);
@@ -69,3 +69,4 @@ export const sortFileTree = (tree: FileTree) => {
 
   return Object.fromEntries(sortedTreeEntries);
 };
+ */
