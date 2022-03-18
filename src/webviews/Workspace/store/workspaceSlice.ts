@@ -7,12 +7,14 @@ import { fetch, fetchFulfilled, fetchPending, fetchRejected } from './fetch';
 import { invalid } from './invalid';
 import { list } from './list';
 import { loading } from './loading';
+import { setClosedFolders } from './setClosedFolders';
 import { setPersistedState } from './setPersistedState';
 import { setSearchTerm } from './setSearchTerm';
 import { setShowPaths } from './setShowPaths';
 
 export const workspaceSlice = createSlice({
   initialState: {
+    closedFolders: [],
     convertedFiles: [],
     error: '',
     files: false,
@@ -35,6 +37,7 @@ export const workspaceSlice = createSlice({
     invalid,
     list,
     loading,
+    setClosedFolders,
     setPersistedState,
     setSearchTerm,
     setShowPaths,

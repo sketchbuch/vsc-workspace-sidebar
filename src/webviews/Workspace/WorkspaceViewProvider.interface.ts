@@ -33,9 +33,11 @@ export type WorkspacePmPayload = string;
 export interface WorkspacePersistedState {
   sort: SortIds;
 }
+export type WorkspacePmPayloadOpenFolders = string;
 export type WorkspacePmPayloadSearchTerm = string;
 
 export type WorkspaceState = {
+  closedFolders: string[];
   convertedFiles: Files;
   error: WorkspaceErrors;
   files: WorkspaceFiles;

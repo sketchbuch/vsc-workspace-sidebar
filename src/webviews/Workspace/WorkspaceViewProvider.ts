@@ -30,7 +30,13 @@ import {
 } from './WorkspaceViewProvider.interface';
 
 const { executeCommand } = vscode.commands;
-const { list, setPersistedState, setSearchTerm, setShowPaths } = workspaceSlice.actions;
+const {
+  list,
+  setClosedFolders,
+  setPersistedState,
+  setSearchTerm,
+  setShowPaths,
+} = workspaceSlice.actions;
 
 export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   public static readonly viewType = EXT_WEBVIEW_WS;
@@ -179,7 +185,9 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
           break;
 
         case Actions.FOLDER_CLICK:
-          console.log('### FOLDER_CLICK', message);
+          if (payload !== undefined) {
+            store.dispatch(setClosedFolders(payload));
+          }
           break;
 
         case Actions.SAVE_WS:

@@ -1,6 +1,12 @@
-export const treeIconArrow = () => {
+export const treeIconOpen = () => {
   return `
       <div class="list_branch-icon codicon codicon-chevron-down"></div>
+    `;
+};
+
+export const treeIconClosed = () => {
+  return `
+      <div class="list_branch-icon codicon codicon-chevron-right"></div>
     `;
 };
 
