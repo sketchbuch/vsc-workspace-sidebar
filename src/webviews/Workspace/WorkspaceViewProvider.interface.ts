@@ -1,5 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { SortIds } from '../../commands/registerCommands';
+import { FileTree } from './helpers/getFileTree';
 
 export interface File {
   file: string;
@@ -44,6 +45,7 @@ export type WorkspaceState = {
   convertedFiles: Files;
   error: WorkspaceErrors;
   files: WorkspaceFiles;
+  fileTree: FileTree;
   isFolderInvalid: boolean;
   search: string;
   selected: string;

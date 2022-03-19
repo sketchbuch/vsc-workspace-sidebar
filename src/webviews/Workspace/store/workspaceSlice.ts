@@ -19,6 +19,7 @@ export const workspaceSlice = createSlice({
     convertedFiles: [],
     error: '',
     files: false,
+    fileTree: {},
     isFolderInvalid: false,
     search: '',
     selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',

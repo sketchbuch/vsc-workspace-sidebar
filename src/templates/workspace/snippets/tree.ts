@@ -42,7 +42,7 @@ export const tree = (
             ${hasSubtree && !isClosed ? tree(sub, renderVars, state, depth + 1) : ''}
             ${
               hasFiles && !isClosed
-                ? files
+                ? [...files]
                     .sort(sortFilesByProp('label'))
                     .map((f) => {
                       const { file, isSelected, label, path, showPath } = f;

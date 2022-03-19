@@ -4,7 +4,7 @@ type SortFilesProps = 'label' | 'path';
 
 export const sortFilesByProp = (prop: SortFilesProps) => (a: File, b: File): number => {
   if (prop === 'label' || prop === 'path') {
-    if (a.hasOwnProperty(prop) && b.hasOwnProperty(prop)) {
+    if (a && b && a.hasOwnProperty(prop) && b.hasOwnProperty(prop)) {
       const aVal = String(a[prop]).toLowerCase();
       const bVal = String(b[prop]).toLowerCase();
 

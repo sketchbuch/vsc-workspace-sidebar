@@ -1,5 +1,6 @@
 import { t } from 'vscode-ext-localisation';
 import { listView, loadingView } from '..';
+import { getDepthConfig, getShowTreeConfig } from '../../../config/getConfig';
 import {
   FS_WEBVIEW_CODICONS_CSS,
   FS_WEBVIEW_UI_TOOLKIT_JS,
@@ -29,9 +30,13 @@ export const defaultTemplate = (
 ): string => {
   const { state: view } = state;
   const renderVars: RenderVars = { imgDarkFolderUri, imgLightFolderUri };
+  const maxDepth = getDepthConfig();
+  const showTree = getShowTreeConfig();
 
   let titleAttr = t('views.title');
   let content = '';
+
+  console.log('### state', state);
 
   if (view === 'loading') {
     content = loadingView(state, renderVars);
@@ -52,9 +57,16 @@ export const defaultTemplate = (
         <title>${titleAttr}</title>
         <link href="${cssFolderUri}/${FS_WEBVIEW_WORKSPACE_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
         <link href="${codiconsFolderUri}/${FS_WEBVIEW_CODICONS_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
-        <style nonce="${nonce}">
-          ${dynamicCss(5)}
-        </style>
+        ${
+          showTree
+            ? `
+                <style nonce="${nonce}">
+                  ${dynamicCss(maxDepth)}
+                </style>
+              `
+            : ''
+        }
+        
       </head>
 
       <body>

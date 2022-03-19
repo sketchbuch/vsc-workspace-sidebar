@@ -1,7 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { WorkspaceState, WorkspaceToggleFolderStateBulk } from '../..';
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree';
-import { getFileTree } from '../helpers/getFileTree';
 
 export const toggleFolderStateBulk = (
   state: WorkspaceState,
@@ -10,8 +9,7 @@ export const toggleFolderStateBulk = (
   if (action.payload === 'expand' && state.closedFolders.length) {
     state.closedFolders = [];
   } else if (action.payload === 'collapse' && state.visibleFiles.length) {
-    const tree = getFileTree(state.visibleFiles, false);
-    const folders = getAllFoldersFromTree(tree);
+    const folders = getAllFoldersFromTree(state.fileTree);
 
     if (state.closedFolders.length !== folders.length) {
       state.closedFolders = [...folders];
