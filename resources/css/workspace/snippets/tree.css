@@ -42,3 +42,7 @@
 .list__branch-list-item-folder.list__styled-item--selected .list__title {
   opacity: 1;
 }
+
+/* .list__branch-list-item-file:not(.list__styled-item--selected) {
+  background: rgba(255, 255, 255, 0.5);
+} */
