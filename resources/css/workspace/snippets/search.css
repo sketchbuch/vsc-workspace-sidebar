@@ -30,13 +30,13 @@
   outline-color: var(--vscode-focusBorder);
 }
 
-.list__styled-list-searchedout {
+.list__searchedout {
   color: var(--vscode-foreground);
   padding: 0.3rem 20px;
   padding-top: 30px;
 }
 
-.list__styled-list-searchedout p {
+.list__searchedout p {
   margin: 0;
   padding: 0.3rem 0;
 }

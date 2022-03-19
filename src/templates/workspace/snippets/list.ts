@@ -1,4 +1,4 @@
-import { workspace } from 'vscode';
+import * as vscode from 'vscode';
 import { t } from 'vscode-ext-localisation';
 import { listItem } from '..';
 import { CONFIG_SHOW_HIERARCHY } from '../../../constants/config';
@@ -17,7 +17,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
   if (visibleFiles.length < 1) {
     if (search) {
       return `
-          <div class="list__list-searchedout">
+          <div class="list__searchedout">
             <p>${t('webViews.workspace.searchedOut')}</p>
           </div>
         `;
@@ -27,7 +27,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
   }
 
   const showTree: boolean =
-    workspace.getConfiguration().get('workspaceSidebar.showFolderHierarchy') ??
+    vscode.workspace.getConfiguration().get('workspaceSidebar.showFolderHierarchy') ??
     CONFIG_SHOW_HIERARCHY;
 
   return `
