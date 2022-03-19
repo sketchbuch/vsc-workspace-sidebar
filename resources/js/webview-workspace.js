@@ -10,8 +10,6 @@
   const folderSaveBtn = document.getElementById('saveFolderAsWorkspace');
   let searchTerm = '';
 
-  vscode;
-
   const sendMessage = (action, payload) => {
     const message = { action };
 

@@ -52,6 +52,10 @@
     },
     "loading": "Arbeitsbereiche wird gesucht...",
     "none": "Keine Arbeitsbereiche gefunden",
+    "searchBox": {
+      "ariaLabel": "Arbeitsbereiche durchsuchen",
+      "placeholder": "Suchen..."
+    },
     "searchedOut": "Keine Arbeitsbereiche stimmten mit Ihren Suchbegriffen überein",
     "viewTitle": "Arbeitsbereiche: {{title}}",
     "titleList": "{{total}}",

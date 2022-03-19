@@ -52,6 +52,10 @@
     },
     "loading": "Collecting workspaces...",
     "none": "No workspaces found",
+    "searchBox": {
+      "ariaLabel": "Search Workspaces",
+      "placeholder": "Search..."
+    },
     "searchedOut": "No workspaces matched your search terms",
     "viewTitle": "Workspaces: {{title}}",
     "titleList": "{{total}}",
