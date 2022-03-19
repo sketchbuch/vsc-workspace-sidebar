@@ -17,10 +17,12 @@ export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) =
     visibleFiles = visibleFiles.filter((file) => file.label.toLowerCase().includes(search));
   }
 
-  visibleFiles.sort(showTree ? sortFilesByProp('path') : sortFilesByProp('label'));
+  if (!showTree) {
+    visibleFiles.sort(sortFilesByProp('label'));
 
-  if (sort === 'descending') {
-    visibleFiles.reverse();
+    if (sort === 'descending') {
+      visibleFiles.reverse();
+    }
   }
 
   if (showPaths === ConfigShowPaths.AS_NEEEDED) {

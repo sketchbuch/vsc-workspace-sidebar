@@ -13,7 +13,7 @@ export interface FileTree {
   [key: string]: FileTreeElement;
 }
 
-export const getFileTree = (files: Files): FileTree => {
+export const getFileTree = (files: Files, includeFiles: boolean = true): FileTree => {
   let tree: FileTree = {};
 
   files.forEach((file) => {
@@ -36,7 +36,7 @@ export const getFileTree = (files: Files): FileTree => {
           };
         }
 
-        if (parts.length < 2) {
+        if (includeFiles && parts.length < 2) {
           branch[part].files.push({ ...file });
         }
 

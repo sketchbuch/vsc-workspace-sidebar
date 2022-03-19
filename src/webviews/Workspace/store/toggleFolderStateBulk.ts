@@ -10,7 +10,7 @@ export const toggleFolderStateBulk = (
   if (action.payload === 'expand' && state.closedFolders.length) {
     state.closedFolders = [];
   } else if (action.payload === 'collapse' && state.visibleFiles.length) {
-    const tree = getFileTree(state.visibleFiles);
+    const tree = getFileTree(state.visibleFiles, false);
     const folders = getAllFoldersFromTree(tree);
 
     if (state.closedFolders.length !== folders.length) {

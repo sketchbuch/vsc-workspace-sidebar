@@ -1,5 +1,5 @@
 import path from 'path';
-import { sortFilesByProp } from '../../../utils/arrays/sortFilesByLabel';
+import { sortFilesByProp } from '../../../utils/arrays/sortFilesByProp';
 import { RenderVars } from '../../../webviews/webviews.interface';
 import { getFileTooltip } from '../../../webviews/Workspace/helpers/getFileTooltip';
 import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree';
