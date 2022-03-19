@@ -27,6 +27,7 @@ export const getMockFiles = (numOfFiles: number, config: Partial<Config> = {}): 
       isSelected,
       label: `File ${fileNum}`,
       path: hasPath ? '/a/path' : '',
+      showPath: false,
     });
   }
 
