@@ -15,9 +15,6 @@ export const tree = (
   state: WorkspaceState,
   depth: number
 ): string => {
-  if (depth === 0) {
-    console.log('### branch', branch);
-  }
   return Object.entries(branch)
     .map(([key, value]) => {
       const { files, folderPath, sub } = value;
