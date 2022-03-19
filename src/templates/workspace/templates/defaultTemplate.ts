@@ -43,6 +43,7 @@ export const defaultTemplate = (
   } else {
     content = errorView(state, renderVars);
   }
+  content = invalidView(state, renderVars);
 
   return `
     <!DOCTYPE html>

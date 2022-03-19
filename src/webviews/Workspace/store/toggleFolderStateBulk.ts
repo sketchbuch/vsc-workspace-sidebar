@@ -7,12 +7,14 @@ export const toggleFolderStateBulk = (
   state: WorkspaceState,
   action: PayloadAction<WorkspaceToggleFolderStateBulk>
 ): void => {
-  if (action.payload === 'expand') {
+  if (action.payload === 'expand' && state.closedFolders.length) {
     state.closedFolders = [];
-  } else if (action.payload === 'collapse') {
+  } else if (action.payload === 'collapse' && state.visibleFiles.length) {
     const tree = getFileTree(state.visibleFiles);
     const folders = getAllFoldersFromTree(tree);
 
-    state.closedFolders = [...folders];
+    if (state.closedFolders.length !== folders.length) {
+      state.closedFolders = [...folders];
+    }
   }
 };

@@ -49,16 +49,16 @@
       {
         "command": "vsc-workspace-sidebar-collapse-all",
         "icon": {
-          "light": "./resources/images/light/sort.svg",
-          "dark": "./resources/images/dark/sort.svg"
+          "light": "./resources/images/light/collapse-all.svg",
+          "dark": "./resources/images/dark/collapse-all.svg"
         },
         "title": "%ext.cmd.wsList.collapse-all%"
       },
       {
         "command": "vsc-workspace-sidebar-expand-all",
         "icon": {
-          "light": "./resources/images/light/sort.svg",
-          "dark": "./resources/images/dark/sort.svg"
+          "light": "./resources/images/light/expand-all.svg",
+          "dark": "./resources/images/dark/expand-all.svg"
         },
         "title": "%ext.cmd.wsList.expand-all%"
       }
