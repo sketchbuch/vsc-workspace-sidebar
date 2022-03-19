@@ -1,8 +1,7 @@
-import { workspace } from 'vscode';
 import { t } from 'vscode-ext-localisation';
 import { list, searchForm } from '..';
 import { getImgUrls } from '../..';
-import { CONFIG_SEARCH_MINIMUM } from '../../../constants';
+import { getSearchMinConfig } from '../../../config/getConfig';
 import { RenderVars } from '../../../webviews/webviews.interface';
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 import { settingsLink } from '../../common/snippets/settingsLink';
@@ -11,8 +10,7 @@ import { folderList } from '../snippets/folderList';
 export const listView = (state: WorkspaceState, renderVars: RenderVars): string => {
   if (state.files) {
     if (state.files.length > 0) {
-      const searchMinimum: number =
-        workspace.getConfiguration().get('workspaceSidebar.searchMinimum') ?? CONFIG_SEARCH_MINIMUM;
+      const searchMinimum = getSearchMinConfig();
       const showSearch = searchMinimum === 0 || state.files.length >= searchMinimum;
 
       return `

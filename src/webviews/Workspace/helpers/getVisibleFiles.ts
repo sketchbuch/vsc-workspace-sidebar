@@ -1,15 +1,12 @@
-import { workspace } from 'vscode';
 import { File, Files } from '../..';
 import { SortIds } from '../../../commands/registerCommands';
-import { ConfigShowPaths, CONFIG_SHOW_HIERARCHY } from '../../../constants';
+import { getShowPathsConfig, getShowTreeConfig } from '../../../config/getConfig';
+import { ConfigShowPaths } from '../../../constants';
 import { findDuplicates, sortFilesByProp } from '../../../utils';
 
 export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) => {
-  const showTree: boolean =
-    workspace.getConfiguration().get('workspaceSidebar.showFolderHierarchy') ??
-    CONFIG_SHOW_HIERARCHY;
-  const showPaths: string =
-    workspace.getConfiguration().get('workspaceSidebar.showPaths') || ConfigShowPaths.NEVER;
+  const showTree = getShowTreeConfig();
+  const showPaths = getShowPathsConfig();
   let visibleFiles = [...wsFiles];
 
   if (search) {

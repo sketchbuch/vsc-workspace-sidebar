@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import * as vscode from 'vscode';
 import { t } from 'vscode-ext-localisation';
 import { SortIds } from '../../commands/registerCommands';
+import { getActionsConfig } from '../../config/getConfig';
 import {
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,
@@ -176,9 +177,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
         case Actions.ICON_CLICK:
         case Actions.MAIN_CLICK:
           if (payload) {
-            const clickAction: string =
-              vscode.workspace.getConfiguration().get('workspaceSidebar.actions') ??
-              ConfigActions.CURRENT_WINDOW;
+            const clickAction = getActionsConfig();
             let cmd =
               clickAction === ConfigActions.NEW_WINDOW ? CMD_OPEN_NEW_WIN : CMD_OPEN_CUR_WIN;
 
