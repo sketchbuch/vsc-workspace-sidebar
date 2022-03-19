@@ -29,12 +29,15 @@ export enum WorkspacePmActions {
   SHOW_SETTINGS = 'SHOW_SETTINGS',
 }
 
-export type WorkspacePmPayload = string;
 export interface WorkspacePersistedState {
   sort: SortIds;
 }
-export type WorkspacePmPayloadOpenFolders = string;
+
+export type FolderState = 'collapse' | 'expand';
+export type WorkspacePmPayload = string;
 export type WorkspacePmPayloadSearchTerm = string;
+export type WorkspacePmPayloadToggleFolderState = string;
+export type WorkspaceToggleFolderStateBulk = FolderState;
 
 export type WorkspaceState = {
   closedFolders: string[];

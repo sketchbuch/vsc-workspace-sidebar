@@ -7,10 +7,11 @@ import { fetch, fetchFulfilled, fetchPending, fetchRejected } from './fetch';
 import { invalid } from './invalid';
 import { list } from './list';
 import { loading } from './loading';
-import { setClosedFolders } from './setClosedFolders';
 import { setPersistedState } from './setPersistedState';
 import { setSearchTerm } from './setSearchTerm';
 import { setVisibleFiles } from './setVisibleFiles';
+import { toggleFolderState } from './toggleFolderState';
+import { toggleFolderStateBulk } from './toggleFolderStateBulk';
 
 export const workspaceSlice = createSlice({
   initialState: {
@@ -37,9 +38,10 @@ export const workspaceSlice = createSlice({
     invalid,
     list,
     loading,
-    setClosedFolders,
     setPersistedState,
     setSearchTerm,
     setVisibleFiles,
+    toggleFolderState,
+    toggleFolderStateBulk,
   },
 });

@@ -61,13 +61,13 @@ export const registerCommands = (
 
   context.subscriptions.push(
     registerCommand(CMD_COLLAPSE, (): void => {
-      console.log('### CMD_COLLAPSE');
+      workspaceViewProvider.toggleAllFolders('collapse');
     })
   );
 
   context.subscriptions.push(
     registerCommand(CMD_EXPAND, (): void => {
-      console.log('### CMD_EXPAND');
+      workspaceViewProvider.toggleAllFolders('expand');
     })
   );
 

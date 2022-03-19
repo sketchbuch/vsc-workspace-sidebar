@@ -23,6 +23,7 @@ import { HtmlData, PostMessage } from '../webviews.interface';
 import { fetch } from './store/fetch';
 import { workspaceSlice } from './store/workspaceSlice';
 import {
+  FolderState,
   WorkspaceCache,
   WorkspacePmActions as Actions,
   WorkspacePmPayload as Payload,
@@ -32,10 +33,11 @@ import {
 const { executeCommand } = vscode.commands;
 const {
   list,
-  setClosedFolders,
   setPersistedState,
   setSearchTerm,
   setVisibleFiles,
+  toggleFolderState,
+  toggleFolderStateBulk,
 } = workspaceSlice.actions;
 
 export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
@@ -128,6 +130,10 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     }
   }
 
+  public toggleAllFolders(type: FolderState) {
+    store.dispatch(toggleFolderStateBulk(type));
+  }
+
   public updateSort() {
     const sort = this._globalState.get<SortIds>(EXT_SORT) ?? 'ascending';
     store.dispatch(setPersistedState({ sort }));
@@ -186,7 +192,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
 
         case Actions.FOLDER_CLICK:
           if (payload !== undefined) {
-            store.dispatch(setClosedFolders(payload));
+            store.dispatch(toggleFolderState(payload));
           }
           break;
 
