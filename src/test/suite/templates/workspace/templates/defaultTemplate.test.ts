@@ -1,7 +1,5 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import * as configs from '../../../../../config/getConfig';
-import * as dynamic from '../../../../../templates/common/snippets/dynamicCss';
 import { defaultTemplate } from '../../../../../templates/workspace';
 import * as content from '../../../../../templates/workspace/views/loadingView';
 import { getMockState, getMockTemplateVars } from '../../../../mocks';
@@ -60,43 +58,6 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
       expect(result).contains(
         'meta name="viewport" content="width=device-width, initial-scale=1.0">'
       );
-    });
-
-    suite('Dynamic CSS', () => {
-      const DEPTH = 5;
-      let depthStub: sinon.SinonStub;
-      let dynamicSpy: sinon.SinonSpy;
-      let treeStub: sinon.SinonStub;
-
-      setup(() => {
-        depthStub = sinon.stub(configs, 'getDepthConfig').callsFake(() => DEPTH);
-        dynamicSpy = sinon.spy(dynamic, 'dynamicCss');
-        treeStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => false);
-      });
-
-      teardown(() => {
-        depthStub.restore();
-        dynamicSpy.restore();
-        treeStub.restore();
-      });
-
-      test('Not rendered if not tree view', () => {
-        const result = defaultTemplate(templateVars, state);
-        expect(result).not.contains(
-          `<style nonce="${templateVars.nonce}" id="ws-webview-css-dynamic">`
-        );
-        sinon.assert.callCount(dynamicSpy, 0);
-      });
-
-      test('Rendered if tree view', () => {
-        treeStub.callsFake(() => true);
-        const result = defaultTemplate(templateVars, state);
-        expect(result).contains(
-          `<style nonce="${templateVars.nonce}" id="ws-webview-css-dynamic">`
-        );
-        sinon.assert.callCount(dynamicSpy, 1);
-        sinon.assert.calledWith(dynamicSpy, DEPTH);
-      });
     });
   });
 

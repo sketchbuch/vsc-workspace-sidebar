@@ -1,5 +1,4 @@
 import { t } from 'vscode-ext-localisation';
-import { getDepthConfig, getShowTreeConfig } from '../../../config/getConfig';
 import {
   FS_WEBVIEW_CODICONS_CSS,
   FS_WEBVIEW_UI_TOOLKIT_JS,
@@ -9,7 +8,6 @@ import {
 import { WorkspaceState } from '../../../webviews';
 import { RenderVars, TemplateVars } from '../../../webviews/webviews.interface';
 import { metaTags } from '../../common';
-import { dynamicCss } from '../../common/snippets/dynamicCss';
 import { errorView } from '../views/errorView';
 import { invalidView } from '../views/invalidView';
 import { listView } from '../views/listView';
@@ -31,8 +29,6 @@ export const defaultTemplate = (
 ): string => {
   const { state: view } = state;
   const renderVars: RenderVars = { imgDarkFolderUri, imgLightFolderUri };
-  const maxDepth = getDepthConfig();
-  const showTree = getShowTreeConfig();
 
   let titleAttr = t('views.title');
   let content = '';
@@ -56,16 +52,6 @@ export const defaultTemplate = (
         <title>${titleAttr}</title>
         <link href="${cssFolderUri}/${FS_WEBVIEW_WORKSPACE_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
         <link href="${codiconsFolderUri}/${FS_WEBVIEW_CODICONS_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
-        ${
-          showTree
-            ? `
-                <style nonce="${nonce}" id="ws-webview-css-dynamic">
-                  ${dynamicCss(maxDepth)}
-                </style>
-              `
-            : ''
-        }
-        
       </head>
 
       <body>

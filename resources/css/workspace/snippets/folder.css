@@ -1,6 +1,6 @@
 .list__folder {
   position: relative;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .list[data-showsearch='true'] .list__folder {
@@ -22,8 +22,14 @@
   background: unset;
 }
 
-.list__folder .list__element:hover > .list__description,
-.list__folder .list__element:focus > .list__description,
-.list__folder .list__element:active > .list__description {
-  opacity: 0.75;
+.list__folder .list__folder-list-item:hover,
+.list__folder .list__folder-list-item:focus,
+.list__folder .list__folder-list-item:active {
+  background-color: unset;
+}
+
+.list__folder:hover .list__element > .list__description,
+.list__folder:focus .list__element > .list__description,
+.list__folder:active .list__element > .list__description {
+  opacity: 0.85;
 }
