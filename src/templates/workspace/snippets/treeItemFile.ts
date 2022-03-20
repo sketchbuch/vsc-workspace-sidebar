@@ -14,7 +14,7 @@ export const treeItemFile = (file: File, depth: number, renderVars: RenderVars):
   const tooltip = getFileTooltip(file, 'cur-win');
 
   return `
-    <li class="${classes}" data-file="${file}" data-depth="${depth}">
+    <li class="${classes}" data-file="${file.file}" data-depth="${depth}">
       ${isSelected ? listItemIcon(renderVars) : ''}
       ${treeIndent(depth + 1)}
       <span class="list__element" title="${tooltip}">
