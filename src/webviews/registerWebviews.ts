@@ -23,6 +23,8 @@ export const registerWebviews = (
         workspaceViewProvider.refresh(true);
       } else if (event.affectsConfiguration('workspaceSidebar.showFolderHierarchy')) {
         workspaceViewProvider.updateVisibleFiles();
+      } else if (event.affectsConfiguration('workspaceSidebar.actions')) {
+        workspaceViewProvider.refresh(true);
       }
     }
   );
