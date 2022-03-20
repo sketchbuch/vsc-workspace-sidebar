@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as vscode from 'vscode';
-import { t } from 'vscode-ext-localisation';
 import { registerCommands, SortIds } from '../../../commands';
 import {
   CMD_COLLAPSE,
@@ -95,13 +94,13 @@ suite('Commands > registerCommands()', () => {
       test(title, async () => {
         const globalGetStub = sinon.stub(mockContext.globalState, 'get').returns(curSort);
         const globalUpdateSpy = sinon.spy(mockContext.globalState, 'update');
-        const qpStub = sinon.stub(vscode.window, 'showQuickPick').returns(
-          Promise.resolve({
-            description: t(`sort.${newSort}.description`),
-            id: newSort,
-            label: t(`sort.${newSort}.label`),
-          })
-        );
+
+        const description = newSort === 'ascending' ? 'Sort from a-z' : 'Sort from z-a';
+        const label = newSort === 'ascending' ? 'Ascending' : 'Descending';
+
+        const qpStub = sinon
+          .stub(vscode.window, 'showQuickPick')
+          .returns(Promise.resolve({ description, id: newSort, label }));
         const wsSpy = sinon.spy(ws, 'updateSort');
         registerCommands(mockContext, ws);
 

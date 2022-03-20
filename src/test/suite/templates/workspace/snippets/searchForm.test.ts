@@ -19,7 +19,7 @@ suite('Templates > Workspace > Snippets: searchForm()', () => {
 
     expect(result).to.be.a('string');
     expect(result).not.to.equal('');
-    expect(result.includes('class="list__search"')).to.equal(true);
+    expect(result).contains('class="list__search"');
 
     sinon.assert.callCount(spy, 1);
     sinon.assert.calledWith(spy, mockState);

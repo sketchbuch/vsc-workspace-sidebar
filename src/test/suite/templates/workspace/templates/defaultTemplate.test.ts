@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { t } from 'vscode-ext-localisation';
 import * as configs from '../../../../../config/getConfig';
 import * as dynamic from '../../../../../templates/common/snippets/dynamicCss';
 import { defaultTemplate } from '../../../../../templates/workspace';
@@ -26,7 +25,7 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
   suite('<head>', () => {
     test('Contains a <title> tag', () => {
       const result = defaultTemplate(templateVars, state);
-      result.includes(`<title>${t('views.title')}</title>`);
+      expect(result).contains(`<title>Workspaces</title>`);
     });
 
     test('Renders the <title> tag correctly if list view', () => {
@@ -35,9 +34,7 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
         getMockTemplateVars({ title: TITLE }),
         getMockState({ state: 'list' })
       );
-      expect(
-        result.includes(`<title>${t('webViews.workspace.viewTitle', { title: TITLE })}</title>`)
-      ).to.equal(true);
+      expect(result).contains(`<title>Workspaces: ${TITLE}</title>`);
     });
 
     test('Contains the correct Content-Security-Policy meta tag', () => {
