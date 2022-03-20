@@ -7,15 +7,17 @@ import { mockRenderVars } from '../../../../mocks';
 suite('Templates > Workspace > Snippets: listItemIcon()', () => {
   test('Renders correctly', () => {
     const spy = sinon.spy(icons, 'getImgUrls');
+
     const result = listItemIcon(mockRenderVars);
 
     expect(result).to.be.a('string');
-    expect(result.includes('class="view__icon list__icon"')).to.equal(true);
-    expect(result.includes('<img alt="" data-theme="dark"')).to.equal(true);
-    expect(result.includes('<img alt="" data-theme="light"')).to.equal(true);
+    expect(result).contains('class="view__icon list__icon"');
+    expect(result).contains('<img alt="" data-theme="dark"');
+    expect(result).contains('<img alt="" data-theme="light"');
 
     sinon.assert.callCount(spy, 1);
-    sinon.assert.calledWith(spy, mockRenderVars, 'success');
+    sinon.assert.calledWith(spy, mockRenderVars, 'check');
+
     spy.restore();
   });
 });

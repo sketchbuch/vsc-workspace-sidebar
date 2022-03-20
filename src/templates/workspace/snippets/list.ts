@@ -19,6 +19,8 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
             <p>${t('webViews.workspace.searchedOut')}</p>
           </div>
         `;
+    } else {
+      return '';
     }
   }
 
