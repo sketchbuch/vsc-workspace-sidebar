@@ -12,9 +12,10 @@ suite('Templates > Workspace > View: invalidView()', () => {
 
     expect(result).to.be.a('string');
     expect(result.includes('class="view invalid"')).to.equal(true);
-    expect(result.includes('<img alt="" data-theme="dark"')).to.equal(true);
-    expect(result.includes('<img alt="" data-theme="light"')).to.equal(true);
     expect(result.includes('class="view__message-title"')).to.equal(true);
+    expect(
+      result.includes('<span class="view__message-icon codicon codicon-error"></span>')
+    ).to.equal(true);
     expect(result.includes(t('webViews.workspace.inValid'))).to.equal(true);
 
     sinon.assert.callCount(spy, 1);
