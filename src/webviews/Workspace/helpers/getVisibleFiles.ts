@@ -10,8 +10,7 @@ export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) =
   let visibleFiles = [...wsFiles];
 
   if (search) {
-    // TODO - Maybe store the lowercased value in converted files?
-    visibleFiles = visibleFiles.filter((file) => file.label.toLowerCase().includes(search));
+    visibleFiles = visibleFiles.filter((file) => file.searchLabel.includes(search));
   }
 
   if (!showTree) {

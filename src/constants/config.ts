@@ -1,3 +1,4 @@
+export const CONFIG_CLEAN_LABELS = true;
 export const CONFIG_DEPTH = 0;
 export const CONFIG_FOLDER = '';
 export const CONFIG_SEARCH_MINIMUM = 15;

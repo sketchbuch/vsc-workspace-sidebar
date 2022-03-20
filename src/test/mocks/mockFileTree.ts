@@ -9,6 +9,7 @@ const file1: File = {
   isSelected: false,
   label: 'Vscode',
   path: `${FOLDERPATH1}/vscode`,
+  searchLabel: 'vscode',
   showPath: false,
 };
 
@@ -19,6 +20,7 @@ const file2: File = {
   isSelected: false,
   label: 'Some Extension',
   path: `${FOLDERPATH2}/some_ext`,
+  searchLabel: 'some extension',
   showPath: false,
 };
 
@@ -29,6 +31,7 @@ const file3: File = {
   isSelected: false,
   label: 'Todo List',
   path: `${FOLDERPATH3}/todo`,
+  searchLabel: 'todo list',
   showPath: false,
 };
 
@@ -39,6 +42,7 @@ const file4: File = {
   isSelected: false,
   label: 'React Router',
   path: `${FOLDERPATH4}/router`,
+  searchLabel: 'react router',
   showPath: false,
 };
 

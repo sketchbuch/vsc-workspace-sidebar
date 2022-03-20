@@ -25,6 +25,8 @@ export const registerWebviews = (
         workspaceViewProvider.updateVisibleFiles();
       } else if (event.affectsConfiguration('workspaceSidebar.actions')) {
         workspaceViewProvider.refresh(true);
+      } else if (event.affectsConfiguration('workspaceSidebar.cleanLabels')) {
+        workspaceViewProvider.refresh();
       }
     }
   );

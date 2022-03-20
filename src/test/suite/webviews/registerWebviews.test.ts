@@ -129,6 +129,22 @@ suite('Webviews > registerWebviews()', () => {
       sinon.assert.callCount(wsSpy, 1);
       expect(wsSpy.getCalls()[0].args[0]).to.equal(true);
     });
+
+    test('workspaceSidebar.cleanLabels', () => {
+      const affectsConfigSpy = sinon.spy(
+        (configPath: string) => configPath === 'workspaceSidebar.cleanLabels'
+      );
+
+      registerWebviews(mockContext, ws);
+      const eventCallback = configStub.getCalls()[0].args[0];
+      eventCallback({
+        affectsConfiguration: affectsConfigSpy,
+      } as vscode.ConfigurationChangeEvent);
+
+      sinon.assert.callCount(affectsConfigSpy, 7);
+      sinon.assert.callCount(wsSpy, 1);
+      expect(wsSpy.getCalls()[0].args[0]).to.equal(undefined);
+    });
   });
 
   suite('Creating a workspace file:', () => {

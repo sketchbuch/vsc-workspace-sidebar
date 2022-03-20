@@ -80,6 +80,12 @@
           "scope": "application",
           "type": "string"
         },
+        "workspaceSidebar.cleanLabels": {
+          "default": true,
+          "description": "%config.workspaceCleanLabels.description%",
+          "scope": "application",
+          "type": "boolean"
+        },
         "workspaceSidebar.depth": {
           "default": 0,
           "description": "%config.workspaceFolderDepth.description%",

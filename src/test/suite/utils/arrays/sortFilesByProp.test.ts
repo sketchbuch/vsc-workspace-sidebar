@@ -9,6 +9,7 @@ suite('Utils > sortFilesByProp()', () => {
     isSelected: false,
     label: 'File A',
     path: '/a/file/to',
+    searchLabel: 'file a',
     showPath: false,
   };
   const fileB: File = {
@@ -16,6 +17,7 @@ suite('Utils > sortFilesByProp()', () => {
     isSelected: false,
     label: 'File B',
     path: '/a/file/to',
+    searchLabel: 'file b',
     showPath: false,
   };
 

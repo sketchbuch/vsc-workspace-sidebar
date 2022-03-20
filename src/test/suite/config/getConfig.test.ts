@@ -3,6 +3,7 @@ import * as sinon from 'sinon';
 import { workspace, WorkspaceConfiguration } from 'vscode';
 import {
   getActionsConfig,
+  getCleanLabelsConfig,
   getDepthConfig,
   getFolderConfig,
   getSearchMinConfig,
@@ -12,6 +13,7 @@ import {
 import {
   ConfigActions,
   ConfigShowPaths,
+  CONFIG_CLEAN_LABELS,
   CONFIG_DEPTH,
   CONFIG_FOLDER,
   CONFIG_SEARCH_MINIMUM,
@@ -39,6 +41,10 @@ suite('Config > getConfig:', () => {
 
   test('getActionsConfig() returns the default if no config value is set', () => {
     expect(getActionsConfig()).to.equal(ConfigActions.CURRENT_WINDOW);
+  });
+
+  test('getCleanLabelsConfig() returns the default if no config value is set', () => {
+    expect(getCleanLabelsConfig()).to.equal(CONFIG_CLEAN_LABELS);
   });
 
   test('getDepthConfig() returns the default if no config value is set', () => {

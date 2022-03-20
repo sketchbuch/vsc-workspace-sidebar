@@ -28,13 +28,17 @@ suite('Webviews > Workspace > reducers:', () => {
   const visibleFiles = getMockFiles(2, { fileType: FS_WS_FILETYPE });
   const files = [visibleFiles[0].file, visibleFiles[1].file];
   const TERM = 'file';
+
+  let cleanStub: sinon.SinonStub;
   let pathsStub: sinon.SinonStub;
 
   setup(() => {
+    cleanStub = sinon.stub(configs, 'getCleanLabelsConfig').callsFake(() => true);
     pathsStub = sinon.stub(configs, 'getShowPathsConfig').callsFake(() => ConfigShowPaths.ALWAYS);
   });
 
   teardown(() => {
+    cleanStub.restore();
     pathsStub.restore();
   });
 

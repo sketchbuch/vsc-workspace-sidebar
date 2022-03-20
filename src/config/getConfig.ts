@@ -2,6 +2,7 @@ import { workspace } from 'vscode';
 import {
   ConfigActions,
   ConfigShowPaths,
+  CONFIG_CLEAN_LABELS,
   CONFIG_DEPTH,
   CONFIG_FOLDER,
   CONFIG_SEARCH_MINIMUM,
@@ -12,6 +13,10 @@ export const getActionsConfig = (): string => {
   return (
     workspace.getConfiguration().get('workspaceSidebar.actions') ?? ConfigActions.CURRENT_WINDOW
   );
+};
+
+export const getCleanLabelsConfig = (): boolean => {
+  return workspace.getConfiguration().get('workspaceSidebar.cleanLabels') ?? CONFIG_CLEAN_LABELS;
 };
 
 export const getDepthConfig = (): number => {
