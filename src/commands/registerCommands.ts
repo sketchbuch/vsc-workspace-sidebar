@@ -60,24 +60,6 @@ export const registerCommands = (
   );
 
   context.subscriptions.push(
-    registerCommand(CMD_COLLAPSE, (): void => {
-      workspaceViewProvider.toggleAllFolders('collapse');
-    })
-  );
-
-  context.subscriptions.push(
-    registerCommand(CMD_EXPAND, (): void => {
-      workspaceViewProvider.toggleAllFolders('expand');
-    })
-  );
-
-  context.subscriptions.push(
-    registerCommand(CMD_FOCUS_SEARCH, (): void => {
-      workspaceViewProvider.focusInput();
-    })
-  );
-
-  context.subscriptions.push(
     registerCommand(
       CMD_SORT,
       async (): Promise<void> => {
@@ -91,5 +73,23 @@ export const registerCommands = (
         }
       }
     )
+  );
+
+  context.subscriptions.push(
+    registerCommand(CMD_FOCUS_SEARCH, (): void => {
+      workspaceViewProvider.focusInput();
+    })
+  );
+
+  context.subscriptions.push(
+    registerCommand(CMD_COLLAPSE, (): void => {
+      workspaceViewProvider.toggleAllFolders('collapse');
+    })
+  );
+
+  context.subscriptions.push(
+    registerCommand(CMD_EXPAND, (): void => {
+      workspaceViewProvider.toggleAllFolders('expand');
+    })
   );
 };

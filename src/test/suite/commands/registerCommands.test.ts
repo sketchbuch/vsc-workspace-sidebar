@@ -4,6 +4,9 @@ import * as vscode from 'vscode';
 import { t } from 'vscode-ext-localisation';
 import { registerCommands, SortIds } from '../../../commands';
 import {
+  CMD_COLLAPSE,
+  CMD_EXPAND,
+  CMD_FOCUS_SEARCH,
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,
   CMD_REFRESH,
@@ -33,10 +36,11 @@ suite('Commands > registerCommands()', () => {
   });
 
   test('Regsiters the correct commands', () => {
+    const CMD_COUNT = 7;
     registerCommands(mockContext, ws);
 
-    expect(mockContext.subscriptions).to.have.length(5);
-    sinon.assert.callCount(regCmdStub, 5);
+    expect(mockContext.subscriptions).to.have.length(CMD_COUNT);
+    sinon.assert.callCount(regCmdStub, CMD_COUNT);
   });
 
   test('CMD_OPEN_CUR_WIN behaves as expected', () => {
@@ -80,7 +84,7 @@ suite('Commands > registerCommands()', () => {
     wsSpy.restore();
   });
 
-  suite.only('CMD_SORT:', () => {
+  suite('CMD_SORT:', () => {
     const testSort = (curSort: SortIds, newSort: SortIds) => {
       let title = `Calls refresh() if "${curSort}" and "${newSort}" is picked`;
 
@@ -126,8 +130,49 @@ suite('Commands > registerCommands()', () => {
     };
 
     testSort('ascending', 'descending');
-    /*     testSort('descending', 'ascending');
+    testSort('descending', 'ascending');
     testSort('ascending', 'ascending');
-    testSort('descending', 'descending'); */
+    testSort('descending', 'descending');
+  });
+
+  test('CMD_FOCUS_SEARCH behaves as expected', () => {
+    const wsSpy = sinon.spy(ws, 'focusInput');
+    registerCommands(mockContext, ws);
+
+    const regCall = regCmdStub.getCalls()[4];
+    const callback = regCall.args[1];
+    callback();
+    expect(regCall.args[0]).to.equal(CMD_FOCUS_SEARCH);
+    sinon.assert.callCount(wsSpy, 1);
+
+    wsSpy.restore();
+  });
+
+  test('CMD_COLLAPSE behaves as expected', () => {
+    const wsSpy = sinon.spy(ws, 'toggleAllFolders');
+    registerCommands(mockContext, ws);
+
+    const regCall = regCmdStub.getCalls()[5];
+    const callback = regCall.args[1];
+    callback();
+    expect(regCall.args[0]).to.equal(CMD_COLLAPSE);
+    sinon.assert.callCount(wsSpy, 1);
+    expect(wsSpy.args[0][0]).to.equal('collapse');
+
+    wsSpy.restore();
+  });
+
+  test('CMD_EXPAND behaves as expected', () => {
+    const wsSpy = sinon.spy(ws, 'toggleAllFolders');
+    registerCommands(mockContext, ws);
+
+    const regCall = regCmdStub.getCalls()[6];
+    const callback = regCall.args[1];
+    callback();
+    expect(regCall.args[0]).to.equal(CMD_EXPAND);
+    sinon.assert.callCount(wsSpy, 1);
+    expect(wsSpy.args[0][0]).to.equal('expand');
+
+    wsSpy.restore();
   });
 });
