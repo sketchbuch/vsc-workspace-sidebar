@@ -1,5 +1,4 @@
 import { t } from 'vscode-ext-localisation';
-import { listView, loadingView } from '..';
 import { getDepthConfig, getShowTreeConfig } from '../../../config/getConfig';
 import {
   FS_WEBVIEW_CODICONS_CSS,
@@ -13,6 +12,8 @@ import { metaTags } from '../../common';
 import { dynamicCss } from '../../common/snippets/dynamicCss';
 import { errorView } from '../views/errorView';
 import { invalidView } from '../views/invalidView';
+import { listView } from '../views/listView';
+import { loadingView } from '../views/loadingView';
 
 export const defaultTemplate = (
   {
@@ -58,7 +59,7 @@ export const defaultTemplate = (
         ${
           showTree
             ? `
-                <style nonce="${nonce}">
+                <style nonce="${nonce}" id="ws-webview-css-dynamic">
                   ${dynamicCss(maxDepth)}
                 </style>
               `
@@ -69,8 +70,8 @@ export const defaultTemplate = (
 
       <body>
         ${content}
-        <script nonce="${nonce}" src="${scriptFolderUri}/${FS_WEBVIEW_WORKSPACE_JS}"></script>
-        <script nonce="${nonce}" src="${uiFolderUri}/${FS_WEBVIEW_UI_TOOLKIT_JS}" type="module"></script>
+        <script nonce="${nonce}" id="ws-webview-js" src="${scriptFolderUri}/${FS_WEBVIEW_WORKSPACE_JS}"></script>
+        <script nonce="${nonce}" id="codicons-js" src="${uiFolderUri}/${FS_WEBVIEW_UI_TOOLKIT_JS}" type="module"></script>
       </body>
     </html>`;
 };

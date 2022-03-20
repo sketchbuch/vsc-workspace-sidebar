@@ -3,9 +3,10 @@ import { t } from 'vscode-ext-localisation';
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 import { folderListItem } from './folderListItem';
 
-const { workspaceFolders } = vscode.workspace;
-
-export const folderList = (state: WorkspaceState) => {
+export const folderList = (
+  state: WorkspaceState,
+  workspaceFolders: vscode.WorkspaceFolder[] | undefined
+) => {
   if (state.wsType === 'folder' && workspaceFolders) {
     const title =
       workspaceFolders.length === 1

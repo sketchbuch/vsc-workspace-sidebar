@@ -7,7 +7,7 @@ export const dynamicCss = (maxDepth: number) => {
       const depth = count + 1;
 
       return `
-      .list__branch-list-item[data-depth='${depth}'] > .list__element {
+      .list__branch-list-item[data-depth="${depth}"] > .list__element {
         padding-left: ${depth * INDENT_PADDING + BASE_PADDING}px;
       }
 
