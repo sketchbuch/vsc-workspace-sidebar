@@ -41,7 +41,7 @@ suite('Webviews > registerWebviews()', () => {
     let wsSpy: sinon.SinonSpy;
 
     setup(() => {
-      wsPathsSpy = sinon.spy(ws, 'updatePaths');
+      wsPathsSpy = sinon.spy(ws, 'updateVisibleFiles');
       wsSpy = sinon.spy(ws, 'refresh');
     });
 
