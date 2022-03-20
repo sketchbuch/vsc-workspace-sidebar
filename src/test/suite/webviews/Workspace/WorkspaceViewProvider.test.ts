@@ -1,4 +1,4 @@
-/* import sinon from 'sinon';
+import sinon from 'sinon';
 import * as vscode from 'vscode';
 import { store } from '../../../../store/redux';
 import * as templates from '../../../../templates/getHtml';
@@ -48,4 +48,3 @@ suite('Webviews > Workspace > WorkspaceViewProvider():', () => {
     callCount += 6;
   });
 });
- */

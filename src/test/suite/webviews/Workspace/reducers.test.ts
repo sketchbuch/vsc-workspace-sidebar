@@ -1,5 +1,7 @@
-/* import { expect } from 'chai';
-import { FS_WS_FILETYPE } from '../../../../constants';
+import { expect } from 'chai';
+import * as sinon from 'sinon';
+import * as configs from '../../../../config/getConfig';
+import { ConfigShowPaths, FS_WS_FILETYPE } from '../../../../constants';
 import { error } from '../../../../webviews/Workspace/store/error';
 import {
   fetchFulfilled,
@@ -11,13 +13,30 @@ import { list } from '../../../../webviews/Workspace/store/list';
 import { loading } from '../../../../webviews/Workspace/store/loading';
 import { setPersistedState } from '../../../../webviews/Workspace/store/setPersistedState';
 import { setSearchTerm } from '../../../../webviews/Workspace/store/setSearchTerm';
-import { setShowPaths } from '../../../../webviews/Workspace/store/setVisibleFiles';
+import { setVisibleFiles } from '../../../../webviews/Workspace/store/setVisibleFiles';
+import { toggleFolderState } from '../../../../webviews/Workspace/store/toggleFolderState';
+import { toggleFolderStateBulk } from '../../../../webviews/Workspace/store/toggleFolderStateBulk';
 import { getMockFiles, getMockState } from '../../../mocks';
+import {
+  mockFileList,
+  mockFilesForFileTree,
+  mockFileTree,
+  mockFileTreeFolders,
+} from '../../../mocks/mockFileTree';
 
 suite('Webviews > Workspace > reducers:', () => {
   const visibleFiles = getMockFiles(2, { fileType: FS_WS_FILETYPE });
   const files = [visibleFiles[0].file, visibleFiles[1].file];
   const TERM = 'file';
+  let pathsStub: sinon.SinonStub;
+
+  setup(() => {
+    pathsStub = sinon.stub(configs, 'getShowPathsConfig').callsFake(() => ConfigShowPaths.ALWAYS);
+  });
+
+  teardown(() => {
+    pathsStub.restore();
+  });
 
   test('error()', () => {
     const state = getMockState({
@@ -250,21 +269,132 @@ suite('Webviews > Workspace > reducers:', () => {
     expect(state).to.eql(expectedState);
   });
 
-  test('setShowPaths()', () => {
-    const state = getMockState({
-      convertedFiles: visibleFiles,
-      files,
-      visibleFiles: [],
-    });
+  test('setVisibleFiles()', () => {
+    const state = getMockState({ convertedFiles: mockFilesForFileTree, files: mockFileList });
     const expectedState = getMockState({
-      convertedFiles: visibleFiles,
-      files,
-      visibleFiles,
+      convertedFiles: mockFilesForFileTree,
+      files: mockFileList,
+      fileTree: mockFileTree,
+      visibleFiles: mockFilesForFileTree,
     });
 
     expect(state).not.to.eql(expectedState);
-    setShowPaths(state);
+    setVisibleFiles(state);
+    expect(state).to.eql(expectedState);
+  });
+
+  test('setVisibleFiles() - No files', () => {
+    const state = getMockState();
+    const expectedState = getMockState();
+
+    setVisibleFiles(state);
+    expect(state).to.eql(expectedState);
+  });
+
+  test('toggleFolderState() - Adds open folder to closed list', () => {
+    const FOLDER = 'vsc';
+    const state = getMockState();
+    const expectedState = getMockState({
+      closedFolders: [FOLDER],
+    });
+
+    expect(state).not.to.eql(expectedState);
+    toggleFolderState(state, { payload: FOLDER, type: 'ws/toggleFolderState' });
+    expect(state).to.eql(expectedState);
+  });
+
+  test('toggleFolderState() - Removes closed folder from closed list', () => {
+    const FOLDER = 'vsc';
+    const state = getMockState({
+      closedFolders: [FOLDER],
+    });
+    const expectedState = getMockState({
+      closedFolders: [],
+    });
+
+    expect(state).not.to.eql(expectedState);
+    toggleFolderState(state, { payload: FOLDER, type: 'ws/toggleFolderState' });
+    expect(state).to.eql(expectedState);
+  });
+
+  test('toggleFolderState() - Leaves state as-is if folder is an empty string', () => {
+    const FOLDER = '';
+    const state = getMockState();
+    const expectedState = getMockState();
+
+    expect(state).to.eql(expectedState);
+    toggleFolderState(state, { payload: FOLDER, type: 'ws/toggleFolderState' });
+    expect(state).to.eql(expectedState);
+  });
+
+  test('toggleFolderStateBulk() - "expand" clears closedFolders, if there were any', () => {
+    const state = getMockState({
+      closedFolders: ['vsc', 'react', 'react/test'],
+    });
+    const expectedState = getMockState();
+
+    expect(state).not.to.eql(expectedState);
+    toggleFolderStateBulk(state, { payload: 'expand', type: 'ws/toggleFolderStateBulk' });
+    expect(state).to.eql(expectedState);
+  });
+
+  test('toggleFolderStateBulk() - "expand" does nothing if there are no closedFolders', () => {
+    const state = getMockState();
+    const expectedState = getMockState();
+
+    expect(state).to.eql(expectedState);
+    toggleFolderStateBulk(state, { payload: 'expand', type: 'ws/toggleFolderStateBulk' });
+    expect(state).to.eql(expectedState);
+  });
+
+  test('toggleFolderStateBulk() - "collapse" does nothing if there are no visibleFiles', () => {
+    const state = getMockState();
+    const expectedState = getMockState();
+
+    expect(state).to.eql(expectedState);
+    toggleFolderStateBulk(state, { payload: 'collapse', type: 'ws/toggleFolderStateBulk' });
+    expect(state).to.eql(expectedState);
+  });
+
+  test('toggleFolderStateBulk() - "collapse" does nothing if all folders are closed', () => {
+    const state = getMockState({
+      convertedFiles: mockFilesForFileTree,
+      closedFolders: mockFileTreeFolders,
+      files: mockFileList,
+      fileTree: mockFileTree,
+      visibleFiles: mockFilesForFileTree,
+    });
+    const expectedState = getMockState({
+      convertedFiles: mockFilesForFileTree,
+      closedFolders: mockFileTreeFolders,
+      files: mockFileList,
+      fileTree: mockFileTree,
+      visibleFiles: mockFilesForFileTree,
+    });
+
+    expect(state).to.eql(expectedState);
+    toggleFolderStateBulk(state, { payload: 'collapse', type: 'ws/toggleFolderStateBulk' });
+    expect(state).to.eql(expectedState);
+  });
+
+  test('toggleFolderStateBulk() - "collapse" will close all folders if some are still open', () => {
+    const state = getMockState({
+      convertedFiles: mockFilesForFileTree,
+      closedFolders: [...mockFileTreeFolders.slice(0, 1)],
+      files: mockFileList,
+      fileTree: mockFileTree,
+      visibleFiles: mockFilesForFileTree,
+    });
+    const expectedState = getMockState({
+      convertedFiles: mockFilesForFileTree,
+      closedFolders: mockFileTreeFolders,
+      files: mockFileList,
+      fileTree: mockFileTree,
+      visibleFiles: mockFilesForFileTree,
+    });
+
+    expect(state).not.to.eql(expectedState);
+    toggleFolderStateBulk(state, { payload: 'collapse', type: 'ws/toggleFolderStateBulk' });
     expect(state).to.eql(expectedState);
   });
 });
- */
