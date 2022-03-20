@@ -9,13 +9,17 @@ import { list } from './list';
 import { loading } from './loading';
 import { setPersistedState } from './setPersistedState';
 import { setSearchTerm } from './setSearchTerm';
-import { setShowPaths } from './setShowPaths';
+import { setVisibleFiles } from './setVisibleFiles';
+import { toggleFolderState } from './toggleFolderState';
+import { toggleFolderStateBulk } from './toggleFolderStateBulk';
 
 export const workspaceSlice = createSlice({
   initialState: {
+    closedFolders: [],
     convertedFiles: [],
     error: '',
     files: false,
+    fileTree: {},
     isFolderInvalid: false,
     search: '',
     selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',
@@ -37,6 +41,8 @@ export const workspaceSlice = createSlice({
     loading,
     setPersistedState,
     setSearchTerm,
-    setShowPaths,
+    setVisibleFiles,
+    toggleFolderState,
+    toggleFolderStateBulk,
   },
 });

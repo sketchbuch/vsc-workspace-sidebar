@@ -18,8 +18,12 @@ export const registerWebviews = (
       } else if (event.affectsConfiguration('workspaceSidebar.folder')) {
         workspaceViewProvider.refresh();
       } else if (event.affectsConfiguration('workspaceSidebar.showPaths')) {
-        workspaceViewProvider.updatePaths();
+        workspaceViewProvider.updateVisibleFiles();
       } else if (event.affectsConfiguration('workspaceSidebar.searchMinimum')) {
+        workspaceViewProvider.refresh(true);
+      } else if (event.affectsConfiguration('workspaceSidebar.showFolderHierarchy')) {
+        workspaceViewProvider.updateVisibleFiles();
+      } else if (event.affectsConfiguration('workspaceSidebar.actions')) {
         workspaceViewProvider.refresh(true);
       }
     }

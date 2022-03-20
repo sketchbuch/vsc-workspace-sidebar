@@ -1,0 +1,166 @@
+.list {
+  position: relative;
+}
+
+.list__styled-list,
+.list__styled-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list[data-showsearch='true'] .list__styled-list {
+  padding-top: 30px;
+}
+
+.list[data-folderopen='true'] .list__styled-list {
+  padding-top: 0;
+}
+
+.list--empty {
+  padding: 0.3rem 20px;
+}
+
+.list__styled-item {
+  color: var(--vscode-editorWidget-foreground);
+  display: flex;
+  margin: 0;
+  padding: 0;
+  touch-action: none;
+  position: relative;
+}
+
+.list__element {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  font-size: var(--vscode-font-size);
+  margin: 0;
+  min-width: 0;
+  padding: 0.3rem 20px;
+  position: relative;
+  text-decoration: none;
+  touch-action: none;
+}
+
+.list__styled-item--unselected {
+  cursor: pointer;
+}
+
+.list__styled-item--selected {
+  background: var(--vscode-list-activeSelectionBackground);
+  color: var(--vscode-list-activeSelectionForeground);
+}
+
+.list__text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-left: 18px;
+  position: relative;
+  text-decoration: none;
+  touch-action: none;
+}
+
+@media (min-width: 300px) {
+  .list__text {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.list__styled-item:hover {
+  background: var(--vscode-list-hoverBackground);
+  color: var(--vscode-editorWidget-foreground);
+}
+
+.list__styled-item:focus {
+  outline: none;
+  background: var(--vscode-list-focusBackground);
+  color: var(--vscode-editorWidget-foreground);
+}
+
+.list__styled-item:active {
+  color: var(--vscode-editorWidget-foreground);
+}
+
+.list__title {
+  display: block;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list__styled-item--selected:not(.list__branch-list-item-folder) .list__title {
+  font-weight: bold;
+}
+
+@media (min-width: 300px) {
+  .list__title {
+    display: inline;
+    margin-right: 0.5rem;
+    overflow: unset;
+    text-overflow: unset;
+  }
+}
+
+.list__description {
+  color: var(--vscode-list-deemphasizedForeground);
+  display: block;
+  margin: 0;
+  margin-top: 0.25rem;
+  opacity: 0.75;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list__styled-item--selected .list__element .list__description {
+  color: var(--vscode-list-activeSelectionForeground);
+  opacity: 1;
+}
+
+@media (min-width: 300px) {
+  .list__description {
+    display: inline;
+    margin-top: 0;
+  }
+}
+
+.list__styled-item:hover > .list__element > .list__description,
+.list__styled-item:focus > .list__element > .list__description,
+.list__styled-item:active > .list__element > .list__description {
+  opacity: 1;
+}
+
+.list__buttons {
+  align-items: center;
+  background: var(--vscode-list-hoverBackground);
+  display: none;
+  height: 100%;
+  justify-content: center;
+  line-height: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  white-space: nowrap;
+  width: 20px;
+}
+
+.list__styled-item:hover > .list__element > .list__buttons {
+  display: inline-flex;
+}
+
+.list__icon {
+  top: 0.25rem;
+}
+
+.list--empty .list__icon {
+  top: 0.3rem;
+}

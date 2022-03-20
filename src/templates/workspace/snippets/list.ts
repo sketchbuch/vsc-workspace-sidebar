@@ -1,7 +1,9 @@
 import { t } from 'vscode-ext-localisation';
 import { listItem } from '..';
+import { getShowTreeConfig } from '../../../config/getConfig';
 import { WorkspaceState } from '../../../webviews';
 import { RenderVars } from '../../../webviews/webviews.interface';
+import { tree } from './tree';
 
 export const list = (state: WorkspaceState, renderVars: RenderVars) => {
   const { files, search, visibleFiles } = state;
@@ -13,7 +15,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
   if (visibleFiles.length < 1) {
     if (search) {
       return `
-          <div class="list__list-searchedout">
+          <div class="list__searchedout">
             <p>${t('webViews.workspace.searchedOut')}</p>
           </div>
         `;
@@ -22,9 +24,15 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
     }
   }
 
+  const showTree = getShowTreeConfig();
+
   return `
-      <ul class="list__list list__styled-list">
-        ${visibleFiles.map((file) => listItem(file, renderVars)).join('')}
+      <ul class="list__list list__styled-list${showTree ? ' list__styled-list--tree' : ''}">
+        ${
+          showTree
+            ? tree(state.fileTree, renderVars, state, 0)
+            : visibleFiles.map((file) => listItem(file, renderVars)).join('')
+        }
       </ul>
     `;
 };

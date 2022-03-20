@@ -1,0 +1,48 @@
+.list__styled-list--tree {
+  position: relative;
+}
+
+.list_branch-indent-box {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  left: 28px;
+  position: relative;
+}
+
+.list_branch-indent {
+  border-left: 1px solid transparent;
+  box-sizing: border-box;
+  display: inline-block;
+  height: 100%;
+  opacity: 0.5;
+  transition: border-color 0.1s linear;
+  width: 10px;
+}
+
+.list__styled-list--tree:hover .list_branch-indent {
+  border-left-color: var(--vscode-tree-indentGuidesStroke);
+}
+
+.list_branch-icon {
+  left: 20px;
+  position: absolute;
+  top: 0.3rem;
+}
+
+.list_branch-icon-empty {
+  min-width: 16px;
+  width: 16px;
+}
+
+.list__branch-list-item-folder .list__title {
+  opacity: 0.66;
+}
+
+.list__branch-list-item-folder.list__styled-item--selected .list__title {
+  opacity: 1;
+}
+
+/* .list__branch-list-item-file:not(.list__styled-item--selected) {
+  background: rgba(255, 255, 255, 0.5);
+} */

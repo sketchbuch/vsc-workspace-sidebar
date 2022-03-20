@@ -25,7 +25,7 @@ suite('Utils > collectFilesFromFolder()', () => {
 
     collectFilesFromFolder(FOLDER, FILE_TYPE, 0, 0).then((wsFiles) => {
       expect(wsFiles).to.have.length(1);
-      expect(wsFiles.includes('file-1.txt')).to.equal(true);
+      expect(wsFiles).contains('file-1.txt');
 
       sinon.assert.callCount(hiddenSpy, 1);
       sinon.assert.callCount(fnSpy, 2);
@@ -41,10 +41,10 @@ suite('Utils > collectFilesFromFolder()', () => {
       const fnSpy = sinon.spy(fn, 'getFilenamesOfType');
 
       expect(wsFiles).to.have.length(4);
-      expect(wsFiles.includes('file-1.txt')).to.equal(true);
-      expect(wsFiles.includes('file-2.txt')).to.equal(true);
-      expect(wsFiles.includes('file-3.txt')).to.equal(true);
-      expect(wsFiles.includes('file-7.txt')).to.equal(true);
+      expect(wsFiles).contains('file-1.txt');
+      expect(wsFiles).contains('file-2.txt');
+      expect(wsFiles).contains('file-3.txt');
+      expect(wsFiles).contains('file-7.txt');
 
       sinon.assert.callCount(hiddenSpy, 3);
       sinon.assert.callCount(fnSpy, 6);

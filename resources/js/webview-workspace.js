@@ -5,11 +5,10 @@
   const searchForm = document.getElementById('searchWorkspacesForm');
   const searchInput = document.getElementById('searchWorkspaces');
   const viewLinks = Array.from(document.getElementsByClassName('view__link'));
-  const wsElements = Array.from(document.getElementsByClassName('list__element--unselected'));
+  const wsElements = Array.from(document.getElementsByClassName('list__styled-item--unselected'));
+  const wsFolders = Array.from(document.getElementsByClassName('list__branch-list-item-folder'));
   const folderSaveBtn = document.getElementById('saveFolderAsWorkspace');
   let searchTerm = '';
-
-  vscode;
 
   const sendMessage = (action, payload) => {
     const message = { action };
@@ -24,6 +23,11 @@
   const handleElementClick = (event) => {
     event.stopPropagation();
     sendMessage('MAIN_CLICK', event.currentTarget.dataset.file);
+  };
+
+  const handleFolderClick = (event) => {
+    event.stopPropagation();
+    sendMessage('FOLDER_CLICK', event.currentTarget.dataset.folder);
   };
 
   const handleIconClick = (event) => {
@@ -91,6 +95,10 @@
       element.addEventListener('click', handleElementClick);
     });
 
+    wsFolders.forEach((element) => {
+      element.addEventListener('click', handleFolderClick);
+    });
+
     if (folderSaveBtn) {
       folderSaveBtn.addEventListener('click', handleSaveFolderClick);
     }
@@ -136,6 +144,10 @@
 
     wsElements.forEach((element) => {
       element.removeEventListener('click', handleElementClick);
+    });
+
+    wsFolders.forEach((element) => {
+      element.removeEventListener('click', handleFolderClick);
     });
 
     if (folderSaveBtn) {

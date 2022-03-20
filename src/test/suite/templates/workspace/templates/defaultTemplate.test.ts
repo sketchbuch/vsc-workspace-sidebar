@@ -1,6 +1,7 @@
 import { expect } from 'chai';
-import { t } from 'vscode-ext-localisation';
+import * as sinon from 'sinon';
 import { defaultTemplate } from '../../../../../templates/workspace';
+import * as content from '../../../../../templates/workspace/views/loadingView';
 import { getMockState, getMockTemplateVars } from '../../../../mocks';
 
 suite('Templates > Workspace > Templates: defaultTemplate()', () => {
@@ -22,7 +23,7 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
   suite('<head>', () => {
     test('Contains a <title> tag', () => {
       const result = defaultTemplate(templateVars, state);
-      result.includes(`<title>${t('views.title')}</title>`);
+      expect(result).contains(`<title>Workspaces</title>`);
     });
 
     test('Renders the <title> tag correctly if list view', () => {
@@ -31,9 +32,7 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
         getMockTemplateVars({ title: TITLE }),
         getMockState({ state: 'list' })
       );
-      expect(
-        result.includes(`<title>${t('webViews.workspace.viewTitle', { title: TITLE })}</title>`)
-      ).to.equal(true);
+      expect(result).contains(`<title>Workspaces: ${TITLE}</title>`);
     });
 
     test('Contains the correct Content-Security-Policy meta tag', () => {
@@ -63,10 +62,21 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
   });
 
   suite('<body>', () => {
-    test('Contains a <script> tag', () => {
+    test('Contains <script> tags', () => {
       const result = defaultTemplate(templateVars, state);
-      expect(result).contains(`<script nonce="${templateVars.nonce}" `);
-      expect(result).contains('</script>');
+      expect(result).contains(`<script nonce="${templateVars.nonce}" id="ws-webview-js"`);
+      expect(result).contains(`<script nonce="${templateVars.nonce}" id="codicons-js"`);
+    });
+
+    test('Renders content', () => {
+      let contentStub = sinon.stub(content, 'loadingView').callsFake(() => 'THE_CONTENT');
+
+      const result = defaultTemplate(templateVars, state);
+      expect(result).contains(`<script nonce="${templateVars.nonce}" id="ws-webview-js"`);
+      expect(result).contains(`<script nonce="${templateVars.nonce}" id="codicons-js"`);
+      expect(result).contains(`THE_CONTENT`);
+
+      contentStub.restore();
     });
   });
 });

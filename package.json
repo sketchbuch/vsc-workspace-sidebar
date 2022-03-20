@@ -45,6 +45,22 @@
           "dark": "./resources/images/dark/sort.svg"
         },
         "title": "%ext.cmd.wsList.sort%"
+      },
+      {
+        "command": "vsc-workspace-sidebar-collapse-all",
+        "icon": {
+          "light": "./resources/images/light/collapse-all.svg",
+          "dark": "./resources/images/dark/collapse-all.svg"
+        },
+        "title": "%ext.cmd.wsList.collapse-all%"
+      },
+      {
+        "command": "vsc-workspace-sidebar-expand-all",
+        "icon": {
+          "light": "./resources/images/light/expand-all.svg",
+          "dark": "./resources/images/dark/expand-all.svg"
+        },
+        "title": "%ext.cmd.wsList.expand-all%"
       }
     ],
     "configuration": {
@@ -86,6 +102,12 @@
           "scope": "application",
           "type": "number"
         },
+        "workspaceSidebar.showFolderHierarchy": {
+          "default": false,
+          "description": "%config.workspaceShowFolderHierarchy.description%",
+          "scope": "application",
+          "type": "boolean"
+        },
         "workspaceSidebar.showPaths": {
           "default": "As needed",
           "description": "%config.workspaceShowPath.description%",
@@ -123,13 +145,23 @@
       ],
       "view/title": [
         {
-          "command": "vsc-workspace-sidebar-refresh",
-          "group": "navigation",
-          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded"
+          "command": "vsc-workspace-sidebar-collapse-all",
+          "group": "navigation@0",
+          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded && config.workspaceSidebar.showFolderHierarchy"
+        },
+        {
+          "command": "vsc-workspace-sidebar-expand-all",
+          "group": "navigation@1",
+          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded && config.workspaceSidebar.showFolderHierarchy"
         },
         {
           "command": "vsc-workspace-sidebar-sort",
-          "group": "navigation",
+          "group": "navigation@2",
+          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded && !config.workspaceSidebar.showFolderHierarchy"
+        },
+        {
+          "command": "vsc-workspace-sidebar-refresh",
+          "group": "navigation@3",
           "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded"
         }
       ]
@@ -202,7 +234,8 @@
     "@reduxjs/toolkit": "^1.5.0",
     "@types/chai": "^4.2.14",
     "@types/sinon": "^9.0.9",
-    "@vscode/webview-ui-toolkit": "^0.8.3",
+    "@vscode/codicons": "^0.0.29",
+    "@vscode/webview-ui-toolkit": "^0.9.2",
     "chai": "^4.2.0",
     "crypto": "^1.0.1",
     "rimraf": "^3.0.2",

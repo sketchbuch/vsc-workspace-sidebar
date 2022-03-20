@@ -10,6 +10,13 @@ export const getMockTemplateVars = (
 ): TemplateVars => {
   return {
     cspSource: '34fdg5654dsf',
+    codiconsFolderUri: isEmpty
+      ? ({} as Uri)
+      : getMockUri('', {
+          scheme: 'file',
+          authority: 'localhost',
+          path: '/resources/css/codicons',
+        }),
     cssFolderUri: isEmpty
       ? ({} as Uri)
       : getMockUri('', {
@@ -28,6 +35,13 @@ export const getMockTemplateVars = (
           path: '/resources/js',
         }),
     title: 'Workspaces',
+    uiFolderUri: isEmpty
+      ? ({} as Uri)
+      : getMockUri('', {
+          scheme: 'file',
+          authority: 'localhost',
+          path: '/resources/js/toolkit',
+        }),
     ...templateVars,
   };
 };

@@ -4,15 +4,18 @@ interface Config {
   fileType: string; // Without .
   hasPath: boolean;
   isSelected: boolean;
+  showPath: boolean;
+  path?: string;
 }
 const defaultConfig = {
   fileType: '',
   hasPath: false,
   isSelected: false,
+  showPath: true,
 };
 
 export const getMockFiles = (numOfFiles: number, config: Partial<Config> = {}): File[] => {
-  const { fileType, hasPath, isSelected }: Config = {
+  const { fileType, hasPath, isSelected, path, showPath }: Config = {
     ...defaultConfig,
     ...config,
   };
@@ -26,7 +29,8 @@ export const getMockFiles = (numOfFiles: number, config: Partial<Config> = {}): 
       file: `file-${fileNum}${ext}`,
       isSelected,
       label: `File ${fileNum}`,
-      path: hasPath ? '/a/path' : '',
+      path: path ?? hasPath ? '/a/path' : '',
+      showPath,
     });
   }
 

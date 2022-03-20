@@ -1,6 +1,6 @@
 import { t } from 'vscode-ext-localisation';
-import { listView, loadingView } from '..';
 import {
+  FS_WEBVIEW_CODICONS_CSS,
   FS_WEBVIEW_UI_TOOLKIT_JS,
   FS_WEBVIEW_WORKSPACE_CSS,
   FS_WEBVIEW_WORKSPACE_JS,
@@ -10,9 +10,12 @@ import { RenderVars, TemplateVars } from '../../../webviews/webviews.interface';
 import { metaTags } from '../../common';
 import { errorView } from '../views/errorView';
 import { invalidView } from '../views/invalidView';
+import { listView } from '../views/listView';
+import { loadingView } from '../views/loadingView';
 
 export const defaultTemplate = (
   {
+    codiconsFolderUri,
     cspSource,
     cssFolderUri,
     imgDarkFolderUri,
@@ -48,12 +51,13 @@ export const defaultTemplate = (
         ${metaTags(nonce, cspSource)}
         <title>${titleAttr}</title>
         <link href="${cssFolderUri}/${FS_WEBVIEW_WORKSPACE_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
+        <link href="${codiconsFolderUri}/${FS_WEBVIEW_CODICONS_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
       </head>
 
       <body>
         ${content}
-        <script nonce="${nonce}" src="${scriptFolderUri}/${FS_WEBVIEW_WORKSPACE_JS}"></script>
-        <script nonce="${nonce}" src="${uiFolderUri}/${FS_WEBVIEW_UI_TOOLKIT_JS}" type="module"></script>
+        <script nonce="${nonce}" id="ws-webview-js" src="${scriptFolderUri}/${FS_WEBVIEW_WORKSPACE_JS}"></script>
+        <script nonce="${nonce}" id="codicons-js" src="${uiFolderUri}/${FS_WEBVIEW_UI_TOOLKIT_JS}" type="module"></script>
       </body>
     </html>`;
 };

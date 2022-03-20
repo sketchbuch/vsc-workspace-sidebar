@@ -20,7 +20,7 @@ suite('Templates > Workspace > View: listView()', () => {
 
     expect(result).to.be.a('string');
     expect(result).not.to.equal('');
-    expect(result.includes('class="view list list--empty"')).to.equal(true);
+    expect(result).contains('class="view list list--empty"');
     expect(result).not.to.equal('');
 
     sinon.assert.callCount(spy, 1);
@@ -34,7 +34,7 @@ suite('Templates > Workspace > View: listView()', () => {
 
     expect(result).to.be.a('string');
     expect(result).not.to.equal('');
-    expect(result.includes('class="view list"')).to.equal(true);
+    expect(result).contains('class="view list"');
     expect(result).not.to.equal('');
 
     sinon.assert.callCount(spy, 1);

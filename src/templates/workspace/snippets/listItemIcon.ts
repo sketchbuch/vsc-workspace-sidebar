@@ -2,7 +2,7 @@ import { RenderVars } from '../../../webviews/webviews.interface';
 import { getImgUrls } from '../../getImgUrls';
 
 export const listItemIcon = (renderVars: RenderVars) => {
-  const { dark, light } = getImgUrls(renderVars, 'success');
+  const { dark, light } = getImgUrls(renderVars, 'check');
 
   return `
     <span class="view__icon list__icon">

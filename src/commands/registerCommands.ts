@@ -2,6 +2,8 @@ import * as vscode from 'vscode';
 import { QuickPickItem } from 'vscode';
 import { t } from 'vscode-ext-localisation';
 import {
+  CMD_COLLAPSE,
+  CMD_EXPAND,
   CMD_FOCUS_SEARCH,
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,
@@ -58,12 +60,6 @@ export const registerCommands = (
   );
 
   context.subscriptions.push(
-    registerCommand(CMD_FOCUS_SEARCH, (): void => {
-      workspaceViewProvider.focusInput();
-    })
-  );
-
-  context.subscriptions.push(
     registerCommand(
       CMD_SORT,
       async (): Promise<void> => {
@@ -77,5 +73,23 @@ export const registerCommands = (
         }
       }
     )
+  );
+
+  context.subscriptions.push(
+    registerCommand(CMD_FOCUS_SEARCH, (): void => {
+      workspaceViewProvider.focusInput();
+    })
+  );
+
+  context.subscriptions.push(
+    registerCommand(CMD_COLLAPSE, (): void => {
+      workspaceViewProvider.toggleAllFolders('collapse');
+    })
+  );
+
+  context.subscriptions.push(
+    registerCommand(CMD_EXPAND, (): void => {
+      workspaceViewProvider.toggleAllFolders('expand');
+    })
   );
 };

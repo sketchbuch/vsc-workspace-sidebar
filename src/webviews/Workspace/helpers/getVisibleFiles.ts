@@ -1,22 +1,25 @@
-import { workspace } from 'vscode';
 import { File, Files } from '../..';
 import { SortIds } from '../../../commands/registerCommands';
+import { getShowPathsConfig, getShowTreeConfig } from '../../../config/getConfig';
 import { ConfigShowPaths } from '../../../constants';
-import { findDuplicates, sortFilesByLabel } from '../../../utils';
+import { findDuplicates, sortFilesByProp } from '../../../utils';
 
 export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) => {
-  const showPaths: string =
-    workspace.getConfiguration().get('workspaceSidebar.showPaths') || ConfigShowPaths.NEVER;
+  const showTree = getShowTreeConfig();
+  const showPaths = getShowPathsConfig();
   let visibleFiles = [...wsFiles];
 
   if (search) {
+    // TODO - Maybe store the lowercased value in converted files?
     visibleFiles = visibleFiles.filter((file) => file.label.toLowerCase().includes(search));
   }
 
-  visibleFiles.sort(sortFilesByLabel);
+  if (!showTree) {
+    visibleFiles.sort(sortFilesByProp('label'));
 
-  if (sort === 'descending') {
-    visibleFiles.reverse();
+    if (sort === 'descending') {
+      visibleFiles.reverse();
+    }
   }
 
   if (showPaths === ConfigShowPaths.AS_NEEEDED) {
@@ -25,7 +28,7 @@ export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) =
 
     visibleFiles = visibleFiles.map((file: File) => {
       if (!dups.includes(file.label)) {
-        return { ...file, path: '' };
+        return { ...file, showPath: false };
       }
 
       return file;
@@ -33,7 +36,7 @@ export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) =
   } else if (showPaths === ConfigShowPaths.NEVER) {
     visibleFiles = visibleFiles.map(
       (file): File => {
-        return { ...file, path: '' };
+        return { ...file, showPath: false };
       }
     );
   }

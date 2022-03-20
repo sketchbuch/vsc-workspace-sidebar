@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { WorkspaceFiles, WorkspaceState, WorkspaceThunkAction } from '../..';
 import { findWorkspaceFiles } from '../../../utils';
 import { convertWsFiles } from '../helpers/convertWsFiles';
+import { getFileTree } from '../helpers/getFileTree';
 import { getVisibleFiles } from '../helpers/getVisibleFiles';
 
 export const fetch = createAsyncThunk('fetch', findWorkspaceFiles);
@@ -17,10 +18,12 @@ export const fetchFulfilled = (
     state.isFolderInvalid = true;
     state.state = 'invalid';
     state.visibleFiles = [];
+    state.fileTree = {};
   } else {
     state.isFolderInvalid = false;
     state.state = 'list';
     state.visibleFiles = getVisibleFiles(state.convertedFiles, state.search, state.sort);
+    state.fileTree = getFileTree(state.visibleFiles);
   }
 };
 
