@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { findDuplicates } from '../../../../utils';
+import { findDuplicates } from '../../../../utils/arrays/findDuplicates';
 
 suite('Utils > findDuplicates()', () => {
   test('Returns an array containing duplicate values', () => {

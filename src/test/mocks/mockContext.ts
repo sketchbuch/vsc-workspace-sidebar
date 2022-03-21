@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { getMockUri } from '.';
+import { getMockUri } from './mockExtensionUri';
 
 export const extensionPath = path.resolve(`${__dirname}/../../..`);
 

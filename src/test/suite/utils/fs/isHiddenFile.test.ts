@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { isHiddenFile } from '../../../../utils';
+import { isHiddenFile } from '../../../../utils/fs/isHiddenFile';
 
 suite('Utils > isHiddenFile()', () => {
   test('Returns true if the fileName begins with a "."', () => {

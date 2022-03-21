@@ -1,11 +1,12 @@
 import { workspace } from 'vscode';
 import { t } from 'vscode-ext-localisation';
-import { list, searchForm } from '..';
 import { getSearchMinConfig } from '../../../config/getConfig';
 import { RenderVars } from '../../../webviews/webviews.interface';
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 import { settingsLink } from '../../common/snippets/settingsLink';
 import { folderList } from '../snippets/folderList';
+import { list } from '../snippets/list';
+import { searchForm } from '../snippets/searchForm';
 
 export const listView = (state: WorkspaceState, renderVars: RenderVars): string => {
   if (state.files) {

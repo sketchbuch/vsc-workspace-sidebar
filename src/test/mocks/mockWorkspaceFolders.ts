@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { FS_WS_EXT } from '../../constants';
+import { FS_WS_EXT } from '../../constants/fs';
 import { getMockUri } from './mockExtensionUri';
 
 export const getMockWorkspaceFolders = (folderCount = 1): vscode.WorkspaceFolder[] => {

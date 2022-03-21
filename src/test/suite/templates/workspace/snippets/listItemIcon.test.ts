@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as icons from '../../../../../templates/getImgUrls';
 import { listItemIcon } from '../../../../../templates/workspace/snippets/listItemIcon';
-import { mockRenderVars } from '../../../../mocks';
+import { mockRenderVars } from '../../../../mocks/mockRenderVars';
 
 suite('Templates > Workspace > Snippets: listItemIcon()', () => {
   test('Renders correctly', () => {

@@ -1,6 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { WorkspaceState, WorkspaceToggleFolderStateBulk } from '../..';
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree';
+import { WorkspaceState, WorkspaceToggleFolderStateBulk } from '../WorkspaceViewProvider.interface';
 
 export const toggleFolderStateBulk = (
   state: WorkspaceState,

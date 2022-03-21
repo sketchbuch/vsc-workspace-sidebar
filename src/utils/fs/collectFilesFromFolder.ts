@@ -1,6 +1,7 @@
 import * as fs from 'fs';
-import { getFilenamesOfType, isHiddenFile } from '.';
 import { WsFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { getFilenamesOfType } from './getFilenamesOfType';
+import { isHiddenFile } from './isHiddenFile';
 
 const foldersToIgnore = ['node_modules', 'out', 'dist', 'build', 'public']; // Folders that slow down collection or won't have workspace files in
 const foldersToAllow = ['.vscode']; // Some users store workspaces files here

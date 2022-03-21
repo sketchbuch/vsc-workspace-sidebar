@@ -1,9 +1,11 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as vscode from 'vscode';
-import { FS_WS_EXT } from '../../../constants';
-import { registerWebviews, WorkspaceViewProvider } from '../../../webviews';
-import { getMockContext, getMockUri } from '../../mocks';
+import { FS_WS_EXT } from '../../../constants/fs';
+import { registerWebviews } from '../../../webviews/registerWebviews';
+import { WorkspaceViewProvider } from '../../../webviews/Workspace/WorkspaceViewProvider';
+import { getMockContext } from '../../mocks/mockContext';
+import { getMockUri } from '../../mocks/mockExtensionUri';
 
 suite('Webviews > registerWebviews()', () => {
   let configStub: sinon.SinonStub;

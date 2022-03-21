@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import * as vscode from 'vscode';
-import { WorkspaceState } from '../..';
 import { getWsType } from '../helpers/getWsType';
+import { WorkspaceState } from '../WorkspaceViewProvider.interface';
 import { error } from './error';
 import { fetch, fetchFulfilled, fetchPending, fetchRejected } from './fetch';
 import { invalid } from './invalid';

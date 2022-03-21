@@ -1,7 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { WorkspacePmPayloadSearchTerm, WorkspaceState } from '../..';
 import { getFileTree } from '../helpers/getFileTree';
 import { getVisibleFiles } from '../helpers/getVisibleFiles';
+import { WorkspacePmPayloadSearchTerm, WorkspaceState } from '../WorkspaceViewProvider.interface';
 
 export const setSearchTerm = (
   state: WorkspaceState,

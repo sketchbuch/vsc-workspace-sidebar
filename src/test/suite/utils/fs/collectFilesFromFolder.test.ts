@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import mockFs from 'mock-fs';
-import { collectFilesFromFolder } from '../../../../utils';
+import { collectFilesFromFolder } from '../../../../utils/fs/collectFilesFromFolder';
 import * as fn from '../../../../utils/fs/getFilenamesOfType';
 import * as hidden from '../../../../utils/fs/isHiddenFile';
-import { mockFsStructure } from '../../../mocks';
+import { mockFsStructure } from '../../../mocks/mockFsStructure';
 import sinon = require('sinon');
 
 suite('Utils > collectFilesFromFolder()', () => {

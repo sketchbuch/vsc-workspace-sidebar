@@ -1,6 +1,6 @@
-import { WorkspaceState } from '../..';
 import { getFileTree } from '../helpers/getFileTree';
 import { getVisibleFiles } from '../helpers/getVisibleFiles';
+import { WorkspaceState } from '../WorkspaceViewProvider.interface';
 
 export const setVisibleFiles = (state: WorkspaceState): void => {
   if (state.files !== false) {

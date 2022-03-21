@@ -2,8 +2,9 @@ import sinon from 'sinon';
 import * as vscode from 'vscode';
 import { store } from '../../../../store/redux';
 import * as templates from '../../../../templates/getHtml';
-import { WorkspaceViewProvider } from '../../../../webviews';
-import { getMockContext, getMockWebviewView } from '../../../mocks';
+import { WorkspaceViewProvider } from '../../../../webviews/Workspace/WorkspaceViewProvider';
+import { getMockContext } from '../../../mocks/mockContext';
+import { getMockWebviewView } from '../../../mocks/mockWebview';
 
 suite('Webviews > Workspace > WorkspaceViewProvider():', () => {
   let mockContext = getMockContext();

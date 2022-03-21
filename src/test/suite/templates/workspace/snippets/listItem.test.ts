@@ -1,9 +1,10 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { listItem } from '../../../../../templates/workspace';
+import { listItem } from '../../../../../templates/workspace/snippets/listItem';
 import * as buttons from '../../../../../templates/workspace/snippets/listItemButtons';
 import * as icons from '../../../../../templates/workspace/snippets/listItemIcon';
-import { getMockFiles, mockRenderVars } from '../../../../mocks';
+import { getMockFiles } from '../../../../mocks/mockFiles';
+import { mockRenderVars } from '../../../../mocks/mockRenderVars';
 
 suite('Templates > Workspace > Snippets: listItem()', () => {
   test('Renders correctly', () => {

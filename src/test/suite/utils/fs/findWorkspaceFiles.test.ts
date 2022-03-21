@@ -3,10 +3,10 @@ import mockFs from 'mock-fs';
 import * as path from 'path';
 import * as sinon from 'sinon';
 import * as vscode from 'vscode';
-import { FS_WS_FILETYPE } from '../../../../constants';
-import { findWorkspaceFiles } from '../../../../utils';
+import { FS_WS_FILETYPE } from '../../../../constants/fs';
 import * as utils from '../../../../utils/fs/collectFilesFromFolder';
-import { mockFsStructure } from '../../../mocks';
+import { findWorkspaceFiles } from '../../../../utils/fs/findWorkspaceFiles';
+import { mockFsStructure } from '../../../mocks/mockFsStructure';
 
 suite('Utils > findWorkspaceFiles()', () => {
   suiteSetup(() => {

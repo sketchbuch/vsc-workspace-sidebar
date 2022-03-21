@@ -1,7 +1,8 @@
 import * as vscode from 'vscode';
 import { getVscodeLang, loadTranslations } from 'vscode-ext-localisation';
-import { registerCommands } from '../commands';
-import { registerWebviews, WorkspaceViewProvider } from '../webviews';
+import { registerCommands } from '../commands/registerCommands';
+import { registerWebviews } from '../webviews/registerWebviews';
+import { WorkspaceViewProvider } from '../webviews/Workspace/WorkspaceViewProvider';
 
 export const setupExt = (context: vscode.ExtensionContext, lang: string) => {
   loadTranslations(lang, context.extensionPath);

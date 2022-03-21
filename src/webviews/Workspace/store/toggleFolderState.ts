@@ -1,5 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { WorkspacePmPayloadToggleFolderState, WorkspaceState } from '../..';
+import {
+  WorkspacePmPayloadToggleFolderState,
+  WorkspaceState,
+} from '../WorkspaceViewProvider.interface';
 
 export const toggleFolderState = (
   state: WorkspaceState,

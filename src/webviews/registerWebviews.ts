@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import { WorkspaceViewProvider } from '.';
-import { isWorkspacefile } from '../utils';
+import { isWorkspacefile } from '../utils/fs/isWorkspacefile';
+import { WorkspaceViewProvider } from './Workspace/WorkspaceViewProvider';
 
 export const registerWebviews = (
   context: vscode.ExtensionContext,

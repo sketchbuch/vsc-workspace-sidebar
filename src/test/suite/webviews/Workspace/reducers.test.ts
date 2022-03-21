@@ -1,7 +1,8 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as configs from '../../../../config/getConfig';
-import { ConfigShowPaths, FS_WS_FILETYPE } from '../../../../constants';
+import { ConfigShowPaths } from '../../../../constants/config';
+import { FS_WS_FILETYPE } from '../../../../constants/fs';
 import { error } from '../../../../webviews/Workspace/store/error';
 import {
   fetchFulfilled,
@@ -16,13 +17,14 @@ import { setSearchTerm } from '../../../../webviews/Workspace/store/setSearchTer
 import { setVisibleFiles } from '../../../../webviews/Workspace/store/setVisibleFiles';
 import { toggleFolderState } from '../../../../webviews/Workspace/store/toggleFolderState';
 import { toggleFolderStateBulk } from '../../../../webviews/Workspace/store/toggleFolderStateBulk';
-import { getMockFiles, getMockState } from '../../../mocks';
+import { getMockFiles } from '../../../mocks/mockFiles';
 import {
   mockFileList,
   mockFilesForFileTree,
   mockFileTree,
   mockFileTreeFolders,
 } from '../../../mocks/mockFileTree';
+import { getMockState } from '../../../mocks/mockState';
 
 suite('Webviews > Workspace > reducers:', () => {
   const visibleFiles = getMockFiles(2, { fileType: FS_WS_FILETYPE });

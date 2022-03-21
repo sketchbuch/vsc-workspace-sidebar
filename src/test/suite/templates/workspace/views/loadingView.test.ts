@@ -1,6 +1,7 @@
 import { expect } from 'chai';
-import { loadingView } from '../../../../../templates/workspace';
-import { getMockState, mockRenderVars } from '../../../../mocks';
+import { loadingView } from '../../../../../templates/workspace/views/loadingView';
+import { mockRenderVars } from '../../../../mocks/mockRenderVars';
+import { getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > View: loadingView()', () => {
   test('Renders as expected', () => {

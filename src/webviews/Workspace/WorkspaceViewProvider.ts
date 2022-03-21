@@ -9,17 +9,19 @@ import {
   CMD_VSC_OPEN_SETTINGS,
   CMD_VSC_SAVE_WS_AS,
   CMD_VSC_SET_CTX,
-  ConfigActions,
+} from '../../constants/commands';
+import { ConfigActions } from '../../constants/config';
+import {
   EXT_LOADED,
   EXT_SORT,
   EXT_WEBVIEW_WS,
   EXT_WSSTATE_CACHE,
   EXT_WSSTATE_CACHE_DURATION,
-} from '../../constants';
+} from '../../constants/ext';
 import { store } from '../../store/redux';
-import { getHtml } from '../../templates';
-import { defaultTemplate as template } from '../../templates/workspace';
-import { GlobalState } from '../../types';
+import { getHtml } from '../../templates/getHtml';
+import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate';
+import { GlobalState } from '../../types/ext';
 import { HtmlData, PostMessage } from '../webviews.interface';
 import { fetch } from './store/fetch';
 import { workspaceSlice } from './store/workspaceSlice';
@@ -121,7 +123,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
       this._view.webview.html = getHtml<WorkspaceState>(
         {
           extensionPath: this._extensionUri,
-          template,
+          template: defaultTemplate,
           htmlData,
         },
         crypto.randomBytes(16).toString('hex')

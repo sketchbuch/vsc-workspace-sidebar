@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { FS_FOLDER_IMAGES, FS_FOLDER_RESOURCES } from '../../constants';
+import { FS_FOLDER_IMAGES, FS_FOLDER_RESOURCES } from '../../constants/fs';
 import { ImgType } from '../../types/ext';
 
 export const getImagePath = (extensionPath: string, imgType: ImgType, fileName: string): string => {

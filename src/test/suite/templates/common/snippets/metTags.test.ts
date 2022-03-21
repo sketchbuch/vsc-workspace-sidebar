@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { metaTags } from '../../../../../templates/common';
+import { metaTags } from '../../../../../templates/common/snippets/metaTags';
 
 suite('Templates > Common > Snippets: metaTags()', () => {
   test('Contains the correct Content-Security-Policy meta tag', () => {

@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as configs from '../../../../config/getConfig';
-import { ConfigShowPaths } from '../../../../constants';
+import { ConfigShowPaths } from '../../../../constants/config';
 import { getVisibleFiles } from '../../../../webviews/Workspace/helpers/getVisibleFiles';
-import { getMockFiles } from '../../../mocks';
+import { getMockFiles } from '../../../mocks/mockFiles';
 
 suite('Webviews > Workspace > getVisibleFiles():', () => {
   const options = { showPath: false };

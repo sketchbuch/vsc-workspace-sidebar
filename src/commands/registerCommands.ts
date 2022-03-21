@@ -10,9 +10,9 @@ import {
   CMD_REFRESH,
   CMD_SORT,
   CMD_VSC_OPEN_WS,
-  EXT_SORT,
-} from '../constants';
-import { WorkspaceViewProvider } from '../webviews';
+} from '../constants/commands';
+import { EXT_SORT } from '../constants/ext';
+import { WorkspaceViewProvider } from '../webviews/Workspace/WorkspaceViewProvider';
 
 export type SortIds = 'ascending' | 'descending';
 

@@ -4,8 +4,9 @@ import * as configs from '../../../../../config/getConfig';
 import { list } from '../../../../../templates/workspace/snippets/list';
 import * as item from '../../../../../templates/workspace/snippets/listItem';
 import * as tree from '../../../../../templates/workspace/snippets/tree';
-import { getMockState, mockRenderVars } from '../../../../mocks';
 import { mockFileList, mockFilesForFileTree, mockFileTree } from '../../../../mocks/mockFileTree';
+import { mockRenderVars } from '../../../../mocks/mockRenderVars';
+import { getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > Snippets: list()', () => {
   let configStub: sinon.SinonStub;

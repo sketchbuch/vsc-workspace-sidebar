@@ -4,10 +4,10 @@ import {
   FS_WEBVIEW_UI_TOOLKIT_JS,
   FS_WEBVIEW_WORKSPACE_CSS,
   FS_WEBVIEW_WORKSPACE_JS,
-} from '../../../constants';
-import { WorkspaceState } from '../../../webviews';
+} from '../../../constants/fs';
 import { RenderVars, TemplateVars } from '../../../webviews/webviews.interface';
-import { metaTags } from '../../common';
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { metaTags } from '../../common/snippets/metaTags';
 import { errorView } from '../views/errorView';
 import { invalidView } from '../views/invalidView';
 import { listView } from '../views/listView';

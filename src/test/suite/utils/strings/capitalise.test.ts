@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { capitalise } from '../../../../utils/';
+import { capitalise } from '../../../../utils/strings/capitalise';
 
 suite('Utils > capitalise()', () => {
   test('Returns the string with the first letter capitalised', () => {

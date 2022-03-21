@@ -1,6 +1,6 @@
 import { t } from 'vscode-ext-localisation';
-import { WorkspaceState } from '../../../webviews';
 import { RenderVars } from '../../../webviews/webviews.interface';
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 
 export const errorView = (state: WorkspaceState, renderVars: RenderVars): string => {
   const errorMsg =

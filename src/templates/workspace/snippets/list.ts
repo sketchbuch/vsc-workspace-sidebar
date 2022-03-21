@@ -1,8 +1,8 @@
 import { t } from 'vscode-ext-localisation';
-import { listItem } from '..';
 import { getShowTreeConfig } from '../../../config/getConfig';
-import { WorkspaceState } from '../../../webviews';
 import { RenderVars } from '../../../webviews/webviews.interface';
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { listItem } from './listItem';
 import { tree } from './tree';
 
 export const list = (state: WorkspaceState, renderVars: RenderVars) => {

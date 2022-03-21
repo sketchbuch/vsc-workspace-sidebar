@@ -2,7 +2,8 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as icons from '../../../../../templates/getImgUrls';
 import { listItemButtons } from '../../../../../templates/workspace/snippets/listItemButtons';
-import { getMockFiles, mockRenderVars } from '../../../../mocks';
+import { getMockFiles } from '../../../../mocks/mockFiles';
+import { mockRenderVars } from '../../../../mocks/mockRenderVars';
 
 suite('Templates > Workspace > Snippets: listItemButtons()', () => {
   const [file] = getMockFiles(1, { showPath: false });

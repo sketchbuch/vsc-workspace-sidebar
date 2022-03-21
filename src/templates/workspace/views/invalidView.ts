@@ -1,6 +1,6 @@
 import { t } from 'vscode-ext-localisation';
-import { WorkspaceState } from '../../../webviews';
 import { RenderVars } from '../../../webviews/webviews.interface';
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 import { settingsLink } from '../../common/snippets/settingsLink';
 
 export const invalidView = (state: WorkspaceState, renderVars: RenderVars): string => {

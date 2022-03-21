@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { folderList } from '../../../../../templates/workspace/snippets/folderList';
 import * as fli from '../../../../../templates/workspace/snippets/folderListItem';
-import { getMockState } from '../../../../mocks';
+import { getMockState } from '../../../../mocks/mockState';
 import { getMockWorkspaceFolders } from '../../../../mocks/mockWorkspaceFolders';
 
 suite('Templates > Workspace > Snippets: folderList()', () => {

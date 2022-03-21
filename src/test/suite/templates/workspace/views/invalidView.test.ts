@@ -1,8 +1,9 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as settings from '../../../../../templates/common/snippets/settingsLink';
-import { invalidView } from '../../../../../templates/workspace';
-import { getMockState, mockRenderVars } from '../../../../mocks';
+import { invalidView } from '../../../../../templates/workspace/views/invalidView';
+import { mockRenderVars } from '../../../../mocks/mockRenderVars';
+import { getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > View: invalidView()', () => {
   test('Renders as expected', () => {

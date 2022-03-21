@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as path from 'path';
-import { getImgUrls } from '../../../templates';
-import { mockRenderVars } from '../../mocks';
+import { getImgUrls } from '../../../templates/getImgUrls';
+import { mockRenderVars } from '../../mocks/mockRenderVars';
 
 suite('Templates > getImgUrls()', () => {
   const iconName = 'success';

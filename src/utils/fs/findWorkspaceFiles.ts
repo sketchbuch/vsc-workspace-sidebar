@@ -1,8 +1,9 @@
 import * as os from 'os';
-import { checkFile, collectFilesFromFolder } from '.';
 import { getDepthConfig, getFolderConfig } from '../../config/getConfig';
-import { FS_WS_FILETYPE } from '../../constants';
+import { FS_WS_FILETYPE } from '../../constants/fs';
 import { WsFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { checkFile } from './checkFile';
+import { collectFilesFromFolder } from './collectFilesFromFolder';
 
 export const findWorkspaceFiles = async (): Promise<WsFiles | false> => {
   const folder = getFolderConfig();

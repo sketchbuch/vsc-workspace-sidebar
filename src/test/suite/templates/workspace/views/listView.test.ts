@@ -1,9 +1,10 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as settings from '../../../../../templates/common/snippets/settingsLink';
-import { listView } from '../../../../../templates/workspace';
 import * as list from '../../../../../templates/workspace/snippets/list';
-import { getMockState, mockRenderVars } from '../../../../mocks';
+import { listView } from '../../../../../templates/workspace/views/listView';
+import { mockRenderVars } from '../../../../mocks/mockRenderVars';
+import { getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > View: listView()', () => {
   test('Renders correctly if files is false', () => {

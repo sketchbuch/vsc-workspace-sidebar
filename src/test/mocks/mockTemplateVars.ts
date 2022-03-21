@@ -1,6 +1,7 @@
 import { Uri } from 'vscode';
-import { getMockUri, mockRenderVars } from '.';
 import { TemplateVars } from '../../webviews/webviews.interface';
+import { getMockUri } from './mockExtensionUri';
+import { mockRenderVars } from './mockRenderVars';
 
 const { imgDarkFolderUri, imgLightFolderUri } = mockRenderVars;
 

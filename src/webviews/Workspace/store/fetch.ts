@@ -1,9 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { WorkspaceFiles, WorkspaceState, WorkspaceThunkAction } from '../..';
-import { findWorkspaceFiles } from '../../../utils';
+import { findWorkspaceFiles } from '../../../utils/fs/findWorkspaceFiles';
 import { convertWsFiles } from '../helpers/convertWsFiles';
 import { getFileTree } from '../helpers/getFileTree';
 import { getVisibleFiles } from '../helpers/getVisibleFiles';
+import {
+  WorkspaceFiles,
+  WorkspaceState,
+  WorkspaceThunkAction,
+} from '../WorkspaceViewProvider.interface';
 
 export const fetch = createAsyncThunk('fetch', findWorkspaceFiles);
 

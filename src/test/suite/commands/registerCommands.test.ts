@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as vscode from 'vscode';
-import { registerCommands, SortIds } from '../../../commands';
+import { registerCommands, SortIds } from '../../../commands/registerCommands';
 import {
   CMD_COLLAPSE,
   CMD_EXPAND,
@@ -11,9 +11,9 @@ import {
   CMD_REFRESH,
   CMD_SORT,
   CMD_VSC_OPEN_WS,
-} from '../../../constants';
-import { WorkspaceViewProvider } from '../../../webviews';
-import { getMockContext } from '../../mocks';
+} from '../../../constants/commands';
+import { WorkspaceViewProvider } from '../../../webviews/Workspace/WorkspaceViewProvider';
+import { getMockContext } from '../../mocks/mockContext';
 
 suite('Commands > registerCommands()', () => {
   const FILE = '/a/file';

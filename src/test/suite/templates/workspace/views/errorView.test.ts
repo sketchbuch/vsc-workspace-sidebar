@@ -1,6 +1,7 @@
 import { expect } from 'chai';
-import { errorView } from '../../../../../templates/workspace';
-import { getMockState, mockRenderVars } from '../../../../mocks';
+import { errorView } from '../../../../../templates/workspace/views/errorView';
+import { mockRenderVars } from '../../../../mocks/mockRenderVars';
+import { getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > View: errorView()', () => {
   test('Renders as expected', () => {

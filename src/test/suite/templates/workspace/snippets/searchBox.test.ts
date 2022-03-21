@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { searchBox } from '../../../../../templates/workspace';
-import { getMockState } from '../../../../mocks';
+import { searchBox } from '../../../../../templates/workspace/snippets/searchBox';
+import { getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > Snippets: searchBox()', () => {
   test('Renders nothing if !showSearch', () => {

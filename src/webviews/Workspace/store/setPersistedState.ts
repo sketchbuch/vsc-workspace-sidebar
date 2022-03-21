@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { WorkspacePersistedState, WorkspaceState } from '../..';
+import { WorkspacePersistedState, WorkspaceState } from '../WorkspaceViewProvider.interface';
 
 export const setPersistedState = (
   state: WorkspaceState,

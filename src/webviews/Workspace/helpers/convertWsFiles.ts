@@ -1,7 +1,7 @@
 import * as os from 'os';
 import * as pathLib from 'path';
 import { getCleanLabelsConfig, getFolderConfig } from '../../../config/getConfig';
-import { isWorkspacefile } from '../../../utils';
+import { isWorkspacefile } from '../../../utils/fs/isWorkspacefile';
 import { File, WsFiles } from '../WorkspaceViewProvider.interface';
 import { getLabel } from './getLabel';
 import { getPath } from './getPath';

@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { searchForm } from '../../../../../templates/workspace';
 import * as templates from '../../../../../templates/workspace/snippets/searchBox';
-import { getMockState } from '../../../../mocks';
+import { searchForm } from '../../../../../templates/workspace/snippets/searchForm';
+import { getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > Snippets: searchForm()', () => {
   test('Renders nothing if !showSearch', () => {

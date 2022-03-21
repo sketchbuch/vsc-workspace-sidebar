@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import mockFs from 'mock-fs';
 import * as path from 'path';
-import { checkFile } from '../../../../utils';
-import { mockFsStructure } from '../../../mocks';
+import { checkFile } from '../../../../utils/fs/checkFile';
+import { mockFsStructure } from '../../../mocks/mockFsStructure';
 
 suite('Utils > checkFile()', () => {
   suiteSetup(() => {

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import { FS_FOLDER_IMAGES, FS_FOLDER_RESOURCES } from '../../../../constants';
-import { getImagePath } from '../../../../utils';
-import { extensionPath } from '../../../mocks';
+import { FS_FOLDER_IMAGES, FS_FOLDER_RESOURCES } from '../../../../constants/fs';
+import { getImagePath } from '../../../../utils/fs/getImagePath';
+import { extensionPath } from '../../../mocks/mockContext';
 
 suite('Utils > getImagePath()', () => {
   test('Returns the expected image path', () => {

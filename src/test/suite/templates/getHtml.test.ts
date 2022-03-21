@@ -2,15 +2,13 @@ import { expect } from 'chai';
 import mockFs from 'mock-fs';
 import * as sinon from 'sinon';
 import { getHtml } from '../../../templates/getHtml';
-import { WorkspaceState } from '../../../webviews';
 import { GetHtml, GetHtmlTemplateFunc } from '../../../webviews/webviews.interface';
-import {
-  getMockState,
-  getMockTemplateVars,
-  mockExtensionUri,
-  mockFsStructure,
-  mockWebView,
-} from '../../mocks';
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { mockExtensionUri } from '../../mocks/mockExtensionUri';
+import { mockFsStructure } from '../../mocks/mockFsStructure';
+import { getMockState } from '../../mocks/mockState';
+import { getMockTemplateVars } from '../../mocks/mockTemplateVars';
+import { mockWebView } from '../../mocks/mockWebview';
 
 suite('Templates > getHtml()', () => {
   const mockState = getMockState();

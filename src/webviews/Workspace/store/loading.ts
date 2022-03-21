@@ -1,4 +1,4 @@
-import { WorkspaceState } from '../..';
+import { WorkspaceState } from '../WorkspaceViewProvider.interface';
 
 export const loading = (state: WorkspaceState): void => {
   state.error = '';

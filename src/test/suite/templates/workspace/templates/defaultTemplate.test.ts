@@ -1,8 +1,9 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { defaultTemplate } from '../../../../../templates/workspace';
+import { defaultTemplate } from '../../../../../templates/workspace/templates/defaultTemplate';
 import * as content from '../../../../../templates/workspace/views/loadingView';
-import { getMockState, getMockTemplateVars } from '../../../../mocks';
+import { getMockState } from '../../../../mocks/mockState';
+import { getMockTemplateVars } from '../../../../mocks/mockTemplateVars';
 
 suite('Templates > Workspace > Templates: defaultTemplate()', () => {
   const state = getMockState();
