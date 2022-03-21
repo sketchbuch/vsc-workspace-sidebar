@@ -89,7 +89,7 @@
         "workspaceSidebar.depth": {
           "default": 0,
           "description": "%config.workspaceFolderDepth.description%",
-          "maximum": 5,
+          "maximum": 25,
           "minimum": 0,
           "scope": "application",
           "type": "number"
