@@ -33,7 +33,7 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-#### [1.3.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.8...1.3.0) (2022-03-21)
+#### [1.4.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.8...1.4.0) (2022-03-21)
 
 - Workspaces can now be displayed as a file tree that can be collapsed/expanded instead of the default list of workspaces. Resolves [#23](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/23)
 - A new option has been added to clean labels (convert to title case) or leave them as-is (like the filename). Resolves [#42](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/42)
