@@ -2,7 +2,7 @@
   "name": "vsc-workspace-sidebar",
   "description": "Adds a sidebar to VSCode that lists Workspaces and lets you open them in the current window or a new window.",
   "displayName": "Workspace Sidebar",
-  "version": "1.2.8",
+  "version": "1.3.0",
   "activationEvents": [
     "*"
   ],
@@ -221,7 +221,7 @@
   },
   "scripts": {
     "build:dev": "parcel build ./src/extension.ts --target=dev",
-    "build:release": "parcel build ./src/extension.ts --target=release" ,
+    "build:release": "parcel build ./src/extension.ts --target=release",
     "clean:cache": "rimraf ./.parcel-cache/*",
     "clean:dist": "rimraf ./dist/*",
     "clean:test": "rimraf ./test/*",
