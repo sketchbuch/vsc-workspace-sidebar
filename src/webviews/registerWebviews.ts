@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { isWorkspacefile } from '../utils/fs/isWorkspacefile';
+import { isWorkspaceFile } from '../utils/fs/isWorkspaceFile';
 import { WorkspaceViewProvider } from './Workspace/WorkspaceViewProvider';
 
 export const registerWebviews = (
@@ -32,7 +32,7 @@ export const registerWebviews = (
   );
 
   const createFiles = vscode.workspace.onDidCreateFiles((event: vscode.FileCreateEvent) => {
-    const isWorkspace = event.files.some((file) => isWorkspacefile(file.path, file.scheme));
+    const isWorkspace = event.files.some((file) => isWorkspaceFile(file.path, file.scheme));
 
     if (isWorkspace) {
       workspaceViewProvider.refresh();

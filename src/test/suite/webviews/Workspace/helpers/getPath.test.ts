@@ -10,7 +10,7 @@ suite('Webviews > Workspace > Helpers > getPath():', () => {
   const FILE = `${CONFIG_FOLDER}/${PATH}/${FILE_NAME}.${FS_WS_FILETYPE}`;
 
   test('Returns the path between the start folder and the file extension', () => {
-    const result = getPath(FILE, 20, CONFIG_FOLDER, OS_HOME);
+    const result = getPath(FILE, CONFIG_FOLDER, OS_HOME);
     expect(result).to.equal(PATH);
   });
 });

@@ -1,8 +1,9 @@
 import { FS_WS_EXT } from '../../../constants/fs';
+import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment';
 import { capitalise } from './capitalise';
 
-export const getLabel = (wsFile: string, clean: boolean, lastSlashIndex: number): string => {
-  const label = wsFile.substring(lastSlashIndex + 1).replace(FS_WS_EXT, '');
+export const getLabel = (wsFile: string, clean: boolean): string => {
+  const label = getLastPathSegment(wsFile).replace(FS_WS_EXT, '');
 
   if (clean) {
     return label

@@ -7,12 +7,12 @@ suite('Webviews > Workspace > Helpers > cleanLabel():', () => {
   const FILE = `/some/path/to/${FILE_NAME}.${FS_WS_FILETYPE}`;
 
   test('Returns the ws file name reformatted to Title Case if clean = "true"', () => {
-    const result = getLabel(FILE, true, 13);
+    const result = getLabel(FILE, true);
     expect(result).to.equal('Create React App');
   });
 
   test('Returns the ws file name as-is if clean = "false"', () => {
-    const result = getLabel(FILE, false, 13);
+    const result = getLabel(FILE, false);
     expect(result).to.equal(FILE_NAME);
   });
 });
