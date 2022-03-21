@@ -1,8 +1,8 @@
 import { t } from 'vscode-ext-localisation';
 import { RenderVars } from '../../../webviews/webviews.interface';
-import { getFileTooltip } from '../../../webviews/Workspace/helpers/getFileTooltip';
 import { File } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 import { getImgUrls } from '../../getImgUrls';
+import { getFileTooltip } from '../../helpers/getFileTooltip';
 
 export const listItemButtons = (file: File, renderVars: RenderVars) => {
   const { dark, light } = getImgUrls(renderVars, 'new-window');

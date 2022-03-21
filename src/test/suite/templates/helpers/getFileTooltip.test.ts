@@ -2,10 +2,10 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as configs from '../../../../config/getConfig';
 import { ConfigActions } from '../../../../constants/config';
-import { getFileTooltip } from '../../../../webviews/Workspace/helpers/getFileTooltip';
+import { getFileTooltip } from '../../../../templates/helpers/getFileTooltip';
 import { getMockFiles } from '../../../mocks/mockFiles';
 
-suite('Webviews > Workspace > getFileTooltip():', () => {
+suite('Templates > Helpers > getFileTooltip():', () => {
   const mockFile = getMockFiles(1, { showPath: false })[0];
   const mockSelectedFile = getMockFiles(1, { isSelected: true, showPath: false })[0];
 

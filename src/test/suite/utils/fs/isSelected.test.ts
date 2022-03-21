@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import { isSelected } from '../../../../webviews/Workspace/helpers/isSelected';
+import { isSelected } from '../../../../utils/fs/isSelected';
 
-suite('Webviews > Workspace > isSelected():', () => {
+suite('Webviews > Fs -> isSelected():', () => {
   test('Correctly detects a selected Workspace', () => {
     expect(isSelected('/file/react', '/file/react', 'lin')).to.eql(true);
   });

@@ -1,8 +1,8 @@
 import { expect } from 'chai';
-import { FS_WS_FILETYPE } from '../../../../constants/fs';
-import { getLabel } from '../../../../webviews/Workspace/helpers/getLabel';
+import { FS_WS_FILETYPE } from '../../../../../constants/fs';
+import { getLabel } from '../../../../../webviews/Workspace/helpers/getLabel';
 
-suite('Webviews > Workspace > cleanLabel():', () => {
+suite('Webviews > Workspace > Helpers > cleanLabel():', () => {
   const FILE_NAME = `create_React-APP`;
   const FILE = `/some/path/to/${FILE_NAME}.${FS_WS_FILETYPE}`;
 

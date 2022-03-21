@@ -6,7 +6,7 @@ import * as hidden from '../../../../utils/fs/isHiddenFile';
 import { mockFsStructure } from '../../../mocks/mockFsStructure';
 import sinon = require('sinon');
 
-suite('Utils > collectFilesFromFolder()', () => {
+suite('Utils > Fs -> collectFilesFromFolder()', () => {
   const FOLDER = 'collect-files-from-folder';
   const FILE_TYPE = 'txt';
   const MAX_DEPTH = 1;

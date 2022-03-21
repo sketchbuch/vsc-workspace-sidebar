@@ -1,8 +1,8 @@
 import { expect } from 'chai';
-import { FS_WS_FILETYPE } from '../../../../constants/fs';
-import { getPath } from '../../../../webviews/Workspace/helpers/getPath';
+import { FS_WS_FILETYPE } from '../../../../../constants/fs';
+import { getPath } from '../../../../../webviews/Workspace/helpers/getPath';
 
-suite('Webviews > Workspace > getPath():', () => {
+suite('Webviews > Workspace > Helpers > getPath():', () => {
   const FILE_NAME = `create_React-APP`;
   const PATH = 'react';
   const OS_HOME = '/home/user';

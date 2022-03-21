@@ -8,7 +8,7 @@ import * as utils from '../../../../utils/fs/collectFilesFromFolder';
 import { findWorkspaceFiles } from '../../../../utils/fs/findWorkspaceFiles';
 import { mockFsStructure } from '../../../mocks/mockFsStructure';
 
-suite('Utils > findWorkspaceFiles()', () => {
+suite('Utils > Fs -> findWorkspaceFiles()', () => {
   suiteSetup(() => {
     mockFs(mockFsStructure);
   });

@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { sortFilesByProp } from '../../../../utils/arrays/sortFilesByProp';
 import { File } from '../../../../webviews/Workspace/WorkspaceViewProvider.interface';
 
-suite('Utils > sortFilesByProp()', () => {
+suite('Utils > Arrays > sortFilesByProp()', () => {
   const PROP = 'label';
   const fileA: File = {
     file: '/a/file/to/compare-1.txt',

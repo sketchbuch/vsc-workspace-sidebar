@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { Uri } from 'vscode';
-import { getWsType } from '../../../../webviews/Workspace/helpers/getWsType';
+import { getWsType } from '../../../../../webviews/Workspace/helpers/getWsType';
 
-suite('Webviews > Workspace > getWsType():', () => {
+suite('Webviews > Workspace > Helpers > getWsType():', () => {
   test('Returns "none" if no workspaceFile and no workspaceFolders', () => {
     const result = getWsType(undefined, undefined);
     expect(result).to.equal('none');

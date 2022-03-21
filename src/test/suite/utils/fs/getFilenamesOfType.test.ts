@@ -4,7 +4,7 @@ import * as path from 'path';
 import { getFilenamesOfType } from '../../../../utils/fs/getFilenamesOfType';
 import { mockFsStructure } from '../../../mocks/mockFsStructure';
 
-suite('Utils > getFilenamesOfType()', () => {
+suite('Utils > Fs -> getFilenamesOfType()', () => {
   const FILE_TYPE = 'txt';
   const FOLDER = 'get-filenames-of-type';
 

@@ -1,11 +1,11 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import * as configs from '../../../../config/getConfig';
-import { ConfigShowPaths } from '../../../../constants/config';
-import { getVisibleFiles } from '../../../../webviews/Workspace/helpers/getVisibleFiles';
-import { getMockFiles } from '../../../mocks/mockFiles';
+import * as configs from '../../../../../config/getConfig';
+import { ConfigShowPaths } from '../../../../../constants/config';
+import { getVisibleFiles } from '../../../../../webviews/Workspace/helpers/getVisibleFiles';
+import { getMockFiles } from '../../../../mocks/mockFiles';
 
-suite('Webviews > Workspace > getVisibleFiles():', () => {
+suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
   const options = { showPath: false };
   let treeStub: sinon.SinonStub;
   let pathsStub: sinon.SinonStub;

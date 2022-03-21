@@ -1,9 +1,9 @@
 import { SortIds } from '../../../commands/registerCommands';
 import { getShowPathsConfig, getShowTreeConfig } from '../../../config/getConfig';
 import { ConfigShowPaths } from '../../../constants/config';
-import { findDuplicates } from '../../../utils/arrays/findDuplicates';
 import { sortFilesByProp } from '../../../utils/arrays/sortFilesByProp';
 import { File, Files } from '../WorkspaceViewProvider.interface';
+import { findDuplicates } from './findDuplicates';
 
 export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) => {
   const showTree = getShowTreeConfig();

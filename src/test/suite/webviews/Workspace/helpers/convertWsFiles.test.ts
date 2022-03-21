@@ -1,10 +1,10 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import * as configs from '../../../../config/getConfig';
-import { convertWsFiles } from '../../../../webviews/Workspace/helpers/convertWsFiles';
-import { Files } from '../../../../webviews/Workspace/WorkspaceViewProvider.interface';
+import * as configs from '../../../../../config/getConfig';
+import { convertWsFiles } from '../../../../../webviews/Workspace/helpers/convertWsFiles';
+import { Files } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface';
 
-suite('Webviews > Workspace > convertWsFiles():', () => {
+suite('Webviews > Workspace > Helpers > convertWsFiles():', () => {
   let configStub: sinon.SinonStub;
 
   const FILE_NAME1 = 'First Project';

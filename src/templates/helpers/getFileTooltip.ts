@@ -1,7 +1,7 @@
 import { t } from 'vscode-ext-localisation';
-import { getActionsConfig } from '../../../config/getConfig';
-import { ConfigActions } from '../../../constants/config';
-import { File } from '../WorkspaceViewProvider.interface';
+import { getActionsConfig } from '../../config/getConfig';
+import { ConfigActions } from '../../constants/config';
+import { File } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
 
 type TooltipType = 'cur-win' | 'new-win';
 

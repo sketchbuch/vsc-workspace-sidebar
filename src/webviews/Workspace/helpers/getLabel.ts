@@ -1,5 +1,5 @@
 import { FS_WS_EXT } from '../../../constants/fs';
-import { capitalise } from '../../../utils/strings/capitalise';
+import { capitalise } from './capitalise';
 
 export const getLabel = (wsFile: string, clean: boolean, lastSlashIndex: number): string => {
   const label = wsFile.substring(lastSlashIndex + 1).replace(FS_WS_EXT, '');
