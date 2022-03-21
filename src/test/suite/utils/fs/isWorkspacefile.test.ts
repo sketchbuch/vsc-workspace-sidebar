@@ -11,7 +11,15 @@ suite('Utils > isWorkspacefile()', () => {
     expect(isWorkspacefile(`/a/file/test.txt`, 'file')).to.equal(false);
   });
 
+  test('Returns false for extensionless files', () => {
+    expect(isWorkspacefile(`/a/file/test`, 'file')).to.equal(false);
+  });
+
   test('Returns true if the schema is "file" and the file is a workspace file', () => {
     expect(isWorkspacefile(`/a/file/test.${FS_WS_FILETYPE}`, 'file')).to.equal(true);
+  });
+
+  test('Returns true if the schema is "file" and the file is a workspace file without folders', () => {
+    expect(isWorkspacefile(`test.${FS_WS_FILETYPE}`, 'file')).to.equal(true);
   });
 });
