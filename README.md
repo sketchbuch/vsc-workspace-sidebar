@@ -4,7 +4,9 @@
 
 Adds a sidebar to VSCode that lists Workspaces and lets you open them in the current window or a new window. The results are cached for 12 Hours but there is a refresh button that you can click to recollect workspaces at any time.
 
-Workspaces can also be sorted ascending or descending and the currently loaded workspace is highlighted.
+Two list modes are available: list and file tree.
+
+Workspaces can also be sorted ascending or descending (in list mode) and the currently loaded workspace is highlighted.
 
 A search box is also available to allow you to look for a specific Workspace.
 
@@ -12,12 +14,15 @@ A search box is also available to allow you to look for a specific Workspace.
 
 ## Settings
 
-| Setting        | Description                                                                                                                                                     | Default Value                        | Type          |
-| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ------------- |
-| Folder         | The folder to look for workspace files in. If Folder is empty, your home folder will be used. **~/** will also be replaced with your home folder.               | None (your home folder will be used) | String        |
-| Depth          | The depth of subfolders to include in the search.                                                                                                               | 0                                    | Number 0-5    |
-| Search minimum | The minimum number of workspaces required before the search box is displayed. 0 Will always display the search box.                                             | 15                                   | Number 0-100  |
-| Show Paths     | Show the paths to the workspaces in the sidebar. Available options are: 'Always', 'Never', 'As needed' (will only display paths if there are duplicate labels). | As Needed                            | Dropdown List |
+Setting               | Description                                                                                                                                                                                                    | Default Value                        | Type         
+--------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | -------------
+Actions               | What is the default action for clicking on a workspace. By default, clicking opens the workspace in the current window and the icon click in a new window. You can use this setting to reverse this behaviour. | Current Window                       | Dropdown List
+Clean Labels          | Should workspace labels be converted to Title Case? If not their filename will be used as-is.                                                                                                                  | true                                 | Boolean      
+Depth                 | The depth of subfolders to include in the search.                                                                                                                                                              | 0                                    | Number 0-25  
+Folder                | The folder to look for workspace files in. If Folder is empty, your home folder will be used. **~/** will also be replaced with your home folder.                                                              | None (your home folder will be used) | String       
+Search minimum        | The minimum number of workspaces required before the search box is displayed. 0 Will always display the search box.                                                                                            | 15                                   | Number 0-100 
+Show Folder Hierarchy | Display a tree of workspaces with collapsable folders instead of the default list.                                                                                                                             | False                                | Boolean      
+Show Paths            | Show the paths to the workspaces in the sidebar. Available options are: 'Always', 'Never', 'As needed' (will only display paths if there are duplicate labels).                                                | As Needed                            | Dropdown List
 
 ## Translations
 
@@ -25,6 +30,13 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-#### [1.2.8](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.7...1.2.8) (2021-06-08)
+#### [1.3.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.8...1.3.0) (2022-03-21)
 
-- Resolves [#26](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/26) - Webview shows 404 due to navigation being caused by search form - navigation is not supported in webviews. See also: https://github.com/microsoft/vscode/issues/125485
+- Workspaces can now be displayed as a file tree that can be collapsed/expanded instead of the default list of workspaces. Resolves [#23](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/23)
+- A new option has been added to clean labels (convert to title case) or leave them as-is (like the filename). Resolves [#42](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/42)
+- If no workspace is open, any folder(s) that you open will be displayed in the sidebar and you can also save them as a new workspace. Resolves [#30](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/30)
+- Refactor/restructure of code
+- Additional unit tests
+- @vscode/webview-ui-toolkit is now used for buttons. Search box still needs converting.
+- @vscode/codicons is now used for icons, where possible.
+- Icons updated

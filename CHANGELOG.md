@@ -1,5 +1,16 @@
 # Change Log
 
+## [1.3.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.8...1.3.0) (2022-03-21)
+
+- Workspaces can now be displayed as a file tree that can be collapsed/expanded instead of the default list of workspaces. Resolves [#23](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/23)
+- A new option has been added to clean labels (convert to title case) or leave them as-is (like the filename). Resolves [#42](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/42)
+- If no workspace is open, any folder(s) that you open will be displayed in the sidebar and you can also save them as a new workspace. Resolves [#30](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/30)
+- Refactor/restructure of code
+- Additional unit tests
+- @vscode/webview-ui-toolkit is now used for buttons. Search box still needs converting.
+- @vscode/codicons is now used for icons, where possible.
+- Icons updated
+
 ## [1.2.8](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.7...1.2.8) (2021-06-08)
 
 - Resolves [#26](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/26) - Webview shows 404 due to navigation being caused by search form - navigation is not supported in webviews. See also: https://github.com/microsoft/vscode/issues/125485
