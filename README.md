@@ -4,11 +4,14 @@
 
 Adds a sidebar to VSCode that lists Workspaces and lets you open them in the current window or a new window. The results are cached for 12 Hours but there is a refresh button that you can click to recollect workspaces at any time.
 
-Two list modes are available: list and file tree.
+Two display modes are available:
 
-Workspaces can also be sorted ascending or descending (in list mode) and the currently loaded workspace is highlighted.
+1. List - Can be sorted asc/desc
+2. File Tree - A representation of the file tree to all workspaces. Can be collapsed/expanded.
 
-A search box is also available to allow you to look for a specific Workspace.
+The currently active workspace is highlighted, or in tree mode, any folder if closed that contains the active workspace
+
+A search box is provided to allow you to search for a specific Workspace.
 
 ![alt text](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/preview.gif 'Workspace Sidebar Preview')
 
@@ -40,3 +43,4 @@ This extension is localised, if you want it in your language please send me a tr
 - @vscode/webview-ui-toolkit is now used for buttons. Search box still needs converting.
 - @vscode/codicons is now used for icons, where possible.
 - Icons updated
+- Fixed tooltips for the icon an dthe workspace if you make new window the default click action.

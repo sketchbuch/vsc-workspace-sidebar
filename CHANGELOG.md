@@ -10,6 +10,7 @@
 - @vscode/webview-ui-toolkit is now used for buttons. Search box still needs converting.
 - @vscode/codicons is now used for icons, where possible.
 - Icons updated
+- Fixed tooltips for the icon an dthe workspace if you make new window the default click action.
 
 ## [1.2.8](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.7...1.2.8) (2021-06-08)
 
