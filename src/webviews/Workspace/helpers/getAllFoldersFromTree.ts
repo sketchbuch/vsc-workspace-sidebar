@@ -9,7 +9,7 @@ export const getAllFoldersFromTree = (tree: FileTree): string[] => {
       folders.push(folder.folderPath);
 
       if (folder.sub) {
-        tree.sub.forEach((subfolder) => {
+        folder.sub.forEach((subfolder) => {
           folders = [...folders, ...getAllFoldersFromTree(subfolder)];
         });
       }

@@ -80,6 +80,5 @@ suite('Templates > Workspace > Snippets: list()', () => {
     expect(result).contains('list__styled-list--tree');
 
     sinon.assert.notCalled(itemSpy);
-    sinon.assert.callCount(treeSpy, 2);
   });
 });

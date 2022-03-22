@@ -30,7 +30,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
       <ul class="list__list list__styled-list${showTree ? ' list__styled-list--tree' : ''}">
         ${
           showTree
-            ? tree(state.fileTree, renderVars, state, 0)
+            ? tree(state.fileTree, 0, renderVars, state)
             : visibleFiles.map((file) => listItem(file, renderVars)).join('')
         }
       </ul>
