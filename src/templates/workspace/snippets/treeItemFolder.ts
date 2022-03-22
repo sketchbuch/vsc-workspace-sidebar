@@ -1,19 +1,18 @@
 import path from 'path';
 import { RenderVars } from '../../../webviews/webviews.interface';
-import { FileTreeElement } from '../../../webviews/Workspace/helpers/getFileTree';
+import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree';
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 import { listItemIcon } from './listItemIcon';
 import { treeIconClosed, treeIconOpen } from './treeIcons';
 import { treeIndent } from './treeIndent';
 
 export const treeItemFolder = (
-  folder: FileTreeElement,
-  key: string,
+  folder: FileTree,
   depth: number,
   renderVars: RenderVars,
   state: WorkspaceState
 ): string => {
-  const { folderPath } = folder;
+  const { folderPath, label } = folder;
   const isClosed = state.closedFolders.includes(folderPath);
   const indicateSelected = isClosed && state.selected.includes(`${folderPath}${path.sep}`);
 
@@ -25,10 +24,10 @@ export const treeItemFolder = (
       <li class="${folderClasses}" data-folder="${folderPath}" data-depth="${depth}">
         ${indicateSelected ? listItemIcon(renderVars) : ''}
         ${treeIndent(depth)}
-        <span class="list__element" title="${key}">
+        <span class="list__element" title="${label}">
           ${isClosed ? treeIconClosed() : treeIconOpen()}
           <span class="list__text">
-            <span class="list__title">${key}</span>
+            <span class="list__title">${label}</span>
           </span>
         </span>
       </li>

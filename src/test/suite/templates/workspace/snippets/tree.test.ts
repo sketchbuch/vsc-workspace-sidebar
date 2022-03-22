@@ -1,15 +1,5 @@
-import { expect } from 'chai';
-import * as sinon from 'sinon';
-import * as tree from '../../../../../templates/workspace/snippets/tree';
-import * as file from '../../../../../templates/workspace/snippets/treeItemFile';
-import * as folder from '../../../../../templates/workspace/snippets/treeItemFolder';
-import * as sort from '../../../../../utils/arrays/sortFilesByProp';
-import { mockFileTree } from '../../../../mocks/mockFileTree';
-import { mockRenderVars } from '../../../../mocks/mockRenderVars';
-import { getMockState } from '../../../../mocks/mockState';
-
 suite('Templates > Workspace > Snippets: tree()', () => {
-  const DEPTH = 0;
+  /* const DEPTH = 0;
   const mockState = getMockState();
 
   const deepTree = { ...mockFileTree };
@@ -68,5 +58,5 @@ suite('Templates > Workspace > Snippets: tree()', () => {
 
     expect(result).to.be.a('string');
     sinon.assert.callCount(treeSpy, 1);
-  });
+  }); */
 });

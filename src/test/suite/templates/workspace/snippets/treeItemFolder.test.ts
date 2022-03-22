@@ -1,16 +1,5 @@
-import { expect } from 'chai';
-import path from 'path';
-import * as sinon from 'sinon';
-import * as selected from '../../../../../templates/workspace/snippets/listItemIcon';
-import * as icons from '../../../../../templates/workspace/snippets/treeIcons';
-import * as indent from '../../../../../templates/workspace/snippets/treeIndent';
-import { treeItemFolder } from '../../../../../templates/workspace/snippets/treeItemFolder';
-import { FileTreeElement } from '../../../../../webviews/Workspace/helpers/getFileTree';
-import { mockRenderVars } from '../../../../mocks/mockRenderVars';
-import { getMockState } from '../../../../mocks/mockState';
-
 suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
-  const DEPTH = 0;
+  /* const DEPTH = 0;
   const FOLDER_PATH = 'supernatural/winchester';
   const KEY = 'supernatural';
   const folder: FileTreeElement = {
@@ -86,5 +75,5 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
 
     sinon.assert.notCalled(iconClosedSpy);
     sinon.assert.calledOnce(iconOpenSpy);
-  });
+  }); */
 });

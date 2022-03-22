@@ -5,7 +5,7 @@ import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvide
 import { treeItemFile } from './treeItemFile';
 import { treeItemFolder } from './treeItemFolder';
 
-export const tree = (
+export const tree1 = (
   branch: FileTree,
   renderVars: RenderVars,
   state: WorkspaceState,
@@ -20,7 +20,7 @@ export const tree = (
 
       if (hasSubtree || hasFiles) {
         return `
-            ${treeItemFolder(value, key, depth, renderVars, state)}
+            ${treeItemFolder(value, depth, renderVars, state)}
             ${hasSubtree && !isClosed ? tree(sub, renderVars, state, depth + 1) : ''}
             ${
               hasFiles && !isClosed
@@ -36,4 +36,33 @@ export const tree = (
       return ``;
     })
     .join('');
+};
+
+export const tree = (
+  branch: FileTree,
+  renderVars: RenderVars,
+  state: WorkspaceState,
+  depth: number
+): string => {
+  const { files, folderPath, sub } = branch;
+  const hasSubtree = Object.keys(sub).length > 0;
+  const hasFiles = files.length > 0;
+  const isClosed = state.closedFolders.includes(folderPath);
+
+  return `
+    ${treeItemFolder(branch, depth, renderVars, state)}
+    ${
+      hasSubtree && !isClosed
+        ? branch.sub.map((folder): string => tree(folder, renderVars, state, depth + 1)).join('')
+        : ''
+    }
+    ${
+      hasFiles && !isClosed
+        ? [...files]
+            .sort(sortFilesByProp('label'))
+            .map((file) => treeItemFile(file, depth, renderVars))
+            .join('')
+        : ''
+    }
+  `;
 };

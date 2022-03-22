@@ -3,80 +3,33 @@ import { getFolderConfig } from '../../../config/getConfig';
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment';
 import { Files } from '../WorkspaceViewProvider.interface';
 
-export type FileTreeElement = {
-  files: Files;
-  folderPath: string;
-  sub: FileTree;
-};
-
 export interface FileTree {
-  [key: string]: FileTreeElement;
-}
-
-export const getFileTree = (files: Files): FileTree => {
-  let tree: FileTree = {};
-
-  files.forEach((file) => {
-    const { path } = file;
-    const parts = path.split(pathLib.sep);
-    let branch = tree;
-    let curPath = '';
-
-    while (parts.length > 1) {
-      let part = parts.shift();
-
-      if (part) {
-        curPath = curPath ? `${curPath}${pathLib.sep}${part}` : part;
-
-        if (branch[part] === undefined) {
-          branch[part] = {
-            files: [],
-            folderPath: curPath,
-            sub: {},
-          };
-        }
-
-        if (parts.length < 2) {
-          branch[part].files.push({ ...file });
-        }
-
-        branch = branch[part].sub;
-      }
-    }
-  });
-
-  getFileTree2(files);
-
-  return tree;
-};
-
-export interface FileTree2 {
   files: Files;
   folderPath: string; // Used to help ID closed folders
   label: string;
-  sub: FileTree2[];
+  sub: FileTree[];
 }
 
-type PartsList = {
-  [key: string]: FileTree2;
+type FolderList = {
+  [key: string]: FileTree;
 };
 
-export const getFileTree2 = (files: Files): FileTree2 => {
+export const getFileTree = (files: Files): FileTree => {
   const folder = getFolderConfig();
   const rootFolder = getLastPathSegment(folder);
 
-  let tree: FileTree2 = {
+  let tree: FileTree = {
     files: [],
     folderPath: rootFolder,
     label: rootFolder,
     sub: [],
   };
 
-  const partsList: PartsList = {};
+  const folderList: FolderList = {};
 
   const rootFiles = tree.files;
   const rootBranch = tree.sub;
-  let branch: FileTree2[] = rootBranch;
+  let branch: FileTree[] = rootBranch;
 
   files.forEach((file) => {
     const { path } = file;
@@ -96,19 +49,19 @@ export const getFileTree2 = (files: Files): FileTree2 => {
           folderPath = folderPath ? `${folderPath}${pathLib.sep}${part}` : part;
 
           // Either the existing folder, or a new one
-          const newFolder: FileTree2 = partsList[folderPath] ?? {
+          const newFolder: FileTree = folderList[folderPath] ?? {
             files: [],
             folderPath,
             label: part,
             sub: [],
           };
 
-          if (partsList[folderPath] === undefined) {
-            partsList[folderPath] = newFolder; // Reference for future iterations
+          if (folderList[folderPath] === undefined) {
+            folderList[folderPath] = newFolder; // Reference for future iterations
             branch.push(newFolder);
           }
 
-          // Ignore final folders and just add workspaces as files, the reset branch to root
+          // Ignore final folders and just add workspaces as files, then reset branch to root
           if (parts.length < 2) {
             newFolder.files.push({ ...file });
             branch = rootBranch;

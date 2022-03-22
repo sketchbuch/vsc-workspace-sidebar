@@ -3,6 +3,7 @@ import { convertWsFiles } from '../helpers/convertWsFiles';
 import { getFileTree } from '../helpers/getFileTree';
 import { getVisibleFiles } from '../helpers/getVisibleFiles';
 import { WorkspaceFiles, WorkspaceState } from '../WorkspaceViewProvider.interface';
+import { defaultFileTree } from './workspaceSlice';
 
 export const list = (state: WorkspaceState, action: PayloadAction<WorkspaceFiles>): void => {
   state.files = action.payload;
@@ -12,7 +13,7 @@ export const list = (state: WorkspaceState, action: PayloadAction<WorkspaceFiles
     state.isFolderInvalid = true;
     state.state = 'invalid';
     state.visibleFiles = [];
-    state.fileTree = {};
+    state.fileTree = { ...defaultFileTree };
   } else {
     state.isFolderInvalid = false;
     state.state = 'list';

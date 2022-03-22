@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import * as vscode from 'vscode';
+import { FileTree } from '../helpers/getFileTree';
 import { getWsType } from '../helpers/getWsType';
 import { WorkspaceState } from '../WorkspaceViewProvider.interface';
 import { error } from './error';
@@ -13,13 +14,20 @@ import { setVisibleFiles } from './setVisibleFiles';
 import { toggleFolderState } from './toggleFolderState';
 import { toggleFolderStateBulk } from './toggleFolderStateBulk';
 
+export const defaultFileTree: FileTree = {
+  files: [],
+  folderPath: '',
+  label: '',
+  sub: [],
+};
+
 export const workspaceSlice = createSlice({
   initialState: {
     closedFolders: [],
     convertedFiles: [],
     error: '',
     files: false,
-    fileTree: {},
+    fileTree: { ...defaultFileTree },
     isFolderInvalid: false,
     search: '',
     selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',

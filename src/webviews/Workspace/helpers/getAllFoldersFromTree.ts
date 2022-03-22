@@ -2,16 +2,19 @@ import { FileTree } from '../helpers/getFileTree';
 
 // TODO - Put in state now that filetree is too
 export const getAllFoldersFromTree = (tree: FileTree): string[] => {
-  let branch: string[] = [];
+  let folders: string[] = [tree.folderPath];
 
-  Object.entries(tree).forEach(([key, value]) => {
-    const { folderPath, sub } = value;
-    branch.push(folderPath);
+  if (tree.sub.length > 0) {
+    tree.sub.forEach((folder) => {
+      folders.push(folder.folderPath);
 
-    if (Object.keys(sub).length) {
-      branch = [...branch, ...getAllFoldersFromTree(sub)];
-    }
-  });
+      if (folder.sub) {
+        tree.sub.forEach((subfolder) => {
+          folders = [...folders, ...getAllFoldersFromTree(subfolder)];
+        });
+      }
+    });
+  }
 
-  return branch;
+  return folders;
 };
