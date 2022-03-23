@@ -26,7 +26,7 @@ import {
   mockVisibleFiles,
   ROOT_TREE,
   SEARCH_TERM,
-} from '../../../../mocks/mockFileTree';
+} from '../../../../mocks/mockFileData';
 import { getMockState } from '../../../../mocks/mockState';
 
 suite('Webviews > Workspace > Store > reducers:', () => {

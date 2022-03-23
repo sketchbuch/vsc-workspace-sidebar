@@ -6,7 +6,7 @@ import * as icons from '../../../../../templates/workspace/snippets/treeIcons';
 import * as indent from '../../../../../templates/workspace/snippets/treeIndent';
 import { treeItemFolder } from '../../../../../templates/workspace/snippets/treeItemFolder';
 import { FileTree } from '../../../../../webviews/Workspace/helpers/getFileTree';
-import { ROOT_FOLDER } from '../../../../mocks/mockFileTree';
+import { ROOT_FOLDER } from '../../../../mocks/mockFileData';
 import { mockRenderVars } from '../../../../mocks/mockRenderVars';
 import { getMockState } from '../../../../mocks/mockState';
 

@@ -3,12 +3,12 @@ import * as sinon from 'sinon';
 import { listItem } from '../../../../../templates/workspace/snippets/listItem';
 import * as buttons from '../../../../../templates/workspace/snippets/listItemButtons';
 import * as icons from '../../../../../templates/workspace/snippets/listItemIcon';
-import { getMockFiles } from '../../../../mocks/mockFiles';
+import { file1 } from '../../../../mocks/mockFileData';
 import { mockRenderVars } from '../../../../mocks/mockRenderVars';
 
 suite('Templates > Workspace > Snippets: listItem()', () => {
   test('Renders correctly', () => {
-    const [file] = getMockFiles(1, { showPath: true });
+    const file = { ...file1 };
     const result = listItem(file, mockRenderVars);
 
     expect(result).to.be.a('string');
@@ -21,7 +21,7 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
   });
 
   test('Description is not rendered if showPath = "false"', () => {
-    const [file] = getMockFiles(1, { showPath: false });
+    const file = { ...file1, showPath: false };
     const result = listItem(file, mockRenderVars);
 
     expect(result).not.contains('class="list__description"');
@@ -31,7 +31,7 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
     const btnSpy = sinon.spy(buttons, 'listItemButtons');
     const iconSpy = sinon.spy(icons, 'listItemIcon');
 
-    const [file] = getMockFiles(1, { isSelected: true, showPath: false });
+    const file = { ...file1, isSelected: true, showPath: false };
     const result = listItem(file, mockRenderVars);
 
     expect(result).contains('list__styled-item--selected');
@@ -49,7 +49,7 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
     const btnSpy = sinon.spy(buttons, 'listItemButtons');
     const iconSpy = sinon.spy(icons, 'listItemIcon');
 
-    const [file] = getMockFiles(1, { showPath: false });
+    const file = { ...file1, showPath: false };
     const result = listItem(file, mockRenderVars);
 
     expect(result).not.contains('list__styled-item--selected');

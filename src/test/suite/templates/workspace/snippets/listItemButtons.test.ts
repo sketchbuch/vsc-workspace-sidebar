@@ -2,11 +2,11 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as icons from '../../../../../templates/getImgUrls';
 import { listItemButtons } from '../../../../../templates/workspace/snippets/listItemButtons';
-import { getMockFiles } from '../../../../mocks/mockFiles';
+import { file1 } from '../../../../mocks/mockFileData';
 import { mockRenderVars } from '../../../../mocks/mockRenderVars';
 
 suite('Templates > Workspace > Snippets: listItemButtons()', () => {
-  const [file] = getMockFiles(1, { showPath: false });
+  const file = { ...file1, showPath: false };
 
   test('Renders correctly', () => {
     const spy = sinon.spy(icons, 'getImgUrls');

@@ -3,16 +3,26 @@ import * as sinon from 'sinon';
 import * as configs from '../../../../../config/getConfig';
 import { ConfigShowPaths } from '../../../../../constants/config';
 import { getVisibleFiles } from '../../../../../webviews/Workspace/helpers/getVisibleFiles';
-import { getMockFiles } from '../../../../mocks/mockFiles';
+import {
+  file4,
+  FOLDER1,
+  mockConvertedFiles,
+  mockConvertedFilesAsc,
+  mockConvertedFilesDesc,
+  SEARCH_TERM,
+} from '../../../../mocks/mockFileData';
 
 suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
-  const options = { showPath: false };
+  const filesUnsorted = mockConvertedFiles;
+  const filesAsc = mockConvertedFilesAsc;
+  const filesDesc = mockConvertedFilesDesc;
+
   let treeStub: sinon.SinonStub;
   let pathsStub: sinon.SinonStub;
 
   setup(() => {
     treeStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => false);
-    pathsStub = sinon.stub(configs, 'getShowPathsConfig');
+    pathsStub = sinon.stub(configs, 'getShowPathsConfig').callsFake(() => ConfigShowPaths.ALWAYS);
   });
 
   teardown(() => {
@@ -21,76 +31,71 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
   });
 
   test('Search correctly filters', () => {
-    const files = getMockFiles(2);
-    const result = getVisibleFiles(files, '2', 'ascending');
-
-    expect(result).to.eql([files[1]]);
+    const result = getVisibleFiles(filesUnsorted, SEARCH_TERM, 'ascending');
+    expect(result).to.eql([file4]);
   });
 
   suite('Sorting:', () => {
-    test('Corectly sorts "ascending"', () => {
-      const files = getMockFiles(2).reverse();
-      const expectedFiles = getMockFiles(2);
-      const result = getVisibleFiles(files, '', 'ascending');
-
-      expect(result).to.eql(expectedFiles);
+    test('Correctly sorts "ascending"', () => {
+      const result = getVisibleFiles(filesUnsorted, '', 'ascending');
+      expect(result).to.eql(filesAsc);
     });
 
-    test('Corectly sorts "descending"', () => {
-      const files = getMockFiles(2);
-      const expectedFiles = getMockFiles(2).reverse();
-      const result = getVisibleFiles(files, '', 'descending');
-
-      expect(result).to.eql(expectedFiles);
+    test('Correctly sorts "descending"', () => {
+      const result = getVisibleFiles(filesUnsorted, '', 'descending');
+      expect(result).to.eql(filesDesc);
     });
 
     test('No sorting when using tree view', () => {
       treeStub.callsFake(() => true);
 
-      const files = getMockFiles(2).reverse();
-      const expectedFiles = getMockFiles(2).reverse();
-      const result = getVisibleFiles(files, '', 'ascending');
-      expect(result).to.eql(expectedFiles);
+      const result = getVisibleFiles(filesDesc, '', 'ascending');
+      expect(result).to.eql(filesDesc);
 
-      const filesDescending = getMockFiles(2);
-      const expectedFilesDescending = getMockFiles(2);
-      const resultDescending = getVisibleFiles(filesDescending, '', 'descending');
-      expect(resultDescending).to.eql(expectedFilesDescending);
+      const resultDescending = getVisibleFiles(filesAsc, '', 'descending');
+      expect(resultDescending).to.eql(filesAsc);
     });
   });
 
   suite('Show paths:', () => {
-    test('"Never" returns files with showPath: "false"', () => {
+    test('"Never" returns filesAsc with showPath: "false"', () => {
       pathsStub.callsFake(() => ConfigShowPaths.NEVER);
+      const expectedFiles = filesAsc.map((file) => {
+        return { ...file, showPath: false };
+      });
 
-      const files = getMockFiles(2);
-      const expectedFiles = getMockFiles(2, options);
-      const result = getVisibleFiles(files, '', 'ascending');
-
+      const result = getVisibleFiles(filesAsc, '', 'ascending');
       expect(result).to.eql(expectedFiles);
     });
 
-    test('"Always" returns files with showPath: "false"', () => {
+    test('"Always" returns filesAsc with showPath: "false"', () => {
       pathsStub.callsFake(() => ConfigShowPaths.ALWAYS);
 
-      const files = getMockFiles(2);
-      const result = getVisibleFiles(files, '', 'ascending');
-
-      expect(result).to.eql(files);
+      const result = getVisibleFiles(filesAsc, '', 'ascending');
+      expect(result).to.eql(filesAsc);
     });
 
     test('"As needed" returns files with showPath: "true" for files with duplicate labels', () => {
       pathsStub.callsFake(() => ConfigShowPaths.AS_NEEEDED);
 
-      const files = getMockFiles(3);
-      files[2].label = files[0].label;
-      files[1].showPath = false;
-      const expectedFiles = getMockFiles(3);
-      expectedFiles[2].label = expectedFiles[0].label;
-      expectedFiles[1].showPath = false;
-      const result = getVisibleFiles(files, '', 'ascending');
+      const files = filesUnsorted.map((file) => {
+        if (file.path.includes(FOLDER1)) {
+          return { ...file, label: 'Same label' };
+        }
 
-      expect(result).to.eql([expectedFiles[0], expectedFiles[2], expectedFiles[1]]);
+        return { ...file };
+      });
+
+      const expectedFiles = [
+        { ...mockConvertedFiles[3], showPath: false },
+        { ...mockConvertedFiles[0], showPath: true, label: 'Same label' },
+        { ...mockConvertedFiles[1], showPath: true, label: 'Same label' },
+        { ...mockConvertedFiles[2], showPath: false },
+      ];
+
+      const result = getVisibleFiles(files, '', 'ascending');
+      result;
+      expect(result).to.eql(expectedFiles);
     });
   });
 });

@@ -5,12 +5,12 @@ import * as selected from '../../../../../templates/workspace/snippets/listItemI
 import * as icons from '../../../../../templates/workspace/snippets/treeIcons';
 import * as indent from '../../../../../templates/workspace/snippets/treeIndent';
 import { treeItemFile } from '../../../../../templates/workspace/snippets/treeItemFile';
-import { getMockFiles } from '../../../../mocks/mockFiles';
+import { file1 } from '../../../../mocks/mockFileData';
 import { mockRenderVars } from '../../../../mocks/mockRenderVars';
 
 suite('Templates > Workspace > Snippets: treeItemFile()', () => {
   const DEPTH = 0;
-  const [file] = getMockFiles(1, { showPath: false });
+  const file = { ...file1, showPath: false };
 
   let buttonSpy: sinon.SinonSpy;
   let iconTreeSpy: sinon.SinonSpy;
@@ -47,7 +47,7 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
   });
 
   test('Renders correctly when selected', () => {
-    const [file] = getMockFiles(1, { showPath: false, isSelected: true });
+    const file = { ...file1, showPath: false, isSelected: true };
     const result = treeItemFile(file, DEPTH, mockRenderVars);
 
     expect(result).contains(`list__styled-item--selected`);
