@@ -13,12 +13,18 @@ export const treeItemFolder = (
   renderVars: RenderVars,
   state: WorkspaceState
 ): string => {
-  const { folderPath, label } = folder;
+  const { folderPath, isRoot, label } = folder;
   const indicateSelected = isClosed && state.selected.includes(`${folderPath}${path.sep}`);
 
-  const folderClasses = `list__branch-list-item list__branch-list-item-folder list__styled-item ${
-    indicateSelected ? 'list__styled-item--selected' : ''
-  }`;
+  let folderClasses = `list__branch-list-item list__branch-list-item-folder list__styled-item`;
+
+  if (indicateSelected) {
+    folderClasses += ' list__styled-item--selected';
+  }
+
+  if (!isRoot) {
+    folderClasses += ' list__branch-list-item-folder-closable';
+  }
 
   return `
       <li class="${folderClasses}" data-folder="${folderPath}" data-depth="${depth}">

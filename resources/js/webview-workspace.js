@@ -6,7 +6,7 @@
   const searchInput = document.getElementById('searchWorkspaces');
   const viewLinks = Array.from(document.getElementsByClassName('view__link'));
   const wsElements = Array.from(document.getElementsByClassName('list__styled-item--unselected'));
-  const wsFolders = Array.from(document.getElementsByClassName('list__branch-list-item-folder'));
+  const wsFolders = Array.from(document.getElementsByClassName('list__branch-list-item-folder-closable'));
   const folderSaveBtn = document.getElementById('saveFolderAsWorkspace');
   let searchTerm = '';
 

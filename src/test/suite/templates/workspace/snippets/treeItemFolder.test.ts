@@ -16,7 +16,7 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
   const folder: FileTree = {
     files: [],
     folderPath: FOLDER_PATH,
-    isRoot: false,
+    isRoot: true,
     label: ROOT_FOLDER,
     sub: [],
   };
@@ -97,5 +97,21 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
 
     sinon.assert.notCalled(iconClosedSpy);
     sinon.assert.calledOnce(iconOpenSpy);
+  });
+
+  test('Root folders do no have the closable class', () => {
+    const result = treeItemFolder(folder, DEPTH, false, mockRenderVars, mockState);
+    expect(result).not.contains(`list__branch-list-item-folder-closable`);
+  });
+
+  test('Non-root folders do have the closable class', () => {
+    const result = treeItemFolder(
+      { ...folder, isRoot: false },
+      DEPTH,
+      false,
+      mockRenderVars,
+      mockState
+    );
+    expect(result).contains(`list__branch-list-item-folder-closable`);
   });
 });
