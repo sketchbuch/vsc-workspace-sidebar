@@ -10,7 +10,6 @@ export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) =
   const showPaths = getShowPathsConfig();
   let visibleFiles = [...wsFiles];
 
-  console.log('### showPaths', showPaths);
   if (search) {
     visibleFiles = visibleFiles.filter((file) => file.searchLabel.includes(search));
   }
