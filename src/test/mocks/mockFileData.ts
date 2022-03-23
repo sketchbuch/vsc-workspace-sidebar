@@ -51,7 +51,6 @@ export const file4: File = {
 
 export const mockFileList = [file1.file, file2.file, file3.file, file4.file];
 export const mockFolderList: string[] = [
-  ROOT_FOLDER,
   FOLDER1,
   FOLDER2,
   `${FOLDER2}/${SUBFOLDER2}`,
