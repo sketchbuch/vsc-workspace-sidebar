@@ -18,17 +18,19 @@ import { toggleFolderState } from '../../../../../webviews/Workspace/store/toggl
 import { toggleFolderStateBulk } from '../../../../../webviews/Workspace/store/toggleFolderStateBulk';
 import {
   file4,
+  mockConvertedFiles,
   mockFileList,
-  mockFilesForFileTree,
-  mockFilesForFileTreeNoPaths,
   mockFileTree,
-  mockFileTreeFolders,
+  mockFileTreeSearched,
+  mockFolderList,
+  mockVisibleFiles,
   ROOT_TREE,
+  SEARCH_TERM,
 } from '../../../../mocks/mockFileTree';
 import { getMockState } from '../../../../mocks/mockState';
 
-suite.only('Webviews > Workspace > Store > reducers:', () => {
-  const TERM = 'react';
+suite('Webviews > Workspace > Store > reducers:', () => {
+  const FOLDER = 'vsc';
 
   let cleanStub: sinon.SinonStub;
   let pathsStub: sinon.SinonStub;
@@ -65,57 +67,6 @@ suite.only('Webviews > Workspace > Store > reducers:', () => {
     expect(state).to.eql(expectedState);
   });
 
-  test('fetch() - Fulfilled - Valid folder', () => {
-    const state = getMockState({
-      convertedFiles: [],
-      files: false,
-      isFolderInvalid: false,
-      state: 'loading',
-      visibleFiles: [],
-    });
-    const expectedState = getMockState({
-      convertedFiles: mockFilesForFileTree,
-      files: mockFileList,
-      isFolderInvalid: false,
-      state: 'list',
-      visibleFiles: mockFilesForFileTreeNoPaths,
-    });
-
-    //expect(state).not.to.eql(expectedState);
-    fetchFulfilled(state, {
-      meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-      payload: mockFileList,
-      type: 'ws/list',
-    });
-    //expect(state).to.eql(expectedState);x
-    expectedState;
-  });
-
-  test('fetch() - Fulfilled - Invalid folder', () => {
-    const state = getMockState({
-      convertedFiles: mockFilesForFileTree,
-      files: false,
-      isFolderInvalid: false,
-      state: 'loading',
-      visibleFiles: mockFilesForFileTreeNoPaths,
-    });
-    const expectedState = getMockState({
-      convertedFiles: [],
-      files: false,
-      isFolderInvalid: true,
-      state: 'invalid',
-      visibleFiles: [],
-    });
-
-    expect(state).not.to.eql(expectedState);
-    fetchFulfilled(state, {
-      meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-      payload: false,
-      type: 'ws/list',
-    });
-    expect(state).to.eql(expectedState);
-  });
-
   test('fetch() - Pending', () => {
     const state = getMockState({
       isFolderInvalid: true,
@@ -146,6 +97,57 @@ suite.only('Webviews > Workspace > Store > reducers:', () => {
     expect(state).to.eql(expectedState);
   });
 
+  test('fetch() - Fulfilled - Invalid folder', () => {
+    const state = getMockState({
+      convertedFiles: mockConvertedFiles,
+      files: false,
+      isFolderInvalid: false,
+      state: 'loading',
+      visibleFiles: mockVisibleFiles,
+    });
+    const expectedState = getMockState({
+      convertedFiles: [],
+      files: false,
+      isFolderInvalid: true,
+      state: 'invalid',
+      visibleFiles: [],
+    });
+
+    expect(state).not.to.eql(expectedState);
+    fetchFulfilled(state, {
+      meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
+      payload: false,
+      type: 'ws/list',
+    });
+    expect(state).to.eql(expectedState);
+  });
+
+  test('fetch() - Fulfilled - Valid folder', () => {
+    const state = getMockState({
+      convertedFiles: [],
+      files: false,
+      isFolderInvalid: true,
+      state: 'invalid',
+      visibleFiles: [],
+    });
+    const expectedState = getMockState({
+      convertedFiles: mockConvertedFiles,
+      fileTree: mockFileTree,
+      files: mockFileList,
+      isFolderInvalid: false,
+      state: 'list',
+      visibleFiles: mockVisibleFiles,
+    });
+
+    expect(state).not.to.eql(expectedState);
+    fetchFulfilled(state, {
+      meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
+      payload: mockFileList,
+      type: 'ws/list',
+    });
+    expect(state.visibleFiles).to.eql(expectedState.visibleFiles);
+  });
+
   test('invalid()', () => {
     const state = getMockState({
       files: [],
@@ -165,11 +167,11 @@ suite.only('Webviews > Workspace > Store > reducers:', () => {
 
   test('list() - Invalid folder', () => {
     const state = getMockState({
-      convertedFiles: mockFilesForFileTree,
+      convertedFiles: mockConvertedFiles,
       files: false,
       isFolderInvalid: false,
       state: 'loading',
-      visibleFiles: mockFilesForFileTreeNoPaths,
+      visibleFiles: mockVisibleFiles,
     });
     const expectedState = getMockState({
       convertedFiles: [],
@@ -193,12 +195,12 @@ suite.only('Webviews > Workspace > Store > reducers:', () => {
       visibleFiles: [],
     });
     const expectedState = getMockState({
-      convertedFiles: mockFilesForFileTreeNoPaths,
+      convertedFiles: mockConvertedFiles,
       files: mockFileList,
       fileTree: mockFileTree,
       isFolderInvalid: false,
       state: 'list',
-      visibleFiles: mockFilesForFileTreeNoPaths,
+      visibleFiles: mockVisibleFiles,
     });
 
     expect(state).not.to.eql(expectedState);
@@ -233,9 +235,11 @@ suite.only('Webviews > Workspace > Store > reducers:', () => {
   test('setPersistedState()', () => {
     const state = getMockState({
       sort: 'descending',
+      visibleFiles: mockVisibleFiles,
     });
     const expectedState = getMockState({
       sort: 'ascending',
+      visibleFiles: mockVisibleFiles.reverse(),
     });
 
     expect(state).not.to.eql(expectedState);
@@ -246,52 +250,50 @@ suite.only('Webviews > Workspace > Store > reducers:', () => {
   test('setSearchTerm() - Invalid folder', () => {
     const state = getMockState({
       files: false,
+      fileTree: mockFileTree,
       search: '',
-      visibleFiles: [],
+      visibleFiles: mockVisibleFiles,
     });
     const expectedState = getMockState({
-      search: TERM,
+      search: SEARCH_TERM,
       visibleFiles: [],
     });
 
     expect(state).not.to.eql(expectedState);
-    setSearchTerm(state, { payload: TERM, type: 'ws/setSearchTerm' });
+    setSearchTerm(state, { payload: SEARCH_TERM, type: 'ws/setSearchTerm' });
     expect(state).to.eql(expectedState);
   });
 
-  test.skip('setSearchTerm() - Valid folder', () => {
+  test('setSearchTerm() - Valid folder', () => {
     const state = getMockState({
-      convertedFiles: mockFilesForFileTree,
+      convertedFiles: mockConvertedFiles,
       files: mockFileList,
       search: '',
-      visibleFiles: [],
+      visibleFiles: mockVisibleFiles,
     });
-    const expectedFileTree = { ...mockFileTree };
-    const file4Tree = expectedFileTree.sub.pop()!;
-    expectedFileTree.sub = [{ ...file4Tree }];
     const expectedState = getMockState({
-      convertedFiles: mockFilesForFileTree,
-      fileTree: expectedFileTree,
+      convertedFiles: mockConvertedFiles,
+      fileTree: mockFileTreeSearched,
       files: mockFileList,
-      search: TERM,
+      search: SEARCH_TERM,
       visibleFiles: [{ ...file4, showPath: false }],
     });
 
     expect(state).not.to.eql(expectedState);
-    setSearchTerm(state, { payload: TERM, type: 'ws/setSearchTerm' });
+    setSearchTerm(state, { payload: SEARCH_TERM, type: 'ws/setSearchTerm' });
     expect(state).to.eql(expectedState);
   });
 
-  test('setVisibleFiles()', () => {
+  test('setVisibleFiles() - With files', () => {
     const state = getMockState({
-      convertedFiles: mockFilesForFileTree,
+      convertedFiles: mockConvertedFiles,
       files: mockFileList,
     });
     const expectedState = getMockState({
-      convertedFiles: mockFilesForFileTree,
+      convertedFiles: mockConvertedFiles,
       files: mockFileList,
       fileTree: mockFileTree,
-      visibleFiles: mockFilesForFileTreeNoPaths,
+      visibleFiles: mockVisibleFiles,
     });
 
     expect(state).not.to.eql(expectedState);
@@ -308,7 +310,6 @@ suite.only('Webviews > Workspace > Store > reducers:', () => {
   });
 
   test('toggleFolderState() - Adds open folder to closed list', () => {
-    const FOLDER = 'vsc';
     const state = getMockState();
     const expectedState = getMockState({
       closedFolders: [FOLDER],
@@ -320,7 +321,6 @@ suite.only('Webviews > Workspace > Store > reducers:', () => {
   });
 
   test('toggleFolderState() - Removes closed folder from closed list', () => {
-    const FOLDER = 'vsc';
     const state = getMockState({
       closedFolders: [FOLDER],
     });
@@ -334,12 +334,11 @@ suite.only('Webviews > Workspace > Store > reducers:', () => {
   });
 
   test('toggleFolderState() - Leaves state as-is if folder is an empty string', () => {
-    const FOLDER = '';
     const state = getMockState();
     const expectedState = getMockState();
 
     expect(state).to.eql(expectedState);
-    toggleFolderState(state, { payload: FOLDER, type: 'ws/toggleFolderState' });
+    toggleFolderState(state, { payload: '', type: 'ws/toggleFolderState' });
     expect(state).to.eql(expectedState);
   });
 
@@ -374,18 +373,18 @@ suite.only('Webviews > Workspace > Store > reducers:', () => {
 
   test('toggleFolderStateBulk() - "collapse" does nothing if all folders are closed', () => {
     const state = getMockState({
-      convertedFiles: mockFilesForFileTree,
-      closedFolders: mockFileTreeFolders,
+      convertedFiles: mockConvertedFiles,
+      closedFolders: mockFolderList,
       files: mockFileList,
       fileTree: mockFileTree,
-      visibleFiles: mockFilesForFileTreeNoPaths,
+      visibleFiles: mockVisibleFiles,
     });
     const expectedState = getMockState({
-      convertedFiles: mockFilesForFileTree,
-      closedFolders: mockFileTreeFolders,
+      convertedFiles: mockConvertedFiles,
+      closedFolders: mockFolderList,
       files: mockFileList,
       fileTree: mockFileTree,
-      visibleFiles: mockFilesForFileTreeNoPaths,
+      visibleFiles: mockVisibleFiles,
     });
 
     expect(state).to.eql(expectedState);
@@ -395,18 +394,18 @@ suite.only('Webviews > Workspace > Store > reducers:', () => {
 
   test('toggleFolderStateBulk() - "collapse" will close all folders if some are still open', () => {
     const state = getMockState({
-      convertedFiles: mockFilesForFileTree,
-      closedFolders: [...mockFileTreeFolders.slice(0, 1)],
+      convertedFiles: mockConvertedFiles,
+      closedFolders: [...mockFolderList.slice(0, 1)],
       files: mockFileList,
       fileTree: mockFileTree,
-      visibleFiles: mockFilesForFileTreeNoPaths,
+      visibleFiles: mockVisibleFiles,
     });
     const expectedState = getMockState({
-      convertedFiles: mockFilesForFileTree,
-      closedFolders: mockFileTreeFolders,
+      convertedFiles: mockConvertedFiles,
+      closedFolders: mockFolderList,
       files: mockFileList,
       fileTree: mockFileTree,
-      visibleFiles: mockFilesForFileTreeNoPaths,
+      visibleFiles: mockVisibleFiles,
     });
 
     expect(state).not.to.eql(expectedState);

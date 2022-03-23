@@ -9,9 +9,8 @@ export const ROOT_FOLDER = 'dev';
 export const ROOT_TREE = `/home/user/${ROOT_FOLDER}`;
 
 const FOLDER1 = 'code';
-const FILEPATH1 = `${ROOT_TREE}/${FOLDER1}/vscode/Vscode.${EXT}`;
 export const file1: File = {
-  file: FILEPATH1,
+  file: `${ROOT_TREE}/${FOLDER1}/vscode/Vscode.${EXT}`,
   isSelected: false,
   label: 'Vscode',
   path: `${FOLDER1}/vscode`,
@@ -20,9 +19,8 @@ export const file1: File = {
 };
 
 const FOLDER2 = 'code/vscode';
-const FILEPATH2 = `${ROOT_TREE}/${FOLDER2}/some_ext/Some Extension.${EXT}`;
 export const file2: File = {
-  file: FILEPATH2,
+  file: `${ROOT_TREE}/${FOLDER2}/some_ext/Some Extension.${EXT}`,
   isSelected: false,
   label: 'Some Extension',
   path: `${FOLDER2}/some_ext`,
@@ -31,9 +29,8 @@ export const file2: File = {
 };
 
 const FOLDER3 = 'flutter';
-const FILEPATH3 = `${ROOT_TREE}/${FOLDER3}/todo/Todo List.${EXT}`;
 export const file3: File = {
-  file: FILEPATH3,
+  file: `${ROOT_TREE}/${FOLDER3}/todo/Todo List.${EXT}`,
   isSelected: false,
   label: 'Todo List',
   path: `${FOLDER3}/todo`,
@@ -42,9 +39,8 @@ export const file3: File = {
 };
 
 const FOLDER4 = 'react';
-const FILEPATH4 = `${ROOT_TREE}/${FOLDER4}/router/React Router.${EXT}`;
 export const file4: File = {
-  file: FILEPATH4,
+  file: `${ROOT_TREE}/${FOLDER4}/router/React Router.${EXT}`,
   isSelected: false,
   label: 'React Router',
   path: `${FOLDER4}/router`,
@@ -52,15 +48,15 @@ export const file4: File = {
   showPath: false,
 };
 
-export const mockFileList = [FILEPATH1, FILEPATH2, FILEPATH3, FILEPATH4];
-export const mockFileTreeFolders: string[] = [ROOT_FOLDER, FOLDER1, FOLDER2, FOLDER3, FOLDER4];
-export const mockFilesForFileTree: Files = [{ ...file1 }, { ...file2 }, { ...file3 }, { ...file4 }];
-export const mockFilesForFileTreeNoPaths: Files = [
-  { ...file1, showPath: false },
-  { ...file2, showPath: false },
-  { ...file3, showPath: false },
-  { ...file4, showPath: false },
+export const mockFileList = [file1.file, file2.file, file3.file, file4.file];
+export const mockFolderList: string[] = [ROOT_FOLDER, FOLDER1, FOLDER2, FOLDER3, FOLDER4];
+export const mockConvertedFiles: Files = [
+  { ...file1, showPath: true },
+  { ...file2, showPath: true },
+  { ...file3, showPath: true },
+  { ...file4, showPath: true },
 ];
+export const mockVisibleFiles: Files = [{ ...file1 }, { ...file2 }, { ...file3 }, { ...file4 }];
 
 export const mockFileTree: FileTree = {
   files: [],
@@ -86,6 +82,21 @@ export const mockFileTree: FileTree = {
       label: FOLDER3,
       sub: [],
     },
+    {
+      files: [{ ...file4 }],
+      folderPath: FOLDER4,
+      label: FOLDER4,
+      sub: [],
+    },
+  ],
+};
+
+export const SEARCH_TERM = 'react';
+export const mockFileTreeSearched: FileTree = {
+  files: [],
+  folderPath: ROOT_FOLDER,
+  label: ROOT_FOLDER,
+  sub: [
     {
       files: [{ ...file4 }],
       folderPath: FOLDER4,

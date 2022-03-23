@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as configs from '../../../../../config/getConfig';
 import { getFileTree } from '../../../../../webviews/Workspace/helpers/getFileTree';
-import { mockFilesForFileTree, mockFileTree, ROOT_FOLDER } from '../../../../mocks/mockFileTree';
+import { mockFileTree, mockVisibleFiles, ROOT_FOLDER } from '../../../../mocks/mockFileTree';
 
 suite('Webviews > Workspace > Helpers > getFileTree():', () => {
   let treeStub: sinon.SinonStub;
@@ -16,7 +16,7 @@ suite('Webviews > Workspace > Helpers > getFileTree():', () => {
   });
 
   test('Returns expected filetree', () => {
-    const result = getFileTree(mockFilesForFileTree);
+    const result = getFileTree(mockVisibleFiles);
     expect(result).to.eql(mockFileTree);
   });
 });

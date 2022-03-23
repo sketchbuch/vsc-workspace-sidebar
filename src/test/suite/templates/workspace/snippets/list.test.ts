@@ -4,7 +4,7 @@ import * as configs from '../../../../../config/getConfig';
 import { list } from '../../../../../templates/workspace/snippets/list';
 import * as item from '../../../../../templates/workspace/snippets/listItem';
 import * as tree from '../../../../../templates/workspace/snippets/tree';
-import { mockFileList, mockFilesForFileTree, mockFileTree } from '../../../../mocks/mockFileTree';
+import { mockConvertedFiles, mockFileList, mockFileTree } from '../../../../mocks/mockFileTree';
 import { mockRenderVars } from '../../../../mocks/mockRenderVars';
 import { getMockState } from '../../../../mocks/mockState';
 
@@ -14,10 +14,10 @@ suite('Templates > Workspace > Snippets: list()', () => {
   let treeSpy: sinon.SinonSpy;
 
   const mockState = getMockState({
-    convertedFiles: mockFilesForFileTree,
+    convertedFiles: mockConvertedFiles,
     files: mockFileList,
     fileTree: mockFileTree,
-    visibleFiles: mockFilesForFileTree,
+    visibleFiles: mockConvertedFiles,
   });
 
   setup(() => {
