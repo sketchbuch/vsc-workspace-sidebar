@@ -6,7 +6,7 @@ export const ROOT_FOLDER = 'dev';
 export const ROOT_TREE = `/home/user/${ROOT_FOLDER}`;
 
 export const FOLDER1 = 'code';
-const SUBFOLDER1 = 'vscode';
+export const SUBFOLDER1 = 'vscode';
 export const file1: File = {
   file: `${ROOT_TREE}/${FOLDER1}/${SUBFOLDER1}/Vscode.${EXT}`,
   isSelected: false,
@@ -16,8 +16,8 @@ export const file1: File = {
   showPath: true,
 };
 
-const FOLDER2 = 'code/vscode';
-const SUBFOLDER2 = 'some_ext';
+export const FOLDER2 = 'code/vscode';
+export const SUBFOLDER2 = 'some_ext';
 export const file2: File = {
   file: `${ROOT_TREE}/${FOLDER2}/${SUBFOLDER2}/Some Extension.${EXT}`,
   isSelected: false,
@@ -27,8 +27,8 @@ export const file2: File = {
   showPath: true,
 };
 
-const FOLDER3 = 'flutter';
-const SUBFOLDER3 = 'todo';
+export const FOLDER3 = 'flutter';
+export const SUBFOLDER3 = 'todo';
 export const file3: File = {
   file: `${ROOT_TREE}/${FOLDER3}/${SUBFOLDER3}/Todo List.${EXT}`,
   isSelected: false,
@@ -38,8 +38,8 @@ export const file3: File = {
   showPath: true,
 };
 
-const FOLDER4 = 'react';
-const SUBFOLDER4 = 'router';
+export const FOLDER4 = 'react';
+export const SUBFOLDER4 = 'router';
 export const file4: File = {
   file: `${ROOT_TREE}/${FOLDER4}/${SUBFOLDER4}/React Router.${EXT}`,
   isSelected: false,

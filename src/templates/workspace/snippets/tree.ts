@@ -15,7 +15,18 @@ export const tree = (
   renderVars: RenderVars,
   state: WorkspaceState
 ): string => {
-  const { files, folderPath, sub } = branch;
+  const { files, folderPath, isRoot, sub } = branch;
+
+  // If this is the root level, and there are no workspaces in the folder,
+  // ignore the default folder and just show the subfolders
+  if (isRoot && files.length < 1 && sub.length > 0) {
+    return sub
+      .map((child) => {
+        return tree(child, depth, renderVars, state);
+      })
+      .join('');
+  }
+
   const isClosed = state.closedFolders.includes(folderPath);
   let children: TreeChildren = [];
 
