@@ -16,6 +16,7 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
   const folder: FileTree = {
     files: [],
     folderPath: FOLDER_PATH,
+    isRoot: false,
     label: ROOT_FOLDER,
     sub: [],
   };

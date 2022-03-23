@@ -6,6 +6,7 @@ import { Files } from '../WorkspaceViewProvider.interface';
 export interface FileTree {
   files: Files;
   folderPath: string; // Used to help ID closed folders
+  isRoot: boolean;
   label: string;
   sub: FileTree[];
 }
@@ -21,6 +22,7 @@ export const getFileTree = (files: Files): FileTree => {
   let tree: FileTree = {
     files: [],
     folderPath: rootFolder,
+    isRoot: true,
     label: rootFolder,
     sub: [],
   };
@@ -36,13 +38,11 @@ export const getFileTree = (files: Files): FileTree => {
     const parts = path.split(pathLib.sep);
     let folderPath = '';
 
-    if (parts.length === 1) {
-      // Handle root level workspaces for people who store workspaces wthout subfolders
+    if (parts.length === 1 && !file.path) {
+      // Workspace files in the folder, not in subs
       rootFiles.push({ ...file });
     } else {
-      // Get whole tree. Greater than 1 so that we don't display the very last subfolders in the tree,
-      // their workspace files are stored in files[] as a flat list to avoid to much noise from folders with just 1 workspace in
-      while (parts.length > 1) {
+      while (parts.length) {
         let part = parts.shift();
 
         if (part) {
@@ -52,6 +52,7 @@ export const getFileTree = (files: Files): FileTree => {
           const newFolder: FileTree = folderList[folderPath] ?? {
             files: [],
             folderPath,
+            isRoot: false,
             label: part,
             sub: [],
           };
@@ -61,12 +62,11 @@ export const getFileTree = (files: Files): FileTree => {
             branch.push(newFolder);
           }
 
-          // Ignore final folders and just add workspaces as files, then reset branch to root
-          if (parts.length < 2) {
+          if (parts.length) {
+            branch = newFolder.sub;
+          } else {
             newFolder.files.push({ ...file });
             branch = rootBranch;
-          } else {
-            branch = newFolder.sub;
           }
         }
       }

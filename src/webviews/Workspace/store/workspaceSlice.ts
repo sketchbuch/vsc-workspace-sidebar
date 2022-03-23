@@ -17,6 +17,7 @@ import { toggleFolderStateBulk } from './toggleFolderStateBulk';
 export const defaultFileTree: FileTree = {
   files: [],
   folderPath: '',
+  isRoot: true,
   label: '',
   sub: [],
 };
