@@ -2,6 +2,10 @@
   position: relative;
 }
 
+.list__styled-list--tree .list__text {
+  padding-left: 18px;
+}
+
 .list_branch-indent-box {
   display: inline-flex;
   flex-direction: row;
