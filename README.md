@@ -20,7 +20,8 @@ A search box is provided to allow you to search for a specific Workspace.
 Setting               | Description                                                                                                                                                                                                    | Default Value                        | Type         
 --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | -------------
 Actions               | What is the default action for clicking on a workspace. By default, clicking opens the workspace in the current window and the icon click in a new window. You can use this setting to reverse this behaviour. | Current Window                       | Dropdown List
-Clean Labels          | Should workspace labels be converted to Title Case? If not their filename will be used as-is.                                                                                                                  | true                                 | Boolean      
+Clean Labels          | Should workspace labels be converted to Title Case? If not their filename will be used as-is.                                                                                                                  | True                                 | Boolean      
+Condense File Tree | Reduce visual noise by removing sufolder with only one workspace in. These workspace files will then be shown in their parent folder.                                                                                                                             | True                                | Boolean      
 Depth                 | The depth of subfolders to include in the search.                                                                                                                                                              | 0                                    | Number 0-25  
 Folder                | The folder to look for workspace files in. If Folder is empty, your home folder will be used. **~/** will also be replaced with your home folder.                                                              | None (your home folder will be used) | String       
 Search minimum        | The minimum number of workspaces required before the search box is displayed. 0 Will always display the search box.                                                                                            | 15                                   | Number 0-100 
@@ -33,14 +34,9 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-#### [1.4.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.8...1.4.0) (2022-03-21)
+#### [1.4.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.4.0...1.4.1) (2022-03-24)
 
-- Workspaces can now be displayed as a file tree that can be collapsed/expanded instead of the default list of workspaces. Resolves [#23](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/23)
-- A new option has been added to clean labels (convert to title case) or leave them as-is (like the filename). Resolves [#42](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/42)
-- If no workspace is open, any folder(s) that you open will be displayed in the sidebar and you can also save them as a new workspace. Resolves [#30](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/30)
-- Refactor/restructure of code
-- Additional unit tests
-- @vscode/webview-ui-toolkit is now used for buttons. Search box still needs converting.
-- @vscode/codicons is now used for icons, where possible.
-- Icons updated
-- Fixed tooltips for the icon an dthe workspace if you make new window the default click action.
+- Fixes an issue that workspaces in the root directory were not displayed in tree view. Resolves [#47](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/47)
+- Tree generation has been changed so that sorting of sub folders and files is possible. In 1.4.0 folders always came before workspaces.
+- A config setting has been added to decide if the tree should be condensed or not (default is true). Condensing removes subfolders if they are no further subfolders and there is only one workspace file within it. The Workspace is then displayed in their parent folder to reduce visual noise if you only ever have one workspace per folder.
+- Added more tests, refactored tests and improved file/file tree mocks
