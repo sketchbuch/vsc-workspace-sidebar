@@ -8,6 +8,7 @@ import { fetch, fetchFulfilled, fetchPending, fetchRejected } from './fetch';
 import { invalid } from './invalid';
 import { list } from './list';
 import { loading } from './loading';
+import { setFileTree } from './setFileTree';
 import { setPersistedState } from './setPersistedState';
 import { setSearchTerm } from './setSearchTerm';
 import { setVisibleFiles } from './setVisibleFiles';
@@ -48,6 +49,7 @@ export const workspaceSlice = createSlice({
     invalid,
     list,
     loading,
+    setFileTree,
     setPersistedState,
     setSearchTerm,
     setVisibleFiles,

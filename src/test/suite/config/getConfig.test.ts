@@ -4,6 +4,7 @@ import { workspace, WorkspaceConfiguration } from 'vscode';
 import {
   getActionsConfig,
   getCleanLabelsConfig,
+  getCondenseFileTreeConfig,
   getDepthConfig,
   getFolderConfig,
   getSearchMinConfig,
@@ -14,6 +15,7 @@ import {
   ConfigActions,
   ConfigShowPaths,
   CONFIG_CLEAN_LABELS,
+  CONFIG_CONDENSE_FILETREE,
   CONFIG_DEPTH,
   CONFIG_FOLDER,
   CONFIG_SEARCH_MINIMUM,
@@ -65,5 +67,9 @@ suite('Config > getConfig:', () => {
 
   test('getShowTreeConfig() returns the default if no config value is set', () => {
     expect(getShowTreeConfig()).to.equal(CONFIG_SHOW_HIERARCHY);
+  });
+
+  test('getCondenseFileTreeConfig() returns the default if no config value is set', () => {
+    expect(getCondenseFileTreeConfig()).to.equal(CONFIG_CONDENSE_FILETREE);
   });
 });

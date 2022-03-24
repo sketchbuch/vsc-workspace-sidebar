@@ -160,3 +160,57 @@ export const mockFileTreeSearched: FileTree = {
     },
   ],
 };
+
+export const mockCondensedFileTree: FileTree = {
+  files: [],
+  folderPath: ROOT_FOLDER,
+  isRoot: true,
+  label: ROOT_FOLDER,
+  sub: [
+    {
+      files: [],
+      folderPath: FOLDER1,
+      isRoot: false,
+      label: FOLDER1,
+      sub: [
+        {
+          files: [{ ...mockVisibleFiles[0] }, { ...mockVisibleFiles[1] }],
+          folderPath: file1.path,
+          isRoot: false,
+          label: SUBFOLDER1,
+          sub: [],
+        },
+      ],
+    },
+    {
+      files: [{ ...mockVisibleFiles[2] }],
+      folderPath: FOLDER3,
+      isRoot: false,
+      label: FOLDER3,
+      sub: [],
+    },
+    {
+      files: [{ ...mockVisibleFiles[3] }],
+      folderPath: FOLDER4,
+      isRoot: false,
+      label: FOLDER4,
+      sub: [],
+    },
+  ],
+};
+
+export const mockCondensedFileTreeSearched: FileTree = {
+  files: [],
+  folderPath: ROOT_FOLDER,
+  isRoot: true,
+  label: ROOT_FOLDER,
+  sub: [
+    {
+      files: [{ ...mockVisibleFiles[3] }],
+      folderPath: FOLDER4,
+      isRoot: false,
+      label: FOLDER4,
+      sub: [],
+    },
+  ],
+};

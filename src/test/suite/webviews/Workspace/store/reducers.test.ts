@@ -18,6 +18,8 @@ import { toggleFolderState } from '../../../../../webviews/Workspace/store/toggl
 import { toggleFolderStateBulk } from '../../../../../webviews/Workspace/store/toggleFolderStateBulk';
 import {
   file4,
+  mockCondensedFileTree,
+  mockCondensedFileTreeSearched,
   mockConvertedFiles,
   mockFileList,
   mockFileTree,
@@ -33,17 +35,20 @@ suite('Webviews > Workspace > Store > reducers:', () => {
   const FOLDER = 'vsc';
 
   let cleanStub: sinon.SinonStub;
+  let condenseStub: sinon.SinonStub;
   let pathsStub: sinon.SinonStub;
   let treeStub: sinon.SinonStub;
 
   setup(() => {
     cleanStub = sinon.stub(configs, 'getCleanLabelsConfig').callsFake(() => true);
+    condenseStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => false);
     pathsStub = sinon.stub(configs, 'getShowPathsConfig').callsFake(() => ConfigShowPaths.NEVER);
     treeStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_TREE);
   });
 
   teardown(() => {
     cleanStub.restore();
+    condenseStub.restore();
     pathsStub.restore();
     treeStub.restore();
   });
@@ -211,6 +216,33 @@ suite('Webviews > Workspace > Store > reducers:', () => {
     expect(state).to.eql(expectedState);
   });
 
+  test('list() - Valid folder condensed', () => {
+    condenseStub.callsFake(() => true);
+
+    const state = getMockState({
+      convertedFiles: [],
+      files: false,
+      isFolderInvalid: false,
+      state: 'loading',
+      visibleFiles: [],
+    });
+    const expectedState = getMockState({
+      convertedFiles: mockConvertedFiles,
+      files: mockFileList,
+      fileTree: mockCondensedFileTree,
+      isFolderInvalid: false,
+      state: 'list',
+      visibleFiles: mockVisibleFiles,
+    });
+
+    expect(state).not.to.eql(expectedState);
+    list(state, {
+      payload: mockFileList,
+      type: 'ws/list',
+    });
+    expect(state).to.eql(expectedState);
+  });
+
   test('loading()', () => {
     const state = getMockState({
       error: 'FETCH',
@@ -284,6 +316,28 @@ suite('Webviews > Workspace > Store > reducers:', () => {
     expect(state).to.eql(expectedState);
   });
 
+  test('setSearchTerm() - Valid folder condensed', () => {
+    condenseStub.callsFake(() => true);
+
+    const state = getMockState({
+      convertedFiles: mockConvertedFiles,
+      files: mockFileList,
+      search: '',
+      visibleFiles: mockVisibleFiles,
+    });
+    const expectedState = getMockState({
+      convertedFiles: mockConvertedFiles,
+      fileTree: mockCondensedFileTreeSearched,
+      files: mockFileList,
+      search: SEARCH_TERM,
+      visibleFiles: [{ ...file4, showPath: false }],
+    });
+
+    expect(state).not.to.eql(expectedState);
+    setSearchTerm(state, { payload: SEARCH_TERM, type: 'ws/setSearchTerm' });
+    expect(state).to.eql(expectedState);
+  });
+
   test('setVisibleFiles() - With files', () => {
     const state = getMockState({
       convertedFiles: mockConvertedFiles,
@@ -293,6 +347,25 @@ suite('Webviews > Workspace > Store > reducers:', () => {
       convertedFiles: mockConvertedFiles,
       files: mockFileList,
       fileTree: mockFileTree,
+      visibleFiles: mockVisibleFiles,
+    });
+
+    expect(state).not.to.eql(expectedState);
+    setVisibleFiles(state);
+    expect(state).to.eql(expectedState);
+  });
+
+  test('setVisibleFiles() - With files condensed', () => {
+    condenseStub.callsFake(() => true);
+
+    const state = getMockState({
+      convertedFiles: mockConvertedFiles,
+      files: mockFileList,
+    });
+    const expectedState = getMockState({
+      convertedFiles: mockConvertedFiles,
+      files: mockFileList,
+      fileTree: mockCondensedFileTree,
       visibleFiles: mockVisibleFiles,
     });
 

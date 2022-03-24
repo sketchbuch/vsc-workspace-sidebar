@@ -36,6 +36,7 @@ import {
 const { executeCommand } = vscode.commands;
 const {
   list,
+  setFileTree,
   setPersistedState,
   setSearchTerm,
   setVisibleFiles,
@@ -137,13 +138,17 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     store.dispatch(toggleFolderStateBulk(type));
   }
 
+  public updateFileTree() {
+    store.dispatch(setVisibleFiles());
+  }
+
   public updateSort() {
     const sort = this._globalState.get<SortIds>(EXT_SORT) ?? 'ascending';
     store.dispatch(setPersistedState({ sort }));
   }
 
   public updateVisibleFiles() {
-    store.dispatch(setVisibleFiles());
+    store.dispatch(setFileTree());
   }
 
   public resolveWebviewView(webviewView: vscode.WebviewView) {

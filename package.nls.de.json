@@ -4,6 +4,7 @@
   "config.workspaceActions.description": "Welche Aktion sollte beim Anklicken auf einen Arbeitsbereich ausgeführt werden?",
   "config.workspaceActions.new-window": "Im neuen Fenster öffnen, Iconklicks werden im aktuellen Fenster geöffnet.",
   "config.workspaceCleanLabels.description": "Pfade in Title Case formattieren. Deaktivieren Sie die Option, um die Namen der Arbeitsbereichsdateien unverändert zu lassen.",
+  "config.workspaceCondenseFileTree.description": "Komprimieren Sie der Ordnerhierarchie, um visuelles Störunegn von Ordnern zu reduzieren (siehe Readme).",
   "config.workspaceFolder.description": "Der Ordnerpfad, in dem nach Arbeitsbereichen gesucht werden soll. Falls leer, wird Ihr Home-Ordner benutzt. '~' wird auch unter Windows durch Ihren Home-Ordner ersetzt.",
   "config.workspaceFolderDepth.description": "Wie weit Unterordner auch durchsucht werden. -1 für keine Einschrängung",
   "config.workspaceSearchMinimum.description": "Die Mindestanzahl von Arbeitsbereichen, die für die Anzeige des Suchfeldes erforderlich ist. Bei 0 wird das Suchfeld immer anzeigt. Skala: 0-100",

@@ -114,6 +114,12 @@
           "scope": "application",
           "type": "boolean"
         },
+        "workspaceSidebar.condenseFileTree": {
+          "default": true,
+          "description": "%config.workspaceCondenseFileTree.description%",
+          "scope": "application",
+          "type": "boolean"
+        },
         "workspaceSidebar.showPaths": {
           "default": "As needed",
           "description": "%config.workspaceShowPath.description%",

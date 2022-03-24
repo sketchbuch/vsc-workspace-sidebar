@@ -1,14 +1,16 @@
 import * as pathLib from 'path';
-import { getFolderConfig } from '../../../config/getConfig';
+import { getCondenseFileTreeConfig, getFolderConfig } from '../../../config/getConfig';
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment';
 import { Files } from '../WorkspaceViewProvider.interface';
+
+type FileTrees = FileTree[];
 
 export interface FileTree {
   files: Files;
   folderPath: string; // Used to help ID closed folders
   isRoot: boolean;
   label: string;
-  sub: FileTree[];
+  sub: FileTrees;
 }
 
 type FolderList = {
@@ -16,8 +18,9 @@ type FolderList = {
 };
 
 export const getFileTree = (files: Files): FileTree => {
-  const folder = getFolderConfig();
-  const rootFolder = getLastPathSegment(folder);
+  const condense = getCondenseFileTreeConfig();
+  const configFolder = getFolderConfig();
+  const rootFolder = getLastPathSegment(configFolder);
 
   let tree: FileTree = {
     files: [],
@@ -39,7 +42,7 @@ export const getFileTree = (files: Files): FileTree => {
     let folderPath = '';
 
     if (parts.length === 1 && !file.path) {
-      // Workspace files in the folder, not in subs
+      // Workspace files in the config folder root, not in subfolders
       rootFiles.push({ ...file });
     } else {
       while (parts.length) {
@@ -49,7 +52,7 @@ export const getFileTree = (files: Files): FileTree => {
           folderPath = folderPath ? `${folderPath}${pathLib.sep}${part}` : part;
 
           // Either the existing folder, or a new one
-          const newFolder: FileTree = folderList[folderPath] ?? {
+          const folder: FileTree = folderList[folderPath] ?? {
             files: [],
             folderPath,
             isRoot: false,
@@ -58,20 +61,47 @@ export const getFileTree = (files: Files): FileTree => {
           };
 
           if (folderList[folderPath] === undefined) {
-            folderList[folderPath] = newFolder; // Reference for future iterations
-            branch.push(newFolder);
+            folderList[folderPath] = folder; // Reference for future iterations
+            branch.push(folder);
           }
 
           if (parts.length) {
-            branch = newFolder.sub;
+            branch = folder.sub;
           } else {
-            newFolder.files.push({ ...file });
+            folder.files.push({ ...file });
             branch = rootBranch;
           }
         }
       }
     }
   });
+
+  return condense === true ? condenseTree(tree) : tree;
+};
+
+/**
+ * This will restructure the tree. If a non-root folder has no subfolders,
+ * but has 1 file, this file will be added to the parent folder's files
+ * and the subfolder is removed from the tree.
+ *
+ * This can greatly reduce the visual clutter if you store your workspaces in the project folder
+ * and hav only one workspace in a folder.
+ */
+export const condenseTree = (tree: FileTree): FileTree => {
+  if (tree.sub.length > 0) {
+    tree.sub = tree.sub.reduce((newSubs: FileTrees, curSub: FileTree) => {
+      if (curSub.sub.length < 1 && !tree.isRoot) {
+        if (curSub.files.length === 1) {
+          tree.files = [...tree.files, ...curSub.files];
+
+          return newSubs;
+        }
+      }
+
+      newSubs.push(condenseTree(curSub));
+      return newSubs;
+    }, []);
+  }
 
   return tree;
 };

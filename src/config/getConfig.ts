@@ -3,6 +3,7 @@ import {
   ConfigActions,
   ConfigShowPaths,
   CONFIG_CLEAN_LABELS,
+  CONFIG_CONDENSE_FILETREE,
   CONFIG_DEPTH,
   CONFIG_FOLDER,
   CONFIG_SEARCH_MINIMUM,
@@ -17,6 +18,13 @@ export const getActionsConfig = (): string => {
 
 export const getCleanLabelsConfig = (): boolean => {
   return workspace.getConfiguration().get('workspaceSidebar.cleanLabels') ?? CONFIG_CLEAN_LABELS;
+};
+
+export const getCondenseFileTreeConfig = (): boolean => {
+  return (
+    workspace.getConfiguration().get('workspaceSidebar.condenseFileTree') ??
+    CONFIG_CONDENSE_FILETREE
+  );
 };
 
 export const getDepthConfig = (): number => {

@@ -39,17 +39,20 @@ suite('Webviews > registerWebviews()', () => {
   });
 
   suite('Configuration changes call refresh() correctly:', () => {
-    let wsPathsSpy: sinon.SinonSpy;
-    let wsSpy: sinon.SinonSpy;
+    let refreshSpy: sinon.SinonSpy;
+    let updateTreeSpy: sinon.SinonSpy;
+    let updateVisibleSpy: sinon.SinonSpy;
 
     setup(() => {
-      wsPathsSpy = sinon.spy(ws, 'updateVisibleFiles');
-      wsSpy = sinon.spy(ws, 'refresh');
+      refreshSpy = sinon.spy(ws, 'refresh');
+      updateTreeSpy = sinon.spy(ws, 'updateFileTree');
+      updateVisibleSpy = sinon.spy(ws, 'updateVisibleFiles');
     });
 
     teardown(() => {
-      wsPathsSpy.restore();
-      wsSpy.restore();
+      refreshSpy.restore();
+      updateTreeSpy.restore();
+      updateVisibleSpy.restore();
     });
 
     test('workspaceSidebar.depth', () => {
@@ -64,8 +67,8 @@ suite('Webviews > registerWebviews()', () => {
       } as vscode.ConfigurationChangeEvent);
 
       sinon.assert.callCount(affectsConfigSpy, 1);
-      sinon.assert.callCount(wsSpy, 1);
-      expect(wsSpy.getCalls()[0].args[0]).to.equal(undefined);
+      sinon.assert.callCount(refreshSpy, 1);
+      expect(refreshSpy.getCalls()[0].args[0]).to.equal(undefined);
     });
 
     test('workspaceSidebar.folder', () => {
@@ -80,8 +83,8 @@ suite('Webviews > registerWebviews()', () => {
       } as vscode.ConfigurationChangeEvent);
 
       sinon.assert.callCount(affectsConfigSpy, 2);
-      sinon.assert.callCount(wsSpy, 1);
-      expect(wsSpy.getCalls()[0].args[0]).to.equal(undefined);
+      sinon.assert.callCount(refreshSpy, 1);
+      expect(refreshSpy.getCalls()[0].args[0]).to.equal(undefined);
     });
 
     test('workspaceSidebar.searchMinimum', () => {
@@ -96,8 +99,8 @@ suite('Webviews > registerWebviews()', () => {
       } as vscode.ConfigurationChangeEvent);
 
       sinon.assert.callCount(affectsConfigSpy, 4);
-      sinon.assert.callCount(wsSpy, 1);
-      expect(wsSpy.getCalls()[0].args[0]).to.equal(true);
+      sinon.assert.callCount(refreshSpy, 1);
+      expect(refreshSpy.getCalls()[0].args[0]).to.equal(true);
     });
 
     test('workspaceSidebar.showPaths', () => {
@@ -112,8 +115,22 @@ suite('Webviews > registerWebviews()', () => {
       } as vscode.ConfigurationChangeEvent);
 
       sinon.assert.callCount(affectsConfigSpy, 3);
-      sinon.assert.callCount(wsPathsSpy, 1);
-      expect(wsPathsSpy.getCalls()[0].args[0]).to.equal(undefined);
+      sinon.assert.callCount(updateVisibleSpy, 1);
+    });
+
+    test('workspaceSidebar.showFolderHierarchy', () => {
+      const affectsConfigSpy = sinon.spy(
+        (configPath: string) => configPath === 'workspaceSidebar.showFolderHierarchy'
+      );
+
+      registerWebviews(mockContext, ws);
+      const eventCallback = configStub.getCalls()[0].args[0];
+      eventCallback({
+        affectsConfiguration: affectsConfigSpy,
+      } as vscode.ConfigurationChangeEvent);
+
+      sinon.assert.callCount(affectsConfigSpy, 5);
+      sinon.assert.callCount(updateVisibleSpy, 1);
     });
 
     test('workspaceSidebar.actions', () => {
@@ -128,8 +145,8 @@ suite('Webviews > registerWebviews()', () => {
       } as vscode.ConfigurationChangeEvent);
 
       sinon.assert.callCount(affectsConfigSpy, 6);
-      sinon.assert.callCount(wsSpy, 1);
-      expect(wsSpy.getCalls()[0].args[0]).to.equal(true);
+      sinon.assert.callCount(refreshSpy, 1);
+      expect(refreshSpy.getCalls()[0].args[0]).to.equal(true);
     });
 
     test('workspaceSidebar.cleanLabels', () => {
@@ -144,14 +161,29 @@ suite('Webviews > registerWebviews()', () => {
       } as vscode.ConfigurationChangeEvent);
 
       sinon.assert.callCount(affectsConfigSpy, 7);
-      sinon.assert.callCount(wsSpy, 1);
-      expect(wsSpy.getCalls()[0].args[0]).to.equal(undefined);
+      sinon.assert.callCount(refreshSpy, 1);
+      expect(refreshSpy.getCalls()[0].args[0]).to.equal(undefined);
+    });
+
+    test('workspaceSidebar.condenseFileTree', () => {
+      const affectsConfigSpy = sinon.spy(
+        (configPath: string) => configPath === 'workspaceSidebar.condenseFileTree'
+      );
+
+      registerWebviews(mockContext, ws);
+      const eventCallback = configStub.getCalls()[0].args[0];
+      eventCallback({
+        affectsConfiguration: affectsConfigSpy,
+      } as vscode.ConfigurationChangeEvent);
+
+      sinon.assert.callCount(affectsConfigSpy, 8);
+      sinon.assert.callCount(updateTreeSpy, 1);
     });
   });
 
   suite('Creating a workspace file:', () => {
     test('Calls refresh() if a file is a code-workspace file', () => {
-      const wsSpy = sinon.spy(ws, 'refresh');
+      const refreshSpy = sinon.spy(ws, 'refresh');
       const createSpy = sinon.spy(vscode.workspace, 'onDidCreateFiles');
 
       registerWebviews(mockContext, ws);
@@ -160,14 +192,14 @@ suite('Webviews > registerWebviews()', () => {
         files: [getMockUri(FS_WS_EXT)],
       } as vscode.FileCreateEvent);
 
-      sinon.assert.callCount(wsSpy, 1);
-      expect(wsSpy.getCalls()[0].args[0]).to.equal(undefined);
+      sinon.assert.callCount(refreshSpy, 1);
+      expect(refreshSpy.getCalls()[0].args[0]).to.equal(undefined);
 
       createSpy.restore();
     });
 
     test('Does NOT call refresh() if no file is a code-workspace file', () => {
-      const wsSpy = sinon.spy(ws, 'refresh');
+      const refreshSpy = sinon.spy(ws, 'refresh');
       const createSpy = sinon.spy(vscode.workspace, 'onDidCreateFiles');
 
       registerWebviews(mockContext, ws);
@@ -176,7 +208,7 @@ suite('Webviews > registerWebviews()', () => {
         files: [getMockUri()],
       } as vscode.FileCreateEvent);
 
-      sinon.assert.callCount(wsSpy, 0);
+      sinon.assert.callCount(refreshSpy, 0);
 
       createSpy.restore();
     });
