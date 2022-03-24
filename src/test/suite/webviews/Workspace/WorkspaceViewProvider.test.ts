@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import sinon from 'sinon';
 import * as vscode from 'vscode';
 import { store } from '../../../../store/redux';
@@ -6,46 +7,95 @@ import { WorkspaceViewProvider } from '../../../../webviews/Workspace/WorkspaceV
 import { getMockContext } from '../../../mocks/mockContext';
 import { getMockWebviewView } from '../../../mocks/mockWebview';
 
+// TODO - Try and spy on the action creators.
 suite('Webviews > Workspace > WorkspaceViewProvider():', () => {
   let mockContext = getMockContext();
-  let ws: WorkspaceViewProvider;
+  let dispatchSpy: sinon.SinonSpy;
   let getHtmlSpy: sinon.SinonSpy;
-  let callCount = 3;
+  let stateSpy: sinon.SinonStub;
+  let ws: WorkspaceViewProvider;
 
   setup(() => {
     mockContext = getMockContext();
+    dispatchSpy = sinon.spy(store, 'dispatch');
     getHtmlSpy = sinon.spy(templates, 'getHtml');
+    stateSpy = sinon.stub(mockContext.globalState, 'get');
     ws = new WorkspaceViewProvider(mockContext.extensionUri, mockContext.globalState);
   });
 
   teardown(() => {
+    dispatchSpy.restore();
     getHtmlSpy.restore();
+    stateSpy.restore();
   });
 
   test('refresh() - Rerender', () => {
     ws.resolveWebviewView(getMockWebviewView());
     ws.refresh(true);
 
-    sinon.assert.callCount(getHtmlSpy, callCount); // 2 from resolveWebviewView, 1 from refresh
-    callCount += 3;
+    sinon.assert.called(dispatchSpy);
+    sinon.assert.called(getHtmlSpy);
   });
 
   test('refresh() - Refetch', () => {
-    const dispatchSpy = sinon.spy(store, 'dispatch');
-    const execSpy = sinon.spy(vscode.commands, 'executeCommand');
-    const gsSpy = sinon.spy(mockContext.globalState, 'update');
+    const execCmdSpy = sinon.spy(vscode.commands, 'executeCommand');
 
     ws.resolveWebviewView(getMockWebviewView());
     ws.refresh();
 
-    sinon.assert.callCount(dispatchSpy, 3); // 1 from resolveWebviewView, 1 from updateSort, 1 from refresh
-    sinon.assert.callCount(execSpy, 1);
-    sinon.assert.callCount(getHtmlSpy, callCount); // 2 from resolveWebviewView, 1 from refresh
-    sinon.assert.callCount(gsSpy, 1);
+    sinon.assert.called(dispatchSpy);
+    sinon.assert.called(getHtmlSpy);
+    sinon.assert.callCount(execCmdSpy, 1);
 
-    dispatchSpy.restore();
-    execSpy.restore();
-    gsSpy.restore();
-    callCount += 6;
+    execCmdSpy.restore();
+  });
+
+  test('updateFileTree()', () => {
+    ws.resolveWebviewView(getMockWebviewView());
+    ws.updateFileTree();
+
+    sinon.assert.called(dispatchSpy);
+    sinon.assert.called(getHtmlSpy);
+  });
+
+  test('updateSort()', () => {
+    stateSpy.callsFake(() => 'descending');
+
+    expect(store.getState().ws.sort).to.equal('ascending');
+
+    ws.resolveWebviewView(getMockWebviewView());
+    ws.updateSort();
+
+    sinon.assert.called(dispatchSpy);
+    sinon.assert.called(getHtmlSpy);
+
+    expect(store.getState().ws.sort).to.equal('descending');
+  });
+
+  test('updateVisibleFiles()', () => {
+    //expect(store.getState().ws.fileTree).to.eql({ ...defaultFileTree });
+
+    ws.resolveWebviewView(getMockWebviewView());
+    ws.updateVisibleFiles();
+
+    sinon.assert.called(dispatchSpy);
+    sinon.assert.called(getHtmlSpy);
+
+    // TODO - some how change the file tree
+  });
+
+  test('toggleAllFolders()', () => {
+    ws.resolveWebviewView(getMockWebviewView());
+    ws.toggleAllFolders('collapse');
+
+    sinon.assert.called(dispatchSpy);
+    sinon.assert.called(getHtmlSpy);
+  });
+
+  test('resolveWebviewView()', () => {
+    ws.resolveWebviewView(getMockWebviewView());
+
+    sinon.assert.called(dispatchSpy);
+    sinon.assert.called(getHtmlSpy);
   });
 });

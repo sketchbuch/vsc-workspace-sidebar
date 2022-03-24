@@ -139,7 +139,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   }
 
   public updateFileTree() {
-    store.dispatch(setVisibleFiles());
+    store.dispatch(setFileTree());
   }
 
   public updateSort() {
@@ -148,7 +148,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   }
 
   public updateVisibleFiles() {
-    store.dispatch(setFileTree());
+    store.dispatch(setVisibleFiles());
   }
 
   public resolveWebviewView(webviewView: vscode.WebviewView) {
