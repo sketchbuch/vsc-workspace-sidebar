@@ -85,7 +85,7 @@ export const getFileTree = (files: Files): FileTree => {
  * and the subfolder is removed from the tree.
  *
  * This can greatly reduce the visual clutter if you store your workspaces in the project folder
- * and hav only one workspace in a folder.
+ * and have only one workspace in a folder.
  */
 export const condenseTree = (tree: FileTree): FileTree => {
   if (tree.sub.length > 0) {

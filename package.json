@@ -147,14 +147,6 @@
       }
     ],
     "menus": {
-      "view/item/context": [
-        {
-          "command": "vsc-workspace-sidebar-open-new-win",
-          "group": "inline",
-          "name": "TESTTEST",
-          "when": "view == vsc-workspace-sidebar-webview-workspace && viewItem == vsc-workspace-sidebar-list-item"
-        }
-      ],
       "view/title": [
         {
           "command": "vsc-workspace-sidebar-collapse-all",
