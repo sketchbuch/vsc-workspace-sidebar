@@ -214,3 +214,67 @@ export const mockCondensedFileTreeSearched: FileTree = {
     },
   ],
 };
+
+export const mockCompactableFileTree: FileTree = {
+  files: [],
+  folderPath: ROOT_FOLDER,
+  isRoot: true,
+  label: ROOT_FOLDER,
+  sub: [
+    {
+      files: [],
+      folderPath: FOLDER1,
+      isRoot: false,
+      label: FOLDER1,
+      sub: [
+        {
+          files: [],
+          folderPath: file1.path,
+          isRoot: false,
+          label: SUBFOLDER1,
+          sub: [
+            {
+              files: [],
+              folderPath: `${FOLDER1}/${SUBFOLDER1}/another_folder`,
+              isRoot: false,
+              label: 'another_folder',
+              sub: [
+                {
+                  files: [{ ...mockVisibleFiles[1] }],
+                  folderPath: file2.path,
+                  isRoot: false,
+                  label: SUBFOLDER2,
+                  sub: [],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+export const mockCompactedFileTree: FileTree = {
+  files: [],
+  folderPath: ROOT_FOLDER,
+  isRoot: true,
+  label: ROOT_FOLDER,
+  sub: [
+    {
+      files: [],
+      folderPath: `${FOLDER1}/${SUBFOLDER1}/another_folder`,
+      isRoot: false,
+      label: `${FOLDER1}/${SUBFOLDER1}/another_folder`,
+      sub: [
+        {
+          files: [{ ...mockVisibleFiles[1] }],
+          folderPath: file2.path,
+          isRoot: false,
+          label: SUBFOLDER2,
+          sub: [],
+        },
+      ],
+    },
+  ],
+};

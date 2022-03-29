@@ -2,8 +2,9 @@ import * as pathLib from 'path';
 import { getCondenseFileTreeConfig, getFolderConfig } from '../../../config/getConfig';
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment';
 import { Files } from '../WorkspaceViewProvider.interface';
+import { condenseTree } from './condenseTree';
 
-type FileTrees = FileTree[];
+export type FileTrees = FileTree[];
 
 export interface FileTree {
   files: Files;
@@ -77,31 +78,4 @@ export const getFileTree = (files: Files): FileTree => {
   });
 
   return condense === true ? condenseTree(tree) : tree;
-};
-
-/**
- * This will restructure the tree. If a non-root folder has no subfolders,
- * but has 1 file, this file will be added to the parent folder's files
- * and the subfolder is removed from the tree.
- *
- * This can greatly reduce the visual clutter if you store your workspaces in the project folder
- * and have only one workspace in a folder.
- */
-export const condenseTree = (tree: FileTree): FileTree => {
-  if (tree.sub.length > 0) {
-    tree.sub = tree.sub.reduce((newSubs: FileTrees, curSub: FileTree) => {
-      if (curSub.sub.length < 1 && !tree.isRoot) {
-        if (curSub.files.length === 1) {
-          tree.files = [...tree.files, ...curSub.files];
-
-          return newSubs;
-        }
-      }
-
-      newSubs.push(condenseTree(curSub));
-      return newSubs;
-    }, []);
-  }
-
-  return tree;
 };

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as configs from '../../../../../config/getConfig';
-import * as ft from '../../../../../webviews/Workspace/helpers/getFileTree';
+import * as condense from '../../../../../webviews/Workspace/helpers/condenseTree';
 import { getFileTree } from '../../../../../webviews/Workspace/helpers/getFileTree';
 import {
   mockCondensedFileTree,
@@ -11,19 +11,19 @@ import {
 } from '../../../../mocks/mockFileData';
 
 suite('Webviews > Workspace > Helpers > getFileTree():', () => {
-  let condenseStub: sinon.SinonStub;
-  let ftSpy: sinon.SinonSpy;
+  let condenseConfigStub: sinon.SinonStub;
+  let condenseSpy: sinon.SinonSpy;
   let treeStub: sinon.SinonStub;
 
   setup(() => {
-    condenseStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => false);
-    ftSpy = sinon.spy(ft, 'condenseTree');
+    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => false);
+    condenseSpy = sinon.spy(condense, 'condenseTree');
     treeStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_FOLDER);
   });
 
   teardown(() => {
-    condenseStub.restore();
-    ftSpy.restore();
+    condenseConfigStub.restore();
+    condenseSpy.restore();
     treeStub.restore();
   });
 
@@ -31,15 +31,15 @@ suite('Webviews > Workspace > Helpers > getFileTree():', () => {
     const result = getFileTree(mockVisibleFiles);
     expect(result).to.eql(mockFileTree);
 
-    sinon.assert.notCalled(ftSpy);
+    sinon.assert.notCalled(condenseSpy);
   });
 
   test('Returns the expected condensed filetree', () => {
-    condenseStub.callsFake(() => true);
+    condenseConfigStub.callsFake(() => true);
 
     const result = getFileTree(mockVisibleFiles);
     expect(result).to.eql(mockCondensedFileTree);
 
-    sinon.assert.callCount(ftSpy, 5);
+    sinon.assert.callCount(condenseSpy, 5);
   });
 });
