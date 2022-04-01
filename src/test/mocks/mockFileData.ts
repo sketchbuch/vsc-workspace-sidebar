@@ -52,7 +52,15 @@ export const file4: File = {
 };
 
 export const getMockFileList = () => [file1.file, file2.file, file3.file, file4.file];
-export const getMockFolderList = (): string[] => [FOLDER1, FOLDER2, FOLDER3, FOLDER4];
+export const getMockFolderList = (): string[] => [
+  FOLDER1,
+  FOLDER2,
+  file2.path,
+  FOLDER3,
+  file3.path,
+  FOLDER4,
+  file4.path,
+];
 export const getMockVisibleFiles = (): Files => [
   { ...file1, showPath: false },
   { ...file2, showPath: false },

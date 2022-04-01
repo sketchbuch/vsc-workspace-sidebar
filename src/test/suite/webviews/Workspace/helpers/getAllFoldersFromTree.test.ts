@@ -25,6 +25,8 @@ suite('Webviews > Workspace > Helpers > getAllFoldersFromTree():', () => {
   test('Returns expected folder list', () => {
     const tree = getMockFileTree('normal');
     const result = getAllFoldersFromTree(tree);
-    expect(result).to.eql(getMockFolderList());
+    const expected = getMockFolderList();
+
+    expect(result).to.eql(expected);
   });
 });
