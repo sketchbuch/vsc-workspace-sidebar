@@ -1,18 +1,37 @@
 import { expect } from 'chai';
+import * as sinon from 'sinon';
 import {
   fetchFulfilled,
   fetchPending,
   fetchRejected,
 } from '../../../../../webviews/Workspace/store/fetch';
+import * as configs from '../../../../../config/getConfig';
 import {
-  mockConvertedFiles,
-  mockFileList,
-  mockFileTree,
-  mockVisibleFiles,
+  getMockFileTree,
+  getMockVisibleFiles,
+  getMockConvertedFiles,
+  getMockFileList,
+  ROOT_FOLDER_PATH,
 } from '../../../../mocks/mockFileData';
 import { getMockState } from '../../../../mocks/mockState';
 
 suite('Webviews > Workspace > Store > fetch()', () => {
+  let condenseConfigStub: sinon.SinonStub;
+  let folderConfigStub: sinon.SinonStub;
+  let treeConfigStub: sinon.SinonStub;
+
+  setup(() => {
+    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => false);
+    folderConfigStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_FOLDER_PATH);
+    treeConfigStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => true);
+  });
+
+  teardown(() => {
+    condenseConfigStub.restore();
+    folderConfigStub.restore();
+    treeConfigStub.restore();
+  });
+
   test('Pending updates state as expected', () => {
     const state = getMockState({
       isFolderInvalid: true,
@@ -45,11 +64,11 @@ suite('Webviews > Workspace > Store > fetch()', () => {
 
   test('Fulfilled (invalid folder) updates state as expected', () => {
     const state = getMockState({
-      convertedFiles: mockConvertedFiles,
+      convertedFiles: getMockConvertedFiles(),
       files: false,
       isFolderInvalid: false,
       state: 'loading',
-      visibleFiles: mockVisibleFiles,
+      visibleFiles: getMockVisibleFiles(),
     });
     const expectedState = getMockState({
       convertedFiles: [],
@@ -77,18 +96,18 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       visibleFiles: [],
     });
     const expectedState = getMockState({
-      convertedFiles: mockConvertedFiles,
-      fileTree: mockFileTree,
-      files: mockFileList,
+      convertedFiles: getMockConvertedFiles(),
+      fileTree: getMockFileTree('normal'),
+      files: getMockFileList(),
       isFolderInvalid: false,
       state: 'list',
-      visibleFiles: mockVisibleFiles,
+      visibleFiles: getMockVisibleFiles(),
     });
 
     expect(state).not.to.eql(expectedState);
     fetchFulfilled(state, {
       meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-      payload: mockFileList,
+      payload: getMockFileList(),
       type: 'ws/list',
     });
     expect(state.visibleFiles).to.eql(expectedState.visibleFiles);

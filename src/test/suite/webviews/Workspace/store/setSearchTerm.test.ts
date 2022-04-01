@@ -4,33 +4,38 @@ import * as configs from '../../../../../config/getConfig';
 import { setSearchTerm } from '../../../../../webviews/Workspace/store/setSearchTerm';
 import {
   file4,
-  mockCondensedFileTreeSearched,
-  mockConvertedFiles,
-  mockFileList,
-  mockFileTree,
-  mockFileTreeSearched,
-  mockVisibleFiles,
+  getMockFileTree,
+  getMockConvertedFiles,
+  getMockFileList,
+  getMockVisibleFiles,
+  ROOT_FOLDER_PATH,
   SEARCH_TERM,
 } from '../../../../mocks/mockFileData';
 import { getMockState } from '../../../../mocks/mockState';
 
 suite('Webviews > Workspace > Store > setSearchTerm()', () => {
-  let condenseStub: sinon.SinonStub;
+  let condenseConfigStub: sinon.SinonStub;
+  let folderConfigStub: sinon.SinonStub;
+  let treeConfigStub: sinon.SinonStub;
 
   setup(() => {
-    condenseStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => false);
+    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => false);
+    folderConfigStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_FOLDER_PATH);
+    treeConfigStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => true);
   });
 
   teardown(() => {
-    condenseStub.restore();
+    condenseConfigStub.restore();
+    folderConfigStub.restore();
+    treeConfigStub.restore();
   });
 
   test('Invalid folder updates state as expected', () => {
     const state = getMockState({
       files: false,
-      fileTree: mockFileTree,
+      fileTree: getMockFileTree('normal'),
       search: '',
-      visibleFiles: mockVisibleFiles,
+      visibleFiles: getMockVisibleFiles(),
     });
     const expectedState = getMockState({
       search: SEARCH_TERM,
@@ -44,15 +49,15 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
 
   test('Valid folder updates state as expected', () => {
     const state = getMockState({
-      convertedFiles: mockConvertedFiles,
-      files: mockFileList,
+      convertedFiles: getMockConvertedFiles(),
+      files: getMockFileList(),
       search: '',
-      visibleFiles: mockVisibleFiles,
+      visibleFiles: getMockVisibleFiles(),
     });
     const expectedState = getMockState({
-      convertedFiles: mockConvertedFiles,
-      fileTree: mockFileTreeSearched,
-      files: mockFileList,
+      convertedFiles: getMockConvertedFiles(),
+      fileTree: getMockFileTree('searched'),
+      files: getMockFileList(),
       search: SEARCH_TERM,
       visibleFiles: [{ ...file4, showPath: false }],
     });
@@ -63,18 +68,19 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
   });
 
   test('Valid folder (condensed) updates state as expected', () => {
-    condenseStub.callsFake(() => true);
+    condenseConfigStub.callsFake(() => true);
 
     const state = getMockState({
-      convertedFiles: mockConvertedFiles,
-      files: mockFileList,
+      convertedFiles: getMockConvertedFiles(),
+      files: getMockFileList(),
       search: '',
-      visibleFiles: mockVisibleFiles,
+      visibleFiles: getMockVisibleFiles(),
     });
+
     const expectedState = getMockState({
-      convertedFiles: mockConvertedFiles,
-      fileTree: mockCondensedFileTreeSearched,
-      files: mockFileList,
+      convertedFiles: getMockConvertedFiles(),
+      fileTree: getMockFileTree('condensed-searched'),
+      files: getMockFileList(),
       search: SEARCH_TERM,
       visibleFiles: [{ ...file4, showPath: false }],
     });

@@ -3,35 +3,41 @@ import * as sinon from 'sinon';
 import * as configs from '../../../../../config/getConfig';
 import { setVisibleFiles } from '../../../../../webviews/Workspace/store/setVisibleFiles';
 import {
-  mockCondensedFileTree,
-  mockConvertedFiles,
-  mockFileList,
-  mockFileTree,
-  mockVisibleFiles,
+  getMockFileTree,
+  getMockVisibleFiles,
+  getMockConvertedFiles,
+  getMockFileList,
+  ROOT_FOLDER_PATH,
 } from '../../../../mocks/mockFileData';
 import { getMockState } from '../../../../mocks/mockState';
 
 suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
-  let condenseStub: sinon.SinonStub;
+  let condenseConfigStub: sinon.SinonStub;
+  let folderConfigStub: sinon.SinonStub;
+  let treeConfigStub: sinon.SinonStub;
 
   setup(() => {
-    condenseStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => false);
+    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => false);
+    folderConfigStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_FOLDER_PATH);
+    treeConfigStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => true);
   });
 
   teardown(() => {
-    condenseStub.restore();
+    condenseConfigStub.restore();
+    folderConfigStub.restore();
+    treeConfigStub.restore();
   });
 
   test('With files updates state as expected', () => {
     const state = getMockState({
-      convertedFiles: mockConvertedFiles,
-      files: mockFileList,
+      convertedFiles: getMockConvertedFiles(),
+      files: getMockFileList(),
     });
     const expectedState = getMockState({
-      convertedFiles: mockConvertedFiles,
-      files: mockFileList,
-      fileTree: mockFileTree,
-      visibleFiles: mockVisibleFiles,
+      convertedFiles: getMockConvertedFiles(),
+      files: getMockFileList(),
+      fileTree: getMockFileTree('normal'),
+      visibleFiles: getMockVisibleFiles(),
     });
 
     expect(state).not.to.eql(expectedState);
@@ -40,17 +46,17 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
   });
 
   test('With files (condensed) updates state as expected', () => {
-    condenseStub.callsFake(() => true);
+    condenseConfigStub.callsFake(() => true);
 
     const state = getMockState({
-      convertedFiles: mockConvertedFiles,
-      files: mockFileList,
+      convertedFiles: getMockConvertedFiles(),
+      files: getMockFileList(),
     });
     const expectedState = getMockState({
-      convertedFiles: mockConvertedFiles,
-      files: mockFileList,
-      fileTree: mockCondensedFileTree,
-      visibleFiles: mockVisibleFiles,
+      convertedFiles: getMockConvertedFiles(),
+      files: getMockFileList(),
+      fileTree: getMockFileTree('condensed'),
+      visibleFiles: getMockVisibleFiles(),
     });
 
     expect(state).not.to.eql(expectedState);

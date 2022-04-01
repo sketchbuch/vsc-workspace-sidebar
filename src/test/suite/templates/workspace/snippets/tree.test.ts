@@ -14,8 +14,8 @@ import {
   FOLDER1,
   FOLDER3,
   FOLDER4,
-  mockFileList,
-  mockFileTree,
+  getMockFileTree,
+  getMockFileList,
   ROOT_FOLDER,
   SUBFOLDER1,
   SUBFOLDER2,
@@ -79,14 +79,14 @@ suite('Templates > Workspace > Snippets: tree()', () => {
   });
 
   test('Root folder is rendered if there are root level files', () => {
-    const rootChildrenFileTree: FileTree = { ...mockFileTree, files: [{ ...file1 }] };
+    const rootChildrenFileTree: FileTree = { ...getMockFileTree('normal'), files: [{ ...file1 }] };
     tree(rootChildrenFileTree, 0, mockRenderVars, state);
 
     expect(folderSpy.args[0][0].folderPath).to.equal(ROOT_FOLDER);
   });
 
   test('Root folder is not rendered if there are no root level files', () => {
-    tree(mockFileTree, 0, mockRenderVars, state);
+    tree(getMockFileTree('normal'), 0, mockRenderVars, state);
 
     expect(folderSpy.args[0][0].folderPath).not.to.equal(ROOT_FOLDER);
     expect(folderSpy.args[0][1]).to.equal(0); // Depth should have been zero for at least one non-root folder
@@ -94,9 +94,9 @@ suite('Templates > Workspace > Snippets: tree()', () => {
   });
 
   test('All files/folders are rendered', () => {
-    tree(mockFileTree, 0, mockRenderVars, state);
+    tree(getMockFileTree('normal'), 0, mockRenderVars, state);
 
-    sinon.assert.callCount(itemSpy, mockFileList.length);
+    sinon.assert.callCount(itemSpy, getMockFileList().length);
     // Order like this due to child sorting
     expect(itemSpy.args[0][0].label).to.equal(file2.label);
     expect(itemSpy.args[1][0].label).to.equal(file1.label);

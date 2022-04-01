@@ -1,17 +1,17 @@
 import { expect } from 'chai';
 import { setPersistedState } from '../../../../../webviews/Workspace/store/setPersistedState';
-import { mockVisibleFiles } from '../../../../mocks/mockFileData';
+import { getMockVisibleFiles } from '../../../../mocks/mockFileData';
 import { getMockState } from '../../../../mocks/mockState';
 
 suite('Webviews > Workspace > Store > setPersistedState()', () => {
   test('Updates state as expected', () => {
     const state = getMockState({
       sort: 'descending',
-      visibleFiles: mockVisibleFiles,
+      visibleFiles: getMockVisibleFiles(),
     });
     const expectedState = getMockState({
       sort: 'ascending',
-      visibleFiles: mockVisibleFiles.reverse(),
+      visibleFiles: getMockVisibleFiles().reverse(),
     });
 
     expect(state).not.to.eql(expectedState);

@@ -3,19 +3,12 @@ import * as sinon from 'sinon';
 import * as configs from '../../../../../config/getConfig';
 import { ConfigShowPaths } from '../../../../../constants/config';
 import { getVisibleFiles } from '../../../../../webviews/Workspace/helpers/getVisibleFiles';
-import {
-  file4,
-  FOLDER1,
-  mockConvertedFiles,
-  mockConvertedFilesAsc,
-  mockConvertedFilesDesc,
-  SEARCH_TERM,
-} from '../../../../mocks/mockFileData';
+import { file4, FOLDER1, getMockConvertedFiles, SEARCH_TERM } from '../../../../mocks/mockFileData';
 
 suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
-  const filesUnsorted = mockConvertedFiles;
-  const filesAsc = mockConvertedFilesAsc;
-  const filesDesc = mockConvertedFilesDesc;
+  const filesUnsorted = getMockConvertedFiles();
+  const filesAsc = getMockConvertedFiles('asc');
+  const filesDesc = getMockConvertedFiles('desc');
 
   let treeStub: sinon.SinonStub;
   let pathsStub: sinon.SinonStub;
@@ -87,10 +80,10 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
       });
 
       const expectedFiles = [
-        { ...mockConvertedFiles[3], showPath: false },
-        { ...mockConvertedFiles[0], showPath: true, label: 'Same label' },
-        { ...mockConvertedFiles[1], showPath: true, label: 'Same label' },
-        { ...mockConvertedFiles[2], showPath: false },
+        { ...getMockConvertedFiles()[3], showPath: false },
+        { ...getMockConvertedFiles()[0], showPath: true, label: 'Same label' },
+        { ...getMockConvertedFiles()[1], showPath: true, label: 'Same label' },
+        { ...getMockConvertedFiles()[2], showPath: false },
       ];
 
       const result = getVisibleFiles(files, '', 'ascending');
