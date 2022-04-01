@@ -3,9 +3,11 @@ import { FileTree } from '../../webviews/Workspace/helpers/getFileTree';
 import { File, Files } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
 
 type GetFileTreeType = 'condensed' | 'condensed-searched' | 'normal' | 'searched';
+type SortDir = 'asc' | 'desc';
 
 export const ROOT_FOLDER = 'dev';
 export const ROOT_FOLDER_PATH = `/home/user/${ROOT_FOLDER}`;
+export const SEARCH_TERM = 'react';
 
 export const FOLDER1 = 'code';
 export const SUBFOLDER1 = 'vscode';
@@ -52,6 +54,7 @@ export const file4: File = {
 };
 
 export const getMockFileList = () => [file1.file, file2.file, file3.file, file4.file];
+
 export const getMockFolderList = (): string[] => [
   FOLDER1,
   FOLDER2,
@@ -61,25 +64,40 @@ export const getMockFolderList = (): string[] => [
   FOLDER4,
   file4.path,
 ];
-export const getMockVisibleFiles = (): Files => [
-  { ...file1, showPath: false },
-  { ...file2, showPath: false },
-  { ...file3, showPath: false },
-  { ...file4, showPath: false },
-];
-export const getMockConvertedFiles = (dir?: 'asc' | 'desc'): Files => {
+
+export const getMockVisibleFiles = (sortDir?: SortDir): Files => {
+  const sortedFiles = [
+    { ...file4, showPath: false },
+    { ...file2, showPath: false },
+    { ...file3, showPath: false },
+    { ...file1, showPath: false },
+  ];
+
+  if (sortDir === 'asc') {
+    return sortedFiles;
+  } else if (sortDir === 'desc') {
+    return sortedFiles.reverse();
+  }
+
+  return [
+    { ...file1, showPath: false },
+    { ...file2, showPath: false },
+    { ...file3, showPath: false },
+    { ...file4, showPath: false },
+  ];
+};
+
+export const getMockConvertedFiles = (sortDir?: SortDir): Files => {
   const sortedFiles = [{ ...file4 }, { ...file2 }, { ...file3 }, { ...file1 }];
 
-  if (dir === 'asc') {
+  if (sortDir === 'asc') {
     return sortedFiles;
-  } else if (dir === 'desc') {
+  } else if (sortDir === 'desc') {
     return sortedFiles.reverse();
   }
 
   return [{ ...file1 }, { ...file2 }, { ...file3 }, { ...file4 }];
 };
-
-export const SEARCH_TERM = 'react';
 
 export const getMockFileTree = (type: GetFileTreeType): FileTree => {
   switch (type) {

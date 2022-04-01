@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as configs from '../../../../../config/getConfig';
 import { list } from '../../../../../webviews/Workspace/store/list';
+import { getDefaultFileTree } from '../../../../../webviews/Workspace/store/workspaceSlice';
 import {
   getMockFileTree,
   getMockVisibleFiles,
@@ -49,7 +50,7 @@ suite('Webviews > Workspace > Store > list()', () => {
     expect(state).to.eql(expectedState);
   });
 
-  test('Valid folder updates state as expected', () => {
+  test('Valid folder - tree - updates state as expected', () => {
     const state = getMockState({
       convertedFiles: [],
       files: false,
@@ -74,7 +75,7 @@ suite('Webviews > Workspace > Store > list()', () => {
     expect(state).to.eql(expectedState);
   });
 
-  test('Valid folder (condensed) updates state as expected', () => {
+  test('Valid folder - tree condensed - updates state as expected', () => {
     condenseConfigStub.callsFake(() => true);
 
     const state = getMockState({
@@ -91,6 +92,64 @@ suite('Webviews > Workspace > Store > list()', () => {
       isFolderInvalid: false,
       state: 'list',
       visibleFiles: getMockVisibleFiles(),
+    });
+
+    expect(state).not.to.eql(expectedState);
+    list(state, {
+      payload: getMockFileList(),
+      type: 'ws/list',
+    });
+    expect(state).to.eql(expectedState);
+  });
+
+  test('Valid folder - flat list asc - updates state as expected', () => {
+    treeConfigStub.callsFake(() => false);
+
+    const state = getMockState({
+      convertedFiles: [],
+      files: false,
+      isFolderInvalid: false,
+      sort: 'ascending',
+      state: 'loading',
+      visibleFiles: [],
+    });
+    const expectedState = getMockState({
+      convertedFiles: getMockConvertedFiles(),
+      files: getMockFileList(),
+      fileTree: getDefaultFileTree(),
+      isFolderInvalid: false,
+      sort: 'ascending',
+      state: 'list',
+      visibleFiles: getMockVisibleFiles('asc'),
+    });
+
+    expect(state).not.to.eql(expectedState);
+    list(state, {
+      payload: getMockFileList(),
+      type: 'ws/list',
+    });
+    expect(state).to.eql(expectedState);
+  });
+
+  test('Valid folder - flat list desc - updates state as expected', () => {
+    treeConfigStub.callsFake(() => false);
+
+    const state = getMockState({
+      convertedFiles: [],
+      files: false,
+      isFolderInvalid: false,
+      sort: 'descending',
+      state: 'loading',
+      visibleFiles: [],
+    });
+    const expectedState = getMockState({
+      convertedFiles: getMockConvertedFiles(),
+      files: getMockFileList(),
+      fileTree: getDefaultFileTree(),
+      isFolderInvalid: false,
+      sort: 'descending',
+      state: 'list',
+      visibleFiles: getMockVisibleFiles('desc'),
     });
 
     expect(state).not.to.eql(expectedState);

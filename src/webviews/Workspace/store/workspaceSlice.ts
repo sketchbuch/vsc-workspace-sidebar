@@ -15,12 +15,14 @@ import { setVisibleFiles } from './setVisibleFiles';
 import { toggleFolderState } from './toggleFolderState';
 import { toggleFolderStateBulk } from './toggleFolderStateBulk';
 
-export const defaultFileTree: FileTree = {
-  files: [],
-  folderPath: '',
-  isRoot: true,
-  label: '',
-  sub: [],
+export const getDefaultFileTree = (): FileTree => {
+  return {
+    files: [],
+    folderPath: '',
+    isRoot: true,
+    label: '',
+    sub: [],
+  };
 };
 
 export const workspaceSlice = createSlice({
@@ -29,7 +31,7 @@ export const workspaceSlice = createSlice({
     convertedFiles: [],
     error: '',
     files: false,
-    fileTree: { ...defaultFileTree },
+    fileTree: getDefaultFileTree(),
     isFolderInvalid: false,
     search: '',
     selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',

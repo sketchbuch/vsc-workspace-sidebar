@@ -8,7 +8,7 @@ import {
   WorkspaceState,
   WorkspaceThunkAction,
 } from '../WorkspaceViewProvider.interface';
-import { defaultFileTree } from './workspaceSlice';
+import { getDefaultFileTree } from './workspaceSlice';
 
 export const fetch = createAsyncThunk('fetch', findWorkspaceFiles);
 
@@ -23,7 +23,7 @@ export const fetchFulfilled = (
     state.isFolderInvalid = true;
     state.state = 'invalid';
     state.visibleFiles = [];
-    state.fileTree = { ...defaultFileTree };
+    state.fileTree = getDefaultFileTree();
   } else {
     state.isFolderInvalid = false;
     state.state = 'list';

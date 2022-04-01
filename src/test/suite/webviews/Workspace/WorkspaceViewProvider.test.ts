@@ -73,7 +73,7 @@ suite('Webviews > Workspace > WorkspaceViewProvider():', () => {
   });
 
   test('updateVisibleFiles()', () => {
-    //expect(store.getState().ws.fileTree).to.eql({ ...defaultFileTree });
+    //expect(store.getState().ws.fileTree).to.eql(getDefaultFileTree());
 
     ws.resolveWebviewView(getMockWebviewView());
     ws.updateVisibleFiles();
