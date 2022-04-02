@@ -9,7 +9,7 @@ suite('Templates > Workspace > Snippets: searchBox()', () => {
 
     expect(result).to.be.a('string');
     expect(result).contains('class="searchBox"');
-    expect(result).contains('class="searchBox__input"');
+    expect(result).contains('id="searchWorkspaces"');
     expect(result).contains(`value="${mockState.search}"`);
   });
 });

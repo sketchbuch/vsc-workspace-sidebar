@@ -13,7 +13,8 @@
   z-index: 1;
 }
 
-.list__search div {
+.list__search div,
+.list__search vscode-text-field {
   width: 100%;
 }
 

@@ -1,14 +1,13 @@
 (function () {
   const vscode = acquireVsCodeApi();
 
-  const newWinIcons = Array.from(document.getElementsByClassName('list__buttons'));
-  const searchForm = document.getElementById('searchWorkspacesForm');
-  const searchInput = document.getElementById('searchWorkspaces');
-  const viewLinks = Array.from(document.getElementsByClassName('view__link'));
-  const wsElements = Array.from(document.getElementsByClassName('list__styled-item--unselected'));
-  const wsFolders = Array.from(document.getElementsByClassName('list__branch-list-item-folder-closable'));
-  const folderSaveBtn = document.getElementById('saveFolderAsWorkspace');
+  let folderSaveBtn = null;
+  let newWinIcons = null;
+  let searchInput = null;
   let searchTerm = '';
+  let viewLinks = null;
+  let wsElements = null;
+  let wsFolders = null;
 
   const sendMessage = (action, payload) => {
     const message = { action };
@@ -39,23 +38,19 @@
     sendMessage('SAVE_WS');
   };
 
-  const handleSearchSubmit = (event) => {
-    sendMessage('SEARCH', searchTerm);
-
-    // Stop submit navigating: https://github.com/microsoft/vscode/issues/125485
-    // Should be done after sending message otherwise the message is not dispatched
-    if (event) {
-      event.preventDefault();
-    }
-  };
-
   const handleSearchChange = (event) => {
     searchTerm = event.target.value;
+  };
+
+  const handleSearchSubmit = () => {
+    sendMessage('SEARCH', searchTerm);
   };
 
   const handleSearchKeyUp = (event) => {
     if (event.key === 'Escape') {
       searchTerm = '';
+      handleSearchSubmit();
+    } else if (event.key === 'Enter') {
       handleSearchSubmit();
     }
   };
@@ -73,13 +68,21 @@
   };
 
   document.addEventListener('DOMContentLoaded', () => {
+    const searchInputShadow = document.querySelector('#searchWorkspaces').shadowRoot;
+
+    folderSaveBtn = document.querySelector('#saveFolderAsWorkspace');
+    newWinIcons = document.querySelectorAll('.list__buttons');
+    viewLinks = document.querySelectorAll('.view__link');
+    wsElements = document.querySelectorAll('.list__styled-item--unselected');
+    wsFolders = document.querySelectorAll('.list__branch-list-item-folder-closable');
+
+    if (searchInputShadow) {
+      searchInput = searchInputShadow.querySelector('input');
+    }
+
     newWinIcons.forEach((element) => {
       element.addEventListener('click', handleIconClick);
     });
-
-    if (searchForm) {
-      searchForm.addEventListener('submit', handleSearchSubmit);
-    }
 
     if (searchInput) {
       searchInput.addEventListener('change', handleSearchChange);
@@ -127,10 +130,6 @@
     newWinIcons.forEach((element) => {
       element.removeEventListener('click', handleIconClick);
     });
-
-    if (searchForm) {
-      searchForm.removeEventListener('submit', handleSearchSubmit);
-    }
 
     if (searchInput) {
       searchInput.removeEventListener('change', handleSearchChange);
