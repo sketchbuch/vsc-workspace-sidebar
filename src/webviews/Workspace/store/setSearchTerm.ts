@@ -13,7 +13,7 @@ export const setSearchTerm = (
 
   state.search = action.payload;
 
-  if (state.files === false) {
+  if (state.files.length === 0) {
     state.fileTree = null;
     state.treeFolders = [];
     state.visibleFiles = [];

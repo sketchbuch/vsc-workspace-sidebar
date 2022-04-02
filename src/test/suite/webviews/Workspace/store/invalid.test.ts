@@ -10,7 +10,7 @@ suite('Webviews > Workspace > Store > invalid()', () => {
       state: 'error',
     });
     const expectedState = getMockState({
-      files: false,
+      files: [],
       isFolderInvalid: true,
       state: 'invalid',
     });

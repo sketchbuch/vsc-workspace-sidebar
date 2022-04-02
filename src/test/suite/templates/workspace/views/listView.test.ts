@@ -7,13 +7,6 @@ import { mockRenderVars } from '../../../../mocks/mockRenderVars';
 import { getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > View: listView()', () => {
-  test('Renders correctly if files is false', () => {
-    const result = listView(getMockState(), mockRenderVars);
-
-    expect(result).to.be.a('string');
-    expect(result).to.equal('');
-  });
-
   test('Renders correctly if there are no files', () => {
     const mockState = getMockState({ files: [] });
     const spy = sinon.spy(settings, 'settingsLink');

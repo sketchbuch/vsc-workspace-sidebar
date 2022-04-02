@@ -36,7 +36,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
     treeSpy.restore();
   });
 
-  test('Renders nothing if files is false', () => {
+  test('Renders nothing if files is empty', () => {
     const result = list(getMockState(), mockRenderVars);
 
     expect(result).to.be.a('string');
@@ -52,7 +52,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
 
   test('Renders search-out message if no visibleFiles and search is in progress', () => {
     const result = list(
-      getMockState({ files: [], search: 'react', visibleFiles: [] }),
+      getMockState({ files: getMockFileList(), search: 'react', visibleFiles: [] }),
       mockRenderVars
     );
 

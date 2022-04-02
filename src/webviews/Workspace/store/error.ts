@@ -3,7 +3,7 @@ import { WorkspaceErrors, WorkspaceState } from '../WorkspaceViewProvider.interf
 
 export const error = (state: WorkspaceState, action: PayloadAction<WorkspaceErrors>): void => {
   state.error = action.payload;
-  state.files = false;
+  state.files = [];
   state.isFolderInvalid = false;
   state.state = 'error';
 };

@@ -12,7 +12,7 @@ export const list = (state: WorkspaceState, action: PayloadAction<WorkspaceFiles
   state.files = action.payload;
   state.convertedFiles = action.payload ? convertWsFiles(action.payload, state.selected) : [];
 
-  if (state.files === false) {
+  if (state.files.length === 0) {
     state.fileTree = null;
     state.isFolderInvalid = true;
     state.state = 'invalid';

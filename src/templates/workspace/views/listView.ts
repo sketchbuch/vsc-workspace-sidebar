@@ -9,24 +9,23 @@ import { list } from '../snippets/list';
 import { searchForm } from '../snippets/searchForm';
 
 export const listView = (state: WorkspaceState, renderVars: RenderVars): string => {
-  if (state.files) {
-    if (state.files.length > 0) {
-      const wsFolders = workspace.workspaceFolders ? [...workspace.workspaceFolders] : undefined;
-      const searchMinimum = getSearchMinConfig();
-      const showSearch = searchMinimum === 0 || state.files.length >= searchMinimum;
+  if (state.files.length > 0) {
+    const wsFolders = workspace.workspaceFolders ? [...workspace.workspaceFolders] : undefined;
+    const searchMinimum = getSearchMinConfig();
+    const showSearch = searchMinimum === 0 || state.files.length >= searchMinimum;
 
-      return `
+    return `
         <section class="view list" data-showsearch=${showSearch} data-folderopen=${
-        state.wsType === 'folder'
-      }>
+      state.wsType === 'folder'
+    }>
           ${folderList(state, wsFolders)}
           ${searchForm(state, showSearch)}
           ${list(state, renderVars)}
         </section>
       `;
-    }
+  }
 
-    return `
+  return `
       <section class="view list list--empty">
         <p class="view__message">
           <span class="view__message-title">
@@ -37,7 +36,4 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
         </p>
       </section>
     `;
-  }
-
-  return '';
 };

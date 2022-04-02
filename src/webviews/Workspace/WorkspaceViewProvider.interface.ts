@@ -62,7 +62,7 @@ export type WsType = 'none' | 'ws' | 'folder';
 
 export type WsFiles = string[];
 
-export type WorkspaceFiles = false | WsFiles;
+export type WorkspaceFiles = WsFiles;
 
 export type WorkspaceThunkAction<Payload> = PayloadAction<
   Payload,

@@ -8,11 +8,11 @@ import { tree } from './tree';
 export const list = (state: WorkspaceState, renderVars: RenderVars) => {
   const { files, search, visibleFiles } = state;
 
-  if (files === false) {
+  if (files.length === 0) {
     return '';
   }
 
-  if (visibleFiles.length < 1) {
+  if (visibleFiles.length === 0) {
     if (search) {
       return `
           <div class="list__searchedout">

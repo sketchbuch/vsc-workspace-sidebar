@@ -1,11 +1,11 @@
 import * as os from 'os';
 import { getDepthConfig, getFolderConfig } from '../../config/getConfig';
 import { FS_WS_FILETYPE } from '../../constants/fs';
-import { WsFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { WorkspaceFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
 import { checkFile } from './checkFile';
 import { collectFilesFromFolder } from './collectFilesFromFolder';
 
-export const findWorkspaceFiles = async (): Promise<WsFiles | false> => {
+export const findWorkspaceFiles = async (): Promise<WorkspaceFiles> => {
   const folder = getFolderConfig();
   const maxDepth = getDepthConfig();
   const homeDir = os.homedir();
@@ -16,5 +16,5 @@ export const findWorkspaceFiles = async (): Promise<WsFiles | false> => {
     return await collectFilesFromFolder(baseFolder, FS_WS_FILETYPE, maxDepth, 0);
   }
 
-  return Promise.resolve(false);
+  return Promise.resolve([]);
 };

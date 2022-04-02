@@ -5,7 +5,7 @@ import { getVisibleFiles } from '../helpers/getVisibleFiles';
 import { WorkspaceState } from '../WorkspaceViewProvider.interface';
 
 export const setVisibleFiles = (state: WorkspaceState): void => {
-  if (state.files !== false) {
+  if (state.files.length > 0) {
     const showTree = getShowTreeConfig();
 
     state.visibleFiles = getVisibleFiles(state.convertedFiles, state.search, state.sort);

@@ -17,7 +17,7 @@ suite('Utils > Fs -> findWorkspaceFiles()', () => {
     mockFs.restore();
   });
 
-  test('false is returned if the folder is not a folder', () => {
+  test('Empty array is returned if the folder is not a folder', () => {
     const stub = sinon.stub(vscode.workspace, 'getConfiguration');
 
     stub.returns({
@@ -30,7 +30,7 @@ suite('Utils > Fs -> findWorkspaceFiles()', () => {
       },
     } as vscode.WorkspaceConfiguration);
     return findWorkspaceFiles().then((wsFiles) => {
-      expect(wsFiles).to.equal(false);
+      expect(wsFiles).to.eql([]);
 
       stub.restore();
     });

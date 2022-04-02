@@ -66,14 +66,14 @@ suite('Webviews > Workspace > Store > fetch()', () => {
     test('Invalid folder - updates state as expected', () => {
       const state = getMockState({
         convertedFiles: getMockConvertedFiles(),
-        files: false,
+        files: [],
         isFolderInvalid: false,
         state: 'loading',
         visibleFiles: getMockVisibleFiles(),
       });
       const expectedState = getMockState({
         convertedFiles: [],
-        files: false,
+        files: [],
         isFolderInvalid: true,
         state: 'invalid',
         visibleFiles: [],
@@ -82,7 +82,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       expect(state).not.to.eql(expectedState);
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: false,
+        payload: [],
         type: 'ws/list',
       });
       expect(state).to.eql(expectedState);
@@ -94,7 +94,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
 
       const state = getMockState({
         convertedFiles: [],
-        files: false,
+        files: [],
         isFolderInvalid: true,
         state: 'invalid',
         visibleFiles: [],
@@ -122,7 +122,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
 
       const state = getMockState({
         convertedFiles: [],
-        files: false,
+        files: [],
         isFolderInvalid: true,
         state: 'invalid',
         visibleFiles: [],
@@ -148,7 +148,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
     test('Valid folder - list asc - updates state as expected', () => {
       const state = getMockState({
         convertedFiles: [],
-        files: false,
+        files: [],
         isFolderInvalid: true,
         sort: 'ascending',
         state: 'invalid',
@@ -176,7 +176,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
     test('Valid folder - list desc - updates state as expected', () => {
       const state = getMockState({
         convertedFiles: [],
-        files: false,
+        files: [],
         isFolderInvalid: true,
         sort: 'descending',
         state: 'invalid',

@@ -33,7 +33,7 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
 
   test('Invalid folder updates state as expected', () => {
     const state = getMockState({
-      files: false,
+      files: [],
       fileTree: getMockFileTree('normal'),
       search: '',
       visibleFiles: getMockVisibleFiles(),

@@ -1,7 +1,7 @@
 import { WorkspaceState } from '../WorkspaceViewProvider.interface';
 
 export const invalid = (state: WorkspaceState): void => {
-  state.files = false;
+  state.files = [];
   state.isFolderInvalid = true;
   state.state = 'invalid';
 };

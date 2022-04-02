@@ -32,21 +32,21 @@ suite('Webviews > Workspace > Store > list()', () => {
   test('Invalid folder updates state as expected', () => {
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
-      files: false,
+      files: [],
       isFolderInvalid: false,
       state: 'loading',
       visibleFiles: getMockVisibleFiles(),
     });
     const expectedState = getMockState({
       convertedFiles: [],
-      files: false,
+      files: [],
       isFolderInvalid: true,
       state: 'invalid',
       visibleFiles: [],
     });
 
     expect(state).not.to.eql(expectedState);
-    list(state, { payload: false, type: 'ws/list' });
+    list(state, { payload: [], type: 'ws/list' });
     expect(state).to.eql(expectedState);
   });
 
@@ -56,7 +56,7 @@ suite('Webviews > Workspace > Store > list()', () => {
 
     const state = getMockState({
       convertedFiles: [],
-      files: false,
+      files: [],
       isFolderInvalid: false,
       state: 'loading',
       visibleFiles: [],
@@ -84,7 +84,7 @@ suite('Webviews > Workspace > Store > list()', () => {
 
     const state = getMockState({
       convertedFiles: [],
-      files: false,
+      files: [],
       isFolderInvalid: false,
       state: 'loading',
       visibleFiles: [],
@@ -110,7 +110,7 @@ suite('Webviews > Workspace > Store > list()', () => {
   test('Valid folder - flat list asc - updates state as expected', () => {
     const state = getMockState({
       convertedFiles: [],
-      files: false,
+      files: [],
       isFolderInvalid: false,
       sort: 'ascending',
       state: 'loading',
@@ -137,7 +137,7 @@ suite('Webviews > Workspace > Store > list()', () => {
   test('Valid folder - flat list desc - updates state as expected', () => {
     const state = getMockState({
       convertedFiles: [],
-      files: false,
+      files: [],
       isFolderInvalid: false,
       sort: 'descending',
       state: 'loading',

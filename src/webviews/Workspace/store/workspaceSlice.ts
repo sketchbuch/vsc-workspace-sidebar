@@ -14,23 +14,24 @@ import { setVisibleFiles } from './setVisibleFiles';
 import { toggleFolderState } from './toggleFolderState';
 import { toggleFolderStateBulk } from './toggleFolderStateBulk';
 
+export const initialState: WorkspaceState = {
+  closedFolders: [],
+  convertedFiles: [],
+  error: '',
+  files: [],
+  fileTree: null,
+  isFolderInvalid: false,
+  search: '',
+  selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',
+  sort: 'ascending',
+  state: 'loading',
+  treeFolders: [],
+  visibleFiles: [],
+  wsType: getWsType(vscode.workspace.workspaceFile, vscode.workspace.workspaceFolders),
+};
+
 export const workspaceSlice = createSlice({
-  initialState: {
-    closedFolders: [],
-    convertedFiles: [],
-    error: '',
-    // TODO - Make null not false
-    files: false,
-    fileTree: null,
-    isFolderInvalid: false,
-    search: '',
-    selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',
-    sort: 'ascending',
-    state: 'loading',
-    treeFolders: [],
-    visibleFiles: [],
-    wsType: getWsType(vscode.workspace.workspaceFile, vscode.workspace.workspaceFolders),
-  } as WorkspaceState,
+  initialState: { ...initialState },
   extraReducers: (builder) => {
     builder.addCase(fetch.pending, fetchPending);
     builder.addCase(fetch.rejected, fetchRejected);
