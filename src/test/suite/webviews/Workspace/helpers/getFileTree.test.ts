@@ -11,7 +11,7 @@ suite('Webviews > Workspace > Helpers > getFileTree():', () => {
   let folderConfigStub: sinon.SinonStub;
 
   setup(() => {
-    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => false);
+    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => true);
     condenseSpy = sinon.spy(condense, 'condenseTree');
     folderConfigStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_FOLDER);
   });
@@ -23,6 +23,8 @@ suite('Webviews > Workspace > Helpers > getFileTree():', () => {
   });
 
   test('Returns the expected filetree', () => {
+    condenseConfigStub.callsFake(() => false);
+
     const result = getFileTree(getMockVisibleFiles());
     expect(result).to.eql(getMockFileTree('normal'));
 
@@ -30,8 +32,6 @@ suite('Webviews > Workspace > Helpers > getFileTree():', () => {
   });
 
   test('Returns the expected condensed filetree', () => {
-    condenseConfigStub.callsFake(() => true);
-
     const result = getFileTree(getMockVisibleFiles());
     expect(result).to.eql(getMockFileTree('condensed'));
 

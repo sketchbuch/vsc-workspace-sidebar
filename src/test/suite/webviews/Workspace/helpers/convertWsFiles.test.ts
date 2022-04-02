@@ -5,7 +5,7 @@ import { convertWsFiles } from '../../../../../webviews/Workspace/helpers/conver
 import { Files } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface';
 
 suite('Webviews > Workspace > Helpers > convertWsFiles():', () => {
-  let configStub: sinon.SinonStub;
+  let cleanLabelsConfigStub: sinon.SinonStub;
 
   const FILE_NAME1 = 'First Project';
   const FILE_NAME2 = 'Second_WORK-Space';
@@ -34,11 +34,11 @@ suite('Webviews > Workspace > Helpers > convertWsFiles():', () => {
   ];
 
   setup(() => {
-    configStub = sinon.stub(configs, 'getCleanLabelsConfig').callsFake(() => true);
+    cleanLabelsConfigStub = sinon.stub(configs, 'getCleanLabelsConfig').callsFake(() => true);
   });
 
   teardown(() => {
-    configStub.restore();
+    cleanLabelsConfigStub.restore();
   });
 
   test('Returns an empty array if no files', () => {
@@ -46,12 +46,12 @@ suite('Webviews > Workspace > Helpers > convertWsFiles():', () => {
   });
 
   test('Converts the files with cleaned labels', () => {
-    configStub.callsFake(() => true);
+    cleanLabelsConfigStub.callsFake(() => true);
     expect(convertWsFiles(files, '')).to.eql(expected);
   });
 
   test('Converts the files without cleaning the labels', () => {
-    configStub.callsFake(() => false);
+    cleanLabelsConfigStub.callsFake(() => false);
     const expectedUncleaned: Files = [
       { ...expected[0], label: FILE_NAME1, searchLabel: FILE_NAME1.toLowerCase() },
       { ...expected[1], label: FILE_NAME2, searchLabel: FILE_NAME2.toLowerCase() },

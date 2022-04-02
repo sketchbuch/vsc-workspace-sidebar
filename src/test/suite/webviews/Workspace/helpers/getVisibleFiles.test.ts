@@ -10,17 +10,19 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
   const filesAsc = getMockConvertedFiles('asc');
   const filesDesc = getMockConvertedFiles('desc');
 
-  let treeStub: sinon.SinonStub;
-  let pathsStub: sinon.SinonStub;
+  let treeConfigStub: sinon.SinonStub;
+  let pathsConfigStub: sinon.SinonStub;
 
   setup(() => {
-    treeStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => false);
-    pathsStub = sinon.stub(configs, 'getShowPathsConfig').callsFake(() => ConfigShowPaths.ALWAYS);
+    treeConfigStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => false);
+    pathsConfigStub = sinon
+      .stub(configs, 'getShowPathsConfig')
+      .callsFake(() => ConfigShowPaths.ALWAYS);
   });
 
   teardown(() => {
-    treeStub.restore();
-    pathsStub.restore();
+    treeConfigStub.restore();
+    pathsConfigStub.restore();
   });
 
   test('Search correctly filters', () => {
@@ -40,7 +42,7 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
     });
 
     test('No sorting when using tree view', () => {
-      treeStub.callsFake(() => true);
+      treeConfigStub.callsFake(() => true);
 
       const result = getVisibleFiles(filesDesc, '', 'ascending');
       expect(result).to.eql(filesDesc);
@@ -52,7 +54,7 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
 
   suite('Show paths:', () => {
     test('"Never" returns filesAsc with showPath: "false"', () => {
-      pathsStub.callsFake(() => ConfigShowPaths.NEVER);
+      pathsConfigStub.callsFake(() => ConfigShowPaths.NEVER);
       const expectedFiles = filesAsc.map((file) => {
         return { ...file, showPath: false };
       });
@@ -62,14 +64,14 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
     });
 
     test('"Always" returns filesAsc with showPath: "false"', () => {
-      pathsStub.callsFake(() => ConfigShowPaths.ALWAYS);
+      pathsConfigStub.callsFake(() => ConfigShowPaths.ALWAYS);
 
       const result = getVisibleFiles(filesAsc, '', 'ascending');
       expect(result).to.eql(filesAsc);
     });
 
     test('"As needed" returns files with showPath: "true" for files with duplicate labels', () => {
-      pathsStub.callsFake(() => ConfigShowPaths.AS_NEEEDED);
+      pathsConfigStub.callsFake(() => ConfigShowPaths.AS_NEEEDED);
 
       const files = filesUnsorted.map((file) => {
         if (file.path.includes(FOLDER1)) {

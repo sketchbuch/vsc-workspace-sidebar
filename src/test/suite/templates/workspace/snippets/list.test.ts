@@ -13,7 +13,7 @@ import { mockRenderVars } from '../../../../mocks/mockRenderVars';
 import { getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > Snippets: list()', () => {
-  let configStub: sinon.SinonStub;
+  let treeConfigStub: sinon.SinonStub;
   let itemSpy: sinon.SinonSpy;
   let treeSpy: sinon.SinonSpy;
 
@@ -25,13 +25,13 @@ suite('Templates > Workspace > Snippets: list()', () => {
   });
 
   setup(() => {
-    configStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => false);
+    treeConfigStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => false);
     itemSpy = sinon.spy(item, 'listItem');
     treeSpy = sinon.spy(tree, 'tree');
   });
 
   teardown(() => {
-    configStub.restore();
+    treeConfigStub.restore();
     itemSpy.restore();
     treeSpy.restore();
   });
@@ -62,7 +62,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
   });
 
   test('Renders list if not tree view', () => {
-    configStub.callsFake(() => false);
+    treeConfigStub.callsFake(() => false);
 
     const result = list(mockState, mockRenderVars);
 
@@ -75,7 +75,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
   });
 
   test('Renders tree if tree view', () => {
-    configStub.callsFake(() => true);
+    treeConfigStub.callsFake(() => true);
 
     const result = list(mockState, mockRenderVars);
 

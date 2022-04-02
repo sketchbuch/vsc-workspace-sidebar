@@ -13,7 +13,7 @@ suite('Webviews > Workspace > Helpers > getAllFoldersFromTree():', () => {
   let folderConfigStub: sinon.SinonStub;
 
   setup(() => {
-    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => false);
+    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => true);
     folderConfigStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_FOLDER_PATH);
   });
 

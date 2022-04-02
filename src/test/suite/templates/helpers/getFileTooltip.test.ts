@@ -10,16 +10,16 @@ suite('Templates > Helpers > getFileTooltip():', () => {
   const fileNotSelected: File = { ...file1, showPath: false };
   const fileSelected: File = { ...file1, isSelected: true, showPath: false };
 
-  let configStub: sinon.SinonStub;
+  let actionConfigStub: sinon.SinonStub;
 
   setup(() => {
-    configStub = sinon
+    actionConfigStub = sinon
       .stub(configs, 'getActionsConfig')
       .callsFake(() => ConfigActions.CURRENT_WINDOW);
   });
 
   teardown(() => {
-    configStub.restore();
+    actionConfigStub.restore();
   });
 
   test('Returns label as tooltip if no type, and not selected', () => {
@@ -46,14 +46,14 @@ suite('Templates > Helpers > getFileTooltip():', () => {
 
   suite('Click action is NEW_WINDOW (reverses cur and new tooltips):', () => {
     test('Returns cur win tooltip if !selected and type is "new-win"', () => {
-      configStub.callsFake(() => ConfigActions.NEW_WINDOW);
+      actionConfigStub.callsFake(() => ConfigActions.NEW_WINDOW);
       expect(getFileTooltip(fileNotSelected, 'new-win')).to.equal(
         `Open '${fileNotSelected.label}' in this window`
       );
     });
 
     test('Returns new win tooltip if !selected and type is "new-win"', () => {
-      configStub.callsFake(() => ConfigActions.NEW_WINDOW);
+      actionConfigStub.callsFake(() => ConfigActions.NEW_WINDOW);
       expect(getFileTooltip(fileNotSelected, 'cur-win')).to.equal(
         `Open '${fileNotSelected.label}' in a new window`
       );

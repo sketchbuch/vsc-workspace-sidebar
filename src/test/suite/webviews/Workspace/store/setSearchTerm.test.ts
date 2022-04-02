@@ -20,9 +20,9 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
   let treeConfigStub: sinon.SinonStub;
 
   setup(() => {
-    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => false);
+    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => true);
     folderConfigStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_FOLDER_PATH);
-    treeConfigStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => true);
+    treeConfigStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => false);
   });
 
   teardown(() => {
@@ -49,6 +49,9 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
   });
 
   test('Valid folder - tree - updates state as expected', () => {
+    condenseConfigStub.callsFake(() => false);
+    treeConfigStub.callsFake(() => true);
+
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
@@ -69,7 +72,7 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
   });
 
   test('Valid folder - tree condensed - updates state as expected', () => {
-    condenseConfigStub.callsFake(() => true);
+    treeConfigStub.callsFake(() => true);
 
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
@@ -92,8 +95,6 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
   });
 
   test('Valid folder - list asc - updates state as expected', () => {
-    treeConfigStub.callsFake(() => false);
-
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
@@ -117,8 +118,6 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
   });
 
   test('Valid folder - list desc - updates state as expected', () => {
-    treeConfigStub.callsFake(() => false);
-
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
