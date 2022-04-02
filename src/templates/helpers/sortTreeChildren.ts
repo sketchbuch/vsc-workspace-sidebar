@@ -8,9 +8,8 @@ export const sortTreeChildren = (childen: TreeChildren): TreeChildren => {
   if (childen.length > 1) {
     return childen.sort((a, b) => {
       if (a && b) {
-        // TODO - user search label and add to folders too
-        const aVal = a.label.toLowerCase();
-        const bVal = b.label.toLowerCase();
+        const aVal = a.searchLabel;
+        const bVal = b.searchLabel;
 
         if (aVal > bVal) {
           return 1;
