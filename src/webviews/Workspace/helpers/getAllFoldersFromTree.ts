@@ -1,6 +1,5 @@
 import { FileTree } from '../helpers/getFileTree';
 
-// TODO - Put in state now that filetree is too
 export const getAllFoldersFromTree = (tree: FileTree): string[] => {
   let folders: string[] = [];
 
