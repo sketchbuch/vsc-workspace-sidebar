@@ -55,15 +55,21 @@ export const file4: File = {
 
 export const getMockFileList = () => [file1.file, file2.file, file3.file, file4.file];
 
-export const getMockFolderList = (): string[] => [
-  FOLDER1,
-  FOLDER2,
-  file2.path,
-  FOLDER3,
-  file3.path,
-  FOLDER4,
-  file4.path,
-];
+export const getMockFolderList = (type: GetFileTreeType): string[] => {
+  switch (type) {
+    case 'condensed':
+      return [FOLDER1, FOLDER2, FOLDER3, FOLDER4];
+
+    case 'condensed-searched':
+      return [FOLDER4];
+
+    case 'searched':
+      return [FOLDER4, file4.path];
+
+    default:
+      return [FOLDER1, FOLDER2, file2.path, FOLDER3, file3.path, FOLDER4, file4.path];
+  }
+};
 
 export const getMockVisibleFiles = (sortDir?: SortDir): Files => {
   const sortedFiles = [

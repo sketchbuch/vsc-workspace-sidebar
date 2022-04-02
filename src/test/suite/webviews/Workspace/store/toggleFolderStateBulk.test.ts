@@ -61,16 +61,18 @@ suite('Webviews > Workspace > Store > toggleFolderStateBulk()', () => {
   test('"collapse" does nothing if all folders are closed', () => {
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
-      closedFolders: getMockFolderList(),
+      closedFolders: getMockFolderList('normal'),
       files: getMockFileList(),
       fileTree: getMockFileTree('normal'),
+      treeFolders: getMockFolderList('normal'),
       visibleFiles: getMockVisibleFiles(),
     });
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
-      closedFolders: getMockFolderList(),
+      closedFolders: getMockFolderList('normal'),
       files: getMockFileList(),
       fileTree: getMockFileTree('normal'),
+      treeFolders: getMockFolderList('normal'),
       visibleFiles: getMockVisibleFiles(),
     });
 
@@ -82,16 +84,18 @@ suite('Webviews > Workspace > Store > toggleFolderStateBulk()', () => {
   test('"collapse" will close all folders if some are still open', () => {
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
-      closedFolders: [...getMockFolderList().slice(0, 1)],
+      closedFolders: [...getMockFolderList('normal').slice(0, 1)],
       files: getMockFileList(),
       fileTree: getMockFileTree('normal'),
+      treeFolders: getMockFolderList('normal'),
       visibleFiles: getMockVisibleFiles(),
     });
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
-      closedFolders: getMockFolderList(),
+      closedFolders: getMockFolderList('normal'),
       files: getMockFileList(),
       fileTree: getMockFileTree('normal'),
+      treeFolders: getMockFolderList('normal'),
       visibleFiles: getMockVisibleFiles(),
     });
 

@@ -1,4 +1,3 @@
-import { getDefaultFileTree } from '../../webviews/Workspace/store/workspaceSlice';
 import { WorkspaceState } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
 
 export const getMockState = (state: Partial<WorkspaceState> = {}): WorkspaceState => {
@@ -7,12 +6,13 @@ export const getMockState = (state: Partial<WorkspaceState> = {}): WorkspaceStat
     convertedFiles: [],
     error: '',
     files: false,
-    fileTree: getDefaultFileTree(),
+    fileTree: null,
     isFolderInvalid: false,
     search: '',
     selected: '',
     sort: 'ascending',
     state: 'loading',
+    treeFolders: [],
     visibleFiles: [],
     wsType: 'ws',
     ...state,

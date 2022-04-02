@@ -2,13 +2,13 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as configs from '../../../../../config/getConfig';
 import { list } from '../../../../../webviews/Workspace/store/list';
-import { getDefaultFileTree } from '../../../../../webviews/Workspace/store/workspaceSlice';
 import {
   getMockFileTree,
   getMockVisibleFiles,
   getMockConvertedFiles,
   getMockFileList,
   ROOT_FOLDER_PATH,
+  getMockFolderList,
 } from '../../../../mocks/mockFileData';
 import { getMockState } from '../../../../mocks/mockState';
 
@@ -67,6 +67,7 @@ suite('Webviews > Workspace > Store > list()', () => {
       fileTree: getMockFileTree('normal'),
       isFolderInvalid: false,
       state: 'list',
+      treeFolders: getMockFolderList('normal'),
       visibleFiles: getMockVisibleFiles(),
     });
 
@@ -94,6 +95,7 @@ suite('Webviews > Workspace > Store > list()', () => {
       fileTree: getMockFileTree('condensed'),
       isFolderInvalid: false,
       state: 'list',
+      treeFolders: getMockFolderList('condensed'),
       visibleFiles: getMockVisibleFiles(),
     });
 
@@ -117,7 +119,7 @@ suite('Webviews > Workspace > Store > list()', () => {
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
-      fileTree: getDefaultFileTree(),
+      fileTree: null,
       isFolderInvalid: false,
       sort: 'ascending',
       state: 'list',
@@ -144,7 +146,7 @@ suite('Webviews > Workspace > Store > list()', () => {
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
-      fileTree: getDefaultFileTree(),
+      fileTree: null,
       isFolderInvalid: false,
       sort: 'descending',
       state: 'list',

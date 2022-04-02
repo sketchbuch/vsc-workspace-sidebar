@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as configs from '../../../../../config/getConfig';
 import { setSearchTerm } from '../../../../../webviews/Workspace/store/setSearchTerm';
-import { getDefaultFileTree } from '../../../../../webviews/Workspace/store/workspaceSlice';
 import {
   file4,
   getMockFileTree,
@@ -11,6 +10,7 @@ import {
   getMockVisibleFiles,
   ROOT_FOLDER_PATH,
   SEARCH_TERM,
+  getMockFolderList,
 } from '../../../../mocks/mockFileData';
 import { getMockState } from '../../../../mocks/mockState';
 
@@ -63,6 +63,7 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
       files: getMockFileList(),
       fileTree: getMockFileTree('searched'),
       search: SEARCH_TERM,
+      treeFolders: getMockFolderList('searched'),
       visibleFiles: [{ ...file4, showPath: false }],
     });
 
@@ -86,6 +87,7 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
       files: getMockFileList(),
       fileTree: getMockFileTree('condensed-searched'),
       search: SEARCH_TERM,
+      treeFolders: getMockFolderList('condensed-searched'),
       visibleFiles: [{ ...file4, showPath: false }],
     });
 
@@ -106,9 +108,10 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
-      fileTree: getDefaultFileTree(),
+      fileTree: null,
       search: SEARCH_TERM,
       sort: 'ascending',
+      treeFolders: [],
       visibleFiles: [{ ...file4, showPath: false }],
     });
 
@@ -129,9 +132,10 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
-      fileTree: getDefaultFileTree(),
+      fileTree: null,
       search: SEARCH_TERM,
       sort: 'descending',
+      treeFolders: [],
       visibleFiles: [{ ...file4, showPath: false }],
     });
 

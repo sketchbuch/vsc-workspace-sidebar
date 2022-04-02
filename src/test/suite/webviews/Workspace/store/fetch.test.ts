@@ -14,7 +14,6 @@ import {
   ROOT_FOLDER_PATH,
 } from '../../../../mocks/mockFileData';
 import { getMockState } from '../../../../mocks/mockState';
-import { getDefaultFileTree } from '../../../../../webviews/Workspace/store/workspaceSlice';
 
 suite('Webviews > Workspace > Store > fetch()', () => {
   let condenseConfigStub: sinon.SinonStub;
@@ -158,7 +157,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       const expectedState = getMockState({
         convertedFiles: getMockConvertedFiles(),
         files: getMockFileList(),
-        fileTree: getDefaultFileTree(),
+        fileTree: null,
         isFolderInvalid: false,
         sort: 'ascending',
         state: 'list',
@@ -186,7 +185,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       const expectedState = getMockState({
         convertedFiles: getMockConvertedFiles(),
         files: getMockFileList(),
-        fileTree: getDefaultFileTree(),
+        fileTree: null,
         isFolderInvalid: false,
         sort: 'descending',
         state: 'list',

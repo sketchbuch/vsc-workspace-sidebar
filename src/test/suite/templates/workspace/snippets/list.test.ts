@@ -83,6 +83,20 @@ suite('Templates > Workspace > Snippets: list()', () => {
     expect(result).contains('<ul class="list__list');
     expect(result).contains('list__styled-list--tree');
 
+    sinon.assert.called(treeSpy);
     sinon.assert.notCalled(itemSpy);
+  });
+
+  test('Renders list if tree is null', () => {
+    treeConfigStub.callsFake(() => true);
+
+    const result = list({ ...mockState, fileTree: null }, mockRenderVars);
+
+    expect(result).to.be.a('string');
+    expect(result).contains('<ul class="list__list');
+    expect(result).not.contains('list__styled-list--tree');
+
+    sinon.assert.called(itemSpy);
+    sinon.assert.notCalled(treeSpy);
   });
 });

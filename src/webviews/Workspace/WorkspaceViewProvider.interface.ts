@@ -46,12 +46,13 @@ export type WorkspaceState = {
   convertedFiles: Files;
   error: WorkspaceErrors;
   files: WorkspaceFiles;
-  fileTree: FileTree;
+  fileTree: FileTree | null;
   isFolderInvalid: boolean;
   search: string;
   selected: string;
   sort: SortIds;
   state: WorkspaceStates;
+  treeFolders: string[];
   visibleFiles: Files;
   wsType: WsType;
 };
