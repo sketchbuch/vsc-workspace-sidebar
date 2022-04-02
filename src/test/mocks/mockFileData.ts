@@ -107,18 +107,21 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
         folderPath: ROOT_FOLDER,
         isRoot: true,
         label: ROOT_FOLDER,
+        searchLabel: ROOT_FOLDER.toLowerCase(),
         sub: [
           {
             files: [],
             folderPath: FOLDER1,
             isRoot: false,
             label: FOLDER1,
+            searchLabel: FOLDER1.toLowerCase(),
             sub: [
               {
                 files: [{ ...getMockVisibleFiles()[0] }, { ...getMockVisibleFiles()[1] }],
                 folderPath: file1.path,
                 isRoot: false,
                 label: SUBFOLDER1,
+                searchLabel: SUBFOLDER1.toLowerCase(),
                 sub: [],
               },
             ],
@@ -128,6 +131,7 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
             folderPath: FOLDER3,
             isRoot: false,
             label: FOLDER3,
+            searchLabel: FOLDER3.toLowerCase(),
             sub: [],
           },
           {
@@ -135,6 +139,7 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
             folderPath: FOLDER4,
             isRoot: false,
             label: FOLDER4,
+            searchLabel: FOLDER4.toLowerCase(),
             sub: [],
           },
         ],
@@ -146,12 +151,14 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
         folderPath: ROOT_FOLDER,
         isRoot: true,
         label: ROOT_FOLDER,
+        searchLabel: ROOT_FOLDER.toLowerCase(),
         sub: [
           {
             files: [{ ...getMockVisibleFiles()[3] }],
             folderPath: FOLDER4,
             isRoot: false,
             label: FOLDER4,
+            searchLabel: FOLDER4.toLowerCase(),
             sub: [],
           },
         ],
@@ -163,18 +170,21 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
         folderPath: ROOT_FOLDER,
         isRoot: true,
         label: ROOT_FOLDER,
+        searchLabel: ROOT_FOLDER.toLowerCase(),
         sub: [
           {
             files: [],
             folderPath: FOLDER4,
             isRoot: false,
             label: FOLDER4,
+            searchLabel: FOLDER4.toLowerCase(),
             sub: [
               {
                 files: [{ ...getMockVisibleFiles()[3] }],
                 folderPath: file4.path,
                 isRoot: false,
                 label: SUBFOLDER4,
+                searchLabel: SUBFOLDER4.toLowerCase(),
                 sub: [],
               },
             ],
@@ -188,24 +198,28 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
         folderPath: ROOT_FOLDER,
         isRoot: true,
         label: ROOT_FOLDER,
+        searchLabel: ROOT_FOLDER.toLowerCase(),
         sub: [
           {
             files: [],
             folderPath: FOLDER1,
             isRoot: false,
             label: FOLDER1,
+            searchLabel: FOLDER1.toLowerCase(),
             sub: [
               {
                 files: [{ ...getMockVisibleFiles()[0] }],
                 folderPath: file1.path,
                 isRoot: false,
                 label: SUBFOLDER1,
+                searchLabel: SUBFOLDER1.toLowerCase(),
                 sub: [
                   {
                     files: [{ ...getMockVisibleFiles()[1] }],
                     folderPath: file2.path,
                     isRoot: false,
                     label: SUBFOLDER2,
+                    searchLabel: SUBFOLDER2.toLowerCase(),
                     sub: [],
                   },
                 ],
@@ -217,12 +231,14 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
             folderPath: FOLDER3,
             isRoot: false,
             label: FOLDER3,
+            searchLabel: FOLDER3.toLowerCase(),
             sub: [
               {
                 files: [{ ...getMockVisibleFiles()[2] }],
                 folderPath: file3.path,
                 isRoot: false,
                 label: SUBFOLDER3,
+                searchLabel: SUBFOLDER3.toLowerCase(),
                 sub: [],
               },
             ],
@@ -232,12 +248,14 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
             folderPath: FOLDER4,
             isRoot: false,
             label: FOLDER4,
+            searchLabel: FOLDER4.toLowerCase(),
             sub: [
               {
                 files: [{ ...getMockVisibleFiles()[3] }],
                 folderPath: file4.path,
                 isRoot: false,
                 label: SUBFOLDER4,
+                searchLabel: SUBFOLDER4.toLowerCase(),
                 sub: [],
               },
             ],

@@ -21,6 +21,7 @@ export const getDefaultFileTree = (): FileTree => {
     folderPath: '',
     isRoot: true,
     label: '',
+    searchLabel: '',
     sub: [],
   };
 };

@@ -37,6 +37,7 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     folderPath: FOLDER1,
     isRoot: false,
     label: FOLDER1,
+    searchLabel: FOLDER1.toLowerCase(),
     sub: [],
   };
 
@@ -45,6 +46,7 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     folderPath: ROOT_FOLDER,
     isRoot: true,
     label: ROOT_FOLDER,
+    searchLabel: ROOT_FOLDER.toLowerCase(),
     sub: [],
   };
 
