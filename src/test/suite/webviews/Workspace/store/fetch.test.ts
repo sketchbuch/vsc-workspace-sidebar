@@ -14,6 +14,7 @@ import {
   ROOT_FOLDER_PATH,
 } from '../../../../mocks/mockFileData';
 import { getMockState } from '../../../../mocks/mockState';
+import { getDefaultFileTree } from '../../../../../webviews/Workspace/store/workspaceSlice';
 
 suite('Webviews > Workspace > Store > fetch()', () => {
   let condenseConfigStub: sinon.SinonStub;
@@ -62,54 +63,144 @@ suite('Webviews > Workspace > Store > fetch()', () => {
     expect(state).to.eql(expectedState);
   });
 
-  test('Fulfilled (invalid folder) updates state as expected', () => {
-    const state = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: false,
-      isFolderInvalid: false,
-      state: 'loading',
-      visibleFiles: getMockVisibleFiles(),
-    });
-    const expectedState = getMockState({
-      convertedFiles: [],
-      files: false,
-      isFolderInvalid: true,
-      state: 'invalid',
-      visibleFiles: [],
+  suite('Fulfilled:', () => {
+    test('Invalid folder - updates state as expected', () => {
+      const state = getMockState({
+        convertedFiles: getMockConvertedFiles(),
+        files: false,
+        isFolderInvalid: false,
+        state: 'loading',
+        visibleFiles: getMockVisibleFiles(),
+      });
+      const expectedState = getMockState({
+        convertedFiles: [],
+        files: false,
+        isFolderInvalid: true,
+        state: 'invalid',
+        visibleFiles: [],
+      });
+
+      expect(state).not.to.eql(expectedState);
+      fetchFulfilled(state, {
+        meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
+        payload: false,
+        type: 'ws/list',
+      });
+      expect(state).to.eql(expectedState);
     });
 
-    expect(state).not.to.eql(expectedState);
-    fetchFulfilled(state, {
-      meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-      payload: false,
-      type: 'ws/list',
-    });
-    expect(state).to.eql(expectedState);
-  });
+    test('Valid folder - tree - updates state as expected', () => {
+      const state = getMockState({
+        convertedFiles: [],
+        files: false,
+        isFolderInvalid: true,
+        state: 'invalid',
+        visibleFiles: [],
+      });
+      const expectedState = getMockState({
+        convertedFiles: getMockConvertedFiles(),
+        files: getMockFileList(),
+        fileTree: getMockFileTree('normal'),
+        isFolderInvalid: false,
+        state: 'list',
+        visibleFiles: getMockVisibleFiles(),
+      });
 
-  test('Fulfilled (valid folder) updates state as expected', () => {
-    const state = getMockState({
-      convertedFiles: [],
-      files: false,
-      isFolderInvalid: true,
-      state: 'invalid',
-      visibleFiles: [],
-    });
-    const expectedState = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      fileTree: getMockFileTree('normal'),
-      files: getMockFileList(),
-      isFolderInvalid: false,
-      state: 'list',
-      visibleFiles: getMockVisibleFiles(),
+      expect(state).not.to.eql(expectedState);
+      fetchFulfilled(state, {
+        meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
+        payload: getMockFileList(),
+        type: 'ws/list',
+      });
+      expect(state.visibleFiles).to.eql(expectedState.visibleFiles);
     });
 
-    expect(state).not.to.eql(expectedState);
-    fetchFulfilled(state, {
-      meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-      payload: getMockFileList(),
-      type: 'ws/list',
+    test('Valid folder - tree condensed - updates state as expected', () => {
+      condenseConfigStub.callsFake(() => true);
+
+      const state = getMockState({
+        convertedFiles: [],
+        files: false,
+        isFolderInvalid: true,
+        state: 'invalid',
+        visibleFiles: [],
+      });
+      const expectedState = getMockState({
+        convertedFiles: getMockConvertedFiles(),
+        files: getMockFileList(),
+        fileTree: getMockFileTree('condensed'),
+        isFolderInvalid: false,
+        state: 'list',
+        visibleFiles: getMockVisibleFiles(),
+      });
+
+      expect(state).not.to.eql(expectedState);
+      fetchFulfilled(state, {
+        meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
+        payload: getMockFileList(),
+        type: 'ws/list',
+      });
+      expect(state.visibleFiles).to.eql(expectedState.visibleFiles);
     });
-    expect(state.visibleFiles).to.eql(expectedState.visibleFiles);
+
+    test('Valid folder - list asc - updates state as expected', () => {
+      treeConfigStub.callsFake(() => false);
+
+      const state = getMockState({
+        convertedFiles: [],
+        files: false,
+        isFolderInvalid: true,
+        sort: 'ascending',
+        state: 'invalid',
+        visibleFiles: [],
+      });
+      const expectedState = getMockState({
+        convertedFiles: getMockConvertedFiles(),
+        files: getMockFileList(),
+        fileTree: getDefaultFileTree(),
+        isFolderInvalid: false,
+        sort: 'ascending',
+        state: 'list',
+        visibleFiles: getMockVisibleFiles('asc'),
+      });
+
+      expect(state).not.to.eql(expectedState);
+      fetchFulfilled(state, {
+        meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
+        payload: getMockFileList(),
+        type: 'ws/list',
+      });
+      expect(state.visibleFiles).to.eql(expectedState.visibleFiles);
+    });
+
+    test('Valid folder - list desc - updates state as expected', () => {
+      treeConfigStub.callsFake(() => false);
+
+      const state = getMockState({
+        convertedFiles: [],
+        files: false,
+        isFolderInvalid: true,
+        sort: 'descending',
+        state: 'invalid',
+        visibleFiles: [],
+      });
+      const expectedState = getMockState({
+        convertedFiles: getMockConvertedFiles(),
+        files: getMockFileList(),
+        fileTree: getDefaultFileTree(),
+        isFolderInvalid: false,
+        sort: 'descending',
+        state: 'list',
+        visibleFiles: getMockVisibleFiles('desc'),
+      });
+
+      expect(state).not.to.eql(expectedState);
+      fetchFulfilled(state, {
+        meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
+        payload: getMockFileList(),
+        type: 'ws/list',
+      });
+      expect(state.visibleFiles).to.eql(expectedState.visibleFiles);
+    });
   });
 });

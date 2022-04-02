@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as configs from '../../../../../config/getConfig';
 import { setSearchTerm } from '../../../../../webviews/Workspace/store/setSearchTerm';
+import { getDefaultFileTree } from '../../../../../webviews/Workspace/store/workspaceSlice';
 import {
   file4,
   getMockFileTree,
@@ -47,7 +48,7 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
     expect(state).to.eql(expectedState);
   });
 
-  test('Valid folder updates state as expected', () => {
+  test('Valid folder - tree - updates state as expected', () => {
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
@@ -56,8 +57,8 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
     });
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
-      fileTree: getMockFileTree('searched'),
       files: getMockFileList(),
+      fileTree: getMockFileTree('searched'),
       search: SEARCH_TERM,
       visibleFiles: [{ ...file4, showPath: false }],
     });
@@ -67,7 +68,7 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
     expect(state).to.eql(expectedState);
   });
 
-  test('Valid folder (condensed) updates state as expected', () => {
+  test('Valid folder - tree condensed - updates state as expected', () => {
     condenseConfigStub.callsFake(() => true);
 
     const state = getMockState({
@@ -79,9 +80,59 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
 
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
-      fileTree: getMockFileTree('condensed-searched'),
       files: getMockFileList(),
+      fileTree: getMockFileTree('condensed-searched'),
       search: SEARCH_TERM,
+      visibleFiles: [{ ...file4, showPath: false }],
+    });
+
+    expect(state).not.to.eql(expectedState);
+    setSearchTerm(state, { payload: SEARCH_TERM, type: 'ws/setSearchTerm' });
+    expect(state).to.eql(expectedState);
+  });
+
+  test('Valid folder - list asc - updates state as expected', () => {
+    treeConfigStub.callsFake(() => false);
+
+    const state = getMockState({
+      convertedFiles: getMockConvertedFiles(),
+      files: getMockFileList(),
+      sort: 'ascending',
+      search: '',
+      visibleFiles: getMockVisibleFiles(),
+    });
+
+    const expectedState = getMockState({
+      convertedFiles: getMockConvertedFiles(),
+      files: getMockFileList(),
+      fileTree: getDefaultFileTree(),
+      search: SEARCH_TERM,
+      sort: 'ascending',
+      visibleFiles: [{ ...file4, showPath: false }],
+    });
+
+    expect(state).not.to.eql(expectedState);
+    setSearchTerm(state, { payload: SEARCH_TERM, type: 'ws/setSearchTerm' });
+    expect(state).to.eql(expectedState);
+  });
+
+  test('Valid folder - list desc - updates state as expected', () => {
+    treeConfigStub.callsFake(() => false);
+
+    const state = getMockState({
+      convertedFiles: getMockConvertedFiles(),
+      files: getMockFileList(),
+      sort: 'descending',
+      search: '',
+      visibleFiles: getMockVisibleFiles(),
+    });
+
+    const expectedState = getMockState({
+      convertedFiles: getMockConvertedFiles(),
+      files: getMockFileList(),
+      fileTree: getDefaultFileTree(),
+      search: SEARCH_TERM,
+      sort: 'descending',
       visibleFiles: [{ ...file4, showPath: false }],
     });
 

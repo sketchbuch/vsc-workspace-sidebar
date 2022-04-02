@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { getShowTreeConfig } from '../../../config/getConfig';
 import { findWorkspaceFiles } from '../../../utils/fs/findWorkspaceFiles';
 import { convertWsFiles } from '../helpers/convertWsFiles';
 import { getFileTree } from '../helpers/getFileTree';
@@ -16,6 +17,8 @@ export const fetchFulfilled = (
   state: WorkspaceState,
   action: WorkspaceThunkAction<WorkspaceFiles>
 ) => {
+  const showTree = getShowTreeConfig();
+
   state.files = action.payload;
   state.convertedFiles = action.payload ? convertWsFiles(action.payload, state.selected) : [];
 
@@ -28,7 +31,7 @@ export const fetchFulfilled = (
     state.isFolderInvalid = false;
     state.state = 'list';
     state.visibleFiles = getVisibleFiles(state.convertedFiles, state.search, state.sort);
-    state.fileTree = getFileTree(state.visibleFiles);
+    state.fileTree = showTree ? getFileTree(state.visibleFiles) : getDefaultFileTree();
   }
 };
 

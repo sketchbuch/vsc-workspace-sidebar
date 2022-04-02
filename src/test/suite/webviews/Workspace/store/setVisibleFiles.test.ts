@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as configs from '../../../../../config/getConfig';
 import { setVisibleFiles } from '../../../../../webviews/Workspace/store/setVisibleFiles';
+import { getDefaultFileTree } from '../../../../../webviews/Workspace/store/workspaceSlice';
 import {
   getMockFileTree,
   getMockVisibleFiles,
@@ -28,7 +29,15 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
     treeConfigStub.restore();
   });
 
-  test('With files updates state as expected', () => {
+  test('No files updates state as expected', () => {
+    const state = getMockState();
+    const expectedState = getMockState();
+
+    setVisibleFiles(state);
+    expect(state).to.eql(expectedState);
+  });
+
+  test('With files - tree - updates state as expected', () => {
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
@@ -45,7 +54,7 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
     expect(state).to.eql(expectedState);
   });
 
-  test('With files (condensed) updates state as expected', () => {
+  test('With files - tree condensed - updates state as expected', () => {
     condenseConfigStub.callsFake(() => true);
 
     const state = getMockState({
@@ -64,10 +73,44 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
     expect(state).to.eql(expectedState);
   });
 
-  test('No files updates state as expected', () => {
-    const state = getMockState();
-    const expectedState = getMockState();
+  test('With files - list asc - updates state as expected', () => {
+    treeConfigStub.callsFake(() => false);
 
+    const state = getMockState({
+      convertedFiles: getMockConvertedFiles(),
+      files: getMockFileList(),
+      sort: 'ascending',
+    });
+    const expectedState = getMockState({
+      convertedFiles: getMockConvertedFiles(),
+      files: getMockFileList(),
+      fileTree: getDefaultFileTree(),
+      sort: 'ascending',
+      visibleFiles: getMockVisibleFiles('asc'),
+    });
+
+    expect(state).not.to.eql(expectedState);
+    setVisibleFiles(state);
+    expect(state).to.eql(expectedState);
+  });
+
+  test('With files - list desc - updates state as expected', () => {
+    treeConfigStub.callsFake(() => false);
+
+    const state = getMockState({
+      convertedFiles: getMockConvertedFiles(),
+      files: getMockFileList(),
+      sort: 'descending',
+    });
+    const expectedState = getMockState({
+      convertedFiles: getMockConvertedFiles(),
+      files: getMockFileList(),
+      fileTree: getDefaultFileTree(),
+      sort: 'descending',
+      visibleFiles: getMockVisibleFiles('desc'),
+    });
+
+    expect(state).not.to.eql(expectedState);
     setVisibleFiles(state);
     expect(state).to.eql(expectedState);
   });
