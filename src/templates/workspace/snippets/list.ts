@@ -10,18 +10,12 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
 
   if (files.length === 0) {
     return '';
-  }
-
-  if (visibleFiles.length === 0) {
-    if (search) {
-      return `
-          <div class="list__searchedout">
-            <p>${t('webViews.workspace.searchedOut')}</p>
-          </div>
-        `;
-    } else {
-      return '';
-    }
+  } else if (visibleFiles.length === 0 && search) {
+    return `
+      <div class="list__searchedout">
+        <p>${t('webViews.workspace.searchedOut')}</p>
+      </div>
+    `;
   }
 
   const showTree = getShowTreeConfig();

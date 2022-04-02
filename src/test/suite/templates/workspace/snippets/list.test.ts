@@ -36,13 +36,6 @@ suite('Templates > Workspace > Snippets: list()', () => {
     treeSpy.restore();
   });
 
-  test('Renders nothing if files is empty', () => {
-    const result = list(getMockState(), mockRenderVars);
-
-    expect(result).to.be.a('string');
-    expect(result).to.equal('');
-  });
-
   test('Renders nothing if there are no files', () => {
     const result = list(getMockState({ files: [], visibleFiles: [] }), mockRenderVars);
 
