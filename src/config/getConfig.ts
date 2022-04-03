@@ -8,6 +8,7 @@ import {
   CONFIG_FOLDER,
   CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_HIERARCHY,
+  CONFIG_SHOW_ROOT_FOLDER,
 } from '../constants/config';
 
 export const getActionsConfig = (): string => {
@@ -43,6 +44,12 @@ export const getSearchMinConfig = (): number => {
 
 export const getShowPathsConfig = (): ConfigShowPaths => {
   return workspace.getConfiguration().get('workspaceSidebar.showPaths') || ConfigShowPaths.NEVER;
+};
+
+export const getRootFolderConfig = (): boolean => {
+  return (
+    workspace.getConfiguration().get('workspaceSidebar.showRootFolder') || CONFIG_SHOW_ROOT_FOLDER
+  );
 };
 
 export const getShowTreeConfig = (): boolean => {

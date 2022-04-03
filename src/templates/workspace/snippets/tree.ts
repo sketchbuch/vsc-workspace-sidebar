@@ -1,3 +1,4 @@
+import { getRootFolderConfig } from '../../../config/getConfig';
 import { RenderVars } from '../../../webviews/webviews.interface';
 import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree';
 import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
@@ -15,16 +16,27 @@ export const tree = (
   renderVars: RenderVars,
   state: WorkspaceState
 ): string => {
+  const showRootFolder = getRootFolderConfig();
   const { files, folderPath, isRoot, sub } = branch;
 
   // If this is the root level, and there are no workspaces in the folder,
   // ignore the default folder and just show the subfolders
-  if (isRoot && files.length < 1 && sub.length > 0) {
-    return sub
-      .map((child) => {
-        return tree(child, depth, renderVars, state);
-      })
-      .join('');
+  if (isRoot && !showRootFolder) {
+    const children = sortTreeChildren([...sub, ...files]);
+
+    if (children.length > 0) {
+      return children
+        .map((child) => {
+          if (isFile(child)) {
+            return treeItemFile(child, -1, renderVars);
+          } else {
+            return tree(child, depth, renderVars, state);
+          }
+        })
+        .join('');
+    }
+
+    return '';
   }
 
   const isClosed = state.closedFolders.includes(folderPath);
