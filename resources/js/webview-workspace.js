@@ -1,13 +1,14 @@
 (function () {
   const vscode = acquireVsCodeApi();
 
-  let folderSaveBtn = null;
-  let newWinIcons = null;
-  let searchInput = null;
+  const searchInput = document.querySelector('#searchWorkspaces');
+  const folderSaveBtn = document.querySelector('#saveFolderAsWorkspace');
+  const newWinIcons = document.querySelectorAll('.list__buttons');
+  const viewLinks = document.querySelectorAll('.view__link');
+  const wsElements = document.querySelectorAll('.list__styled-item--unselected');
+  const wsFolders = document.querySelectorAll('.list__branch-list-item-folder-closable');
+
   let searchTerm = '';
-  let viewLinks = null;
-  let wsElements = null;
-  let wsFolders = null;
 
   const sendMessage = (action, payload) => {
     const message = { action };
@@ -68,18 +69,6 @@
   };
 
   document.addEventListener('DOMContentLoaded', () => {
-    const searchInputShadow = document.querySelector('#searchWorkspaces').shadowRoot;
-
-    folderSaveBtn = document.querySelector('#saveFolderAsWorkspace');
-    newWinIcons = document.querySelectorAll('.list__buttons');
-    viewLinks = document.querySelectorAll('.view__link');
-    wsElements = document.querySelectorAll('.list__styled-item--unselected');
-    wsFolders = document.querySelectorAll('.list__branch-list-item-folder-closable');
-
-    if (searchInputShadow) {
-      searchInput = searchInputShadow.querySelector('input');
-    }
-
     newWinIcons.forEach((element) => {
       element.addEventListener('click', handleIconClick);
     });
