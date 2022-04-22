@@ -9,6 +9,7 @@ import {
   getFolderConfig,
   getSearchMinConfig,
   getShowPathsConfig,
+  getShowRootFolderConfig,
   getShowTreeConfig,
 } from '../../../config/getConfig';
 import {
@@ -20,6 +21,7 @@ import {
   CONFIG_FOLDER,
   CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_HIERARCHY,
+  CONFIG_SHOW_ROOT_FOLDER,
 } from '../../../constants/config';
 
 suite('Config > getConfig:', () => {
@@ -71,5 +73,9 @@ suite('Config > getConfig:', () => {
 
   test('getCondenseFileTreeConfig() returns the default if no config value is set', () => {
     expect(getCondenseFileTreeConfig()).to.equal(CONFIG_CONDENSE_FILETREE);
+  });
+
+  test('getShowRootFolderConfig() returns the default if no config value is set', () => {
+    expect(getShowRootFolderConfig()).to.equal(CONFIG_SHOW_ROOT_FOLDER);
   });
 });

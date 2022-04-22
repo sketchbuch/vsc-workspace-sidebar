@@ -46,7 +46,7 @@ export const getShowPathsConfig = (): ConfigShowPaths => {
   return workspace.getConfiguration().get('workspaceSidebar.showPaths') || ConfigShowPaths.NEVER;
 };
 
-export const getRootFolderConfig = (): boolean => {
+export const getShowRootFolderConfig = (): boolean => {
   return (
     workspace.getConfiguration().get('workspaceSidebar.showRootFolder') || CONFIG_SHOW_ROOT_FOLDER
   );
