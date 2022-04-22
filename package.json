@@ -2,7 +2,7 @@
   "name": "vsc-workspace-sidebar",
   "description": "Adds a sidebar to VSCode that lists Workspaces and lets you open them in the current window or a new window.",
   "displayName": "Workspace Sidebar",
-  "version": "1.4.1",
+  "version": "1.4.1-alpha",
   "activationEvents": [
     "*"
   ],
@@ -111,6 +111,12 @@
         "workspaceSidebar.showFolderHierarchy": {
           "default": false,
           "description": "%config.workspaceShowFolderHierarchy.description%",
+          "scope": "application",
+          "type": "boolean"
+        },
+        "workspaceSidebar.showRootFolder": {
+          "default": false,
+          "description": "Show root folder",
           "scope": "application",
           "type": "boolean"
         },
@@ -249,7 +255,6 @@
     "@types/mock-fs": "^4.13.0",
     "@types/node": "^13.11.0",
     "@types/sinon": "^9.0.9",
-    "@types/stylelint": "^9.10.1",
     "@types/vscode": "^1.50.0",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
@@ -265,8 +270,8 @@
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
     "sinon": "^9.2.2",
-    "stylelint": "^13.9.0",
-    "stylelint-config-recommended": "^3.0.0",
+    "stylelint": "^14.7.1",
+    "stylelint-config-recommended": "^7.0.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.8.3",
     "vscode-test": "^1.3.0"

@@ -8,6 +8,7 @@ import { treeIndent } from './treeIndent';
 
 export const treeItemFile = (file: File, depth: number, renderVars: RenderVars): string => {
   const { isSelected, label, path, showPath } = file;
+  const isRootLvlFile = depth < 0;
   const classes = `list__branch-list-item list__branch-list-item-file list__styled-item ${
     isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
   }`;
@@ -16,7 +17,7 @@ export const treeItemFile = (file: File, depth: number, renderVars: RenderVars):
   return `
     <li class="${classes}" data-file="${file.file}" data-depth="${depth}">
       ${isSelected ? listItemIcon(renderVars) : ''}
-      ${treeIndent(depth + 1)}
+      ${treeIndent(isRootLvlFile ? 0 : depth + 1)}
       <span class="list__element" title="${tooltip}">
         ${treeIconFile()}
         <span class="list__text">
