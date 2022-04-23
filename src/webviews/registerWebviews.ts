@@ -19,7 +19,7 @@ export const registerWebviews = (
       const { affectsConfiguration } = event;
 
       if (affectsConfiguration(WS_CONFIG)) {
-        configOptions.forEach(({ config, type }) => {
+        for (const { config, type } of configOptions) {
           if (affectsConfiguration(config)) {
             switch (type) {
               case 'tree':
@@ -38,8 +38,10 @@ export const registerWebviews = (
                 workspaceViewProvider.refresh(type === 'rerender');
                 break;
             }
+
+            break;
           }
-        });
+        }
       }
     }
   );
