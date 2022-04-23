@@ -1,10 +1,13 @@
 import * as vscode from 'vscode';
+import { getShowTreeConfig } from '../config/getConfig';
 import { isWorkspaceFile } from '../utils/fs/isWorkspaceFile';
+import { ConfigOptions, WS_CONFIG } from './configOptions';
 import { WorkspaceViewProvider } from './Workspace/WorkspaceViewProvider';
 
 export const registerWebviews = (
   context: vscode.ExtensionContext,
-  workspaceViewProvider: WorkspaceViewProvider
+  workspaceViewProvider: WorkspaceViewProvider,
+  configOptions: ConfigOptions
 ): void => {
   const regWebview = vscode.window.registerWebviewViewProvider(
     WorkspaceViewProvider.viewType,
@@ -13,24 +16,30 @@ export const registerWebviews = (
 
   const configChange = vscode.workspace.onDidChangeConfiguration(
     (event: vscode.ConfigurationChangeEvent) => {
-      if (event.affectsConfiguration('workspaceSidebar.depth')) {
-        workspaceViewProvider.refresh();
-      } else if (event.affectsConfiguration('workspaceSidebar.folder')) {
-        workspaceViewProvider.refresh();
-      } else if (event.affectsConfiguration('workspaceSidebar.showPaths')) {
-        workspaceViewProvider.updateVisibleFiles();
-      } else if (event.affectsConfiguration('workspaceSidebar.searchMinimum')) {
-        workspaceViewProvider.refresh(true);
-      } else if (event.affectsConfiguration('workspaceSidebar.showFolderHierarchy')) {
-        workspaceViewProvider.updateVisibleFiles();
-      } else if (event.affectsConfiguration('workspaceSidebar.actions')) {
-        workspaceViewProvider.refresh(true);
-      } else if (event.affectsConfiguration('workspaceSidebar.cleanLabels')) {
-        workspaceViewProvider.refresh();
-      } else if (event.affectsConfiguration('workspaceSidebar.condenseFileTree')) {
-        workspaceViewProvider.updateFileTree();
-      } else if (event.affectsConfiguration('workspaceSidebar.showRootFolder')) {
-        workspaceViewProvider.updateFileTree();
+      const { affectsConfiguration } = event;
+
+      if (affectsConfiguration(WS_CONFIG)) {
+        configOptions.forEach(({ config, type }) => {
+          if (affectsConfiguration(config)) {
+            switch (type) {
+              case 'tree':
+                const showTree = getShowTreeConfig();
+
+                if (showTree) {
+                  workspaceViewProvider.updateFileTree();
+                }
+                break;
+
+              case 'visible-files':
+                workspaceViewProvider.updateVisibleFiles();
+                break;
+
+              default:
+                workspaceViewProvider.refresh(type === 'rerender');
+                break;
+            }
+          }
+        });
       }
     }
   );

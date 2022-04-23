@@ -111,7 +111,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   }
 
   private render() {
-    if (this._view) {
+    if (this._view !== undefined) {
       const state = store.getState().ws;
       this._view.title = this.getViewTitle(state);
 

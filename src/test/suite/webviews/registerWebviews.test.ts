@@ -1,7 +1,9 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as vscode from 'vscode';
+import * as configs from '../../../config/getConfig';
 import { FS_WS_EXT } from '../../../constants/fs';
+import { configOptions, WS_CONFIG } from '../../../webviews/configOptions';
 import { registerWebviews } from '../../../webviews/registerWebviews';
 import { WorkspaceViewProvider } from '../../../webviews/Workspace/WorkspaceViewProvider';
 import { getMockContext } from '../../mocks/mockContext';
@@ -9,7 +11,8 @@ import { getMockUri } from '../../mocks/mockExtensionUri';
 
 suite('Webviews > registerWebviews()', () => {
   let configStub: sinon.SinonStub;
-  let mockContext = getMockContext();
+  let mockContext: vscode.ExtensionContext;
+  let refreshSpy: sinon.SinonSpy;
   let regWebviewStub: sinon.SinonStub;
   let ws: WorkspaceViewProvider;
 
@@ -18,17 +21,39 @@ suite('Webviews > registerWebviews()', () => {
     mockContext = getMockContext();
     regWebviewStub = sinon.stub(vscode.window, 'registerWebviewViewProvider');
     ws = new WorkspaceViewProvider(mockContext.extensionUri, mockContext.globalState);
+    refreshSpy = sinon.spy(ws, 'refresh');
   });
 
   teardown(() => {
     configStub.restore();
+    refreshSpy.restore();
     regWebviewStub.restore();
   });
+
+  const callChangeConfigCallaback = (affectsConfiguration: (section: string) => boolean) => {
+    const changeConfigCallBack = configStub.getCalls()[0].args[0];
+
+    changeConfigCallBack({
+      affectsConfiguration,
+    } as vscode.ConfigurationChangeEvent);
+  };
+
+  const getAffectsConfigSpy = (configKey: string) => {
+    return sinon.spy(
+      (configPath: string) =>
+        configPath === `${WS_CONFIG}${configKey}` || configPath.includes(WS_CONFIG)
+    );
+  };
+
+  const getConfigOptions = (optionWanted: string) => {
+    const configOpt = configOptions.find((opt) => opt.config.includes(optionWanted));
+    return configOpt ? [configOpt] : [];
+  };
 
   test('Sets up webview as expected', () => {
     const createStub = sinon.stub(vscode.workspace, 'onDidCreateFiles');
 
-    registerWebviews(mockContext, ws);
+    registerWebviews(mockContext, ws, configOptions);
 
     expect(mockContext.subscriptions).to.have.length(3);
     sinon.assert.callCount(configStub, 1);
@@ -38,179 +63,132 @@ suite('Webviews > registerWebviews()', () => {
     createStub.restore();
   });
 
-  suite('Configuration changes call refresh() correctly:', () => {
-    let refreshSpy: sinon.SinonSpy;
-    let updateTreeSpy: sinon.SinonSpy;
+  suite('Config changes that call refresh():', () => {
+    const testOption = (opt: string, isRerender: boolean) => {
+      test(`${WS_CONFIG}${opt}`, () => {
+        const affectsConfigSpy = getAffectsConfigSpy(opt);
+        const configOpts = getConfigOptions(opt);
+
+        registerWebviews(mockContext, ws, configOpts);
+        callChangeConfigCallaback(affectsConfigSpy);
+
+        sinon.assert.callCount(affectsConfigSpy, 2); // Check for WS_CONFIG and CONFIG_OPTION
+        sinon.assert.callCount(refreshSpy, 1);
+        expect(refreshSpy.getCalls()[0].args[0]).to.equal(isRerender);
+      });
+    };
+
+    [
+      { opt: '.actions', isRerender: true },
+      { opt: '.cleanLabels', isRerender: false },
+      { opt: '.depth', isRerender: false },
+      { opt: '.folder', isRerender: false },
+      { opt: '.searchMinimum', isRerender: true },
+    ].forEach((opt) => {
+      testOption(opt.opt, opt.isRerender);
+    });
+  });
+
+  suite('Config changes that call updateVisibleFiles():', () => {
     let updateVisibleSpy: sinon.SinonSpy;
 
     setup(() => {
-      refreshSpy = sinon.spy(ws, 'refresh');
-      updateTreeSpy = sinon.spy(ws, 'updateFileTree');
       updateVisibleSpy = sinon.spy(ws, 'updateVisibleFiles');
     });
 
     teardown(() => {
-      refreshSpy.restore();
-      updateTreeSpy.restore();
       updateVisibleSpy.restore();
     });
 
-    test('workspaceSidebar.depth', () => {
-      const affectsConfigSpy = sinon.spy(
-        (configPath: string) => configPath === 'workspaceSidebar.depth'
-      );
+    const testOption = (opt: string) => {
+      test(`${WS_CONFIG}${opt}`, () => {
+        const affectsConfigSpy = getAffectsConfigSpy(opt);
+        const configOpts = getConfigOptions(opt);
 
-      registerWebviews(mockContext, ws);
-      const eventCallback = configStub.getCalls()[0].args[0];
-      eventCallback({
-        affectsConfiguration: affectsConfigSpy,
-      } as vscode.ConfigurationChangeEvent);
+        registerWebviews(mockContext, ws, configOpts);
+        callChangeConfigCallaback(affectsConfigSpy);
 
-      sinon.assert.callCount(affectsConfigSpy, 1);
-      sinon.assert.callCount(refreshSpy, 1);
-      expect(refreshSpy.getCalls()[0].args[0]).to.equal(undefined);
+        sinon.assert.callCount(affectsConfigSpy, 2); // Check for WS_CONFIG and opt
+        sinon.assert.callCount(updateVisibleSpy, 1);
+      });
+    };
+
+    ['.showFolderHierarchy', '.showPaths'].forEach((opt: string) => {
+      testOption(opt);
+    });
+  });
+
+  suite('Config changes that call updateFileTree():', () => {
+    let treeConfigStub: sinon.SinonStub;
+    let updateTreeSpy: sinon.SinonSpy;
+
+    setup(() => {
+      treeConfigStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => false);
+      updateTreeSpy = sinon.spy(ws, 'updateFileTree');
     });
 
-    test('workspaceSidebar.folder', () => {
-      const affectsConfigSpy = sinon.spy(
-        (configPath: string) => configPath === 'workspaceSidebar.folder'
-      );
-
-      registerWebviews(mockContext, ws);
-      const eventCallback = configStub.getCalls()[0].args[0];
-      eventCallback({
-        affectsConfiguration: affectsConfigSpy,
-      } as vscode.ConfigurationChangeEvent);
-
-      sinon.assert.callCount(affectsConfigSpy, 2);
-      sinon.assert.callCount(refreshSpy, 1);
-      expect(refreshSpy.getCalls()[0].args[0]).to.equal(undefined);
+    teardown(() => {
+      treeConfigStub.restore();
+      updateTreeSpy.restore();
     });
 
-    test('workspaceSidebar.searchMinimum', () => {
-      const affectsConfigSpy = sinon.spy(
-        (configPath: string) => configPath === 'workspaceSidebar.searchMinimum'
-      );
+    const testOption = (opt: string, isTree: boolean) => {
+      test(`${WS_CONFIG}${opt} - ${isTree ? 'Tree' : 'Flat List'}`, () => {
+        treeConfigStub.callsFake(() => isTree);
 
-      registerWebviews(mockContext, ws);
-      const eventCallback = configStub.getCalls()[0].args[0];
-      eventCallback({
-        affectsConfiguration: affectsConfigSpy,
-      } as vscode.ConfigurationChangeEvent);
+        const affectsConfigSpy = getAffectsConfigSpy(opt);
+        const configOpts = getConfigOptions(opt);
 
-      sinon.assert.callCount(affectsConfigSpy, 4);
-      sinon.assert.callCount(refreshSpy, 1);
-      expect(refreshSpy.getCalls()[0].args[0]).to.equal(true);
+        registerWebviews(mockContext, ws, configOpts);
+        callChangeConfigCallaback(affectsConfigSpy);
+
+        sinon.assert.callCount(affectsConfigSpy, 2); // Check for WS_CONFIG and CONFIG_OPTION
+        sinon.assert.callCount(updateTreeSpy, isTree ? 1 : 0);
+      });
+    };
+
+    const treeOptions = ['.condenseFileTree', '.showRootFolder'];
+
+    treeOptions.forEach((opt: string) => {
+      testOption(opt, false);
     });
 
-    test('workspaceSidebar.showPaths', () => {
-      const affectsConfigSpy = sinon.spy(
-        (configPath: string) => configPath === 'workspaceSidebar.showPaths'
-      );
-
-      registerWebviews(mockContext, ws);
-      const eventCallback = configStub.getCalls()[0].args[0];
-      eventCallback({
-        affectsConfiguration: affectsConfigSpy,
-      } as vscode.ConfigurationChangeEvent);
-
-      sinon.assert.callCount(affectsConfigSpy, 3);
-      sinon.assert.callCount(updateVisibleSpy, 1);
-    });
-
-    test('workspaceSidebar.showFolderHierarchy', () => {
-      const affectsConfigSpy = sinon.spy(
-        (configPath: string) => configPath === 'workspaceSidebar.showFolderHierarchy'
-      );
-
-      registerWebviews(mockContext, ws);
-      const eventCallback = configStub.getCalls()[0].args[0];
-      eventCallback({
-        affectsConfiguration: affectsConfigSpy,
-      } as vscode.ConfigurationChangeEvent);
-
-      sinon.assert.callCount(affectsConfigSpy, 5);
-      sinon.assert.callCount(updateVisibleSpy, 1);
-    });
-
-    test('workspaceSidebar.actions', () => {
-      const affectsConfigSpy = sinon.spy(
-        (configPath: string) => configPath === 'workspaceSidebar.actions'
-      );
-
-      registerWebviews(mockContext, ws);
-      const eventCallback = configStub.getCalls()[0].args[0];
-      eventCallback({
-        affectsConfiguration: affectsConfigSpy,
-      } as vscode.ConfigurationChangeEvent);
-
-      sinon.assert.callCount(affectsConfigSpy, 6);
-      sinon.assert.callCount(refreshSpy, 1);
-      expect(refreshSpy.getCalls()[0].args[0]).to.equal(true);
-    });
-
-    test('workspaceSidebar.cleanLabels', () => {
-      const affectsConfigSpy = sinon.spy(
-        (configPath: string) => configPath === 'workspaceSidebar.cleanLabels'
-      );
-
-      registerWebviews(mockContext, ws);
-      const eventCallback = configStub.getCalls()[0].args[0];
-      eventCallback({
-        affectsConfiguration: affectsConfigSpy,
-      } as vscode.ConfigurationChangeEvent);
-
-      sinon.assert.callCount(affectsConfigSpy, 7);
-      sinon.assert.callCount(refreshSpy, 1);
-      expect(refreshSpy.getCalls()[0].args[0]).to.equal(undefined);
-    });
-
-    test('workspaceSidebar.condenseFileTree', () => {
-      const affectsConfigSpy = sinon.spy(
-        (configPath: string) => configPath === 'workspaceSidebar.condenseFileTree'
-      );
-
-      registerWebviews(mockContext, ws);
-      const eventCallback = configStub.getCalls()[0].args[0];
-      eventCallback({
-        affectsConfiguration: affectsConfigSpy,
-      } as vscode.ConfigurationChangeEvent);
-
-      sinon.assert.callCount(affectsConfigSpy, 8);
-      sinon.assert.callCount(updateTreeSpy, 1);
+    treeOptions.forEach((opt: string) => {
+      testOption(opt, true);
     });
   });
 
   suite('Creating a workspace file:', () => {
-    test('Calls refresh() if a file is a code-workspace file', () => {
-      const refreshSpy = sinon.spy(ws, 'refresh');
-      const createSpy = sinon.spy(vscode.workspace, 'onDidCreateFiles');
+    let createSpy: sinon.SinonSpy;
 
-      registerWebviews(mockContext, ws);
-      const eventCallback = createSpy.getCalls()[0].args[0];
-      eventCallback({
-        files: [getMockUri(FS_WS_EXT)],
-      } as vscode.FileCreateEvent);
+    setup(() => {
+      createSpy = sinon.spy(vscode.workspace, 'onDidCreateFiles');
+    });
 
-      sinon.assert.callCount(refreshSpy, 1);
-      expect(refreshSpy.getCalls()[0].args[0]).to.equal(undefined);
-
+    teardown(() => {
       createSpy.restore();
     });
 
-    test('Does NOT call refresh() if no file is a code-workspace file', () => {
-      const refreshSpy = sinon.spy(ws, 'refresh');
-      const createSpy = sinon.spy(vscode.workspace, 'onDidCreateFiles');
-
-      registerWebviews(mockContext, ws);
+    const callCreateCallaback = (files: vscode.Uri[]) => {
       const eventCallback = createSpy.getCalls()[0].args[0];
       eventCallback({
-        files: [getMockUri()],
+        files,
       } as vscode.FileCreateEvent);
+    };
+
+    test('Calls refresh() if a file is a code-workspace file', () => {
+      registerWebviews(mockContext, ws, configOptions);
+      callCreateCallaback([getMockUri(FS_WS_EXT)]);
+
+      sinon.assert.callCount(refreshSpy, 1);
+      expect(refreshSpy.getCalls()[0].args[0]).to.equal(undefined);
+    });
+
+    test('Does NOT call refresh() if no file is a code-workspace file', () => {
+      registerWebviews(mockContext, ws, configOptions);
+      callCreateCallaback([getMockUri()]);
 
       sinon.assert.callCount(refreshSpy, 0);
-
-      createSpy.restore();
     });
   });
 });
