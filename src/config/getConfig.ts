@@ -11,50 +11,40 @@ import {
   CONFIG_SHOW_ROOT_FOLDER,
 } from '../constants/config';
 
+const { getConfiguration } = workspace;
+
 export const getActionsConfig = (): string => {
-  return (
-    workspace.getConfiguration().get('workspaceSidebar.actions') ?? ConfigActions.CURRENT_WINDOW
-  );
+  return getConfiguration().get('workspaceSidebar.actions') ?? ConfigActions.CURRENT_WINDOW;
 };
 
 export const getCleanLabelsConfig = (): boolean => {
-  return workspace.getConfiguration().get('workspaceSidebar.cleanLabels') ?? CONFIG_CLEAN_LABELS;
+  return getConfiguration().get('workspaceSidebar.cleanLabels') ?? CONFIG_CLEAN_LABELS;
 };
 
 export const getCondenseFileTreeConfig = (): boolean => {
-  return (
-    workspace.getConfiguration().get('workspaceSidebar.condenseFileTree') ??
-    CONFIG_CONDENSE_FILETREE
-  );
+  return getConfiguration().get('workspaceSidebar.condenseFileTree') ?? CONFIG_CONDENSE_FILETREE;
 };
 
 export const getDepthConfig = (): number => {
-  return workspace.getConfiguration().get('workspaceSidebar.depth') ?? CONFIG_DEPTH;
+  return getConfiguration().get('workspaceSidebar.depth') ?? CONFIG_DEPTH;
 };
 
 export const getFolderConfig = (): string => {
-  return workspace.getConfiguration().get('workspaceSidebar.folder') || CONFIG_FOLDER;
+  return getConfiguration().get('workspaceSidebar.folder') || CONFIG_FOLDER;
 };
 
 export const getSearchMinConfig = (): number => {
-  return (
-    workspace.getConfiguration().get('workspaceSidebar.searchMinimum') ?? CONFIG_SEARCH_MINIMUM
-  );
+  return getConfiguration().get('workspaceSidebar.searchMinimum') ?? CONFIG_SEARCH_MINIMUM;
 };
 
 export const getShowPathsConfig = (): ConfigShowPaths => {
-  return workspace.getConfiguration().get('workspaceSidebar.showPaths') || ConfigShowPaths.NEVER;
+  return getConfiguration().get('workspaceSidebar.showPaths') || ConfigShowPaths.NEVER;
 };
 
 export const getShowRootFolderConfig = (): boolean => {
-  return (
-    workspace.getConfiguration().get('workspaceSidebar.showRootFolder') || CONFIG_SHOW_ROOT_FOLDER
-  );
+  return getConfiguration().get('workspaceSidebar.showRootFolder') || CONFIG_SHOW_ROOT_FOLDER;
 };
 
 export const getShowTreeConfig = (): boolean => {
-  return (
-    workspace.getConfiguration().get('workspaceSidebar.showFolderHierarchy') ??
-    CONFIG_SHOW_HIERARCHY
-  );
+  return getConfiguration().get('workspaceSidebar.showFolderHierarchy') ?? CONFIG_SHOW_HIERARCHY;
 };

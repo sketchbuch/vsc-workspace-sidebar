@@ -1,3 +1,4 @@
+import { getCondenseFileTreeConfig } from '../../../config/getConfig';
 import { RenderVars } from '../../../webviews/webviews.interface';
 import { File } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 import { getFileTooltip } from '../../helpers/getFileTooltip';
@@ -13,6 +14,7 @@ export const treeItemFile = (file: File, depth: number, renderVars: RenderVars):
     isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
   }`;
   const tooltip = getFileTooltip(file, 'cur-win');
+  const condenseFileTree = getCondenseFileTreeConfig();
 
   return `
     <li class="${classes}" data-file="${file.file}" data-depth="${depth}">
@@ -22,7 +24,7 @@ export const treeItemFile = (file: File, depth: number, renderVars: RenderVars):
         ${treeIconFile()}
         <span class="list__text">
           <span class="list__title">${label}</span>
-          ${showPath ? `<span class="list__description">${path}</span>` : ''}
+          ${showPath && condenseFileTree ? `<span class="list__description">${path}</span>` : ''}
         </span>
         ${!isSelected ? listItemButtons(file, renderVars) : ''}
       </span>
