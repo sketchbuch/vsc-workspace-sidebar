@@ -1,12 +1,12 @@
 import { t } from 'vscode-ext-localisation';
-import { getActionsConfig } from '../../config/getConfig';
 import { ConfigActions } from '../../constants/config';
+import { RenderVars } from '../../webviews/webviews.interface';
 import { File } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
 
 type TooltipType = 'cur-win' | 'new-win';
 
-export const getFileTooltip = (file: File, type?: TooltipType): string => {
-  const clickAction = getActionsConfig();
+export const getFileTooltip = (renderVars: RenderVars, file: File, type?: TooltipType): string => {
+  const { clickAction } = renderVars;
   const isDefault = clickAction === ConfigActions.CURRENT_WINDOW;
 
   const { isSelected, label, path, showPath } = file;

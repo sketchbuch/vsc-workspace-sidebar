@@ -4,9 +4,11 @@ import { listItem } from '../../../../../templates/workspace/snippets/listItem';
 import * as buttons from '../../../../../templates/workspace/snippets/listItemButtons';
 import * as icons from '../../../../../templates/workspace/snippets/listItemIcon';
 import { file1 } from '../../../../mocks/mockFileData';
-import { mockRenderVars } from '../../../../mocks/mockRenderVars';
+import { getMockRenderVars } from '../../../../mocks/mockRenderVars';
 
 suite('Templates > Workspace > Snippets: listItem()', () => {
+  const mockRenderVars = getMockRenderVars();
+
   test('Renders correctly', () => {
     const file = { ...file1 };
     const result = listItem(file, mockRenderVars);

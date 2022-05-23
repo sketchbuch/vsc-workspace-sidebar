@@ -1,6 +1,5 @@
 import { workspace } from 'vscode';
 import { t } from 'vscode-ext-localisation';
-import { getSearchMinConfig } from '../../../config/getConfig';
 import { RenderVars } from '../../../webviews/webviews.interface';
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 import { settingsLink } from '../../common/snippets/settingsLink';
@@ -11,7 +10,7 @@ import { searchForm } from '../snippets/searchForm';
 export const listView = (state: WorkspaceState, renderVars: RenderVars): string => {
   if (state.files.length > 0) {
     const wsFolders = workspace.workspaceFolders ? [...workspace.workspaceFolders] : undefined;
-    const searchMinimum = getSearchMinConfig();
+    const { searchMinimum } = renderVars;
     const showSearch = searchMinimum === 0 || state.files.length >= searchMinimum;
 
     return `

@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { ConfigActions } from '../constants/config';
 
 export interface PostMessage<Payload, Actions> {
   action: Actions;
@@ -6,8 +7,13 @@ export interface PostMessage<Payload, Actions> {
 }
 
 export interface RenderVars {
+  clickAction: ConfigActions;
+  condenseFileTree: boolean;
   imgDarkFolderUri: vscode.Uri;
   imgLightFolderUri: vscode.Uri;
+  searchMinimum: number;
+  showRootFolder: boolean;
+  showTree: boolean;
 }
 
 export interface TemplateVars {

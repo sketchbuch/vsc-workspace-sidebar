@@ -13,7 +13,7 @@ import {
 
 const { getConfiguration } = workspace;
 
-export const getActionsConfig = (): string => {
+export const getActionsConfig = (): ConfigActions => {
   return getConfiguration().get('workspaceSidebar.actions') ?? ConfigActions.CURRENT_WINDOW;
 };
 

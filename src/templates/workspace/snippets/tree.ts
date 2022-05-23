@@ -1,4 +1,3 @@
-import { getShowRootFolderConfig } from '../../../config/getConfig';
 import { RenderVars } from '../../../webviews/webviews.interface';
 import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree';
 import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
@@ -21,7 +20,7 @@ export const tree = (
   // If this is the root level, and show root folder is false,
   // ignore the root folder and just show the subfolders/subworkspaces
   if (isRoot) {
-    const showRootFolder = getShowRootFolderConfig();
+    const { showRootFolder } = renderVars;
 
     if (!showRootFolder) {
       const children = sortTreeChildren([...sub, ...files]);

@@ -23,11 +23,12 @@ import {
   SUBFOLDER3,
   SUBFOLDER4,
 } from '../../../../mocks/mockFileData';
-import { mockRenderVars } from '../../../../mocks/mockRenderVars';
+import { getMockRenderVars } from '../../../../mocks/mockRenderVars';
 import { getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > Snippets: tree()', () => {
   const state = getMockState();
+  const mockRenderVars = getMockRenderVars();
   let folderSpy: sinon.SinonSpy;
   let itemSpy: sinon.SinonSpy;
   let showRootConfigStub: sinon.SinonStub;

@@ -5,14 +5,15 @@ import { list } from '../../../../../templates/workspace/snippets/list';
 import * as item from '../../../../../templates/workspace/snippets/listItem';
 import * as tree from '../../../../../templates/workspace/snippets/tree';
 import {
-  getMockFileTree,
   getMockConvertedFiles,
   getMockFileList,
+  getMockFileTree,
 } from '../../../../mocks/mockFileData';
-import { mockRenderVars } from '../../../../mocks/mockRenderVars';
+import { getMockRenderVars } from '../../../../mocks/mockRenderVars';
 import { getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > Snippets: list()', () => {
+  const mockRenderVars = getMockRenderVars();
   let treeConfigStub: sinon.SinonStub;
   let itemSpy: sinon.SinonSpy;
   let treeSpy: sinon.SinonSpy;

@@ -6,7 +6,7 @@ import { getFileTooltip } from '../../helpers/getFileTooltip';
 
 export const listItemButtons = (file: File, renderVars: RenderVars) => {
   const { dark, light } = getImgUrls(renderVars, 'new-window');
-  const tooltip = getFileTooltip(file, 'new-win');
+  const tooltip = getFileTooltip(renderVars, file, 'new-win');
   const alt = t('webViews.workspace.listItem.iconAlt');
 
   return `

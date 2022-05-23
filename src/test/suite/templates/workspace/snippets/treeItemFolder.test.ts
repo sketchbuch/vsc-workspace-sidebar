@@ -7,7 +7,7 @@ import * as indent from '../../../../../templates/workspace/snippets/treeIndent'
 import { treeItemFolder } from '../../../../../templates/workspace/snippets/treeItemFolder';
 import { FileTree } from '../../../../../webviews/Workspace/helpers/getFileTree';
 import { ROOT_FOLDER } from '../../../../mocks/mockFileData';
-import { mockRenderVars } from '../../../../mocks/mockRenderVars';
+import { getMockRenderVars } from '../../../../mocks/mockRenderVars';
 import { getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
@@ -22,6 +22,7 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
     sub: [],
   };
   const mockState = getMockState();
+  const mockRenderVars = getMockRenderVars();
 
   let iconClosedSpy: sinon.SinonSpy;
   let iconOpenSpy: sinon.SinonSpy;

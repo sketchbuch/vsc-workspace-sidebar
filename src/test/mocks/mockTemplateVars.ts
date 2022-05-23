@@ -1,9 +1,9 @@
 import { Uri } from 'vscode';
 import { TemplateVars } from '../../webviews/webviews.interface';
 import { getMockUri } from './mockExtensionUri';
-import { mockRenderVars } from './mockRenderVars';
+import { getMockRenderVars } from './mockRenderVars';
 
-const { imgDarkFolderUri, imgLightFolderUri } = mockRenderVars;
+const { imgDarkFolderUri, imgLightFolderUri } = getMockRenderVars();
 
 export const getMockTemplateVars = (
   templateVars: Partial<TemplateVars> = {},

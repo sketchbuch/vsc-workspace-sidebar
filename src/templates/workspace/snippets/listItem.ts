@@ -6,7 +6,7 @@ import { listItemIcon } from './listItemIcon';
 
 export const listItem = (file: File, renderVars: RenderVars) => {
   const { file: dataFile, isSelected, label, path, showPath } = file;
-  const tooltip = getFileTooltip(file, 'cur-win');
+  const tooltip = getFileTooltip(renderVars, file, 'cur-win');
   const classes = `list__styled-item ${
     isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
   }`;

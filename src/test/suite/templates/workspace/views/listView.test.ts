@@ -3,10 +3,12 @@ import * as sinon from 'sinon';
 import * as settings from '../../../../../templates/common/snippets/settingsLink';
 import * as list from '../../../../../templates/workspace/snippets/list';
 import { listView } from '../../../../../templates/workspace/views/listView';
-import { mockRenderVars } from '../../../../mocks/mockRenderVars';
+import { getMockRenderVars } from '../../../../mocks/mockRenderVars';
 import { getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > View: listView()', () => {
+  const mockRenderVars = getMockRenderVars();
+
   test('Renders correctly if there are no files', () => {
     const mockState = getMockState({ files: [] });
     const spy = sinon.spy(settings, 'settingsLink');

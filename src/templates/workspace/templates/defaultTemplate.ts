@@ -5,30 +5,27 @@ import {
   FS_WEBVIEW_WORKSPACE_CSS,
   FS_WEBVIEW_WORKSPACE_JS,
 } from '../../../constants/fs';
-import { RenderVars, TemplateVars } from '../../../webviews/webviews.interface';
+import { TemplateVars } from '../../../webviews/webviews.interface';
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 import { metaTags } from '../../common/snippets/metaTags';
+import { getRenderVars } from '../../helpers/getRenderVars';
 import { errorView } from '../views/errorView';
 import { invalidView } from '../views/invalidView';
 import { listView } from '../views/listView';
 import { loadingView } from '../views/loadingView';
 
-export const defaultTemplate = (
-  {
+export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceState): string => {
+  const {
     codiconsFolderUri,
     cspSource,
     cssFolderUri,
-    imgDarkFolderUri,
-    imgLightFolderUri,
     nonce,
     scriptFolderUri,
     title,
     uiFolderUri,
-  }: TemplateVars,
-  state: WorkspaceState
-): string => {
+  } = templateVars;
   const { state: view } = state;
-  const renderVars: RenderVars = { imgDarkFolderUri, imgLightFolderUri };
+  const renderVars = getRenderVars(templateVars);
 
   let titleAttr = t('views.title');
   let content = '';

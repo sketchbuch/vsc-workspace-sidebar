@@ -3,10 +3,11 @@ import * as sinon from 'sinon';
 import * as icons from '../../../../../templates/getImgUrls';
 import { listItemButtons } from '../../../../../templates/workspace/snippets/listItemButtons';
 import { file1 } from '../../../../mocks/mockFileData';
-import { mockRenderVars } from '../../../../mocks/mockRenderVars';
+import { getMockRenderVars } from '../../../../mocks/mockRenderVars';
 
 suite('Templates > Workspace > Snippets: listItemButtons()', () => {
   const file = { ...file1, showPath: false };
+  const mockRenderVars = getMockRenderVars();
 
   test('Renders correctly', () => {
     const spy = sinon.spy(icons, 'getImgUrls');
