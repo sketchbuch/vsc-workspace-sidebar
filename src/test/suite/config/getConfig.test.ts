@@ -24,24 +24,24 @@ import {
   CONFIG_SHOW_ROOT_FOLDER,
 } from '../../../constants/config';
 
-suite('Config > getConfig:', () => {
+suite.only('Config > getConfig:', () => {
   let stub: sinon.SinonStub;
 
   setup(() => {
-    stub = getConfigStub();
+    stub = sinon.stub(workspace, 'getConfiguration').callsFake(() => {
+      console.log('### STUB');
+      return {
+        get: (section: string) => {
+          console.log('### STUB 2');
+          return undefined;
+        },
+      } as WorkspaceConfiguration;
+    });
   });
 
   teardown(() => {
     stub.restore();
   });
-
-  const getConfigStub = () => {
-    return sinon.stub(workspace, 'getConfiguration').callsFake(() => {
-      return {
-        get: (section: string) => undefined,
-      } as WorkspaceConfiguration;
-    });
-  };
 
   test('getActionsConfig() returns the default if no config value is set', () => {
     expect(getActionsConfig()).to.equal(ConfigActions.CURRENT_WINDOW);
@@ -51,7 +51,7 @@ suite('Config > getConfig:', () => {
     expect(getCleanLabelsConfig()).to.equal(CONFIG_CLEAN_LABELS);
   });
 
-  test('getDepthConfig() returns the default if no config value is set', () => {
+  test.only('getDepthConfig() returns the default if no config value is set', () => {
     expect(getDepthConfig()).to.equal(CONFIG_DEPTH);
   });
 

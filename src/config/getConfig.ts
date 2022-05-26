@@ -26,7 +26,9 @@ export const getCondenseFileTreeConfig = (): boolean => {
 };
 
 export const getDepthConfig = (): number => {
-  return getConfiguration().get('workspaceSidebar.depth') ?? CONFIG_DEPTH;
+  const depth: number | undefined = getConfiguration().get('workspaceSidebar.depth');
+  console.log('### depth', depth);
+  return depth ?? CONFIG_DEPTH;
 };
 
 export const getFolderConfig = (): string => {

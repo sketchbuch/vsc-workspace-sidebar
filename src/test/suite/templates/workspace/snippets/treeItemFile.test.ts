@@ -8,7 +8,7 @@ import { treeItemFile } from '../../../../../templates/workspace/snippets/treeIt
 import { file1 } from '../../../../mocks/mockFileData';
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars';
 
-suite.only('Templates > Workspace > Snippets: treeItemFile()', () => {
+suite('Templates > Workspace > Snippets: treeItemFile()', () => {
   const DEPTH = 0;
   const file = { ...file1, showPath: false };
   const mockRenderVars = getMockRenderVars();
@@ -32,12 +32,11 @@ suite.only('Templates > Workspace > Snippets: treeItemFile()', () => {
     selectedIconSpy.restore();
   });
 
-  test.only('Renders correctly', () => {
+  test('Renders correctly', () => {
     const result = treeItemFile(file, DEPTH, mockRenderVars);
-    console.log('### result', result);
 
-    //expect(result).to.be.a('string');
-    /* expect(result).contains(`data-file="${file.file}"`);
+    expect(result).to.be.a('string');
+    expect(result).contains(`data-file="${file.file}"`);
     expect(result).contains(`data-depth="${DEPTH}"`);
     expect(result).contains(
       `<span class="list__element" title="Open '${file.label}' in this window">`
@@ -45,7 +44,7 @@ suite.only('Templates > Workspace > Snippets: treeItemFile()', () => {
     expect(result).contains(`<span class="list__title">${file.label}</span>`);
 
     sinon.assert.calledOnce(indentSpy);
-    sinon.assert.calledOnce(iconTreeSpy); */
+    sinon.assert.calledOnce(iconTreeSpy);
   });
 
   test('Renders correctly when selected', () => {
