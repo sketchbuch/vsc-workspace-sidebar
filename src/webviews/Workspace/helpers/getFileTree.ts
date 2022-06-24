@@ -1,14 +1,20 @@
-import * as pathLib from 'path';
-import { getCondenseFileTreeConfig, getFolderConfig } from '../../../config/getConfig';
-import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment';
-import { Files } from '../WorkspaceViewProvider.interface';
 import { condenseTree } from './condenseTree';
+import { Files } from '../WorkspaceViewProvider.interface';
+import {
+  getCondenseFileTreeConfig,
+  getExplorerCompactFoldersConfig,
+  getFolderConfig,
+} from '../../../config/getConfig';
+import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment';
+import * as pathLib from 'path';
+import { compactTree } from './compactTree';
 
 export type FileTrees = FileTree[];
 
 export interface FileTree {
   files: Files;
   folderPath: string; // Used to help ID closed folders
+  isCompacted: boolean;
   isRoot: boolean;
   label: string;
   searchLabel: string;
@@ -21,12 +27,14 @@ type FolderList = {
 
 export const getFileTree = (files: Files): FileTree => {
   const condense = getCondenseFileTreeConfig();
+  const compact = getExplorerCompactFoldersConfig();
   const configFolder = getFolderConfig();
   const rootFolder = getLastPathSegment(configFolder);
 
   let tree: FileTree = {
     files: [],
     folderPath: rootFolder,
+    isCompacted: false,
     isRoot: true,
     label: rootFolder,
     searchLabel: rootFolder.toLowerCase(),
@@ -80,5 +88,13 @@ export const getFileTree = (files: Files): FileTree => {
     }
   });
 
-  return condense === true ? condenseTree(tree) : tree;
+  if (condense === true) {
+    tree = condenseTree(tree);
+  }
+
+  if (compact === true) {
+    tree = compactTree(tree);
+  }
+
+  return tree;
 };
