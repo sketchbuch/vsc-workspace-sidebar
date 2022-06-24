@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { getShowTreeConfig } from '../config/getConfig';
 import { isWorkspaceFile } from '../utils/fs/isWorkspaceFile';
-import { ConfigOptions, WS_CONFIG } from './configOptions';
+import { ConfigOptions, EXPLORER_CONFIG, WS_CONFIG } from './configOptions';
 import { WorkspaceViewProvider } from './Workspace/WorkspaceViewProvider';
 
 export const registerWebviews = (
@@ -18,7 +18,7 @@ export const registerWebviews = (
     (event: vscode.ConfigurationChangeEvent) => {
       const { affectsConfiguration } = event;
 
-      if (affectsConfiguration(WS_CONFIG)) {
+      if (affectsConfiguration(WS_CONFIG) || affectsConfiguration(EXPLORER_CONFIG)) {
         for (const { config, type } of configOptions) {
           if (affectsConfiguration(config)) {
             switch (type) {
