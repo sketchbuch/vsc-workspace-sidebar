@@ -14,7 +14,6 @@ export type FileTrees = FileTree[];
 export interface FileTree {
   files: Files;
   folderPath: string; // Used to help ID closed folders
-  isCompacted: boolean;
   isRoot: boolean;
   label: string;
   searchLabel: string;
@@ -34,7 +33,6 @@ export const getFileTree = (files: Files): FileTree => {
   let tree: FileTree = {
     files: [],
     folderPath: rootFolder,
-    isCompacted: false,
     isRoot: true,
     label: rootFolder,
     searchLabel: rootFolder.toLowerCase(),

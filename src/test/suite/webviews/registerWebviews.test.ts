@@ -9,6 +9,7 @@ import { WorkspaceViewProvider } from '../../../webviews/Workspace/WorkspaceView
 import { getMockContext } from '../../mocks/mockContext';
 import { getMockUri } from '../../mocks/mockExtensionUri';
 
+// TODO - Add test for explorer compact folders
 suite('Webviews > registerWebviews()', () => {
   let configStub: sinon.SinonStub;
   let mockContext: vscode.ExtensionContext;
