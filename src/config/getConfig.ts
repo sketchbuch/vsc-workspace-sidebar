@@ -5,6 +5,7 @@ import {
   CONFIG_CLEAN_LABELS,
   CONFIG_CONDENSE_FILETREE,
   CONFIG_DEPTH,
+  CONFIG_EXPLORER_COMPACT_FOLDERS,
   CONFIG_FOLDER,
   CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_HIERARCHY,
@@ -26,9 +27,11 @@ export const getCondenseFileTreeConfig = (): boolean => {
 };
 
 export const getDepthConfig = (): number => {
-  const depth: number | undefined = getConfiguration().get('workspaceSidebar.depth');
-  console.log('### depth', depth);
-  return depth ?? CONFIG_DEPTH;
+  return getConfiguration().get('workspaceSidebar.depth') ?? CONFIG_DEPTH;
+};
+
+export const getExplorerCompactFoldersConfig = (): boolean => {
+  return getConfiguration().get('explorer.compactFolders') ?? CONFIG_EXPLORER_COMPACT_FOLDERS;
 };
 
 export const getFolderConfig = (): string => {
