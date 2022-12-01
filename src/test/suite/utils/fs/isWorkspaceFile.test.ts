@@ -22,4 +22,9 @@ suite('Utils > Fs -> isWorkspaceFile()', () => {
   test('Returns true if the schema is "file" and the file is a workspace file without folders', () => {
     expect(isWorkspaceFile(`test.${FS_WS_FILETYPE}`, 'file')).to.equal(true);
   });
+
+  test('Correctly handles multiple dots in a file name', () => {
+    expect(isWorkspaceFile(`/a/file/domain.com.${FS_WS_FILETYPE}`, 'file')).to.equal(true);
+    expect(isWorkspaceFile(`domain.com.${FS_WS_FILETYPE}`, 'file')).to.equal(true);
+  });
 });
