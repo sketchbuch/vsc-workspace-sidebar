@@ -34,9 +34,8 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-#### [1.4.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.4.0...1.4.1) (2022-03-24)
+#### [1.4.2](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.4.1...1.4.2) (2022-12-01)
 
-- Fixes an issue that workspaces in the root directory were not displayed in tree view. Resolves [#47](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/47)
-- Tree generation has been changed so that sorting of sub folders and files is possible. In 1.4.0 folders always came before workspaces.
-- A config setting has been added to decide if the tree should be condensed or not (default is true). Condensing removes subfolders if they are no further subfolders and there is only one workspace file within it. The Workspace is then displayed in their parent folder to reduce visual noise if you only ever have one workspace per folder.
-- Added more tests, refactored tests and improved file/file tree mocks
+- Fixes workspaces with dots in the file names being displayed
+- Added option to compact folders if the explorer compact option is true (tree view)
+- Updated tests

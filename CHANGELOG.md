@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.4.2](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.4.1...1.4.2) (2022-12-01)
+
+- Fixes workspaces with dots in the file names being displayed
+- Added option to compact folders if the explorer compact option is true (tree view)
+- Updated tests
+
 ## [1.4.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.4.0...1.4.1) (2022-03-24)
 
 - Fixes an issue that workspaces in the root directory were not displayed in tree view. Resolves [#47](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/47)
