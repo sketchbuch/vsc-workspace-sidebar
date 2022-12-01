@@ -34,11 +34,9 @@ export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) =
       return file;
     });
   } else if (showPaths === ConfigShowPaths.NEVER) {
-    visibleFiles = visibleFiles.map(
-      (file): File => {
-        return { ...file, showPath: false };
-      }
-    );
+    visibleFiles = visibleFiles.map((file): File => {
+      return { ...file, showPath: false };
+    });
   }
 
   return visibleFiles;

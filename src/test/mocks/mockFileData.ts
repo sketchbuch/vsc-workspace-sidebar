@@ -1,8 +1,17 @@
+import * as path from 'path';
 import { FS_WS_FILETYPE as EXT } from '../../constants/fs';
 import { FileTree } from '../../webviews/Workspace/helpers/getFileTree';
 import { File, Files } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
 
-type GetFileTreeType = 'condensed' | 'condensed-searched' | 'normal' | 'searched';
+type GetFileTreeType =
+  | 'compacted-condensed-searched'
+  | 'compacted-condensed'
+  | 'compacted-searched'
+  | 'compacted'
+  | 'condensed-searched'
+  | 'condensed'
+  | 'normal'
+  | 'searched';
 type SortDir = 'asc' | 'desc';
 
 export const ROOT_FOLDER = 'dev';
@@ -57,9 +66,19 @@ export const getMockFileList = () => [file1.file, file2.file, file3.file, file4.
 
 export const getMockFolderList = (type: GetFileTreeType): string[] => {
   switch (type) {
+    case 'compacted-condensed':
+      return [FOLDER2, FOLDER3, FOLDER4];
+
+    case 'compacted':
+      return [FOLDER2, file3.path, file4.path];
+
     case 'condensed':
       return [FOLDER1, FOLDER2, FOLDER3, FOLDER4];
 
+    case 'compacted-searched':
+      return [file4.path];
+
+    case 'compacted-condensed-searched':
     case 'condensed-searched':
       return [FOLDER4];
 
@@ -170,6 +189,25 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
         ],
       };
 
+    case 'compacted-searched':
+      return {
+        files: [],
+        folderPath: ROOT_FOLDER,
+        isRoot: true,
+        label: ROOT_FOLDER,
+        searchLabel: ROOT_FOLDER.toLowerCase(),
+        sub: [
+          {
+            files: [{ ...getMockVisibleFiles()[3] }],
+            folderPath: file4.path,
+            isRoot: false,
+            label: path.join(FOLDER4, SUBFOLDER4),
+            searchLabel: path.join(FOLDER4, SUBFOLDER4).toLowerCase(),
+            sub: [],
+          },
+        ],
+      };
+
     case 'searched':
       return {
         files: [],
@@ -194,6 +232,95 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
                 sub: [],
               },
             ],
+          },
+        ],
+      };
+
+    case 'compacted':
+      return {
+        files: [],
+        folderPath: ROOT_FOLDER,
+        isRoot: true,
+        label: ROOT_FOLDER,
+        searchLabel: ROOT_FOLDER.toLowerCase(),
+        sub: [
+          {
+            files: [{ ...getMockVisibleFiles()[1] }],
+            folderPath: file1.path,
+            isRoot: false,
+            label: path.join(FOLDER1, SUBFOLDER1, SUBFOLDER2),
+            searchLabel: path.join(FOLDER1, SUBFOLDER1, SUBFOLDER2).toLowerCase(),
+            sub: [],
+          },
+          {
+            files: [{ ...getMockVisibleFiles()[2] }],
+            folderPath: file3.path,
+            isRoot: false,
+            label: path.join(FOLDER3, SUBFOLDER3),
+            searchLabel: path.join(FOLDER3, SUBFOLDER3).toLowerCase(),
+            sub: [],
+          },
+          {
+            files: [{ ...getMockVisibleFiles()[3] }],
+            folderPath: file4.path,
+            isRoot: false,
+            label: path.join(FOLDER4, SUBFOLDER4),
+            searchLabel: path.join(FOLDER4, SUBFOLDER4).toLowerCase(),
+            sub: [],
+          },
+        ],
+      };
+
+    case 'compacted-condensed-searched':
+      return {
+        files: [],
+        folderPath: ROOT_FOLDER,
+        isRoot: true,
+        label: ROOT_FOLDER,
+        searchLabel: ROOT_FOLDER.toLowerCase(),
+        sub: [
+          {
+            files: [{ ...getMockVisibleFiles()[3] }],
+            folderPath: FOLDER4,
+            isRoot: false,
+            label: FOLDER4,
+            searchLabel: FOLDER4.toLowerCase(),
+            sub: [],
+          },
+        ],
+      };
+
+    case 'compacted-condensed':
+      return {
+        files: [],
+        folderPath: ROOT_FOLDER,
+        isRoot: true,
+        label: ROOT_FOLDER,
+        searchLabel: ROOT_FOLDER.toLowerCase(),
+        sub: [
+          {
+            files: [{ ...getMockVisibleFiles()[0] }, { ...getMockVisibleFiles()[1] }],
+            folderPath: file1.path,
+            isRoot: false,
+            label: path.join(FOLDER1, SUBFOLDER1),
+            searchLabel: path.join(FOLDER1, SUBFOLDER1).toLowerCase(),
+            sub: [],
+          },
+          {
+            files: [{ ...getMockVisibleFiles()[2] }],
+            folderPath: FOLDER3,
+            isRoot: false,
+            label: FOLDER3,
+            searchLabel: FOLDER3.toLowerCase(),
+            sub: [],
+          },
+          {
+            files: [{ ...getMockVisibleFiles()[3] }],
+            folderPath: FOLDER4,
+            isRoot: false,
+            label: FOLDER4,
+            searchLabel: FOLDER4.toLowerCase(),
+            sub: [],
           },
         ],
       };

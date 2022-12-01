@@ -60,19 +60,16 @@ export const registerCommands = (
   );
 
   context.subscriptions.push(
-    registerCommand(
-      CMD_SORT,
-      async (): Promise<void> => {
-        const sort = context.globalState.get<SortIds>(EXT_SORT) || 'ascending';
-        const selection = await vscode.window.showQuickPick(items);
+    registerCommand(CMD_SORT, async (): Promise<void> => {
+      const sort = context.globalState.get<SortIds>(EXT_SORT) || 'ascending';
+      const selection = await vscode.window.showQuickPick(items);
 
-        if (selection && selection.id !== sort) {
-          await context.globalState
-            .update(EXT_SORT, selection.id)
-            .then(() => workspaceViewProvider.updateSort());
-        }
+      if (selection && selection.id !== sort) {
+        await context.globalState
+          .update(EXT_SORT, selection.id)
+          .then(() => workspaceViewProvider.updateSort());
       }
-    )
+    })
   );
 
   context.subscriptions.push(

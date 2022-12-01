@@ -15,15 +15,8 @@ import { listView } from '../views/listView';
 import { loadingView } from '../views/loadingView';
 
 export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceState): string => {
-  const {
-    codiconsFolderUri,
-    cspSource,
-    cssFolderUri,
-    nonce,
-    scriptFolderUri,
-    title,
-    uiFolderUri,
-  } = templateVars;
+  const { codiconsFolderUri, cspSource, cssFolderUri, nonce, scriptFolderUri, title, uiFolderUri } =
+    templateVars;
   const { state: view } = state;
   const renderVars = getRenderVars(templateVars);
 

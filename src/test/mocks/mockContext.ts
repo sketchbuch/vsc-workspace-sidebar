@@ -7,6 +7,7 @@ export const extensionPath = path.resolve(`${__dirname}/../../..`);
 export const getMockContext = () => {
   return {
     asAbsolutePath: (relativePath: string) => relativePath,
+    extension: {} as vscode.Extension<{}>,
     extensionPath,
     environmentVariableCollection: {} as vscode.EnvironmentVariableCollection,
     extensionMode: vscode.ExtensionMode.Test,
@@ -15,6 +16,7 @@ export const getMockContext = () => {
       get: (key: string) => {
         // Do nothing...
       },
+      keys: () => [],
       setKeysForSync: (keys: string[]) => {},
       update: (key: string, value: never) => Promise.resolve(),
     } as vscode.Memento & { setKeysForSync(keys: string[]): void },
@@ -30,6 +32,7 @@ export const getMockContext = () => {
       get: (key: string) => {
         // Do nothing...
       },
+      keys: () => [],
       update: (key: string, value: never) => Promise.resolve(),
     } as vscode.Memento,
   } as vscode.ExtensionContext;

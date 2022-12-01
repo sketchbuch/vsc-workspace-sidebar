@@ -11,23 +11,21 @@ export const convertWsFiles = (wsFiles: WsFiles, selected: string) => {
   const folder = getFolderConfig();
   const osHomeDir = os.homedir();
 
-  const convertedFiles = [...wsFiles]
-    .filter((file) => isWorkspaceFile(file, 'file'))
-    .map(
-      (file): File => {
-        const label = getLabel(file, cleanLabels);
-        const path = getPath(file, folder, osHomeDir);
+  const filteredFiles = [...wsFiles].filter((file) => isWorkspaceFile(file, 'file'));
 
-        return {
-          file,
-          isSelected: isSelected(file, selected, process.platform),
-          label,
-          path,
-          searchLabel: label.toLowerCase(),
-          showPath: true,
-        };
-      }
-    );
+  const convertedFiles = filteredFiles.map((file): File => {
+    const label = getLabel(file, cleanLabels);
+    const path = getPath(file, folder, osHomeDir);
+
+    return {
+      file,
+      isSelected: isSelected(file, selected, process.platform),
+      label,
+      path,
+      searchLabel: label.toLowerCase(),
+      showPath: true,
+    };
+  });
 
   return convertedFiles;
 };

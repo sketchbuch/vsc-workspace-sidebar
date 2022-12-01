@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import * as configs from '../../../../../config/getConfig';
 import * as sort from '../../../../../templates/helpers/sortTreeChildren';
 import * as trees from '../../../../../templates/workspace/snippets/tree';
 import { tree } from '../../../../../templates/workspace/snippets/tree';
@@ -31,7 +30,6 @@ suite('Templates > Workspace > Snippets: tree()', () => {
   const mockRenderVars = getMockRenderVars();
   let folderSpy: sinon.SinonSpy;
   let itemSpy: sinon.SinonSpy;
-  let showRootConfigStub: sinon.SinonStub;
   let sortSpy: sinon.SinonSpy;
   let treeSpy: sinon.SinonSpy;
 
@@ -56,7 +54,6 @@ suite('Templates > Workspace > Snippets: tree()', () => {
   setup(() => {
     folderSpy = sinon.spy(folder, 'treeItemFolder');
     itemSpy = sinon.spy(item, 'treeItemFile');
-    showRootConfigStub = sinon.stub(configs, 'getShowRootFolderConfig').callsFake(() => false);
     sortSpy = sinon.spy(sort, 'sortTreeChildren');
     treeSpy = sinon.spy(trees, 'tree');
   });
@@ -64,15 +61,12 @@ suite('Templates > Workspace > Snippets: tree()', () => {
   teardown(() => {
     folderSpy.restore();
     itemSpy.restore();
-    showRootConfigStub.restore();
     sortSpy.restore();
     treeSpy.restore();
   });
 
   test('An empty tree will render just the root folder', () => {
-    showRootConfigStub.callsFake(() => true);
-
-    const result = tree(emptyRootTree, 0, mockRenderVars, state);
+    const result = tree(emptyRootTree, 0, getMockRenderVars({ showRootFolder: true }), state);
 
     expect(result).to.be.a('string');
 
@@ -88,10 +82,8 @@ suite('Templates > Workspace > Snippets: tree()', () => {
   });
 
   test('Root folder is rendered if there are root level files', () => {
-    showRootConfigStub.callsFake(() => true);
-
     const rootChildrenFileTree: FileTree = { ...getMockFileTree('normal'), files: [{ ...file1 }] };
-    tree(rootChildrenFileTree, 0, mockRenderVars, state);
+    tree(rootChildrenFileTree, 0, getMockRenderVars({ showRootFolder: true }), state);
 
     expect(folderSpy.args[0][0].folderPath).to.equal(ROOT_FOLDER);
   });

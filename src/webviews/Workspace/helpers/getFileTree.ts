@@ -1,13 +1,13 @@
-import { condenseTree } from './condenseTree';
-import { Files } from '../WorkspaceViewProvider.interface';
+import * as pathLib from 'path';
 import {
   getCondenseFileTreeConfig,
   getExplorerCompactFoldersConfig,
   getFolderConfig,
 } from '../../../config/getConfig';
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment';
-import * as pathLib from 'path';
+import { Files } from '../WorkspaceViewProvider.interface';
 import { compactTree } from './compactTree';
+import { condenseTree } from './condenseTree';
 
 export type FileTrees = FileTree[];
 

@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import * as configs from '../../../../../config/getConfig';
 import { list } from '../../../../../templates/workspace/snippets/list';
 import * as item from '../../../../../templates/workspace/snippets/listItem';
 import * as tree from '../../../../../templates/workspace/snippets/tree';
@@ -14,7 +13,6 @@ import { getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > Snippets: list()', () => {
   const mockRenderVars = getMockRenderVars();
-  let treeConfigStub: sinon.SinonStub;
   let itemSpy: sinon.SinonSpy;
   let treeSpy: sinon.SinonSpy;
 
@@ -26,13 +24,11 @@ suite('Templates > Workspace > Snippets: list()', () => {
   });
 
   setup(() => {
-    treeConfigStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => false);
     itemSpy = sinon.spy(item, 'listItem');
     treeSpy = sinon.spy(tree, 'tree');
   });
 
   teardown(() => {
-    treeConfigStub.restore();
     itemSpy.restore();
     treeSpy.restore();
   });
@@ -56,8 +52,6 @@ suite('Templates > Workspace > Snippets: list()', () => {
   });
 
   test('Renders list if not tree view', () => {
-    treeConfigStub.callsFake(() => false);
-
     const result = list(mockState, mockRenderVars);
 
     expect(result).to.be.a('string');
@@ -69,9 +63,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
   });
 
   test('Renders tree if tree view', () => {
-    treeConfigStub.callsFake(() => true);
-
-    const result = list(mockState, mockRenderVars);
+    const result = list(mockState, getMockRenderVars({ showTree: true }));
 
     expect(result).to.be.a('string');
     expect(result).contains('<ul class="list__list');
@@ -82,9 +74,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
   });
 
   test('Renders list if tree is null', () => {
-    treeConfigStub.callsFake(() => true);
-
-    const result = list({ ...mockState, fileTree: null }, mockRenderVars);
+    const result = list({ ...mockState, fileTree: null }, getMockRenderVars({ showTree: true }));
 
     expect(result).to.be.a('string');
     expect(result).contains('<ul class="list__list');
