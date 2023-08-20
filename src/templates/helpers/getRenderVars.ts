@@ -1,6 +1,7 @@
 import {
   getActionsConfig,
   getCondenseFileTreeConfig,
+  getDepthConfig,
   getSearchMinConfig,
   getShowRootFolderConfig,
   getShowTreeConfig,
@@ -14,6 +15,7 @@ export const getRenderVars = ({
   return {
     clickAction: getActionsConfig(),
     condenseFileTree: getCondenseFileTreeConfig(),
+    depth: getDepthConfig(),
     imgDarkFolderUri,
     imgLightFolderUri,
     searchMinimum: getSearchMinConfig(),

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import * as vscode from 'vscode';
-import { getWsType } from '../helpers/getWsType';
 import { WorkspaceState } from '../WorkspaceViewProvider.interface';
+import { getWsType } from '../helpers/getWsType';
 import { error } from './error';
 import { fetch, fetchFulfilled, fetchPending, fetchRejected } from './fetch';
 import { invalid } from './invalid';
@@ -20,6 +20,7 @@ export const initialState: WorkspaceState = {
   error: '',
   files: [],
   fileTree: null,
+  invalidReason: 'none',
   isFolderInvalid: false,
   search: '',
   selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',

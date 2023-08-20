@@ -10,8 +10,8 @@ export const folderList = (
   if (state.wsType === 'folder' && workspaceFolders) {
     const title =
       workspaceFolders.length === 1
-        ? 'webViews.workspace.folder.open'
-        : 'webViews.workspace.folder.open-plural';
+        ? 'webViews.workspace.list.folder.open'
+        : 'webViews.workspace.list.folder.open-plural';
 
     return `
       <div class="list__folder">
@@ -27,7 +27,7 @@ export const folderList = (
 
         <div class="list__folder-controls">
           <vscode-button class="list__folder-save" id="saveFolderAsWorkspace">
-            ${t('webViews.workspace.folder.saveButton')}
+            ${t('webViews.workspace.list.folder.saveButton')}
           </vscode-button>
         </div>
       </div>

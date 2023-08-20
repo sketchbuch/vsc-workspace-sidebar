@@ -23,15 +23,15 @@ import { getHtml } from '../../templates/getHtml';
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate';
 import { GlobalState } from '../../types/ext';
 import { HtmlData, PostMessage } from '../webviews.interface';
-import { fetch } from './store/fetch';
-import { workspaceSlice } from './store/workspaceSlice';
 import {
-  FolderState,
-  WorkspaceCache,
   WorkspacePmActions as Actions,
+  FolderState,
   WorkspacePmPayload as Payload,
+  WorkspaceCache,
   WorkspaceState,
 } from './WorkspaceViewProvider.interface';
+import { fetch } from './store/fetch';
+import { workspaceSlice } from './store/workspaceSlice';
 
 const { executeCommand } = vscode.commands;
 const {
@@ -85,11 +85,13 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   }
 
   private getViewTitle({ files, visibleFiles, search, state: view }: WorkspaceState) {
-    let viewTitle = t('views.title');
+    let viewTitle = t('webViews.workspace.list.title');
 
     if (view === 'list' && files !== null) {
       viewTitle = t(
-        search ? 'webViews.workspace.titleListSearched' : 'webViews.workspace.titleList',
+        search
+          ? 'webViews.workspace.list.titleCount.searched'
+          : 'webViews.workspace.list.titleCount.default',
         {
           matches: visibleFiles.length.toString(),
           total: files.length.toString(),

@@ -41,12 +41,15 @@ export type WorkspacePmPayloadSearchTerm = string;
 export type WorkspacePmPayloadToggleFolderState = string;
 export type WorkspaceToggleFolderStateBulk = FolderState;
 
+export type FileErrorResult = 'invalid-folder' | 'no-workspaces' | 'none';
+
 export type WorkspaceState = {
   closedFolders: string[];
   convertedFiles: Files;
   error: WorkspaceErrors;
   files: WorkspaceFiles;
   fileTree: FileTree | null;
+  invalidReason: FileErrorResult;
   isFolderInvalid: boolean;
   search: string;
   selected: string;
