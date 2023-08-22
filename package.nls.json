@@ -53,7 +53,7 @@
         "title": "Folder path is not a directory"
       },
       "noWorkspaces": {
-        "hintDepth": "The current search depth is 0, this means that only the workspace folder will be searched in for workspace files.",
+        "hintDepth": "The current search depth is 0, this means that only the root workspace folder will be searched in for workspace files.",
         "hintSettings": "Try increasing the search depth or change the folder path.",
         "title": "Folder contains no workspaces"
       }

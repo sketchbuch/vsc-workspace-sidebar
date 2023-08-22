@@ -37,30 +37,55 @@
   },
   "workspace": {
     "checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",
-    "error-fetch": "Beim Suchen nach Arbeitsbereichen ist ein Fehler aufgetreten",
-    "error": "Ein unbekannter Fehler ist aufgetreten",
-    "folder": {
-      "open-plural": "Derzeit geöffnete Ordner:",
-      "open": "Derzeit offener Ordner:",
-      "saveButton": "Als neuen Arbeitsbereich speichern"
+    "error": {
+      "default": {
+        "title": "Ein unbekannter Fehler ist aufgetreten"
+      },
+      "fetch": {
+        "title": "Beim Suchen nach Arbeitsbereichen ist ein Fehler aufgetreten"
+      }
     },
-    "inValid": "Der Ordnerpfad ist kein Verzeichnis",
-    "list-empty": "Keine Arbeitsbereiche gefunden",
-    "listItem": {
-      "iconAlt": "Neues Fenster icon",
-      "openCurWin": "'{{label}}' in diesem Fenster öffnen",
-      "openNewWin": "'{{label}}' in einem neuen Fenster öffnen",
-      "selected": "Aktueller Arbeitsbereich"
+    "inValid": {
+      "default": {
+        "title": "Beim Suchen nach Arbeitsbereichen ist ein Fehler aufgetreten"
+      },
+      "notDirectory": {
+        "title": "Der Ordnerpfad ist kein Verzeichnis"
+      },
+      "noWorkspaces": {
+        "hintDepth": "Die aktuelle Suchtiefe ist 0, das bedeutet, dass nur der Stammordner des Arbeitsbereichs nach Arbeitsbereichsdateien durchsucht wird.",
+        "hintSettings": "Versuchen Sie, die Suchtiefe zu erhöhen oder den Ordnerpfad zu ändern.",
+        "title": "Keine Arbeitsbereiche gefunden"
+      }
     },
-    "loading": "Arbeitsbereiche wird gesucht...",
-    "none": "Keine Arbeitsbereiche gefunden",
-    "searchBox": {
-      "ariaLabel": "Arbeitsbereiche durchsuchen",
-      "placeholder": "Suchen..."
+    "list": {
+      "empty": {
+        "title": "Keine Arbeitsbereiche gefunden"
+      },
+      "folder": {
+        "open-plural": "Derzeit geöffnete Ordner:",
+        "open": "Derzeit offener Ordner:",
+        "saveButton": "Als neuen Arbeitsbereich speichern"
+      },
+      "item": {
+        "iconAlt": "Neues Fenster icon",
+        "openCurWin": "'{{label}}' in diesem Fenster öffnen",
+        "openNewWin": "'{{label}}' in einem neuen Fenster öffnen",
+        "selected": "Aktueller Arbeitsbereich"
+      },
+      "search": {
+        "ariaLabel": "Arbeitsbereiche durchsuchen",
+        "placeholder": "Suchen...",
+        "noMatch": "Keine Arbeitsbereiche stimmten mit Ihren Suchbegriffen überein"
+      },
+      "title": "Arbeitsbereiche: {{title}}",
+      "titleCount": {
+        "default": "{{total}}",
+        "searched": "{{matches}}/{{total}}"
+      }
     },
-    "searchedOut": "Keine Arbeitsbereiche stimmten mit Ihren Suchbegriffen überein",
-    "viewTitle": "Arbeitsbereiche: {{title}}",
-    "titleList": "{{total}}",
-    "titleListSearched": "{{matches}}/{{total}}"
+    "loading": {
+      "title": "Arbeitsbereiche wird gesucht..."
+    }
   }
 }
