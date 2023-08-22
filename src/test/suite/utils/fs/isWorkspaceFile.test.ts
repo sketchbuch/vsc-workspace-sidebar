@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { FS_WS_FILETYPE } from '../../../../constants/fs';
 import { isWorkspaceFile } from '../../../../utils/fs/isWorkspaceFile';
 
-suite('Utils > Fs -> isWorkspaceFile()', () => {
+suite('Utils > Fs > isWorkspaceFile()', () => {
   test('Returns false if the schema is not "file"', () => {
     expect(isWorkspaceFile(`/a/file/test.${FS_WS_FILETYPE}`, 'something')).to.equal(false);
   });

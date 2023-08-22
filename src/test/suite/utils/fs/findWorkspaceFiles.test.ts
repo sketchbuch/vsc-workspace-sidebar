@@ -8,7 +8,7 @@ import * as utils from '../../../../utils/fs/collectFilesFromFolder';
 import { findWorkspaceFiles } from '../../../../utils/fs/findWorkspaceFiles';
 import { mockFsStructure } from '../../../mocks/mockFsStructure';
 
-suite('Utils > Fs -> findWorkspaceFiles()', () => {
+suite('Utils > Fs > findWorkspaceFiles()', () => {
   const FOLDER = 'find-workspace-files';
 
   let configFolderStub: sinon.SinonStub;
@@ -32,22 +32,32 @@ suite('Utils > Fs -> findWorkspaceFiles()', () => {
     configDepthStub.restore();
   });
 
-  test('Empty array is returned if the folder is not a folder', () => {
+  test('invalid-folder object is returned if the folder is not a folder', () => {
     configFolderStub.callsFake(() => 'a.file');
     return findWorkspaceFiles().then((wsFiles) => {
-      expect(wsFiles).to.eql([]);
+      expect(wsFiles).to.eql({ files: [], result: 'invalid-folder' });
     });
   });
 
-  test('File paths array is returned if the folder contains files of correct type', () => {
+  test('no-workspaces object is returned if the folder contains no workspace files', () => {
+    configFolderStub.callsFake(() => 'get-filenames-of-type');
+    return findWorkspaceFiles().then((wsFiles) => {
+      expect(wsFiles).to.eql({ files: [], result: 'no-workspaces' });
+    });
+  });
+
+  test('valid object is returned if the folder contains files of correct type', () => {
     const collectSpy = sinon.spy(utils, 'collectFilesFromFolder');
 
     return findWorkspaceFiles().then((wsFiles) => {
-      expect(wsFiles).to.eql([
-        path.join(FOLDER, 'WS 0.code-workspace'),
-        path.join(FOLDER, 'test-subfolder1', 'WS 1.code-workspace'),
-        path.join(FOLDER, 'test-subfolder2', 'WS 2.code-workspace'),
-      ]);
+      expect(wsFiles).to.eql({
+        files: [
+          path.join(FOLDER, 'WS 0.code-workspace'),
+          path.join(FOLDER, 'test-subfolder1', 'WS 1.code-workspace'),
+          path.join(FOLDER, 'test-subfolder2', 'WS 2.code-workspace'),
+        ],
+        result: 'none',
+      });
 
       sinon.assert.callCount(collectSpy, 3); // Initial + 2 subfolders
       sinon.assert.calledWith(collectSpy, FOLDER, FS_WS_FILETYPE, 1, 0);

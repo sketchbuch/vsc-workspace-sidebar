@@ -33,7 +33,6 @@ export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceStat
   } else {
     content = errorView(state, renderVars);
   }
-  content = invalidView({ ...state }, { ...renderVars });
 
   return `
     <!DOCTYPE html>

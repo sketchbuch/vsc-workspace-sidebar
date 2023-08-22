@@ -45,6 +45,7 @@ suite('Webviews > Workspace > Store > list()', () => {
     const expectedState = getMockState({
       convertedFiles: [],
       files: [],
+      invalidReason: 'no-workspaces',
       isFolderInvalid: true,
       state: 'invalid',
       visibleFiles: [],

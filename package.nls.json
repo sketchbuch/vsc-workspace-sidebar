@@ -38,14 +38,17 @@
   "workspace": {
     "checkSettings": "Check extension settings",
     "error": {
+      "default": {
+        "title": "An unknown error occured"
+      },
       "fetch": {
         "title": "An error occured whilst collecting workspace files"
-      },
-      "other": {
-        "title": "An unknown error occured"
       }
     },
     "inValid": {
+      "default": {
+        "title": "Something went wrong whilst collecting workspaces"
+      },
       "notDirectory": {
         "title": "Folder path is not a directory"
       },
@@ -53,9 +56,6 @@
         "hintDepth": "The current search depth is 0, this means that only the workspace folder will be searched in for workspace files.",
         "hintSettings": "Try increasing the search depth or change the folder path.",
         "title": "Folder contains no workspaces"
-      },
-      "other": {
-        "title": "Something went wrong whilst collecting workspaces"
       }
     },
     "list": {

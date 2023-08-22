@@ -13,7 +13,7 @@ export const errorView = (state: WorkspaceState, renderVars: RenderVars): string
           ${
             isFetch
               ? t('webViews.workspace.error.fetch.title')
-              : t('webViews.workspace.error.other.title')
+              : t('webViews.workspace.error.default.title')
           }
         </span>
       </p>

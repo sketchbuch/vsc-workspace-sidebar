@@ -3,7 +3,7 @@ import mockFs from 'mock-fs';
 import { collectFilesFromFolder } from '../../../../utils/fs/collectFilesFromFolder';
 import { mockFsStructure } from '../../../mocks/mockFsStructure';
 
-suite('Utils > Fs -> collectFilesFromFolder()', () => {
+suite('Utils > Fs > collectFilesFromFolder()', () => {
   const FOLDER = 'collect-files-from-folder';
   const FILE_TYPE = 'txt';
   const MAX_DEPTH = 1;

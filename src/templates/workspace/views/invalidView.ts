@@ -18,7 +18,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
               ? t('webViews.workspace.inValid.noWorkspaces.title')
               : isInvalidFolder
               ? t('webViews.workspace.inValid.notDirectory.title')
-              : t('webViews.workspace.inValid.other.title')
+              : t('webViews.workspace.inValid.default.title')
           }
         </span>
       </p>
