@@ -38,6 +38,7 @@ suite('Webviews > Workspace > Store > list()', () => {
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: [],
+      invalidReason: 'none',
       isFolderInvalid: false,
       state: 'loading',
       visibleFiles: getMockVisibleFiles(),
@@ -45,6 +46,7 @@ suite('Webviews > Workspace > Store > list()', () => {
     const expectedState = getMockState({
       convertedFiles: [],
       files: [],
+      invalidReason: 'no-workspaces',
       isFolderInvalid: true,
       state: 'invalid',
       visibleFiles: [],
@@ -63,6 +65,7 @@ suite('Webviews > Workspace > Store > list()', () => {
     const state = getMockState({
       convertedFiles: [],
       files: [],
+      invalidReason: 'none',
       isFolderInvalid: false,
       state: 'loading',
       visibleFiles: [],
@@ -71,6 +74,7 @@ suite('Webviews > Workspace > Store > list()', () => {
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
       fileTree: getMockFileTree('normal'),
+      invalidReason: 'none',
       isFolderInvalid: false,
       state: 'list',
       treeFolders: getMockFolderList('normal'),
@@ -93,6 +97,7 @@ suite('Webviews > Workspace > Store > list()', () => {
     const state = getMockState({
       convertedFiles: [],
       files: [],
+      invalidReason: 'none',
       isFolderInvalid: false,
       state: 'loading',
       visibleFiles: [],
@@ -101,6 +106,7 @@ suite('Webviews > Workspace > Store > list()', () => {
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
       fileTree: getMockFileTree('condensed'),
+      invalidReason: 'none',
       isFolderInvalid: false,
       state: 'list',
       treeFolders: getMockFolderList('condensed'),
@@ -123,6 +129,7 @@ suite('Webviews > Workspace > Store > list()', () => {
     const state = getMockState({
       convertedFiles: [],
       files: [],
+      invalidReason: 'none',
       isFolderInvalid: false,
       state: 'loading',
       visibleFiles: [],
@@ -131,6 +138,7 @@ suite('Webviews > Workspace > Store > list()', () => {
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
       fileTree: getMockFileTree('compacted'),
+      invalidReason: 'none',
       isFolderInvalid: false,
       state: 'list',
       treeFolders: getMockFolderList('compacted'),
@@ -153,6 +161,7 @@ suite('Webviews > Workspace > Store > list()', () => {
     const state = getMockState({
       convertedFiles: [],
       files: [],
+      invalidReason: 'none',
       isFolderInvalid: false,
       state: 'loading',
       visibleFiles: [],
@@ -161,6 +170,7 @@ suite('Webviews > Workspace > Store > list()', () => {
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
       fileTree: getMockFileTree('compacted-condensed'),
+      invalidReason: 'none',
       isFolderInvalid: false,
       state: 'list',
       treeFolders: getMockFolderList('compacted-condensed'),
@@ -179,6 +189,7 @@ suite('Webviews > Workspace > Store > list()', () => {
     const state = getMockState({
       convertedFiles: [],
       files: [],
+      invalidReason: 'none',
       isFolderInvalid: false,
       sort: 'ascending',
       state: 'loading',
@@ -188,6 +199,7 @@ suite('Webviews > Workspace > Store > list()', () => {
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
       fileTree: null,
+      invalidReason: 'none',
       isFolderInvalid: false,
       sort: 'ascending',
       state: 'list',
@@ -206,6 +218,7 @@ suite('Webviews > Workspace > Store > list()', () => {
     const state = getMockState({
       convertedFiles: [],
       files: [],
+      invalidReason: 'none',
       isFolderInvalid: false,
       sort: 'descending',
       state: 'loading',
@@ -215,6 +228,7 @@ suite('Webviews > Workspace > Store > list()', () => {
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
       fileTree: null,
+      invalidReason: 'none',
       isFolderInvalid: false,
       sort: 'descending',
       state: 'list',

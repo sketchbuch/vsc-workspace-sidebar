@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { getLastPathSegment } from '../../../../utils/fs/getLastPathSegment';
 
-suite('Utils > Fs -> getLastPathSegment()', () => {
+suite('Utils > Fs > getLastPathSegment()', () => {
   test('Returns path as-is if path has no slash', () => {
     expect(getLastPathSegment('')).to.equal('');
     expect(getLastPathSegment('file.txt')).to.equal('file.txt');

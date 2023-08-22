@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { isHiddenFile } from '../../../../utils/fs/isHiddenFile';
 
-suite('Utils > Fs -> isHiddenFile()', () => {
+suite('Utils > Fs > isHiddenFile()', () => {
   test('Returns true if the fileName begins with a "."', () => {
     expect(isHiddenFile('.')).to.equal(true);
     expect(isHiddenFile('..')).to.equal(true);

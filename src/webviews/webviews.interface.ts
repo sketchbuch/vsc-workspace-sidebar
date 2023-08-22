@@ -9,6 +9,7 @@ export interface PostMessage<Payload, Actions> {
 export interface RenderVars {
   clickAction: ConfigActions;
   condenseFileTree: boolean;
+  depth: number;
   imgDarkFolderUri: vscode.Uri;
   imgLightFolderUri: vscode.Uri;
   searchMinimum: number;

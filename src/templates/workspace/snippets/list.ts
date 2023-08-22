@@ -1,6 +1,6 @@
 import { t } from 'vscode-ext-localisation';
-import { RenderVars } from '../../../webviews/webviews.interface';
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { RenderVars } from '../../../webviews/webviews.interface';
 import { listItem } from './listItem';
 import { tree } from './tree';
 
@@ -13,7 +13,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
   } else if (visibleFiles.length === 0 && search) {
     return `
       <div class="list__searchedout">
-        <p>${t('webViews.workspace.searchedOut')}</p>
+        <p>${t('webViews.workspace.list.search.noMatch')}</p>
       </div>
     `;
   }

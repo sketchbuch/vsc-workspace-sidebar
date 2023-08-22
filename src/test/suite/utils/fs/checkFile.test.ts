@@ -4,7 +4,7 @@ import * as path from 'path';
 import { checkFile } from '../../../../utils/fs/checkFile';
 import { mockFsStructure } from '../../../mocks/mockFsStructure';
 
-suite('Utils > Fs -> checkFile()', () => {
+suite('Utils > Fs > checkFile()', () => {
   suiteSetup(() => {
     mockFs(mockFsStructure);
   });

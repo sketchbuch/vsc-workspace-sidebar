@@ -1,34 +1,32 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getShowTreeConfig } from '../../../config/getConfig';
-import { findWorkspaceFiles } from '../../../utils/fs/findWorkspaceFiles';
+import { FindWorkspaceFiles, findWorkspaceFiles } from '../../../utils/fs/findWorkspaceFiles';
+import { WorkspaceState, WorkspaceThunkAction } from '../WorkspaceViewProvider.interface';
 import { convertWsFiles } from '../helpers/convertWsFiles';
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree';
 import { getFileTree } from '../helpers/getFileTree';
 import { getVisibleFiles } from '../helpers/getVisibleFiles';
-import {
-  WorkspaceFiles,
-  WorkspaceState,
-  WorkspaceThunkAction,
-} from '../WorkspaceViewProvider.interface';
 
 export const fetch = createAsyncThunk('fetch', findWorkspaceFiles);
 
 export const fetchFulfilled = (
   state: WorkspaceState,
-  action: WorkspaceThunkAction<WorkspaceFiles>
+  action: WorkspaceThunkAction<FindWorkspaceFiles>
 ) => {
   const showTree = getShowTreeConfig();
 
-  state.files = action.payload;
-  state.convertedFiles = action.payload ? convertWsFiles(action.payload, state.selected) : [];
+  state.files = action.payload.files;
+  state.convertedFiles = action.payload ? convertWsFiles(action.payload.files, state.selected) : [];
 
   if (state.files.length === 0) {
     state.fileTree = null;
+    state.invalidReason = action.payload.result;
     state.isFolderInvalid = true;
     state.state = 'invalid';
     state.treeFolders = [];
     state.visibleFiles = [];
   } else {
+    state.invalidReason = 'none';
     state.isFolderInvalid = false;
     state.state = 'list';
     state.visibleFiles = getVisibleFiles(state.convertedFiles, state.search, state.sort);
@@ -40,6 +38,7 @@ export const fetchFulfilled = (
 
 export const fetchPending = (state: WorkspaceState) => {
   state.state = 'loading';
+  state.invalidReason = 'none';
   state.isFolderInvalid = false;
 };
 

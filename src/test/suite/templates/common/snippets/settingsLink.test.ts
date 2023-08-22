@@ -6,7 +6,7 @@ suite('Templates > Common > Snippets: settingsLink()', () => {
     const result = settingsLink();
 
     expect(result).to.be.a('string');
-    expect(result).contains('role="link" class="view__link view__message-description"');
-    expect(result).contains('Check the extension settings');
+    expect(result).contains('<a class="view__link view__message-description"');
+    expect(result).contains('Check extension settings');
   });
 });

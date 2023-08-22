@@ -7,12 +7,14 @@ suite('Webviews > Workspace > Store > error()', () => {
     const state = getMockState({
       error: '',
       files: [],
+      invalidReason: 'invalid-folder',
       isFolderInvalid: true,
       state: 'invalid',
     });
     const expectedState = getMockState({
       error: 'FETCH',
       files: [],
+      invalidReason: 'none',
       isFolderInvalid: false,
       state: 'error',
     });

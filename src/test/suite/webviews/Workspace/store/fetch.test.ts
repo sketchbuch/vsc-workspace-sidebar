@@ -1,17 +1,17 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import * as configs from '../../../../../config/getConfig';
 import {
   fetchFulfilled,
   fetchPending,
   fetchRejected,
 } from '../../../../../webviews/Workspace/store/fetch';
-import * as configs from '../../../../../config/getConfig';
 import {
-  getMockFileTree,
-  getMockVisibleFiles,
+  ROOT_FOLDER_PATH,
   getMockConvertedFiles,
   getMockFileList,
-  ROOT_FOLDER_PATH,
+  getMockFileTree,
+  getMockVisibleFiles,
 } from '../../../../mocks/mockFileData';
 import { getMockState } from '../../../../mocks/mockState';
 
@@ -82,7 +82,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       expect(state).not.to.eql(expectedState);
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: [],
+        payload: { files: [], result: 'none' },
         type: 'ws/list',
       });
       expect(state).to.eql(expectedState);
@@ -111,7 +111,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       expect(state).not.to.eql(expectedState);
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: getMockFileList(),
+        payload: { files: getMockFileList(), result: 'none' },
         type: 'ws/list',
       });
       expect(state.visibleFiles).to.eql(expectedState.visibleFiles);
@@ -139,7 +139,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       expect(state).not.to.eql(expectedState);
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: getMockFileList(),
+        payload: { files: getMockFileList(), result: 'none' },
         type: 'ws/list',
       });
       expect(state.visibleFiles).to.eql(expectedState.visibleFiles);
@@ -167,7 +167,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       expect(state).not.to.eql(expectedState);
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: getMockFileList(),
+        payload: { files: getMockFileList(), result: 'none' },
         type: 'ws/list',
       });
       expect(state.visibleFiles).to.eql(expectedState.visibleFiles);
@@ -195,7 +195,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       expect(state).not.to.eql(expectedState);
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: getMockFileList(),
+        payload: { files: getMockFileList(), result: 'none' },
         type: 'ws/list',
       });
       expect(state.visibleFiles).to.eql(expectedState.visibleFiles);

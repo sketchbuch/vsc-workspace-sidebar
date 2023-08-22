@@ -39,6 +39,10 @@ body.vscode-dark img[data-theme='light'] {
   position: relative;
 }
 
+.view__message + .view__message{
+  margin-top: 0.5rem;
+}
+
 .view__message-icon {
   left: 0px;
   position: absolute;
