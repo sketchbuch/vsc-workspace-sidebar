@@ -14,6 +14,7 @@ suite('Webviews > Workspace > Store > loading()', () => {
     const expectedState = getMockState({
       error: '',
       files: [],
+      invalidReason: 'none',
       isFolderInvalid: false,
       selected: '',
       state: 'loading',

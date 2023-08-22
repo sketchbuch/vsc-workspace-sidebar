@@ -20,6 +20,7 @@ export const list = (state: WorkspaceState, action: PayloadAction<WorkspaceFiles
     state.treeFolders = [];
     state.visibleFiles = [];
   } else {
+    state.invalidReason = 'none';
     state.isFolderInvalid = false;
     state.state = 'list';
     state.visibleFiles = getVisibleFiles(state.convertedFiles, state.search, state.sort);
