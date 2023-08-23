@@ -7,8 +7,8 @@ export const sortFilesByProp =
   (a: File, b: File): number => {
     if (prop === 'label' || prop === 'path') {
       if (a && b && a.hasOwnProperty(prop) && b.hasOwnProperty(prop)) {
-        const aVal = prop === 'label' ? a.searchLabel : String(a[prop]).toLowerCase();
-        const bVal = prop === 'label' ? b.searchLabel : String(b[prop]).toLowerCase();
+        const aVal = String(a[prop]).toLowerCase();
+        const bVal = String(b[prop]).toLowerCase();
 
         if (aVal > bVal) {
           return 1;

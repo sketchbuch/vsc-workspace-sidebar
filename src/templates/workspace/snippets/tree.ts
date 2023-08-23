@@ -29,7 +29,7 @@ export const tree = (
         return children
           .map((child) => {
             if (isFile(child)) {
-              return treeItemFile(child, -1, renderVars);
+              return treeItemFile(child, -1, state, renderVars);
             } else {
               return tree(child, depth, renderVars, state);
             }
@@ -55,7 +55,7 @@ export const tree = (
         ? children
             .map((child) => {
               if (isFile(child)) {
-                return treeItemFile(child, depth, renderVars);
+                return treeItemFile(child, depth, state, renderVars);
               } else {
                 return tree(child, depth + 1, renderVars, state);
               }

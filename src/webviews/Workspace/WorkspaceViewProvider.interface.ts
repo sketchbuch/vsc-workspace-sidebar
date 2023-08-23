@@ -7,7 +7,6 @@ export interface File {
   isSelected: boolean;
   label: string;
   path: string;
-  searchLabel: string;
   showPath: boolean;
   [key: string]: string | boolean;
 }

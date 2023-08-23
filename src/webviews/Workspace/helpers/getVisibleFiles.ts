@@ -11,7 +11,7 @@ export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) =
   let visibleFiles = [...wsFiles];
 
   if (search) {
-    visibleFiles = visibleFiles.filter((file) => file.searchLabel.includes(search));
+    visibleFiles = visibleFiles.filter((file) => file.label.includes(search));
   }
 
   if (!showTree) {

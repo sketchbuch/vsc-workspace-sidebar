@@ -5,13 +5,15 @@ import * as buttons from '../../../../../templates/workspace/snippets/listItemBu
 import * as icons from '../../../../../templates/workspace/snippets/listItemIcon';
 import { file1 } from '../../../../mocks/mockFileData';
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars';
+import { getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > Snippets: listItem()', () => {
   const mockRenderVars = getMockRenderVars();
+  const mockState = getMockState();
 
   test('Renders correctly', () => {
     const file = { ...file1 };
-    const result = listItem(file, mockRenderVars);
+    const result = listItem(file, mockState, mockRenderVars);
 
     expect(result).to.be.a('string');
     expect(result).contains('class="list__item');
@@ -24,7 +26,7 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
 
   test('Description is not rendered if showPath = "false"', () => {
     const file = { ...file1, showPath: false };
-    const result = listItem(file, mockRenderVars);
+    const result = listItem(file, mockState, mockRenderVars);
 
     expect(result).not.contains('class="list__description"');
   });
@@ -34,7 +36,7 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
     const iconSpy = sinon.spy(icons, 'listItemIcon');
 
     const file = { ...file1, isSelected: true, showPath: false };
-    const result = listItem(file, mockRenderVars);
+    const result = listItem(file, mockState, mockRenderVars);
 
     expect(result).contains('list__styled-item--selected');
     expect(result).contains(`title="Current workspace"`);
@@ -52,7 +54,7 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
     const iconSpy = sinon.spy(icons, 'listItemIcon');
 
     const file = { ...file1, showPath: false };
-    const result = listItem(file, mockRenderVars);
+    const result = listItem(file, mockState, mockRenderVars);
 
     expect(result).not.contains('list__styled-item--selected');
     expect(result).contains(`title="Open '${file.label}' in this window"`);

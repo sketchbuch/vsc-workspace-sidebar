@@ -49,7 +49,7 @@
 
 .list__styled-item--selected {
   background: var(--vscode-list-activeSelectionBackground);
-  color: var(--vscode-list-activeSelectionForeground);
+  color: var(--vscode-editor-foreground);
 }
 
 .list__text {
@@ -162,4 +162,18 @@
 
 .list--empty .list__icon {
   top: 0.3rem;
+}
+
+.list__styled-item--selected .list__element .list__description {
+  color: var(--vscode-list-activeSelectionForeground);
+  opacity: 1;
+}
+
+.list__styled-item .searchMatch {
+  background: var(--vscode-editor-findMatchHighlightBackground);
+  color: var(--vscode-editorWidget-foreground);
+}
+
+.list__styled-item--selected .searchMatch {
+  color: var(--vscode-editor-foreground);
 }

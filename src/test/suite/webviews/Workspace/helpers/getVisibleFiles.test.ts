@@ -75,7 +75,7 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
 
       const files = filesUnsorted.map((file) => {
         if (file.path.includes(FOLDER1)) {
-          return { ...file, label: 'Same label', searchLabel: 'same label' };
+          return { ...file, label: 'Same label' };
         }
 
         return { ...file };
@@ -87,13 +87,11 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
           ...getMockConvertedFiles()[0],
           showPath: true,
           label: 'Same label',
-          searchLabel: 'same label',
         },
         {
           ...getMockConvertedFiles()[1],
           showPath: true,
           label: 'Same label',
-          searchLabel: 'same label',
         },
         { ...getMockConvertedFiles()[2], showPath: false },
       ];

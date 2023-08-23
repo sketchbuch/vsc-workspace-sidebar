@@ -8,9 +8,9 @@ export const sortTreeChildren = (childen: TreeChildren): TreeChildren => {
   if (childen.length > 1) {
     return childen.sort((a, b) => {
       if (a && b) {
-        if (a.searchLabel > b.searchLabel) {
+        if (a.label > b.label) {
           return 1;
-        } else if (a.searchLabel < b.searchLabel) {
+        } else if (a.label < b.label) {
           return -1;
         }
       }
