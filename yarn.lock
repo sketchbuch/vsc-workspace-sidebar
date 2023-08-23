@@ -1135,7 +1135,22 @@
   resolved "https://registry.yarnpkg.com/@microsoft/fast-element/-/fast-element-1.11.0.tgz#494f6c87057bcbb42406982d68a92887d6b5acb1"
   integrity sha512-VKJYMkS5zgzHHb66sY7AFpYv6IfFhXrjQcAyNgi2ivD65My1XOhtjfKez5ELcLFRJfgZNAxvI8kE69apXERTkw==
 
-"@microsoft/fast-foundation@^2.34.0", "@microsoft/fast-foundation@^2.41.1":
+"@microsoft/fast-element@^1.12.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@microsoft/fast-element/-/fast-element-1.12.0.tgz#aabfc75518c3a9000710cce5f66dfc677de8c254"
+  integrity sha512-gQutuDHPKNxUEcQ4pypZT4Wmrbapus+P9s3bR/SEOLsMbNqNoXigGImITygI5zhb+aA5rzflM6O8YWkmRbGkPA==
+
+"@microsoft/fast-foundation@^2.38.0":
+  version "2.49.1"
+  resolved "https://registry.yarnpkg.com/@microsoft/fast-foundation/-/fast-foundation-2.49.1.tgz#f9cd36491d4d0080e694eaf0aece5672cdf7075a"
+  integrity sha512-dSajlZeX+lkqjg4108XbIIhVLECgJTCG32bE8P6rNgo8XCPHVJBDiBejrF34lv5pO9Z2uGORZjeip/N0fPib+g==
+  dependencies:
+    "@microsoft/fast-element" "^1.12.0"
+    "@microsoft/fast-web-utilities" "^5.4.1"
+    tabbable "^5.2.0"
+    tslib "^1.13.0"
+
+"@microsoft/fast-foundation@^2.41.1":
   version "2.47.0"
   resolved "https://registry.yarnpkg.com/@microsoft/fast-foundation/-/fast-foundation-2.47.0.tgz#a4cc8c5277e21d080215f5adcaed4266a8dd8a8e"
   integrity sha512-EyFuioaZQ9ngjUNRQi8R3dIPPsaNQdUOS+tP0G7b1MJRhXmQWIitBM6IeveQA6ZvXG6H21dqgrfEWlsYrUZ2sw==
@@ -1413,13 +1428,13 @@
   resolved "https://registry.yarnpkg.com/@vscode/codicons/-/codicons-0.0.29.tgz#587e6ce4be8de55d9d11e5297ea55a3dbab08ccf"
   integrity sha512-AXhTv1nl3r4W5DqAfXXKiawQNW+tLBNlXn/GcsnFCL0j17sQ2AY+az9oB9K6wjkibq1fndNJvmT8RYN712Fdww==
 
-"@vscode/webview-ui-toolkit@^0.9.2":
-  version "0.9.3"
-  resolved "https://registry.yarnpkg.com/@vscode/webview-ui-toolkit/-/webview-ui-toolkit-0.9.3.tgz#f4a830e9b1f3000c91bb9a39c010e0a0fb64ce06"
-  integrity sha512-uEEpTVA21zkHtWMR8TPT7vbIZ1+tvfhQPThEdmmDjh0PulKPvaAVNqnGbQitU3F9GVqpq2AdIKAq6N1jFeBoXg==
+"@vscode/webview-ui-toolkit@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@vscode/webview-ui-toolkit/-/webview-ui-toolkit-1.2.2.tgz#f071ec7434b2733d1c724fa874341ec20998f930"
+  integrity sha512-xIQoF4FC3Xh6d7KNKIoIezSiFWYFuf6gQMdDyKueKBFGeKwaHWEn+dY2g3makvvEsNMEDji/woEwvg9QSbuUsw==
   dependencies:
     "@microsoft/fast-element" "^1.6.2"
-    "@microsoft/fast-foundation" "^2.34.0"
+    "@microsoft/fast-foundation" "^2.38.0"
     "@microsoft/fast-react-wrapper" "^0.1.18"
 
 JSONStream@^1.0.4:
