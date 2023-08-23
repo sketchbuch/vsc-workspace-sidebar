@@ -3,7 +3,15 @@ import * as sinon from 'sinon';
 import * as configs from '../../../../../config/getConfig';
 import { ConfigShowPaths } from '../../../../../constants/config';
 import { getVisibleFiles } from '../../../../../webviews/Workspace/helpers/getVisibleFiles';
-import { file4, FOLDER1, getMockConvertedFiles, SEARCH_TERM } from '../../../../mocks/mockFileData';
+import {
+  file2,
+  file4,
+  FOLDER1,
+  getMockConvertedFiles,
+  SEARCH_TERM,
+  SEARCH_TERM_LOWERCASE,
+} from '../../../../mocks/mockFileData';
+import { getMockSearchState } from '../../../../mocks/mockState';
 
 suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
   const filesUnsorted = getMockConvertedFiles();
@@ -25,29 +33,109 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
     pathsConfigStub.restore();
   });
 
-  test('Search correctly filters', () => {
-    const result = getVisibleFiles(filesUnsorted, SEARCH_TERM, 'ascending');
-    expect(result).to.eql([file4]);
+  suite('Search:', () => {
+    suite('caseInsensitive:', () => {
+      test('Search correctly filters when case sensitive and there is not a match', () => {
+        const result = getVisibleFiles(
+          filesUnsorted,
+          getMockSearchState({ caseInsensitive: false, term: SEARCH_TERM_LOWERCASE }),
+          'ascending'
+        );
+
+        expect(result).to.eql([]);
+      });
+
+      test('Search correctly filters when case sensitive and there is a match', () => {
+        const result = getVisibleFiles(
+          filesUnsorted,
+          getMockSearchState({ caseInsensitive: false, term: SEARCH_TERM }),
+          'ascending'
+        );
+
+        expect(result).to.eql([file4]);
+      });
+
+      test('Search correctly filters when case insensitive and there is not a match', () => {
+        const result = getVisibleFiles(
+          filesUnsorted,
+          getMockSearchState({ caseInsensitive: true, term: 'No Match' }),
+          'ascending'
+        );
+
+        expect(result).to.eql([]);
+      });
+
+      test('Search correctly filters when case insensitive and there is a match', () => {
+        const result = getVisibleFiles(
+          filesUnsorted,
+          getMockSearchState({ caseInsensitive: true, term: SEARCH_TERM }),
+          'ascending'
+        );
+        expect(result).to.eql([file4]);
+      });
+    });
+
+    suite('matchStart:', () => {
+      test('Search correctly filters when matchStart and there is not a match', () => {
+        const result = getVisibleFiles(
+          filesUnsorted,
+          getMockSearchState({ matchStart: true, term: 'Extension' }),
+          'ascending'
+        );
+
+        expect(result).to.eql([]);
+      });
+
+      test('Search correctly filters when matchStart and there is a match', () => {
+        const result = getVisibleFiles(
+          filesUnsorted,
+          getMockSearchState({ matchStart: true, term: 'Some' }),
+          'ascending'
+        );
+
+        expect(result).to.eql([file2]);
+      });
+
+      test('Search correctly filters when not matchStart and there is not a match', () => {
+        const result = getVisibleFiles(
+          filesUnsorted,
+          getMockSearchState({ matchStart: false, term: 'No Match' }),
+          'ascending'
+        );
+
+        expect(result).to.eql([]);
+      });
+
+      test('Search correctly filters when not matchStart and there is a match', () => {
+        const result = getVisibleFiles(
+          filesUnsorted,
+          getMockSearchState({ matchStart: false, term: 'Extension' }),
+          'ascending'
+        );
+
+        expect(result).to.eql([file2]);
+      });
+    });
   });
 
   suite('Sorting:', () => {
     test('Correctly sorts "ascending"', () => {
-      const result = getVisibleFiles(filesUnsorted, '', 'ascending');
+      const result = getVisibleFiles(filesUnsorted, getMockSearchState(), 'ascending');
       expect(result).to.eql(filesAsc);
     });
 
     test('Correctly sorts "descending"', () => {
-      const result = getVisibleFiles(filesUnsorted, '', 'descending');
+      const result = getVisibleFiles(filesUnsorted, getMockSearchState(), 'descending');
       expect(result).to.eql(filesDesc);
     });
 
     test('No sorting when using tree view', () => {
       treeConfigStub.callsFake(() => true);
 
-      const result = getVisibleFiles(filesDesc, '', 'ascending');
+      const result = getVisibleFiles(filesDesc, getMockSearchState(), 'ascending');
       expect(result).to.eql(filesDesc);
 
-      const resultDescending = getVisibleFiles(filesAsc, '', 'descending');
+      const resultDescending = getVisibleFiles(filesAsc, getMockSearchState(), 'descending');
       expect(resultDescending).to.eql(filesAsc);
     });
   });
@@ -59,14 +147,14 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
         return { ...file, showPath: false };
       });
 
-      const result = getVisibleFiles(filesAsc, '', 'ascending');
+      const result = getVisibleFiles(filesAsc, getMockSearchState(), 'ascending');
       expect(result).to.eql(expectedFiles);
     });
 
     test('"Always" returns filesAsc with showPath: "false"', () => {
       pathsConfigStub.callsFake(() => ConfigShowPaths.ALWAYS);
 
-      const result = getVisibleFiles(filesAsc, '', 'ascending');
+      const result = getVisibleFiles(filesAsc, getMockSearchState(), 'ascending');
       expect(result).to.eql(filesAsc);
     });
 
@@ -75,7 +163,7 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
 
       const files = filesUnsorted.map((file) => {
         if (file.path.includes(FOLDER1)) {
-          return { ...file, label: 'Same label', searchLabel: 'same label' };
+          return { ...file, label: 'Same label' };
         }
 
         return { ...file };
@@ -87,18 +175,16 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
           ...getMockConvertedFiles()[0],
           showPath: true,
           label: 'Same label',
-          searchLabel: 'same label',
         },
         {
           ...getMockConvertedFiles()[1],
           showPath: true,
           label: 'Same label',
-          searchLabel: 'same label',
         },
         { ...getMockConvertedFiles()[2], showPath: false },
       ];
 
-      const result = getVisibleFiles(files, '', 'ascending');
+      const result = getVisibleFiles(files, getMockSearchState(), 'ascending');
       expect(result).to.eql(expectedFiles);
     });
   });

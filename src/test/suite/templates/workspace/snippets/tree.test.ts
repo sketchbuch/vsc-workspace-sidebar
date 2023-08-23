@@ -38,7 +38,6 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     folderPath: FOLDER1,
     isRoot: false,
     label: FOLDER1,
-    searchLabel: FOLDER1.toLowerCase(),
     sub: [],
   };
 
@@ -47,7 +46,6 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     folderPath: ROOT_FOLDER,
     isRoot: true,
     label: ROOT_FOLDER,
-    searchLabel: ROOT_FOLDER.toLowerCase(),
     sub: [],
   };
 
@@ -101,8 +99,8 @@ suite('Templates > Workspace > Snippets: tree()', () => {
 
     sinon.assert.callCount(itemSpy, getMockFileList().length);
     // Order like this due to child sorting
-    expect(itemSpy.args[0][0].label).to.equal(file2.label);
-    expect(itemSpy.args[1][0].label).to.equal(file1.label);
+    expect(itemSpy.args[0][0].label).to.equal(file1.label);
+    expect(itemSpy.args[1][0].label).to.equal(file2.label);
     expect(itemSpy.args[2][0].label).to.equal(file3.label);
     expect(itemSpy.args[3][0].label).to.equal(file4.label);
 

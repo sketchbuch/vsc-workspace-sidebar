@@ -16,7 +16,6 @@ export interface FileTree {
   folderPath: string; // Used to help ID closed folders
   isRoot: boolean;
   label: string;
-  searchLabel: string;
   sub: FileTrees;
 }
 
@@ -35,7 +34,6 @@ export const getFileTree = (files: Files): FileTree => {
     folderPath: rootFolder,
     isRoot: true,
     label: rootFolder,
-    searchLabel: rootFolder.toLowerCase(),
     sub: [],
   };
 
@@ -66,7 +64,6 @@ export const getFileTree = (files: Files): FileTree => {
             folderPath,
             isRoot: false,
             label: part,
-            searchLabel: part.toLowerCase(),
             sub: [],
           };
 

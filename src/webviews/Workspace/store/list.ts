@@ -7,8 +7,6 @@ import { getFileTree } from '../helpers/getFileTree';
 import { getVisibleFiles } from '../helpers/getVisibleFiles';
 
 export const list = (state: WorkspaceState, action: PayloadAction<WorkspaceFiles>): void => {
-  const showTree = getShowTreeConfig();
-
   state.files = action.payload;
   state.convertedFiles = action.payload ? convertWsFiles(action.payload, state.selected) : [];
 
@@ -20,6 +18,8 @@ export const list = (state: WorkspaceState, action: PayloadAction<WorkspaceFiles
     state.treeFolders = [];
     state.visibleFiles = [];
   } else {
+    const showTree = getShowTreeConfig();
+
     state.invalidReason = 'none';
     state.isFolderInvalid = false;
     state.state = 'list';

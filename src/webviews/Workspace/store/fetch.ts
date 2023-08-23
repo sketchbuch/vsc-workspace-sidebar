@@ -13,8 +13,6 @@ export const fetchFulfilled = (
   state: WorkspaceState,
   action: WorkspaceThunkAction<FindWorkspaceFiles>
 ) => {
-  const showTree = getShowTreeConfig();
-
   state.files = action.payload.files;
   state.convertedFiles = action.payload ? convertWsFiles(action.payload.files, state.selected) : [];
 
@@ -26,6 +24,8 @@ export const fetchFulfilled = (
     state.treeFolders = [];
     state.visibleFiles = [];
   } else {
+    const showTree = getShowTreeConfig();
+
     state.invalidReason = 'none';
     state.isFolderInvalid = false;
     state.state = 'list';

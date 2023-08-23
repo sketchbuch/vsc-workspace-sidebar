@@ -38,7 +38,7 @@ const {
   list,
   setFileTree,
   setPersistedState,
-  setSearchTerm,
+  setSearch,
   setVisibleFiles,
   toggleFolderState,
   toggleFolderStateBulk,
@@ -183,6 +183,12 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
       const { action, payload } = message;
 
       switch (action) {
+        case Actions.FOLDER_CLICK:
+          if (payload !== undefined) {
+            store.dispatch(toggleFolderState(payload.toString()));
+          }
+          break;
+
         case Actions.ICON_CLICK:
         case Actions.MAIN_CLICK:
           if (payload) {
@@ -198,19 +204,24 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
           }
           break;
 
-        case Actions.FOLDER_CLICK:
-          if (payload !== undefined) {
-            store.dispatch(toggleFolderState(payload));
-          }
-          break;
-
         case Actions.SAVE_WS:
           executeCommand(CMD_VSC_SAVE_WS_AS);
           break;
 
         case Actions.SEARCH:
           if (payload !== undefined) {
-            store.dispatch(setSearchTerm(payload));
+            store.dispatch(setSearch({ term: payload.toString() }));
+          }
+          break;
+
+        case Actions.SEARCH_CHECKBOX_DISABLE:
+        case Actions.SEARCH_CHECKBOX_ENABLE:
+          if (payload !== undefined) {
+            const searchState = {
+              [payload]: action === Actions.SEARCH_CHECKBOX_ENABLE,
+            };
+
+            store.dispatch(setSearch(searchState));
           }
           break;
 

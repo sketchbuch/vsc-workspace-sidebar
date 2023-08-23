@@ -1,9 +1,10 @@
 (function () {
   const vscode = acquireVsCodeApi();
 
-  const searchInput = document.querySelector('#searchWorkspaces');
   const folderSaveBtn = document.querySelector('#saveFolderAsWorkspace');
   const newWinIcons = document.querySelectorAll('.list__buttons');
+  const searchCheckboxes = document.querySelectorAll('.list__search-checkbox');
+  const searchInput = document.querySelector('#searchWorkspaces');
   const viewLinks = document.querySelectorAll('.view__link');
   const wsElements = document.querySelectorAll('.list__styled-item--unselected');
   const wsFolders = document.querySelectorAll('.list__branch-list-item-folder-closable');
@@ -56,16 +57,19 @@
     }
   };
 
-  const handleSearch = (event) => {
-    if (event.target.value === '') {
-      searchTerm = '';
-      handleSearchSubmit();
-    }
-  };
-
   const handleViewLInkClick = (event) => {
     event.stopPropagation();
     sendMessage('SHOW_SETTINGS');
+  };
+
+  const handleSearchCheckboxClick = (event) => {
+    const { checked, value } = event.target;
+
+    if (checked) {
+      sendMessage('SEARCH_CHECKBOX_ENABLE', value);
+    } else {
+      sendMessage('SEARCH_CHECKBOX_DISABLE', value);
+    }
   };
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -76,8 +80,13 @@
     if (searchInput) {
       searchInput.addEventListener('change', handleSearchChange);
       searchInput.addEventListener('keyup', handleSearchKeyUp);
-      searchInput.addEventListener('search', handleSearch);
+
+      searchTerm = searchInput.value;
     }
+
+    searchCheckboxes.forEach((element) => {
+      element.addEventListener('click', handleSearchCheckboxClick);
+    });
 
     viewLinks.forEach((element) => {
       element.addEventListener('click', handleViewLInkClick);
@@ -123,8 +132,11 @@
     if (searchInput) {
       searchInput.removeEventListener('change', handleSearchChange);
       searchInput.removeEventListener('keyup', handleSearchKeyUp);
-      searchInput.removeEventListener('search', handleSearch);
     }
+
+    searchCheckboxes.forEach((element) => {
+      element.removeEventListener('click', handleSearchCheckboxClick);
+    });
 
     viewLinks.forEach((element) => {
       element.removeEventListener('click', handleViewLInkClick);

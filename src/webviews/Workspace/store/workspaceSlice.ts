@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import * as vscode from 'vscode';
-import { WorkspaceState } from '../WorkspaceViewProvider.interface';
+import { SearchState, WorkspaceState } from '../WorkspaceViewProvider.interface';
 import { getWsType } from '../helpers/getWsType';
 import { error } from './error';
 import { fetch, fetchFulfilled, fetchPending, fetchRejected } from './fetch';
@@ -9,10 +9,16 @@ import { list } from './list';
 import { loading } from './loading';
 import { setFileTree } from './setFileTree';
 import { setPersistedState } from './setPersistedState';
-import { setSearchTerm } from './setSearchTerm';
+import { setSearch } from './setSearch';
 import { setVisibleFiles } from './setVisibleFiles';
 import { toggleFolderState } from './toggleFolderState';
 import { toggleFolderStateBulk } from './toggleFolderStateBulk';
+
+export const initialSearchState: SearchState = {
+  caseInsensitive: false,
+  matchStart: false,
+  term: '',
+};
 
 export const initialState: WorkspaceState = {
   closedFolders: [],
@@ -22,7 +28,7 @@ export const initialState: WorkspaceState = {
   fileTree: null,
   invalidReason: 'none',
   isFolderInvalid: false,
-  search: '',
+  search: { ...initialSearchState },
   selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',
   sort: 'ascending',
   state: 'loading',
@@ -46,7 +52,7 @@ export const workspaceSlice = createSlice({
     loading,
     setFileTree,
     setPersistedState,
-    setSearchTerm,
+    setSearch,
     setVisibleFiles,
     toggleFolderState,
     toggleFolderStateBulk,

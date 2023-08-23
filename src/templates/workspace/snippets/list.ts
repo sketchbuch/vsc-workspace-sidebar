@@ -25,7 +25,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars) => {
         ${
           showTree && state.fileTree !== null
             ? tree(state.fileTree, 0, renderVars, state)
-            : visibleFiles.map((file) => listItem(file, renderVars)).join('')
+            : visibleFiles.map((file) => listItem(file, state, renderVars)).join('')
         }
       </ul>
     `;

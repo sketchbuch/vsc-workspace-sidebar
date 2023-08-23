@@ -18,7 +18,6 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
     folderPath: FOLDER_PATH,
     isRoot: true,
     label: ROOT_FOLDER,
-    searchLabel: ROOT_FOLDER.toLowerCase(),
     sub: [],
   };
   const mockState = getMockState();

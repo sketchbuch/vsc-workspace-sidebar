@@ -76,7 +76,12 @@
       "search": {
         "ariaLabel": "Search Workspaces",
         "placeholder": "Search...",
-        "noMatch": "No workspaces matched your search terms"
+        "noMatch": "No workspaces matched your search terms",
+        "options": {
+          "caseInsensitive": "Case insensitive",
+          "matchStart": "Match start of label"
+        },
+        "optionsLegend": "Search options"
       },
       "title": "Workspaces: {{title}}",
       "titleCount": {

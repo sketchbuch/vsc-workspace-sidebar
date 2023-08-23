@@ -1,23 +1,23 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { getShowTreeConfig } from '../../../config/getConfig';
+import { WorkspacePmPayloadSearch, WorkspaceState } from '../WorkspaceViewProvider.interface';
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree';
 import { getFileTree } from '../helpers/getFileTree';
 import { getVisibleFiles } from '../helpers/getVisibleFiles';
-import { WorkspacePmPayloadSearchTerm, WorkspaceState } from '../WorkspaceViewProvider.interface';
 
-export const setSearchTerm = (
+export const setSearch = (
   state: WorkspaceState,
-  action: PayloadAction<WorkspacePmPayloadSearchTerm>
+  action: PayloadAction<WorkspacePmPayloadSearch>
 ): void => {
-  const showTree = getShowTreeConfig();
-
-  state.search = action.payload;
+  state.search = { ...state.search, ...action.payload };
 
   if (state.files.length === 0) {
     state.fileTree = null;
     state.treeFolders = [];
     state.visibleFiles = [];
   } else {
+    const showTree = getShowTreeConfig();
+
     state.visibleFiles = getVisibleFiles(state.convertedFiles, state.search, state.sort);
     state.fileTree = showTree ? getFileTree(state.visibleFiles) : null;
     state.treeFolders =

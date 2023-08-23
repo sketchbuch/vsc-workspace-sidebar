@@ -48,7 +48,7 @@ suite('Templates > Workspace > View: invalidView()', () => {
     expect(result).contains('Folder contains no workspaces');
     expect(result).contains('Try increasing the search depth or change the folder path.');
     expect(result).not.contains(
-      'The current search depth is 0, this means that only the workspace folder will be searched in for workspace files.'
+      'The current search depth is 0, this means that only the root workspace folder will be searched in for workspace files.'
     );
   });
 
@@ -61,7 +61,7 @@ suite('Templates > Workspace > View: invalidView()', () => {
     expect(result).contains('Folder contains no workspaces');
     expect(result).contains('Try increasing the search depth or change the folder path.');
     expect(result).contains(
-      'The current search depth is 0, this means that only the workspace folder will be searched in for workspace files.'
+      'The current search depth is 0, this means that only the root workspace folder will be searched in for workspace files.'
     );
   });
 });

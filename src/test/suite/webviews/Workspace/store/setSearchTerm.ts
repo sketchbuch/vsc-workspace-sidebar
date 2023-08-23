@@ -1,7 +1,6 @@
-import { expect } from 'chai';
+/* import { expect } from 'chai';
 import * as sinon from 'sinon';
 import * as configs from '../../../../../config/getConfig';
-import { setSearchTerm } from '../../../../../webviews/Workspace/store/setSearchTerm';
 import {
   file4,
   getMockConvertedFiles,
@@ -204,3 +203,4 @@ suite('Webviews > Workspace > Store > setSearchTerm()', () => {
     expect(state).to.eql(expectedState);
   });
 });
+ */

@@ -8,8 +8,8 @@ export const searchBox = (state: WorkspaceState): string => {
         aria-label="${t('workspace.list.search.ariaLabel')}"
         id="searchWorkspaces"
         placeholder="${t('workspace.list.search.placeholder')}"
-        type="search"
-        value="${state.search}"
+        type="text"
+        value="${state.search.term}"
       />
     </div>
   `;

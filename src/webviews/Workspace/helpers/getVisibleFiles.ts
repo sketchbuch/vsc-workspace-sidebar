@@ -2,16 +2,23 @@ import { SortIds } from '../../../commands/registerCommands';
 import { getShowPathsConfig, getShowTreeConfig } from '../../../config/getConfig';
 import { ConfigShowPaths } from '../../../constants/config';
 import { sortFilesByProp } from '../../../utils/arrays/sortFilesByProp';
-import { File, Files } from '../WorkspaceViewProvider.interface';
+import { File, Files, SearchState } from '../WorkspaceViewProvider.interface';
 import { findDuplicates } from './findDuplicates';
 
-export const getVisibleFiles = (wsFiles: Files, search: string, sort: SortIds) => {
+export const getVisibleFiles = (wsFiles: Files, search: SearchState, sort: SortIds) => {
   const showTree = getShowTreeConfig();
   const showPaths = getShowPathsConfig();
+
+  const { caseInsensitive, matchStart, term } = search;
   let visibleFiles = [...wsFiles];
 
-  if (search) {
-    visibleFiles = visibleFiles.filter((file) => file.searchLabel.includes(search));
+  if (term) {
+    visibleFiles = visibleFiles.filter((file) => {
+      const label = caseInsensitive ? file.label.toLowerCase() : file.label;
+      const searchTerm = caseInsensitive ? term.toLowerCase() : term;
+
+      return matchStart ? label.startsWith(searchTerm) : label.includes(searchTerm);
+    });
   }
 
   if (!showTree) {

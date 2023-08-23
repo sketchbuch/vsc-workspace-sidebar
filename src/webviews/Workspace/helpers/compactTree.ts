@@ -1,5 +1,5 @@
-import { FileTree, FileTrees } from './getFileTree';
 import * as path from 'path';
+import { FileTree, FileTrees } from './getFileTree';
 import { isTreeFolderCompacted } from './isTreeFolderCompacted';
 
 export const compactTree = (tree: FileTree): FileTree => {
@@ -12,7 +12,6 @@ export const compactTree = (tree: FileTree): FileTree => {
           compactTree({
             ...curSub.sub[0],
             label: nextLabel,
-            searchLabel: nextLabel.toLowerCase(),
           })
         );
       } else if (
@@ -24,7 +23,6 @@ export const compactTree = (tree: FileTree): FileTree => {
         tree = {
           ...tree,
           label: nextLabel,
-          searchLabel: nextLabel.toLowerCase(),
           sub: [],
           files: [...curSub.files],
         };

@@ -1,12 +1,19 @@
 import { RenderVars } from '../../../webviews/webviews.interface';
-import { File } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 import { getFileTooltip } from '../../helpers/getFileTooltip';
+import { getLabel } from '../../helpers/getLabel';
 import { listItemButtons } from './listItemButtons';
 import { listItemIcon } from './listItemIcon';
 import { treeIconFile } from './treeIcons';
 import { treeIndent } from './treeIndent';
 
-export const treeItemFile = (file: File, depth: number, renderVars: RenderVars): string => {
+export const treeItemFile = (
+  file: File,
+  depth: number,
+  state: WorkspaceState,
+  renderVars: RenderVars
+): string => {
+  const { search } = state;
   const { isSelected, label, path, showPath } = file;
   const isRootLvlFile = depth < 0;
   const classes = `list__branch-list-item list__branch-list-item-file list__styled-item ${
@@ -22,7 +29,7 @@ export const treeItemFile = (file: File, depth: number, renderVars: RenderVars):
       <span class="list__element" title="${tooltip}">
         ${treeIconFile()}
         <span class="list__text">
-          <span class="list__title">${label}</span>
+          <span class="list__title">${getLabel(label, search)}</span>
           ${showPath && condenseFileTree ? `<span class="list__description">${path}</span>` : ''}
         </span>
         ${!isSelected ? listItemButtons(file, renderVars) : ''}
