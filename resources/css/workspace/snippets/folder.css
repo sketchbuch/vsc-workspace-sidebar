@@ -4,12 +4,13 @@
 }
 
 .list[data-showsearch='true'] .list__folder {
-  padding-top: var(--ext-workspace-sidebar__search-offset);
+  margin-top: var(--ext-workspace-sidebar__search-offset);
 }
 
 .list__folder-title {
   margin: 0.7rem 0;
   padding: 0 20px;
+  padding-top: 0.5rem;
 }
 
 .list__folder-controls {
