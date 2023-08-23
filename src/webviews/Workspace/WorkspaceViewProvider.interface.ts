@@ -27,7 +27,14 @@ export enum WorkspacePmActions {
   MAIN_CLICK = 'MAIN_CLICK',
   SAVE_WS = 'SAVE_WS',
   SEARCH = 'SEARCH',
+  SEARCH_CHECKBOX_DISABLE = 'SEARCH_CHECKBOX_DISABLE',
+  SEARCH_CHECKBOX_ENABLE = 'SEARCH_CHECKBOX_ENABLE',
   SHOW_SETTINGS = 'SHOW_SETTINGS',
+}
+
+export enum WorkspaceSearchCheckboxes {
+  CASE_INSENSITIVE = 'CASE_INSENSITIVE',
+  MATCH_START = 'MATCH_START',
 }
 
 export interface WorkspacePersistedState {
@@ -37,10 +44,17 @@ export interface WorkspacePersistedState {
 export type FolderState = 'collapse' | 'expand';
 export type WorkspacePmPayload = string;
 export type WorkspacePmPayloadSearchTerm = string;
+export type WorkspacePmPayloadSearch = Partial<SearchState>;
 export type WorkspacePmPayloadToggleFolderState = string;
 export type WorkspaceToggleFolderStateBulk = FolderState;
 
 export type FileErrorResult = 'invalid-folder' | 'no-workspaces' | 'none';
+
+export interface SearchState {
+  caseInsensitive: boolean;
+  matchStart: boolean;
+  term: string;
+}
 
 export type WorkspaceState = {
   closedFolders: string[];
@@ -50,7 +64,7 @@ export type WorkspaceState = {
   fileTree: FileTree | null;
   invalidReason: FileErrorResult;
   isFolderInvalid: boolean;
-  search: string;
+  search: SearchState;
   selected: string;
   sort: SortIds;
   state: WorkspaceStates;

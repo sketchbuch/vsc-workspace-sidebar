@@ -7,11 +7,13 @@ import * as indent from '../../../../../templates/workspace/snippets/treeIndent'
 import { treeItemFile } from '../../../../../templates/workspace/snippets/treeItemFile';
 import { file1 } from '../../../../mocks/mockFileData';
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars';
+import { getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > Snippets: treeItemFile()', () => {
   const DEPTH = 0;
   const file = { ...file1, showPath: false };
   const mockRenderVars = getMockRenderVars();
+  const mockState = getMockState();
 
   let buttonSpy: sinon.SinonSpy;
   let iconTreeSpy: sinon.SinonSpy;
@@ -33,7 +35,7 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
   });
 
   test('Renders correctly', () => {
-    const result = treeItemFile(file, DEPTH, mockRenderVars);
+    const result = treeItemFile(file, DEPTH, mockState, mockRenderVars);
 
     expect(result).to.be.a('string');
     expect(result).contains(`data-file="${file.file}"`);
@@ -49,7 +51,7 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
 
   test('Renders correctly when selected', () => {
     const file = { ...file1, showPath: false, isSelected: true };
-    const result = treeItemFile(file, DEPTH, mockRenderVars);
+    const result = treeItemFile(file, DEPTH, mockState, mockRenderVars);
 
     expect(result).contains(`list__styled-item--selected`);
 
@@ -58,7 +60,7 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
   });
 
   test('Renders correctly when not selected', () => {
-    const result = treeItemFile(file, DEPTH, mockRenderVars);
+    const result = treeItemFile(file, DEPTH, mockState, mockRenderVars);
 
     expect(result).contains(`list__styled-item--unselected`);
 
@@ -68,14 +70,24 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
 
   test('Renders description if condensed', () => {
     const file = { ...file1, showPath: true };
-    const result = treeItemFile(file, DEPTH, getMockRenderVars({ condenseFileTree: true }));
+    const result = treeItemFile(
+      file,
+      DEPTH,
+      mockState,
+      getMockRenderVars({ condenseFileTree: true })
+    );
 
     expect(result).contains(`list__description`);
   });
 
   test('Does not render description if not condensed', () => {
     const file = { ...file1, showPath: true };
-    const result = treeItemFile(file, DEPTH, getMockRenderVars({ condenseFileTree: false }));
+    const result = treeItemFile(
+      file,
+      DEPTH,
+      mockState,
+      getMockRenderVars({ condenseFileTree: false })
+    );
 
     expect(result).not.contains(`list__description`);
   });

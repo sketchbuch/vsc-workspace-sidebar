@@ -9,7 +9,7 @@ export const searchBox = (state: WorkspaceState): string => {
         id="searchWorkspaces"
         placeholder="${t('workspace.list.search.placeholder')}"
         type="text"
-        value="${state.search}"
+        value="${state.search.term}"
       />
     </div>
   `;

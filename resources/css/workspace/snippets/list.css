@@ -10,7 +10,7 @@
 }
 
 .list[data-showsearch='true'] .list__styled-list {
-  padding-top: 30px;
+  padding-top: var(--ext-workspace-sidebar__search-offset);
 }
 
 .list[data-folderopen='true'] .list__styled-list {
@@ -61,6 +61,22 @@
   touch-action: none;
 }
 
+.list__description {
+  color: var(--vscode-list-deemphasizedForeground);
+  display: block;
+  margin: 0;
+  margin-top: 0.25rem;
+  opacity: 0.75;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list__styled-item--selected .list__element .list__description {
+  color: var(--vscode-list-activeSelectionForeground);
+  opacity: 1;
+}
+
 @media (min-width: 300px) {
   .list__text {
     flex-direction: row;
@@ -107,22 +123,6 @@
   }
 }
 
-.list__description {
-  color: var(--vscode-list-deemphasizedForeground);
-  display: block;
-  margin: 0;
-  margin-top: 0.25rem;
-  opacity: 0.75;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.list__styled-item--selected .list__element .list__description {
-  color: var(--vscode-list-activeSelectionForeground);
-  opacity: 1;
-}
-
 @media (min-width: 300px) {
   .list__description {
     display: inline;
@@ -162,11 +162,6 @@
 
 .list--empty .list__icon {
   top: 0.3rem;
-}
-
-.list__styled-item--selected .list__element .list__description {
-  color: var(--vscode-list-activeSelectionForeground);
-  opacity: 1;
 }
 
 .list__styled-item mark {

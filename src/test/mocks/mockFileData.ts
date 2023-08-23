@@ -17,6 +17,7 @@ type SortDir = 'asc' | 'desc';
 export const ROOT_FOLDER = 'dev';
 export const ROOT_FOLDER_PATH = `/home/user/${ROOT_FOLDER}`;
 export const SEARCH_TERM = 'React';
+export const SEARCH_TERM_LOWERCASE = 'react';
 
 export const FOLDER1 = 'code';
 export const SUBFOLDER1 = 'vscode';

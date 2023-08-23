@@ -3,6 +3,7 @@
   background: var(--vscode-sideBar-background);
   box-sizing: border-box;
   display: flex;
+  flex-direction: column;
   height: 30px;
   justify-content: flex-start;
   left: 0;
@@ -34,10 +35,23 @@
 .list__searchedout {
   color: var(--vscode-foreground);
   padding: 0.3rem 20px;
-  padding-top: 30px;
+  padding-top: var(--ext-workspace-sidebar__search-offset);
 }
 
 .list__searchedout p {
   margin: 0;
   padding: 0.3rem 0;
+}
+
+.list__search-optionlist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list__search fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }

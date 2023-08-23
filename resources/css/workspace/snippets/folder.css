@@ -4,7 +4,7 @@
 }
 
 .list[data-showsearch='true'] .list__folder {
-  padding-top: 30px;
+  padding-top: var(--ext-workspace-sidebar__search-offset);
 }
 
 .list__folder-title {

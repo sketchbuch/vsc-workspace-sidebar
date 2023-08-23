@@ -9,7 +9,7 @@ import {
   getMockFileTree,
 } from '../../../../mocks/mockFileData';
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars';
-import { getMockState } from '../../../../mocks/mockState';
+import { getMockSearchState, getMockState } from '../../../../mocks/mockState';
 
 suite('Templates > Workspace > Snippets: list()', () => {
   const mockRenderVars = getMockRenderVars();
@@ -42,7 +42,11 @@ suite('Templates > Workspace > Snippets: list()', () => {
 
   test('Renders search-out message if no visibleFiles and search is in progress', () => {
     const result = list(
-      getMockState({ files: getMockFileList(), search: 'react', visibleFiles: [] }),
+      getMockState({
+        files: getMockFileList(),
+        search: getMockSearchState({ term: 'VSCode' }),
+        visibleFiles: [],
+      }),
       mockRenderVars
     );
 

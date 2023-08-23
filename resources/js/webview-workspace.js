@@ -1,9 +1,10 @@
 (function () {
   const vscode = acquireVsCodeApi();
 
-  const searchInput = document.querySelector('#searchWorkspaces');
   const folderSaveBtn = document.querySelector('#saveFolderAsWorkspace');
   const newWinIcons = document.querySelectorAll('.list__buttons');
+  const searchCheckboxes = document.querySelectorAll('.list__search-checkbox');
+  const searchInput = document.querySelector('#searchWorkspaces');
   const viewLinks = document.querySelectorAll('.view__link');
   const wsElements = document.querySelectorAll('.list__styled-item--unselected');
   const wsFolders = document.querySelectorAll('.list__branch-list-item-folder-closable');
@@ -61,6 +62,16 @@
     sendMessage('SHOW_SETTINGS');
   };
 
+  const handleSearchCheckboxClick = (event) => {
+    const { checked, value } = event.target;
+
+    if (checked) {
+      sendMessage('SEARCH_CHECKBOX_ENABLE', value);
+    } else {
+      sendMessage('SEARCH_CHECKBOX_DISABLE', value);
+    }
+  };
+
   document.addEventListener('DOMContentLoaded', () => {
     newWinIcons.forEach((element) => {
       element.addEventListener('click', handleIconClick);
@@ -69,7 +80,13 @@
     if (searchInput) {
       searchInput.addEventListener('change', handleSearchChange);
       searchInput.addEventListener('keyup', handleSearchKeyUp);
+
+      searchTerm = searchInput.value;
     }
+
+    searchCheckboxes.forEach((element) => {
+      element.addEventListener('click', handleSearchCheckboxClick);
+    });
 
     viewLinks.forEach((element) => {
       element.addEventListener('click', handleViewLInkClick);
@@ -116,6 +133,10 @@
       searchInput.removeEventListener('change', handleSearchChange);
       searchInput.removeEventListener('keyup', handleSearchKeyUp);
     }
+
+    searchCheckboxes.forEach((element) => {
+      element.removeEventListener('click', handleSearchCheckboxClick);
+    });
 
     viewLinks.forEach((element) => {
       element.removeEventListener('click', handleViewLInkClick);
