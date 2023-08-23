@@ -169,11 +169,11 @@
   opacity: 1;
 }
 
-.list__styled-item .searchMatch {
+.list__styled-item mark {
   background: var(--vscode-editor-findMatchHighlightBackground);
   color: var(--vscode-editorWidget-foreground);
 }
 
-.list__styled-item--selected .searchMatch {
+.list__styled-item--selected mark {
   color: var(--vscode-editor-foreground);
 }

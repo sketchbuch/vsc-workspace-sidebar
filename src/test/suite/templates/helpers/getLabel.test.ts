@@ -11,8 +11,6 @@ suite('Templates > Helpers > getLabel():', () => {
   });
 
   test('Returns label with search terms wrapped correctly', () => {
-    expect(getLabel('test', 't')).to.equal(
-      '<mark class="searchMatch">t</mark>es<mark class="searchMatch">t</mark>'
-    );
+    expect(getLabel('test', 't')).to.equal('<mark>t</mark>es<mark>t</mark>');
   });
 });
