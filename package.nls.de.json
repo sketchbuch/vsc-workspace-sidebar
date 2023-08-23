@@ -76,7 +76,12 @@
       "search": {
         "ariaLabel": "Arbeitsbereiche durchsuchen",
         "placeholder": "Suchen...",
-        "noMatch": "Keine Arbeitsbereiche stimmten mit Ihren Suchbegriffen überein"
+        "noMatch": "Keine Arbeitsbereiche stimmten mit Ihren Suchbegriffen überein",
+        "options": {
+          "caseInsensitive": "Case-insensitive",
+          "matchStart": "Abgleich vom Beginn des Namens"
+        },
+        "optionsLegend": "Suchoptionen"
       },
       "title": "Arbeitsbereiche: {{title}}",
       "titleCount": {
