@@ -1,3 +1,4 @@
+import * as os from 'os';
 import * as pathLib from 'path';
 import {
   getCondenseFileTreeConfig,
@@ -13,7 +14,8 @@ export type FileTrees = FileTree[];
 
 export interface FileTree {
   files: Files;
-  folderPath: string; // Used to help ID closed folders
+  folderPath: string; // Absolute path to the folder
+  folderPathSegment: string; // Used to help ID closed folders
   isRoot: boolean;
   label: string;
   sub: FileTrees;
@@ -24,6 +26,7 @@ type FolderList = {
 };
 
 export const getFileTree = (files: Files): FileTree => {
+  const homeDir = os.homedir();
   const condense = getCondenseFileTreeConfig();
   const compact = getExplorerCompactFoldersConfig();
   const configFolder = getFolderConfig();
@@ -31,7 +34,8 @@ export const getFileTree = (files: Files): FileTree => {
 
   let tree: FileTree = {
     files: [],
-    folderPath: rootFolder,
+    folderPath: configFolder.replace(`~`, homeDir),
+    folderPathSegment: rootFolder,
     isRoot: true,
     label: rootFolder,
     sub: [],
@@ -46,7 +50,7 @@ export const getFileTree = (files: Files): FileTree => {
   files.forEach((file) => {
     const { path } = file;
     const parts = path.split(pathLib.sep);
-    let folderPath = '';
+    let folderPathSegment = '';
 
     if (parts.length === 1 && !file.path) {
       // Workspace files in the config folder root, not in subfolders
@@ -56,19 +60,23 @@ export const getFileTree = (files: Files): FileTree => {
         let part = parts.shift();
 
         if (part) {
-          folderPath = folderPath ? `${folderPath}${pathLib.sep}${part}` : part;
+          folderPathSegment = folderPathSegment
+            ? `${folderPathSegment}${pathLib.sep}${part}`
+            : part;
+          const cropPos = file.file.indexOf(part) + part.length;
 
           // Either the existing folder, or a new one
-          const folder: FileTree = folderList[folderPath] ?? {
+          const folder: FileTree = folderList[folderPathSegment] ?? {
             files: [],
-            folderPath,
+            folderPath: file.file.substring(0, cropPos),
+            folderPathSegment,
             isRoot: false,
             label: part,
             sub: [],
           };
 
-          if (folderList[folderPath] === undefined) {
-            folderList[folderPath] = folder; // Reference for future iterations
+          if (folderList[folderPathSegment] === undefined) {
+            folderList[folderPathSegment] = folder; // Reference for future iterations
             branch.push(folder);
           }
 

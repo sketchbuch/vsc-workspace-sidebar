@@ -1,7 +1,9 @@
 import path from 'path';
-import { RenderVars } from '../../../webviews/webviews.interface';
-import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree';
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree';
+import { RenderVars } from '../../../webviews/webviews.interface';
+import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceButtons';
+import { listItemButtons } from './listItemButtons';
 import { listItemIcon } from './listItemIcon';
 import { treeIconClosed, treeIconOpen } from './treeIcons';
 import { treeIndent } from './treeIndent';
@@ -13,8 +15,8 @@ export const treeItemFolder = (
   renderVars: RenderVars,
   state: WorkspaceState
 ): string => {
-  const { folderPath, isRoot, label } = folder;
-  const indicateSelected = isClosed && state.selected.includes(`${folderPath}${path.sep}`);
+  const { folderPath, folderPathSegment, isRoot, label } = folder;
+  const indicateSelected = isClosed && state.selected.includes(`${folderPathSegment}${path.sep}`);
 
   let folderClasses = `list__branch-list-item list__branch-list-item-folder list__styled-item`;
 
@@ -26,8 +28,18 @@ export const treeItemFolder = (
     folderClasses += ' list__branch-list-item-folder-closable';
   }
 
+  const buttons: ConfigButtons = [
+    {
+      key: 'open-filemanager',
+      file: folderPath,
+      label,
+    },
+  ];
+
+  const folderButtons = getWorkspaceButtons({ buttons, renderVars });
+
   return `
-      <li class="${folderClasses}" data-folder="${folderPath}" data-depth="${depth}">
+      <li class="${folderClasses}" data-folder="${folderPathSegment}" data-depth="${depth}">
         ${indicateSelected ? listItemIcon(renderVars) : ''}
         ${treeIndent(depth)}
         <span class="list__element" title="${label}">
@@ -35,6 +47,7 @@ export const treeItemFolder = (
           <span class="list__text">
             <span class="list__title">${label}</span>
           </span>
+          ${listItemButtons(folderButtons)}
         </span>
       </li>
     `;

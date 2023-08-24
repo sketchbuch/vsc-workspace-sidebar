@@ -2,16 +2,34 @@ import { RenderVars } from '../../../webviews/webviews.interface';
 import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 import { getFileTooltip } from '../../helpers/getFileTooltip';
 import { getLabel } from '../../helpers/getLabel';
+import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceButtons';
 import { listItemButtons } from './listItemButtons';
 import { listItemIcon } from './listItemIcon';
 
-export const listItem = (file: File, state: WorkspaceState, renderVars: RenderVars) => {
+export const listItem = (file: File, state: WorkspaceState, renderVars: RenderVars): string => {
   const { search } = state;
   const { file: dataFile, isSelected, label, path, showPath } = file;
   const tooltip = getFileTooltip(renderVars, file, 'cur-win');
   const classes = `list__styled-item ${
     isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
   }`;
+
+  const buttons: ConfigButtons = [
+    {
+      key: 'open-filemanager',
+      file: file.file,
+      label: file.label,
+    },
+  ];
+
+  if (!isSelected) {
+    buttons.push({
+      key: 'new-window',
+      file,
+    });
+  }
+
+  const itemButtons = getWorkspaceButtons({ buttons, renderVars });
 
   return `
     <li class="list__item list__list-styled-item ${classes}" data-file="${dataFile}">
@@ -21,7 +39,7 @@ export const listItem = (file: File, state: WorkspaceState, renderVars: RenderVa
           <span class="list__title">${getLabel(label, search)}</span>
           ${showPath ? `<span class="list__description">${path}</span>` : ''}
         </span>
-        ${!isSelected ? listItemButtons(file, renderVars) : ''}
+        ${listItemButtons(itemButtons)}
       </span>
     </li>
   `;

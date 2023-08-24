@@ -2,6 +2,7 @@ import { RenderVars } from '../../../webviews/webviews.interface';
 import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
 import { getFileTooltip } from '../../helpers/getFileTooltip';
 import { getLabel } from '../../helpers/getLabel';
+import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceButtons';
 import { listItemButtons } from './listItemButtons';
 import { listItemIcon } from './listItemIcon';
 import { treeIconFile } from './treeIcons';
@@ -22,6 +23,23 @@ export const treeItemFile = (
   const tooltip = getFileTooltip(renderVars, file, 'cur-win');
   const { condenseFileTree } = renderVars;
 
+  const buttons: ConfigButtons = [
+    {
+      key: 'open-filemanager',
+      file: file.file,
+      label: file.label,
+    },
+  ];
+
+  if (!isSelected) {
+    buttons.push({
+      key: 'new-window',
+      file,
+    });
+  }
+
+  const itemButtons = getWorkspaceButtons({ buttons, renderVars });
+
   return `
     <li class="${classes}" data-file="${file.file}" data-depth="${depth}">
       ${isSelected ? listItemIcon(renderVars) : ''}
@@ -32,7 +50,7 @@ export const treeItemFile = (
           <span class="list__title">${getLabel(label, search)}</span>
           ${showPath && condenseFileTree ? `<span class="list__description">${path}</span>` : ''}
         </span>
-        ${!isSelected ? listItemButtons(file, renderVars) : ''}
+        ${listItemButtons(itemButtons)}
       </span>
     </li>
   `;

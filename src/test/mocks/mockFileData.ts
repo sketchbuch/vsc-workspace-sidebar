@@ -14,8 +14,10 @@ type GetFileTreeType =
   | 'searched';
 type SortDir = 'asc' | 'desc';
 
+export const OS_HOMEFOLDER = '/home/user';
 export const ROOT_FOLDER = 'dev';
-export const ROOT_FOLDER_PATH = `/home/user/${ROOT_FOLDER}`;
+export const ROOT_FOLDER_USERPATH = `~/${ROOT_FOLDER}`;
+export const ROOT_FOLDER_PATH = `${OS_HOMEFOLDER}/${ROOT_FOLDER}`;
 export const SEARCH_TERM = 'React';
 export const SEARCH_TERM_LOWERCASE = 'react';
 
@@ -126,19 +128,22 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
     case 'condensed':
       return {
         files: [],
-        folderPath: ROOT_FOLDER,
+        folderPath: ROOT_FOLDER_PATH,
+        folderPathSegment: ROOT_FOLDER,
         isRoot: true,
         label: ROOT_FOLDER,
         sub: [
           {
             files: [],
-            folderPath: FOLDER1,
+            folderPath: `${ROOT_FOLDER_PATH}/${FOLDER1}`,
+            folderPathSegment: FOLDER1,
             isRoot: false,
             label: FOLDER1,
             sub: [
               {
                 files: [{ ...getMockVisibleFiles()[0] }, { ...getMockVisibleFiles()[1] }],
-                folderPath: file1.path,
+                folderPath: `${ROOT_FOLDER_PATH}/${file1.path}`,
+                folderPathSegment: file1.path,
                 isRoot: false,
                 label: SUBFOLDER1,
                 sub: [],
@@ -147,14 +152,16 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
           },
           {
             files: [{ ...getMockVisibleFiles()[2] }],
-            folderPath: FOLDER3,
+            folderPath: `${ROOT_FOLDER_PATH}/${FOLDER3}`,
+            folderPathSegment: FOLDER3,
             isRoot: false,
             label: FOLDER3,
             sub: [],
           },
           {
             files: [{ ...getMockVisibleFiles()[3] }],
-            folderPath: FOLDER4,
+            folderPath: `${ROOT_FOLDER_PATH}/${FOLDER4}`,
+            folderPathSegment: FOLDER4,
             isRoot: false,
             label: FOLDER4,
             sub: [],
@@ -165,13 +172,15 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
     case 'condensed-searched':
       return {
         files: [],
-        folderPath: ROOT_FOLDER,
+        folderPath: ROOT_FOLDER_PATH,
+        folderPathSegment: ROOT_FOLDER,
         isRoot: true,
         label: ROOT_FOLDER,
         sub: [
           {
             files: [{ ...getMockVisibleFiles()[3] }],
-            folderPath: FOLDER4,
+            folderPath: `${ROOT_FOLDER_PATH}/${FOLDER4}`,
+            folderPathSegment: FOLDER4,
             isRoot: false,
             label: FOLDER4,
             sub: [],
@@ -182,13 +191,15 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
     case 'compacted-searched':
       return {
         files: [],
-        folderPath: ROOT_FOLDER,
+        folderPath: ROOT_FOLDER_PATH,
+        folderPathSegment: ROOT_FOLDER,
         isRoot: true,
         label: ROOT_FOLDER,
         sub: [
           {
             files: [{ ...getMockVisibleFiles()[3] }],
-            folderPath: file4.path,
+            folderPath: `${ROOT_FOLDER_PATH}/${file4.path}`,
+            folderPathSegment: file4.path,
             isRoot: false,
             label: path.join(FOLDER4, SUBFOLDER4),
             sub: [],
@@ -199,19 +210,22 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
     case 'searched':
       return {
         files: [],
-        folderPath: ROOT_FOLDER,
+        folderPath: ROOT_FOLDER_PATH,
+        folderPathSegment: ROOT_FOLDER,
         isRoot: true,
         label: ROOT_FOLDER,
         sub: [
           {
             files: [],
-            folderPath: FOLDER4,
+            folderPath: `${ROOT_FOLDER_PATH}/${FOLDER4}`,
+            folderPathSegment: FOLDER4,
             isRoot: false,
             label: FOLDER4,
             sub: [
               {
                 files: [{ ...getMockVisibleFiles()[3] }],
-                folderPath: file4.path,
+                folderPath: `${ROOT_FOLDER_PATH}/${file4.path}`,
+                folderPathSegment: file4.path,
                 isRoot: false,
                 label: SUBFOLDER4,
                 sub: [],
@@ -224,27 +238,31 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
     case 'compacted':
       return {
         files: [],
-        folderPath: ROOT_FOLDER,
+        folderPath: ROOT_FOLDER_PATH,
+        folderPathSegment: ROOT_FOLDER,
         isRoot: true,
         label: ROOT_FOLDER,
         sub: [
           {
             files: [{ ...getMockVisibleFiles()[1] }],
-            folderPath: file1.path,
+            folderPath: `${ROOT_FOLDER_PATH}/${file1.path}`,
+            folderPathSegment: file1.path,
             isRoot: false,
             label: path.join(FOLDER1, SUBFOLDER1, SUBFOLDER2),
             sub: [],
           },
           {
             files: [{ ...getMockVisibleFiles()[2] }],
-            folderPath: file3.path,
+            folderPath: `${ROOT_FOLDER_PATH}/${file3.path}`,
+            folderPathSegment: file3.path,
             isRoot: false,
             label: path.join(FOLDER3, SUBFOLDER3),
             sub: [],
           },
           {
             files: [{ ...getMockVisibleFiles()[3] }],
-            folderPath: file4.path,
+            folderPath: `${ROOT_FOLDER_PATH}/${file4.path}`,
+            folderPathSegment: file4.path,
             isRoot: false,
             label: path.join(FOLDER4, SUBFOLDER4),
             sub: [],
@@ -255,13 +273,15 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
     case 'compacted-condensed-searched':
       return {
         files: [],
-        folderPath: ROOT_FOLDER,
+        folderPath: ROOT_FOLDER_PATH,
+        folderPathSegment: ROOT_FOLDER,
         isRoot: true,
         label: ROOT_FOLDER,
         sub: [
           {
             files: [{ ...getMockVisibleFiles()[3] }],
-            folderPath: FOLDER4,
+            folderPath: `${ROOT_FOLDER_PATH}/${FOLDER4}`,
+            folderPathSegment: FOLDER4,
             isRoot: false,
             label: FOLDER4,
             sub: [],
@@ -272,27 +292,31 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
     case 'compacted-condensed':
       return {
         files: [],
-        folderPath: ROOT_FOLDER,
+        folderPath: ROOT_FOLDER_PATH,
+        folderPathSegment: ROOT_FOLDER,
         isRoot: true,
         label: ROOT_FOLDER,
         sub: [
           {
             files: [{ ...getMockVisibleFiles()[0] }, { ...getMockVisibleFiles()[1] }],
-            folderPath: file1.path,
+            folderPath: `${ROOT_FOLDER_PATH}/${file1.path}`,
+            folderPathSegment: file1.path,
             isRoot: false,
             label: path.join(FOLDER1, SUBFOLDER1),
             sub: [],
           },
           {
             files: [{ ...getMockVisibleFiles()[2] }],
-            folderPath: FOLDER3,
+            folderPath: `${ROOT_FOLDER_PATH}/${FOLDER3}`,
+            folderPathSegment: FOLDER3,
             isRoot: false,
             label: FOLDER3,
             sub: [],
           },
           {
             files: [{ ...getMockVisibleFiles()[3] }],
-            folderPath: FOLDER4,
+            folderPath: `${ROOT_FOLDER_PATH}/${FOLDER4}`,
+            folderPathSegment: FOLDER4,
             isRoot: false,
             label: FOLDER4,
             sub: [],
@@ -300,28 +324,33 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
         ],
       };
 
+    case 'normal':
     default:
       return {
         files: [],
-        folderPath: ROOT_FOLDER,
+        folderPath: ROOT_FOLDER_PATH,
+        folderPathSegment: ROOT_FOLDER,
         isRoot: true,
         label: ROOT_FOLDER,
         sub: [
           {
             files: [],
-            folderPath: FOLDER1,
+            folderPath: `${ROOT_FOLDER_PATH}/${FOLDER1}`,
+            folderPathSegment: FOLDER1,
             isRoot: false,
             label: FOLDER1,
             sub: [
               {
                 files: [{ ...getMockVisibleFiles()[0] }],
-                folderPath: file1.path,
+                folderPath: `${ROOT_FOLDER_PATH}/${file1.path}`,
+                folderPathSegment: file1.path,
                 isRoot: false,
                 label: SUBFOLDER1,
                 sub: [
                   {
                     files: [{ ...getMockVisibleFiles()[1] }],
-                    folderPath: file2.path,
+                    folderPath: `${ROOT_FOLDER_PATH}/${file2.path}`,
+                    folderPathSegment: file2.path,
                     isRoot: false,
                     label: SUBFOLDER2,
                     sub: [],
@@ -332,13 +361,15 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
           },
           {
             files: [],
-            folderPath: FOLDER3,
+            folderPath: `${ROOT_FOLDER_PATH}/${FOLDER3}`,
+            folderPathSegment: FOLDER3,
             isRoot: false,
             label: FOLDER3,
             sub: [
               {
                 files: [{ ...getMockVisibleFiles()[2] }],
-                folderPath: file3.path,
+                folderPath: `${ROOT_FOLDER_PATH}/${file3.path}`,
+                folderPathSegment: file3.path,
                 isRoot: false,
                 label: SUBFOLDER3,
                 sub: [],
@@ -347,13 +378,15 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
           },
           {
             files: [],
-            folderPath: FOLDER4,
+            folderPath: `${ROOT_FOLDER_PATH}/${FOLDER4}`,
+            folderPathSegment: FOLDER4,
             isRoot: false,
             label: FOLDER4,
             sub: [
               {
                 files: [{ ...getMockVisibleFiles()[3] }],
-                folderPath: file4.path,
+                folderPath: `${ROOT_FOLDER_PATH}/${file4.path}`,
+                folderPathSegment: file4.path,
                 isRoot: false,
                 label: SUBFOLDER4,
                 sub: [],

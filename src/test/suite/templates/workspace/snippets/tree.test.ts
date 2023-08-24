@@ -35,7 +35,8 @@ suite('Templates > Workspace > Snippets: tree()', () => {
 
   const closedFolderTree: FileTree = {
     files: [],
-    folderPath: FOLDER1,
+    folderPath: '',
+    folderPathSegment: FOLDER1,
     isRoot: false,
     label: FOLDER1,
     sub: [],
@@ -43,7 +44,8 @@ suite('Templates > Workspace > Snippets: tree()', () => {
 
   const emptyRootTree: FileTree = {
     files: [],
-    folderPath: ROOT_FOLDER,
+    folderPath: '',
+    folderPathSegment: ROOT_FOLDER,
     isRoot: true,
     label: ROOT_FOLDER,
     sub: [],
@@ -83,15 +85,15 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     const rootChildrenFileTree: FileTree = { ...getMockFileTree('normal'), files: [{ ...file1 }] };
     tree(rootChildrenFileTree, 0, getMockRenderVars({ showRootFolder: true }), state);
 
-    expect(folderSpy.args[0][0].folderPath).to.equal(ROOT_FOLDER);
+    expect(folderSpy.args[0][0].folderPathSegment).to.equal(ROOT_FOLDER);
   });
 
   test('Root folder is not rendered if there are no root level files', () => {
     tree(getMockFileTree('normal'), 0, mockRenderVars, state);
 
-    expect(folderSpy.args[0][0].folderPath).not.to.equal(ROOT_FOLDER);
+    expect(folderSpy.args[0][0].folderPathSegment).not.to.equal(ROOT_FOLDER);
     expect(folderSpy.args[0][1]).to.equal(0); // Depth should have been zero for at least one non-root folder
-    expect(folderSpy.args[0][0].folderPath).to.equal(FOLDER1);
+    expect(folderSpy.args[0][0].folderPathSegment).to.equal(FOLDER1);
   });
 
   test('All files/folders are rendered', () => {

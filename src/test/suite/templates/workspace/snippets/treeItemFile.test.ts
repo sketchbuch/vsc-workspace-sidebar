@@ -55,7 +55,7 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
 
     expect(result).contains(`list__styled-item--selected`);
 
-    sinon.assert.notCalled(buttonSpy);
+    sinon.assert.calledOnce(buttonSpy);
     sinon.assert.calledOnce(selectedIconSpy);
   });
 

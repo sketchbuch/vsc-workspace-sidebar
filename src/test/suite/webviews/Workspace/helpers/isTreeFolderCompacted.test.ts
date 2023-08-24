@@ -6,7 +6,8 @@ suite('Webviews > Workspace > Helpers > isTreeFolderCompacted():', () => {
   test('Returns false if file label does not contain path.sep', () => {
     const result = isTreeFolderCompacted({
       files: [],
-      folderPath: 'test',
+      folderPath: '',
+      folderPathSegment: 'test',
       isRoot: true,
       label: 'test',
       sub: [],
@@ -17,7 +18,8 @@ suite('Webviews > Workspace > Helpers > isTreeFolderCompacted():', () => {
   test('Returns true if file label contains path.sep', () => {
     const result = isTreeFolderCompacted({
       files: [],
-      folderPath: 'test',
+      folderPath: '',
+      folderPathSegment: 'test',
       isRoot: true,
       label: `test${path.sep}test`,
       sub: [],

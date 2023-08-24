@@ -4,7 +4,7 @@ import { RenderVars } from '../../../webviews/webviews.interface';
 import { listItem } from './listItem';
 import { tree } from './tree';
 
-export const list = (state: WorkspaceState, renderVars: RenderVars) => {
+export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
   const { files, search, visibleFiles } = state;
   const { showTree } = renderVars;
 

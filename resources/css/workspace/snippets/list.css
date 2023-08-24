@@ -137,11 +137,9 @@
 }
 
 .list__buttons {
-  align-items: center;
   background: var(--vscode-list-hoverBackground);
   display: none;
   height: 100%;
-  justify-content: center;
   line-height: 100%;
   padding-left: 10px;
   padding-right: 10px;
@@ -149,11 +147,20 @@
   right: 0;
   top: 0;
   white-space: nowrap;
-  width: 20px;
 }
 
 .list__styled-item:hover > .list__element > .list__buttons {
   display: inline-flex;
+}
+
+.list__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.list__button + .list__button {
+  margin-left: 5px;
 }
 
 .list__icon {

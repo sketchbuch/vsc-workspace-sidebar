@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-export const folderListItem = (folder: vscode.WorkspaceFolder) => {
+export const folderListItem = (folder: vscode.WorkspaceFolder): string => {
   const { uri, name } = folder;
 
   return `

@@ -41,7 +41,16 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
     expect(result).contains('list__styled-item--selected');
     expect(result).contains(`title="Current workspace"`);
 
-    sinon.assert.callCount(btnSpy, 0);
+    sinon.assert.callCount(btnSpy, 1);
+    sinon.assert.calledWith(btnSpy, [
+      {
+        ariaLabel: `Open folder containing '${file.label}' in your file manager`,
+        file: file.file,
+        renderVars: mockRenderVars,
+        tooltip: `Open '${file.label}' in your file manager`,
+        type: 'open-filemanager',
+      },
+    ]);
     sinon.assert.callCount(iconSpy, 1);
     sinon.assert.calledWith(iconSpy, mockRenderVars);
 
@@ -60,7 +69,22 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
     expect(result).contains(`title="Open '${file.label}' in this window"`);
 
     sinon.assert.callCount(btnSpy, 1);
-    sinon.assert.calledWith(btnSpy, file, mockRenderVars);
+    sinon.assert.calledWith(btnSpy, [
+      {
+        ariaLabel: `Open folder containing '${file.label}' in your file manager`,
+        file: file.file,
+        renderVars: mockRenderVars,
+        tooltip: `Open '${file.label}' in your file manager`,
+        type: 'open-filemanager',
+      },
+      {
+        ariaLabel: "Open 'Vscode' in a new window",
+        file: file.file,
+        renderVars: mockRenderVars,
+        tooltip: "Open 'Vscode' in a new window",
+        type: 'new-window',
+      },
+    ]);
     sinon.assert.callCount(iconSpy, 0);
 
     btnSpy.restore();

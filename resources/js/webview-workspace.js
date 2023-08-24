@@ -2,7 +2,8 @@
   const vscode = acquireVsCodeApi();
 
   const folderSaveBtn = document.querySelector('#saveFolderAsWorkspace');
-  const newWinIcons = document.querySelectorAll('.list__buttons');
+  const newWindowIconBtns = document.querySelectorAll('.list__button[data-type="new-window"]');
+  const filemanagerIconBtns = document.querySelectorAll('.list__button[data-type="open-filemanager"]');
   const searchCheckboxes = document.querySelectorAll('.list__search-checkbox');
   const searchInput = document.querySelector('#searchWorkspaces');
   const viewLinks = document.querySelectorAll('.view__link');
@@ -35,6 +36,13 @@
     event.stopPropagation();
     sendMessage('ICON_CLICK', event.currentTarget.dataset.file);
   };
+
+  const handleFilemanagerIconClick = (event) => {
+    event.stopPropagation();
+    sendMessage('ICON_CLICK_FILEMANAGER', event.currentTarget.dataset.file);
+  };
+
+
 
   const handleSaveFolderClick = () => {
     sendMessage('SAVE_WS');
@@ -73,8 +81,12 @@
   };
 
   document.addEventListener('DOMContentLoaded', () => {
-    newWinIcons.forEach((element) => {
+    newWindowIconBtns.forEach((element) => {
       element.addEventListener('click', handleIconClick);
+    });
+
+    filemanagerIconBtns.forEach((element) => {
+      element.addEventListener('click', handleFilemanagerIconClick);
     });
 
     if (searchInput) {
@@ -125,8 +137,12 @@
   });
 
   window.addEventListener('unload', () => {
-    newWinIcons.forEach((element) => {
+    newWindowIconBtns.forEach((element) => {
       element.removeEventListener('click', handleIconClick);
+    });
+
+    filemanagerIconBtns.forEach((element) => {
+      element.removeEventListener('click', handleFilemanagerIconClick);
     });
 
     if (searchInput) {

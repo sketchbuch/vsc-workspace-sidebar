@@ -1,4 +1,4 @@
-export const treeIndent = (depth: number) => {
+export const treeIndent = (depth: number): string => {
   if (depth === 0) {
     return '';
   }

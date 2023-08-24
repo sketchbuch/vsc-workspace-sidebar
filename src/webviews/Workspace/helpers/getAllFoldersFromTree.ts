@@ -4,12 +4,12 @@ export const getAllFoldersFromTree = (tree: FileTree): string[] => {
   let folders: string[] = [];
 
   if (!tree.isRoot) {
-    folders.push(tree.folderPath);
+    folders.push(tree.folderPathSegment);
   }
 
   if (tree.sub.length > 0) {
     tree.sub.forEach((folder) => {
-      folders.push(folder.folderPath);
+      folders.push(folder.folderPathSegment);
 
       if (folder.sub) {
         folder.sub.forEach((subfolder) => {

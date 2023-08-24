@@ -1,10 +1,16 @@
 import { expect } from 'chai';
+import os from 'os';
 import * as sinon from 'sinon';
 import * as configs from '../../../../../config/getConfig';
 import * as compact from '../../../../../webviews/Workspace/helpers/compactTree';
 import * as condense from '../../../../../webviews/Workspace/helpers/condenseTree';
 import { getFileTree } from '../../../../../webviews/Workspace/helpers/getFileTree';
-import { getMockFileTree, getMockVisibleFiles, ROOT_FOLDER } from '../../../../mocks/mockFileData';
+import {
+  OS_HOMEFOLDER,
+  ROOT_FOLDER_USERPATH,
+  getMockFileTree,
+  getMockVisibleFiles,
+} from '../../../../mocks/mockFileData';
 
 suite('Webviews > Workspace > Helpers > getFileTree():', () => {
   let compactConfigStub: sinon.SinonStub;
@@ -12,6 +18,7 @@ suite('Webviews > Workspace > Helpers > getFileTree():', () => {
   let condenseConfigStub: sinon.SinonStub;
   let condenseSpy: sinon.SinonSpy;
   let folderConfigStub: sinon.SinonStub;
+  let osHomeStub: sinon.SinonStub;
 
   setup(() => {
     compactConfigStub = sinon
@@ -20,7 +27,8 @@ suite('Webviews > Workspace > Helpers > getFileTree():', () => {
     compactSpy = sinon.spy(compact, 'compactTree');
     condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => true);
     condenseSpy = sinon.spy(condense, 'condenseTree');
-    folderConfigStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_FOLDER);
+    folderConfigStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_FOLDER_USERPATH);
+    osHomeStub = sinon.stub(os, 'homedir').callsFake(() => OS_HOMEFOLDER);
   });
 
   teardown(() => {
@@ -29,6 +37,7 @@ suite('Webviews > Workspace > Helpers > getFileTree():', () => {
     condenseConfigStub.restore();
     condenseSpy.restore();
     folderConfigStub.restore();
+    osHomeStub.restore();
   });
 
   test('Returns the expected uncondensed & uncompacted filetree', () => {
