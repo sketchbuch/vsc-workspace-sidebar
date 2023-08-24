@@ -216,7 +216,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
 
         case Actions.SEARCH:
           if (payload !== undefined) {
-            store.dispatch(setSearch({ term: payload.toString() }));
+            store.dispatch(setSearch({ term: payload }));
           }
           break;
 

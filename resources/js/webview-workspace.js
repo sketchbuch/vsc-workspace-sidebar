@@ -73,6 +73,9 @@
   const handleSearchCheckboxClick = (event) => {
     const { checked, value } = event.target;
 
+    searchTerm = searchInput.value;
+    handleSearchSubmit();
+
     if (checked) {
       sendMessage('SEARCH_CHECKBOX_ENABLE', value);
     } else {
