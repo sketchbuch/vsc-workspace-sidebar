@@ -204,6 +204,12 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
           }
           break;
 
+        case Actions.ICON_CLICK_FILEMANAGER:
+          if (payload) {
+            executeCommand('revealFileInOS', vscode.Uri.file(payload));
+          }
+          break;
+
         case Actions.SAVE_WS:
           executeCommand(CMD_VSC_SAVE_WS_AS);
           break;

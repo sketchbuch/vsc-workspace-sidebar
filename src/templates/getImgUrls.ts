@@ -1,7 +1,12 @@
 import * as path from 'path';
 import { RenderVars } from '../webviews/webviews.interface';
 
-export const getImgUrls = (renderVars: RenderVars, iconName: string) => {
+export interface GetImgUrls {
+  dark: string;
+  light: string;
+}
+
+export const getImgUrls = (renderVars: RenderVars, iconName: string): GetImgUrls => {
   const { imgDarkFolderUri, imgLightFolderUri } = renderVars;
 
   return {

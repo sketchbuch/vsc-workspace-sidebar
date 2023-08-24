@@ -6,7 +6,7 @@ import { folderListItem } from './folderListItem';
 export const folderList = (
   state: WorkspaceState,
   workspaceFolders: vscode.WorkspaceFolder[] | undefined
-) => {
+): string => {
   if (state.wsType === 'folder' && workspaceFolders) {
     const title =
       workspaceFolders.length === 1

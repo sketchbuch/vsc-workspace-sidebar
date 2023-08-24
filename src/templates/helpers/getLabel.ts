@@ -1,6 +1,6 @@
 import { SearchState } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
 
-export const getLabel = (label: string, search: SearchState) => {
+export const getLabel = (label: string, search: SearchState): string => {
   const { caseInsensitive, term } = search;
 
   if (term) {

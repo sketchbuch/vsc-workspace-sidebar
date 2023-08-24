@@ -5,6 +5,7 @@ export const CMD_COLLAPSE = `${EXT}-collapse-all`;
 export const CMD_EXPAND = `${EXT}-expand-all`;
 export const CMD_FOCUS_SEARCH = `${EXT}-focus-search`;
 export const CMD_OPEN_CUR_WIN = `${EXT}-open-cur-win`;
+export const CMD_OPEN_IN_FILEMANAGER = `${EXT}-open-in-filemanager`;
 export const CMD_OPEN_NEW_WIN = `${EXT}-open-new-win`;
 export const CMD_OPEN_SETTINGS = `${EXT}-settings`;
 export const CMD_REFRESH = `${EXT}-refresh`;

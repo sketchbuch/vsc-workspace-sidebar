@@ -67,11 +67,16 @@
         "open": "Derzeit offener Ordner:",
         "saveButton": "Als neuen Arbeitsbereich speichern"
       },
-      "item": {
-        "iconAlt": "Neues Fenster icon",
-        "openCurWin": "'{{label}}' in diesem Fenster öffnen",
-        "openNewWin": "'{{label}}' in einem neuen Fenster öffnen",
-        "selected": "Aktueller Arbeitsbereich"
+      "itemButtons": {
+        "newWindow": {
+          "openCurWin": "'{{label}}' in diesem Fenster öffnen",
+          "openNewWin": "'{{label}}' in einem neuen Fenster öffnen",
+          "selected": "Aktueller Arbeitsbereich"
+        },
+        "openFilemanager": {
+          "ariaLabel": "Öffnen Sie den Ordner '{{label}}' in Ihrem Dateimanager",
+          "tooltip": "Öffnen Sie '{{label}}' in Ihrem Dateimanager"
+        }
       },
       "search": {
         "ariaLabel": "Arbeitsbereiche durchsuchen",

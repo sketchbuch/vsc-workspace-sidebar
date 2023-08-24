@@ -67,11 +67,16 @@
         "open": "Current open folder:",
         "saveButton": "Save as new Workspace"
       },
-      "item": {
-        "iconAlt": "New window icon",
-        "openCurWin": "Open '{{label}}' in this window",
-        "openNewWin": "Open '{{label}}' in a new window",
-        "selected": "Current workspace"
+      "itemButtons": {
+        "newWindow": {
+          "openCurWin": "Open '{{label}}' in this window",
+          "openNewWin": "Open '{{label}}' in a new window",
+          "selected": "Current workspace"
+        },
+        "openFilemanager": {
+          "ariaLabel": "Open folder containing '{{label}}' in your file manager",
+          "tooltip": "Open '{{label}}' in your file manager"
+        }
       },
       "search": {
         "ariaLabel": "Search Workspaces",

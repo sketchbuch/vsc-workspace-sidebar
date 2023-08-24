@@ -15,7 +15,8 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
   const FOLDER_PATH = 'supernatural/winchester';
   const folder: FileTree = {
     files: [],
-    folderPath: FOLDER_PATH,
+    folderPath: '',
+    folderPathSegment: FOLDER_PATH,
     isRoot: true,
     label: ROOT_FOLDER,
     sub: [],
@@ -46,7 +47,7 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
     const result = treeItemFolder(folder, DEPTH, false, mockRenderVars, mockState);
 
     expect(result).to.be.a('string');
-    expect(result).contains(`data-folder="${folder.folderPath}"`);
+    expect(result).contains(`data-folder="${folder.folderPathSegment}"`);
     expect(result).contains(`data-depth="${DEPTH}"`);
     expect(result).contains(`<span class="list__element" title="${folder.label}">`);
     expect(result).contains(`<span class="list__title">${folder.label}</span>`);
