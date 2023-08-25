@@ -50,7 +50,8 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
 
   constructor(
     private readonly _extensionUri: vscode.Uri,
-    private readonly _globalState: GlobalState
+    private readonly _globalState: GlobalState,
+    private readonly _extMode: vscode.ExtensionMode
   ) {}
 
   public focusInput() {
@@ -131,7 +132,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
         },
         crypto.randomBytes(16).toString('hex')
       )
-    } else {
+    } else if (this._extMode !== vscode.ExtensionMode.Test) {
       vscode.window.showErrorMessage(t('errors.viewNotFound'))
     }
   }

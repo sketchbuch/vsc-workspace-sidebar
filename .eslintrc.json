@@ -13,6 +13,9 @@
         "@typescript-eslint/semi": "off",
         "curly": "warn",
         "eqeqeq": "warn",
+        "no-dupe-else-if": "warn",
+        "no-lonely-if": "warn",
+        "no-duplicate-case":"error",
         "no-throw-literal": "warn",
         "semi": "off"
     }

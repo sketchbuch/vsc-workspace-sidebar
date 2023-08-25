@@ -20,7 +20,11 @@ suite('Webviews > Workspace > WorkspaceViewProvider():', () => {
     dispatchSpy = sinon.spy(store, 'dispatch')
     getHtmlSpy = sinon.spy(templates, 'getHtml')
     stateSpy = sinon.stub(mockContext.globalState, 'get')
-    ws = new WorkspaceViewProvider(mockContext.extensionUri, mockContext.globalState)
+    ws = new WorkspaceViewProvider(
+      mockContext.extensionUri,
+      mockContext.globalState,
+      mockContext.extensionMode
+    )
   })
 
   teardown(() => {

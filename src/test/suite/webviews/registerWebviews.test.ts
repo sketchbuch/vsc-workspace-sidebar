@@ -21,7 +21,11 @@ suite('Webviews > registerWebviews()', () => {
     configStub = sinon.stub(vscode.workspace, 'onDidChangeConfiguration')
     mockContext = getMockContext()
     regWebviewStub = sinon.stub(vscode.window, 'registerWebviewViewProvider')
-    ws = new WorkspaceViewProvider(mockContext.extensionUri, mockContext.globalState)
+    ws = new WorkspaceViewProvider(
+      mockContext.extensionUri,
+      mockContext.globalState,
+      mockContext.extensionMode
+    )
     refreshSpy = sinon.spy(ws, 'refresh')
   })
 

@@ -26,7 +26,11 @@ suite('Commands > registerCommands()', () => {
     execCmdStub = sinon.stub(vscode.commands, 'executeCommand')
     mockContext = getMockContext()
     regCmdStub = sinon.stub(vscode.commands, 'registerCommand')
-    ws = new WorkspaceViewProvider(mockContext.extensionUri, mockContext.globalState)
+    ws = new WorkspaceViewProvider(
+      mockContext.extensionUri,
+      mockContext.globalState,
+      mockContext.extensionMode
+    )
   })
 
   teardown(() => {
