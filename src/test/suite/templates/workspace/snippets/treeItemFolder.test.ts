@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 import path from 'path'
 import * as sinon from 'sinon'
+import * as buttons from '../../../../../templates/workspace/snippets/listItemButtons'
 import * as selected from '../../../../../templates/workspace/snippets/listItemIcon'
 import * as icons from '../../../../../templates/workspace/snippets/treeIcons'
 import * as indent from '../../../../../templates/workspace/snippets/treeIndent'
@@ -19,7 +20,7 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
     folderPathSegment: FOLDER_PATH,
     isRoot: true,
     label: ROOT_FOLDER,
-    sub: []
+    sub: [],
   }
   const mockState = getMockState()
   const mockRenderVars = getMockRenderVars()
@@ -44,6 +45,8 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
   })
 
   test('Renders correctly', () => {
+    const btnSpy = sinon.spy(buttons, 'listItemButtons')
+
     const result = treeItemFolder(folder, DEPTH, false, mockRenderVars, mockState)
 
     expect(result).to.be.a('string')
@@ -52,7 +55,19 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
     expect(result).contains(`<span class="list__element" title="${folder.label}">`)
     expect(result).contains(`<span class="list__title">${folder.label}</span>`)
 
+    sinon.assert.callCount(btnSpy, 1)
+    sinon.assert.calledWith(btnSpy, [
+      {
+        ariaLabel: `Open folder containing '${folder.label}' in your file manager`,
+        codicon: 'browser',
+        file: folder.folderPath,
+        renderVars: mockRenderVars,
+        tooltip: `Open '${folder.label}' in your file manager`,
+        type: 'open-filemanager',
+      },
+    ])
     sinon.assert.calledOnce(indentSpy)
+    btnSpy.restore()
   })
 
   test('Selected indicator not shown if not selected', () => {
@@ -68,7 +83,7 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
     const mockState = getMockState({ closedFolders: [FOLDER_PATH] })
     const result = treeItemFolder(folder, DEPTH, true, mockRenderVars, {
       ...mockState,
-      selected: `${FOLDER_PATH}${path.sep}`
+      selected: `${FOLDER_PATH}${path.sep}`,
     })
 
     expect(result).to.be.a('string')
@@ -81,7 +96,7 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
     const mockState = getMockState({ closedFolders: [FOLDER_PATH] })
     treeItemFolder(folder, DEPTH, false, mockRenderVars, {
       ...mockState,
-      selected: `${FOLDER_PATH}${path.sep}`
+      selected: `${FOLDER_PATH}${path.sep}`,
     })
     sinon.assert.notCalled(selectedIconSpy)
   })

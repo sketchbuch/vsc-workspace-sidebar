@@ -44,11 +44,11 @@ export const getWorkspaceButtons: GetWorkspaceButtons = ({ buttons, renderVars }
 
       return {
         ariaLabel: tooltip,
-        codicon: btn.codicon,
+        ...(btn.codicon ? { codicon: btn.codicon } : {}),
         file: btn.file.file,
         renderVars,
         tooltip,
-        type: btn.key
+        type: btn.key,
       }
     }
 
@@ -56,15 +56,15 @@ export const getWorkspaceButtons: GetWorkspaceButtons = ({ buttons, renderVars }
 
     return {
       ariaLabel: t(`webViews.workspace.list.itemButtons.${translationKey}.ariaLabel`, {
-        label: btn.label
+        label: btn.label,
       }),
-      codicon: btn.codicon,
+      ...(btn.codicon ? { codicon: btn.codicon } : {}),
       file: btn.file,
       renderVars,
       tooltip: t(`webViews.workspace.list.itemButtons.${translationKey}.tooltip`, {
-        label: btn.label
+        label: btn.label,
       }),
-      type: btn.key
+      type: btn.key,
     }
   })
 

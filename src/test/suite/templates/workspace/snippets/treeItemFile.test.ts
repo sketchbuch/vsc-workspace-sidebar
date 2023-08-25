@@ -56,6 +56,16 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
     expect(result).contains(`list__styled-item--selected`)
 
     sinon.assert.calledOnce(buttonSpy)
+    sinon.assert.calledWith(buttonSpy, [
+      {
+        ariaLabel: `Open folder containing '${file.label}' in your file manager`,
+        codicon: 'browser',
+        file: file.file,
+        renderVars: mockRenderVars,
+        tooltip: `Open '${file.label}' in your file manager`,
+        type: 'open-filemanager',
+      },
+    ])
     sinon.assert.calledOnce(selectedIconSpy)
   })
 
@@ -65,6 +75,23 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
     expect(result).contains(`list__styled-item--unselected`)
 
     sinon.assert.calledOnce(buttonSpy)
+    sinon.assert.calledWith(buttonSpy, [
+      {
+        ariaLabel: `Open folder containing '${file.label}' in your file manager`,
+        codicon: 'browser',
+        file: file.file,
+        renderVars: mockRenderVars,
+        tooltip: `Open '${file.label}' in your file manager`,
+        type: 'open-filemanager',
+      },
+      {
+        ariaLabel: "Open 'Vscode' in a new window",
+        file: file.file,
+        renderVars: mockRenderVars,
+        tooltip: "Open 'Vscode' in a new window",
+        type: 'new-window',
+      },
+    ])
     sinon.assert.notCalled(selectedIconSpy)
   })
 

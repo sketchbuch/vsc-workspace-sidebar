@@ -25,16 +25,17 @@ export const treeItemFile = (
 
   const buttons: ConfigButtons = [
     {
-      key: 'open-filemanager',
+      codicon: 'browser',
       file: file.file,
-      label: file.label
-    }
+      key: 'open-filemanager',
+      label: file.label,
+    },
   ]
 
   if (!isSelected) {
     buttons.push({
       key: 'new-window',
-      file
+      file,
     })
   }
 

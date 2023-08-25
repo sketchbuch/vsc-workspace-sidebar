@@ -30,10 +30,11 @@ export const treeItemFolder = (
 
   const buttons: ConfigButtons = [
     {
-      key: 'open-filemanager',
+      codicon: 'browser',
       file: folderPath,
-      label
-    }
+      key: 'open-filemanager',
+      label,
+    },
   ]
 
   const folderButtons = getWorkspaceButtons({ buttons, renderVars })
