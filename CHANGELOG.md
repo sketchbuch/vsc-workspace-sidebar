@@ -1,5 +1,18 @@
 # Change Log
 
+## [1.5.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.4.2...1.5.0) (2023-08-25)
+
+- Fixed #71 - Search term must be lowercase.
+  - Search now has two options: search from beginning of label, and case insensitive.
+  - Also substrings matching the search terms are now shown
+- Fixed #68 - Error message displays folder path is not a directory
+  - Added handling for different issues when collecting workspaces: not a folder, no workspaces found, no workspaces found with depth 0, and any other errror
+- Restyled the open folder display
+- Added an "open in file manager" icon to items and folders
+- Updated tests
+- Changed linting
+- Fixed issues with running tests
+
 ## [1.4.2](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.4.1...1.4.2) (2022-12-01)
 
 - Fixes workspaces with dots in the file names being displayed
