@@ -6,16 +6,18 @@
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "eslint-plugin-mocha"
     ],
     "rules": {
         "@typescript-eslint/class-name-casing": "warn",
         "@typescript-eslint/semi": "off",
         "curly": "warn",
         "eqeqeq": "warn",
+        "mocha/no-identical-title": "warn",
         "no-dupe-else-if": "warn",
-        "no-lonely-if": "warn",
         "no-duplicate-case":"error",
+        "no-lonely-if": "warn",
         "no-throw-literal": "warn",
         "semi": "off"
     }
