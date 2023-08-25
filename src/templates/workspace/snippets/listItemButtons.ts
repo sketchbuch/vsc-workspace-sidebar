@@ -4,7 +4,7 @@ import { listItemButton } from './listItemButton'
 export const listItemButtons = (buttons: WorkspaceButtons): string => {
   return `
     <span class="list__buttons">
-      ${buttons.map((btn) => listItemButton(btn))}
+      ${buttons.map((btn) => listItemButton(btn)).join('')}
     </span>
   `
 }
