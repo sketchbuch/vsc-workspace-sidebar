@@ -1,6 +1,5 @@
 .list__folder {
   position: relative;
-  background: rgba(0, 0, 0, 0.05);
 }
 
 .list[data-showsearch='true'] .list__folder {
@@ -33,4 +32,12 @@
 .list__folder:focus .list__element > .list__description,
 .list__folder:active .list__element > .list__description {
   opacity: 0.85;
+}
+
+.list__folder-divider {
+  padding: 0 20px;
+}
+
+.list__folder-vscodedivider {
+  margin-bottom: 0;
 }

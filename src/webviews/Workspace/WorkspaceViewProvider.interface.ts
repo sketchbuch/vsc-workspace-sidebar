@@ -20,8 +20,9 @@ export interface WorkspaceCache {
 
 export type WorkspaceErrors = '' | 'FETCH'
 
+// Messages sent by the FE
 export enum WorkspacePmActions {
-  FOCUS_SEARCH = 'FOCUS_SEARCH',
+  ERROR_MSG = 'ERROR_MSG',
   FOLDER_CLICK = 'FOLDER_CLICK',
   ICON_CLICK = 'ICON_CLICK',
   ICON_CLICK_FILEMANAGER = 'ICON_CLICK_FILEMANAGER',
@@ -31,6 +32,11 @@ export enum WorkspacePmActions {
   SEARCH_CHECKBOX_DISABLE = 'SEARCH_CHECKBOX_DISABLE',
   SEARCH_CHECKBOX_ENABLE = 'SEARCH_CHECKBOX_ENABLE',
   SHOW_SETTINGS = 'SHOW_SETTINGS'
+}
+
+// Messages received by the FE
+export enum WorkspacePmClientActions {
+  FOCUS_SEARCH = 'FOCUS_SEARCH'
 }
 
 export enum WorkspaceSearchCheckboxes {

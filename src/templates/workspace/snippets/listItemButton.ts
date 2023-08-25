@@ -1,22 +1,31 @@
-import { RenderVars } from '../../../webviews/webviews.interface'
 import { getImgUrls } from '../../getImgUrls'
-
-export interface ListItemButton {
-  ariaLabel: string
-  file: string
-  renderVars: RenderVars
-  tooltip: string
-  type: string
-}
+import { WorkspaceButton } from '../../helpers/getWorkspaceButtons'
 
 export const listItemButton = ({
   ariaLabel,
+  codicon,
   file,
   renderVars,
   tooltip,
   type
-}: ListItemButton): string => {
+}: WorkspaceButton): string => {
   const icon = getImgUrls(renderVars, type)
+
+  if (codicon) {
+    return `
+      <vscode-button
+        appearance="icon"
+        aria-label="${ariaLabel}"
+        class="list__button"
+        data-file="${file}"
+        data-type="${type}"
+        title="${tooltip}"
+        type="button"
+      >
+        <span class="codicon codicon-${codicon}"></span>
+      </vscode-button>
+    `
+  }
 
   return `
     <vscode-button

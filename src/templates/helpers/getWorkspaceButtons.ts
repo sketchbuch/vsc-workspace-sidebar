@@ -6,6 +6,7 @@ import { getFileTooltip } from './getFileTooltip'
 
 export interface WorkspaceButton {
   ariaLabel: string
+  codicon?: string
   file: string
   renderVars: RenderVars
   tooltip: string
@@ -15,12 +16,14 @@ export interface WorkspaceButton {
 export type WorkspaceButtons = WorkspaceButton[]
 
 export interface GenericButton {
+  codicon?: string
   file: string
   key: 'open-filemanager'
   label: string
 }
 
 export interface FileButton {
+  codicon?: string
   file: File
   key: 'new-window'
 }
@@ -41,6 +44,7 @@ export const getWorkspaceButtons: GetWorkspaceButtons = ({ buttons, renderVars }
 
       return {
         ariaLabel: tooltip,
+        codicon: btn.codicon,
         file: btn.file.file,
         renderVars,
         tooltip,
@@ -54,6 +58,7 @@ export const getWorkspaceButtons: GetWorkspaceButtons = ({ buttons, renderVars }
       ariaLabel: t(`webViews.workspace.list.itemButtons.${translationKey}.ariaLabel`, {
         label: btn.label
       }),
+      codicon: btn.codicon,
       file: btn.file,
       renderVars,
       tooltip: t(`webViews.workspace.list.itemButtons.${translationKey}.tooltip`, {

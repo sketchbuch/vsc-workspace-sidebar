@@ -16,8 +16,9 @@ export const listItem = (file: File, state: WorkspaceState, renderVars: RenderVa
 
   const buttons: ConfigButtons = [
     {
-      key: 'open-filemanager',
+      codicon: 'browser',
       file: file.file,
+      key: 'open-filemanager',
       label: file.label
     }
   ]

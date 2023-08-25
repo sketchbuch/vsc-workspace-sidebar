@@ -4,7 +4,7 @@
 @import './workspace/views/loading.css';
 
 :root {
-  --ext-workspace-sidebar__search-offset: 84px;
+  --ext-workspace-sidebar__search-offset: 32px;
 }
 
 body {
@@ -43,7 +43,7 @@ body.vscode-dark img[data-theme='light'] {
   position: relative;
 }
 
-.view__message + .view__message{
+.view__message+.view__message {
   margin-top: 0.5rem;
 }
 
@@ -79,14 +79,14 @@ body.vscode-dark img[data-theme='light'] {
 
 
 .a11y__screenreader-text {
-	border: 0;  
-	clip-path: inset(50%);  
-	clip: rect(0, 0, 0, 0);  
-	height: 1px;  
-	margin: -1px;  
-	overflow: hidden;  
-	padding: 0;  
-	position: absolute;  
-	white-space: nowrap;  
-	width: 1px;  
+  border: 0;
+  clip-path: inset(50%);
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }

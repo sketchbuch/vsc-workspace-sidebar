@@ -25,6 +25,7 @@ import { GlobalState } from '../../types/ext'
 import { HtmlData, PostMessage } from '../webviews.interface'
 import {
   WorkspacePmActions as Actions,
+  WorkspacePmClientActions as ClientActions,
   FolderState,
   WorkspacePmPayload as Payload,
   WorkspaceCache,
@@ -56,7 +57,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
 
   public focusInput() {
     if (this._view?.visible) {
-      this._view.webview.postMessage({ action: Actions.FOCUS_SEARCH })
+      this._view.webview.postMessage({ action: ClientActions.FOCUS_SEARCH })
     }
   }
 
@@ -235,7 +236,16 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
           executeCommand(CMD_VSC_OPEN_SETTINGS, 'workspaceSidebar')
           break
 
+        case Actions.ERROR_MSG:
+          if (this._extMode !== vscode.ExtensionMode.Production && payload !== undefined) {
+            vscode.window.showErrorMessage(payload)
+          }
+          break
+
         default:
+          if (this._extMode !== vscode.ExtensionMode.Production) {
+            vscode.window.showErrorMessage(`Action not found: "${action}"`)
+          }
           break
       }
     })

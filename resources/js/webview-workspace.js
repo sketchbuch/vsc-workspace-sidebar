@@ -4,11 +4,13 @@
   const folderSaveBtn = document.querySelector('#saveFolderAsWorkspace');
   const newWindowIconBtns = document.querySelectorAll('.list__button[data-type="new-window"]');
   const filemanagerIconBtns = document.querySelectorAll('.list__button[data-type="open-filemanager"]');
-  const searchCheckboxes = document.querySelectorAll('.list__search-checkbox');
+  const searchOptions = document.querySelectorAll('.searchBox__options-button--toggle');
   const searchInput = document.querySelector('#searchWorkspaces');
   const viewLinks = document.querySelectorAll('.view__link');
   const wsElements = document.querySelectorAll('.list__styled-item--unselected');
   const wsFolders = document.querySelectorAll('.list__branch-list-item-folder-closable');
+
+  console.log('### searchOptions', searchOptions.length)
 
   let searchTerm = '';
 
@@ -42,8 +44,6 @@
     sendMessage('ICON_CLICK_FILEMANAGER', event.currentTarget.dataset.file);
   };
 
-
-
   const handleSaveFolderClick = () => {
     sendMessage('SAVE_WS');
   };
@@ -65,21 +65,33 @@
     }
   };
 
-  const handleViewLInkClick = (event) => {
+  const handleViewLinkClick = (event) => {
     event.stopPropagation();
     sendMessage('SHOW_SETTINGS');
   };
 
-  const handleSearchCheckboxClick = (event) => {
-    const { checked, value } = event.target;
+  const handleSearchOptionClick = (event) => {
+    event.stopPropagation();
 
-    searchTerm = searchInput.value;
-    handleSearchSubmit();
+    const button = event.target.closest('vscode-button')
 
-    if (checked) {
-      sendMessage('SEARCH_CHECKBOX_ENABLE', value);
+    if (button === null) {
+      sendMessage('ERROR_MSG', `vscode-button not found for "${event.target.getAttribute('data-btnname')}"`);
     } else {
-      sendMessage('SEARCH_CHECKBOX_DISABLE', value);
+      const name = button.getAttribute('name')
+      const ariaPressed = button.getAttribute('aria-pressed') === 'true' ? true : false
+
+      searchTerm = searchInput.value;
+      handleSearchSubmit();
+
+
+      console.log('###', name, ariaPressed)
+
+      if (ariaPressed) {
+        sendMessage('SEARCH_CHECKBOX_DISABLE', name);
+      } else {
+        sendMessage('SEARCH_CHECKBOX_ENABLE', name);
+      }
     }
   };
 
@@ -99,12 +111,12 @@
       searchTerm = searchInput.value;
     }
 
-    searchCheckboxes.forEach((element) => {
-      element.addEventListener('click', handleSearchCheckboxClick);
+    searchOptions.forEach((element) => {
+      element.addEventListener('click', handleSearchOptionClick);
     });
 
     viewLinks.forEach((element) => {
-      element.addEventListener('click', handleViewLInkClick);
+      element.addEventListener('click', handleViewLinkClick);
     });
 
     wsElements.forEach((element) => {
@@ -153,12 +165,12 @@
       searchInput.removeEventListener('keyup', handleSearchKeyUp);
     }
 
-    searchCheckboxes.forEach((element) => {
-      element.removeEventListener('click', handleSearchCheckboxClick);
+    searchOptions.forEach((element) => {
+      element.removeEventListener('click', handleSearchOptionClick);
     });
 
     viewLinks.forEach((element) => {
-      element.removeEventListener('click', handleViewLInkClick);
+      element.removeEventListener('click', handleViewLinkClick);
     });
 
     wsElements.forEach((element) => {

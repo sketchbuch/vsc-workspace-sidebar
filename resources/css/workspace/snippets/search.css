@@ -43,15 +43,33 @@
   padding: 0.3rem 0;
 }
 
-.list__search-optionlist {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.searchBox__options-section {
+  align-items: end;
+  display: flex;
+  flex-direction: row;
+  height: 18px;
 }
 
-.list__search fieldset {
-  border: none;
-  margin: 0;
-  padding: 0;
-  width: 100%;
+.searchBox__options-button {
+  align-content: center;
+  height: 100%;
+  justify-content: center;
+}
+
+.searchBox__options-button,
+.searchBox__options-button::part(control) {
+  width: 18px;
+}
+
+.searchBox__options-button + .searchBox__options-button {
+  margin-left: 4px;
+}
+
+.searchBox__options-button--toggle[aria-pressed='true'] {
+  background-color: var(--vscode-inputOption-activeBackground);
+  border-color: var(--vscode-inputOption-activeBorder);
+  border-width: 1px;
+  color: var(--vscode-inputOption-activeForeground);
+  outline-offset: var(--button-icon-outline-offset);
+  outline: calc(var(--border-width) * 1px) solid var(--focus-border);
 }

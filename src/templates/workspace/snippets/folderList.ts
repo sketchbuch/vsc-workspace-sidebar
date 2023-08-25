@@ -30,6 +30,10 @@ export const folderList = (
             ${t('webViews.workspace.list.folder.saveButton')}
           </vscode-button>
         </div>
+
+        <div class="list__folder-divider">
+          <vscode-divider class="list__folder-vscodedivider"></vscode-divider>
+        </div
       </div>
     `
   }
