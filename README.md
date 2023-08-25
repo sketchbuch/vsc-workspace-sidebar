@@ -48,15 +48,7 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-### [1.5.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.4.2...1.5.0) (2023-08-25)
+### [1.5.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.5.0...v1.5.1) (2023-08-25)
 
-- Fixed #71 - Search term must be lowercase.
-  - Search now has two options: search from beginning of label, and case insensitive.
-  - Also substrings matching the search terms are now shown
-- Fixed #68 - Error message displays folder path is not a directory
-  - Added handling for different issues when collecting workspaces: not a folder, no workspaces found, no workspaces found with depth 0, and any other errror
-- Restyled the open folder display
-- Added an "open in file manager" icon to items and folders
-- Updated tests
-- Changed linting
-- Fixed issues with running tests
+- Fixes issues with links in changelog
+- Fixes the view title when recollecting workspaces

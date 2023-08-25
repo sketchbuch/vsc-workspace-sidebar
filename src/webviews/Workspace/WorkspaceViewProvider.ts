@@ -87,7 +87,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   }
 
   private getViewTitle({ files, visibleFiles, search, state: view }: WorkspaceState) {
-    let viewTitle = t('webViews.workspace.list.title')
+    let viewTitle = t('views.title')
 
     if (view === 'list' && files !== null) {
       viewTitle = t(

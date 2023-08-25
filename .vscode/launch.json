@@ -28,7 +28,7 @@
         "--extensionTestsPath=${workspaceFolder}/test/test/suite/index"
       ],
       "outFiles": ["${workspaceFolder}/test/test/**/*.js"],
-      "preLaunchTask": "npm: test:pretest"
+      "preLaunchTask": "npm: test"
     }
   ]
 }

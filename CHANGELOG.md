@@ -1,6 +1,11 @@
 # Change Log
 
-## [1.5.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.4.2...1.5.0) (2023-08-25)
+## [1.5.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.5.0...v1.5.1) (2023-08-25)
+
+- Fixes issues with links in changelog
+- Fixes the view title when recollecting workspaces
+
+## [1.5.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.4.2...v1.5.0) (2023-08-25)
 
 - Fixed #71 - Search term must be lowercase.
   - Search now has two options: search from beginning of label, and case insensitive.
@@ -13,20 +18,20 @@
 - Changed linting
 - Fixed issues with running tests
 
-## [1.4.2](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.4.1...1.4.2) (2022-12-01)
+## [1.4.2](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.4.1...v1.4.2) (2022-12-01)
 
 - Fixes workspaces with dots in the file names being displayed
 - Added option to compact folders if the explorer compact option is true (tree view)
 - Updated tests
 
-## [1.4.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.4.0...1.4.1) (2022-03-24)
+## [1.4.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.4.0...v1.4.1) (2022-03-24)
 
 - Fixes an issue that workspaces in the root directory were not displayed in tree view. Resolves [#47](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/47)
 - Tree generation has been changed so that sorting of sub folders and files is possible. In 1.4.0 folders always came before workspaces.
 - A config setting has been added to decide if the tree should be condensed or not (default is true). Condensing removes subfolders if they are no further subfolders and there is only one workspace file within it. The Workspace is then displayed in their parent folder to reduce visual noise if you only ever have one workspace per folder.
 - Added more tests, refactored tests and improved file/file tree mocks
 
-## [1.4.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.8...1.4.0) (2022-03-21)
+## [1.4.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.8...v1.4.0) (2022-03-21)
 
 - Workspaces can now be displayed as a file tree that can be collapsed/expanded instead of the default list of workspaces. Resolves [#23](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/23)
 - A new option has been added to clean labels (convert to title case) or leave them as-is (like the filename). Resolves [#42](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/42)
@@ -38,29 +43,29 @@
 - Icons updated
 - Fixed tooltips for the icon an dthe workspace if you make new window the default click action.
 
-## [1.2.8](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.7...1.2.8) (2021-06-08)
+## [1.2.8](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.7...v1.2.8) (2021-06-08)
 
 - Resolves [#26](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/26) - Webview shows 404 due to navigation being caused by search form - navigation is not supported in webviews. See also: https://github.com/microsoft/vscode/issues/125485
 
-## [1.2.7](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.6...1.2.7) (2021-06-01)
+## [1.2.7](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.6...v1.2.7) (2021-06-01)
 
 - Resolves [#21](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/21) - Search box is focused. Also a keyboard shortcut is provided to focus the search box.
 
-## [1.2.6](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.5...1.2.6) (2021-05-30)
+## [1.2.6](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.5...v1.2.6) (2021-05-30)
 
 - Fixed [#22](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/22) - First char from paths in the sidebar was always cropped even if not a slash
 
-## [1.2.5](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.4...1.2.5) (2021-02-25)
+## [1.2.5](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.4...v1.2.5) (2021-02-25)
 
 - Fixed an issue where workspaces were not found in .vscode
 - Fixed an issue on Windows wih highlighting the active Workspace due to inconsistent drive letter case.
 
-## [1.2.4](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.2...1.2.4) (2021-02-11)
+## [1.2.4](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.2.2...v1.2.4) (2021-02-11)
 
 - Fixed a bug with the configuration due to translations
 - Optimised getting visible files
 
-## [1.2.2](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.9...1.2.2) (2021-02-11)
+## [1.2.2](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.1.9...v1.2.2) (2021-02-11)
 
 - Switched from TreeView to WebView to allow for more customisation of the UI and to facilitate future feature changes
 - Added better highlighting of the selected Workspace
