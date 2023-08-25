@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
     "experimentalDecorators": false,
     "forceConsistentCasingInFileNames": false,
     "lib": ["es6", "dom", "es2019"],
@@ -11,7 +12,6 @@
     "sourceMap": true,
     "strict": true,
     "strictNullChecks": true,
-    "esModuleInterop": true,
     "target": "es6"
   },
   "exclude": [
