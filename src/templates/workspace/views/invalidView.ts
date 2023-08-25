@@ -1,12 +1,12 @@
-import { t } from 'vscode-ext-localisation';
-import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
-import { RenderVars } from '../../../webviews/webviews.interface';
-import { settingsLink } from '../../common/snippets/settingsLink';
+import { t } from 'vscode-ext-localisation'
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { RenderVars } from '../../../webviews/webviews.interface'
+import { settingsLink } from '../../common/snippets/settingsLink'
 
 export const invalidView = (state: WorkspaceState, renderVars: RenderVars): string => {
-  const isNoWorkspace = state.invalidReason === 'no-workspaces';
-  const isInvalidFolder = state.invalidReason === 'invalid-folder';
-  const isDepthZero = renderVars.depth === 0;
+  const isNoWorkspace = state.invalidReason === 'no-workspaces'
+  const isInvalidFolder = state.invalidReason === 'invalid-folder'
+  const isDepthZero = renderVars.depth === 0
 
   return `
     <section class="view invalid">
@@ -45,5 +45,5 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
       <p class="view__message">
         ${settingsLink()}
       </p>
-    </section>`;
-};
+    </section>`
+}

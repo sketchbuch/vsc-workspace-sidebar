@@ -1,8 +1,8 @@
-import * as path from 'path';
-import * as vscode from 'vscode';
-import { getMockUri } from './mockExtensionUri';
+import * as path from 'path'
+import * as vscode from 'vscode'
+import { getMockUri } from './mockExtensionUri'
 
-export const extensionPath = path.resolve(`${__dirname}/../../..`);
+export const extensionPath = path.resolve(`${__dirname}/../../..`)
 
 export const getMockContext = () => {
   return {
@@ -18,7 +18,7 @@ export const getMockContext = () => {
       },
       keys: () => [],
       setKeysForSync: (keys: string[]) => {},
-      update: (key: string, value: never) => Promise.resolve(),
+      update: (key: string, value: never) => Promise.resolve()
     } as vscode.Memento & { setKeysForSync(keys: string[]): void },
     globalStoragePath: '',
     globalStorageUri: {} as vscode.Uri,
@@ -33,7 +33,7 @@ export const getMockContext = () => {
         // Do nothing...
       },
       keys: () => [],
-      update: (key: string, value: never) => Promise.resolve(),
-    } as vscode.Memento,
-  } as vscode.ExtensionContext;
-};
+      update: (key: string, value: never) => Promise.resolve()
+    } as vscode.Memento
+  } as vscode.ExtensionContext
+}

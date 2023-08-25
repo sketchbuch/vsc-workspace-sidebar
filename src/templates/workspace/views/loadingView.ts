@@ -1,6 +1,6 @@
-import { t } from 'vscode-ext-localisation';
-import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
-import { RenderVars } from '../../../webviews/webviews.interface';
+import { t } from 'vscode-ext-localisation'
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { RenderVars } from '../../../webviews/webviews.interface'
 
 export const loadingView = (state: WorkspaceState, renderVars: RenderVars): string => {
   return `
@@ -11,5 +11,5 @@ export const loadingView = (state: WorkspaceState, renderVars: RenderVars): stri
           ${t('webViews.workspace.loading.title')}
         </span>
       </p>
-    </section>`;
-};
+    </section>`
+}

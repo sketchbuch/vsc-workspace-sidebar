@@ -1,12 +1,12 @@
 interface ConfigOption {
-  config: string;
-  type: 'refresh' | 'rerender' | 'tree' | 'visible-files';
+  config: string
+  type: 'refresh' | 'rerender' | 'tree' | 'visible-files'
 }
 
-export type ConfigOptions = ConfigOption[];
+export type ConfigOptions = ConfigOption[]
 
-export const WS_CONFIG = 'workspaceSidebar';
-export const EXPLORER_CONFIG = 'explorer';
+export const WS_CONFIG = 'workspaceSidebar'
+export const EXPLORER_CONFIG = 'explorer'
 export const configOptions: ConfigOptions = [
   { config: `${WS_CONFIG}.actions`, type: 'rerender' },
   { config: `${WS_CONFIG}.cleanLabels`, type: 'refresh' },
@@ -17,5 +17,5 @@ export const configOptions: ConfigOptions = [
   { config: `${WS_CONFIG}.showFolderHierarchy`, type: 'visible-files' },
   { config: `${WS_CONFIG}.showPaths`, type: 'visible-files' },
   { config: `${WS_CONFIG}.showRootFolder`, type: 'tree' },
-  { config: `${EXPLORER_CONFIG}.compactFolders`, type: 'tree' },
-];
+  { config: `${EXPLORER_CONFIG}.compactFolders`, type: 'tree' }
+]

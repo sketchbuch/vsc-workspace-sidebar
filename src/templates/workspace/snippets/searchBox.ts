@@ -1,5 +1,5 @@
-import { t } from 'vscode-ext-localisation';
-import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { t } from 'vscode-ext-localisation'
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 
 export const searchBox = (state: WorkspaceState): string => {
   return `
@@ -12,5 +12,5 @@ export const searchBox = (state: WorkspaceState): string => {
         value="${state.search.term}"
       />
     </div>
-  `;
-};
+  `
+}

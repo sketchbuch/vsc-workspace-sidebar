@@ -1,12 +1,12 @@
-import { RenderVars } from '../../../webviews/webviews.interface';
-import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
-import { getFileTooltip } from '../../helpers/getFileTooltip';
-import { getLabel } from '../../helpers/getLabel';
-import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceButtons';
-import { listItemButtons } from './listItemButtons';
-import { listItemIcon } from './listItemIcon';
-import { treeIconFile } from './treeIcons';
-import { treeIndent } from './treeIndent';
+import { RenderVars } from '../../../webviews/webviews.interface'
+import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { getFileTooltip } from '../../helpers/getFileTooltip'
+import { getLabel } from '../../helpers/getLabel'
+import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceButtons'
+import { listItemButtons } from './listItemButtons'
+import { listItemIcon } from './listItemIcon'
+import { treeIconFile } from './treeIcons'
+import { treeIndent } from './treeIndent'
 
 export const treeItemFile = (
   file: File,
@@ -14,31 +14,31 @@ export const treeItemFile = (
   state: WorkspaceState,
   renderVars: RenderVars
 ): string => {
-  const { search } = state;
-  const { isSelected, label, path, showPath } = file;
-  const isRootLvlFile = depth < 0;
+  const { search } = state
+  const { isSelected, label, path, showPath } = file
+  const isRootLvlFile = depth < 0
   const classes = `list__branch-list-item list__branch-list-item-file list__styled-item ${
     isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
-  }`;
-  const tooltip = getFileTooltip(renderVars, file, 'cur-win');
-  const { condenseFileTree } = renderVars;
+  }`
+  const tooltip = getFileTooltip(renderVars, file, 'cur-win')
+  const { condenseFileTree } = renderVars
 
   const buttons: ConfigButtons = [
     {
       key: 'open-filemanager',
       file: file.file,
-      label: file.label,
-    },
-  ];
+      label: file.label
+    }
+  ]
 
   if (!isSelected) {
     buttons.push({
       key: 'new-window',
-      file,
-    });
+      file
+    })
   }
 
-  const itemButtons = getWorkspaceButtons({ buttons, renderVars });
+  const itemButtons = getWorkspaceButtons({ buttons, renderVars })
 
   return `
     <li class="${classes}" data-file="${file.file}" data-depth="${depth}">
@@ -53,5 +53,5 @@ export const treeItemFile = (
         ${listItemButtons(itemButtons)}
       </span>
     </li>
-  `;
-};
+  `
+}

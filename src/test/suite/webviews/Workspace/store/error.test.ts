@@ -1,6 +1,6 @@
-import { expect } from 'chai';
-import { error } from '../../../../../webviews/Workspace/store/error';
-import { getMockState } from '../../../../mocks/mockState';
+import { expect } from 'chai'
+import { error } from '../../../../../webviews/Workspace/store/error'
+import { getMockState } from '../../../../mocks/mockState'
 
 suite('Webviews > Workspace > Store > error()', () => {
   test('Updates state as expected', () => {
@@ -9,18 +9,18 @@ suite('Webviews > Workspace > Store > error()', () => {
       files: [],
       invalidReason: 'invalid-folder',
       isFolderInvalid: true,
-      state: 'invalid',
-    });
+      state: 'invalid'
+    })
     const expectedState = getMockState({
       error: 'FETCH',
       files: [],
       invalidReason: 'none',
       isFolderInvalid: false,
-      state: 'error',
-    });
+      state: 'error'
+    })
 
-    expect(state).not.to.eql(expectedState);
-    error(state, { payload: 'FETCH', type: 'ws/error' });
-    expect(state).to.eql(expectedState);
-  });
-});
+    expect(state).not.to.eql(expectedState)
+    error(state, { payload: 'FETCH', type: 'ws/error' })
+    expect(state).to.eql(expectedState)
+  })
+})

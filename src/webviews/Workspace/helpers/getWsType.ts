@@ -1,5 +1,5 @@
-import { Uri, WorkspaceFolder } from 'vscode';
-import { WsType } from '../WorkspaceViewProvider.interface';
+import { Uri, WorkspaceFolder } from 'vscode'
+import { WsType } from '../WorkspaceViewProvider.interface'
 
 export const getWsType = (
   workspaceFile: Uri | undefined,
@@ -7,13 +7,13 @@ export const getWsType = (
 ): WsType => {
   if (workspaceFile) {
     if (workspaceFile?.scheme === 'untitled') {
-      return 'folder';
+      return 'folder'
     }
 
-    return 'ws';
+    return 'ws'
   } else if (workspaceFolders) {
-    return 'folder';
+    return 'folder'
   }
 
-  return 'none';
-};
+  return 'none'
+}

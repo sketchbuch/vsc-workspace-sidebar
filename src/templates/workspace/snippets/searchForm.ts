@@ -1,6 +1,6 @@
-import { t } from 'vscode-ext-localisation';
-import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
-import { searchBox } from './searchBox';
+import { t } from 'vscode-ext-localisation'
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { searchBox } from './searchBox'
 
 export const searchForm = (state: WorkspaceState, showSearch: boolean): string => {
   if (showSearch) {
@@ -26,8 +26,8 @@ export const searchForm = (state: WorkspaceState, showSearch: boolean): string =
         </fieldset>
         <vscode-divider role="separator"></vscode-divider>
       </section>
-    `;
+    `
   }
 
-  return '';
-};
+  return ''
+}

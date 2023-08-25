@@ -1,24 +1,24 @@
-import { PayloadAction } from '@reduxjs/toolkit';
-import { SortIds } from '../../commands/registerCommands';
-import { FileTree } from './helpers/getFileTree';
+import { PayloadAction } from '@reduxjs/toolkit'
+import { SortIds } from '../../commands/registerCommands'
+import { FileTree } from './helpers/getFileTree'
 
 export interface File {
-  file: string;
-  isSelected: boolean;
-  label: string;
-  path: string;
-  showPath: boolean;
-  [key: string]: string | boolean;
+  file: string
+  isSelected: boolean
+  label: string
+  path: string
+  showPath: boolean
+  [key: string]: string | boolean
 }
 
-export type Files = File[];
+export type Files = File[]
 
 export interface WorkspaceCache {
-  files: WsFiles;
-  timestamp: number;
+  files: WsFiles
+  timestamp: number
 }
 
-export type WorkspaceErrors = '' | 'FETCH';
+export type WorkspaceErrors = '' | 'FETCH'
 
 export enum WorkspacePmActions {
   FOCUS_SEARCH = 'FOCUS_SEARCH',
@@ -30,64 +30,64 @@ export enum WorkspacePmActions {
   SEARCH = 'SEARCH',
   SEARCH_CHECKBOX_DISABLE = 'SEARCH_CHECKBOX_DISABLE',
   SEARCH_CHECKBOX_ENABLE = 'SEARCH_CHECKBOX_ENABLE',
-  SHOW_SETTINGS = 'SHOW_SETTINGS',
+  SHOW_SETTINGS = 'SHOW_SETTINGS'
 }
 
 export enum WorkspaceSearchCheckboxes {
   CASE_INSENSITIVE = 'CASE_INSENSITIVE',
-  MATCH_START = 'MATCH_START',
+  MATCH_START = 'MATCH_START'
 }
 
 export interface WorkspacePersistedState {
-  sort: SortIds;
+  sort: SortIds
 }
 
-export type FolderState = 'collapse' | 'expand';
-export type WorkspacePmPayload = string;
-export type WorkspacePmPayloadSearchTerm = string;
-export type WorkspacePmPayloadSearch = Partial<SearchState>;
-export type WorkspacePmPayloadToggleFolderState = string;
-export type WorkspaceToggleFolderStateBulk = FolderState;
+export type FolderState = 'collapse' | 'expand'
+export type WorkspacePmPayload = string
+export type WorkspacePmPayloadSearchTerm = string
+export type WorkspacePmPayloadSearch = Partial<SearchState>
+export type WorkspacePmPayloadToggleFolderState = string
+export type WorkspaceToggleFolderStateBulk = FolderState
 
-export type FileErrorResult = 'invalid-folder' | 'no-workspaces' | 'none';
+export type FileErrorResult = 'invalid-folder' | 'no-workspaces' | 'none'
 
 export interface SearchState {
-  caseInsensitive: boolean;
-  matchStart: boolean;
-  term: string;
+  caseInsensitive: boolean
+  matchStart: boolean
+  term: string
 }
 
 export type WorkspaceState = {
-  closedFolders: string[];
-  convertedFiles: Files;
-  error: WorkspaceErrors;
-  files: WorkspaceFiles;
-  fileTree: FileTree | null;
-  invalidReason: FileErrorResult;
-  isFolderInvalid: boolean;
-  search: SearchState;
-  selected: string;
-  sort: SortIds;
-  state: WorkspaceStates;
-  treeFolders: string[];
-  visibleFiles: Files;
-  wsType: WsType;
-};
+  closedFolders: string[]
+  convertedFiles: Files
+  error: WorkspaceErrors
+  files: WorkspaceFiles
+  fileTree: FileTree | null
+  invalidReason: FileErrorResult
+  isFolderInvalid: boolean
+  search: SearchState
+  selected: string
+  sort: SortIds
+  state: WorkspaceStates
+  treeFolders: string[]
+  visibleFiles: Files
+  wsType: WsType
+}
 
-export type WorkspaceStates = 'error' | 'invalid' | 'list' | 'loading';
-export type WsType = 'none' | 'ws' | 'folder';
+export type WorkspaceStates = 'error' | 'invalid' | 'list' | 'loading'
+export type WsType = 'none' | 'ws' | 'folder'
 
-export type WsFiles = string[];
+export type WsFiles = string[]
 
-export type WorkspaceFiles = WsFiles;
+export type WorkspaceFiles = WsFiles
 
 export type WorkspaceThunkAction<Payload> = PayloadAction<
   Payload,
   string,
   {
-    arg: void;
-    requestId: string;
-    requestStatus: 'fulfilled';
+    arg: void
+    requestId: string
+    requestStatus: 'fulfilled'
   },
   never
->;
+>

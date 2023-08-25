@@ -1,4 +1,4 @@
-import { FileTree, FileTrees } from './getFileTree';
+import { FileTree, FileTrees } from './getFileTree'
 
 /**
  * This will restructure the tree. If a non-root folder has no subfolders,
@@ -13,16 +13,16 @@ export const condenseTree = (tree: FileTree): FileTree => {
     tree.sub = tree.sub.reduce((newSubs: FileTrees, curSub: FileTree) => {
       if (curSub.sub.length < 1 && !tree.isRoot) {
         if (curSub.files.length === 1) {
-          tree.files = [...tree.files, ...curSub.files];
+          tree.files = [...tree.files, ...curSub.files]
 
-          return newSubs;
+          return newSubs
         }
       }
 
-      newSubs.push(condenseTree(curSub));
-      return newSubs;
-    }, []);
+      newSubs.push(condenseTree(curSub))
+      return newSubs
+    }, [])
   }
 
-  return tree;
-};
+  return tree
+}

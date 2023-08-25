@@ -1,39 +1,39 @@
-import * as vscode from 'vscode';
+import * as vscode from 'vscode'
 import {
   FS_FOLDER_CSS,
   FS_FOLDER_IMAGES,
   FS_FOLDER_IMAGES_DARK,
   FS_FOLDER_IMAGES_LIGHT,
   FS_FOLDER_JS,
-  FS_FOLDER_RESOURCES,
-} from '../constants/fs';
-import { GetHtml } from '../webviews/webviews.interface';
+  FS_FOLDER_RESOURCES
+} from '../constants/fs'
+import { GetHtml } from '../webviews/webviews.interface'
 
-const { joinPath } = vscode.Uri;
+const { joinPath } = vscode.Uri
 
 export const getHtml = <T>(
   { extensionPath, template, htmlData }: GetHtml<T>,
   nonce: string
 ): string => {
-  const { data, title, webview } = htmlData;
+  const { data, title, webview } = htmlData
   const cssFolderUri = webview.asWebviewUri(
     joinPath(extensionPath, FS_FOLDER_RESOURCES, FS_FOLDER_CSS)
-  );
+  )
   const imgDarkFolderUri = webview.asWebviewUri(
     joinPath(extensionPath, FS_FOLDER_RESOURCES, FS_FOLDER_IMAGES, FS_FOLDER_IMAGES_DARK)
-  );
+  )
   const imgLightFolderUri = webview.asWebviewUri(
     joinPath(extensionPath, FS_FOLDER_RESOURCES, FS_FOLDER_IMAGES, FS_FOLDER_IMAGES_LIGHT)
-  );
+  )
   const scriptFolderUri = webview.asWebviewUri(
     joinPath(extensionPath, FS_FOLDER_RESOURCES, FS_FOLDER_JS)
-  );
+  )
   const uiFolderUri = webview.asWebviewUri(
     joinPath(extensionPath, 'node_modules', '@vscode', 'webview-ui-toolkit', 'dist')
-  );
+  )
   const codiconsFolderUri = webview.asWebviewUri(
     joinPath(extensionPath, 'node_modules', '@vscode/codicons', 'dist')
-  );
+  )
 
   return template(
     {
@@ -45,8 +45,8 @@ export const getHtml = <T>(
       nonce,
       scriptFolderUri,
       title,
-      uiFolderUri,
+      uiFolderUri
     },
     data
-  );
-};
+  )
+}

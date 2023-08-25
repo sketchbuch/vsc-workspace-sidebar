@@ -1,66 +1,66 @@
-import { expect } from 'chai';
-import * as sinon from 'sinon';
-import * as configs from '../../../../../config/getConfig';
+import { expect } from 'chai'
+import * as sinon from 'sinon'
+import * as configs from '../../../../../config/getConfig'
 import {
   fetchFulfilled,
   fetchPending,
-  fetchRejected,
-} from '../../../../../webviews/Workspace/store/fetch';
+  fetchRejected
+} from '../../../../../webviews/Workspace/store/fetch'
 import {
   ROOT_FOLDER_PATH,
   getMockConvertedFiles,
   getMockFileList,
   getMockFileTree,
-  getMockVisibleFiles,
-} from '../../../../mocks/mockFileData';
-import { getMockState } from '../../../../mocks/mockState';
+  getMockVisibleFiles
+} from '../../../../mocks/mockFileData'
+import { getMockState } from '../../../../mocks/mockState'
 
 suite('Webviews > Workspace > Store > fetch()', () => {
-  let condenseConfigStub: sinon.SinonStub;
-  let folderConfigStub: sinon.SinonStub;
-  let treeConfigStub: sinon.SinonStub;
+  let condenseConfigStub: sinon.SinonStub
+  let folderConfigStub: sinon.SinonStub
+  let treeConfigStub: sinon.SinonStub
 
   setup(() => {
-    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => true);
-    folderConfigStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_FOLDER_PATH);
-    treeConfigStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => false);
-  });
+    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => true)
+    folderConfigStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_FOLDER_PATH)
+    treeConfigStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => false)
+  })
 
   teardown(() => {
-    condenseConfigStub.restore();
-    folderConfigStub.restore();
-    treeConfigStub.restore();
-  });
+    condenseConfigStub.restore()
+    folderConfigStub.restore()
+    treeConfigStub.restore()
+  })
 
   test('Pending updates state as expected', () => {
     const state = getMockState({
       isFolderInvalid: true,
-      state: 'invalid',
-    });
+      state: 'invalid'
+    })
     const expectedState = getMockState({
       isFolderInvalid: false,
-      state: 'loading',
-    });
+      state: 'loading'
+    })
 
-    expect(state).not.to.eql(expectedState);
-    fetchPending(state);
-    expect(state).to.eql(expectedState);
-  });
+    expect(state).not.to.eql(expectedState)
+    fetchPending(state)
+    expect(state).to.eql(expectedState)
+  })
 
   test('Rejected updates state as expected', () => {
     const state = getMockState({
       error: '',
-      state: 'invalid',
-    });
+      state: 'invalid'
+    })
     const expectedState = getMockState({
       error: 'FETCH',
-      state: 'error',
-    });
+      state: 'error'
+    })
 
-    expect(state).not.to.eql(expectedState);
-    fetchRejected(state);
-    expect(state).to.eql(expectedState);
-  });
+    expect(state).not.to.eql(expectedState)
+    fetchRejected(state)
+    expect(state).to.eql(expectedState)
+  })
 
   suite('Fulfilled:', () => {
     test('Invalid folder - updates state as expected', () => {
@@ -69,81 +69,81 @@ suite('Webviews > Workspace > Store > fetch()', () => {
         files: [],
         isFolderInvalid: false,
         state: 'loading',
-        visibleFiles: getMockVisibleFiles(),
-      });
+        visibleFiles: getMockVisibleFiles()
+      })
       const expectedState = getMockState({
         convertedFiles: [],
         files: [],
         isFolderInvalid: true,
         state: 'invalid',
-        visibleFiles: [],
-      });
+        visibleFiles: []
+      })
 
-      expect(state).not.to.eql(expectedState);
+      expect(state).not.to.eql(expectedState)
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
         payload: { files: [], result: 'none' },
-        type: 'ws/list',
-      });
-      expect(state).to.eql(expectedState);
-    });
+        type: 'ws/list'
+      })
+      expect(state).to.eql(expectedState)
+    })
 
     test('Valid folder - tree - updates state as expected', () => {
-      condenseConfigStub.callsFake(() => false);
-      treeConfigStub.callsFake(() => true);
+      condenseConfigStub.callsFake(() => false)
+      treeConfigStub.callsFake(() => true)
 
       const state = getMockState({
         convertedFiles: [],
         files: [],
         isFolderInvalid: true,
         state: 'invalid',
-        visibleFiles: [],
-      });
+        visibleFiles: []
+      })
       const expectedState = getMockState({
         convertedFiles: getMockConvertedFiles(),
         files: getMockFileList(),
         fileTree: getMockFileTree('normal'),
         isFolderInvalid: false,
         state: 'list',
-        visibleFiles: getMockVisibleFiles(),
-      });
+        visibleFiles: getMockVisibleFiles()
+      })
 
-      expect(state).not.to.eql(expectedState);
+      expect(state).not.to.eql(expectedState)
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
         payload: { files: getMockFileList(), result: 'none' },
-        type: 'ws/list',
-      });
-      expect(state.visibleFiles).to.eql(expectedState.visibleFiles);
-    });
+        type: 'ws/list'
+      })
+      expect(state.visibleFiles).to.eql(expectedState.visibleFiles)
+    })
 
     test('Valid folder - tree condensed - updates state as expected', () => {
-      treeConfigStub.callsFake(() => true);
+      treeConfigStub.callsFake(() => true)
 
       const state = getMockState({
         convertedFiles: [],
         files: [],
         isFolderInvalid: true,
         state: 'invalid',
-        visibleFiles: [],
-      });
+        visibleFiles: []
+      })
       const expectedState = getMockState({
         convertedFiles: getMockConvertedFiles(),
         files: getMockFileList(),
         fileTree: getMockFileTree('condensed'),
         isFolderInvalid: false,
         state: 'list',
-        visibleFiles: getMockVisibleFiles(),
-      });
+        visibleFiles: getMockVisibleFiles()
+      })
 
-      expect(state).not.to.eql(expectedState);
+      expect(state).not.to.eql(expectedState)
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
         payload: { files: getMockFileList(), result: 'none' },
-        type: 'ws/list',
-      });
-      expect(state.visibleFiles).to.eql(expectedState.visibleFiles);
-    });
+        type: 'ws/list'
+      })
+      expect(state.visibleFiles).to.eql(expectedState.visibleFiles)
+    })
 
     test('Valid folder - list asc - updates state as expected', () => {
       const state = getMockState({
@@ -152,8 +152,8 @@ suite('Webviews > Workspace > Store > fetch()', () => {
         isFolderInvalid: true,
         sort: 'ascending',
         state: 'invalid',
-        visibleFiles: [],
-      });
+        visibleFiles: []
+      })
       const expectedState = getMockState({
         convertedFiles: getMockConvertedFiles(),
         files: getMockFileList(),
@@ -161,17 +161,17 @@ suite('Webviews > Workspace > Store > fetch()', () => {
         isFolderInvalid: false,
         sort: 'ascending',
         state: 'list',
-        visibleFiles: getMockVisibleFiles('asc'),
-      });
+        visibleFiles: getMockVisibleFiles('asc')
+      })
 
-      expect(state).not.to.eql(expectedState);
+      expect(state).not.to.eql(expectedState)
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
         payload: { files: getMockFileList(), result: 'none' },
-        type: 'ws/list',
-      });
-      expect(state.visibleFiles).to.eql(expectedState.visibleFiles);
-    });
+        type: 'ws/list'
+      })
+      expect(state.visibleFiles).to.eql(expectedState.visibleFiles)
+    })
 
     test('Valid folder - list desc - updates state as expected', () => {
       const state = getMockState({
@@ -180,8 +180,8 @@ suite('Webviews > Workspace > Store > fetch()', () => {
         isFolderInvalid: true,
         sort: 'descending',
         state: 'invalid',
-        visibleFiles: [],
-      });
+        visibleFiles: []
+      })
       const expectedState = getMockState({
         convertedFiles: getMockConvertedFiles(),
         files: getMockFileList(),
@@ -189,16 +189,16 @@ suite('Webviews > Workspace > Store > fetch()', () => {
         isFolderInvalid: false,
         sort: 'descending',
         state: 'list',
-        visibleFiles: getMockVisibleFiles('desc'),
-      });
+        visibleFiles: getMockVisibleFiles('desc')
+      })
 
-      expect(state).not.to.eql(expectedState);
+      expect(state).not.to.eql(expectedState)
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
         payload: { files: getMockFileList(), result: 'none' },
-        type: 'ws/list',
-      });
-      expect(state.visibleFiles).to.eql(expectedState.visibleFiles);
-    });
-  });
-});
+        type: 'ws/list'
+      })
+      expect(state.visibleFiles).to.eql(expectedState.visibleFiles)
+    })
+  })
+})

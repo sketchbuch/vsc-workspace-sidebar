@@ -1,9 +1,9 @@
-import { t } from 'vscode-ext-localisation';
-import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
-import { RenderVars } from '../../../webviews/webviews.interface';
+import { t } from 'vscode-ext-localisation'
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { RenderVars } from '../../../webviews/webviews.interface'
 
 export const errorView = (state: WorkspaceState, renderVars: RenderVars): string => {
-  const isFetch = state.error === 'FETCH';
+  const isFetch = state.error === 'FETCH'
 
   return `
     <section class="view error">
@@ -17,5 +17,5 @@ export const errorView = (state: WorkspaceState, renderVars: RenderVars): string
           }
         </span>
       </p>
-    </section>`;
-};
+    </section>`
+}

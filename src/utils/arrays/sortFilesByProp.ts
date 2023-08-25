@@ -1,22 +1,22 @@
-import { File } from '../../webviews/Workspace/WorkspaceViewProvider.interface';
+import { File } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 
-type SortFilesProps = 'label' | 'path';
+type SortFilesProps = 'label' | 'path'
 
 export const sortFilesByProp =
   (prop: SortFilesProps) =>
   (a: File, b: File): number => {
     if (prop === 'label' || prop === 'path') {
       if (a && b && a.hasOwnProperty(prop) && b.hasOwnProperty(prop)) {
-        const aVal = String(a[prop]).toLowerCase();
-        const bVal = String(b[prop]).toLowerCase();
+        const aVal = String(a[prop]).toLowerCase()
+        const bVal = String(b[prop]).toLowerCase()
 
         if (aVal > bVal) {
-          return 1;
+          return 1
         } else if (aVal < bVal) {
-          return -1;
+          return -1
         }
       }
     }
 
-    return 0;
-  };
+    return 0
+  }

@@ -1,7 +1,7 @@
-import * as vscode from 'vscode';
-import { t } from 'vscode-ext-localisation';
-import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
-import { folderListItem } from './folderListItem';
+import * as vscode from 'vscode'
+import { t } from 'vscode-ext-localisation'
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { folderListItem } from './folderListItem'
 
 export const folderList = (
   state: WorkspaceState,
@@ -11,7 +11,7 @@ export const folderList = (
     const title =
       workspaceFolders.length === 1
         ? 'webViews.workspace.list.folder.open'
-        : 'webViews.workspace.list.folder.open-plural';
+        : 'webViews.workspace.list.folder.open-plural'
 
     return `
       <div class="list__folder">
@@ -31,8 +31,8 @@ export const folderList = (
           </vscode-button>
         </div>
       </div>
-    `;
+    `
   }
 
-  return ``;
-};
+  return ``
+}

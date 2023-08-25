@@ -1,12 +1,12 @@
-import path from 'path';
-import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
-import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree';
-import { RenderVars } from '../../../webviews/webviews.interface';
-import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceButtons';
-import { listItemButtons } from './listItemButtons';
-import { listItemIcon } from './listItemIcon';
-import { treeIconClosed, treeIconOpen } from './treeIcons';
-import { treeIndent } from './treeIndent';
+import path from 'path'
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree'
+import { RenderVars } from '../../../webviews/webviews.interface'
+import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceButtons'
+import { listItemButtons } from './listItemButtons'
+import { listItemIcon } from './listItemIcon'
+import { treeIconClosed, treeIconOpen } from './treeIcons'
+import { treeIndent } from './treeIndent'
 
 export const treeItemFolder = (
   folder: FileTree,
@@ -15,28 +15,28 @@ export const treeItemFolder = (
   renderVars: RenderVars,
   state: WorkspaceState
 ): string => {
-  const { folderPath, folderPathSegment, isRoot, label } = folder;
-  const indicateSelected = isClosed && state.selected.includes(`${folderPathSegment}${path.sep}`);
+  const { folderPath, folderPathSegment, isRoot, label } = folder
+  const indicateSelected = isClosed && state.selected.includes(`${folderPathSegment}${path.sep}`)
 
-  let folderClasses = `list__branch-list-item list__branch-list-item-folder list__styled-item`;
+  let folderClasses = `list__branch-list-item list__branch-list-item-folder list__styled-item`
 
   if (indicateSelected) {
-    folderClasses += ' list__styled-item--selected';
+    folderClasses += ' list__styled-item--selected'
   }
 
   if (!isRoot) {
-    folderClasses += ' list__branch-list-item-folder-closable';
+    folderClasses += ' list__branch-list-item-folder-closable'
   }
 
   const buttons: ConfigButtons = [
     {
       key: 'open-filemanager',
       file: folderPath,
-      label,
-    },
-  ];
+      label
+    }
+  ]
 
-  const folderButtons = getWorkspaceButtons({ buttons, renderVars });
+  const folderButtons = getWorkspaceButtons({ buttons, renderVars })
 
   return `
       <li class="${folderClasses}" data-folder="${folderPathSegment}" data-depth="${depth}">
@@ -50,5 +50,5 @@ export const treeItemFolder = (
           ${listItemButtons(folderButtons)}
         </span>
       </li>
-    `;
-};
+    `
+}

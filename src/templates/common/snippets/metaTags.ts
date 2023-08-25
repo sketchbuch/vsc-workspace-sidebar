@@ -8,5 +8,5 @@ export const metaTags = (nonce: string, cspSource: string): string => {
       style-src ${cspSource} vscode-resource: 'nonce-${nonce}'";
     >
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  `;
-};
+  `
+}

@@ -1,7 +1,7 @@
-import * as vscode from 'vscode';
+import * as vscode from 'vscode'
 
 export const folderListItem = (folder: vscode.WorkspaceFolder): string => {
-  const { uri, name } = folder;
+  const { uri, name } = folder
 
   return `
     <li class="list__folder-list-item list__styled-item">
@@ -10,5 +10,5 @@ export const folderListItem = (folder: vscode.WorkspaceFolder): string => {
         <span class="list__description">${uri.fsPath}</span>
       </span>
     </li>
-  `;
-};
+  `
+}

@@ -1,4 +1,4 @@
-import * as vscode from 'vscode';
+import * as vscode from 'vscode'
 
 export const mockExtensionUri = {
   authority: 'localhost',
@@ -9,9 +9,9 @@ export const mockExtensionUri = {
   scheme: 'file',
   toJSON: () => '',
   with: () => {
-    return {} as vscode.Uri;
-  },
-} as vscode.Uri;
+    return {} as vscode.Uri
+  }
+} as vscode.Uri
 
 export const getMockUri = (extension: string = '', uri: Partial<vscode.Uri> = {}) => {
   return {
@@ -23,8 +23,8 @@ export const getMockUri = (extension: string = '', uri: Partial<vscode.Uri> = {}
     scheme: 'file',
     toJSON: () => '',
     with: () => {
-      return {} as vscode.Uri;
+      return {} as vscode.Uri
     },
-    ...uri,
-  } as vscode.Uri;
-};
+    ...uri
+  } as vscode.Uri
+}

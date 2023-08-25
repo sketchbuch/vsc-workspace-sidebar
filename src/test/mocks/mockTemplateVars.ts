@@ -1,9 +1,9 @@
-import { Uri } from 'vscode';
-import { TemplateVars } from '../../webviews/webviews.interface';
-import { getMockUri } from './mockExtensionUri';
-import { getMockRenderVars } from './mockRenderVars';
+import { Uri } from 'vscode'
+import { TemplateVars } from '../../webviews/webviews.interface'
+import { getMockUri } from './mockExtensionUri'
+import { getMockRenderVars } from './mockRenderVars'
 
-const { imgDarkFolderUri, imgLightFolderUri } = getMockRenderVars();
+const { imgDarkFolderUri, imgLightFolderUri } = getMockRenderVars()
 
 export const getMockTemplateVars = (
   templateVars: Partial<TemplateVars> = {},
@@ -16,14 +16,14 @@ export const getMockTemplateVars = (
       : getMockUri('', {
           scheme: 'file',
           authority: 'localhost',
-          path: '/resources/css/codicons',
+          path: '/resources/css/codicons'
         }),
     cssFolderUri: isEmpty
       ? ({} as Uri)
       : getMockUri('', {
           scheme: 'file',
           authority: 'localhost',
-          path: '/resources/css',
+          path: '/resources/css'
         }),
     imgDarkFolderUri: isEmpty ? ({} as Uri) : getMockUri('', { ...imgDarkFolderUri }),
     imgLightFolderUri: isEmpty ? ({} as Uri) : getMockUri('', { ...imgLightFolderUri }),
@@ -33,7 +33,7 @@ export const getMockTemplateVars = (
       : getMockUri('', {
           scheme: 'file',
           authority: 'localhost',
-          path: '/resources/js',
+          path: '/resources/js'
         }),
     title: 'Workspaces',
     uiFolderUri: isEmpty
@@ -41,8 +41,8 @@ export const getMockTemplateVars = (
       : getMockUri('', {
           scheme: 'file',
           authority: 'localhost',
-          path: '/resources/js/toolkit',
+          path: '/resources/js/toolkit'
         }),
-    ...templateVars,
-  };
-};
+    ...templateVars
+  }
+}

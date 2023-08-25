@@ -1,12 +1,12 @@
-import { RenderVars } from '../../../webviews/webviews.interface';
-import { getImgUrls } from '../../getImgUrls';
+import { RenderVars } from '../../../webviews/webviews.interface'
+import { getImgUrls } from '../../getImgUrls'
 
 export interface ListItemButton {
-  ariaLabel: string;
-  file: string;
-  renderVars: RenderVars;
-  tooltip: string;
-  type: string;
+  ariaLabel: string
+  file: string
+  renderVars: RenderVars
+  tooltip: string
+  type: string
 }
 
 export const listItemButton = ({
@@ -14,9 +14,9 @@ export const listItemButton = ({
   file,
   renderVars,
   tooltip,
-  type,
+  type
 }: ListItemButton): string => {
-  const icon = getImgUrls(renderVars, type);
+  const icon = getImgUrls(renderVars, type)
 
   return `
     <vscode-button
@@ -31,5 +31,5 @@ export const listItemButton = ({
       <img alt="" data-theme="dark" src="${icon.dark}" />
       <img alt="" data-theme="light" src="${icon.light}" />
     </vscode-button>
-  `;
-};
+  `
+}

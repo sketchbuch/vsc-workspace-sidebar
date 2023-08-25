@@ -1,24 +1,24 @@
-import { expect } from 'chai';
-import mockFs from 'mock-fs';
-import * as path from 'path';
-import { getFilenamesOfType } from '../../../../utils/fs/getFilenamesOfType';
-import { mockFsStructure } from '../../../mocks/mockFsStructure';
+import { expect } from 'chai'
+import mockFs from 'mock-fs'
+import * as path from 'path'
+import { getFilenamesOfType } from '../../../../utils/fs/getFilenamesOfType'
+import { mockFsStructure } from '../../../mocks/mockFsStructure'
 
 suite('Utils > Fs > getFilenamesOfType()', () => {
-  const FILE_TYPE = 'txt';
-  const FOLDER = 'get-filenames-of-type';
+  const FILE_TYPE = 'txt'
+  const FOLDER = 'get-filenames-of-type'
 
   suiteSetup(() => {
-    mockFs(mockFsStructure);
-  });
+    mockFs(mockFsStructure)
+  })
 
   suiteTeardown(() => {
-    mockFs.restore();
-  });
+    mockFs.restore()
+  })
 
   test('An empty array is returned if there are no filenames', () => {
-    expect(getFilenamesOfType('folders', [], '/test', FILE_TYPE)).to.eql([]);
-  });
+    expect(getFilenamesOfType('folders', [], '/test', FILE_TYPE)).to.eql([])
+  })
 
   test('An array of folders is returned if there are folders in filenames', () => {
     expect(
@@ -28,8 +28,8 @@ suite('Utils > Fs > getFilenamesOfType()', () => {
         FOLDER,
         FILE_TYPE
       )
-    ).to.eql([path.join(FOLDER, 'test-subfolder1'), path.join(FOLDER, 'test-subfolder2')]);
-  });
+    ).to.eql([path.join(FOLDER, 'test-subfolder1'), path.join(FOLDER, 'test-subfolder2')])
+  })
 
   test('An array of files is returned if there are files in filenames matching the fileType', () => {
     expect(
@@ -39,6 +39,6 @@ suite('Utils > Fs > getFilenamesOfType()', () => {
         FOLDER,
         FILE_TYPE
       )
-    ).to.eql([path.join(FOLDER, 'test-file.txt')]);
-  });
-});
+    ).to.eql([path.join(FOLDER, 'test-file.txt')])
+  })
+})

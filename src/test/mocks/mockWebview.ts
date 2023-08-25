@@ -1,15 +1,15 @@
-import * as vscode from 'vscode';
+import * as vscode from 'vscode'
 
 export const mockWebView = {
   asWebviewUri: (response) => response,
   cspSource: '34fdg5654dsf',
   html: '',
   onDidReceiveMessage: () => {
-    return {} as vscode.Disposable;
+    return {} as vscode.Disposable
   },
   options: {} as vscode.WebviewOptions,
-  postMessage: () => Promise.resolve(true),
-} as vscode.Webview;
+  postMessage: () => Promise.resolve(true)
+} as vscode.Webview
 
 export const getMockWebviewView = (webviewView: Partial<vscode.WebviewView> = {}) => {
   return {
@@ -21,6 +21,6 @@ export const getMockWebviewView = (webviewView: Partial<vscode.WebviewView> = {}
     viewType: '',
     visible: true,
     webview: mockWebView,
-    ...webviewView,
-  } as vscode.WebviewView;
-};
+    ...webviewView
+  } as vscode.WebviewView
+}

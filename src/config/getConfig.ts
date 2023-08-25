@@ -1,4 +1,4 @@
-import { workspace } from 'vscode';
+import { workspace } from 'vscode'
 import {
   ConfigActions,
   ConfigShowPaths,
@@ -9,47 +9,47 @@ import {
   CONFIG_FOLDER,
   CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_HIERARCHY,
-  CONFIG_SHOW_ROOT_FOLDER,
-} from '../constants/config';
+  CONFIG_SHOW_ROOT_FOLDER
+} from '../constants/config'
 
-const { getConfiguration } = workspace;
+const { getConfiguration } = workspace
 
 export const getActionsConfig = (): ConfigActions => {
-  return getConfiguration().get('workspaceSidebar.actions') ?? ConfigActions.CURRENT_WINDOW;
-};
+  return getConfiguration().get('workspaceSidebar.actions') ?? ConfigActions.CURRENT_WINDOW
+}
 
 export const getCleanLabelsConfig = (): boolean => {
-  return getConfiguration().get('workspaceSidebar.cleanLabels') ?? CONFIG_CLEAN_LABELS;
-};
+  return getConfiguration().get('workspaceSidebar.cleanLabels') ?? CONFIG_CLEAN_LABELS
+}
 
 export const getCondenseFileTreeConfig = (): boolean => {
-  return getConfiguration().get('workspaceSidebar.condenseFileTree') ?? CONFIG_CONDENSE_FILETREE;
-};
+  return getConfiguration().get('workspaceSidebar.condenseFileTree') ?? CONFIG_CONDENSE_FILETREE
+}
 
 export const getDepthConfig = (): number => {
-  return getConfiguration().get('workspaceSidebar.depth') ?? CONFIG_DEPTH;
-};
+  return getConfiguration().get('workspaceSidebar.depth') ?? CONFIG_DEPTH
+}
 
 export const getExplorerCompactFoldersConfig = (): boolean => {
-  return getConfiguration().get('explorer.compactFolders') ?? CONFIG_EXPLORER_COMPACT_FOLDERS;
-};
+  return getConfiguration().get('explorer.compactFolders') ?? CONFIG_EXPLORER_COMPACT_FOLDERS
+}
 
 export const getFolderConfig = (): string => {
-  return getConfiguration().get('workspaceSidebar.folder') || CONFIG_FOLDER;
-};
+  return getConfiguration().get('workspaceSidebar.folder') || CONFIG_FOLDER
+}
 
 export const getSearchMinConfig = (): number => {
-  return getConfiguration().get('workspaceSidebar.searchMinimum') ?? CONFIG_SEARCH_MINIMUM;
-};
+  return getConfiguration().get('workspaceSidebar.searchMinimum') ?? CONFIG_SEARCH_MINIMUM
+}
 
 export const getShowPathsConfig = (): ConfigShowPaths => {
-  return getConfiguration().get('workspaceSidebar.showPaths') || ConfigShowPaths.NEVER;
-};
+  return getConfiguration().get('workspaceSidebar.showPaths') || ConfigShowPaths.NEVER
+}
 
 export const getShowRootFolderConfig = (): boolean => {
-  return getConfiguration().get('workspaceSidebar.showRootFolder') || CONFIG_SHOW_ROOT_FOLDER;
-};
+  return getConfiguration().get('workspaceSidebar.showRootFolder') || CONFIG_SHOW_ROOT_FOLDER
+}
 
 export const getShowTreeConfig = (): boolean => {
-  return getConfiguration().get('workspaceSidebar.showFolderHierarchy') ?? CONFIG_SHOW_HIERARCHY;
-};
+  return getConfiguration().get('workspaceSidebar.showFolderHierarchy') ?? CONFIG_SHOW_HIERARCHY
+}

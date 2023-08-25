@@ -4,13 +4,13 @@ import {
   getDepthConfig,
   getSearchMinConfig,
   getShowRootFolderConfig,
-  getShowTreeConfig,
-} from '../../config/getConfig';
-import { RenderVars, TemplateVars } from '../../webviews/webviews.interface';
+  getShowTreeConfig
+} from '../../config/getConfig'
+import { RenderVars, TemplateVars } from '../../webviews/webviews.interface'
 
 export const getRenderVars = ({
   imgDarkFolderUri,
-  imgLightFolderUri,
+  imgLightFolderUri
 }: TemplateVars): RenderVars => {
   return {
     clickAction: getActionsConfig(),
@@ -20,6 +20,6 @@ export const getRenderVars = ({
     imgLightFolderUri,
     searchMinimum: getSearchMinConfig(),
     showRootFolder: getShowRootFolderConfig(),
-    showTree: getShowTreeConfig(),
-  };
-};
+    showTree: getShowTreeConfig()
+  }
+}

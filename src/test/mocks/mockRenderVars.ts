@@ -1,18 +1,18 @@
-import { Uri } from 'vscode';
+import { Uri } from 'vscode'
 import {
   CONFIG_CONDENSE_FILETREE,
   CONFIG_DEPTH,
   CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_HIERARCHY,
   CONFIG_SHOW_ROOT_FOLDER,
-  ConfigActions,
-} from '../../constants/config';
-import { RenderVars } from '../../webviews/webviews.interface';
+  ConfigActions
+} from '../../constants/config'
+import { RenderVars } from '../../webviews/webviews.interface'
 
 const baseUri = {
   scheme: 'file',
-  authority: 'localhost',
-};
+  authority: 'localhost'
+}
 
 export const getMockRenderVars = (renderVars: Partial<RenderVars> = {}): RenderVars => {
   return {
@@ -24,6 +24,6 @@ export const getMockRenderVars = (renderVars: Partial<RenderVars> = {}): RenderV
     searchMinimum: CONFIG_SEARCH_MINIMUM,
     showRootFolder: CONFIG_SHOW_ROOT_FOLDER,
     showTree: CONFIG_SHOW_HIERARCHY,
-    ...renderVars,
-  };
-};
+    ...renderVars
+  }
+}

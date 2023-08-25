@@ -1,37 +1,37 @@
-import { t } from 'vscode-ext-localisation';
+import { t } from 'vscode-ext-localisation'
 import {
   FS_WEBVIEW_CODICONS_CSS,
   FS_WEBVIEW_UI_TOOLKIT_JS,
   FS_WEBVIEW_WORKSPACE_CSS,
-  FS_WEBVIEW_WORKSPACE_JS,
-} from '../../../constants/fs';
-import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
-import { TemplateVars } from '../../../webviews/webviews.interface';
-import { metaTags } from '../../common/snippets/metaTags';
-import { getRenderVars } from '../../helpers/getRenderVars';
-import { errorView } from '../views/errorView';
-import { invalidView } from '../views/invalidView';
-import { listView } from '../views/listView';
-import { loadingView } from '../views/loadingView';
+  FS_WEBVIEW_WORKSPACE_JS
+} from '../../../constants/fs'
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { TemplateVars } from '../../../webviews/webviews.interface'
+import { metaTags } from '../../common/snippets/metaTags'
+import { getRenderVars } from '../../helpers/getRenderVars'
+import { errorView } from '../views/errorView'
+import { invalidView } from '../views/invalidView'
+import { listView } from '../views/listView'
+import { loadingView } from '../views/loadingView'
 
 export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceState): string => {
   const { codiconsFolderUri, cspSource, cssFolderUri, nonce, scriptFolderUri, title, uiFolderUri } =
-    templateVars;
-  const { state: view } = state;
-  const renderVars = getRenderVars(templateVars);
+    templateVars
+  const { state: view } = state
+  const renderVars = getRenderVars(templateVars)
 
-  let titleAttr = t('views.title');
-  let content = '';
+  let titleAttr = t('views.title')
+  let content = ''
 
   if (view === 'loading') {
-    content = loadingView(state, renderVars);
+    content = loadingView(state, renderVars)
   } else if (view === 'list') {
-    titleAttr = t('webViews.workspace.list.title', { title });
-    content = listView(state, renderVars);
+    titleAttr = t('webViews.workspace.list.title', { title })
+    content = listView(state, renderVars)
   } else if (view === 'invalid') {
-    content = invalidView(state, renderVars);
+    content = invalidView(state, renderVars)
   } else {
-    content = errorView(state, renderVars);
+    content = errorView(state, renderVars)
   }
 
   return `
@@ -49,5 +49,5 @@ export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceStat
         <script nonce="${nonce}" id="ws-webview-js" src="${scriptFolderUri}/${FS_WEBVIEW_WORKSPACE_JS}"></script>
         <script nonce="${nonce}" id="codicons-js" src="${uiFolderUri}/${FS_WEBVIEW_UI_TOOLKIT_JS}" type="module"></script>
       </body>
-    </html>`;
-};
+    </html>`
+}

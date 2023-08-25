@@ -1,21 +1,21 @@
-import { t } from 'vscode-ext-localisation';
-import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface';
-import { RenderVars } from '../../../webviews/webviews.interface';
-import { listItem } from './listItem';
-import { tree } from './tree';
+import { t } from 'vscode-ext-localisation'
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { RenderVars } from '../../../webviews/webviews.interface'
+import { listItem } from './listItem'
+import { tree } from './tree'
 
 export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
-  const { files, search, visibleFiles } = state;
-  const { showTree } = renderVars;
+  const { files, search, visibleFiles } = state
+  const { showTree } = renderVars
 
   if (files.length === 0) {
-    return '';
+    return ''
   } else if (visibleFiles.length === 0 && search) {
     return `
       <div class="list__searchedout">
         <p>${t('webViews.workspace.list.search.noMatch')}</p>
       </div>
-    `;
+    `
   }
 
   return `
@@ -28,5 +28,5 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
             : visibleFiles.map((file) => listItem(file, state, renderVars)).join('')
         }
       </ul>
-    `;
-};
+    `
+}
