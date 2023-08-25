@@ -237,7 +237,8 @@
     "lint:ts": "eslint ./src --ext ts --fix",
     "lint": "yarn lint:js && yarn lint:ts && yarn lint:prettier && yarn lint:css",
     "pretest": "yarn clean:dist && yarn build:dev && yarn lint",
-    "test": "yarn clean:test && yarn typecheck",
+    "test:pretest": "yarn clean:test && yarn typecheck",
+    "test": "echo \"To run tests, please use the debugger launcher\" && exit 1",
     "typecheck": "tsc -p ./",
     "vscode:prepublish": "yarn clean:dist && yarn build:release"
   },
