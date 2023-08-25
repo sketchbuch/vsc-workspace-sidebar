@@ -19,14 +19,14 @@ export const listItem = (file: File, state: WorkspaceState, renderVars: RenderVa
       codicon: 'browser',
       file: file.file,
       key: 'open-filemanager',
-      label: file.label
-    }
+      label: file.label,
+    },
   ]
 
   if (!isSelected) {
     buttons.push({
       key: 'new-window',
-      file
+      file,
     })
   }
 

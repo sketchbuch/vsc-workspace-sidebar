@@ -7,7 +7,7 @@ export const listItemButton = ({
   file,
   renderVars,
   tooltip,
-  type
+  type,
 }: WorkspaceButton): string => {
   const icon = getImgUrls(renderVars, type)
 

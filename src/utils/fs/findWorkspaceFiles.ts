@@ -3,7 +3,7 @@ import { getDepthConfig, getFolderConfig } from '../../config/getConfig'
 import { FS_WS_FILETYPE } from '../../constants/fs'
 import {
   FileErrorResult,
-  WorkspaceFiles
+  WorkspaceFiles,
 } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { checkFile } from './checkFile'
 import { collectFilesFromFolder } from './collectFilesFromFolder'

@@ -18,7 +18,7 @@ export const getMockContext = () => {
       },
       keys: () => [],
       setKeysForSync: (keys: string[]) => {},
-      update: (key: string, value: never) => Promise.resolve()
+      update: (key: string, value: never) => Promise.resolve(),
     } as vscode.Memento & { setKeysForSync(keys: string[]): void },
     globalStoragePath: '',
     globalStorageUri: {} as vscode.Uri,
@@ -33,7 +33,7 @@ export const getMockContext = () => {
         // Do nothing...
       },
       keys: () => [],
-      update: (key: string, value: never) => Promise.resolve()
-    } as vscode.Memento
+      update: (key: string, value: never) => Promise.resolve(),
+    } as vscode.Memento,
   } as vscode.ExtensionContext
 }

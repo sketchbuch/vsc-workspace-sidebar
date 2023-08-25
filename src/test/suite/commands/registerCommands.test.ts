@@ -10,7 +10,7 @@ import {
   CMD_OPEN_NEW_WIN,
   CMD_REFRESH,
   CMD_SORT,
-  CMD_VSC_OPEN_WS
+  CMD_VSC_OPEN_WS,
 } from '../../../constants/commands'
 import { WorkspaceViewProvider } from '../../../webviews/Workspace/WorkspaceViewProvider'
 import { getMockContext } from '../../mocks/mockContext'

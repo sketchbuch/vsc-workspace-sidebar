@@ -17,7 +17,7 @@ import { toggleFolderStateBulk } from './toggleFolderStateBulk'
 export const initialSearchState: SearchState = {
   caseInsensitive: false,
   matchStart: false,
-  term: ''
+  term: '',
 }
 
 export const initialState: WorkspaceState = {
@@ -34,7 +34,7 @@ export const initialState: WorkspaceState = {
   state: 'loading',
   treeFolders: [],
   visibleFiles: [],
-  wsType: getWsType(vscode.workspace.workspaceFile, vscode.workspace.workspaceFolders)
+  wsType: getWsType(vscode.workspace.workspaceFile, vscode.workspace.workspaceFolders),
 }
 
 export const workspaceSlice = createSlice({
@@ -55,6 +55,6 @@ export const workspaceSlice = createSlice({
     setSearch,
     setVisibleFiles,
     toggleFolderState,
-    toggleFolderStateBulk
-  }
+    toggleFolderStateBulk,
+  },
 })

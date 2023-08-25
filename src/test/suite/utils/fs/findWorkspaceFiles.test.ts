@@ -54,9 +54,9 @@ suite('Utils > Fs > findWorkspaceFiles()', () => {
         files: [
           path.join(FOLDER, 'WS 0.code-workspace'),
           path.join(FOLDER, 'test-subfolder1', 'WS 1.code-workspace'),
-          path.join(FOLDER, 'test-subfolder2', 'WS 2.code-workspace')
+          path.join(FOLDER, 'test-subfolder2', 'WS 2.code-workspace'),
         ],
-        result: 'none'
+        result: 'none',
       })
 
       sinon.assert.callCount(collectSpy, 3) // Initial + 2 subfolders

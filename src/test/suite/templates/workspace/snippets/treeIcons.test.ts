@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import {
   treeIconClosed,
   treeIconFile,
-  treeIconOpen
+  treeIconOpen,
 } from '../../../../../templates/workspace/snippets/treeIcons'
 
 suite('Templates > Workspace > Snippets: treeIcons:', () => {

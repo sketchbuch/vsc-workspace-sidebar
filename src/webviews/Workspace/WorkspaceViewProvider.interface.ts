@@ -31,17 +31,17 @@ export enum WorkspacePmActions {
   SEARCH = 'SEARCH',
   SEARCH_CHECKBOX_DISABLE = 'SEARCH_CHECKBOX_DISABLE',
   SEARCH_CHECKBOX_ENABLE = 'SEARCH_CHECKBOX_ENABLE',
-  SHOW_SETTINGS = 'SHOW_SETTINGS'
+  SHOW_SETTINGS = 'SHOW_SETTINGS',
 }
 
 // Messages received by the FE
 export enum WorkspacePmClientActions {
-  FOCUS_SEARCH = 'FOCUS_SEARCH'
+  FOCUS_SEARCH = 'FOCUS_SEARCH',
 }
 
 export enum WorkspaceSearchCheckboxes {
   CASE_INSENSITIVE = 'CASE_INSENSITIVE',
-  MATCH_START = 'MATCH_START'
+  MATCH_START = 'MATCH_START',
 }
 
 export interface WorkspacePersistedState {

@@ -9,7 +9,7 @@ import {
   OS_HOMEFOLDER,
   ROOT_FOLDER_USERPATH,
   getMockFileTree,
-  getMockVisibleFiles
+  getMockVisibleFiles,
 } from '../../../../mocks/mockFileData'
 
 suite('Webviews > Workspace > Helpers > getFileTree():', () => {

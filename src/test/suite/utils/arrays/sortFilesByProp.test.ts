@@ -9,14 +9,14 @@ suite('Utils > Arrays > sortFilesByProp()', () => {
     isSelected: false,
     label: 'File A',
     path: '/a/file/to',
-    showPath: false
+    showPath: false,
   }
   const fileB: File = {
     file: '/a/file/to/compare-2.txt',
     isSelected: false,
     label: 'File B',
     path: '/a/file/to',
-    showPath: false
+    showPath: false,
   }
 
   test(`Returns -1 if A.${PROP} is less than B.${PROP}`, () => {

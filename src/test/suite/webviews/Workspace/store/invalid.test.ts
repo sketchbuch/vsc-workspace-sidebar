@@ -7,12 +7,12 @@ suite('Webviews > Workspace > Store > invalid()', () => {
     const state = getMockState({
       files: [],
       isFolderInvalid: false,
-      state: 'error'
+      state: 'error',
     })
     const expectedState = getMockState({
       files: [],
       isFolderInvalid: true,
-      state: 'invalid'
+      state: 'invalid',
     })
 
     expect(state).not.to.eql(expectedState)

@@ -22,8 +22,8 @@ suite('Templates > getHtml()', () => {
       htmlData: {
         data: mockState,
         title: 'Workspaces',
-        webview: mockWebView
-      }
+        webview: mockWebView,
+      },
     }
   }
 

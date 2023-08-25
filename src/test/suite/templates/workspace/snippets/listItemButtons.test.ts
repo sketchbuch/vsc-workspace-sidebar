@@ -18,8 +18,8 @@ suite('Templates > Workspace > Snippets: listItemButtons()', () => {
         file: file.file,
         renderVars: mockRenderVars,
         tooltip: 'not important',
-        type: 'open-filemanager'
-      }
+        type: 'open-filemanager',
+      },
     ]
 
     const result = listItemButtons(buttons)

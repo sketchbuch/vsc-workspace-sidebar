@@ -5,13 +5,13 @@ import {
   CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_HIERARCHY,
   CONFIG_SHOW_ROOT_FOLDER,
-  ConfigActions
+  ConfigActions,
 } from '../../constants/config'
 import { RenderVars } from '../../webviews/webviews.interface'
 
 const baseUri = {
   scheme: 'file',
-  authority: 'localhost'
+  authority: 'localhost',
 }
 
 export const getMockRenderVars = (renderVars: Partial<RenderVars> = {}): RenderVars => {
@@ -24,6 +24,6 @@ export const getMockRenderVars = (renderVars: Partial<RenderVars> = {}): RenderV
     searchMinimum: CONFIG_SEARCH_MINIMUM,
     showRootFolder: CONFIG_SHOW_ROOT_FOLDER,
     showTree: CONFIG_SHOW_HIERARCHY,
-    ...renderVars
+    ...renderVars,
   }
 }

@@ -5,7 +5,7 @@ import { getAllFoldersFromTree } from '../../../../../webviews/Workspace/helpers
 import {
   getMockFileTree,
   getMockFolderList,
-  ROOT_FOLDER_PATH
+  ROOT_FOLDER_PATH,
 } from '../../../../mocks/mockFileData'
 
 suite('Webviews > Workspace > Helpers > getAllFoldersFromTree():', () => {

@@ -20,7 +20,7 @@ import {
   SUBFOLDER1,
   SUBFOLDER2,
   SUBFOLDER3,
-  SUBFOLDER4
+  SUBFOLDER4,
 } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
 import { getMockState } from '../../../../mocks/mockState'
@@ -39,7 +39,7 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     folderPathSegment: FOLDER1,
     isRoot: false,
     label: FOLDER1,
-    sub: []
+    sub: [],
   }
 
   const emptyRootTree: FileTree = {
@@ -48,7 +48,7 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     folderPathSegment: ROOT_FOLDER,
     isRoot: true,
     label: ROOT_FOLDER,
-    sub: []
+    sub: [],
   }
 
   setup(() => {

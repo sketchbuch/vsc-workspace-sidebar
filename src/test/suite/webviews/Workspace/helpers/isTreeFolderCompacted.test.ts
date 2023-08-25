@@ -10,7 +10,7 @@ suite('Webviews > Workspace > Helpers > isTreeFolderCompacted():', () => {
       folderPathSegment: 'test',
       isRoot: true,
       label: 'test',
-      sub: []
+      sub: [],
     })
     expect(result).to.equal(false)
   })
@@ -22,7 +22,7 @@ suite('Webviews > Workspace > Helpers > isTreeFolderCompacted():', () => {
       folderPathSegment: 'test',
       isRoot: true,
       label: `test${path.sep}test`,
-      sub: []
+      sub: [],
     })
     expect(result).to.equal(true)
   })

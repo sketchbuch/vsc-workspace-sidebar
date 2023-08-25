@@ -5,7 +5,7 @@ import {
   FS_FOLDER_IMAGES_DARK,
   FS_FOLDER_IMAGES_LIGHT,
   FS_FOLDER_JS,
-  FS_FOLDER_RESOURCES
+  FS_FOLDER_RESOURCES,
 } from '../constants/fs'
 import { GetHtml } from '../webviews/webviews.interface'
 
@@ -45,7 +45,7 @@ export const getHtml = <T>(
       nonce,
       scriptFolderUri,
       title,
-      uiFolderUri
+      uiFolderUri,
     },
     data
   )

@@ -39,7 +39,7 @@ suite('Webviews > registerWebviews()', () => {
     const changeConfigCallBack = configStub.getCalls()[0].args[0]
 
     changeConfigCallBack({
-      affectsConfiguration
+      affectsConfiguration,
     } as vscode.ConfigurationChangeEvent)
   }
 
@@ -88,7 +88,7 @@ suite('Webviews > registerWebviews()', () => {
       { opt: '.cleanLabels', isRerender: false },
       { opt: '.depth', isRerender: false },
       { opt: '.folder', isRerender: false },
-      { opt: '.searchMinimum', isRerender: true }
+      { opt: '.searchMinimum', isRerender: true },
     ].forEach((opt) => {
       testOption(opt.opt, opt.isRerender)
     })
@@ -177,7 +177,7 @@ suite('Webviews > registerWebviews()', () => {
     const callCreateCallaback = (files: vscode.Uri[]) => {
       const eventCallback = createSpy.getCalls()[0].args[0]
       eventCallback({
-        files
+        files,
       } as vscode.FileCreateEvent)
     }
 

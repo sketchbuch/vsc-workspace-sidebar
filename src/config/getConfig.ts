@@ -9,7 +9,7 @@ import {
   CONFIG_FOLDER,
   CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_HIERARCHY,
-  CONFIG_SHOW_ROOT_FOLDER
+  CONFIG_SHOW_ROOT_FOLDER,
 } from '../constants/config'
 
 const { getConfiguration } = workspace

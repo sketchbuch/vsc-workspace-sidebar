@@ -11,7 +11,7 @@ export const compactTree = (tree: FileTree): FileTree => {
         newSubs.push(
           compactTree({
             ...curSub.sub[0],
-            label: nextLabel
+            label: nextLabel,
           })
         )
       } else if (
@@ -24,7 +24,7 @@ export const compactTree = (tree: FileTree): FileTree => {
           ...tree,
           label: nextLabel,
           sub: [],
-          files: [...curSub.files]
+          files: [...curSub.files],
         }
       } else {
         newSubs.push(compactTree(curSub))

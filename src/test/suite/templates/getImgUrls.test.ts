@@ -10,7 +10,7 @@ suite('Templates > getImgUrls()', () => {
     const mockRenderVars = getMockRenderVars()
     expect(getImgUrls(mockRenderVars, iconName)).to.eql({
       dark: `${mockRenderVars.imgDarkFolderUri}${path.sep}${iconName}.svg`,
-      light: `${mockRenderVars.imgLightFolderUri}${path.sep}${iconName}.svg`
+      light: `${mockRenderVars.imgLightFolderUri}${path.sep}${iconName}.svg`,
     })
   })
 })

@@ -7,7 +7,7 @@ export const getMockWorkspaceFolders = (folderCount = 1): vscode.WorkspaceFolder
     return {
       index: index,
       name: `Folder ${value}`,
-      uri: getMockUri(FS_WS_EXT)
+      uri: getMockUri(FS_WS_EXT),
     }
   })
 }

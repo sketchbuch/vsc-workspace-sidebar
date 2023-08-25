@@ -8,7 +8,7 @@ import {
   getMockFileList,
   getMockFolderList,
   getMockVisibleFiles,
-  ROOT_FOLDER_PATH
+  ROOT_FOLDER_PATH,
 } from '../../../../mocks/mockFileData'
 import { getMockState } from '../../../../mocks/mockState'
 
@@ -31,7 +31,7 @@ suite('Webviews > Workspace > Store > toggleFolderStateBulk()', () => {
 
   test('"expand" clears closedFolders, if there were any', () => {
     const state = getMockState({
-      closedFolders: ['vsc', 'react', 'react/test']
+      closedFolders: ['vsc', 'react', 'react/test'],
     })
     const expectedState = getMockState()
 
@@ -65,7 +65,7 @@ suite('Webviews > Workspace > Store > toggleFolderStateBulk()', () => {
       files: getMockFileList(),
       fileTree: getMockFileTree('normal'),
       treeFolders: getMockFolderList('normal'),
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
@@ -73,7 +73,7 @@ suite('Webviews > Workspace > Store > toggleFolderStateBulk()', () => {
       files: getMockFileList(),
       fileTree: getMockFileTree('normal'),
       treeFolders: getMockFolderList('normal'),
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
 
     expect(state).to.eql(expectedState)
@@ -88,7 +88,7 @@ suite('Webviews > Workspace > Store > toggleFolderStateBulk()', () => {
       files: getMockFileList(),
       fileTree: getMockFileTree('normal'),
       treeFolders: getMockFolderList('normal'),
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
@@ -96,7 +96,7 @@ suite('Webviews > Workspace > Store > toggleFolderStateBulk()', () => {
       files: getMockFileList(),
       fileTree: getMockFileTree('normal'),
       treeFolders: getMockFolderList('normal'),
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
 
     expect(state).not.to.eql(expectedState)

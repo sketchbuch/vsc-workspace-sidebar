@@ -9,7 +9,7 @@ import {
   FOLDER1,
   getMockConvertedFiles,
   SEARCH_TERM,
-  SEARCH_TERM_LOWERCASE
+  SEARCH_TERM_LOWERCASE,
 } from '../../../../mocks/mockFileData'
 import { getMockSearchState } from '../../../../mocks/mockState'
 
@@ -174,14 +174,14 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
         {
           ...getMockConvertedFiles()[0],
           showPath: true,
-          label: 'Same label'
+          label: 'Same label',
         },
         {
           ...getMockConvertedFiles()[1],
           showPath: true,
-          label: 'Same label'
+          label: 'Same label',
         },
-        { ...getMockConvertedFiles()[2], showPath: false }
+        { ...getMockConvertedFiles()[2], showPath: false },
       ]
 
       const result = getVisibleFiles(files, getMockSearchState(), 'ascending')

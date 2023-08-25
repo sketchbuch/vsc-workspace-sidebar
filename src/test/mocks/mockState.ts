@@ -1,7 +1,7 @@
 import { initialSearchState, initialState } from '../../webviews/Workspace/store/workspaceSlice'
 import {
   SearchState,
-  WorkspaceState
+  WorkspaceState,
 } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 
 export const getMockState = (state: Partial<WorkspaceState> = {}): WorkspaceState => {
@@ -9,13 +9,13 @@ export const getMockState = (state: Partial<WorkspaceState> = {}): WorkspaceStat
     ...initialState,
     selected: '',
     wsType: 'ws',
-    ...state
+    ...state,
   }
 }
 
 export const getMockSearchState = (state: Partial<SearchState> = {}): SearchState => {
   return {
     ...initialSearchState,
-    ...state
+    ...state,
   }
 }

@@ -3,7 +3,7 @@ import * as pathLib from 'path'
 import {
   getCondenseFileTreeConfig,
   getExplorerCompactFoldersConfig,
-  getFolderConfig
+  getFolderConfig,
 } from '../../../config/getConfig'
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
 import { Files } from '../WorkspaceViewProvider.interface'
@@ -38,7 +38,7 @@ export const getFileTree = (files: Files): FileTree => {
     folderPathSegment: rootFolder,
     isRoot: true,
     label: rootFolder,
-    sub: []
+    sub: [],
   }
 
   const folderList: FolderList = {}
@@ -70,7 +70,7 @@ export const getFileTree = (files: Files): FileTree => {
             folderPathSegment,
             isRoot: false,
             label: part,
-            sub: []
+            sub: [],
           }
 
           if (folderList[folderPathSegment] === undefined) {

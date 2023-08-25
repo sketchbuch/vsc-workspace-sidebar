@@ -11,6 +11,6 @@ export const getImgUrls = (renderVars: RenderVars, iconName: string): GetImgUrls
 
   return {
     dark: `${imgDarkFolderUri}${path.sep}${iconName}.svg`,
-    light: `${imgLightFolderUri}${path.sep}${iconName}.svg`
+    light: `${imgLightFolderUri}${path.sep}${iconName}.svg`,
   }
 }

@@ -6,7 +6,7 @@ import * as tree from '../../../../../templates/workspace/snippets/tree'
 import {
   getMockConvertedFiles,
   getMockFileList,
-  getMockFileTree
+  getMockFileTree,
 } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
 import { getMockSearchState, getMockState } from '../../../../mocks/mockState'
@@ -20,7 +20,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
     convertedFiles: getMockConvertedFiles(),
     files: getMockFileList(),
     fileTree: getMockFileTree('normal'),
-    visibleFiles: getMockConvertedFiles()
+    visibleFiles: getMockConvertedFiles(),
   })
 
   setup(() => {
@@ -45,7 +45,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
       getMockState({
         files: getMockFileList(),
         search: getMockSearchState({ term: 'VSCode' }),
-        visibleFiles: []
+        visibleFiles: [],
       }),
       mockRenderVars
     )

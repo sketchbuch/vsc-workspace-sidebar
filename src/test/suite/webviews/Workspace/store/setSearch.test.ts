@@ -10,7 +10,7 @@ import {
   getMockFolderList,
   getMockVisibleFiles,
   ROOT_FOLDER_PATH,
-  SEARCH_TERM
+  SEARCH_TERM,
 } from '../../../../mocks/mockFileData'
 import { getMockSearchState, getMockState } from '../../../../mocks/mockState'
 
@@ -38,11 +38,11 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
     const state = getMockState({
       files: [],
       fileTree: getMockFileTree('normal'),
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
     const expectedState = getMockState({
       search: getMockSearchState({ term: SEARCH_TERM }),
-      visibleFiles: []
+      visibleFiles: [],
     })
 
     expect(state).not.to.eql(expectedState)
@@ -58,7 +58,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
@@ -66,7 +66,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
       fileTree: getMockFileTree('searched'),
       search: getMockSearchState({ term: SEARCH_TERM }),
       treeFolders: getMockFolderList('searched'),
-      visibleFiles: [{ ...file4, showPath: false }]
+      visibleFiles: [{ ...file4, showPath: false }],
     })
 
     expect(state).not.to.eql(expectedState)
@@ -82,7 +82,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
 
     const expectedState = getMockState({
@@ -91,7 +91,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
       fileTree: getMockFileTree('condensed-searched'),
       search: getMockSearchState({ term: SEARCH_TERM }),
       treeFolders: getMockFolderList('condensed-searched'),
-      visibleFiles: [{ ...file4, showPath: false }]
+      visibleFiles: [{ ...file4, showPath: false }],
     })
 
     expect(state).not.to.eql(expectedState)
@@ -107,7 +107,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
 
     const expectedState = getMockState({
@@ -116,7 +116,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
       fileTree: getMockFileTree('compacted-searched'),
       search: getMockSearchState({ term: SEARCH_TERM }),
       treeFolders: getMockFolderList('compacted-searched'),
-      visibleFiles: [{ ...file4, showPath: false }]
+      visibleFiles: [{ ...file4, showPath: false }],
     })
 
     expect(state).not.to.eql(expectedState)
@@ -132,7 +132,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
 
     const expectedState = getMockState({
@@ -141,7 +141,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
       fileTree: getMockFileTree('compacted-condensed-searched'),
       search: getMockSearchState({ term: SEARCH_TERM }),
       treeFolders: getMockFolderList('compacted-condensed-searched'),
-      visibleFiles: [{ ...file4, showPath: false }]
+      visibleFiles: [{ ...file4, showPath: false }],
     })
 
     expect(state).not.to.eql(expectedState)
@@ -154,7 +154,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
       sort: 'ascending',
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
 
     const expectedState = getMockState({
@@ -164,7 +164,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
       search: getMockSearchState({ term: SEARCH_TERM }),
       sort: 'ascending',
       treeFolders: [],
-      visibleFiles: [{ ...file4, showPath: false }]
+      visibleFiles: [{ ...file4, showPath: false }],
     })
 
     expect(state).not.to.eql(expectedState)
@@ -177,7 +177,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
       sort: 'descending',
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
 
     const expectedState = getMockState({
@@ -187,7 +187,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
       search: getMockSearchState({ term: SEARCH_TERM }),
       sort: 'descending',
       treeFolders: [],
-      visibleFiles: [{ ...file4, showPath: false }]
+      visibleFiles: [{ ...file4, showPath: false }],
     })
 
     expect(state).not.to.eql(expectedState)
@@ -201,7 +201,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
       files: getMockFileList(),
       search: getMockSearchState({ term: SEARCH_TERM }),
       sort: 'ascending',
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
 
     const expectedState = getMockState({
@@ -211,7 +211,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
       search: getMockSearchState({ caseInsensitive: true, term: SEARCH_TERM }),
       sort: 'ascending',
       treeFolders: [],
-      visibleFiles: [{ ...file4, showPath: false }]
+      visibleFiles: [{ ...file4, showPath: false }],
     })
 
     expect(state).not.to.eql(expectedState)
@@ -225,7 +225,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
       files: getMockFileList(),
       search: getMockSearchState({ term: SEARCH_TERM }),
       sort: 'ascending',
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
 
     const expectedState = getMockState({
@@ -235,7 +235,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
       search: getMockSearchState({ matchStart: true, term: SEARCH_TERM }),
       sort: 'ascending',
       treeFolders: [],
-      visibleFiles: [{ ...file4, showPath: false }]
+      visibleFiles: [{ ...file4, showPath: false }],
     })
 
     expect(state).not.to.eql(expectedState)

@@ -17,5 +17,5 @@ export const configOptions: ConfigOptions = [
   { config: `${WS_CONFIG}.showFolderHierarchy`, type: 'visible-files' },
   { config: `${WS_CONFIG}.showPaths`, type: 'visible-files' },
   { config: `${WS_CONFIG}.showRootFolder`, type: 'tree' },
-  { config: `${EXPLORER_CONFIG}.compactFolders`, type: 'tree' }
+  { config: `${EXPLORER_CONFIG}.compactFolders`, type: 'tree' },
 ]

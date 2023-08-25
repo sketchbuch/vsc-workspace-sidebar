@@ -8,7 +8,7 @@ export const mockWebView = {
     return {} as vscode.Disposable
   },
   options: {} as vscode.WebviewOptions,
-  postMessage: () => Promise.resolve(true)
+  postMessage: () => Promise.resolve(true),
 } as vscode.Webview
 
 export const getMockWebviewView = (webviewView: Partial<vscode.WebviewView> = {}) => {
@@ -21,6 +21,6 @@ export const getMockWebviewView = (webviewView: Partial<vscode.WebviewView> = {}
     viewType: '',
     visible: true,
     webview: mockWebView,
-    ...webviewView
+    ...webviewView,
   } as vscode.WebviewView
 }

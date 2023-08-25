@@ -4,14 +4,14 @@ import * as configs from '../../../../../config/getConfig'
 import {
   fetchFulfilled,
   fetchPending,
-  fetchRejected
+  fetchRejected,
 } from '../../../../../webviews/Workspace/store/fetch'
 import {
   ROOT_FOLDER_PATH,
   getMockConvertedFiles,
   getMockFileList,
   getMockFileTree,
-  getMockVisibleFiles
+  getMockVisibleFiles,
 } from '../../../../mocks/mockFileData'
 import { getMockState } from '../../../../mocks/mockState'
 
@@ -35,11 +35,11 @@ suite('Webviews > Workspace > Store > fetch()', () => {
   test('Pending updates state as expected', () => {
     const state = getMockState({
       isFolderInvalid: true,
-      state: 'invalid'
+      state: 'invalid',
     })
     const expectedState = getMockState({
       isFolderInvalid: false,
-      state: 'loading'
+      state: 'loading',
     })
 
     expect(state).not.to.eql(expectedState)
@@ -50,11 +50,11 @@ suite('Webviews > Workspace > Store > fetch()', () => {
   test('Rejected updates state as expected', () => {
     const state = getMockState({
       error: '',
-      state: 'invalid'
+      state: 'invalid',
     })
     const expectedState = getMockState({
       error: 'FETCH',
-      state: 'error'
+      state: 'error',
     })
 
     expect(state).not.to.eql(expectedState)
@@ -69,21 +69,21 @@ suite('Webviews > Workspace > Store > fetch()', () => {
         files: [],
         isFolderInvalid: false,
         state: 'loading',
-        visibleFiles: getMockVisibleFiles()
+        visibleFiles: getMockVisibleFiles(),
       })
       const expectedState = getMockState({
         convertedFiles: [],
         files: [],
         isFolderInvalid: true,
         state: 'invalid',
-        visibleFiles: []
+        visibleFiles: [],
       })
 
       expect(state).not.to.eql(expectedState)
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
         payload: { files: [], result: 'none' },
-        type: 'ws/list'
+        type: 'ws/list',
       })
       expect(state).to.eql(expectedState)
     })
@@ -97,7 +97,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
         files: [],
         isFolderInvalid: true,
         state: 'invalid',
-        visibleFiles: []
+        visibleFiles: [],
       })
       const expectedState = getMockState({
         convertedFiles: getMockConvertedFiles(),
@@ -105,14 +105,14 @@ suite('Webviews > Workspace > Store > fetch()', () => {
         fileTree: getMockFileTree('normal'),
         isFolderInvalid: false,
         state: 'list',
-        visibleFiles: getMockVisibleFiles()
+        visibleFiles: getMockVisibleFiles(),
       })
 
       expect(state).not.to.eql(expectedState)
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
         payload: { files: getMockFileList(), result: 'none' },
-        type: 'ws/list'
+        type: 'ws/list',
       })
       expect(state.visibleFiles).to.eql(expectedState.visibleFiles)
     })
@@ -125,7 +125,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
         files: [],
         isFolderInvalid: true,
         state: 'invalid',
-        visibleFiles: []
+        visibleFiles: [],
       })
       const expectedState = getMockState({
         convertedFiles: getMockConvertedFiles(),
@@ -133,14 +133,14 @@ suite('Webviews > Workspace > Store > fetch()', () => {
         fileTree: getMockFileTree('condensed'),
         isFolderInvalid: false,
         state: 'list',
-        visibleFiles: getMockVisibleFiles()
+        visibleFiles: getMockVisibleFiles(),
       })
 
       expect(state).not.to.eql(expectedState)
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
         payload: { files: getMockFileList(), result: 'none' },
-        type: 'ws/list'
+        type: 'ws/list',
       })
       expect(state.visibleFiles).to.eql(expectedState.visibleFiles)
     })
@@ -152,7 +152,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
         isFolderInvalid: true,
         sort: 'ascending',
         state: 'invalid',
-        visibleFiles: []
+        visibleFiles: [],
       })
       const expectedState = getMockState({
         convertedFiles: getMockConvertedFiles(),
@@ -161,14 +161,14 @@ suite('Webviews > Workspace > Store > fetch()', () => {
         isFolderInvalid: false,
         sort: 'ascending',
         state: 'list',
-        visibleFiles: getMockVisibleFiles('asc')
+        visibleFiles: getMockVisibleFiles('asc'),
       })
 
       expect(state).not.to.eql(expectedState)
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
         payload: { files: getMockFileList(), result: 'none' },
-        type: 'ws/list'
+        type: 'ws/list',
       })
       expect(state.visibleFiles).to.eql(expectedState.visibleFiles)
     })
@@ -180,7 +180,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
         isFolderInvalid: true,
         sort: 'descending',
         state: 'invalid',
-        visibleFiles: []
+        visibleFiles: [],
       })
       const expectedState = getMockState({
         convertedFiles: getMockConvertedFiles(),
@@ -189,14 +189,14 @@ suite('Webviews > Workspace > Store > fetch()', () => {
         isFolderInvalid: false,
         sort: 'descending',
         state: 'list',
-        visibleFiles: getMockVisibleFiles('desc')
+        visibleFiles: getMockVisibleFiles('desc'),
       })
 
       expect(state).not.to.eql(expectedState)
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
         payload: { files: getMockFileList(), result: 'none' },
-        type: 'ws/list'
+        type: 'ws/list',
       })
       expect(state.visibleFiles).to.eql(expectedState.visibleFiles)
     })

@@ -8,7 +8,7 @@ import {
   CMD_OPEN_NEW_WIN,
   CMD_VSC_OPEN_SETTINGS,
   CMD_VSC_SAVE_WS_AS,
-  CMD_VSC_SET_CTX
+  CMD_VSC_SET_CTX,
 } from '../../constants/commands'
 import { ConfigActions } from '../../constants/config'
 import {
@@ -16,7 +16,7 @@ import {
   EXT_SORT,
   EXT_WEBVIEW_WS,
   EXT_WSSTATE_CACHE,
-  EXT_WSSTATE_CACHE_DURATION
+  EXT_WSSTATE_CACHE_DURATION,
 } from '../../constants/ext'
 import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
@@ -29,7 +29,7 @@ import {
   FolderState,
   WorkspacePmPayload as Payload,
   WorkspaceCache,
-  WorkspaceState
+  WorkspaceState,
 } from './WorkspaceViewProvider.interface'
 import { fetch } from './store/fetch'
 import { workspaceSlice } from './store/workspaceSlice'
@@ -42,7 +42,7 @@ const {
   setSearch,
   setVisibleFiles,
   toggleFolderState,
-  toggleFolderStateBulk
+  toggleFolderStateBulk,
 } = workspaceSlice.actions
 
 export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
@@ -96,7 +96,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
           : 'webViews.workspace.list.titleCount.default',
         {
           matches: visibleFiles.length.toString(),
-          total: files.length.toString()
+          total: files.length.toString(),
         }
       )
     }
@@ -122,14 +122,14 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
       const htmlData: HtmlData<WorkspaceState> = {
         data: { ...state },
         title: this._view.title,
-        webview: this._view.webview
+        webview: this._view.webview,
       }
 
       this._view.webview.html = getHtml<WorkspaceState>(
         {
           extensionPath: this._extensionUri,
           template: defaultTemplate,
-          htmlData
+          htmlData,
         },
         crypto.randomBytes(16).toString('hex')
       )
@@ -178,7 +178,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   private setupWebview(webviewView: vscode.WebviewView) {
     webviewView.webview.options = {
       enableScripts: true,
-      localResourceRoots: [this._extensionUri]
+      localResourceRoots: [this._extensionUri],
     }
 
     webviewView.webview.onDidReceiveMessage((message: PostMessage<Payload, Actions>) => {
@@ -225,7 +225,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
         case Actions.SEARCH_CHECKBOX_ENABLE:
           if (payload !== undefined) {
             const searchState = {
-              [payload]: action === Actions.SEARCH_CHECKBOX_ENABLE
+              [payload]: action === Actions.SEARCH_CHECKBOX_ENABLE,
             }
 
             store.dispatch(setSearch(searchState))
@@ -266,7 +266,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
         if (files) {
           this._globalState.update(EXT_WSSTATE_CACHE, {
             files,
-            timestamp: this.getTimestamp()
+            timestamp: this.getTimestamp(),
           })
         }
         break

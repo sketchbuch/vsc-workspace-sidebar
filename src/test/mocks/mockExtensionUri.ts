@@ -10,7 +10,7 @@ export const mockExtensionUri = {
   toJSON: () => '',
   with: () => {
     return {} as vscode.Uri
-  }
+  },
 } as vscode.Uri
 
 export const getMockUri = (extension: string = '', uri: Partial<vscode.Uri> = {}) => {
@@ -25,6 +25,6 @@ export const getMockUri = (extension: string = '', uri: Partial<vscode.Uri> = {}
     with: () => {
       return {} as vscode.Uri
     },
-    ...uri
+    ...uri,
   } as vscode.Uri
 }

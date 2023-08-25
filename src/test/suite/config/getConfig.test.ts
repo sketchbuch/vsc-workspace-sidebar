@@ -10,7 +10,7 @@ import {
   getSearchMinConfig,
   getShowPathsConfig,
   getShowRootFolderConfig,
-  getShowTreeConfig
+  getShowTreeConfig,
 } from '../../../config/getConfig'
 import {
   ConfigActions,
@@ -21,7 +21,7 @@ import {
   CONFIG_FOLDER,
   CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_HIERARCHY,
-  CONFIG_SHOW_ROOT_FOLDER
+  CONFIG_SHOW_ROOT_FOLDER,
 } from '../../../constants/config'
 
 // Reenable once stub is working
@@ -35,7 +35,7 @@ suite.skip('Config > getConfig:', () => {
         get: (section: string) => {
           console.log('### STUB 2')
           return undefined
-        }
+        },
       } as WorkspaceConfiguration
     })
   })

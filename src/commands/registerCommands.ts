@@ -9,7 +9,7 @@ import {
   CMD_OPEN_NEW_WIN,
   CMD_REFRESH,
   CMD_SORT,
-  CMD_VSC_OPEN_WS
+  CMD_VSC_OPEN_WS,
 } from '../constants/commands'
 import { EXT_SORT } from '../constants/ext'
 import { WorkspaceViewProvider } from '../webviews/Workspace/WorkspaceViewProvider'
@@ -32,13 +32,13 @@ export const registerCommands = (
     {
       description: t('sort.ascending.description'),
       id: 'ascending',
-      label: t('sort.ascending.label')
+      label: t('sort.ascending.label'),
     },
     {
       description: t('sort.descending.description'),
       id: 'descending',
-      label: t('sort.descending.label')
-    }
+      label: t('sort.descending.label'),
+    },
   ]
 
   context.subscriptions.push(

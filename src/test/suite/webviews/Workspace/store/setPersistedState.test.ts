@@ -7,11 +7,11 @@ suite('Webviews > Workspace > Store > setPersistedState()', () => {
   test('Updates state as expected', () => {
     const state = getMockState({
       sort: 'descending',
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
     const expectedState = getMockState({
       sort: 'ascending',
-      visibleFiles: getMockVisibleFiles().reverse()
+      visibleFiles: getMockVisibleFiles().reverse(),
     })
 
     expect(state).not.to.eql(expectedState)

@@ -20,15 +20,15 @@ suite('Webviews > Workspace > Helpers > convertWsFiles():', () => {
       isSelected: false,
       label: 'First Project',
       path: '',
-      showPath: true
+      showPath: true,
     },
     {
       file: FILE2,
       isSelected: false,
       label: 'Second Work Space',
       path: FILE_PATH2,
-      showPath: true
-    }
+      showPath: true,
+    },
   ]
 
   setup(() => {
@@ -52,7 +52,7 @@ suite('Webviews > Workspace > Helpers > convertWsFiles():', () => {
     cleanLabelsConfigStub.callsFake(() => false)
     const expectedUncleaned: Files = [
       { ...expected[0], label: FILE_NAME1 },
-      { ...expected[1], label: FILE_NAME2 }
+      { ...expected[1], label: FILE_NAME2 },
     ]
     expect(convertWsFiles(files, '')).to.eql(expectedUncleaned)
   })

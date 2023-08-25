@@ -8,7 +8,7 @@ import {
   getMockFileTree,
   getMockFolderList,
   getMockVisibleFiles,
-  ROOT_FOLDER_PATH
+  ROOT_FOLDER_PATH,
 } from '../../../../mocks/mockFileData'
 import { getMockState } from '../../../../mocks/mockState'
 
@@ -47,14 +47,14 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
 
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList()
+      files: getMockFileList(),
     })
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
       fileTree: getMockFileTree('normal'),
       treeFolders: getMockFolderList('normal'),
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
 
     expect(state).not.to.eql(expectedState)
@@ -69,14 +69,14 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
 
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList()
+      files: getMockFileList(),
     })
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
       fileTree: getMockFileTree('condensed'),
       treeFolders: getMockFolderList('condensed'),
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
 
     expect(state).not.to.eql(expectedState)
@@ -91,14 +91,14 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
 
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList()
+      files: getMockFileList(),
     })
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
       fileTree: getMockFileTree('compacted'),
       treeFolders: getMockFolderList('compacted'),
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
 
     expect(state).not.to.eql(expectedState)
@@ -113,14 +113,14 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
 
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList()
+      files: getMockFileList(),
     })
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
       fileTree: getMockFileTree('compacted-condensed'),
       treeFolders: getMockFolderList('compacted-condensed'),
-      visibleFiles: getMockVisibleFiles()
+      visibleFiles: getMockVisibleFiles(),
     })
 
     expect(state).not.to.eql(expectedState)
@@ -132,14 +132,14 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
-      sort: 'ascending'
+      sort: 'ascending',
     })
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
       fileTree: null,
       sort: 'ascending',
-      visibleFiles: getMockVisibleFiles('asc')
+      visibleFiles: getMockVisibleFiles('asc'),
     })
 
     expect(state).not.to.eql(expectedState)
@@ -151,14 +151,14 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
     const state = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
-      sort: 'descending'
+      sort: 'descending',
     })
     const expectedState = getMockState({
       convertedFiles: getMockConvertedFiles(),
       files: getMockFileList(),
       fileTree: null,
       sort: 'descending',
-      visibleFiles: getMockVisibleFiles('desc')
+      visibleFiles: getMockVisibleFiles('desc'),
     })
 
     expect(state).not.to.eql(expectedState)

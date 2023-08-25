@@ -9,11 +9,11 @@ export const CONFIG_EXPLORER_COMPACT_FOLDERS = true
 
 export enum ConfigActions {
   CURRENT_WINDOW = 'Current Window',
-  NEW_WINDOW = 'New Window'
+  NEW_WINDOW = 'New Window',
 }
 
 export enum ConfigShowPaths {
   ALWAYS = 'Always',
   AS_NEEEDED = 'As needed',
-  NEVER = 'Never'
+  NEVER = 'Never',
 }

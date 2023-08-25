@@ -3,7 +3,7 @@ import {
   FS_WEBVIEW_CODICONS_CSS,
   FS_WEBVIEW_UI_TOOLKIT_JS,
   FS_WEBVIEW_WORKSPACE_CSS,
-  FS_WEBVIEW_WORKSPACE_JS
+  FS_WEBVIEW_WORKSPACE_JS,
 } from '../../../constants/fs'
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { TemplateVars } from '../../../webviews/webviews.interface'

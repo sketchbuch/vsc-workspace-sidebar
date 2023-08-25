@@ -16,14 +16,14 @@ suite('Utils > Fs > checkFile()', () => {
   test('Returned object is as expected if the file does not exist', () => {
     expect(checkFile(path.join('a', 'non-existent', 'file'))).to.eql({
       isFile: false,
-      isFolder: false
+      isFolder: false,
     })
   })
 
   test('Returned object is as expected if the file does exist and is a file', () => {
     expect(checkFile(path.join('check-file', 'test-file.txt'))).to.eql({
       isFile: true,
-      isFolder: false
+      isFolder: false,
     })
   })
 
