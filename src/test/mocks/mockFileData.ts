@@ -78,6 +78,7 @@ export const getMockFolderList = (type: GetFileTreeType): string[] => {
       return [file4.path]
 
     case 'compacted-condensed-searched':
+
     case 'condensed-searched':
       return [FOLDER4]
 

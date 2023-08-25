@@ -34,6 +34,7 @@ suite('Utils > Fs > findWorkspaceFiles()', () => {
 
   test('invalid-folder object is returned if the folder is not a folder', () => {
     configFolderStub.callsFake(() => 'a.file')
+
     return findWorkspaceFiles().then((wsFiles) => {
       expect(wsFiles).to.eql({ files: [], result: 'invalid-folder' })
     })
@@ -41,6 +42,7 @@ suite('Utils > Fs > findWorkspaceFiles()', () => {
 
   test('no-workspaces object is returned if the folder contains no workspace files', () => {
     configFolderStub.callsFake(() => 'get-filenames-of-type')
+
     return findWorkspaceFiles().then((wsFiles) => {
       expect(wsFiles).to.eql({ files: [], result: 'no-workspaces' })
     })

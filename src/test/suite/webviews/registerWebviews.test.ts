@@ -52,6 +52,7 @@ suite('Webviews > registerWebviews()', () => {
 
   const getConfigOptions = (optionWanted: string) => {
     const configOpt = configOptions.find((opt) => opt.config.includes(optionWanted))
+
     return configOpt ? [configOpt] : []
   }
 

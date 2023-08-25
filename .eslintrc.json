@@ -1,24 +1,34 @@
 {
-    "root": true,
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaVersion": 6,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "@typescript-eslint",
-        "eslint-plugin-mocha"
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint", "eslint-plugin-mocha"],
+  "rules": {
+    "@typescript-eslint/class-name-casing": "warn",
+    "@typescript-eslint/semi": "off",
+    "curly": "warn",
+    "eqeqeq": "warn",
+    "mocha/no-identical-title": "warn",
+    "no-dupe-else-if": "warn",
+    "no-duplicate-case": "error",
+    "no-lonely-if": "warn",
+    "no-throw-literal": "warn",
+    "padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "always",
+        "next": ["case", "default", "return"],
+        "prev": "*"
+      },
+      {
+        "blankLine": "any",
+        "next": ["case", "default"],
+        "prev": ["case", "default"]
+      }
     ],
-    "rules": {
-        "@typescript-eslint/class-name-casing": "warn",
-        "@typescript-eslint/semi": "off",
-        "curly": "warn",
-        "eqeqeq": "warn",
-        "mocha/no-identical-title": "warn",
-        "no-dupe-else-if": "warn",
-        "no-duplicate-case":"error",
-        "no-lonely-if": "warn",
-        "no-throw-literal": "warn",
-        "semi": "off"
-    }
+    "semi": "off"
+  }
 }

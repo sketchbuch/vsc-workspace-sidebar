@@ -22,6 +22,7 @@ export const findWorkspaceFiles = async (): Promise<FindWorkspaceFiles> => {
 
   if (isFolder) {
     const files = await collectFilesFromFolder(baseFolder, FS_WS_FILETYPE, maxDepth, 0)
+
     return Promise.resolve({ files: files, result: files.length > 0 ? 'none' : 'no-workspaces' })
   }
 

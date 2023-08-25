@@ -20,6 +20,7 @@ export const condenseTree = (tree: FileTree): FileTree => {
       }
 
       newSubs.push(condenseTree(curSub))
+
       return newSubs
     }, [])
   }

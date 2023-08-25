@@ -1,8 +1,8 @@
 import * as vscode from 'vscode'
 import { getShowTreeConfig } from '../config/getConfig'
 import { isWorkspaceFile } from '../utils/fs/isWorkspaceFile'
-import { ConfigOptions, EXPLORER_CONFIG, WS_CONFIG } from './configOptions'
 import { WorkspaceViewProvider } from './Workspace/WorkspaceViewProvider'
+import { ConfigOptions, EXPLORER_CONFIG, WS_CONFIG } from './configOptions'
 
 export const registerWebviews = (
   context: vscode.ExtensionContext,

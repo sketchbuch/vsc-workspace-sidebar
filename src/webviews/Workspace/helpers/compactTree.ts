@@ -29,6 +29,7 @@ export const compactTree = (tree: FileTree): FileTree => {
       } else {
         newSubs.push(compactTree(curSub))
       }
+
       return newSubs
     }, [])
   }
