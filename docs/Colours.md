@@ -1,3 +1,8 @@
+# Colours
+
+Sample colour vars that can be used in webviews.
+
+```css
 html {
   --vscode-font-family: system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
   --vscode-font-weight: normal;
@@ -426,3 +431,4 @@ html {
   --vscode-bookmarks-lineBorder: rgba(0, 0, 0, 0);
   --vscode-bookmarks-overviewRuler: rgba(21, 126, 251, 0.53);
 }
+```

@@ -1,21 +1,22 @@
+# Files
 .cache
 .gitignore
 .prettierrc.js
 .stylelintignore
 .stylelintrc
-.vscode-test/**
-.vscode/**
 *.code-workspace
 **/.eslintrc.json
 **/.vsix
 **/*.map
 **/*.ts
 **/tsconfig.json
-Colours.css
-Colours.json
 commitlint.config.js
+vsc-extension-quickstart.md
+
+# Folders
+.vscode-test/**
+.vscode/**
+docs/
 out/test/**
 src/**
 test/**
-vsc-extension-quickstart.md
-docs/images/preview.gif
