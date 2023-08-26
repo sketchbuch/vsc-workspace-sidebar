@@ -47,7 +47,7 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
   test('Renders correctly', () => {
     const btnSpy = sinon.spy(buttons, 'listItemButtons')
 
-    const result = treeItemFolder(folder, DEPTH, false, mockRenderVars, mockState)
+    const result = treeItemFolder(folder, DEPTH, false, mockState, mockRenderVars)
 
     expect(result).to.be.a('string')
     expect(result).contains(`data-folder="${folder.folderPathSegment}"`)
@@ -71,7 +71,7 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
   })
 
   test('Selected indicator not shown if not selected', () => {
-    const result = treeItemFolder(folder, DEPTH, false, mockRenderVars, mockState)
+    const result = treeItemFolder(folder, DEPTH, false, mockState, mockRenderVars)
 
     expect(result).to.be.a('string')
     expect(result).not.contains(`list__styled-item--selected`)
@@ -81,10 +81,16 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
 
   test('Selected indicator shown if selected & closed', () => {
     const mockState = getMockState({ closedFolders: [FOLDER_PATH] })
-    const result = treeItemFolder(folder, DEPTH, true, mockRenderVars, {
-      ...mockState,
-      selected: `${FOLDER_PATH}${path.sep}`,
-    })
+    const result = treeItemFolder(
+      folder,
+      DEPTH,
+      true,
+      {
+        ...mockState,
+        selected: `${FOLDER_PATH}${path.sep}`,
+      },
+      mockRenderVars
+    )
 
     expect(result).to.be.a('string')
     expect(result).contains(`list__styled-item--selected`)
@@ -94,30 +100,36 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
 
   test('Selected indicator not shown if selected & not closed', () => {
     const mockState = getMockState({ closedFolders: [FOLDER_PATH] })
-    treeItemFolder(folder, DEPTH, false, mockRenderVars, {
-      ...mockState,
-      selected: `${FOLDER_PATH}${path.sep}`,
-    })
+    treeItemFolder(
+      folder,
+      DEPTH,
+      false,
+      {
+        ...mockState,
+        selected: `${FOLDER_PATH}${path.sep}`,
+      },
+      mockRenderVars
+    )
     sinon.assert.notCalled(selectedIconSpy)
   })
 
   test('Closed icon shown if closed', () => {
     const mockState = getMockState({ closedFolders: [FOLDER_PATH] })
-    treeItemFolder(folder, DEPTH, true, mockRenderVars, mockState)
+    treeItemFolder(folder, DEPTH, true, mockState, mockRenderVars)
 
     sinon.assert.calledOnce(iconClosedSpy)
     sinon.assert.notCalled(iconOpenSpy)
   })
 
   test('Open icon shown if not closed', () => {
-    treeItemFolder(folder, DEPTH, false, mockRenderVars, mockState)
+    treeItemFolder(folder, DEPTH, false, mockState, mockRenderVars)
 
     sinon.assert.notCalled(iconClosedSpy)
     sinon.assert.calledOnce(iconOpenSpy)
   })
 
   test('Root folders do no have the closable class', () => {
-    const result = treeItemFolder(folder, DEPTH, false, mockRenderVars, mockState)
+    const result = treeItemFolder(folder, DEPTH, false, mockState, mockRenderVars)
     expect(result).not.contains(`list__branch-list-item-folder-closable`)
   })
 
@@ -126,8 +138,8 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
       { ...folder, isRoot: false },
       DEPTH,
       false,
-      mockRenderVars,
-      mockState
+      mockState,
+      mockRenderVars
     )
     expect(result).contains(`list__branch-list-item-folder-closable`)
   })

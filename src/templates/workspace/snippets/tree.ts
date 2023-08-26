@@ -12,52 +12,42 @@ const isFile = (item: File | FileTree): item is File => {
 export const tree = (
   branch: FileTree,
   depth: number,
-  renderVars: RenderVars,
-  state: WorkspaceState
+  state: WorkspaceState,
+  renderVars: RenderVars
 ): string => {
+  const { showRootFolder } = renderVars
   const { files, folderPathSegment, isRoot, sub } = branch
+  const isClosed = state.closedFolders.includes(folderPathSegment)
+  let children: TreeChildren = []
+  let fileDepth = depth
+  let treeDepth = depth + 1
+  let showItemFolder = true
 
   // If this is the root level, and show root folder is false,
   // ignore the root folder and just show the subfolders/subworkspaces
   if (isRoot) {
-    const { showRootFolder } = renderVars
-
     if (!showRootFolder) {
-      const children = sortTreeChildren([...sub, ...files])
-
-      if (children.length > 0) {
-        return children
-          .map((child) => {
-            if (isFile(child)) {
-              return treeItemFile(child, -1, state, renderVars)
-            } else {
-              return tree(child, depth, renderVars, state)
-            }
-          })
-          .join('')
-      }
-
-      return ''
+      children = sortTreeChildren([...sub, ...files])
+      fileDepth = -1
+      treeDepth = depth
+      showItemFolder = false
     }
   }
 
-  const isClosed = state.closedFolders.includes(folderPathSegment)
-  let children: TreeChildren = []
-
-  if (!isClosed) {
+  if (showItemFolder && !isClosed) {
     children = sortTreeChildren([...sub, ...files])
   }
 
   return `
-    ${treeItemFolder(branch, depth, isClosed, renderVars, state)}
+    ${showItemFolder ? treeItemFolder(branch, depth, isClosed, state, renderVars) : ''}
     ${
       children.length > 0
         ? children
             .map((child) => {
               if (isFile(child)) {
-                return treeItemFile(child, depth, state, renderVars)
+                return treeItemFile(child, fileDepth, state, renderVars)
               } else {
-                return tree(child, depth + 1, renderVars, state)
+                return tree(child, treeDepth, state, renderVars)
               }
             })
             .join('')

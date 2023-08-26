@@ -12,8 +12,8 @@ export const treeItemFolder = (
   folder: FileTree,
   depth: number,
   isClosed: boolean,
-  renderVars: RenderVars,
-  state: WorkspaceState
+  state: WorkspaceState,
+  renderVars: RenderVars
 ): string => {
   const { folderPath, folderPathSegment, isRoot, label } = folder
   const indicateSelected = isClosed && state.selected.includes(`${folderPathSegment}${path.sep}`)

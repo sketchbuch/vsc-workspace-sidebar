@@ -66,7 +66,7 @@ suite('Templates > Workspace > Snippets: tree()', () => {
   })
 
   test('An empty tree will render just the root folder', () => {
-    const result = tree(emptyRootTree, 0, getMockRenderVars({ showRootFolder: true }), state)
+    const result = tree(emptyRootTree, 0, state, getMockRenderVars({ showRootFolder: true }))
 
     expect(result).to.be.a('string')
 
@@ -77,19 +77,19 @@ suite('Templates > Workspace > Snippets: tree()', () => {
   })
 
   test('Children are not sorted if a folder is closed', () => {
-    tree(closedFolderTree, 0, mockRenderVars, { ...state, closedFolders: [FOLDER1] })
+    tree(closedFolderTree, 0, { ...state, closedFolders: [FOLDER1] }, mockRenderVars)
     sinon.assert.notCalled(sortSpy)
   })
 
   test('Root folder is rendered if there are root level files', () => {
     const rootChildrenFileTree: FileTree = { ...getMockFileTree('normal'), files: [{ ...file1 }] }
-    tree(rootChildrenFileTree, 0, getMockRenderVars({ showRootFolder: true }), state)
+    tree(rootChildrenFileTree, 0, state, getMockRenderVars({ showRootFolder: true }))
 
     expect(folderSpy.args[0][0].folderPathSegment).to.equal(ROOT_FOLDER)
   })
 
   test('Root folder is not rendered if there are no root level files', () => {
-    tree(getMockFileTree('normal'), 0, mockRenderVars, state)
+    tree(getMockFileTree('normal'), 0, state, mockRenderVars)
 
     expect(folderSpy.args[0][0].folderPathSegment).not.to.equal(ROOT_FOLDER)
     expect(folderSpy.args[0][1]).to.equal(0) // Depth should have been zero for at least one non-root folder
@@ -97,7 +97,7 @@ suite('Templates > Workspace > Snippets: tree()', () => {
   })
 
   test('All files/folders are rendered', () => {
-    tree(getMockFileTree('normal'), 0, mockRenderVars, state)
+    tree(getMockFileTree('normal'), 0, state, mockRenderVars)
 
     sinon.assert.callCount(itemSpy, getMockFileList().length)
     // Order like this due to child sorting
