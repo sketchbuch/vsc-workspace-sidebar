@@ -246,7 +246,7 @@
     "@vscode/codicons": "^0.0.29",
     "@vscode/webview-ui-toolkit": "^1.2.2",
     "crypto": "^1.0.1",
-    "vscode-ext-localisation": "^1.0.1"
+    "vscode-ext-localisation": "^1.1.1"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",

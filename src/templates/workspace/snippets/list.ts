@@ -13,7 +13,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
   } else if (visibleFiles.length === 0 && search) {
     return `
       <div class="list__searchedout">
-        <p>${t('webViews.workspace.list.search.noMatch')}</p>
+        <p>${t('workspace.list.search.noMatch')}</p>
       </div>
     `
   }

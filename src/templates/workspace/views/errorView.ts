@@ -10,11 +10,7 @@ export const errorView = (state: WorkspaceState, renderVars: RenderVars): string
       <p class="view__message">
         <span class="view__message-title">
           <span class="view__message-icon codicon codicon-error"></span>
-          ${
-            isFetch
-              ? t('webViews.workspace.error.fetch.title')
-              : t('webViews.workspace.error.default.title')
-          }
+          ${isFetch ? t('workspace.error.fetch.title') : t('workspace.error.default.title')}
         </span>
       </p>
     </section>`

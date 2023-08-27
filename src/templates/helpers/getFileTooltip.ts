@@ -13,11 +13,11 @@ export const getFileTooltip = (renderVars: RenderVars, file: File, type?: Toolti
   let tooltip = label
 
   if (isSelected) {
-    tooltip = t('webViews.workspace.list.itemButtons.newWindow.selected')
+    tooltip = t('workspace.list.itemButtons.newWindow.selected')
   } else if ((isDefault && type === 'new-win') || (!isDefault && type === 'cur-win')) {
-    tooltip = t('webViews.workspace.list.itemButtons.newWindow.openNewWin', { label })
+    tooltip = t('workspace.list.itemButtons.newWindow.openNewWin', { label })
   } else if ((isDefault && type === 'cur-win') || (!isDefault && type === 'new-win')) {
-    tooltip = t('webViews.workspace.list.itemButtons.newWindow.openCurWin', { label })
+    tooltip = t('workspace.list.itemButtons.newWindow.openCurWin', { label })
   }
 
   return `${tooltip}${showPath ? ` (${path})` : ''}`
