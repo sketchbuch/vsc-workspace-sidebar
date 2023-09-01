@@ -238,7 +238,9 @@
     "lint": "yarn lint:js && yarn lint:ts && yarn lint:prettier && yarn lint:css",
     "pretest": "yarn clean:dist && yarn build:dev && yarn lint",
     "test": "yarn clean:test && yarn typecheck",
+    "test:mocha": "mocha -w -ui tdd --",
     "typecheck": "tsc -p ./",
+    "typecheck:mocha": "tsc -w -p ./",
     "vscode:prepublish": "yarn clean:dist && yarn build:release"
   },
   "dependencies": {

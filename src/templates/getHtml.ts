@@ -12,10 +12,10 @@ import { GetHtml } from '../webviews/webviews.interface'
 const { joinPath } = vscode.Uri
 
 export const getHtml = <T>(
-  { extensionPath, template, htmlData }: GetHtml<T>,
+  { extensionPath, htmlData, template, themeData }: GetHtml<T>,
   nonce: string
 ): string => {
-  const { data, title, webview } = htmlData
+  const { state, title, webview } = htmlData
   const cssFolderUri = webview.asWebviewUri(
     joinPath(extensionPath, FS_FOLDER_RESOURCES, FS_FOLDER_CSS)
   )
@@ -46,7 +46,8 @@ export const getHtml = <T>(
       scriptFolderUri,
       title,
       uiFolderUri,
+      themeData,
     },
-    data
+    state
   )
 }

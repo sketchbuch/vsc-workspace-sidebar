@@ -21,7 +21,9 @@ import {
 import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
+import { ThemeProcessor } from '../../theme/ThemeProcessor'
 import { GlobalState } from '../../types/ext'
+import { getTimestamp } from '../../utils/datetime/getTimestamp'
 import { HtmlData, PostMessage } from '../webviews.interface'
 import {
   WorkspacePmActions as Actions,
@@ -52,7 +54,8 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   constructor(
     private readonly _extensionUri: vscode.Uri,
     private readonly _globalState: GlobalState,
-    private readonly _extMode: vscode.ExtensionMode
+    private readonly _extMode: vscode.ExtensionMode,
+    private readonly _themeProcessor: ThemeProcessor
   ) {}
 
   public focusInput() {
@@ -68,7 +71,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
       const { files, timestamp } = cachedData
 
       if (files && timestamp) {
-        const timestampNow = this.getTimestamp()
+        const timestampNow = getTimestamp()
         const timestampExpired = timestamp + EXT_WSSTATE_CACHE_DURATION
 
         if (timestampNow < timestampExpired) {
@@ -80,10 +83,6 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     }
 
     return null
-  }
-
-  private getTimestamp() {
-    return Math.floor(Date.now() / 1000)
   }
 
   private getViewTitle({ files, visibleFiles, search, state: view }: WorkspaceState) {
@@ -117,10 +116,11 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
   private render() {
     if (this._view !== undefined) {
       const state = store.getState().ws
+
       this._view.title = this.getViewTitle(state)
 
       const htmlData: HtmlData<WorkspaceState> = {
-        data: { ...state },
+        state: { ...state },
         title: this._view.title,
         webview: this._view.webview,
       }
@@ -130,6 +130,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
           extensionPath: this._extensionUri,
           template: defaultTemplate,
           htmlData,
+          themeData: this._themeProcessor.getThemeData() ?? null,
         },
         crypto.randomBytes(16).toString('hex')
       )
@@ -187,7 +188,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
       switch (action) {
         case Actions.FOLDER_CLICK:
           if (payload !== undefined) {
-            store.dispatch(toggleFolderState(payload.toString()))
+            store.dispatch(toggleFolderState(payload))
           }
           break
 
@@ -266,7 +267,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
         if (files) {
           this._globalState.update(EXT_WSSTATE_CACHE, {
             files,
-            timestamp: this.getTimestamp(),
+            timestamp: getTimestamp(),
           })
         }
         break

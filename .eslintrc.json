@@ -27,6 +27,11 @@
         "blankLine": "any",
         "next": ["case", "default"],
         "prev": ["case", "default"]
+      },
+      {
+        "blankLine": "always",
+        "next": ["if"],
+        "prev": ["const", "let"]
       }
     ],
     "semi": "off"

@@ -20,7 +20,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
 
   return `
       <ul class="list__list list__styled-list${
-        showTree && state.fileTree !== null ? ' list__styled-list--tree' : ''
+        showTree && state.fileTree !== null ? ' list__styled-list--tree show-file-icons' : ''
       }">
         ${
           showTree && state.fileTree !== null
