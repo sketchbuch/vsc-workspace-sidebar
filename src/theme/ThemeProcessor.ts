@@ -5,7 +5,7 @@ import { ThemeCacheData, ThemeData, ThemeJson } from './ThemeProcessor.interface
 import { getActiveExtThemeData } from './getActiveExtThemeData'
 
 export class ThemeProcessor {
-  private readonly _cacheDuration = 259200 // 72 Hours
+  private readonly _cacheDuration = 604800 // 1 Week
   private readonly _cacheKey = `themeProcessor-cache`
   private readonly _workbenchConfigKey = 'workbench'
 
