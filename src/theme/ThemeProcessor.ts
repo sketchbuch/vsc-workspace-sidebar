@@ -28,7 +28,7 @@ export class ThemeProcessor implements Observerable {
   }
 
   private init() {
-    let shouldProcessData = true
+    let cacheMiss = true
     const cachedData = this._ctx.globalState.get<ThemeCacheData>(this._cacheKey)
 
     if (cachedData) {
@@ -39,14 +39,14 @@ export class ThemeProcessor implements Observerable {
         const timestampExpired = timestamp + this._cacheDuration
 
         if (timestampNow < timestampExpired) {
-          shouldProcessData = false
+          cacheMiss = false
         } else {
           this.deleteThemeData()
         }
       }
     }
 
-    if (shouldProcessData) {
+    if (cacheMiss) {
       this.processThemeData()
     }
   }
@@ -95,21 +95,16 @@ export class ThemeProcessor implements Observerable {
         }
 
         this.setThemeData(themeCacheData)
-        this.notifyAll()
       } catch {
         if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
           vscode.window.showErrorMessage('Unable to process theme json')
         }
-
-        this.notifyAll()
       }
-    } else {
-      if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
-        vscode.window.showErrorMessage('Active theme not found')
-      }
-
-      this.notifyAll()
+    } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
+      vscode.window.showErrorMessage('Active theme not found')
     }
+
+    this.notifyAll()
   }
 
   private watchConfig() {
