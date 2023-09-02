@@ -16,7 +16,6 @@ export class ThemeDataProcessor implements Observerable {
   private readonly _cacheDuration = 604800 // 1 Week
   private readonly _cacheKey = `themeProcessor-cache`
   private _observers: Set<Observer>
-  private readonly _workbenchConfigKey = 'workbench'
 
   constructor(private readonly _ctx: vscode.ExtensionContext) {
     this._observers = new Set()
@@ -113,7 +112,7 @@ export class ThemeDataProcessor implements Observerable {
       (event: vscode.ConfigurationChangeEvent) => {
         const { affectsConfiguration } = event
 
-        if (affectsConfiguration(`${this._workbenchConfigKey}.iconTheme`)) {
+        if (affectsConfiguration('workbench.iconTheme')) {
           this.processThemeData()
         }
       }

@@ -130,10 +130,12 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, Observ
           extensionPath: this._ctx.extensionUri,
           template: defaultTemplate,
           htmlData,
-          themeData: this._themeProcessor.getThemeData() ?? null,
+          themeData: state.state === 'list' ? this._themeProcessor.getThemeData() ?? null : null,
         },
         crypto.randomBytes(16).toString('hex')
       )
+
+      // Suppress error when running in extension development host
     } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Test) {
       vscode.window.showErrorMessage(t('errors.viewNotFound'))
     }
