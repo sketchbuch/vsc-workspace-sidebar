@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
 import { ConfigActions } from '../constants/config'
-import { ThemeData } from '../theme/ThemeProcessor.interface'
+import { ThemeData } from '../theme/ThemeDataProcessor.interface'
 
 export interface PostMessage<Payload, Actions> {
   action: Actions

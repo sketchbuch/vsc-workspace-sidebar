@@ -8,10 +8,11 @@ import {
   ThemeJson,
   ThemeJsonIconDef,
   ThemeJsonIconDefs,
-} from './ThemeProcessor.interface'
-import { getActiveExtThemeData } from './getActiveExtThemeData'
+} from './ThemeDataProcessor.interface'
+import { getActiveExtThemeData } from './utils/getActiveExtThemeData'
+import { isLightTheme } from './utils/isLightTheme'
 
-export class ThemeProcessor implements Observerable {
+export class ThemeDataProcessor implements Observerable {
   private readonly _cacheDuration = 604800 // 1 Week
   private readonly _cacheKey = `themeProcessor-cache`
   private _observers: Set<Observer>
@@ -51,12 +52,6 @@ export class ThemeProcessor implements Observerable {
     }
   }
 
-  private isLightTheme(): boolean {
-    const { activeColorTheme } = vscode.window
-
-    return activeColorTheme.kind === 1 || activeColorTheme.kind === 4
-  }
-
   private async processThemeData() {
     const activeFileiconTheme = vscode.workspace.getConfiguration('workbench').iconTheme
     const activeExtThemeData = await getActiveExtThemeData(activeFileiconTheme)
@@ -65,7 +60,7 @@ export class ThemeProcessor implements Observerable {
       const themePath = path.join(activeExtThemeData.extPath, activeExtThemeData.themePath)
 
       try {
-        const isLight = this.isLightTheme()
+        const isLight = isLightTheme(vscode.window.activeColorTheme)
         const jsonContent = fs.readFileSync(themePath, 'utf8')
         const jsonData = JSON.parse(jsonContent) as ThemeJson
         const newIconDefinitions: ThemeJsonIconDefs = {}

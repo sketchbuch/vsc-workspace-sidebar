@@ -21,7 +21,7 @@ import {
 import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
-import { ThemeProcessor } from '../../theme/ThemeProcessor'
+import { ThemeDataProcessor } from '../../theme/ThemeDataProcessor'
 import { Observer } from '../../types/observerable'
 import { getTimestamp } from '../../utils/datetime/getTimestamp'
 import { HtmlData, PostMessage } from '../webviews.interface'
@@ -53,7 +53,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, Observ
 
   constructor(
     private readonly _ctx: vscode.ExtensionContext,
-    private readonly _themeProcessor: ThemeProcessor
+    private readonly _themeProcessor: ThemeDataProcessor
   ) {
     this._themeProcessor.subscribe(this)
   }
