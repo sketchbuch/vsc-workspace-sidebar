@@ -22,7 +22,6 @@ import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
 import { ThemeProcessor } from '../../theme/ThemeProcessor'
-import { GlobalState } from '../../types/ext'
 import { Observer } from '../../types/observerable'
 import { getTimestamp } from '../../utils/datetime/getTimestamp'
 import { HtmlData, PostMessage } from '../webviews.interface'
@@ -53,9 +52,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, Observ
   private _view?: vscode.WebviewView
 
   constructor(
-    private readonly _extensionUri: vscode.Uri,
-    private readonly _globalState: GlobalState,
-    private readonly _extMode: vscode.ExtensionMode,
+    private readonly _ctx: vscode.ExtensionContext,
     private readonly _themeProcessor: ThemeProcessor
   ) {
     this._themeProcessor.subscribe(this)
@@ -68,7 +65,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, Observ
   }
 
   private getCacheFiles() {
-    const cachedData = this._globalState.get<WorkspaceCache>(EXT_WSSTATE_CACHE)
+    const cachedData = this._ctx.globalState.get<WorkspaceCache>(EXT_WSSTATE_CACHE)
 
     if (cachedData) {
       const { files, timestamp } = cachedData
@@ -80,7 +77,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, Observ
         if (timestampNow < timestampExpired) {
           return [...files]
         } else {
-          this._globalState.update(EXT_WSSTATE_CACHE, undefined)
+          this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
         }
       }
     }
@@ -111,7 +108,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, Observ
       this.render()
     } else {
       vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
-      this._globalState.update(EXT_WSSTATE_CACHE, undefined)
+      this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
       store.dispatch(fetch())
     }
   }
@@ -130,14 +127,14 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, Observ
 
       this._view.webview.html = getHtml<WorkspaceState>(
         {
-          extensionPath: this._extensionUri,
+          extensionPath: this._ctx.extensionUri,
           template: defaultTemplate,
           htmlData,
           themeData: this._themeProcessor.getThemeData() ?? null,
         },
         crypto.randomBytes(16).toString('hex')
       )
-    } else if (this._extMode !== vscode.ExtensionMode.Test) {
+    } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Test) {
       vscode.window.showErrorMessage(t('errors.viewNotFound'))
     }
   }
@@ -151,7 +148,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, Observ
   }
 
   public updateSort() {
-    const sort = this._globalState.get<SortIds>(EXT_SORT) ?? 'ascending'
+    const sort = this._ctx.globalState.get<SortIds>(EXT_SORT) ?? 'ascending'
     store.dispatch(setPersistedState({ sort }))
   }
 
@@ -182,7 +179,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, Observ
   private setupWebview(webviewView: vscode.WebviewView) {
     webviewView.webview.options = {
       enableScripts: true,
-      localResourceRoots: [this._extensionUri],
+      localResourceRoots: [this._ctx.extensionUri],
     }
 
     webviewView.webview.onDidReceiveMessage((message: PostMessage<Payload, Actions>) => {
@@ -241,13 +238,16 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, Observ
           break
 
         case Actions.ERROR_MSG:
-          if (this._extMode !== vscode.ExtensionMode.Production && payload !== undefined) {
+          if (
+            this._ctx.extensionMode !== vscode.ExtensionMode.Production &&
+            payload !== undefined
+          ) {
             vscode.window.showErrorMessage(payload)
           }
           break
 
         default:
-          if (this._extMode !== vscode.ExtensionMode.Production) {
+          if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
             vscode.window.showErrorMessage(`Action not found: "${action}"`)
           }
           break
@@ -268,7 +268,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, Observ
         executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, true)
 
         if (files) {
-          this._globalState.update(EXT_WSSTATE_CACHE, {
+          this._ctx.globalState.update(EXT_WSSTATE_CACHE, {
             files,
             timestamp: getTimestamp(),
           })

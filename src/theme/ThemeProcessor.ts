@@ -17,11 +17,7 @@ export class ThemeProcessor implements Observerable {
   private _observers: Set<Observer>
   private readonly _workbenchConfigKey = 'workbench'
 
-  constructor(
-    private readonly _extMode: vscode.ExtensionMode,
-    private readonly _globalState: vscode.Memento,
-    private readonly _subscriptions: vscode.Disposable[]
-  ) {
+  constructor(private readonly _ctx: vscode.ExtensionContext) {
     this._observers = new Set()
     this.init()
     this.watchConfig()
@@ -33,7 +29,7 @@ export class ThemeProcessor implements Observerable {
 
   private init() {
     let shouldProcessData = true
-    const cachedData = this._globalState.get<ThemeCacheData>(this._cacheKey)
+    const cachedData = this._ctx.globalState.get<ThemeCacheData>(this._cacheKey)
 
     if (cachedData) {
       const { themeData, timestamp } = cachedData
@@ -101,14 +97,14 @@ export class ThemeProcessor implements Observerable {
         this.setThemeData(themeCacheData)
         this.notifyAll()
       } catch {
-        if (this._extMode !== vscode.ExtensionMode.Production) {
+        if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
           vscode.window.showErrorMessage('Unable to process theme json')
         }
 
         this.notifyAll()
       }
     } else {
-      if (this._extMode !== vscode.ExtensionMode.Production) {
+      if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
         vscode.window.showErrorMessage('Active theme not found')
       }
 
@@ -127,21 +123,21 @@ export class ThemeProcessor implements Observerable {
       }
     )
 
-    this._subscriptions.push(configChange)
+    this._ctx.subscriptions.push(configChange)
   }
 
   public deleteThemeData() {
-    this._globalState.update(this._cacheKey, undefined)
+    this._ctx.globalState.update(this._cacheKey, undefined)
   }
 
   public getThemeData(): ThemeData | null {
-    const cachedData = this._globalState.get<ThemeCacheData>(this._cacheKey)
+    const cachedData = this._ctx.globalState.get<ThemeCacheData>(this._cacheKey)
 
     return cachedData?.themeData ?? null
   }
 
   public setThemeData(data: ThemeCacheData) {
-    this._globalState.update(this._cacheKey, data)
+    this._ctx.globalState.update(this._cacheKey, data)
   }
 
   public subscribe(observer: Observer) {

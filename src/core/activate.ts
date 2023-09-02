@@ -7,17 +7,10 @@ import { configOptions } from '../webviews/configOptions'
 import { registerWebviews } from '../webviews/registerWebviews'
 
 export const setupExt = (context: vscode.ExtensionContext, lang: string) => {
-  const { extensionMode, extensionPath, extensionUri, globalState, subscriptions } = context
+  loadTranslations(lang, context.extensionPath)
 
-  loadTranslations(lang, extensionPath)
-
-  const themeProcessor = new ThemeProcessor(extensionMode, globalState, subscriptions)
-  const workspaceViewProvider = new WorkspaceViewProvider(
-    extensionUri,
-    globalState,
-    extensionMode,
-    themeProcessor
-  )
+  const themeProcessor = new ThemeProcessor(context)
+  const workspaceViewProvider = new WorkspaceViewProvider(context, themeProcessor)
 
   registerCommands(context, workspaceViewProvider)
   registerWebviews(context, workspaceViewProvider, configOptions)
