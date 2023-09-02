@@ -23,6 +23,7 @@ import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
 import { ThemeProcessor } from '../../theme/ThemeProcessor'
 import { GlobalState } from '../../types/ext'
+import { Observer } from '../../types/observerable'
 import { getTimestamp } from '../../utils/datetime/getTimestamp'
 import { HtmlData, PostMessage } from '../webviews.interface'
 import {
@@ -47,7 +48,7 @@ const {
   toggleFolderStateBulk,
 } = workspaceSlice.actions
 
-export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
+export class WorkspaceViewProvider implements vscode.WebviewViewProvider, Observer {
   public static readonly viewType = EXT_WEBVIEW_WS
   private _view?: vscode.WebviewView
 
@@ -56,7 +57,9 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     private readonly _globalState: GlobalState,
     private readonly _extMode: vscode.ExtensionMode,
     private readonly _themeProcessor: ThemeProcessor
-  ) {}
+  ) {
+    this._themeProcessor.subscribe(this)
+  }
 
   public focusInput() {
     if (this._view?.visible) {
@@ -275,5 +278,9 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
       default:
         break
     }
+  }
+
+  public notify() {
+    this.render()
   }
 }

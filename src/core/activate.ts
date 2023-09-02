@@ -12,8 +12,6 @@ export const setupExt = (context: vscode.ExtensionContext, lang: string) => {
   loadTranslations(lang, extensionPath)
 
   const themeProcessor = new ThemeProcessor(extensionMode, globalState, subscriptions)
-  themeProcessor.init()
-
   const workspaceViewProvider = new WorkspaceViewProvider(
     extensionUri,
     globalState,
