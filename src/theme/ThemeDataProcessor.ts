@@ -52,6 +52,12 @@ export class ThemeDataProcessor implements Observerable {
     }
   }
 
+  private notifyAll() {
+    this._observers.forEach((observer) => {
+      observer.notify()
+    })
+  }
+
   private async processThemeData() {
     const activeFileiconTheme = vscode.workspace.getConfiguration('workbench').iconTheme
     const activeExtThemeData = await getActiveExtThemeData(activeFileiconTheme)
@@ -136,11 +142,5 @@ export class ThemeDataProcessor implements Observerable {
 
   public unsubscribe(observer: Observer) {
     this._observers.delete(observer)
-  }
-
-  private notifyAll() {
-    this._observers.forEach((observer) => {
-      observer.notify()
-    })
   }
 }

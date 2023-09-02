@@ -11,25 +11,29 @@ import { getMockUri } from '../../mocks/mockExtensionUri'
 import { mockThemeDataProvider } from '../../mocks/mockThemeDataProvider'
 
 // TODO - Add test for explorer compact folders
-suite.only('Webviews > registerWebviews()', () => {
+suite('Webviews > registerWebviews()', () => {
   let configStub: sinon.SinonStub
   let mockContext: vscode.ExtensionContext
   let refreshSpy: sinon.SinonSpy
   let regWebviewStub: sinon.SinonStub
+  let tdpSpy: sinon.SinonSpy
   let ws: WorkspaceViewProvider
 
   setup(() => {
+    tdpSpy = sinon.spy(mockThemeDataProvider, 'subscribe')
+    ws = new WorkspaceViewProvider(mockContext, mockThemeDataProvider)
+
     configStub = sinon.stub(vscode.workspace, 'onDidChangeConfiguration')
     mockContext = getMockContext()
     refreshSpy = sinon.spy(ws, 'refresh')
     regWebviewStub = sinon.stub(vscode.window, 'registerWebviewViewProvider')
-    ws = new WorkspaceViewProvider(mockContext, mockThemeDataProvider)
   })
 
   teardown(() => {
     configStub.restore()
     refreshSpy.restore()
     regWebviewStub.restore()
+    tdpSpy.restore()
   })
 
   const callChangeConfigCallaback = (affectsConfiguration: (section: string) => boolean) => {
@@ -62,6 +66,7 @@ suite.only('Webviews > registerWebviews()', () => {
     sinon.assert.callCount(configStub, 1)
     sinon.assert.callCount(createStub, 1)
     sinon.assert.callCount(regWebviewStub, 1)
+    sinon.assert.callCount(tdpSpy, 1)
 
     createStub.restore()
   })

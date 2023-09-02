@@ -7,7 +7,7 @@ interface GetFile {
   folder?: string
 }
 
-suite.only('Webviews > Workspace > Helpers > getLangIcon():', () => {
+suite('Webviews > Workspace > Helpers > getLangIcon():', () => {
   const FILE_NAME = `flutter-app-google`
   const PATH = 'flutter'
   const OS_HOME = '/home/user'

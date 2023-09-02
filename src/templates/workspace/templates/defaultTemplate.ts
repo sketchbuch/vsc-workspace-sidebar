@@ -21,11 +21,10 @@ export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceStat
     cssFolderUri,
     nonce,
     scriptFolderUri,
-    themeData,
+    // themeData,
     title,
     uiFolderUri,
   } = templateVars
-  console.log('### defaultTemplate() themeData', themeData)
   const { state: view } = state
   const renderVars = getRenderVars(templateVars)
 

@@ -17,10 +17,6 @@ export const treeIconFile = (): string => {
 }
 
 export const treeCustomIconFile = (icon: string): string => {
-  // console.log('### icon', icon)
-  // .vs .show-file-icons .typescript-lang-file-icon.file-icon::before,
-  // .vs .show-file-icons .typescriptreact-lang-file-icon.file-icon::before
-
   return `
       <div class="list_branch-icon file-icon ${icon}-lang-file-icon"></div>
     `
