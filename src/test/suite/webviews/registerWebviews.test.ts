@@ -8,9 +8,10 @@ import { registerWebviews } from '../../../webviews/registerWebviews'
 import { WorkspaceViewProvider } from '../../../webviews/Workspace/WorkspaceViewProvider'
 import { getMockContext } from '../../mocks/mockContext'
 import { getMockUri } from '../../mocks/mockExtensionUri'
+import { mockThemeDataProvider } from '../../mocks/mockThemeDataProvider'
 
 // TODO - Add test for explorer compact folders
-suite('Webviews > registerWebviews()', () => {
+suite.only('Webviews > registerWebviews()', () => {
   let configStub: sinon.SinonStub
   let mockContext: vscode.ExtensionContext
   let refreshSpy: sinon.SinonSpy
@@ -20,13 +21,9 @@ suite('Webviews > registerWebviews()', () => {
   setup(() => {
     configStub = sinon.stub(vscode.workspace, 'onDidChangeConfiguration')
     mockContext = getMockContext()
-    regWebviewStub = sinon.stub(vscode.window, 'registerWebviewViewProvider')
-    ws = new WorkspaceViewProvider(
-      mockContext.extensionUri,
-      mockContext.globalState,
-      mockContext.extensionMode
-    )
     refreshSpy = sinon.spy(ws, 'refresh')
+    regWebviewStub = sinon.stub(vscode.window, 'registerWebviewViewProvider')
+    ws = new WorkspaceViewProvider(mockContext, mockThemeDataProvider)
   })
 
   teardown(() => {

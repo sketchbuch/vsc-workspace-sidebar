@@ -14,6 +14,7 @@ import {
 } from '../../../constants/commands'
 import { WorkspaceViewProvider } from '../../../webviews/Workspace/WorkspaceViewProvider'
 import { getMockContext } from '../../mocks/mockContext'
+import { mockThemeDataProvider } from '../../mocks/mockThemeDataProvider'
 
 suite('Commands > registerCommands()', () => {
   const FILE = '/a/file'
@@ -26,11 +27,7 @@ suite('Commands > registerCommands()', () => {
     execCmdStub = sinon.stub(vscode.commands, 'executeCommand')
     mockContext = getMockContext()
     regCmdStub = sinon.stub(vscode.commands, 'registerCommand')
-    ws = new WorkspaceViewProvider(
-      mockContext.extensionUri,
-      mockContext.globalState,
-      mockContext.extensionMode
-    )
+    ws = new WorkspaceViewProvider(mockContext, mockThemeDataProvider)
   })
 
   teardown(() => {

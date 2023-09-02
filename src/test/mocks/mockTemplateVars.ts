@@ -2,6 +2,7 @@ import { Uri } from 'vscode'
 import { TemplateVars } from '../../webviews/webviews.interface'
 import { getMockUri } from './mockExtensionUri'
 import { getMockRenderVars } from './mockRenderVars'
+import { mockThemeData } from './mockThemeData'
 
 const { imgDarkFolderUri, imgLightFolderUri } = getMockRenderVars()
 
@@ -35,6 +36,7 @@ export const getMockTemplateVars = (
           authority: 'localhost',
           path: '/resources/js',
         }),
+    themeData: mockThemeData,
     title: 'Workspaces',
     uiFolderUri: isEmpty
       ? ({} as Uri)

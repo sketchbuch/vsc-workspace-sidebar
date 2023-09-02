@@ -5,6 +5,7 @@ import { store } from '../../../../store/redux'
 import * as templates from '../../../../templates/getHtml'
 import { WorkspaceViewProvider } from '../../../../webviews/Workspace/WorkspaceViewProvider'
 import { getMockContext } from '../../../mocks/mockContext'
+import { mockThemeDataProvider } from '../../../mocks/mockThemeDataProvider'
 import { getMockWebviewView } from '../../../mocks/mockWebview'
 
 // TODO - Try and spy on the action creators.
@@ -20,11 +21,7 @@ suite('Webviews > Workspace > WorkspaceViewProvider():', () => {
     dispatchSpy = sinon.spy(store, 'dispatch')
     getHtmlSpy = sinon.spy(templates, 'getHtml')
     stateSpy = sinon.stub(mockContext.globalState, 'get')
-    ws = new WorkspaceViewProvider(
-      mockContext.extensionUri,
-      mockContext.globalState,
-      mockContext.extensionMode
-    )
+    ws = new WorkspaceViewProvider(mockContext, mockThemeDataProvider)
   })
 
   teardown(() => {

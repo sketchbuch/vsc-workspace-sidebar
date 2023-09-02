@@ -2,12 +2,13 @@ import { expect } from 'chai'
 import mockFs from 'mock-fs'
 import * as sinon from 'sinon'
 import { getHtml } from '../../../templates/getHtml'
-import { GetHtml, GetHtmlTemplateFunc } from '../../../webviews/webviews.interface'
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { GetHtml, GetHtmlTemplateFunc } from '../../../webviews/webviews.interface'
 import { mockExtensionUri } from '../../mocks/mockExtensionUri'
 import { mockFsStructure } from '../../mocks/mockFsStructure'
 import { getMockState } from '../../mocks/mockState'
 import { getMockTemplateVars } from '../../mocks/mockTemplateVars'
+import { mockThemeData } from '../../mocks/mockThemeData'
 import { mockWebView } from '../../mocks/mockWebview'
 
 suite('Templates > getHtml()', () => {
@@ -18,12 +19,13 @@ suite('Templates > getHtml()', () => {
   const getGetHtml = (template: GetHtmlTemplateFunc<WorkspaceState>): GetHtml<WorkspaceState> => {
     return {
       extensionPath: mockExtensionUri,
-      template,
       htmlData: {
-        data: mockState,
+        state: mockState,
         title: 'Workspaces',
         webview: mockWebView,
       },
+      template,
+      themeData: mockThemeData,
     }
   }
 
