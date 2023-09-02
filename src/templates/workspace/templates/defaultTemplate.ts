@@ -7,6 +7,7 @@ import {
 } from '../../../constants/fs'
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { TemplateVars } from '../../../webviews/webviews.interface'
+import { fileIconCss } from '../../common/snippets/fileIconCss'
 import { metaTags } from '../../common/snippets/metaTags'
 import { getRenderVars } from '../../helpers/getRenderVars'
 import { errorView } from '../views/errorView'
@@ -21,7 +22,7 @@ export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceStat
     cssFolderUri,
     nonce,
     scriptFolderUri,
-    // themeData,
+    themeData,
     title,
     uiFolderUri,
   } = templateVars
@@ -50,6 +51,7 @@ export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceStat
         <title>${titleAttr}</title>
         <link href="${cssFolderUri}/${FS_WEBVIEW_WORKSPACE_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
         <link href="${codiconsFolderUri}/${FS_WEBVIEW_CODICONS_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
+        ${fileIconCss(nonce, themeData)}
       </head>
 
       <body>

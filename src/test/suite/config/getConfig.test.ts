@@ -13,8 +13,6 @@ import {
   getShowTreeConfig,
 } from '../../../config/getConfig'
 import {
-  ConfigActions,
-  ConfigShowPaths,
   CONFIG_CLEAN_LABELS,
   CONFIG_CONDENSE_FILETREE,
   CONFIG_DEPTH,
@@ -22,6 +20,8 @@ import {
   CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_HIERARCHY,
   CONFIG_SHOW_ROOT_FOLDER,
+  ConfigActions,
+  ConfigShowPaths,
 } from '../../../constants/config'
 
 // Reenable once stub is working
@@ -30,12 +30,8 @@ suite.skip('Config > getConfig:', () => {
 
   setup(() => {
     stub = sinon.stub(workspace, 'getConfiguration').callsFake(() => {
-      console.log('### STUB')
-
       return {
         get: (section: string) => {
-          console.log('### STUB 2')
-
           return undefined
         },
       } as WorkspaceConfiguration
