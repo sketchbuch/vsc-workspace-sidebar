@@ -1,8 +1,21 @@
 // See: https://github.com/microsoft/vscode/blob/main/src/vs/workbench/services/themes/browser/fileIconThemeData.ts
 // Interfaces are not exported
 
+export interface ThemeProcessorObserver {
+  notify(): void
+}
+
+export interface ObserverableThemeProcessor {
+  subscribe(observer: ThemeProcessorObserver): void
+  unsubscribe(observer: ThemeProcessorObserver): void
+
+  // Observerable should have this private method
+  // notifyAll(): void
+}
+
 export interface ThemeCacheData {
   themeData: ThemeData
+  themeId: string
   timestamp: number
 }
 

@@ -1,7 +1,7 @@
 import * as vscode from 'vscode'
 import { getVscodeLang, loadTranslations } from 'vscode-ext-localisation'
 import { registerCommands } from '../commands/registerCommands'
-import { ThemeDataProcessor } from '../theme/ThemeDataProcessor'
+import { ThemeProcessor } from '../theme/ThemeProcessor'
 import { WorkspaceViewProvider } from '../webviews/Workspace/WorkspaceViewProvider'
 import { configOptions } from '../webviews/configOptions'
 import { registerWebviews } from '../webviews/registerWebviews'
@@ -9,7 +9,7 @@ import { registerWebviews } from '../webviews/registerWebviews'
 export const setupExt = (context: vscode.ExtensionContext, lang: string) => {
   loadTranslations(lang, context.extensionPath)
 
-  const themeProcessor = new ThemeDataProcessor(context)
+  const themeProcessor = new ThemeProcessor(context)
   const workspaceViewProvider = new WorkspaceViewProvider(context, themeProcessor)
 
   registerCommands(context, workspaceViewProvider)

@@ -1,4 +1,4 @@
-import { ThemeData } from '../../theme/ThemeDataProcessor.interface'
+import { ThemeData } from '../../theme/ThemeProcessor.interface'
 
 export const mockThemeData: ThemeData = {
   fileExtensions: {},

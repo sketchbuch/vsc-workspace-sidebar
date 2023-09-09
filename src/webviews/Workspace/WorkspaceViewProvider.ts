@@ -21,8 +21,8 @@ import {
 import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
-import { ThemeDataProcessor } from '../../theme/ThemeDataProcessor'
-import { Observer } from '../../types/observerable'
+import { ThemeProcessor } from '../../theme/ThemeProcessor'
+import { ThemeProcessorObserver } from '../../theme/ThemeProcessor.interface'
 import { getTimestamp } from '../../utils/datetime/getTimestamp'
 import { HtmlData, PostMessage } from '../webviews.interface'
 import {
@@ -47,13 +47,13 @@ const {
   toggleFolderStateBulk,
 } = workspaceSlice.actions
 
-export class WorkspaceViewProvider implements vscode.WebviewViewProvider, Observer {
+export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeProcessorObserver {
   public static readonly viewType = EXT_WEBVIEW_WS
   private _view?: vscode.WebviewView
 
   constructor(
     private readonly _ctx: vscode.ExtensionContext,
-    private readonly _themeProcessor: ThemeDataProcessor
+    private readonly _themeProcessor: ThemeProcessor
   ) {
     this._themeProcessor.subscribe(this)
   }
@@ -282,6 +282,9 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, Observ
     }
   }
 
+  /**
+   * Inform this observer that the file theme has changed.
+   */
   public notify() {
     this.render()
   }

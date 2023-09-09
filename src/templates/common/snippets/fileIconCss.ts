@@ -1,8 +1,4 @@
-import {
-  ThemeData,
-  ThemeJsonIconDef,
-  ThemeJsonMap,
-} from '../../../theme/ThemeDataProcessor.interface'
+import { ThemeData, ThemeJsonIconDef, ThemeJsonMap } from '../../../theme/ThemeProcessor.interface'
 
 interface CssProp {
   key: string

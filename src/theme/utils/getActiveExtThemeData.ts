@@ -11,14 +11,12 @@ interface ThemeInfo {
   path: string
 }
 
-interface ExtThemeDataItem {
+type ExtThemeData = null | {
   extId: string
   extPath: string
   themeId: string
   themePath: string
 }
-
-type ExtThemeData = null | ExtThemeDataItem
 
 export const getDefaultExtThemeData = (activeFileiconTheme: string): ExtThemeData => {
   let themeData: ExtThemeData = null

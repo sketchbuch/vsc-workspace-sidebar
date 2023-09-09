@@ -1,26 +1,36 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as vscode from 'vscode'
-import { Observer, Observerable } from '../types/observerable'
 import {
+  ObserverableThemeProcessor,
   ThemeCacheData,
   ThemeData,
   ThemeJson,
   ThemeJsonIconDef,
   ThemeJsonIconDefs,
-} from './ThemeDataProcessor.interface'
+  ThemeProcessorObserver,
+} from './ThemeProcessor.interface'
 import { getActiveExtThemeData } from './utils/getActiveExtThemeData'
 import { isLightTheme } from './utils/isLightTheme'
 
-export class ThemeDataProcessor implements Observerable {
+export class ThemeProcessor implements ObserverableThemeProcessor {
+  private _observers: Set<ThemeProcessorObserver>
   private readonly _cacheDuration = 604800 // 1 Week
   private readonly _cacheKey = `themeProcessor-cache`
-  private _observers: Set<Observer>
+  private readonly _defaultTheme = 'vs-seti'
 
   constructor(private readonly _ctx: vscode.ExtensionContext) {
     this._observers = new Set()
-    this.init()
     this.watchConfig()
+    this.init()
+  }
+
+  private getFileiconTheme = (): string => {
+    return vscode.workspace.getConfiguration('workbench').iconTheme ?? this._defaultTheme
+  }
+
+  private getFullThemeData(): ThemeCacheData | null {
+    return this._ctx.globalState.get<ThemeCacheData>(this._cacheKey) ?? null
   }
 
   private getTimestamp(): number {
@@ -29,25 +39,27 @@ export class ThemeDataProcessor implements Observerable {
 
   private init() {
     let cacheMiss = true
-    const cachedData = this._ctx.globalState.get<ThemeCacheData>(this._cacheKey)
+    const activeFileiconTheme = this.getFileiconTheme()
+    const cachedData = this.getFullThemeData()
 
     if (cachedData) {
-      const { themeData, timestamp } = cachedData
+      const { themeData, themeId, timestamp } = cachedData
 
-      if (themeData && timestamp) {
+      if (themeData && timestamp && themeId && themeId === activeFileiconTheme) {
         const timestampNow = this.getTimestamp()
         const timestampExpired = timestamp + this._cacheDuration
 
         if (timestampNow < timestampExpired) {
           cacheMiss = false
-        } else {
-          this.deleteThemeData()
         }
       }
     }
 
     if (cacheMiss) {
+      this.deleteThemeData()
       this.processThemeData()
+    } else {
+      this.notifyAll()
     }
   }
 
@@ -58,7 +70,7 @@ export class ThemeDataProcessor implements Observerable {
   }
 
   private async processThemeData() {
-    const activeFileiconTheme = vscode.workspace.getConfiguration('workbench').iconTheme
+    const activeFileiconTheme = this.getFileiconTheme()
     const activeExtThemeData = await getActiveExtThemeData(activeFileiconTheme)
 
     if (activeExtThemeData !== null) {
@@ -91,17 +103,24 @@ export class ThemeDataProcessor implements Observerable {
             fileNames: isLight ? jsonData.light.fileNames : jsonData.fileNames,
             languageIds: isLight ? jsonData.light.languageIds : jsonData.languageIds,
           },
+          themeId: activeFileiconTheme,
           timestamp: this.getTimestamp(),
         }
 
         this.setThemeData(themeCacheData)
       } catch {
+        this.deleteThemeData()
+
         if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
           vscode.window.showErrorMessage('Unable to process theme json')
         }
       }
-    } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
-      vscode.window.showErrorMessage('Active theme not found')
+    } else {
+      this.deleteThemeData()
+
+      if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
+        vscode.window.showErrorMessage(`Active theme not found: "${activeFileiconTheme}"`)
+      }
     }
 
     this.notifyAll()
@@ -113,6 +132,7 @@ export class ThemeDataProcessor implements Observerable {
         const { affectsConfiguration } = event
 
         if (affectsConfiguration('workbench.iconTheme')) {
+          this.deleteThemeData()
           this.processThemeData()
         }
       }
@@ -121,25 +141,44 @@ export class ThemeDataProcessor implements Observerable {
     this._ctx.subscriptions.push(configChange)
   }
 
+  /**
+   * Delete cached theme data.
+   */
   public deleteThemeData() {
     this._ctx.globalState.update(this._cacheKey, undefined)
   }
 
+  /**
+   * Get cached theme data.
+   */
   public getThemeData(): ThemeData | null {
-    const cachedData = this._ctx.globalState.get<ThemeCacheData>(this._cacheKey)
-
-    return cachedData?.themeData ?? null
+    return this.getFullThemeData()?.themeData ?? null
   }
 
+  /**
+   * Get cached theme data.
+   *
+   * @param {ThemeCacheData} data The subscriber
+   */
   public setThemeData(data: ThemeCacheData) {
     this._ctx.globalState.update(this._cacheKey, data)
   }
 
-  public subscribe(observer: Observer) {
+  /**
+   * Subscribe to file theme changes.
+   *
+   * @param {ThemeProcessorObserver} observer The subscriber
+   */
+  public subscribe(observer: ThemeProcessorObserver) {
     this._observers.add(observer)
   }
 
-  public unsubscribe(observer: Observer) {
+  /**
+   * Unsubscribe to file theme changes.
+   *
+   * @param {ThemeProcessorObserver} observer The unsubscriber
+   */
+  public unsubscribe(observer: ThemeProcessorObserver) {
     this._observers.delete(observer)
   }
 }
