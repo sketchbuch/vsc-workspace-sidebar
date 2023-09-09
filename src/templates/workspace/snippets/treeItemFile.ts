@@ -43,8 +43,6 @@ export const treeItemFile = (
   const itemButtons = getWorkspaceButtons({ buttons, renderVars })
   const langIcon = getLangIcon(file.file)
 
-  console.log('### langIcon', langIcon)
-
   return `
     <li class="${classes}" data-file="${file.file}" data-depth="${depth}">
       ${isSelected ? listItemIcon(renderVars) : ''}
