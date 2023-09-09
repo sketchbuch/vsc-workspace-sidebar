@@ -4,7 +4,7 @@
   "displayName": "Workspace Sidebar",
   "version": "1.5.1",
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "bugs": {
     "url": "https://github.com/sketchbuch/vsc-workspace-sidebar/issues"
