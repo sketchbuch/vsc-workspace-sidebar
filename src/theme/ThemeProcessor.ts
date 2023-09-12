@@ -163,9 +163,9 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
   }
 
   /**
-   * Get cached theme data.
+   * Set cached theme data.
    *
-   * @param {ThemeCacheData} data The subscriber
+   * @param {ThemeCacheData} data The data to write to the cache
    */
   public setThemeData(data: ThemeCacheData) {
     this._ctx.globalState.update(this._cacheKey, data)
