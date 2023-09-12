@@ -75,6 +75,7 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
 
     if (activeExtThemeData !== null) {
       const themePath = path.join(activeExtThemeData.extPath, activeExtThemeData.themePath)
+      console.log('### themePath', themePath)
 
       try {
         const isLight = isLightTheme(vscode.window.activeColorTheme)
@@ -96,12 +97,24 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
           newIconDefinitions[iconKey] = newDef
         })
 
+        const fontDataWithFullPaths = [...jsonData.fonts].map((font) => {
+          const { dir } = path.parse(themePath)
+          const newPath = path.join(dir, font.src[0].path)
+          console.log('### newPath', newPath)
+
+          return {
+            ...font,
+            src: [{ ...font.src[0], path: newPath }],
+          }
+        })
+
         const themeCacheData: ThemeCacheData = {
           themeData: {
             iconDefinitions: newIconDefinitions,
             fileExtensions: isLight ? jsonData.light.fileExtensions : jsonData.fileExtensions,
             fileNames: isLight ? jsonData.light.fileNames : jsonData.fileNames,
             languageIds: isLight ? jsonData.light.languageIds : jsonData.languageIds,
+            fonts: fontDataWithFullPaths,
           },
           themeId: activeFileiconTheme,
           timestamp: this.getTimestamp(),
@@ -109,18 +122,12 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
 
         this.setThemeData(themeCacheData)
       } catch {
-        this.deleteThemeData()
-
         if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
           vscode.window.showErrorMessage('Unable to process theme json')
         }
       }
-    } else {
-      this.deleteThemeData()
-
-      if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
-        vscode.window.showErrorMessage(`Active theme not found: "${activeFileiconTheme}"`)
-      }
+    } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
+      vscode.window.showErrorMessage(`Active theme not found: "${activeFileiconTheme}"`)
     }
 
     this.notifyAll()

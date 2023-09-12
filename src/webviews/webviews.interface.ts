@@ -11,6 +11,7 @@ export interface RenderVars {
   clickAction: ConfigActions
   condenseFileTree: boolean
   depth: number
+  fileIconKeys: string[]
   imgDarkFolderUri: vscode.Uri
   imgLightFolderUri: vscode.Uri
   searchMinimum: number
@@ -31,7 +32,11 @@ export interface TemplateVars {
   uiFolderUri: vscode.Uri
 }
 
-export type GetHtmlTemplateFunc<TState> = (templateVars: TemplateVars, state: TState) => string
+export type GetHtmlTemplateFunc<TState> = (
+  templateVars: TemplateVars,
+  state: TState,
+  webview: vscode.Webview
+) => string
 
 export interface GetHtml<TState> {
   extensionPath: vscode.Uri

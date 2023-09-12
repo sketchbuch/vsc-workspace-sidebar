@@ -18,6 +18,6 @@ export const treeIconFile = (): string => {
 
 export const treeCustomIconFile = (icon: string): string => {
   return `
-      <div class="list_branch-icon file-icon ${icon}-file-icon"></div>
+      <div class="list_branch-icon file-icon file-icon-lang-${icon}"></div>
     `
 }

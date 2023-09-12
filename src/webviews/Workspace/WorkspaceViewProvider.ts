@@ -137,6 +137,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
 
       // Suppress error when running in extension development host
     } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Test) {
+      console.log('### error')
       vscode.window.showErrorMessage(t('errors.viewNotFound'))
     }
   }
@@ -181,7 +182,10 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
   private setupWebview(webviewView: vscode.WebviewView) {
     webviewView.webview.options = {
       enableScripts: true,
-      localResourceRoots: [this._ctx.extensionUri],
+      localResourceRoots: [
+        this._ctx.extensionUri,
+        vscode.Uri.parse('file:///usr/share/code/resources/app/extensions/theme-seti/icons'),
+      ],
     }
 
     webviewView.webview.onDidReceiveMessage((message: PostMessage<Payload, Actions>) => {
@@ -286,6 +290,9 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
    * Inform this observer that the file theme has changed.
    */
   public notify() {
-    this.render()
+    // Only rerender if resolveWebviewView() has been called
+    if (this._view !== undefined) {
+      this.render()
+    }
   }
 }

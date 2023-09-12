@@ -37,17 +37,18 @@ export const getHtml = <T>(
 
   return template(
     {
+      codiconsFolderUri,
       cspSource: webview.cspSource,
       cssFolderUri,
       imgDarkFolderUri,
       imgLightFolderUri,
-      codiconsFolderUri,
       nonce,
       scriptFolderUri,
+      themeData,
       title,
       uiFolderUri,
-      themeData,
     },
-    state
+    state,
+    htmlData.webview
   )
 }

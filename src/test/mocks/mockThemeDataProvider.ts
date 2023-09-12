@@ -1,11 +1,10 @@
-import { ThemeDataProcessor } from '../../theme/ThemeProcessor'
-import { ThemeCacheData } from '../../theme/ThemeProcessor.interface'
-import { Observer } from '../../types/observerable'
+import { ThemeProcessor } from '../../theme/ThemeProcessor'
+import { ThemeCacheData, ThemeProcessorObserver } from '../../theme/ThemeProcessor.interface'
 
 export const mockThemeDataProvider = {
   deleteThemeData: () => {},
   getThemeData: () => null,
   setThemeData: (data: ThemeCacheData) => {},
-  subscribe: (observer: Observer) => {},
-  unsubscribe: (observer: Observer) => {},
-} as ThemeDataProcessor
+  subscribe: (observer: ThemeProcessorObserver) => {},
+  unsubscribe: (observer: ThemeProcessorObserver) => {},
+} as ThemeProcessor

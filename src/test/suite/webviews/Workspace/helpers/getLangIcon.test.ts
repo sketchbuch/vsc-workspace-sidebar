@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { FS_WS_FILETYPE } from '../../../../../constants/fs'
-import { getLangIcon } from '../../../../../webviews/Workspace/helpers/getLangIcon'
+import { getLangIconNew } from '../../../../../webviews/Workspace/helpers/getLangIcon'
 
 interface GetFile {
   fileName?: string
@@ -8,7 +8,45 @@ interface GetFile {
 }
 
 suite('Webviews > Workspace > Helpers > getLangIcon():', () => {
-  const FILE_NAME = `flutter-app-google`
+  const TARGET = 'py'
+  const FILE_NAME = `${TARGET}-app-google`
+  const PATH = TARGET
+  const OS_HOME = '/home/user'
+  const CONFIG_FOLDER = `${OS_HOME}/dev`
+  /* const fileIconKeys = [
+    '3dm',
+    'flutter',
+    'fsharp',
+    'go',
+    'godot',
+    'gql',
+    'javascript',
+    'php',
+    'python',
+    'py',
+    'react',
+    'typescript',
+  ] */
+
+  const getFile = ({ fileName = FILE_NAME, folder = PATH }: GetFile): string => {
+    return `${CONFIG_FOLDER}/${folder}/${fileName}.${FS_WS_FILETYPE}`
+  }
+
+  test('Returns empty string if fileIconKeys is empty', () => {
+    const file = getFile({ fileName: FILE_NAME, folder: PATH })
+    const result = getLangIconNew(file, [])
+    expect(result).to.eql('')
+  })
+
+  test(`Returns ${TARGET} if a language match is not found`, () => {
+    const file = getFile({ fileName: FILE_NAME, folder: PATH })
+    const result = getLangIconNew(file, [TARGET])
+    expect(result).to.eql(TARGET)
+  })
+})
+
+/* suite.skip('Webviews > Workspace > Helpers > getLangIcon():', () => {
+const FILE_NAME = `flutter-app-google`
   const PATH = 'flutter'
   const OS_HOME = '/home/user'
   const CONFIG_FOLDER = `${OS_HOME}/dev`
@@ -31,4 +69,4 @@ suite('Webviews > Workspace > Helpers > getLangIcon():', () => {
     const result = getLangIcon(getFile({ fileName: 'react-app' }))
     expect(result).to.eql(PATH)
   })
-})
+}) */

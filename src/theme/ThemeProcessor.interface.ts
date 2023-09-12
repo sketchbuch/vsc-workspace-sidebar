@@ -19,7 +19,16 @@ export interface ThemeCacheData {
   timestamp: number
 }
 
+interface ThemeFontDefinition {
+  id: string
+  weight: string
+  style: string
+  size: string
+  src: { path: string; format: string }[]
+}
+
 export interface ThemeData {
+  fonts: ThemeFontDefinition[]
   fileExtensions?: ThemeJsonMap
   fileNames?: ThemeJsonMap
   iconDefinitions: ThemeJsonIconDefs
@@ -28,6 +37,7 @@ export interface ThemeData {
 
 // Just enough needed to get the data we want
 export interface ThemeJson {
+  fonts: ThemeFontDefinition[]
   fileExtensions?: ThemeJsonMap
   fileNames?: ThemeJsonMap
   iconDefinitions: ThemeJsonIconDefs

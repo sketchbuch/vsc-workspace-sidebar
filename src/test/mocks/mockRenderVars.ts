@@ -19,6 +19,7 @@ export const getMockRenderVars = (renderVars: Partial<RenderVars> = {}): RenderV
     clickAction: ConfigActions.CURRENT_WINDOW,
     condenseFileTree: CONFIG_CONDENSE_FILETREE,
     depth: CONFIG_DEPTH,
+    fileIconKeys: [],
     imgDarkFolderUri: { ...baseUri, path: '/resources/imgages/dark' } as Uri,
     imgLightFolderUri: { ...baseUri, path: '/resources/imgages/light' } as Uri,
     searchMinimum: CONFIG_SEARCH_MINIMUM,
