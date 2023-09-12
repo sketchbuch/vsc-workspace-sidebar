@@ -1,5 +1,5 @@
 import { RenderVars } from '../../../webviews/webviews.interface'
-import { getLangIcon } from '../../../webviews/Workspace/helpers/getLangIcon'
+import { getLangIconNew } from '../../../webviews/Workspace/helpers/getLangIcon'
 import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { getFileTooltip } from '../../helpers/getFileTooltip'
 import { getLabel } from '../../helpers/getLabel'
@@ -41,9 +41,12 @@ export const treeItemFile = (
   }
 
   const itemButtons = getWorkspaceButtons({ buttons, renderVars })
-  const langIcon = getLangIcon(file.file, renderVars.fileIconKeys)
+  const langIcon = getLangIconNew(file.file, renderVars.fileIconKeys)
+
   //console.log('### fileIconKeys', renderVars.fileIconKeys.length)
-  // console.log('### langIcon', langIcon)
+  if (langIcon) {
+    console.log('### langIcon', langIcon)
+  }
 
   return `
     <li class="${classes}" data-file="${file.file}" data-depth="${depth}">

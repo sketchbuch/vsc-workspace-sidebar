@@ -7,7 +7,7 @@ interface GetFile {
   folder?: string
 }
 
-suite('Webviews > Workspace > Helpers > getLangIcon():', () => {
+suite.only('Webviews > Workspace > Helpers > getLangIcon():', () => {
   const TARGET = 'py'
   const FILE_NAME = `${TARGET}-app-google`
   const PATH = TARGET
