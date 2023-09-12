@@ -50,3 +50,9 @@
 /* .list__branch-list-item-file:not(.list__styled-item--selected) {
   background: rgba(255, 255, 255, 0.5);
 } */
+
+.list_branch-icon.file-icon {
+  top: 0.15rem;
+  width: 22px;
+  height: 22px;
+}
