@@ -19,12 +19,14 @@ export interface ThemeCacheData {
   timestamp: number
 }
 
+export type ThemeFontDefinitionSrc = { path: string; format: string }
+
 interface ThemeFontDefinition {
   id: string
   weight: string
   style: string
   size: string
-  src: { path: string; format: string }[]
+  src: ThemeFontDefinitionSrc[]
 }
 
 export interface ThemeData {

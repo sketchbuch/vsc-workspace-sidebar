@@ -10,8 +10,8 @@ import {
   ThemeJsonIconDefs,
   ThemeProcessorObserver,
 } from './ThemeProcessor.interface'
-import { getActiveExtThemeData } from './utils/getActiveExtThemeData'
-import { isLightTheme } from './utils/isLightTheme'
+import { getActiveExtThemeData } from './utils/theme/getActiveExtThemeData'
+import { isLightTheme } from './utils/theme/isLightTheme'
 
 export class ThemeProcessor implements ObserverableThemeProcessor {
   private _observers: Set<ThemeProcessorObserver>
@@ -151,8 +151,8 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
   /**
    * Delete cached theme data.
    */
-  public deleteThemeData() {
-    this._ctx.globalState.update(this._cacheKey, undefined)
+  public async deleteThemeData(): Promise<void> {
+    return this._ctx.globalState.update(this._cacheKey, undefined)
   }
 
   /**
@@ -167,8 +167,8 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
    *
    * @param {ThemeCacheData} data The data to write to the cache
    */
-  public setThemeData(data: ThemeCacheData) {
-    this._ctx.globalState.update(this._cacheKey, data)
+  public async setThemeData(data: ThemeCacheData): Promise<void> {
+    return this._ctx.globalState.update(this._cacheKey, data)
   }
 
   /**

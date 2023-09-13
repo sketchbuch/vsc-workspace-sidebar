@@ -2,8 +2,8 @@ import * as fs from 'fs'
 import * as os from 'os'
 import path from 'path'
 import * as vscode from 'vscode'
-import { checkFile } from '../../utils/fs/checkFile'
-import { isHiddenFile } from '../../utils/fs/isHiddenFile'
+import { checkFile } from '../fs/checkFile'
+import { isHiddenFile } from '../fs/isHiddenFile'
 
 interface ThemeInfo {
   id: string
