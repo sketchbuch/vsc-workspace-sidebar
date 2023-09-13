@@ -5,18 +5,29 @@ interface IconMap {
 }
 
 const iconMap: IconMap = {
-  flutter: ['flutter'],
-  javascript: ['javascript', 'js'],
-  php: ['php'],
-  python: ['python', 'py'],
-  react: ['react', 'rjs'],
-  typescript: ['typescript', 'ts', 'tsx'],
+  dart: ['flutter'],
+  javascript: ['js'],
+  python: ['py'],
+  react: ['rjs'],
+  typescript: ['ts', 'vsc', 'deadfire'],
+  yml: ['ansible'],
+}
+
+let iconMapFlat: string[] = []
+
+for (const themeKey of Object.keys(iconMap)) {
+  const customMatches = iconMap[themeKey]
+
+  for (const match of customMatches) {
+    iconMapFlat.push(`${themeKey}###${match}`)
+  }
 }
 
 export const getLangIconNew = (file: string, fileIconKeys: string[]): string => {
+  const allKeys = [...iconMapFlat, ...fileIconKeys]
   let icon = ''
 
-  if (fileIconKeys.length > 0) {
+  if (allKeys.length > 0) {
     const { dir, name } = path.parse(file)
 
     const nameSegments = name
@@ -33,14 +44,17 @@ export const getLangIconNew = (file: string, fileIconKeys: string[]): string => 
       .filter((seg) => seg)
       .reverse() // Prioritise deepest folders
 
-    for (const iconKey of fileIconKeys) {
+    for (const iconKey of allKeys) {
       if (icon) {
         break
       }
 
+      const [themeKey, customMatch] = iconKey.split('###')
+      const targetSeg = customMatch ?? themeKey
+
       for (let seg of nameSegments) {
-        if (seg === iconKey) {
-          icon = iconKey
+        if (seg === targetSeg) {
+          icon = themeKey
           break
         }
       }
@@ -50,8 +64,8 @@ export const getLangIconNew = (file: string, fileIconKeys: string[]): string => 
       }
 
       for (let seg of pathSegments) {
-        if (seg === iconKey) {
-          icon = iconKey
+        if (seg === targetSeg) {
+          icon = themeKey
           break
         }
       }
