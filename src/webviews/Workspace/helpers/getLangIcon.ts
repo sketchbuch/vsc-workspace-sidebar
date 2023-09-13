@@ -4,13 +4,17 @@ interface IconMap {
   [key: string]: string[]
 }
 
+// Example custom matchers - move to config
 const iconMap: IconMap = {
   dart: ['flutter'],
-  javascript: ['js'],
+  html: ['ea'],
+  javascript: ['js', 'gnome'],
+  markdown: ['obsidian', 'review', 'sketchbuch'],
   python: ['py'],
   react: ['rjs'],
-  typescript: ['ts', 'vsc', 'deadfire'],
-  yml: ['ansible'],
+  typescript: ['deadfire', 'ts', 'vsc', 'vscode'],
+  typescriptreact: ['electron', 'todo'],
+  yaml: ['ansible'],
 }
 
 let iconMapFlat: string[] = []

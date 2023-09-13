@@ -59,7 +59,9 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
       this.deleteThemeData()
       this.processThemeData()
     } else {
-      this.notifyAll()
+      // this.notifyAll()
+      this.deleteThemeData()
+      this.processThemeData()
     }
   }
 
@@ -75,7 +77,6 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
 
     if (activeExtThemeData !== null) {
       const themePath = path.join(activeExtThemeData.extPath, activeExtThemeData.themePath)
-      console.log('### themePath', themePath)
 
       try {
         const isLight = isLightTheme(vscode.window.activeColorTheme)
@@ -100,7 +101,6 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
         const fontDataWithFullPaths = [...jsonData.fonts].map((font) => {
           const { dir } = path.parse(themePath)
           const newPath = path.join(dir, font.src[0].path)
-          console.log('### newPath', newPath)
 
           return {
             ...font,
