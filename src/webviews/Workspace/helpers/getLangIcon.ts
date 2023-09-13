@@ -48,29 +48,21 @@ export const getLangIconNew = (file: string, fileIconKeys: string[]): string => 
       .filter((seg) => seg)
       .reverse() // Prioritise deepest folders
 
-    for (const iconKey of allKeys) {
-      if (icon) {
-        break
-      }
-
+    iconSearch: for (const iconKey of allKeys) {
       const [themeKey, customMatch] = iconKey.split('###')
       const targetSeg = customMatch ?? themeKey
 
       for (let seg of nameSegments) {
         if (seg === targetSeg) {
           icon = themeKey
-          break
+          break iconSearch
         }
-      }
-
-      if (icon) {
-        break
       }
 
       for (let seg of pathSegments) {
         if (seg === targetSeg) {
           icon = themeKey
-          break
+          break iconSearch
         }
       }
     }
