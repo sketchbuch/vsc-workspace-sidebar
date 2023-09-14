@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
 import { ConfigActions } from '../constants/config'
-import { ThemeData } from '../theme/ThemeProcessor.interface'
+import { GetThemeData, ThemeProcessorState } from '../theme/ThemeProcessor.interface'
 
 export interface PostMessage<Payload, Actions> {
   action: Actions
@@ -17,6 +17,7 @@ export interface RenderVars {
   searchMinimum: number
   showRootFolder: boolean
   showTree: boolean
+  themeProcessorState: ThemeProcessorState
 }
 
 export interface TemplateVars {
@@ -27,7 +28,7 @@ export interface TemplateVars {
   imgLightFolderUri: vscode.Uri
   nonce: string
   scriptFolderUri: vscode.Uri
-  themeData: ThemeData | null
+  themeData: GetThemeData | null
   title: string
   uiFolderUri: vscode.Uri
 }
@@ -42,7 +43,7 @@ export interface GetHtml<TState> {
   extensionPath: vscode.Uri
   htmlData: HtmlData<TState>
   template: GetHtmlTemplateFunc<TState>
-  themeData: ThemeData | null
+  themeData: GetThemeData | null
 }
 
 export interface HtmlData<TState> {

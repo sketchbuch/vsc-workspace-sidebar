@@ -22,7 +22,7 @@ export const treeItemFile = (
     isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
   }`
   const tooltip = getFileTooltip(renderVars, file, 'cur-win')
-  const { condenseFileTree } = renderVars
+  const { condenseFileTree, themeProcessorState } = renderVars
 
   const buttons: ConfigButtons = [
     {
@@ -41,7 +41,8 @@ export const treeItemFile = (
   }
 
   const itemButtons = getWorkspaceButtons({ buttons, renderVars })
-  const langIcon = getLangIconNew(file.file, renderVars.fileIconKeys)
+  const langIcon =
+    themeProcessorState === 'data-ready' ? getLangIconNew(file.file, renderVars.fileIconKeys) : ''
 
   return `
     <li class="${classes}" data-file="${file.file}" data-depth="${depth}">

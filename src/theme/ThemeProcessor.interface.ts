@@ -13,6 +13,14 @@ export interface ObserverableThemeProcessor {
   // notifyAll(): void
 }
 
+export interface GetThemeData {
+  data: ThemeData | null
+  state: ThemeProcessorState
+  themeId: string | null
+}
+
+export type ThemeProcessorState = 'loading' | 'error' | 'idle' | 'data-ready'
+
 export interface ThemeCacheData {
   themeData: ThemeData
   themeId: string

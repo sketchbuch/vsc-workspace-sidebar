@@ -104,6 +104,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
   }
 
   public refresh(isRerender = false) {
+    console.log('### refresh()')
     if (isRerender) {
       this.render()
     } else {
@@ -116,6 +117,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
   private render() {
     if (this._view !== undefined) {
       const state = store.getState().ws
+      console.log('### render()', state.state)
 
       this._view.title = this.getViewTitle(state)
 
@@ -160,6 +162,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
   }
 
   public resolveWebviewView(webviewView: vscode.WebviewView) {
+    console.log('### resolveWebviewView()')
     this._view = webviewView
 
     store.subscribe(() => {
@@ -290,6 +293,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
    * Inform this observer that the file theme has changed.
    */
   public notify() {
+    console.log('### notify()')
     // Only rerender if resolveWebviewView() has been called
     if (this._view !== undefined) {
       this.render()

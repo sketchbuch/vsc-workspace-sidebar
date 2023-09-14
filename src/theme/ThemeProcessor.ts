@@ -2,13 +2,14 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as vscode from 'vscode'
 import {
+  GetThemeData,
   ObserverableThemeProcessor,
   ThemeCacheData,
-  ThemeData,
   ThemeJson,
   ThemeJsonIconDef,
   ThemeJsonIconDefs,
   ThemeProcessorObserver,
+  ThemeProcessorState,
 } from './ThemeProcessor.interface'
 import { getActiveExtThemeData } from './utils/theme/getActiveExtThemeData'
 import { isLightTheme } from './utils/theme/isLightTheme'
@@ -18,11 +19,16 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
   private readonly _cacheDuration = 604800 // 1 Week
   private readonly _cacheKey = `themeProcessor-cache`
   private readonly _defaultTheme = 'vs-seti'
+  private _state: ThemeProcessorState = 'idle'
 
   constructor(private readonly _ctx: vscode.ExtensionContext) {
     this._observers = new Set()
     this.watchConfig()
     this.init()
+  }
+
+  private async deleteThemeData(): Promise<void> {
+    return this._ctx.globalState.update(this._cacheKey, undefined)
   }
 
   private getFileiconTheme = (): string => {
@@ -56,22 +62,26 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
     }
 
     if (cacheMiss) {
-      this.deleteThemeData()
       this.processThemeData()
     } else {
+      // this._state = 'data-ready'
       // this.notifyAll()
-      this.deleteThemeData()
       this.processThemeData()
     }
   }
 
   private notifyAll() {
+    console.log('### notifyAll()')
     this._observers.forEach((observer) => {
       observer.notify()
     })
   }
 
   private async processThemeData() {
+    console.log('### processThemeData() 1')
+    this._state = 'loading'
+    await this.deleteThemeData()
+
     const activeFileiconTheme = this.getFileiconTheme()
     const activeExtThemeData = await getActiveExtThemeData(activeFileiconTheme)
 
@@ -120,17 +130,25 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
           timestamp: this.getTimestamp(),
         }
 
-        this.setThemeData(themeCacheData)
+        await this.setThemeData(themeCacheData)
+        console.log('### processThemeData() 2 - theme data processed')
+        this._state = 'data-ready'
       } catch {
+        this._state = 'error'
         if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
           vscode.window.showErrorMessage('Unable to process theme json')
         }
       }
     } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
+      this._state = 'error'
       vscode.window.showErrorMessage(`Active theme not found: "${activeFileiconTheme}"`)
     }
 
     this.notifyAll()
+  }
+
+  private async setThemeData(data: ThemeCacheData): Promise<void> {
+    return this._ctx.globalState.update(this._cacheKey, data)
   }
 
   private watchConfig() {
@@ -139,7 +157,6 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
         const { affectsConfiguration } = event
 
         if (affectsConfiguration('workbench.iconTheme')) {
-          this.deleteThemeData()
           this.processThemeData()
         }
       }
@@ -149,26 +166,16 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
   }
 
   /**
-   * Delete cached theme data.
-   */
-  public async deleteThemeData(): Promise<void> {
-    return this._ctx.globalState.update(this._cacheKey, undefined)
-  }
-
-  /**
    * Get cached theme data.
    */
-  public getThemeData(): ThemeData | null {
-    return this.getFullThemeData()?.themeData ?? null
-  }
+  public getThemeData(): GetThemeData {
+    const themeData = this.getFullThemeData() ?? null
 
-  /**
-   * Set cached theme data.
-   *
-   * @param {ThemeCacheData} data The data to write to the cache
-   */
-  public async setThemeData(data: ThemeCacheData): Promise<void> {
-    return this._ctx.globalState.update(this._cacheKey, data)
+    return {
+      data: themeData?.themeData ?? null,
+      state: this._state,
+      themeId: themeData?.themeId ?? null,
+    }
   }
 
   /**

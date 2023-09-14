@@ -13,18 +13,19 @@ export const getRenderVars = ({
   imgLightFolderUri,
   themeData,
 }: TemplateVars): RenderVars => {
+  const data = themeData?.data ?? null
   let fileIconKeys: string[] = []
 
-  if (themeData) {
-    if (themeData.fileExtensions) {
+  if (data) {
+    if (data.fileExtensions) {
       fileIconKeys = fileIconKeys.concat(
-        Object.keys(themeData.fileExtensions).filter((key) => !key.includes('.'))
+        Object.keys(data.fileExtensions).filter((key) => !key.includes('.'))
       )
     }
 
-    if (themeData.languageIds) {
+    if (data.languageIds) {
       fileIconKeys = fileIconKeys.concat(
-        Object.keys(themeData.languageIds).filter((key) => !key.includes('.'))
+        Object.keys(data.languageIds).filter((key) => !key.includes('.'))
       )
     }
 
@@ -41,5 +42,6 @@ export const getRenderVars = ({
     searchMinimum: getSearchMinConfig(),
     showRootFolder: getShowRootFolderConfig(),
     showTree: getShowTreeConfig(),
+    themeProcessorState: themeData?.state ?? 'idle',
   }
 }
