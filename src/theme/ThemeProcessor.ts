@@ -9,11 +9,13 @@ import {
   ThemeJson,
   ThemeJsonIconDef,
   ThemeJsonIconDefs,
-  ThemeJsonMap,
+  ThemeJsonIconMap,
+  ThemeJsonIconSingle,
   ThemeProcessorObserver,
   ThemeProcessorState,
 } from './ThemeProcessor.interface'
 import { getActiveExtThemeData } from './utils/theme/getActiveExtThemeData'
+import { isHighContrastTheme } from './utils/theme/isHighContrastTheme'
 import { isLightTheme } from './utils/theme/isLightTheme'
 
 export class ThemeProcessor implements ObserverableThemeProcessor {
@@ -90,11 +92,10 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
 
       try {
         const isLight = isLightTheme(vscode.window.activeColorTheme)
+        const isHighContrast = isHighContrastTheme(vscode.window.activeColorTheme)
         const jsonContent = fs.readFileSync(themePath, 'utf8')
         const jsonData = JSON.parse(jsonContent) as ThemeJson
         const newIconDefinitions: ThemeJsonIconDefs = {}
-
-        console.log('### jsonData', jsonData)
 
         Object.keys(jsonData.iconDefinitions).forEach((iconKey: string) => {
           const oldDef = jsonData.iconDefinitions[iconKey]
@@ -124,23 +125,62 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
           })
         }
 
-        let fileExtensions: ThemeJsonMap = { ...(jsonData.fileExtensions ?? {}) }
-        let fileNames: ThemeJsonMap = { ...(jsonData.fileNames ?? {}) }
-        let languageIds: ThemeJsonMap = { ...(jsonData.languageIds ?? {}) }
+        let fileExtensions: ThemeJsonIconMap = { ...(jsonData.fileExtensions ?? {}) }
+        let fileIcon: ThemeJsonIconSingle = jsonData.file ?? undefined
+        let fileNames: ThemeJsonIconMap = { ...(jsonData.fileNames ?? {}) }
+        let folderExpanded: ThemeJsonIconSingle = jsonData.folderExpanded ?? undefined
+        let folderIcon: ThemeJsonIconSingle = jsonData.folder ?? undefined
+        let folderNames: ThemeJsonIconMap = { ...(jsonData.folderNames ?? {}) }
+        let folderNamesExpanded: ThemeJsonIconMap = { ...(jsonData.folderNamesExpanded ?? {}) }
+        let languageIds: ThemeJsonIconMap = { ...(jsonData.languageIds ?? {}) }
+        let rootFolder: ThemeJsonIconSingle = jsonData.rootFolder ?? undefined
+        let rootFolderExpanded: ThemeJsonIconSingle = jsonData.rootFolderExpanded ?? undefined
 
-        if (isLight) {
-          fileExtensions = { ...fileExtensions, ...(jsonData.light.fileExtensions && {}) }
-          fileNames = { ...fileNames, ...(jsonData.light.fileNames && {}) }
-          languageIds = { ...languageIds, ...(jsonData.light.languageIds && {}) }
+        if (isLight && jsonData.light) {
+          fileExtensions = { ...fileExtensions, ...(jsonData.light.fileExtensions ?? {}) }
+          fileIcon = jsonData.light.file ?? fileIcon
+          fileNames = { ...fileNames, ...(jsonData.light.fileNames ?? {}) }
+          folderExpanded = jsonData.light.folderExpanded ?? folderExpanded
+          folderIcon = jsonData.light.folder ?? folderIcon
+          folderNames = { ...folderNames, ...(jsonData.light.folderNames ?? {}) }
+          folderNamesExpanded = {
+            ...folderNamesExpanded,
+            ...(jsonData.light.folderNamesExpanded ?? {}),
+          }
+          languageIds = { ...languageIds, ...(jsonData.light.languageIds ?? {}) }
+          rootFolder = jsonData.light.rootFolder ?? rootFolder
+          rootFolderExpanded = jsonData.light.rootFolderExpanded ?? rootFolderExpanded
+        } else if (isHighContrast && jsonData.highContrast) {
+          fileExtensions = { ...fileExtensions, ...(jsonData.highContrast.fileExtensions ?? {}) }
+          fileIcon = jsonData.highContrast.file ?? fileIcon
+          fileNames = { ...fileNames, ...(jsonData.highContrast.fileNames ?? {}) }
+          folderExpanded = jsonData.highContrast.folderExpanded ?? folderExpanded
+          folderIcon = jsonData.highContrast.folder ?? folderIcon
+          folderNames = { ...folderNames, ...(jsonData.highContrast.folderNames ?? {}) }
+          folderNamesExpanded = {
+            ...folderNamesExpanded,
+            ...(jsonData.highContrast.folderNamesExpanded ?? {}),
+          }
+          languageIds = { ...languageIds, ...(jsonData.highContrast.languageIds ?? {}) }
+          rootFolder = jsonData.highContrast.rootFolder ?? rootFolder
+          rootFolderExpanded = jsonData.highContrast.rootFolderExpanded ?? rootFolderExpanded
         }
 
         const themeCacheData: ThemeCacheData = {
+          localResourceRoots: [activeExtThemeData.extPath],
           themeData: {
-            iconDefinitions: newIconDefinitions,
+            file: fileIcon,
             fileExtensions,
             fileNames,
-            languageIds,
+            folder: folderIcon,
+            folderExpanded,
+            folderNames,
+            folderNamesExpanded,
             fonts: fontsData,
+            iconDefinitions: newIconDefinitions,
+            languageIds,
+            rootFolder,
+            rootFolderExpanded,
           },
           themeId: activeFileiconTheme,
           timestamp: this.getTimestamp(),
@@ -148,15 +188,20 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
 
         await this.setThemeData(themeCacheData)
         this._state = 'data-ready'
-      } catch {
+      } catch (error) {
         this._state = 'error'
+
         if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
-          vscode.window.showErrorMessage('Unable to process theme json')
+          console.log('### error', error)
+          vscode.window.showErrorMessage('Unable to process theme json:' + error)
         }
       }
-    } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
+    } else {
       this._state = 'error'
-      vscode.window.showErrorMessage(`Active theme not found: "${activeFileiconTheme}"`)
+
+      if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
+        vscode.window.showErrorMessage(`Active theme not found: "${activeFileiconTheme}"`)
+      }
     }
 
     this.notifyAll()
@@ -188,6 +233,7 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
 
     return {
       data: themeData?.themeData ?? null,
+      localResourceRoots: themeData?.localResourceRoots ?? [],
       state: this._state,
       themeId: themeData?.themeId ?? null,
     }

@@ -15,6 +15,7 @@ export interface ObserverableThemeProcessor {
 
 export interface GetThemeData {
   data: ThemeData | null
+  localResourceRoots: string[]
   state: ThemeProcessorState
   themeId: string | null
 }
@@ -22,6 +23,7 @@ export interface GetThemeData {
 export type ThemeProcessorState = 'loading' | 'error' | 'idle' | 'data-ready'
 
 export interface ThemeCacheData {
+  localResourceRoots: string[]
   themeData: ThemeData
   themeId: string
   timestamp: number
@@ -37,26 +39,32 @@ export interface ThemeFontDefinition {
   src: ThemeFontDefinitionSrc[]
 }
 
-export interface ThemeData {
-  fonts: ThemeFontDefinition[]
-  fileExtensions?: ThemeJsonMap
-  fileNames?: ThemeJsonMap
-  iconDefinitions: ThemeJsonIconDefs
-  languageIds?: ThemeJsonMap
+interface ThemeIconAssociation {
+  file?: ThemeJsonIconSingle // Icon for file
+  fileExtensions?: ThemeJsonIconMap // Icons for file extensions
+  fileNames?: ThemeJsonIconMap // Icons for filenames
+  folder?: ThemeJsonIconSingle // Icon for folder
+  folderExpanded?: ThemeJsonIconSingle // Icons for open folder
+  folderNames?: ThemeJsonIconMap // Icons for specfic named folders
+  folderNamesExpanded?: ThemeJsonIconMap // Icons for open specfic named folders
+  languageIds?: ThemeJsonIconMap // Icons for specific languages
+  rootFolder?: ThemeJsonIconSingle // Icon for root folder
+  rootFolderExpanded?: ThemeJsonIconSingle // Icon for open root folder
 }
 
-// Just enough needed to get the data we want
-export interface ThemeJson {
+export type ThemeData = ThemeJson
+
+export type ThemeJsonIconSingle = string | undefined
+
+export interface ThemeJson extends ThemeIconAssociation {
   fonts: ThemeFontDefinition[]
-  fileExtensions?: ThemeJsonMap
-  fileNames?: ThemeJsonMap
+  hidesExplorerArrows?: boolean
+  highContrast?: ThemeIconAssociation
   iconDefinitions: ThemeJsonIconDefs
-  languageIds?: ThemeJsonMap
-  light: {
-    fileExtensions?: ThemeJsonMap
-    fileNames?: ThemeJsonMap
-    languageIds?: ThemeJsonMap
-  }
+  light?: ThemeIconAssociation
+
+  // Not supported, no fall back to default laguage icon
+  showLanguageModeIcons?: boolean // https://code.visualstudio.com/api/extension-guides/file-icon-theme
 }
 
 export interface ThemeJsonIconDef {
@@ -73,6 +81,6 @@ export interface ThemeJsonIconDefs {
   [key: string]: ThemeJsonIconDef
 }
 
-export interface ThemeJsonMap {
+export interface ThemeJsonIconMap {
   [key: string]: string
 }

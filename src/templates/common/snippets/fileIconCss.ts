@@ -3,7 +3,7 @@ import {
   GetThemeData,
   ThemeData,
   ThemeJsonIconDef,
-  ThemeJsonMap,
+  ThemeJsonIconMap,
 } from '../../../theme/ThemeProcessor.interface'
 
 interface CssProp {
@@ -25,16 +25,21 @@ export const getCssProps = (iconDef: ThemeJsonIconDef, webview: vscode.Webview):
     cssProps.push({ key: 'font-size', value: `${iconDef.fontSize}` })
   }
 
+  if (iconDef.fontCharacter) {
+    cssProps.push({ key: 'content', value: `'${iconDef.fontCharacter}'` })
+  }
+
   if (iconDef.iconPath) {
     cssProps.push({
       key: 'background-image',
       value: `url(${webview.asWebviewUri(vscode.Uri.file(iconDef.iconPath))})`,
     })
     cssProps.push({ key: 'content', value: '" "' })
-  }
-
-  if (iconDef.fontCharacter) {
-    cssProps.push({ key: 'content', value: `'${iconDef.fontCharacter}'` })
+  } else {
+    cssProps.push({
+      key: 'background-image',
+      value: 'unset',
+    })
   }
 
   return cssProps
@@ -44,7 +49,7 @@ const getCssDefinition = (
   classes: CssDefinition,
   key: string,
   cssPrefix: string,
-  data?: ThemeJsonMap
+  data?: ThemeJsonIconMap
 ): CssDefinition => {
   const newClasses = [...classes]
 

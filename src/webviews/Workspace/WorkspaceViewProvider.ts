@@ -104,7 +104,6 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
   }
 
   public refresh(isRerender = false) {
-    console.log('### refresh()')
     if (isRerender) {
       this.render()
     } else {
@@ -117,6 +116,11 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
   private render() {
     if (this._view !== undefined) {
       const state = store.getState().ws
+      const themeData = state.state === 'list' ? this._themeProcessor.getThemeData() ?? null : null
+
+      if (themeData !== null) {
+        this.setOptions(this._view, themeData.localResourceRoots)
+      }
 
       this._view.title = this.getViewTitle(state)
 
@@ -131,7 +135,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
           extensionPath: this._ctx.extensionUri,
           template: defaultTemplate,
           htmlData,
-          themeData: state.state === 'list' ? this._themeProcessor.getThemeData() ?? null : null,
+          themeData,
         },
         crypto.randomBytes(16).toString('hex')
       )
@@ -179,17 +183,21 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
     }
   }
 
-  private setupWebview(webviewView: vscode.WebviewView) {
+  private setOptions = (webviewView: vscode.WebviewView, localResourceRoots: string[] = []) => {
+    console.log('### localResourceRoots', localResourceRoots)
     webviewView.webview.options = {
       enableScripts: true,
       localResourceRoots: [
         this._ctx.extensionUri,
-        vscode.Uri.parse('file:///usr/share/code/resources/app/extensions/theme-seti/icons'),
-        vscode.Uri.parse(
-          'file:///home/stephen/.vscode/extensions/pkief.material-icon-theme-4.30.1/icons'
-        ),
+        ...localResourceRoots.map((resouceRoot) => {
+          return vscode.Uri.parse(resouceRoot)
+        }),
       ],
     }
+  }
+
+  private setupWebview(webviewView: vscode.WebviewView) {
+    this.setOptions(webviewView)
 
     webviewView.webview.onDidReceiveMessage((message: PostMessage<Payload, Actions>) => {
       const { action, payload } = message

@@ -3,7 +3,7 @@
 }
 
 .list__styled-list--tree .list__text {
-  padding-left: 18px;
+  padding-left: 22px;
 }
 
 .list_branch-indent-box {
@@ -64,11 +64,11 @@
   -webkit-font-smoothing: antialiased;
   background-position: 0;
   background-repeat: no-repeat;
-  background-size: 22px;
+  background-size: 16px;
   display: inline-block;
   flex-shrink: 0;
   height: 22px;
   line-height: inherit !important;
   vertical-align: top;
-  width: 22px;
+  width: 16px;
 }
