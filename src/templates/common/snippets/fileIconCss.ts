@@ -1,5 +1,10 @@
 import * as vscode from 'vscode'
-import { ThemeData, ThemeJsonIconDef, ThemeJsonMap } from '../../../theme/ThemeProcessor.interface'
+import {
+  GetThemeData,
+  ThemeData,
+  ThemeJsonIconDef,
+  ThemeJsonMap,
+} from '../../../theme/ThemeProcessor.interface'
 
 interface CssProp {
   key: string
@@ -9,7 +14,7 @@ interface CssProp {
 type CssDefinition = string[]
 type CssDefinitions = { [key: string]: CssDefinition }
 
-export const getCssProps = (iconDef: ThemeJsonIconDef): CssProp[] => {
+export const getCssProps = (iconDef: ThemeJsonIconDef, webview: vscode.Webview): CssProp[] => {
   const cssProps: CssProp[] = []
 
   if (iconDef.fontColor) {
@@ -20,12 +25,16 @@ export const getCssProps = (iconDef: ThemeJsonIconDef): CssProp[] => {
     cssProps.push({ key: 'font-size', value: `${iconDef.fontSize}` })
   }
 
-  if (iconDef.fontCharacter) {
-    cssProps.push({ key: 'content', value: `'${iconDef.fontCharacter}'` })
+  if (iconDef.iconPath) {
+    cssProps.push({
+      key: 'background-image',
+      value: `url(${webview.asWebviewUri(vscode.Uri.file(iconDef.iconPath))})`,
+    })
+    cssProps.push({ key: 'content', value: '" "' })
   }
 
-  if (iconDef.iconPath) {
-    cssProps.push({ key: 'background-image', value: `url(${iconDef.iconPath})` })
+  if (iconDef.fontCharacter) {
+    cssProps.push({ key: 'content', value: `'${iconDef.fontCharacter}'` })
   }
 
   return cssProps
@@ -71,8 +80,8 @@ const cssDefinitions = (themeData: ThemeData, baseClass: string): CssDefinitions
   return defs
 }
 
-const getCss = (iconDef: ThemeJsonIconDef, classes: CssDefinition) => {
-  const cssProps = getCssProps(iconDef)
+const getCss = (iconDef: ThemeJsonIconDef, classes: CssDefinition, webview: vscode.Webview) => {
+  const cssProps = getCssProps(iconDef, webview)
 
   return `${classes.join('::before, ')}::before {
       ${cssProps
@@ -116,23 +125,26 @@ export const getFontCss = (
 
 export const fileIconCss = (
   nonce: string,
-  themeData: ThemeData | null,
+  themeData: GetThemeData | null,
   webview: vscode.Webview
 ): string => {
-  if (themeData === null) {
+  if (themeData === null || themeData.state !== 'data-ready' || themeData.data === null) {
     return ''
   }
 
-  console.log('### themeData', themeData)
+  const { data, themeId } = themeData
 
-  const defs = cssDefinitions(themeData, defaultBaseClass)
+  const defs = cssDefinitions(data, defaultBaseClass)
+  const defKeys = Object.keys(defs)
 
-  return `<style id="file-icon-css" media="screen" nonce="${nonce}" type="text/css">
-    ${getFontCss(themeData, defaultBaseClass, webview)}
+  return `<style id="file-icon-css" media="screen" nonce="${nonce}" data-defcount="${
+    defKeys.length
+  }" data-themeid="${themeId}"  type="text/css">
+    ${getFontCss(data, defaultBaseClass, webview)}
 
-    ${Object.keys(defs)
+    ${defKeys
       .map((def: string) => {
-        return getCss(themeData.iconDefinitions[def], defs[def])
+        return getCss(data.iconDefinitions[def], defs[def], webview)
       })
       .join('')}
   </style>`

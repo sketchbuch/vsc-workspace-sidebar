@@ -5,9 +5,11 @@ import {
   GetThemeData,
   ObserverableThemeProcessor,
   ThemeCacheData,
+  ThemeFontDefinition,
   ThemeJson,
   ThemeJsonIconDef,
   ThemeJsonIconDefs,
+  ThemeJsonMap,
   ThemeProcessorObserver,
   ThemeProcessorState,
 } from './ThemeProcessor.interface'
@@ -71,14 +73,12 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
   }
 
   private notifyAll() {
-    console.log('### notifyAll()')
     this._observers.forEach((observer) => {
       observer.notify()
     })
   }
 
   private async processThemeData() {
-    console.log('### processThemeData() 1')
     this._state = 'loading'
     await this.deleteThemeData()
 
@@ -94,6 +94,8 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
         const jsonData = JSON.parse(jsonContent) as ThemeJson
         const newIconDefinitions: ThemeJsonIconDefs = {}
 
+        console.log('### jsonData', jsonData)
+
         Object.keys(jsonData.iconDefinitions).forEach((iconKey: string) => {
           const oldDef = jsonData.iconDefinitions[iconKey]
           const newDef: ThemeJsonIconDef = { ...oldDef }
@@ -108,30 +110,43 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
           newIconDefinitions[iconKey] = newDef
         })
 
-        const fontDataWithFullPaths = [...jsonData.fonts].map((font) => {
-          const { dir } = path.parse(themePath)
-          const newPath = path.join(dir, font.src[0].path)
+        let fontsData: ThemeFontDefinition[] = []
 
-          return {
-            ...font,
-            src: [{ ...font.src[0], path: newPath }],
-          }
-        })
+        if (jsonData.fonts) {
+          fontsData = [...jsonData.fonts].map((font) => {
+            const { dir } = path.parse(themePath)
+            const newPath = path.join(dir, font.src[0].path)
+
+            return {
+              ...font,
+              src: [{ ...font.src[0], path: newPath }],
+            }
+          })
+        }
+
+        let fileExtensions: ThemeJsonMap = { ...(jsonData.fileExtensions ?? {}) }
+        let fileNames: ThemeJsonMap = { ...(jsonData.fileNames ?? {}) }
+        let languageIds: ThemeJsonMap = { ...(jsonData.languageIds ?? {}) }
+
+        if (isLight) {
+          fileExtensions = { ...fileExtensions, ...(jsonData.light.fileExtensions && {}) }
+          fileNames = { ...fileNames, ...(jsonData.light.fileNames && {}) }
+          languageIds = { ...languageIds, ...(jsonData.light.languageIds && {}) }
+        }
 
         const themeCacheData: ThemeCacheData = {
           themeData: {
             iconDefinitions: newIconDefinitions,
-            fileExtensions: isLight ? jsonData.light.fileExtensions : jsonData.fileExtensions,
-            fileNames: isLight ? jsonData.light.fileNames : jsonData.fileNames,
-            languageIds: isLight ? jsonData.light.languageIds : jsonData.languageIds,
-            fonts: fontDataWithFullPaths,
+            fileExtensions,
+            fileNames,
+            languageIds,
+            fonts: fontsData,
           },
           themeId: activeFileiconTheme,
           timestamp: this.getTimestamp(),
         }
 
         await this.setThemeData(themeCacheData)
-        console.log('### processThemeData() 2 - theme data processed')
         this._state = 'data-ready'
       } catch {
         this._state = 'error'

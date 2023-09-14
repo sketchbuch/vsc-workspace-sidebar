@@ -7,7 +7,7 @@ interface IconMap {
 // Example custom matchers - move to config
 const iconMap: IconMap = {
   dart: ['flutter'],
-  html: ['ea'],
+  java: ['ea'],
   javascript: ['js', 'gnome'],
   markdown: ['obsidian', 'review', 'sketchbuch'],
   python: ['py'],

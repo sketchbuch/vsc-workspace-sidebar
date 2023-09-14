@@ -117,7 +117,6 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
   private render() {
     if (this._view !== undefined) {
       const state = store.getState().ws
-      console.log('### render()', state.state)
 
       this._view.title = this.getViewTitle(state)
 
@@ -139,7 +138,6 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
 
       // Suppress error when running in extension development host
     } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Test) {
-      console.log('### error')
       vscode.window.showErrorMessage(t('errors.viewNotFound'))
     }
   }
@@ -162,7 +160,6 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
   }
 
   public resolveWebviewView(webviewView: vscode.WebviewView) {
-    console.log('### resolveWebviewView()')
     this._view = webviewView
 
     store.subscribe(() => {
@@ -188,6 +185,9 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
       localResourceRoots: [
         this._ctx.extensionUri,
         vscode.Uri.parse('file:///usr/share/code/resources/app/extensions/theme-seti/icons'),
+        vscode.Uri.parse(
+          'file:///home/stephen/.vscode/extensions/pkief.material-icon-theme-4.30.1/icons'
+        ),
       ],
     }
 
@@ -293,7 +293,6 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
    * Inform this observer that the file theme has changed.
    */
   public notify() {
-    console.log('### notify()')
     // Only rerender if resolveWebviewView() has been called
     if (this._view !== undefined) {
       this.render()

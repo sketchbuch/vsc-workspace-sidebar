@@ -29,7 +29,7 @@ export interface ThemeCacheData {
 
 export type ThemeFontDefinitionSrc = { path: string; format: string }
 
-interface ThemeFontDefinition {
+export interface ThemeFontDefinition {
   id: string
   weight: string
   style: string

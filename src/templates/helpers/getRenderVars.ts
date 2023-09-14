@@ -18,18 +18,15 @@ export const getRenderVars = ({
 
   if (data) {
     if (data.fileExtensions) {
-      fileIconKeys = fileIconKeys.concat(
-        Object.keys(data.fileExtensions).filter((key) => !key.includes('.'))
-      )
+      fileIconKeys = fileIconKeys.concat(Object.keys(data.fileExtensions).map((key) => key))
     }
 
     if (data.languageIds) {
-      fileIconKeys = fileIconKeys.concat(
-        Object.keys(data.languageIds).filter((key) => !key.includes('.'))
-      )
+      fileIconKeys = fileIconKeys.concat(Object.keys(data.languageIds).map((key) => key))
     }
 
     fileIconKeys.sort()
+    console.log('### fileIconKeys', fileIconKeys)
   }
 
   return {
