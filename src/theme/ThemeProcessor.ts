@@ -231,6 +231,8 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
   public getThemeData(): GetThemeData {
     const themeData = this.getFullThemeData() ?? null
 
+    console.log('### themeData', themeData?.themeData ?? null)
+
     return {
       data: themeData?.themeData ?? null,
       localResourceRoots: themeData?.localResourceRoots ?? [],

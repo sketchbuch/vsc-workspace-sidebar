@@ -184,7 +184,6 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
   }
 
   private setOptions = (webviewView: vscode.WebviewView, localResourceRoots: string[] = []) => {
-    console.log('### localResourceRoots', localResourceRoots)
     webviewView.webview.options = {
       enableScripts: true,
       localResourceRoots: [

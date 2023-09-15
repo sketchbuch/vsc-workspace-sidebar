@@ -1,72 +1,108 @@
 import * as path from 'path'
+import { FileIconKeys } from '../../webviews.interface'
 
-interface IconMap {
-  [key: string]: string[]
-}
+export const getLangIconNew = (file: string, fileIconKeys: FileIconKeys): string => {
+  const { custom, fileExtensions, languageIds } = fileIconKeys
+  const { dir, name } = path.parse(file)
+  let fallback = fileIconKeys.file ? 'file' : ''
 
-// Example custom matchers - move to config
-const iconMap: IconMap = {
-  dart: ['flutter'],
-  java: ['ea'],
-  javascript: ['js', 'gnome'],
-  markdown: ['obsidian', 'review', 'sketchbuch'],
-  python: ['py'],
-  react: ['rjs'],
-  typescript: ['deadfire', 'ts', 'vsc', 'vscode'],
-  typescriptreact: ['electron', 'todo'],
-  yaml: ['ansible'],
-}
+  const nameSegments = name
+    .toLowerCase()
+    // Normalise keyword seperators
+    .replace(' ', '.')
+    .replace('_', '.')
+    .replace('-', '.')
+    .split('.')
 
-let iconMapFlat: string[] = []
+  const pathSegments = dir
+    .toLowerCase()
+    .split(path.sep)
+    .filter((seg) => seg)
+    .reverse() // Prioritise deepest folders
 
-for (const themeKey of Object.keys(iconMap)) {
-  const customMatches = iconMap[themeKey]
-
-  for (const match of customMatches) {
-    iconMapFlat.push(`${themeKey}###${match}`)
-  }
-}
-
-export const getLangIconNew = (file: string, fileIconKeys: string[]): string => {
-  const allKeys = [...iconMapFlat, ...fileIconKeys]
-  let icon = ''
-
-  if (allKeys.length > 0) {
-    const { dir, name } = path.parse(file)
-
-    const nameSegments = name
-      .toLowerCase()
-      // Normalise keyword seperators
-      .replace(' ', '.')
-      .replace('_', '.')
-      .replace('-', '.')
-      .split('.')
-
-    const pathSegments = dir
-      .toLowerCase()
-      .split(path.sep)
-      .filter((seg) => seg)
-      .reverse() // Prioritise deepest folders
-
-    iconSearch: for (const iconKey of allKeys) {
-      const [themeKey, customMatch] = iconKey.split('###')
-      const targetSeg = customMatch ?? themeKey
+  if (fileExtensions) {
+    for (const iconKey of fileExtensions) {
+      if (iconKey === 'workspace') {
+        fallback = iconKey
+      }
 
       for (let seg of nameSegments) {
-        if (seg === targetSeg) {
-          icon = themeKey
-          break iconSearch
+        if (seg === iconKey) {
+          return iconKey
         }
       }
 
       for (let seg of pathSegments) {
-        if (seg === targetSeg) {
-          icon = themeKey
-          break iconSearch
+        if (seg === iconKey) {
+          return iconKey
+        }
+      }
+
+      if (custom) {
+        const customKeys = Object.keys(custom)
+
+        for (const customKey of customKeys) {
+          if (customKey === iconKey) {
+            for (const customIconKey of custom[customKey]) {
+              for (let seg of nameSegments) {
+                if (seg === customIconKey) {
+                  return iconKey
+                }
+              }
+
+              for (let seg of pathSegments) {
+                if (seg === customIconKey) {
+                  return iconKey
+                }
+              }
+            }
+          }
         }
       }
     }
   }
 
-  return icon
+  if (languageIds) {
+    for (const iconKey of languageIds) {
+      if (iconKey === 'workspace') {
+        fallback = iconKey
+      }
+
+      for (let seg of nameSegments) {
+        if (seg === iconKey) {
+          return iconKey
+        }
+      }
+
+      for (let seg of pathSegments) {
+        if (seg === iconKey) {
+          return iconKey
+        }
+      }
+
+      if (custom) {
+        const customKeys = Object.keys(custom)
+
+        for (const customKey of customKeys) {
+          if (customKey === iconKey) {
+            for (const customIconKey of custom[customKey]) {
+              for (let seg of nameSegments) {
+                if (seg === customIconKey) {
+                  return iconKey
+                }
+              }
+
+              for (let seg of pathSegments) {
+                if (seg === customIconKey) {
+                  return iconKey
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return fallback
 }

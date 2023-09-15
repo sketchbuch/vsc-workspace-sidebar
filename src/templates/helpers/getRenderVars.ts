@@ -6,7 +6,29 @@ import {
   getShowRootFolderConfig,
   getShowTreeConfig,
 } from '../../config/getConfig'
-import { RenderVars, TemplateVars } from '../../webviews/webviews.interface'
+import {
+  FileIconKeys,
+  FileIconKeysCustom,
+  RenderVars,
+  TemplateVars,
+} from '../../webviews/webviews.interface'
+
+// Example custom matchers - move to config
+const iconMap: FileIconKeysCustom = {
+  dart: ['flutter'],
+  java: ['ea'],
+  javascript: ['js', 'gnome'],
+  js: ['gnome'],
+  markdown: ['obsidian', 'review', 'sketchbuch'],
+  md: ['obsidian', 'review', 'sketchbuch'],
+  python: ['py'],
+  react: ['rjs'],
+  ts: ['deadfire', 'vsc', 'vscode', 'electron', 'todo'],
+  typescript: ['deadfire', 'ts', 'vsc', 'vscode'],
+  typescriptreact: ['electron', 'todo'],
+  yaml: ['ansible'],
+  yml: ['ansible'],
+}
 
 export const getRenderVars = ({
   imgDarkFolderUri,
@@ -14,18 +36,43 @@ export const getRenderVars = ({
   themeData,
 }: TemplateVars): RenderVars => {
   const data = themeData?.data ?? null
-  let fileIconKeys: string[] = []
+  const fileIconKeys: FileIconKeys = {}
 
   if (data) {
+    if (iconMap) {
+      fileIconKeys.custom = iconMap
+    }
+
     if (data.fileExtensions) {
-      fileIconKeys = fileIconKeys.concat(Object.keys(data.fileExtensions).map((key) => key))
+      fileIconKeys.fileExtensions = Object.keys(data.fileExtensions).map((key) => key)
+      fileIconKeys.fileExtensions.sort()
     }
 
     if (data.languageIds) {
-      fileIconKeys = fileIconKeys.concat(Object.keys(data.languageIds).map((key) => key))
+      fileIconKeys.languageIds = Object.keys(data.languageIds).map((key) => key)
+      fileIconKeys.languageIds.sort()
     }
 
-    fileIconKeys.sort()
+    if (data.file) {
+      fileIconKeys.file = data.file
+    }
+
+    if (data.folder) {
+      fileIconKeys.folder = data.folder
+    }
+
+    if (data.folderExpanded) {
+      fileIconKeys.folderExpanded = data.folderExpanded
+    }
+
+    if (data.rootFolder) {
+      fileIconKeys.rootFolder = data.rootFolder
+    }
+
+    if (data.rootFolderExpanded) {
+      fileIconKeys.rootFolderExpanded = data.rootFolderExpanded
+    }
+
     console.log('### fileIconKeys', fileIconKeys)
   }
 

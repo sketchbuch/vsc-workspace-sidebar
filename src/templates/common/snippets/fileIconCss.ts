@@ -48,7 +48,7 @@ export const getCssProps = (iconDef: ThemeJsonIconDef, webview: vscode.Webview):
 const getCssDefinition = (
   classes: CssDefinition,
   key: string,
-  cssPrefix: string,
+  baseClass: string,
   data?: ThemeJsonIconMap
 ): CssDefinition => {
   const newClasses = [...classes]
@@ -56,7 +56,13 @@ const getCssDefinition = (
   if (data) {
     for (const [dataType, iconKey] of Object.entries(data)) {
       if (iconKey === key) {
-        newClasses.push(`${cssPrefix}-${dataType}`)
+        const newClass = `.${baseClass}.${baseClass}-lang-${dataType
+          .replace(/\./g, '-')
+          .replace(/\//g, '-')}`
+
+        if (!newClasses.includes(newClass)) {
+          newClasses.push(newClass)
+        }
       }
     }
   }
@@ -67,20 +73,28 @@ const getCssDefinition = (
 const defaultBaseClass = 'file-icon'
 
 const cssDefinitions = (themeData: ThemeData, baseClass: string): CssDefinitions => {
-  const { iconDefinitions, fileExtensions, fileNames, languageIds } = themeData
+  const { file, iconDefinitions, fileExtensions, fileNames, languageIds } = themeData
   const defs: CssDefinitions = {}
+  let defaultFileAdded = false
 
   Object.keys(iconDefinitions).forEach((key) => {
     let classes: CssDefinition = []
 
-    classes = getCssDefinition(classes, key, `.${baseClass}.${baseClass}-fileext`, fileExtensions)
-    classes = getCssDefinition(classes, key, `.${baseClass}.${baseClass}-filename`, fileNames)
-    classes = getCssDefinition(classes, key, `.${baseClass}.${baseClass}-lang`, languageIds)
+    classes = getCssDefinition(classes, key, baseClass, fileExtensions)
+    classes = getCssDefinition(classes, key, baseClass, fileNames)
+    classes = getCssDefinition(classes, key, baseClass, languageIds)
+
+    if (key === file && !defaultFileAdded) {
+      classes.push(`.${baseClass}.${baseClass}-lang-file`)
+      defaultFileAdded = true
+    }
 
     if (classes.length > 0) {
       defs[key] = classes
     }
   })
+
+  console.log('### defs', defs)
 
   return defs
 }
