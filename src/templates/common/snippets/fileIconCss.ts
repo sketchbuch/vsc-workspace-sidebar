@@ -180,8 +180,6 @@ export const fileIconCss = (
     return ''
   }
 
-  // const cssProcessor = new CssProcessor(themeData.data, webview)
-
   const { data, themeId } = themeData
 
   const defs = cssDefinitions(data, defaultBaseClass)
