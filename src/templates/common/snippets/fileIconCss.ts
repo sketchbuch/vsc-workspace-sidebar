@@ -2,6 +2,7 @@ import * as vscode from 'vscode'
 import {
   GetThemeData,
   ThemeData,
+  ThemeFontDefinition,
   ThemeJsonIconDef,
   ThemeJsonIconMap,
 } from '../../../theme/ThemeProcessor.interface'
@@ -14,20 +15,13 @@ interface CssProp {
 type CssDefinition = string[]
 type CssDefinitions = { [key: string]: CssDefinition }
 
-export const getCssProps = (iconDef: ThemeJsonIconDef, webview: vscode.Webview): CssProp[] => {
+export const getCssProps = (
+  iconDef: ThemeJsonIconDef,
+  webview: vscode.Webview,
+  showLanguageModeIcons: boolean,
+  fonts: ThemeFontDefinition[]
+): CssProp[] => {
   const cssProps: CssProp[] = []
-
-  if (iconDef.fontColor) {
-    cssProps.push({ key: 'color', value: `${iconDef.fontColor}` })
-  }
-
-  if (iconDef.fontSize) {
-    cssProps.push({ key: 'font-size', value: `${iconDef.fontSize}` })
-  }
-
-  if (iconDef.fontCharacter) {
-    cssProps.push({ key: 'content', value: `'${iconDef.fontCharacter}'` })
-  }
 
   if (iconDef.iconPath) {
     cssProps.push({
@@ -35,11 +29,38 @@ export const getCssProps = (iconDef: ThemeJsonIconDef, webview: vscode.Webview):
       value: `url(${webview.asWebviewUri(vscode.Uri.file(iconDef.iconPath))})`,
     })
     cssProps.push({ key: 'content', value: '" "' })
-  } else {
-    cssProps.push({
-      key: 'background-image',
-      value: 'unset',
-    })
+  } else if (iconDef.fontCharacter || iconDef.fontColor) {
+    if (iconDef.fontColor) {
+      cssProps.push({ key: 'color', value: `${iconDef.fontColor}` })
+    }
+
+    if (iconDef.fontCharacter) {
+      cssProps.push({ key: 'content', value: `'${iconDef.fontCharacter}'` })
+    }
+
+    const fontId = iconDef.fontId
+    let fontSize = iconDef.fontSize
+
+    if (fontId) {
+      cssProps.push({ key: 'font-family', value: `${fontId}` })
+
+      const fontDefinition = fonts.find((font) => (font.id = fontId))
+
+      if (fontDefinition) {
+        fontSize = fontDefinition.size ?? '150%'
+      }
+    }
+
+    if (fontSize) {
+      cssProps.push({ key: 'font-size', value: `${fontSize}` })
+    }
+
+    if (showLanguageModeIcons) {
+      cssProps.push({
+        key: 'background-image',
+        value: 'unset',
+      })
+    }
   }
 
   return cssProps
@@ -84,6 +105,7 @@ const cssDefinitions = (themeData: ThemeData, baseClass: string): CssDefinitions
     classes = getCssDefinition(classes, key, baseClass, fileNames)
     classes = getCssDefinition(classes, key, baseClass, languageIds)
 
+    // Default file from theme
     if (key === file && !defaultFileAdded) {
       classes.push(`.${baseClass}.${baseClass}-lang-file`)
       defaultFileAdded = true
@@ -94,13 +116,17 @@ const cssDefinitions = (themeData: ThemeData, baseClass: string): CssDefinitions
     }
   })
 
-  console.log('### defs', defs)
-
   return defs
 }
 
-const getCss = (iconDef: ThemeJsonIconDef, classes: CssDefinition, webview: vscode.Webview) => {
-  const cssProps = getCssProps(iconDef, webview)
+const getCss = (
+  iconDef: ThemeJsonIconDef,
+  classes: CssDefinition,
+  webview: vscode.Webview,
+  showLanguageModeIcons: boolean,
+  fonts: ThemeFontDefinition[]
+) => {
+  const cssProps = getCssProps(iconDef, webview, showLanguageModeIcons, fonts)
 
   return `${classes.join('::before, ')}::before {
       ${cssProps
@@ -121,22 +147,25 @@ export const getFontCss = (
   webview: vscode.Webview
 ): string => {
   if (themeData.fonts.length > 0) {
-    const fontData = themeData.fonts[0]
+    return themeData.fonts
+      .map((font): string => {
+        const src = font.src
+          .map(
+            (fontSrc) =>
+              `url('${webview.asWebviewUri(vscode.Uri.file(fontSrc.path))}') format('${
+                fontSrc.format
+              }')`
+          )
+          .join(', ')
 
-    return `@font-face {
-        font-family: '${fontData.id}';
-        src: url('${webview.asWebviewUri(
-          vscode.Uri.file(fontData.src[0].path)
-        )}') format('truetype');
-    }
+        const fontFace = `@font-face { font-family: '${font.id}'; src: ${src}; font-weight: ${font.weight}; font-style: ${font.style}; font-display: block; }`
+        const baseStyle = `.${baseClass}-${font.id} { font-family: '${font.id}'; font-size: ${
+          font.size ?? 'medium'
+        }; font-style: ${font.style ?? 'normal'}; font-weight: ${font.weight ?? 'normal'}; }`
 
-   .${baseClass} {
-      font-family: '${fontData.id}';
-      font-size: ${fontData.size ?? 'medium'};
-      font-style: ${fontData.style ?? 'normal'};
-      font-weight: ${fontData.weight ?? 'normal'};
-    }
-    `
+        return `${fontFace}\n${baseStyle}\n`
+      })
+      .join('\n')
   }
 
   return ''
@@ -151,6 +180,8 @@ export const fileIconCss = (
     return ''
   }
 
+  // const cssProcessor = new CssProcessor(themeData.data, webview)
+
   const { data, themeId } = themeData
 
   const defs = cssDefinitions(data, defaultBaseClass)
@@ -163,7 +194,13 @@ export const fileIconCss = (
 
     ${defKeys
       .map((def: string) => {
-        return getCss(data.iconDefinitions[def], defs[def], webview)
+        return getCss(
+          data.iconDefinitions[def],
+          defs[def],
+          webview,
+          !!themeData.data?.showLanguageModeIcons,
+          data.fonts
+        )
       })
       .join('')}
   </style>`

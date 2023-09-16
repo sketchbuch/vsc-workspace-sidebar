@@ -95,21 +95,6 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
         const isHighContrast = isHighContrastTheme(vscode.window.activeColorTheme)
         const jsonContent = fs.readFileSync(themePath, 'utf8')
         const jsonData = JSON.parse(jsonContent) as ThemeJson
-        const newIconDefinitions: ThemeJsonIconDefs = {}
-
-        Object.keys(jsonData.iconDefinitions).forEach((iconKey: string) => {
-          const oldDef = jsonData.iconDefinitions[iconKey]
-          const newDef: ThemeJsonIconDef = { ...oldDef }
-
-          if (oldDef.iconPath) {
-            newDef.iconPath = path.join(
-              activeExtThemeData.extPath,
-              oldDef.iconPath.replace('/..', '')
-            )
-          }
-
-          newIconDefinitions[iconKey] = newDef
-        })
 
         let fontsData: ThemeFontDefinition[] = []
 
@@ -124,6 +109,24 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
             }
           })
         }
+
+        const newIconDefinitions: ThemeJsonIconDefs = {}
+
+        Object.keys(jsonData.iconDefinitions).forEach((iconKey: string) => {
+          const oldDef = jsonData.iconDefinitions[iconKey]
+          const newDef: ThemeJsonIconDef = { ...oldDef }
+
+          if (oldDef.iconPath) {
+            newDef.iconPath = path.join(
+              activeExtThemeData.extPath,
+              oldDef.iconPath.replace('/..', '')
+            )
+          } else if (!newDef.fontId && fontsData.length === 1) {
+            newDef.fontId = fontsData[0].id
+          } // Multiple fonts, id must already be set
+
+          newIconDefinitions[iconKey] = newDef
+        })
 
         let fileExtensions: ThemeJsonIconMap = { ...(jsonData.fileExtensions ?? {}) }
         let fileIcon: ThemeJsonIconSingle = jsonData.file ?? undefined
@@ -150,7 +153,9 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
           languageIds = { ...languageIds, ...(jsonData.light.languageIds ?? {}) }
           rootFolder = jsonData.light.rootFolder ?? rootFolder
           rootFolderExpanded = jsonData.light.rootFolderExpanded ?? rootFolderExpanded
-        } else if (isHighContrast && jsonData.highContrast) {
+        }
+
+        if (isHighContrast && jsonData.highContrast) {
           fileExtensions = { ...fileExtensions, ...(jsonData.highContrast.fileExtensions ?? {}) }
           fileIcon = jsonData.highContrast.file ?? fileIcon
           fileNames = { ...fileNames, ...(jsonData.highContrast.fileNames ?? {}) }
@@ -192,7 +197,6 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
         this._state = 'error'
 
         if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
-          console.log('### error', error)
           vscode.window.showErrorMessage('Unable to process theme json:' + error)
         }
       }
@@ -231,8 +235,6 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
   public getThemeData(): GetThemeData {
     const themeData = this.getFullThemeData() ?? null
 
-    console.log('### themeData', themeData?.themeData ?? null)
-
     return {
       data: themeData?.themeData ?? null,
       localResourceRoots: themeData?.localResourceRoots ?? [],
@@ -241,20 +243,10 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
     }
   }
 
-  /**
-   * Subscribe to file theme changes.
-   *
-   * @param {ThemeProcessorObserver} observer The subscriber
-   */
   public subscribe(observer: ThemeProcessorObserver) {
     this._observers.add(observer)
   }
 
-  /**
-   * Unsubscribe to file theme changes.
-   *
-   * @param {ThemeProcessorObserver} observer The unsubscriber
-   */
   public unsubscribe(observer: ThemeProcessorObserver) {
     this._observers.delete(observer)
   }

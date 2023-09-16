@@ -45,12 +45,10 @@ export const getRenderVars = ({
 
     if (data.fileExtensions) {
       fileIconKeys.fileExtensions = Object.keys(data.fileExtensions).map((key) => key)
-      fileIconKeys.fileExtensions.sort()
     }
 
     if (data.languageIds) {
       fileIconKeys.languageIds = Object.keys(data.languageIds).map((key) => key)
-      fileIconKeys.languageIds.sort()
     }
 
     if (data.file) {
@@ -72,8 +70,6 @@ export const getRenderVars = ({
     if (data.rootFolderExpanded) {
       fileIconKeys.rootFolderExpanded = data.rootFolderExpanded
     }
-
-    console.log('### fileIconKeys', fileIconKeys)
   }
 
   return {

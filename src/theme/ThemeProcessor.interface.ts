@@ -2,15 +2,22 @@
 // Interfaces are not exported
 
 export interface ThemeProcessorObserver {
+  /**
+   * Inform this observer that the file theme has changed.
+   */
   notify(): void
 }
 
 export interface ObserverableThemeProcessor {
+  /**
+   * Subscribe to file theme changes.
+   */
   subscribe(observer: ThemeProcessorObserver): void
-  unsubscribe(observer: ThemeProcessorObserver): void
 
-  // Observerable should have this private method
-  // notifyAll(): void
+  /**
+   * Unsubscribe to file theme changes.
+   */
+  unsubscribe(observer: ThemeProcessorObserver): void
 }
 
 export interface GetThemeData {
@@ -62,9 +69,7 @@ export interface ThemeJson extends ThemeIconAssociation {
   highContrast?: ThemeIconAssociation
   iconDefinitions: ThemeJsonIconDefs
   light?: ThemeIconAssociation
-
-  // Not supported, no fall back to default laguage icon
-  showLanguageModeIcons?: boolean // https://code.visualstudio.com/api/extension-guides/file-icon-theme
+  showLanguageModeIcons?: boolean // Unset background image if true
 }
 
 export interface ThemeJsonIconDef {
@@ -72,9 +77,7 @@ export interface ThemeJsonIconDef {
   fontColor?: string
   fontSize?: string
   iconPath?: string
-
-  // Not sure what this is so leave unsupported for now...
-  //fontId: string;
+  fontId: string // Used to match fonts in ThemeJson.fonts
 }
 
 export interface ThemeJsonIconDefs {

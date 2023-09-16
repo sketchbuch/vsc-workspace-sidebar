@@ -296,9 +296,6 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
     }
   }
 
-  /**
-   * Inform this observer that the file theme has changed.
-   */
   public notify() {
     // Only rerender if resolveWebviewView() has been called
     if (this._view !== undefined) {
