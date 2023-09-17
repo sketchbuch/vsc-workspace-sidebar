@@ -248,6 +248,7 @@
     "@vscode/codicons": "^0.0.29",
     "@vscode/webview-ui-toolkit": "^1.2.2",
     "crypto": "^1.0.1",
+    "json5": "^2.2.3",
     "vscode-ext-localisation": "^1.0.1"
   },
   "devDependencies": {

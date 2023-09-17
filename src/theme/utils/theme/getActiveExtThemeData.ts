@@ -1,4 +1,5 @@
 import * as fs from 'fs'
+import JSON5 from 'json5'
 import * as os from 'os'
 import path from 'path'
 import * as vscode from 'vscode'
@@ -22,11 +23,7 @@ export const getDefaultExtThemeData = (activeFileiconTheme: string): ExtThemeDat
   let themeData: ExtThemeData = null
 
   try {
-    for (const ext of vscode.extensions.all) {
-      if (themeData !== null) {
-        break
-      }
-
+    extTheme: for (const ext of vscode.extensions.all) {
       if (ext.packageJSON.contributes.iconThemes) {
         const iconThemes = ext.packageJSON.contributes.iconThemes as ThemeInfo[]
 
@@ -41,7 +38,8 @@ export const getDefaultExtThemeData = (activeFileiconTheme: string): ExtThemeDat
                 themeId: themeInfo.id,
                 themePath: themeInfo.path,
               }
-              break
+
+              break extTheme
             }
           }
         }
@@ -64,11 +62,7 @@ export const getUserExtThemeData = async (activeFileiconTheme: string): Promise<
     if (isFolder) {
       const extFolders = await fs.promises.readdir(USER_DIR)
 
-      for (const ext of extFolders) {
-        if (themeData !== null) {
-          break
-        }
-
+      userTheme: for (const ext of extFolders) {
         if (!isHiddenFile(ext)) {
           const extPath = path.join(USER_DIR, ext)
           const packageJsonPath = path.join(extPath, 'package.json')
@@ -76,7 +70,7 @@ export const getUserExtThemeData = async (activeFileiconTheme: string): Promise<
 
           if (isFile) {
             const packageJsonContent = await fs.promises.readFile(packageJsonPath, 'utf8')
-            const packageJson = JSON.parse(packageJsonContent)
+            const packageJson = JSON5.parse(packageJsonContent)
 
             if (packageJson.contributes && packageJson.contributes.iconThemes) {
               const iconThemes = packageJson.contributes.iconThemes as ThemeInfo[]
@@ -89,7 +83,8 @@ export const getUserExtThemeData = async (activeFileiconTheme: string): Promise<
                     themeId: themeInfo.id,
                     themePath: themeInfo.path,
                   }
-                  break
+
+                  break userTheme
                 }
               }
             }

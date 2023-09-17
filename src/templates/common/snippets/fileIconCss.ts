@@ -77,9 +77,13 @@ const getCssDefinition = (
   if (data) {
     for (const [dataType, iconKey] of Object.entries(data)) {
       if (iconKey === key) {
-        const newClass = `.${baseClass}.${baseClass}-lang-${dataType
+        const cleanedType = dataType
           .replace(/\./g, '-')
-          .replace(/\//g, '-')}`
+          .replace(/\//g, '-')
+          .replace(/\++/g, 'pp')
+          .replace(/#/g, 'h')
+
+        const newClass = `.${baseClass}.${baseClass}-lang-${cleanedType}`
 
         if (!newClasses.includes(newClass)) {
           newClasses.push(newClass)
@@ -141,11 +145,7 @@ const getCss = (
 /* panel.webview.asWebviewUri(vscode.Uri.file(
   path.join(extensionPath, "out", "fonts", "font.ttf")
 )); */
-export const getFontCss = (
-  themeData: ThemeData,
-  baseClass: string,
-  webview: vscode.Webview
-): string => {
+export const getFontCss = (themeData: ThemeData, webview: vscode.Webview): string => {
   if (themeData.fonts.length > 0) {
     return themeData.fonts
       .map((font): string => {
@@ -158,12 +158,7 @@ export const getFontCss = (
           )
           .join(', ')
 
-        const fontFace = `@font-face { font-family: '${font.id}'; src: ${src}; font-weight: ${font.weight}; font-style: ${font.style}; font-display: block; }`
-        const baseStyle = `.${baseClass}-${font.id} { font-family: '${font.id}'; font-size: ${
-          font.size ?? 'medium'
-        }; font-style: ${font.style ?? 'normal'}; font-weight: ${font.weight ?? 'normal'}; }`
-
-        return `${fontFace}\n${baseStyle}\n`
+        return `@font-face { font-family: '${font.id}'; src: ${src}; font-weight: ${font.weight}; font-style: ${font.style}; font-display: block; }\n`
       })
       .join('\n')
   }
@@ -184,11 +179,15 @@ export const fileIconCss = (
 
   const defs = cssDefinitions(data, defaultBaseClass)
   const defKeys = Object.keys(defs)
+  console.log('### themeData', themeData)
+  console.log('### defKeys', defKeys)
+
+  defKeys.reverse()
 
   return `<style id="file-icon-css" media="screen" nonce="${nonce}" data-defcount="${
     defKeys.length
   }" data-themeid="${themeId}"  type="text/css">
-    ${getFontCss(data, defaultBaseClass, webview)}
+    ${getFontCss(data, webview)}
 
     ${defKeys
       .map((def: string) => {

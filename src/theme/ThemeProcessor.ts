@@ -1,4 +1,5 @@
 import * as fs from 'fs'
+import JSON5 from 'json5'
 import * as path from 'path'
 import * as vscode from 'vscode'
 import {
@@ -94,7 +95,7 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
         const isLight = isLightTheme(vscode.window.activeColorTheme)
         const isHighContrast = isHighContrastTheme(vscode.window.activeColorTheme)
         const jsonContent = fs.readFileSync(themePath, 'utf8')
-        const jsonData = JSON.parse(jsonContent) as ThemeJson
+        const jsonData = JSON5.parse(jsonContent) as ThemeJson
 
         let fontsData: ThemeFontDefinition[] = []
 
@@ -117,16 +118,35 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
           const newDef: ThemeJsonIconDef = { ...oldDef }
 
           if (oldDef.iconPath) {
-            newDef.iconPath = path.join(
-              activeExtThemeData.extPath,
-              oldDef.iconPath.replace('/..', '')
-            )
+            let cleanedPath = oldDef.iconPath
+
+            if (cleanedPath.startsWith('./')) {
+              const { dir } = path.parse(activeExtThemeData.themePath)
+              cleanedPath = cleanedPath.replace('./', `${dir}/`)
+            } else if (cleanedPath.startsWith('/..')) {
+              cleanedPath = cleanedPath.replace('/..', '')
+            }
+
+            newDef.iconPath = path.join(activeExtThemeData.extPath, cleanedPath)
           } else if (!newDef.fontId && fontsData.length === 1) {
             newDef.fontId = fontsData[0].id
           } // Multiple fonts, id must already be set
 
           newIconDefinitions[iconKey] = newDef
         })
+
+        // Some themes seem not to include fontCharacter in light
+        if (isLight) {
+          const darkKeys = Object.keys(newIconDefinitions).filter((key) => !key.includes('_light'))
+          darkKeys.forEach((key) => {
+            const darkElement = newIconDefinitions[key]
+            const lightElement = newIconDefinitions[`${key}_light`]
+
+            if (lightElement) {
+              newIconDefinitions[`${key}_light`] = { ...darkElement, ...lightElement }
+            }
+          })
+        }
 
         let fileExtensions: ThemeJsonIconMap = { ...(jsonData.fileExtensions ?? {}) }
         let fileIcon: ThemeJsonIconSingle = jsonData.file ?? undefined

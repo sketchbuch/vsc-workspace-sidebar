@@ -43,7 +43,11 @@ export const treeItemFile = (
   const itemButtons = getWorkspaceButtons({ buttons, renderVars })
   const langIcon =
     themeProcessorState === 'data-ready'
-      ? getLangIconNew(file.file, renderVars.fileIconKeys).replace(/\./g, '-').replace(/\//g, '-')
+      ? getLangIconNew(file.file, renderVars.fileIconKeys)
+          .replace(/\./g, '-')
+          .replace(/\//g, '-')
+          .replace(/\++/g, 'pp')
+          .replace(/#/g, 'h')
       : ''
 
   return `
