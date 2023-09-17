@@ -117,8 +117,6 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
       const state = store.getState().ws
       const themeData = state.state === 'list' ? this._themeProcessor.getThemeData() ?? null : null
 
-      console.log('### render', themeData?.state)
-
       if (themeData !== null) {
         this.setOptions(this._view, themeData.localResourceRoots)
       }
