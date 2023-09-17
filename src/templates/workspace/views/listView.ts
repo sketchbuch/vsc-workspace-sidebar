@@ -4,13 +4,14 @@ import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvide
 import { RenderVars } from '../../../webviews/webviews.interface'
 import { settingsLink } from '../../common/snippets/settingsLink'
 import { folderList } from '../snippets/folderList'
+import { hoverNotification } from '../snippets/hoverNotification'
 import { list } from '../snippets/list'
 import { searchForm } from '../snippets/searchForm'
 
 export const listView = (state: WorkspaceState, renderVars: RenderVars): string => {
   if (state.files.length > 0) {
     const wsFolders = workspace.workspaceFolders ? [...workspace.workspaceFolders] : undefined
-    const { searchMinimum } = renderVars
+    const { searchMinimum, themeProcessorState } = renderVars
     const showSearch = searchMinimum === 0 || state.files.length >= searchMinimum
 
     return `
@@ -19,6 +20,11 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
     }>
           ${folderList(state, wsFolders)}
           ${searchForm(state, showSearch)}
+          ${
+            themeProcessorState === 'loading'
+              ? hoverNotification({ title: 'Loading file theme data' })
+              : ''
+          }
           ${list(state, renderVars)}
         </section>
       `

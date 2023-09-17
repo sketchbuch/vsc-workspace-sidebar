@@ -72,8 +72,6 @@ export const getRenderVars = ({
     if (data.rootFolderExpanded) {
       fileIconKeys.rootFolderExpanded = data.rootFolderExpanded
     }
-
-    console.log('### fileIconKeys', fileIconKeys)
   }
 
   return {

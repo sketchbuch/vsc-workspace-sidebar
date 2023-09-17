@@ -23,7 +23,6 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
   private _observers: Set<ThemeProcessorObserver>
   private readonly _cacheDuration = 604800 // 1 Week
   private readonly _cacheKey = `themeProcessor-cache`
-  private readonly _defaultTheme = 'vs-seti'
   private _state: ThemeProcessorState = 'idle'
 
   constructor(private readonly _ctx: vscode.ExtensionContext) {
@@ -36,8 +35,12 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
     return this._ctx.globalState.update(this._cacheKey, undefined)
   }
 
-  private getFileiconTheme = (): string => {
-    return vscode.workspace.getConfiguration('workbench').iconTheme ?? this._defaultTheme
+  /**
+   * If there is no icon theme set, the default theme will be returned, currently "vs-seti".
+   * If file icons are disabled, null will be returned.
+   */
+  private getFileiconTheme = (): string | null => {
+    return vscode.workspace.getConfiguration('workbench').iconTheme
   }
 
   private getFullThemeData(): ThemeCacheData | null {
@@ -83,149 +86,157 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
 
   private async processThemeData() {
     this._state = 'loading'
+    this.notifyAll() // Let webviews handle loading if they want
     await this.deleteThemeData()
 
     const activeFileiconTheme = this.getFileiconTheme()
-    const activeExtThemeData = await getActiveExtThemeData(activeFileiconTheme)
 
-    if (activeExtThemeData !== null) {
-      const themePath = path.join(activeExtThemeData.extPath, activeExtThemeData.themePath)
+    if (activeFileiconTheme !== null) {
+      const activeExtThemeData = await getActiveExtThemeData(activeFileiconTheme)
 
-      try {
-        const isLight = isLightTheme(vscode.window.activeColorTheme)
-        const isHighContrast = isHighContrastTheme(vscode.window.activeColorTheme)
-        const jsonContent = fs.readFileSync(themePath, 'utf8')
-        const jsonData = JSON5.parse(jsonContent) as ThemeJson
+      if (activeExtThemeData !== null) {
+        const themePath = path.join(activeExtThemeData.extPath, activeExtThemeData.themePath)
 
-        let fontsData: ThemeFontDefinition[] = []
+        try {
+          const isLight = isLightTheme(vscode.window.activeColorTheme)
+          const isHighContrast = isHighContrastTheme(vscode.window.activeColorTheme)
+          const jsonContent = fs.readFileSync(themePath, 'utf8')
+          const jsonData = JSON5.parse(jsonContent) as ThemeJson
 
-        if (jsonData.fonts) {
-          fontsData = [...jsonData.fonts].map((font) => {
-            const { dir } = path.parse(themePath)
-            const newPath = path.join(dir, font.src[0].path)
+          let fontsData: ThemeFontDefinition[] = []
 
-            return {
-              ...font,
-              src: [{ ...font.src[0], path: newPath }],
-            }
-          })
-        }
+          if (jsonData.fonts) {
+            fontsData = [...jsonData.fonts].map((font) => {
+              const { dir } = path.parse(themePath)
+              const newPath = path.join(dir, font.src[0].path)
 
-        const newIconDefinitions: ThemeJsonIconDefs = {}
-
-        Object.keys(jsonData.iconDefinitions).forEach((iconKey: string) => {
-          const oldDef = jsonData.iconDefinitions[iconKey]
-          const newDef: ThemeJsonIconDef = { ...oldDef }
-
-          if (oldDef.iconPath) {
-            let cleanedPath = oldDef.iconPath
-
-            if (cleanedPath.startsWith('./')) {
-              const { dir } = path.parse(activeExtThemeData.themePath)
-              cleanedPath = cleanedPath.replace('./', `${dir}/`)
-            } else if (cleanedPath.startsWith('/..')) {
-              cleanedPath = cleanedPath.replace('/..', '')
-            }
-
-            newDef.iconPath = path.join(activeExtThemeData.extPath, cleanedPath)
-          } else if (!newDef.fontId && fontsData.length === 1) {
-            newDef.fontId = fontsData[0].id
-          } // Multiple fonts, id must already be set
-
-          newIconDefinitions[iconKey] = newDef
-        })
-
-        // Some themes seem not to include fontCharacter in light
-        if (isLight) {
-          const darkKeys = Object.keys(newIconDefinitions).filter((key) => !key.includes('_light'))
-          darkKeys.forEach((key) => {
-            const darkElement = newIconDefinitions[key]
-            const lightElement = newIconDefinitions[`${key}_light`]
-
-            if (lightElement) {
-              newIconDefinitions[`${key}_light`] = { ...darkElement, ...lightElement }
-            }
-          })
-        }
-
-        let fileExtensions: ThemeJsonIconMap = { ...(jsonData.fileExtensions ?? {}) }
-        let fileIcon: ThemeJsonIconSingle = jsonData.file ?? undefined
-        let fileNames: ThemeJsonIconMap = { ...(jsonData.fileNames ?? {}) }
-        let folderExpanded: ThemeJsonIconSingle = jsonData.folderExpanded ?? undefined
-        let folderIcon: ThemeJsonIconSingle = jsonData.folder ?? undefined
-        let folderNames: ThemeJsonIconMap = { ...(jsonData.folderNames ?? {}) }
-        let folderNamesExpanded: ThemeJsonIconMap = { ...(jsonData.folderNamesExpanded ?? {}) }
-        let languageIds: ThemeJsonIconMap = { ...(jsonData.languageIds ?? {}) }
-        let rootFolder: ThemeJsonIconSingle = jsonData.rootFolder ?? undefined
-        let rootFolderExpanded: ThemeJsonIconSingle = jsonData.rootFolderExpanded ?? undefined
-
-        if (isLight && jsonData.light) {
-          fileExtensions = { ...fileExtensions, ...(jsonData.light.fileExtensions ?? {}) }
-          fileIcon = jsonData.light.file ?? fileIcon
-          fileNames = { ...fileNames, ...(jsonData.light.fileNames ?? {}) }
-          folderExpanded = jsonData.light.folderExpanded ?? folderExpanded
-          folderIcon = jsonData.light.folder ?? folderIcon
-          folderNames = { ...folderNames, ...(jsonData.light.folderNames ?? {}) }
-          folderNamesExpanded = {
-            ...folderNamesExpanded,
-            ...(jsonData.light.folderNamesExpanded ?? {}),
+              return {
+                ...font,
+                src: [{ ...font.src[0], path: newPath }],
+              }
+            })
           }
-          languageIds = { ...languageIds, ...(jsonData.light.languageIds ?? {}) }
-          rootFolder = jsonData.light.rootFolder ?? rootFolder
-          rootFolderExpanded = jsonData.light.rootFolderExpanded ?? rootFolderExpanded
-        }
 
-        if (isHighContrast && jsonData.highContrast) {
-          fileExtensions = { ...fileExtensions, ...(jsonData.highContrast.fileExtensions ?? {}) }
-          fileIcon = jsonData.highContrast.file ?? fileIcon
-          fileNames = { ...fileNames, ...(jsonData.highContrast.fileNames ?? {}) }
-          folderExpanded = jsonData.highContrast.folderExpanded ?? folderExpanded
-          folderIcon = jsonData.highContrast.folder ?? folderIcon
-          folderNames = { ...folderNames, ...(jsonData.highContrast.folderNames ?? {}) }
-          folderNamesExpanded = {
-            ...folderNamesExpanded,
-            ...(jsonData.highContrast.folderNamesExpanded ?? {}),
+          const newIconDefinitions: ThemeJsonIconDefs = {}
+
+          Object.keys(jsonData.iconDefinitions).forEach((iconKey: string) => {
+            const oldDef = jsonData.iconDefinitions[iconKey]
+            const newDef: ThemeJsonIconDef = { ...oldDef }
+
+            if (oldDef.iconPath) {
+              let cleanedPath = oldDef.iconPath
+
+              if (cleanedPath.startsWith('./')) {
+                const { dir } = path.parse(activeExtThemeData.themePath)
+                cleanedPath = cleanedPath.replace('./', `${dir}/`)
+              } else if (cleanedPath.startsWith('/..')) {
+                cleanedPath = cleanedPath.replace('/..', '')
+              }
+
+              newDef.iconPath = path.join(activeExtThemeData.extPath, cleanedPath)
+            } else if (!newDef.fontId && fontsData.length === 1) {
+              newDef.fontId = fontsData[0].id
+            } // Multiple fonts, id must already be set
+
+            newIconDefinitions[iconKey] = newDef
+          })
+
+          // Some themes seem not to include fontCharacter in light
+          if (isLight) {
+            const darkKeys = Object.keys(newIconDefinitions).filter(
+              (key) => !key.includes('_light')
+            )
+            darkKeys.forEach((key) => {
+              const darkElement = newIconDefinitions[key]
+              const lightElement = newIconDefinitions[`${key}_light`]
+
+              if (lightElement) {
+                newIconDefinitions[`${key}_light`] = { ...darkElement, ...lightElement }
+              }
+            })
           }
-          languageIds = { ...languageIds, ...(jsonData.highContrast.languageIds ?? {}) }
-          rootFolder = jsonData.highContrast.rootFolder ?? rootFolder
-          rootFolderExpanded = jsonData.highContrast.rootFolderExpanded ?? rootFolderExpanded
-        }
 
-        const themeCacheData: ThemeCacheData = {
-          localResourceRoots: [activeExtThemeData.extPath],
-          themeData: {
-            file: fileIcon,
-            fileExtensions,
-            fileNames,
-            folder: folderIcon,
-            folderExpanded,
-            folderNames,
-            folderNamesExpanded,
-            fonts: fontsData,
-            iconDefinitions: newIconDefinitions,
-            languageIds,
-            rootFolder,
-            rootFolderExpanded,
-          },
-          themeId: activeFileiconTheme,
-          timestamp: this.getTimestamp(),
-        }
+          let fileExtensions: ThemeJsonIconMap = { ...(jsonData.fileExtensions ?? {}) }
+          let fileIcon: ThemeJsonIconSingle = jsonData.file ?? undefined
+          let fileNames: ThemeJsonIconMap = { ...(jsonData.fileNames ?? {}) }
+          let folderExpanded: ThemeJsonIconSingle = jsonData.folderExpanded ?? undefined
+          let folderIcon: ThemeJsonIconSingle = jsonData.folder ?? undefined
+          let folderNames: ThemeJsonIconMap = { ...(jsonData.folderNames ?? {}) }
+          let folderNamesExpanded: ThemeJsonIconMap = { ...(jsonData.folderNamesExpanded ?? {}) }
+          let languageIds: ThemeJsonIconMap = { ...(jsonData.languageIds ?? {}) }
+          let rootFolder: ThemeJsonIconSingle = jsonData.rootFolder ?? undefined
+          let rootFolderExpanded: ThemeJsonIconSingle = jsonData.rootFolderExpanded ?? undefined
 
-        await this.setThemeData(themeCacheData)
-        this._state = 'data-ready'
-      } catch (error) {
+          if (isLight && jsonData.light) {
+            fileExtensions = { ...fileExtensions, ...(jsonData.light.fileExtensions ?? {}) }
+            fileIcon = jsonData.light.file ?? fileIcon
+            fileNames = { ...fileNames, ...(jsonData.light.fileNames ?? {}) }
+            folderExpanded = jsonData.light.folderExpanded ?? folderExpanded
+            folderIcon = jsonData.light.folder ?? folderIcon
+            folderNames = { ...folderNames, ...(jsonData.light.folderNames ?? {}) }
+            folderNamesExpanded = {
+              ...folderNamesExpanded,
+              ...(jsonData.light.folderNamesExpanded ?? {}),
+            }
+            languageIds = { ...languageIds, ...(jsonData.light.languageIds ?? {}) }
+            rootFolder = jsonData.light.rootFolder ?? rootFolder
+            rootFolderExpanded = jsonData.light.rootFolderExpanded ?? rootFolderExpanded
+          }
+
+          if (isHighContrast && jsonData.highContrast) {
+            fileExtensions = { ...fileExtensions, ...(jsonData.highContrast.fileExtensions ?? {}) }
+            fileIcon = jsonData.highContrast.file ?? fileIcon
+            fileNames = { ...fileNames, ...(jsonData.highContrast.fileNames ?? {}) }
+            folderExpanded = jsonData.highContrast.folderExpanded ?? folderExpanded
+            folderIcon = jsonData.highContrast.folder ?? folderIcon
+            folderNames = { ...folderNames, ...(jsonData.highContrast.folderNames ?? {}) }
+            folderNamesExpanded = {
+              ...folderNamesExpanded,
+              ...(jsonData.highContrast.folderNamesExpanded ?? {}),
+            }
+            languageIds = { ...languageIds, ...(jsonData.highContrast.languageIds ?? {}) }
+            rootFolder = jsonData.highContrast.rootFolder ?? rootFolder
+            rootFolderExpanded = jsonData.highContrast.rootFolderExpanded ?? rootFolderExpanded
+          }
+
+          const themeCacheData: ThemeCacheData = {
+            localResourceRoots: [activeExtThemeData.extPath],
+            themeData: {
+              file: fileIcon,
+              fileExtensions,
+              fileNames,
+              folder: folderIcon,
+              folderExpanded,
+              folderNames,
+              folderNamesExpanded,
+              fonts: fontsData,
+              iconDefinitions: newIconDefinitions,
+              languageIds,
+              rootFolder,
+              rootFolderExpanded,
+            },
+            themeId: activeFileiconTheme,
+            timestamp: this.getTimestamp(),
+          }
+
+          await this.setThemeData(themeCacheData)
+          this._state = 'data-ready'
+        } catch (error) {
+          this._state = 'error'
+
+          if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
+            vscode.window.showErrorMessage('Unable to process theme json:' + error)
+          }
+        }
+      } else {
         this._state = 'error'
 
         if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
-          vscode.window.showErrorMessage('Unable to process theme json:' + error)
+          vscode.window.showErrorMessage(`Active theme not found: "${activeFileiconTheme}"`)
         }
       }
     } else {
-      this._state = 'error'
-
-      if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
-        vscode.window.showErrorMessage(`Active theme not found: "${activeFileiconTheme}"`)
-      }
+      this._state = 'data-ready' // File icon themes disabled
     }
 
     this.notifyAll()

@@ -32,7 +32,7 @@ export type ThemeProcessorState = 'loading' | 'error' | 'idle' | 'data-ready'
 export interface ThemeCacheData {
   localResourceRoots: string[]
   themeData: ThemeData
-  themeId: string
+  themeId: string | null
   timestamp: number
 }
 

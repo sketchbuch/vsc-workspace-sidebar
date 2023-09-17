@@ -50,6 +50,7 @@ const {
 export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeProcessorObserver {
   public static readonly viewType = EXT_WEBVIEW_WS
   private _view?: vscode.WebviewView
+  private _resourceRootsPaths: string[] = []
 
   constructor(
     private readonly _ctx: vscode.ExtensionContext,
@@ -118,6 +119,8 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
       const state = store.getState().ws
       const themeData = state.state === 'list' ? this._themeProcessor.getThemeData() ?? null : null
 
+      console.log('### render', themeData?.state)
+
       if (themeData !== null) {
         this.setOptions(this._view, themeData.localResourceRoots)
       }
@@ -184,11 +187,19 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
   }
 
   private setOptions = (webviewView: vscode.WebviewView, localResourceRoots: string[] = []) => {
+    if (localResourceRoots.length > 0) {
+      localResourceRoots.forEach((resouceRoot) => {
+        if (!this._resourceRootsPaths.includes(resouceRoot)) {
+          this._resourceRootsPaths.push(resouceRoot)
+        }
+      })
+    }
+
     webviewView.webview.options = {
       enableScripts: true,
       localResourceRoots: [
         this._ctx.extensionUri,
-        ...localResourceRoots.map((resouceRoot) => {
+        ...this._resourceRootsPaths.map((resouceRoot) => {
           return vscode.Uri.parse(resouceRoot)
         }),
       ],

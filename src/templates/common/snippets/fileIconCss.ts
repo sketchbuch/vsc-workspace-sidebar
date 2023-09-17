@@ -179,8 +179,6 @@ export const fileIconCss = (
 
   const defs = cssDefinitions(data, defaultBaseClass)
   const defKeys = Object.keys(defs)
-  console.log('### themeData', themeData)
-  console.log('### defKeys', defKeys)
 
   defKeys.reverse()
 
