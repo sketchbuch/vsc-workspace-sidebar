@@ -1,7 +1,5 @@
 import { workspace } from 'vscode'
 import {
-  ConfigActions,
-  ConfigShowPaths,
   CONFIG_CLEAN_LABELS,
   CONFIG_CONDENSE_FILETREE,
   CONFIG_DEPTH,
@@ -10,7 +8,10 @@ import {
   CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_HIERARCHY,
   CONFIG_SHOW_ROOT_FOLDER,
+  ConfigActions,
+  ConfigShowPaths,
 } from '../constants/config'
+import { ThemeId } from '../theme/ThemeProcessor.interface'
 
 const { getConfiguration } = workspace
 
@@ -28,10 +29,6 @@ export const getCondenseFileTreeConfig = (): boolean => {
 
 export const getDepthConfig = (): number => {
   return getConfiguration().get('workspaceSidebar.depth') ?? CONFIG_DEPTH
-}
-
-export const getExplorerCompactFoldersConfig = (): boolean => {
-  return getConfiguration().get('explorer.compactFolders') ?? CONFIG_EXPLORER_COMPACT_FOLDERS
 }
 
 export const getFolderConfig = (): string => {
@@ -52,4 +49,14 @@ export const getShowRootFolderConfig = (): boolean => {
 
 export const getShowTreeConfig = (): boolean => {
   return getConfiguration().get('workspaceSidebar.showFolderHierarchy') ?? CONFIG_SHOW_HIERARCHY
+}
+
+// The following are core config options
+
+export const getExplorerCompactFoldersConfig = (): boolean => {
+  return getConfiguration().get('explorer.compactFolders') ?? CONFIG_EXPLORER_COMPACT_FOLDERS
+}
+
+export const getFileiconThemeConfig = (): ThemeId => {
+  return getConfiguration('workbench').iconTheme
 }

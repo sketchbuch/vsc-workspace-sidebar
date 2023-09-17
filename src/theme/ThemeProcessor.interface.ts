@@ -24,15 +24,17 @@ export interface GetThemeData {
   data: ThemeData | null
   localResourceRoots: string[]
   state: ThemeProcessorState
-  themeId: string | null
+  themeId: ThemeId
 }
+
+export type ThemeId = string | null
 
 export type ThemeProcessorState = 'loading' | 'error' | 'idle' | 'data-ready'
 
 export interface ThemeCacheData {
   localResourceRoots: string[]
   themeData: ThemeData
-  themeId: string | null
+  themeId: ThemeId
   timestamp: number
 }
 

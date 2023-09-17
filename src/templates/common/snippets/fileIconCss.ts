@@ -6,6 +6,7 @@ import {
   ThemeJsonIconDef,
   ThemeJsonIconMap,
 } from '../../../theme/ThemeProcessor.interface'
+import { cleanFileIconKey } from '../../../theme/utils/strings/cleanFileIconKey'
 
 interface CssProp {
   key: string
@@ -77,11 +78,7 @@ const getCssDefinition = (
   if (data) {
     for (const [dataType, iconKey] of Object.entries(data)) {
       if (iconKey === key) {
-        const cleanedType = dataType
-          .replace(/\./g, '-')
-          .replace(/\//g, '-')
-          .replace(/\++/g, 'pp')
-          .replace(/#/g, 'h')
+        const cleanedType = cleanFileIconKey(dataType)
 
         const newClass = `.${baseClass}.${baseClass}-lang-${cleanedType}`
 

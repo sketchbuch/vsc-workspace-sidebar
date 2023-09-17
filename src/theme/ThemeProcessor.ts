@@ -7,6 +7,7 @@ import {
   ObserverableThemeProcessor,
   ThemeCacheData,
   ThemeFontDefinition,
+  ThemeId,
   ThemeJson,
   ThemeJsonIconDef,
   ThemeJsonIconDefs,
@@ -39,7 +40,7 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
    * If there is no icon theme set, the default theme will be returned, currently "vs-seti".
    * If file icons are disabled, null will be returned.
    */
-  private getFileiconTheme = (): string | null => {
+  private getFileiconTheme = (): ThemeId => {
     return vscode.workspace.getConfiguration('workbench').iconTheme
   }
 

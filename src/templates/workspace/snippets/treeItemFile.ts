@@ -1,12 +1,14 @@
+import { getFileiconThemeConfig } from '../../../config/getConfig'
 import { RenderVars } from '../../../webviews/webviews.interface'
 import { getLangIconNew } from '../../../webviews/Workspace/helpers/getLangIcon'
 import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { getFileTooltip } from '../../helpers/getFileTooltip'
 import { getLabel } from '../../helpers/getLabel'
 import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceButtons'
+import { fileIconFile } from './fileIconFile'
 import { listItemButtons } from './listItemButtons'
 import { listItemIcon } from './listItemIcon'
-import { treeCustomIconFile, treeIconFile } from './treeIcons'
+import { treeIconFile } from './treeIcons'
 import { treeIndent } from './treeIndent'
 
 export const treeItemFile = (
@@ -22,7 +24,7 @@ export const treeItemFile = (
     isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
   }`
   const tooltip = getFileTooltip(renderVars, file, 'cur-win')
-  const { condenseFileTree, themeProcessorState } = renderVars
+  const { condenseFileTree, fileIconKeys, themeProcessorState } = renderVars
 
   const buttons: ConfigButtons = [
     {
@@ -41,21 +43,16 @@ export const treeItemFile = (
   }
 
   const itemButtons = getWorkspaceButtons({ buttons, renderVars })
-  const langIcon =
-    themeProcessorState === 'data-ready'
-      ? getLangIconNew(file.file, renderVars.fileIconKeys)
-          .replace(/\./g, '-')
-          .replace(/\//g, '-')
-          .replace(/\++/g, 'pp')
-          .replace(/#/g, 'h')
-      : ''
+  const curFileIconTheme = getFileiconThemeConfig()
+  const showFileIcon = curFileIconTheme && themeProcessorState === 'data-ready'
+  const langIcon = showFileIcon ? getLangIconNew(file.file, fileIconKeys) : ''
 
   return `
     <li class="${classes}" data-file="${file.file}" data-depth="${depth}">
       ${isSelected ? listItemIcon(renderVars) : ''}
       ${treeIndent(isRootLvlFile ? 0 : depth + 1)}
       <span class="list__element" title="${tooltip}">
-        ${langIcon ? treeCustomIconFile(langIcon) : treeIconFile()}
+        ${showFileIcon ? fileIconFile(langIcon) : treeIconFile()}
         <span class="list__text">
           <span class="list__title">${getLabel(label, search)}</span>
           ${showPath && condenseFileTree ? `<span class="list__description">${path}</span>` : ''}
