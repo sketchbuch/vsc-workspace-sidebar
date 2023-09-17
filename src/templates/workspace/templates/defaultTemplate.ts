@@ -40,7 +40,7 @@ export const defaultTemplate = (
   if (view === 'loading') {
     content = loadingView(state, renderVars)
   } else if (view === 'list') {
-    titleAttr = t('webViews.workspace.list.title', { title })
+    titleAttr = t('workspace.list.title', { title })
     content = listView(state, renderVars)
   } else if (view === 'invalid') {
     content = invalidView(state, renderVars)

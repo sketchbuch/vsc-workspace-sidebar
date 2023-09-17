@@ -15,10 +15,10 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
           <span class="view__message-icon codicon codicon-error"></span>
           ${
             isNoWorkspace
-              ? t('webViews.workspace.inValid.noWorkspaces.title')
+              ? t('workspace.inValid.noWorkspaces.title')
               : isInvalidFolder
-              ? t('webViews.workspace.inValid.notDirectory.title')
-              : t('webViews.workspace.inValid.default.title')
+              ? t('workspace.inValid.notDirectory.title')
+              : t('workspace.inValid.default.title')
           }
         </span>
       </p>
@@ -27,7 +27,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
           ? `
             <p class="view__message">
               <span class="view__message-description">
-                ${t('webViews.workspace.inValid.noWorkspaces.hintDepth')}
+                ${t('workspace.inValid.noWorkspaces.hintDepth')}
               </span>
             </p>`
           : ''
@@ -37,7 +37,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
           ? `
             <p class="view__message">
               <span class="view__message-description">
-                ${t('webViews.workspace.inValid.noWorkspaces.hintSettings')}
+                ${t('workspace.inValid.noWorkspaces.hintSettings')}
               </span>
             </p>`
           : ''

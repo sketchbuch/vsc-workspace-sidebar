@@ -22,7 +22,7 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
           ${searchForm(state, showSearch)}
           ${
             themeProcessorState === 'loading'
-              ? hoverNotification({ title: 'Loading file theme data' })
+              ? hoverNotification({ title: t('workspace.list.fileicons.loadingMsg') })
               : ''
           }
           ${list(state, renderVars)}
@@ -35,7 +35,7 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
         <p class="view__message">
           <span class="view__message-title">
             <span class="view__message-icon codicon codicon-error"></span>
-            ${t('webViews.workspace.list.empty.title')}
+            ${t('workspace.list.empty.title')}
           </span>
           ${settingsLink()}
         </p>

@@ -55,13 +55,13 @@ export const getWorkspaceButtons: GetWorkspaceButtons = ({ buttons, renderVars }
     const translationKey = kebabCaseToCamelCase(btn.key)
 
     return {
-      ariaLabel: t(`webViews.workspace.list.itemButtons.${translationKey}.ariaLabel`, {
+      ariaLabel: t(`workspace.list.itemButtons.${translationKey}.ariaLabel`, {
         label: btn.label,
       }),
       ...(btn.codicon ? { codicon: btn.codicon } : {}),
       file: btn.file,
       renderVars,
-      tooltip: t(`webViews.workspace.list.itemButtons.${translationKey}.tooltip`, {
+      tooltip: t(`workspace.list.itemButtons.${translationKey}.tooltip`, {
         label: btn.label,
       }),
       type: btn.key,

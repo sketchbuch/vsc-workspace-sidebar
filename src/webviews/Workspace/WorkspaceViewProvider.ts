@@ -91,9 +91,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
 
     if (view === 'list' && files !== null) {
       viewTitle = t(
-        search
-          ? 'webViews.workspace.list.titleCount.searched'
-          : 'webViews.workspace.list.titleCount.default',
+        search ? 'workspace.list.titleCount.searched' : 'workspace.list.titleCount.default',
         {
           matches: visibleFiles.length.toString(),
           total: files.length.toString(),
