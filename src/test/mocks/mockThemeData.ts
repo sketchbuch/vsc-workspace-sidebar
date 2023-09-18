@@ -8,6 +8,7 @@ export const mockThemeData: GetThemeData = {
     iconDefinitions: {},
     languageIds: {},
   },
+  localResourceRoots: [],
   state: 'data-ready',
   themeId: 'vs-seti',
 }

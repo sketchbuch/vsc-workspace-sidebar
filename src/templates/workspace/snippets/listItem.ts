@@ -1,5 +1,5 @@
 import { RenderVars } from '../../../webviews/webviews.interface'
-import { getLangIconNew } from '../../../webviews/Workspace/helpers/getLangIcon'
+import { getLangIcon } from '../../../webviews/Workspace/helpers/getLangIcon'
 import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { getFileTooltip } from '../../helpers/getFileTooltip'
 import { getLabel } from '../../helpers/getLabel'
@@ -35,7 +35,7 @@ export const listItem = (file: File, state: WorkspaceState, renderVars: RenderVa
 
   const itemButtons = getWorkspaceButtons({ buttons, renderVars })
   const showFileIcons = fileIconsActive && themeProcessorState === 'data-ready'
-  const langIcon = showFileIcons ? getLangIconNew(file.file, fileIconKeys) : ''
+  const langIcon = showFileIcons ? getLangIcon(file.file, fileIconKeys) : ''
 
   return `
     <li class="list__item list__list-styled-item ${classes}" data-file="${dataFile}">

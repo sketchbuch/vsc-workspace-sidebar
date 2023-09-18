@@ -50,7 +50,6 @@ const {
 export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeProcessorObserver {
   public static readonly viewType = EXT_WEBVIEW_WS
   private _view?: vscode.WebviewView
-  private _resourceRootsPaths: string[] = []
 
   constructor(
     private readonly _ctx: vscode.ExtensionContext,

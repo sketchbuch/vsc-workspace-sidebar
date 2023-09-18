@@ -17,10 +17,6 @@
   padding-top: 0;
 }
 
-.list[data-fileiconsactive='false'] .list__text {
-  padding-left: 1px;
-}
-
 .list--empty {
   padding: 0.3rem 20px;
 }
@@ -64,6 +60,10 @@
   position: relative;
   text-decoration: none;
   touch-action: none;
+}
+
+.list[data-fileiconsactive='false'] .list__text {
+  padding-left: 1px;
 }
 
 .list__description {
