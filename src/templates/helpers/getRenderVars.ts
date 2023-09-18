@@ -2,7 +2,9 @@ import {
   getActionsConfig,
   getCondenseFileTreeConfig,
   getDepthConfig,
+  getFileiconThemeConfig,
   getSearchMinConfig,
+  getShowFileiconConfig,
   getShowRootFolderConfig,
   getShowTreeConfig,
 } from '../../config/getConfig'
@@ -35,10 +37,14 @@ export const getRenderVars = ({
   imgLightFolderUri,
   themeData,
 }: TemplateVars): RenderVars => {
+  const showFileiconConfig = getShowFileiconConfig()
+  const curFileIconTheme = getFileiconThemeConfig()
+  const fileIconsActive = showFileiconConfig && !!curFileIconTheme
+
   const data = themeData?.data ?? null
   const fileIconKeys: FileIconKeys = {}
 
-  if (data) {
+  if (fileIconsActive && data) {
     if (iconMap) {
       fileIconKeys.custom = iconMap
     }
@@ -79,6 +85,7 @@ export const getRenderVars = ({
     condenseFileTree: getCondenseFileTreeConfig(),
     depth: getDepthConfig(),
     fileIconKeys,
+    fileIconsActive,
     imgDarkFolderUri,
     imgLightFolderUri,
     searchMinimum: getSearchMinConfig(),

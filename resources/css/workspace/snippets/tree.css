@@ -2,8 +2,9 @@
   position: relative;
 }
 
-.list__styled-list--tree .list__text {
-  padding-left: 22px;
+.list[data-fileiconsactive='true'] .list__branch-list-item .list__text,
+.list[data-fileiconsactive='false'] .list__branch-list-item .list__text {
+  padding-left: 18px;
 }
 
 .list_branch-indent-box {
@@ -29,14 +30,16 @@
 }
 
 .list_branch-icon {
-  left: 20px;
+  height: 22px;
+  left: 16px;
   position: absolute;
-  top: 0.3rem;
+  top: 0.25rem;
+  width: 20px;
 }
 
 .list_branch-icon-empty {
-  min-width: 16px;
-  width: 16px;
+  min-width: 22px;
+  width: 20px;
 }
 
 .list__branch-list-item-folder .list__title {
@@ -69,6 +72,7 @@
   flex-shrink: 0;
   height: 22px;
   line-height: inherit !important;
+  margin-left: unset;
   vertical-align: top;
   width: 16px;
 }

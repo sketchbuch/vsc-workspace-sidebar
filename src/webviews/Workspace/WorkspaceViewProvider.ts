@@ -183,19 +183,19 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
   }
 
   private setOptions = (webviewView: vscode.WebviewView, localResourceRoots: string[] = []) => {
-    if (localResourceRoots.length > 0) {
+    /* if (localResourceRoots.length > 0) {
       localResourceRoots.forEach((resouceRoot) => {
         if (!this._resourceRootsPaths.includes(resouceRoot)) {
           this._resourceRootsPaths.push(resouceRoot)
         }
       })
-    }
+    } */
 
     webviewView.webview.options = {
       enableScripts: true,
       localResourceRoots: [
         this._ctx.extensionUri,
-        ...this._resourceRootsPaths.map((resouceRoot) => {
+        ...localResourceRoots.map((resouceRoot) => {
           return vscode.Uri.parse(resouceRoot)
         }),
       ],

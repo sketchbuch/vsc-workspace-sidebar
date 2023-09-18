@@ -1,4 +1,3 @@
-import { getFileiconThemeConfig } from '../../../config/getConfig'
 import { RenderVars } from '../../../webviews/webviews.interface'
 import { getLangIconNew } from '../../../webviews/Workspace/helpers/getLangIcon'
 import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
@@ -24,7 +23,7 @@ export const treeItemFile = (
     isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
   }`
   const tooltip = getFileTooltip(renderVars, file, 'cur-win')
-  const { condenseFileTree, fileIconKeys, themeProcessorState } = renderVars
+  const { condenseFileTree, fileIconKeys, fileIconsActive, themeProcessorState } = renderVars
 
   const buttons: ConfigButtons = [
     {
@@ -43,8 +42,7 @@ export const treeItemFile = (
   }
 
   const itemButtons = getWorkspaceButtons({ buttons, renderVars })
-  const curFileIconTheme = getFileiconThemeConfig()
-  const showFileIcon = curFileIconTheme && themeProcessorState === 'data-ready'
+  const showFileIcon = fileIconsActive && themeProcessorState === 'data-ready'
   const langIcon = showFileIcon ? getLangIconNew(file.file, fileIconKeys) : ''
 
   return `

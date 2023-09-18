@@ -6,6 +6,7 @@ import {
   CONFIG_EXPLORER_COMPACT_FOLDERS,
   CONFIG_FOLDER,
   CONFIG_SEARCH_MINIMUM,
+  CONFIG_SHOW_FILE_ICONS,
   CONFIG_SHOW_HIERARCHY,
   CONFIG_SHOW_ROOT_FOLDER,
   ConfigActions,
@@ -49,6 +50,10 @@ export const getShowRootFolderConfig = (): boolean => {
 
 export const getShowTreeConfig = (): boolean => {
   return getConfiguration().get('workspaceSidebar.showFolderHierarchy') ?? CONFIG_SHOW_HIERARCHY
+}
+
+export const getShowFileiconConfig = (): boolean => {
+  return getConfiguration().get('workspaceSidebar.showFileIcons') ?? CONFIG_SHOW_FILE_ICONS
 }
 
 // The following are core config options

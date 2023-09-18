@@ -88,6 +88,7 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
   private async processThemeData() {
     this._state = 'loading'
     this.notifyAll() // Let webviews handle loading if they want
+
     await this.deleteThemeData()
 
     const activeFileiconTheme = this.getFileiconTheme()
@@ -143,10 +144,12 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
           })
 
           // Some themes seem not to include fontCharacter in light
+          // so overlay light on to dark to get full props
           if (isLight) {
             const darkKeys = Object.keys(newIconDefinitions).filter(
               (key) => !key.includes('_light')
             )
+
             darkKeys.forEach((key) => {
               const darkElement = newIconDefinitions[key]
               const lightElement = newIconDefinitions[`${key}_light`]
@@ -261,9 +264,6 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
     this._ctx.subscriptions.push(configChange)
   }
 
-  /**
-   * Get cached theme data.
-   */
   public getThemeData(): GetThemeData {
     const themeData = this.getFullThemeData() ?? null
 

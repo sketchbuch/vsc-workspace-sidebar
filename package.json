@@ -141,6 +141,12 @@
           ],
           "scope": "application",
           "type": "string"
+        },
+        "workspaceSidebar.showFileIcons": {
+          "default": true,
+          "markdownDescription": "%config.workspaceShowFileIcons.description%",
+          "scope": "application",
+          "type": "boolean"
         }
       }
     },

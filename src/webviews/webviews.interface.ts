@@ -27,6 +27,7 @@ export interface RenderVars {
   condenseFileTree: boolean
   depth: number
   fileIconKeys: FileIconKeys
+  fileIconsActive: boolean
   imgDarkFolderUri: vscode.Uri
   imgLightFolderUri: vscode.Uri
   searchMinimum: number

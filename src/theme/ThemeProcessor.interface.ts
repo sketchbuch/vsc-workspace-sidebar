@@ -10,6 +10,11 @@ export interface ThemeProcessorObserver {
 
 export interface ObserverableThemeProcessor {
   /**
+   * Get cached theme data.
+   */
+  getThemeData(observer: ThemeProcessorObserver): void
+
+  /**
    * Subscribe to file theme changes.
    */
   subscribe(observer: ThemeProcessorObserver): void

@@ -11,13 +11,13 @@ import { searchForm } from '../snippets/searchForm'
 export const listView = (state: WorkspaceState, renderVars: RenderVars): string => {
   if (state.files.length > 0) {
     const wsFolders = workspace.workspaceFolders ? [...workspace.workspaceFolders] : undefined
-    const { searchMinimum, themeProcessorState } = renderVars
+    const { fileIconsActive, searchMinimum, themeProcessorState } = renderVars
     const showSearch = searchMinimum === 0 || state.files.length >= searchMinimum
 
     return `
-        <section class="view list" data-showsearch=${showSearch} data-folderopen=${
+        <section class="view list" data-fileiconsactive="${fileIconsActive}" data-folderopen="${
       state.wsType === 'folder'
-    }>
+    }" data-showsearch="${showSearch}" >
           ${folderList(state, wsFolders)}
           ${searchForm(state, showSearch)}
           ${
