@@ -7,12 +7,14 @@ import {
   CONFIG_FOLDER,
   CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_FILE_ICONS,
+  CONFIG_SHOW_FILE_ICONS_CONFIG,
   CONFIG_SHOW_HIERARCHY,
   CONFIG_SHOW_ROOT_FOLDER,
   ConfigActions,
   ConfigShowPaths,
 } from '../constants/config'
 import { ThemeId } from '../theme/ThemeProcessor.interface'
+import { FileIconKeysCustom } from '../webviews/webviews.interface'
 
 const { getConfiguration } = workspace
 
@@ -54,6 +56,12 @@ export const getShowTreeConfig = (): boolean => {
 
 export const getShowFileiconConfig = (): boolean => {
   return getConfiguration().get('workspaceSidebar.showFileIcons') ?? CONFIG_SHOW_FILE_ICONS
+}
+
+export const getShowFileiconsConfigConfig = (): FileIconKeysCustom => {
+  return (
+    getConfiguration().get('workspaceSidebar.showFileIconsConfig') ?? CONFIG_SHOW_FILE_ICONS_CONFIG
+  )
 }
 
 // The following are core config options

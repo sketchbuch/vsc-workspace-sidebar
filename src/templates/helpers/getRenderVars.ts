@@ -5,32 +5,11 @@ import {
   getFileiconThemeConfig,
   getSearchMinConfig,
   getShowFileiconConfig,
+  getShowFileiconsConfigConfig,
   getShowRootFolderConfig,
   getShowTreeConfig,
 } from '../../config/getConfig'
-import {
-  FileIconKeys,
-  FileIconKeysCustom,
-  RenderVars,
-  TemplateVars,
-} from '../../webviews/webviews.interface'
-
-// Example custom matchers - move to config
-const iconMap: FileIconKeysCustom = {
-  dart: ['flutter'],
-  java: ['ea'],
-  javascript: ['js', 'gnome'],
-  js: ['gnome'],
-  markdown: ['obsidian', 'review', 'sketchbuch'],
-  md: ['obsidian', 'review', 'sketchbuch'],
-  python: ['py'],
-  react: ['rjs'],
-  ts: ['deadfire', 'vsc', 'vscode', 'electron', 'todo'],
-  typescript: ['deadfire', 'ts', 'vsc', 'vscode'],
-  typescriptreact: ['electron', 'todo'],
-  yaml: ['ansible'],
-  yml: ['ansible'],
-}
+import { FileIconKeys, RenderVars, TemplateVars } from '../../webviews/webviews.interface'
 
 export const getRenderVars = ({
   imgDarkFolderUri,
@@ -38,6 +17,7 @@ export const getRenderVars = ({
   themeData,
 }: TemplateVars): RenderVars => {
   const showFileiconConfig = getShowFileiconConfig()
+  const showFileiconsConfigConfig = getShowFileiconsConfigConfig()
   const curFileIconTheme = getFileiconThemeConfig()
   const fileIconsActive = showFileiconConfig && !!curFileIconTheme
 
@@ -45,8 +25,8 @@ export const getRenderVars = ({
   const fileIconKeys: FileIconKeys = {}
 
   if (fileIconsActive && data) {
-    if (iconMap) {
-      fileIconKeys.custom = iconMap
+    if (showFileiconsConfigConfig) {
+      fileIconKeys.custom = showFileiconsConfigConfig
     }
 
     if (data.fileExtensions) {
