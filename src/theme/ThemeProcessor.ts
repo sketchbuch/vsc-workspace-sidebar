@@ -73,9 +73,9 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
     if (cacheMiss) {
       this.processThemeData()
     } else {
-      // this._state = 'data-ready'
-      // this.notifyAll()
-      this.processThemeData()
+      console.log('### cache HIT')
+      this._state = 'data-ready'
+      this.notifyAll()
     }
   }
 
