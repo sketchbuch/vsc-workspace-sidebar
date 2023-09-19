@@ -2,7 +2,7 @@ import * as path from 'path'
 import { FileIconKeys } from '../webviews/webviews.interface'
 import { checkCustomSegments } from './checkCustomSegments'
 import { checkThemeSegments } from './checkThemeSegments'
-import { getNameSegments, getPathSegments } from './getSegments'
+import { getNameSegments, getPathSegments } from './getFileSegments'
 
 export const getLangIcon = (file: string, fileIconKeys: FileIconKeys): string => {
   const { custom, fileExtensions, languageIds } = fileIconKeys
