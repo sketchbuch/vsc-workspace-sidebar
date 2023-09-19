@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
+import * as fileIcons from '../../../../../templates/workspace/snippets/fileIconFile'
 import { listItem } from '../../../../../templates/workspace/snippets/listItem'
 import * as buttons from '../../../../../templates/workspace/snippets/listItemButtons'
 import * as icons from '../../../../../templates/workspace/snippets/listItemIcon'
@@ -34,6 +35,7 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
   test('Renders selected files correctly', () => {
     const btnSpy = sinon.spy(buttons, 'listItemButtons')
     const iconSpy = sinon.spy(icons, 'listItemIcon')
+    const iconFileSpy = sinon.spy(fileIcons, 'fileIconFile')
 
     const file = { ...file1, isSelected: true, showPath: false }
     const result = listItem(file, mockState, mockRenderVars)
@@ -54,14 +56,17 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
     ])
     sinon.assert.callCount(iconSpy, 1)
     sinon.assert.calledWith(iconSpy, mockRenderVars)
+    sinon.assert.notCalled(iconFileSpy)
 
     btnSpy.restore()
     iconSpy.restore()
+    iconFileSpy.restore()
   })
 
   test('Renders unselected files correctly', () => {
     const btnSpy = sinon.spy(buttons, 'listItemButtons')
     const iconSpy = sinon.spy(icons, 'listItemIcon')
+    const iconFileSpy = sinon.spy(fileIcons, 'fileIconFile')
 
     const file = { ...file1, showPath: false }
     const result = listItem(file, mockState, mockRenderVars)
@@ -88,8 +93,20 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
       },
     ])
     sinon.assert.callCount(iconSpy, 0)
+    sinon.assert.notCalled(iconFileSpy)
 
     btnSpy.restore()
     iconSpy.restore()
+    iconFileSpy.restore()
+  })
+
+  test('Renders file icon if needed', () => {
+    const iconFileSpy = sinon.spy(fileIcons, 'fileIconFile')
+
+    const file = { ...file1, isSelected: true, showPath: false }
+    listItem(file, mockState, getMockRenderVars({ fileIconsActive: true }))
+    sinon.assert.calledOnce(iconFileSpy)
+
+    iconFileSpy.restore()
   })
 })
