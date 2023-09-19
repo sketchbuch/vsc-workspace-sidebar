@@ -17,7 +17,6 @@ export const getRenderVars = ({
   themeData,
 }: TemplateVars): RenderVars => {
   const showFileiconConfig = getShowFileiconConfig()
-  const showFileiconsConfigConfig = getShowFileiconsConfigConfig()
   const curFileIconTheme = getFileiconThemeConfig()
   const fileIconsActive = showFileiconConfig && !!curFileIconTheme
 
@@ -25,18 +24,18 @@ export const getRenderVars = ({
   const fileIconKeys: FileIconKeys = {}
 
   if (fileIconsActive && data) {
+    const showFileiconsConfigConfig = getShowFileiconsConfigConfig()
+
     if (showFileiconsConfigConfig) {
       fileIconKeys.custom = showFileiconsConfigConfig
     }
 
     if (data.fileExtensions) {
       fileIconKeys.fileExtensions = Object.keys(data.fileExtensions).map((key) => key)
-      fileIconKeys.fileExtensions.sort()
     }
 
     if (data.languageIds) {
       fileIconKeys.languageIds = Object.keys(data.languageIds).map((key) => key)
-      fileIconKeys.languageIds.sort()
     }
 
     if (data.file) {

@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { ExtensionContext } from 'vscode'
+import { DEFAULT_THEME } from '../../../theme/constants'
 import { ThemeProcessor } from '../../../themeNpm/ThemeProcessor'
 import { ThemeCacheData, ThemeProcessorObserver } from '../../../themeNpm/ThemeProcessor.interface'
 import { getMockContext } from './mocks/mockContext'
@@ -40,12 +41,12 @@ suite('Theme > ThemeProcessor()', () => {
         fonts: [],
         iconDefinitions: {
           typescript: {
-            fontId: 'vs-seti',
+            fontId: DEFAULT_THEME,
             fontSize: '120%',
           },
         },
       },
-      themeId: 'vs-seti',
+      themeId: DEFAULT_THEME,
       timestamp: 1695041763,
     }
 

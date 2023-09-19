@@ -6,8 +6,12 @@ import {
   getCleanLabelsConfig,
   getCondenseFileTreeConfig,
   getDepthConfig,
+  getExplorerCompactFoldersConfig,
+  getFileiconThemeConfig,
   getFolderConfig,
   getSearchMinConfig,
+  getShowFileiconConfig,
+  getShowFileiconsConfigConfig,
   getShowPathsConfig,
   getShowRootFolderConfig,
   getShowTreeConfig,
@@ -16,8 +20,11 @@ import {
   CONFIG_CLEAN_LABELS,
   CONFIG_CONDENSE_FILETREE,
   CONFIG_DEPTH,
+  CONFIG_EXPLORER_COMPACT_FOLDERS,
   CONFIG_FOLDER,
   CONFIG_SEARCH_MINIMUM,
+  CONFIG_SHOW_FILE_ICONS,
+  CONFIG_SHOW_FILE_ICONS_CONFIG,
   CONFIG_SHOW_HIERARCHY,
   CONFIG_SHOW_ROOT_FOLDER,
   ConfigActions,
@@ -32,6 +39,8 @@ suite.skip('Config > getConfig:', () => {
     stub = sinon.stub(workspace, 'getConfiguration').callsFake(() => {
       return {
         get: (section: string) => {
+          console.log('### test')
+
           return undefined
         },
       } as WorkspaceConfiguration
@@ -52,6 +61,10 @@ suite.skip('Config > getConfig:', () => {
     expect(getCleanLabelsConfig()).to.equal(CONFIG_CLEAN_LABELS)
   })
 
+  test('getCondenseFileTreeConfig() returns the default if no config value is set', () => {
+    expect(getCondenseFileTreeConfig()).to.equal(CONFIG_CONDENSE_FILETREE)
+  })
+
   test('getDepthConfig() returns the default if no config value is set', () => {
     expect(getDepthConfig()).to.equal(CONFIG_DEPTH)
   })
@@ -68,15 +81,27 @@ suite.skip('Config > getConfig:', () => {
     expect(getShowPathsConfig()).to.equal(ConfigShowPaths.NEVER)
   })
 
+  test('getShowRootFolderConfig() returns the default if no config value is set', () => {
+    expect(getShowRootFolderConfig()).to.equal(CONFIG_SHOW_ROOT_FOLDER)
+  })
+
   test('getShowTreeConfig() returns the default if no config value is set', () => {
     expect(getShowTreeConfig()).to.equal(CONFIG_SHOW_HIERARCHY)
   })
 
-  test('getCondenseFileTreeConfig() returns the default if no config value is set', () => {
-    expect(getCondenseFileTreeConfig()).to.equal(CONFIG_CONDENSE_FILETREE)
+  test('getShowFileiconConfig() returns the default if no config value is set', () => {
+    expect(getShowFileiconConfig()).to.equal(CONFIG_SHOW_FILE_ICONS)
   })
 
-  test('getShowRootFolderConfig() returns the default if no config value is set', () => {
-    expect(getShowRootFolderConfig()).to.equal(CONFIG_SHOW_ROOT_FOLDER)
+  test('getShowFileiconsConfigConfig() returns the default if no config value is set', () => {
+    expect(getShowFileiconsConfigConfig()).to.equal(CONFIG_SHOW_FILE_ICONS_CONFIG)
+  })
+
+  test('getExplorerCompactFoldersConfig() returns the default if no config value is set', () => {
+    expect(getExplorerCompactFoldersConfig()).to.equal(CONFIG_EXPLORER_COMPACT_FOLDERS)
+  })
+
+  test('getFileiconThemeConfig() returns the default if no config value is set', () => {
+    expect(getFileiconThemeConfig()).to.equal('vs-seti')
   })
 })

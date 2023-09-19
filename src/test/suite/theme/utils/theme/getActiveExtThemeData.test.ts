@@ -3,6 +3,7 @@ import mockFs from 'mock-fs'
 import * as os from 'os'
 import * as sinon from 'sinon'
 
+import { DEFAULT_THEME } from '../../../../../theme/constants'
 import {
   getDefaultExtThemeData,
   getUserExtThemeData,
@@ -19,13 +20,11 @@ suite('Theme > Utils > Theme >', () => {
     })
 
     test('Returns ext data if the theme ID is a theme extension', () => {
-      const themeId = 'vs-seti'
-
-      expect(getDefaultExtThemeData(themeId)).to.eql({
+      expect(getDefaultExtThemeData(DEFAULT_THEME)).to.eql({
         extId: 'vscode.vscode-theme-seti',
         extPath: '/usr/share/code/resources/app/extensions/theme-seti',
-        themeId: themeId,
-        themePath: `./icons/${themeId}-icon-theme.json`,
+        themeId: DEFAULT_THEME,
+        themePath: `./icons/${DEFAULT_THEME}-icon-theme.json`,
       })
     })
   })

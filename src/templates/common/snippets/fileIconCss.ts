@@ -177,8 +177,6 @@ export const fileIconCss = (
   const defs = cssDefinitions(data, defaultBaseClass)
   const defKeys = Object.keys(defs)
 
-  defKeys.reverse()
-
   return `<style id="file-icon-css" media="screen" nonce="${nonce}" data-defcount="${
     defKeys.length
   }" data-themeid="${themeId}"  type="text/css">

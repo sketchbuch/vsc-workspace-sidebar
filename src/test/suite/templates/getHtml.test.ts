@@ -8,7 +8,7 @@ import { mockExtensionUri } from '../../mocks/mockExtensionUri'
 import { mockFsStructure } from '../../mocks/mockFsStructure'
 import { getMockState } from '../../mocks/mockState'
 import { getMockTemplateVars } from '../../mocks/mockTemplateVars'
-import { mockThemeData } from '../../mocks/mockThemeData'
+import { getMockThemeData } from '../../mocks/mockThemeData'
 import { mockWebView } from '../../mocks/mockWebview'
 
 suite('Templates > getHtml()', () => {
@@ -25,7 +25,7 @@ suite('Templates > getHtml()', () => {
         webview: mockWebView,
       },
       template,
-      themeData: mockThemeData,
+      themeData: getMockThemeData(),
     }
   }
 

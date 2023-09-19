@@ -1,9 +1,9 @@
 import { ThemeProcessor } from '../../themeNpm/ThemeProcessor'
 import { ThemeProcessorObserver } from '../../themeNpm/ThemeProcessor.interface'
-import { mockThemeData } from './mockThemeData'
+import { getMockThemeData } from './mockThemeData'
 
 export const mockThemeDataProvider = {
-  getThemeData: () => mockThemeData,
+  getThemeData: () => getMockThemeData(),
   subscribe: (observer: ThemeProcessorObserver) => {},
   unsubscribe: (observer: ThemeProcessorObserver) => {},
 } as ThemeProcessor
