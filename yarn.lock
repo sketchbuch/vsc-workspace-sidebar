@@ -8201,10 +8201,10 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vscode-ext-localisation@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/vscode-ext-localisation/-/vscode-ext-localisation-1.0.1.tgz#59c2b2b9f7e59b1d22241b8b351a54307425d5d0"
-  integrity sha512-re70E6VxInCMf4AoNehDh4G3sJTwA7d+mi/5ZdVQhBFK4IHRgbOQajaGA440RL64NKO7SPVG9MOLZOIJ7FoRIg==
+vscode-ext-localisation@^1.1.1:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/vscode-ext-localisation/-/vscode-ext-localisation-1.1.0.tgz#acf5cb18adcc69c44bb5388f8b3d892d7f6ba94c"
+  integrity sha512-O07j8xDeOkx2isdZ7DfuhAbfuub9PMMtZxVTMnyHyGnzC6P8Wf78w/770SJDsssvQQ7HZXQ1ZWKmtLcQ87LKLg==
   dependencies:
     path "^0.12.7"
 
