@@ -5,8 +5,8 @@ import {
   ThemeFontDefinition,
   ThemeJsonIconDef,
   ThemeJsonIconMap,
-} from '../../../theme/ThemeProcessor.interface'
-import { cleanFileIconKey } from '../../../theme/utils/strings/cleanFileIconKey'
+} from '../../../themeNpm/ThemeProcessor.interface'
+import { cleanFileIconKey } from '../../../themeNpm/utils/strings/cleanFileIconKey'
 
 interface CssProp {
   key: string

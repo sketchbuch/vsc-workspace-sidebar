@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { checkThemeSegments } from '../../../theme2/checkThemeSegments'
+import { checkThemeSegments } from '../../../theme/checkThemeSegments'
 
 suite('Themes > checkThemeSegments():', () => {
   const match = 'typescript'

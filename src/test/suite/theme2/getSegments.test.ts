@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import * as path from 'path'
-import { getNameSegments, getPathSegments } from '../../../theme2/getSegments'
+import { getNameSegments, getPathSegments } from '../../../theme/getSegments'
 
 suite('Themes > Get Segments:', () => {
   test('getNameSegments() returns a normalised array of name parts', () => {

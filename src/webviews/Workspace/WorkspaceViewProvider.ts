@@ -21,8 +21,8 @@ import {
 import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
-import { ThemeProcessor } from '../../theme/ThemeProcessor'
-import { ThemeProcessorObserver } from '../../theme/ThemeProcessor.interface'
+import { ThemeProcessor } from '../../themeNpm/ThemeProcessor'
+import { ThemeProcessorObserver } from '../../themeNpm/ThemeProcessor.interface'
 import { getTimestamp } from '../../utils/datetime/getTimestamp'
 import { HtmlData, PostMessage } from '../webviews.interface'
 import {

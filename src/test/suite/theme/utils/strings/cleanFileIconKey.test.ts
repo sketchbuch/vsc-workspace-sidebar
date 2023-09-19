@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { cleanFileIconKey } from '../../../../../theme/utils/strings/cleanFileIconKey'
+import { cleanFileIconKey } from '../../../../../themeNpm/utils/strings/cleanFileIconKey'
 
 interface TestObject {
   cleanedKey: string

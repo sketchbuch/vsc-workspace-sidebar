@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { checkCustomSegments } from '../../../theme2/checkCustomSegments'
+import { checkCustomSegments } from '../../../theme/checkCustomSegments'
 
 suite('Themes > checkCustomSegments():', () => {
   const match = 'typescript'

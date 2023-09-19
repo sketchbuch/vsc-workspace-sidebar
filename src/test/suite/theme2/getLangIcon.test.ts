@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { FS_WS_FILETYPE } from '../../../constants/fs'
-import { getLangIcon } from '../../../theme2/getLangIcon'
+import { getLangIcon } from '../../../theme/getLangIcon'
 import { FileIconKeys } from '../../../webviews/webviews.interface'
 
 interface GetFile {

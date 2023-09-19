@@ -6,7 +6,7 @@ import * as sinon from 'sinon'
 import {
   getDefaultExtThemeData,
   getUserExtThemeData,
-} from '../../../../../theme/utils/theme/getActiveExtThemeData'
+} from '../../../../../themeNpm/utils/theme/getActiveExtThemeData'
 
 suite('Theme > Utils > Theme >', () => {
   suite('getDefaultExtThemeData():', () => {

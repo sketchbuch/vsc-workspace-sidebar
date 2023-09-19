@@ -1,4 +1,4 @@
-import { GetThemeData } from '../../theme/ThemeProcessor.interface'
+import { GetThemeData } from '../../themeNpm/ThemeProcessor.interface'
 
 export const mockThemeData: GetThemeData = {
   data: {

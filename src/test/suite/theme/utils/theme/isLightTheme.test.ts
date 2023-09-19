@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import * as vscode from 'vscode'
 
-import { isLightTheme } from '../../../../../theme/utils/theme/isLightTheme'
+import { isLightTheme } from '../../../../../themeNpm/utils/theme/isLightTheme'
 
 suite('Theme > Utils > Theme > isLightTheme()', () => {
   test('Returns false if the theme is "Dark"', () => {

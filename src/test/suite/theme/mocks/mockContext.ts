@@ -1,6 +1,6 @@
 import * as path from 'path'
 import * as vscode from 'vscode'
-import { ThemeCacheData } from '../../../../theme/ThemeProcessor.interface'
+import { ThemeCacheData } from '../../../../themeNpm/ThemeProcessor.interface'
 import { getMockUri } from './mockExtensionUri'
 
 interface MockStorage {

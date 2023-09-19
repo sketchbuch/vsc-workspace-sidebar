@@ -1,5 +1,5 @@
-import { ThemeProcessor } from '../../theme/ThemeProcessor'
-import { ThemeProcessorObserver } from '../../theme/ThemeProcessor.interface'
+import { ThemeProcessor } from '../../themeNpm/ThemeProcessor'
+import { ThemeProcessorObserver } from '../../themeNpm/ThemeProcessor.interface'
 import { mockThemeData } from './mockThemeData'
 
 export const mockThemeDataProvider = {

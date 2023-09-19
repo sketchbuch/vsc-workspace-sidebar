@@ -1,4 +1,4 @@
-import { cleanFileIconKey } from '../../../theme/utils/strings/cleanFileIconKey'
+import { cleanFileIconKey } from '../../../themeNpm/utils/strings/cleanFileIconKey'
 
 export const fileIconFile = (icon: string): string => {
   return `

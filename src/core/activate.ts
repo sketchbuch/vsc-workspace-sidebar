@@ -1,7 +1,7 @@
 import * as vscode from 'vscode'
 import { getVscodeLang, loadTranslations } from 'vscode-ext-localisation'
 import { registerCommands } from '../commands/registerCommands'
-import { ThemeProcessor } from '../theme/ThemeProcessor'
+import { ThemeProcessor } from '../themeNpm/ThemeProcessor'
 import { WorkspaceViewProvider } from '../webviews/Workspace/WorkspaceViewProvider'
 import { configOptions } from '../webviews/configOptions'
 import { registerWebviews } from '../webviews/registerWebviews'

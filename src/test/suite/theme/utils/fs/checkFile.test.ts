@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import mockFs from 'mock-fs'
 import * as path from 'path'
-import { checkFile } from '../../../../../theme/utils/fs/checkFile'
+import { checkFile } from '../../../../../themeNpm/utils/fs/checkFile'
 import { mockFsStructure } from '../../mocks/mockFsStructure'
 
 suite('Theme > Utils > Fs > checkFile()', () => {

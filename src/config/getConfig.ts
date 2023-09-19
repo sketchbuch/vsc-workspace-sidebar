@@ -13,7 +13,7 @@ import {
   ConfigActions,
   ConfigShowPaths,
 } from '../constants/config'
-import { ThemeId } from '../theme/ThemeProcessor.interface'
+import { ThemeId } from '../themeNpm/ThemeProcessor.interface'
 import { FileIconKeysCustom } from '../webviews/webviews.interface'
 
 const { getConfiguration } = workspace

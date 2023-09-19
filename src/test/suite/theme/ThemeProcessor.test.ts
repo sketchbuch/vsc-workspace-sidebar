@@ -1,8 +1,8 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { ExtensionContext } from 'vscode'
-import { ThemeProcessor } from '../../../theme/ThemeProcessor'
-import { ThemeCacheData, ThemeProcessorObserver } from '../../../theme/ThemeProcessor.interface'
+import { ThemeProcessor } from '../../../themeNpm/ThemeProcessor'
+import { ThemeCacheData, ThemeProcessorObserver } from '../../../themeNpm/ThemeProcessor.interface'
 import { getMockContext } from './mocks/mockContext'
 
 suite('Theme > ThemeProcessor()', () => {
