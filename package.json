@@ -261,7 +261,7 @@
     "@vscode/webview-ui-toolkit": "^1.2.2",
     "crypto": "^1.0.1",
     "json5": "^2.2.3",
-    "vscode-ext-localisation": "^1.1.1"
+    "vscode-ext-localisation": "^1.1.0"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",
