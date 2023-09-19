@@ -23,7 +23,7 @@ import { isLightTheme } from './utils/theme/isLightTheme'
 export class ThemeProcessor implements ObserverableThemeProcessor {
   private _observers: Set<ThemeProcessorObserver>
   private readonly _cacheDuration = 604800 // 1 Week
-  private readonly _cacheKey = `themeProcessor-cache`
+  private readonly _cacheKey = 'themeProcessor-cache'
   private _state: ThemeProcessorState = 'idle'
 
   constructor(private readonly _ctx: vscode.ExtensionContext) {
@@ -73,7 +73,6 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
     if (cacheMiss) {
       this.processThemeData()
     } else {
-      console.log('### cache HIT')
       this._state = 'data-ready'
       this.notifyAll()
     }
@@ -279,7 +278,7 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
     this._observers.add(observer)
   }
 
-  public unsubscribe(observer: ThemeProcessorObserver) {
-    this._observers.delete(observer)
+  public unsubscribe(observer: ThemeProcessorObserver): boolean {
+    return this._observers.delete(observer)
   }
 }

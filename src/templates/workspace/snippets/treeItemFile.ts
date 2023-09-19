@@ -1,6 +1,6 @@
-import { RenderVars } from '../../../webviews/webviews.interface'
-import { getLangIcon } from '../../../webviews/Workspace/helpers/getLangIcon'
+import { getLangIcon } from '../../../theme2/getLangIcon'
 import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { RenderVars } from '../../../webviews/webviews.interface'
 import { getFileTooltip } from '../../helpers/getFileTooltip'
 import { getLabel } from '../../helpers/getLabel'
 import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceButtons'

@@ -2,22 +2,10 @@ import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { ExtensionContext } from 'vscode'
 import { ThemeProcessor } from '../../../theme/ThemeProcessor'
-// import { ThemeCacheData } from '../../../theme/ThemeProcessor.interface'
+import { ThemeCacheData, ThemeProcessorObserver } from '../../../theme/ThemeProcessor.interface'
 import { getMockContext } from './mocks/mockContext'
 
 suite('Theme > ThemeProcessor()', () => {
-  /* const themeCacheData: ThemeCacheData = {
-    themeData: {
-      iconDefinitions: {},
-      fileExtensions: {},
-      fileNames: {},
-      languageIds: {},
-      fonts: [],
-    },
-    themeId: 'vs-seti',
-    timestamp: Math.floor(Date.now() / 1000),
-  } */
-
   let mockContext: ExtensionContext
   let getStore: sinon.SinonSpy
   let themeProcessor: ThemeProcessor
@@ -35,10 +23,48 @@ suite('Theme > ThemeProcessor()', () => {
     updateStore.restore()
   })
 
-  test('getThemeData() returns null if there is no data', () => {
+  test('getThemeData() returns expected theme data if there is no data', () => {
     const data = themeProcessor.getThemeData()
-    expect(data).to.be.null
+    expect(data).to.eql({
+      data: null,
+      localResourceRoots: [],
+      state: 'loading',
+      themeId: null,
+    })
   })
 
-  // Set data on thecache directly and test what getthemedata returns
+  test('getThemeData() returns expected theme data if there is data', async () => {
+    const mockData: ThemeCacheData = {
+      localResourceRoots: ['some/path/to/serve/from'],
+      themeData: {
+        fonts: [],
+        iconDefinitions: {
+          typescript: {
+            fontId: 'vs-seti',
+            fontSize: '120%',
+          },
+        },
+      },
+      themeId: 'vs-seti',
+      timestamp: 1695041763,
+    }
+
+    await mockContext.globalState.update('themeProcessor-cache', mockData)
+    const data = themeProcessor.getThemeData()
+
+    expect(data).to.eql({
+      data: mockData.themeData,
+      localResourceRoots: mockData.localResourceRoots,
+      state: 'loading',
+      themeId: mockData.themeId,
+    })
+  })
+
+  test('subscribe && unsubscribe work as expected', () => {
+    const observer = { notify: () => null } as ThemeProcessorObserver
+
+    expect(themeProcessor.unsubscribe(observer)).to.be.false
+    themeProcessor.subscribe(observer)
+    expect(themeProcessor.unsubscribe(observer)).to.be.true
+  })
 })
