@@ -53,7 +53,7 @@ export interface ThemeFontDefinition {
   src: ThemeFontDefinitionSrc[]
 }
 
-interface ThemeIconAssociation {
+export interface ThemeIconAssociation {
   file?: ThemeJsonIconSingle // Icon for file
   fileExtensions?: ThemeJsonIconMap // Icons for file extensions
   fileNames?: ThemeJsonIconMap // Icons for filenames

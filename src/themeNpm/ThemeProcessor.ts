@@ -6,13 +6,13 @@ import {
   GetThemeData,
   ObserverableThemeProcessor,
   ThemeCacheData,
+  ThemeData,
   ThemeFontDefinition,
+  ThemeIconAssociation,
   ThemeId,
   ThemeJson,
   ThemeJsonIconDef,
   ThemeJsonIconDefs,
-  ThemeJsonIconMap,
-  ThemeJsonIconSingle,
   ThemeProcessorObserver,
   ThemeProcessorState,
 } from './ThemeProcessor.interface'
@@ -76,6 +76,59 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
       this._state = 'data-ready'
       this.notifyAll()
     }
+  }
+
+  private flattenData = (
+    themeData: ThemeData,
+    isThemeDeepDataType: boolean,
+    deepData?: ThemeIconAssociation
+  ): ThemeData => {
+    if (isThemeDeepDataType && deepData) {
+      return {
+        ...themeData,
+        fileExtensions: { ...themeData.fileExtensions, ...(deepData.fileExtensions ?? {}) },
+        file: deepData.file ?? themeData.file,
+        fileNames: { ...themeData.fileNames, ...(deepData.fileNames ?? {}) },
+        folderExpanded: deepData.folderExpanded ?? themeData.folderExpanded,
+        folder: deepData.folder ?? themeData.folder,
+        folderNames: { ...themeData.folderNames, ...(deepData.folderNames ?? {}) },
+        folderNamesExpanded: {
+          ...themeData.folderNamesExpanded,
+          ...(deepData.folderNamesExpanded ?? {}),
+        },
+        languageIds: { ...themeData.languageIds, ...(deepData.languageIds ?? {}) },
+        rootFolder: deepData.rootFolder ?? themeData.rootFolder,
+        rootFolderExpanded: deepData.rootFolderExpanded ?? themeData.rootFolderExpanded,
+      }
+    }
+
+    return themeData
+  }
+
+  private normaliseData = (
+    jsonData: ThemeJson,
+    isLight: boolean,
+    isHighContrast: boolean
+  ): ThemeData => {
+    let themeData: ThemeData = {
+      file: jsonData.file ?? undefined,
+      fileExtensions: { ...(jsonData.fileExtensions ?? {}) },
+      fileNames: { ...(jsonData.fileNames ?? {}) },
+      folder: jsonData.folder ?? undefined,
+      folderExpanded: jsonData.folderExpanded ?? undefined,
+      folderNames: { ...(jsonData.folderNames ?? {}) },
+      folderNamesExpanded: { ...(jsonData.folderNamesExpanded ?? {}) },
+      fonts: [],
+      iconDefinitions: {},
+      languageIds: { ...(jsonData.languageIds ?? {}) },
+      rootFolder: jsonData.rootFolder ?? undefined,
+      rootFolderExpanded: jsonData.rootFolderExpanded ?? undefined,
+    }
+
+    themeData = this.flattenData(themeData, isLight, jsonData.light)
+    themeData = this.flattenData(themeData, isHighContrast, jsonData.highContrast)
+
+    return themeData
   }
 
   private notifyAll() {
@@ -159,64 +212,12 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
             })
           }
 
-          let fileExtensions: ThemeJsonIconMap = { ...(jsonData.fileExtensions ?? {}) }
-          let fileIcon: ThemeJsonIconSingle = jsonData.file ?? undefined
-          let fileNames: ThemeJsonIconMap = { ...(jsonData.fileNames ?? {}) }
-          let folderExpanded: ThemeJsonIconSingle = jsonData.folderExpanded ?? undefined
-          let folderIcon: ThemeJsonIconSingle = jsonData.folder ?? undefined
-          let folderNames: ThemeJsonIconMap = { ...(jsonData.folderNames ?? {}) }
-          let folderNamesExpanded: ThemeJsonIconMap = { ...(jsonData.folderNamesExpanded ?? {}) }
-          let languageIds: ThemeJsonIconMap = { ...(jsonData.languageIds ?? {}) }
-          let rootFolder: ThemeJsonIconSingle = jsonData.rootFolder ?? undefined
-          let rootFolderExpanded: ThemeJsonIconSingle = jsonData.rootFolderExpanded ?? undefined
-
-          if (isLight && jsonData.light) {
-            fileExtensions = { ...fileExtensions, ...(jsonData.light.fileExtensions ?? {}) }
-            fileIcon = jsonData.light.file ?? fileIcon
-            fileNames = { ...fileNames, ...(jsonData.light.fileNames ?? {}) }
-            folderExpanded = jsonData.light.folderExpanded ?? folderExpanded
-            folderIcon = jsonData.light.folder ?? folderIcon
-            folderNames = { ...folderNames, ...(jsonData.light.folderNames ?? {}) }
-            folderNamesExpanded = {
-              ...folderNamesExpanded,
-              ...(jsonData.light.folderNamesExpanded ?? {}),
-            }
-            languageIds = { ...languageIds, ...(jsonData.light.languageIds ?? {}) }
-            rootFolder = jsonData.light.rootFolder ?? rootFolder
-            rootFolderExpanded = jsonData.light.rootFolderExpanded ?? rootFolderExpanded
-          }
-
-          if (isHighContrast && jsonData.highContrast) {
-            fileExtensions = { ...fileExtensions, ...(jsonData.highContrast.fileExtensions ?? {}) }
-            fileIcon = jsonData.highContrast.file ?? fileIcon
-            fileNames = { ...fileNames, ...(jsonData.highContrast.fileNames ?? {}) }
-            folderExpanded = jsonData.highContrast.folderExpanded ?? folderExpanded
-            folderIcon = jsonData.highContrast.folder ?? folderIcon
-            folderNames = { ...folderNames, ...(jsonData.highContrast.folderNames ?? {}) }
-            folderNamesExpanded = {
-              ...folderNamesExpanded,
-              ...(jsonData.highContrast.folderNamesExpanded ?? {}),
-            }
-            languageIds = { ...languageIds, ...(jsonData.highContrast.languageIds ?? {}) }
-            rootFolder = jsonData.highContrast.rootFolder ?? rootFolder
-            rootFolderExpanded = jsonData.highContrast.rootFolderExpanded ?? rootFolderExpanded
-          }
-
           const themeCacheData: ThemeCacheData = {
             localResourceRoots: [activeExtThemeData.extPath],
             themeData: {
-              file: fileIcon,
-              fileExtensions,
-              fileNames,
-              folder: folderIcon,
-              folderExpanded,
-              folderNames,
-              folderNamesExpanded,
+              ...this.normaliseData(jsonData, isLight, isHighContrast),
               fonts: fontsData,
               iconDefinitions: newIconDefinitions,
-              languageIds,
-              rootFolder,
-              rootFolderExpanded,
             },
             themeId: activeFileiconTheme,
             timestamp: this.getTimestamp(),
