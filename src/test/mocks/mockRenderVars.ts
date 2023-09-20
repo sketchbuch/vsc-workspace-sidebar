@@ -26,7 +26,7 @@ export const getMockRenderVars = (renderVars: Partial<RenderVars> = {}): RenderV
     searchMinimum: CONFIG_SEARCH_MINIMUM,
     showRootFolder: CONFIG_SHOW_ROOT_FOLDER,
     showTree: CONFIG_SHOW_HIERARCHY,
-    themeProcessorState: 'data-ready',
+    themeProcessorState: 'ready',
     ...renderVars,
   }
 }

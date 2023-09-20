@@ -4,6 +4,7 @@ import {
   ThemeJson,
   ThemeJsonIconDef,
   ThemeJsonIconMap,
+  ThemeJsonIconSingle,
 } from '../ThemeProcessor.interface'
 import { cleanFileIconKey } from '../utils/strings/cleanFileIconKey'
 import {
@@ -39,7 +40,6 @@ export class CssGenerator implements CssGeneratorInterface {
   private getCssDefinition(
     classes: CssDefinition,
     key: string,
-    type: string,
     data?: ThemeJsonIconMap
   ): CssDefinition {
     const newClasses = [...classes]
@@ -49,7 +49,7 @@ export class CssGenerator implements CssGeneratorInterface {
         if (iconKey === key) {
           const cleanedIconKey = cleanFileIconKey(dataType)
 
-          const newClass = `.${this._baseClass}.${this._baseClass}-lang-${cleanedIconKey}`
+          const newClass = `.${this._baseClass}.${this._baseClass}-type-${cleanedIconKey}`
 
           if (!newClasses.includes(newClass)) {
             newClasses.push(newClass)
@@ -124,31 +124,54 @@ export class CssGenerator implements CssGeneratorInterface {
             )
             .join(', ')
 
-          return `@font-face { font-family: '${font.id}'; src: ${src}; font-weight: ${font.weight}; font-style: ${font.style}; font-display: block; }\n`
+          return `@font-face { font-family: '${font.id}'; src: ${src}; font-weight: ${font.weight}; font-style: ${font.style}; font-display: block; }`
         })
-        .join('\n')
+        .join('')
     }
 
     return ''
   }
 
   private cssDefinitions(themeData: ThemeJson) {
-    const { file, iconDefinitions, fileExtensions, fileNames, languageIds } = themeData
+    const {
+      file,
+      fileExtensions,
+      fileNames,
+      folder,
+      folderExpanded,
+      folderNames,
+      folderNamesExpanded,
+      iconDefinitions,
+      languageIds,
+      rootFolder,
+      rootFolderExpanded,
+    } = themeData
     const defs: CssDefinitions = {}
-    let defaultFileAdded = false
+    const singleIcons: { icon: string; isSet: boolean; value: ThemeJsonIconSingle }[] = [
+      { icon: 'file', isSet: false, value: file },
+      { icon: 'folder', isSet: false, value: folder },
+      { icon: 'folderExpanded', isSet: false, value: folderExpanded },
+      { icon: 'rootFolder', isSet: false, value: rootFolder },
+      { icon: 'rootFolderExpanded', isSet: false, value: rootFolderExpanded },
+    ]
 
     Object.keys(iconDefinitions).forEach((key) => {
       let classes: CssDefinition = []
 
-      classes = this.getCssDefinition(classes, key, 'ext', fileExtensions)
-      classes = this.getCssDefinition(classes, key, 'name', fileNames)
-      classes = this.getCssDefinition(classes, key, 'lang', languageIds)
+      classes = this.getCssDefinition(classes, key, fileExtensions)
+      classes = this.getCssDefinition(classes, key, fileNames)
+      classes = this.getCssDefinition(classes, key, languageIds)
+      classes = this.getCssDefinition(classes, key, folderNames)
+      classes = this.getCssDefinition(classes, key, folderNamesExpanded)
 
-      // Default file from theme
-      if (key === file && !defaultFileAdded) {
-        classes.push(`.${this._baseClass}.${this._baseClass}-lang-file`)
-        defaultFileAdded = true
-      }
+      singleIcons.forEach((singleIcon) => {
+        const { icon, isSet, value } = singleIcon
+
+        if (key === value && !isSet) {
+          classes.push(`.${this._baseClass}.${this._baseClass}-type-${icon}`)
+          singleIcon.isSet = true
+        }
+      })
 
       if (classes.length > 0) {
         defs[key] = classes
@@ -162,14 +185,16 @@ export class CssGenerator implements CssGeneratorInterface {
     const defs = this.cssDefinitions(themeData)
     const defKeys = Object.keys(defs)
     const fontCss = this.getFontCss(themeData)
-    const iconCss = defKeys.map((def: string) => {
-      return this.getCss(
-        themeData.iconDefinitions[def],
-        defs[def],
-        !!themeData?.showLanguageModeIcons,
-        themeData.fonts
-      )
-    })
+    const iconCss = defKeys
+      .map((def: string) => {
+        return this.getCss(
+          themeData.iconDefinitions[def],
+          defs[def],
+          !!themeData?.showLanguageModeIcons,
+          themeData.fonts
+        )
+      })
+      .join('')
 
     return {
       defCount: defKeys.length,

@@ -19,5 +19,5 @@ export interface CssProp {
 export interface ProcessedCss {
   defCount: number
   fontCss: string
-  iconCss: string[]
+  iconCss: string
 }

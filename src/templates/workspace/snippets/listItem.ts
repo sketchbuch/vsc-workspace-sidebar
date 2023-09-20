@@ -34,7 +34,7 @@ export const listItem = (file: File, state: WorkspaceState, renderVars: RenderVa
   }
 
   const itemButtons = getWorkspaceButtons({ buttons, renderVars })
-  const showFileIcons = fileIconsActive && themeProcessorState === 'data-ready'
+  const showFileIcons = fileIconsActive && themeProcessorState === 'ready'
   const langIcon = showFileIcons ? getLangIcon(file.file, fileIconKeys) : ''
 
   return `

@@ -7,7 +7,7 @@ export const fileIconCss = (
   themeData: GetThemeData | null,
   webview: vscode.Webview
 ): string => {
-  if (themeData === null || themeData.state !== 'data-ready' || themeData.data === null) {
+  if (themeData === null || themeData.state !== 'ready' || themeData.data === null) {
     return ''
   }
 
@@ -18,6 +18,6 @@ export const fileIconCss = (
 
   return `<style id="file-icon-css" media="screen" nonce="${nonce}" data-defcount="${defCount}" data-themeid="${themeId}"  type="text/css">
     ${fontCss}
-    ${iconCss.join('')}
+    ${iconCss}
   </style>`
 }

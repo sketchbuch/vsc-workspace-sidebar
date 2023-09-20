@@ -15,6 +15,7 @@ import {
   ThemeJsonIconDefs,
   ThemeProcessorObserver,
   ThemeProcessorState,
+  ThemeSessionCacheData,
 } from './ThemeProcessor.interface'
 import { getActiveExtThemeData } from './utils/theme/getActiveExtThemeData'
 import { isHighContrastTheme } from './utils/theme/isHighContrastTheme'
@@ -25,6 +26,12 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
   private readonly _cacheDuration = 604800 // 1 Week
   private readonly _cacheKey = 'themeProcessor-cache'
   private _state: ThemeProcessorState = 'idle'
+
+  // globalState is used to store the data for the current theme.
+  // This container stores data loaded during the current session to speed up reloading
+  // If users try reloading a theme they already loaded.
+
+  private _sessionCache: ThemeSessionCacheData = {}
 
   constructor(private readonly _ctx: vscode.ExtensionContext) {
     this._observers = new Set()
@@ -66,6 +73,7 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
 
         if (timestampNow < timestampExpired) {
           cacheMiss = false
+          this.setSessionCache(activeFileiconTheme, cachedData)
         }
       }
     }
@@ -73,9 +81,8 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
     if (cacheMiss) {
       this.processThemeData()
     } else {
-      /* this._state = 'data-ready'
-      this.notifyAll() */
-      this.processThemeData()
+      this._state = 'ready'
+      this.notifyAll()
     }
   }
 
@@ -138,113 +145,139 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
     })
   }
 
+  private getSessionCache(themeId: string): ThemeCacheData | null {
+    return this._sessionCache[themeId] ?? null
+  }
+
+  private setSessionCache(themeId: string, themeCacheData: ThemeCacheData) {
+    this._sessionCache[themeId] = themeCacheData
+  }
+
   private async processThemeData() {
-    this._state = 'loading'
-    this.notifyAll() // Let webviews handle loading if they want
+    try {
+      this._state = 'loading'
+      this.notifyAll() // Let webviews handle loading if they want
 
-    await this.deleteThemeData()
+      const activeFileiconTheme = this.getFileiconTheme()
 
-    const activeFileiconTheme = this.getFileiconTheme()
+      if (activeFileiconTheme === null) {
+        // File icon themes disabled
+        this._state = 'ready'
+        this.notifyAll()
 
-    if (activeFileiconTheme !== null) {
+        return
+      }
+
+      await this.deleteThemeData()
+
+      const sessionCacheData = this.getSessionCache(activeFileiconTheme)
+
+      if (sessionCacheData) {
+        await this.setThemeData(sessionCacheData)
+
+        this._state = 'ready'
+        this.notifyAll()
+
+        return
+      }
+
       const activeExtThemeData = await getActiveExtThemeData(activeFileiconTheme)
 
-      if (activeExtThemeData !== null) {
-        const themePath = path.join(activeExtThemeData.extPath, activeExtThemeData.themePath)
-
-        try {
-          const isLight = isLightTheme(vscode.window.activeColorTheme)
-          const isHighContrast = isHighContrastTheme(vscode.window.activeColorTheme)
-          const jsonContent = fs.readFileSync(themePath, 'utf8')
-          const jsonData = JSON5.parse(jsonContent) as ThemeJson
-
-          let fontsData: ThemeFontDefinition[] = []
-
-          if (jsonData.fonts) {
-            fontsData = [...jsonData.fonts].map((font) => {
-              const { dir } = path.parse(themePath)
-              const newPath = path.join(dir, font.src[0].path)
-
-              return {
-                ...font,
-                src: [{ ...font.src[0], path: newPath }],
-              }
-            })
-          }
-
-          const newIconDefinitions: ThemeJsonIconDefs = {}
-
-          Object.keys(jsonData.iconDefinitions).forEach((iconKey: string) => {
-            const oldDef = jsonData.iconDefinitions[iconKey]
-            const newDef: ThemeJsonIconDef = { ...oldDef }
-
-            if (oldDef.iconPath) {
-              let cleanedPath = oldDef.iconPath
-
-              if (cleanedPath.startsWith('./')) {
-                const { dir } = path.parse(activeExtThemeData.themePath)
-                cleanedPath = cleanedPath.replace('./', `${dir}/`)
-              } else if (cleanedPath.startsWith('/..')) {
-                cleanedPath = cleanedPath.replace('/..', '')
-              }
-
-              newDef.iconPath = path.join(activeExtThemeData.extPath, cleanedPath)
-            } else if (!newDef.fontId && fontsData.length === 1) {
-              newDef.fontId = fontsData[0].id
-            } // Multiple fonts, id must already be set
-
-            newIconDefinitions[iconKey] = newDef
-          })
-
-          // Some themes seem not to include fontCharacter in light
-          // so overlay light on to dark to get full props
-          if (isLight) {
-            const darkKeys = Object.keys(newIconDefinitions).filter(
-              (key) => !key.includes('_light')
-            )
-
-            darkKeys.forEach((key) => {
-              const darkElement = newIconDefinitions[key]
-              const lightElement = newIconDefinitions[`${key}_light`]
-
-              if (lightElement) {
-                newIconDefinitions[`${key}_light`] = { ...darkElement, ...lightElement }
-              }
-            })
-          }
-
-          const themeCacheData: ThemeCacheData = {
-            localResourceRoots: [activeExtThemeData.extPath],
-            themeData: {
-              ...this.normaliseData(jsonData, isLight, isHighContrast),
-              fonts: fontsData,
-              iconDefinitions: newIconDefinitions,
-            },
-            themeId: activeFileiconTheme,
-            timestamp: this.getTimestamp(),
-          }
-
-          await this.setThemeData(themeCacheData)
-          this._state = 'data-ready'
-        } catch (error) {
-          this._state = 'error'
-
-          if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
-            vscode.window.showErrorMessage('Unable to process theme json:' + error)
-          }
-        }
-      } else {
-        this._state = 'error'
-
+      if (activeExtThemeData === null) {
         if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
           vscode.window.showErrorMessage(`Active theme not found: "${activeFileiconTheme}"`)
         }
-      }
-    } else {
-      this._state = 'data-ready' // File icon themes disabled
-    }
 
-    this.notifyAll()
+        this._state = 'error'
+        this.notifyAll()
+
+        return
+      }
+
+      const themePath = path.join(activeExtThemeData.extPath, activeExtThemeData.themePath)
+      const jsonContent = fs.readFileSync(themePath, 'utf8')
+      const jsonData = JSON5.parse(jsonContent) as ThemeJson
+
+      let fontsData: ThemeFontDefinition[] = []
+
+      if (jsonData.fonts) {
+        fontsData = [...jsonData.fonts].map((font) => {
+          const { dir } = path.parse(themePath)
+          const newPath = path.join(dir, font.src[0].path)
+
+          return {
+            ...font,
+            src: [{ ...font.src[0], path: newPath }],
+          }
+        })
+      }
+
+      const newIconDefinitions: ThemeJsonIconDefs = {}
+
+      Object.keys(jsonData.iconDefinitions).forEach((iconKey: string) => {
+        const oldDef = jsonData.iconDefinitions[iconKey]
+        const newDef: ThemeJsonIconDef = { ...oldDef }
+
+        if (oldDef.iconPath) {
+          let cleanedPath = oldDef.iconPath
+
+          if (cleanedPath.startsWith('./')) {
+            const { dir } = path.parse(activeExtThemeData.themePath)
+            cleanedPath = cleanedPath.replace('./', `${dir}/`)
+          } else if (cleanedPath.startsWith('/..')) {
+            cleanedPath = cleanedPath.replace('/..', '')
+          }
+
+          newDef.iconPath = path.join(activeExtThemeData.extPath, cleanedPath)
+        } else if (!newDef.fontId && fontsData.length === 1) {
+          newDef.fontId = fontsData[0].id
+        } // Multiple fonts, id must already be set
+
+        newIconDefinitions[iconKey] = newDef
+      })
+
+      const isLight = isLightTheme(vscode.window.activeColorTheme)
+      const isHighContrast = isHighContrastTheme(vscode.window.activeColorTheme)
+
+      // Some themes seem not to include fontCharacter in light
+      // so overlay light on to dark to get full props
+      if (isLight) {
+        const darkKeys = Object.keys(newIconDefinitions).filter((key) => !key.includes('_light'))
+
+        darkKeys.forEach((key) => {
+          const darkElement = newIconDefinitions[key]
+          const lightElement = newIconDefinitions[`${key}_light`]
+
+          if (lightElement) {
+            newIconDefinitions[`${key}_light`] = { ...darkElement, ...lightElement }
+          }
+        })
+      }
+
+      const themeCacheData: ThemeCacheData = {
+        localResourceRoots: [activeExtThemeData.extPath],
+        themeData: {
+          ...this.normaliseData(jsonData, isLight, isHighContrast),
+          fonts: fontsData,
+          iconDefinitions: newIconDefinitions,
+        },
+        themeId: activeFileiconTheme,
+        timestamp: this.getTimestamp(),
+      }
+
+      await this.setThemeData(themeCacheData)
+      this.setSessionCache(activeFileiconTheme, themeCacheData)
+
+      this._state = 'ready'
+      this.notifyAll()
+    } catch (error) {
+      if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
+        vscode.window.showErrorMessage('An error occured whilst processing theme data:' + error)
+      }
+
+      this._state = 'error'
+      this.notifyAll()
+    }
   }
 
   private async setThemeData(data: ThemeCacheData): Promise<void> {

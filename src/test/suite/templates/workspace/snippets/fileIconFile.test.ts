@@ -6,6 +6,6 @@ suite('Templates > Workspace > Snippets: fileIconFile()', () => {
     const result = fileIconFile('typescript')
 
     expect(result).to.be.a('string')
-    expect(result).contains(`list_branch-icon file-icon file-icon-lang-typescript"`)
+    expect(result).contains(`list_branch-icon file-icon file-icon-type-typescript"`)
   })
 })

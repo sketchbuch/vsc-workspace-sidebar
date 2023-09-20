@@ -19,7 +19,7 @@ export const getMockThemeData = (testData: Partial<GetThemeData> = {}): GetTheme
       showLanguageModeIcons: false,
     },
     localResourceRoots: [],
-    state: 'data-ready',
+    state: 'ready',
     themeId: DEFAULT_THEME,
     ...testData,
   }

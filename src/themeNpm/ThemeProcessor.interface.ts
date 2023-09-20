@@ -34,13 +34,17 @@ export interface GetThemeData {
 
 export type ThemeId = string | null
 
-export type ThemeProcessorState = 'loading' | 'error' | 'idle' | 'data-ready'
+export type ThemeProcessorState = 'loading' | 'error' | 'idle' | 'ready'
 
 export interface ThemeCacheData {
   localResourceRoots: string[]
   themeData: ThemeData
   themeId: ThemeId
   timestamp: number
+}
+
+export interface ThemeSessionCacheData {
+  [key: string]: ThemeCacheData
 }
 
 export type ThemeFontDefinitionSrc = { path: string; format: string }

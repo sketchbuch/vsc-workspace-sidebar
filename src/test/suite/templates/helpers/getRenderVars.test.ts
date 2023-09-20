@@ -98,7 +98,7 @@ suite('Templates > Helpers > getRenderVars():', () => {
     const mockTemplateVars = getMockTemplateVars()
     const result = getRenderVars(mockTemplateVars)
 
-    expect(result.themeProcessorState).to.eql('data-ready')
+    expect(result.themeProcessorState).to.eql('ready')
   })
 
   test('fileIconsActive is "false" if config option deactivated', () => {

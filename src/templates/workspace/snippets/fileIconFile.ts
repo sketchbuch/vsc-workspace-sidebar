@@ -2,6 +2,6 @@ import { cleanFileIconKey } from '../../../themeNpm/utils/strings/cleanFileIconK
 
 export const fileIconFile = (icon: string): string => {
   return `
-      <div class="list_branch-icon file-icon file-icon-lang-${cleanFileIconKey(icon)}"></div>
+      <div class="list_branch-icon file-icon file-icon-type-${cleanFileIconKey(icon)}"></div>
     `
 }

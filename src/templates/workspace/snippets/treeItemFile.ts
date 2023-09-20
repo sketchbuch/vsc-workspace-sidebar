@@ -42,7 +42,7 @@ export const treeItemFile = (
   }
 
   const itemButtons = getWorkspaceButtons({ buttons, renderVars })
-  const showFileIcon = fileIconsActive && themeProcessorState === 'data-ready'
+  const showFileIcon = fileIconsActive && themeProcessorState === 'ready'
   const langIcon = showFileIcon ? getLangIcon(file.file, fileIconKeys) : ''
 
   return `
