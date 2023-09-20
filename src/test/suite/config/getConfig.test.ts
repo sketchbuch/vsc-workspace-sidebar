@@ -39,8 +39,6 @@ suite.skip('Config > getConfig:', () => {
     stub = sinon.stub(workspace, 'getConfiguration').callsFake(() => {
       return {
         get: (section: string) => {
-          console.log('### test')
-
           return undefined
         },
       } as WorkspaceConfiguration

@@ -87,8 +87,6 @@ export const getUserExtThemeData = async (activeFileiconTheme: string): Promise<
                   break userTheme
                 }
               }
-            } else if (activeFileiconTheme === 'vsc-workspace-sidebar') {
-              console.log('### not a theme')
             }
           }
         }
