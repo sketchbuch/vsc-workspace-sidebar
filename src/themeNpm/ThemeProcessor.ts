@@ -160,8 +160,8 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
 
       const activeFileiconTheme = this.getFileiconTheme()
 
+      // File icon themes disabled
       if (activeFileiconTheme === null) {
-        // File icon themes disabled
         this._state = 'ready'
         this.notifyAll()
 

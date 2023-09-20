@@ -37,6 +37,12 @@ export class CssGenerator implements CssGeneratorInterface {
     `
   }
 
+  private getCssClass(iconKey: string): string {
+    const cleanedIconKey = cleanFileIconKey(iconKey)
+
+    return `.${this._baseClass}.${this._baseClass}-type-${cleanedIconKey}`
+  }
+
   private getCssDefinition(
     classes: CssDefinition,
     key: string,
@@ -47,9 +53,7 @@ export class CssGenerator implements CssGeneratorInterface {
     if (data) {
       for (const [dataType, iconKey] of Object.entries(data)) {
         if (iconKey === key) {
-          const cleanedIconKey = cleanFileIconKey(dataType)
-
-          const newClass = `.${this._baseClass}.${this._baseClass}-type-${cleanedIconKey}`
+          const newClass = this.getCssClass(dataType)
 
           if (!newClasses.includes(newClass)) {
             newClasses.push(newClass)
@@ -147,12 +151,12 @@ export class CssGenerator implements CssGeneratorInterface {
       rootFolderExpanded,
     } = themeData
     const defs: CssDefinitions = {}
-    const singleIcons: { icon: string; isSet: boolean; value: ThemeJsonIconSingle }[] = [
-      { icon: 'file', isSet: false, value: file },
-      { icon: 'folder', isSet: false, value: folder },
-      { icon: 'folderExpanded', isSet: false, value: folderExpanded },
-      { icon: 'rootFolder', isSet: false, value: rootFolder },
-      { icon: 'rootFolderExpanded', isSet: false, value: rootFolderExpanded },
+    const singleIcons: { icon: string; value: ThemeJsonIconSingle }[] = [
+      { icon: 'file', value: file },
+      { icon: 'folder', value: folder },
+      { icon: 'folderExpanded', value: folderExpanded },
+      { icon: 'rootFolder', value: rootFolder },
+      { icon: 'rootFolderExpanded', value: rootFolderExpanded },
     ]
 
     Object.keys(iconDefinitions).forEach((key) => {
@@ -165,11 +169,14 @@ export class CssGenerator implements CssGeneratorInterface {
       classes = this.getCssDefinition(classes, key, folderNamesExpanded)
 
       singleIcons.forEach((singleIcon) => {
-        const { icon, isSet, value } = singleIcon
+        const { icon, value } = singleIcon
 
-        if (key === value && !isSet) {
-          classes.push(`.${this._baseClass}.${this._baseClass}-type-${icon}`)
-          singleIcon.isSet = true
+        if (key === value) {
+          const singleClass = this.getCssClass(icon)
+
+          if (!classes.includes(singleClass)) {
+            classes.push(singleClass)
+          }
         }
       })
 
