@@ -1,40 +1,40 @@
 // See: https://github.com/microsoft/vscode/blob/main/src/vs/workbench/services/themes/browser/fileIconThemeData.ts
 // Interfaces are not exported
 
-export interface ThemeProcessorObserver {
+export interface FileThemeProcessorObserver {
   /**
    * Inform this observer that the file theme has changed.
    */
   notify(): void
 }
 
-export interface ObserverableThemeProcessor {
+export interface ObserverableFileThemeProcessor {
   /**
    * Get cached theme data.
    */
-  getThemeData(observer: ThemeProcessorObserver): void
+  getThemeData(observer: FileThemeProcessorObserver): void
 
   /**
    * Subscribe to file theme changes.
    */
-  subscribe(observer: ThemeProcessorObserver): void
+  subscribe(observer: FileThemeProcessorObserver): void
 
   /**
    * Unsubscribe to file theme changes.
    */
-  unsubscribe(observer: ThemeProcessorObserver): void
+  unsubscribe(observer: FileThemeProcessorObserver): void
 }
 
 export interface GetThemeData {
   data: ThemeData | null
   localResourceRoots: string[]
-  state: ThemeProcessorState
+  state: FileThemeProcessorState
   themeId: ThemeId
 }
 
 export type ThemeId = string | null
 
-export type ThemeProcessorState = 'loading' | 'error' | 'idle' | 'ready'
+export type FileThemeProcessorState = 'loading' | 'error' | 'idle' | 'ready'
 
 export interface ThemeCacheData {
   localResourceRoots: string[]

@@ -1,4 +1,4 @@
-import { ThemeJson } from '../ThemeProcessor.interface'
+import { ThemeJson } from '../FileThemeProcessor.interface'
 
 export type CssDefinition = string[]
 
@@ -6,9 +6,9 @@ export type CssDefinitions = { [key: string]: CssDefinition }
 
 export interface CssGeneratorInterface {
   /**
-   * Take the data from the theme processor and create the css data.
+   * Take the data from the theme processor and create the css for the theme.
    */
-  processCss(themeData: ThemeJson): void
+  getCss(themeData: ThemeJson, themeId: string): void
 }
 
 export interface CssProp {
@@ -18,6 +18,6 @@ export interface CssProp {
 
 export interface ProcessedCss {
   defCount: number
-  fontCss: string
+  fontFaceCss: string
   iconCss: string
 }

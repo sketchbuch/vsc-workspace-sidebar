@@ -1,5 +1,5 @@
 import { DEFAULT_THEME } from '../../theme/constants'
-import { GetThemeData } from '../../themeNpm/ThemeProcessor.interface'
+import { GetThemeData } from '../../themeNpm/FileThemeProcessor.interface'
 
 export const getMockThemeData = (testData: Partial<GetThemeData> = {}): GetThemeData => {
   return {

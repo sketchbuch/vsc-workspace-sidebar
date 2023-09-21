@@ -5,7 +5,7 @@ import {
   ThemeJsonIconDef,
   ThemeJsonIconMap,
   ThemeJsonIconSingle,
-} from '../ThemeProcessor.interface'
+} from '../FileThemeProcessor.interface'
 import { cleanFileIconKey } from '../utils/strings/cleanFileIconKey'
 import {
   CssDefinition,
@@ -16,15 +16,23 @@ import {
 } from './CssGenerator.interface'
 
 export class CssGenerator implements CssGeneratorInterface {
+  // private readonly _cacheKey = 'cssGenerator-cache'
+
   constructor(private _webview: vscode.Webview, private _baseClass: string = 'file-icon') {}
 
-  private getCss(
+  private getClass(iconKey: string): string {
+    const cleanedIconKey = cleanFileIconKey(iconKey)
+
+    return `.${this._baseClass}.${this._baseClass}-type-${cleanedIconKey}`
+  }
+
+  private getClasses(
     iconDef: ThemeJsonIconDef,
     classes: CssDefinition,
     showLanguageModeIcons: boolean,
     fonts: ThemeFontDefinition[]
   ) {
-    const cssProps = this.getCssProps(iconDef, showLanguageModeIcons, fonts)
+    const cssProps = this.getProps(iconDef, showLanguageModeIcons, fonts)
 
     return `${classes.join('::before, ')}::before {
         ${cssProps
@@ -37,13 +45,7 @@ export class CssGenerator implements CssGeneratorInterface {
     `
   }
 
-  private getCssClass(iconKey: string): string {
-    const cleanedIconKey = cleanFileIconKey(iconKey)
-
-    return `.${this._baseClass}.${this._baseClass}-type-${cleanedIconKey}`
-  }
-
-  private getCssDefinition(
+  private getDefinition(
     classes: CssDefinition,
     key: string,
     data?: ThemeJsonIconMap
@@ -53,7 +55,7 @@ export class CssGenerator implements CssGeneratorInterface {
     if (data) {
       for (const [dataType, iconKey] of Object.entries(data)) {
         if (iconKey === key) {
-          const newClass = this.getCssClass(dataType)
+          const newClass = this.getClass(dataType)
 
           if (!newClasses.includes(newClass)) {
             newClasses.push(newClass)
@@ -65,7 +67,80 @@ export class CssGenerator implements CssGeneratorInterface {
     return newClasses
   }
 
-  private getCssProps(
+  private getDefinitions(themeData: ThemeJson) {
+    const {
+      file,
+      fileExtensions,
+      fileNames,
+      folder,
+      folderExpanded,
+      folderNames,
+      folderNamesExpanded,
+      iconDefinitions,
+      languageIds,
+      rootFolder,
+      rootFolderExpanded,
+    } = themeData
+    const defs: CssDefinitions = {}
+    const singleIcons: { icon: string; value: ThemeJsonIconSingle }[] = [
+      { icon: 'file', value: file },
+      { icon: 'folder', value: folder },
+      { icon: 'folderExpanded', value: folderExpanded },
+      { icon: 'rootFolder', value: rootFolder },
+      { icon: 'rootFolderExpanded', value: rootFolderExpanded },
+    ]
+
+    Object.keys(iconDefinitions).forEach((key) => {
+      let classes: CssDefinition = []
+
+      classes = this.getDefinition(classes, key, fileExtensions)
+      classes = this.getDefinition(classes, key, fileNames)
+      classes = this.getDefinition(classes, key, languageIds)
+      classes = this.getDefinition(classes, key, folderNames)
+      classes = this.getDefinition(classes, key, folderNamesExpanded)
+
+      singleIcons.forEach((singleIcon) => {
+        const { icon, value } = singleIcon
+
+        if (key === value) {
+          const singleClass = this.getClass(icon)
+
+          if (!classes.includes(singleClass)) {
+            classes.push(singleClass)
+          }
+        }
+      })
+
+      if (classes.length > 0) {
+        defs[key] = classes
+      }
+    })
+
+    return defs
+  }
+
+  private getFontFace(themeData: ThemeJson): string {
+    if (themeData.fonts.length > 0) {
+      return themeData.fonts
+        .map((font): string => {
+          const src = font.src
+            .map(
+              (fontSrc) =>
+                `url('${this._webview.asWebviewUri(vscode.Uri.file(fontSrc.path))}') format('${
+                  fontSrc.format
+                }')`
+            )
+            .join(', ')
+
+          return `@font-face { font-family: '${font.id}'; src: ${src}; font-weight: ${font.weight}; font-style: ${font.style}; font-display: block; }`
+        })
+        .join('')
+    }
+
+    return ''
+  }
+
+  private getProps(
     iconDef: ThemeJsonIconDef,
     showLanguageModeIcons: boolean,
     fonts: ThemeFontDefinition[]
@@ -115,86 +190,13 @@ export class CssGenerator implements CssGeneratorInterface {
     return cssProps
   }
 
-  private getFontCss(themeData: ThemeJson): string {
-    if (themeData.fonts.length > 0) {
-      return themeData.fonts
-        .map((font): string => {
-          const src = font.src
-            .map(
-              (fontSrc) =>
-                `url('${this._webview.asWebviewUri(vscode.Uri.file(fontSrc.path))}') format('${
-                  fontSrc.format
-                }')`
-            )
-            .join(', ')
-
-          return `@font-face { font-family: '${font.id}'; src: ${src}; font-weight: ${font.weight}; font-style: ${font.style}; font-display: block; }`
-        })
-        .join('')
-    }
-
-    return ''
-  }
-
-  private cssDefinitions(themeData: ThemeJson) {
-    const {
-      file,
-      fileExtensions,
-      fileNames,
-      folder,
-      folderExpanded,
-      folderNames,
-      folderNamesExpanded,
-      iconDefinitions,
-      languageIds,
-      rootFolder,
-      rootFolderExpanded,
-    } = themeData
-    const defs: CssDefinitions = {}
-    const singleIcons: { icon: string; value: ThemeJsonIconSingle }[] = [
-      { icon: 'file', value: file },
-      { icon: 'folder', value: folder },
-      { icon: 'folderExpanded', value: folderExpanded },
-      { icon: 'rootFolder', value: rootFolder },
-      { icon: 'rootFolderExpanded', value: rootFolderExpanded },
-    ]
-
-    Object.keys(iconDefinitions).forEach((key) => {
-      let classes: CssDefinition = []
-
-      classes = this.getCssDefinition(classes, key, fileExtensions)
-      classes = this.getCssDefinition(classes, key, fileNames)
-      classes = this.getCssDefinition(classes, key, languageIds)
-      classes = this.getCssDefinition(classes, key, folderNames)
-      classes = this.getCssDefinition(classes, key, folderNamesExpanded)
-
-      singleIcons.forEach((singleIcon) => {
-        const { icon, value } = singleIcon
-
-        if (key === value) {
-          const singleClass = this.getCssClass(icon)
-
-          if (!classes.includes(singleClass)) {
-            classes.push(singleClass)
-          }
-        }
-      })
-
-      if (classes.length > 0) {
-        defs[key] = classes
-      }
-    })
-
-    return defs
-  }
-
-  public processCss(themeData: ThemeJson): ProcessedCss {
-    const defs = this.cssDefinitions(themeData)
+  private processCss(themeData: ThemeJson): ProcessedCss {
+    const defs = this.getDefinitions(themeData)
     const defKeys = Object.keys(defs)
-    const fontCss = this.getFontCss(themeData)
+    const fontFaceCss = this.getFontFace(themeData)
     const iconCss = defKeys
       .map((def: string) => {
-        return this.getCss(
+        return this.getClasses(
           themeData.iconDefinitions[def],
           defs[def],
           !!themeData?.showLanguageModeIcons,
@@ -205,8 +207,12 @@ export class CssGenerator implements CssGeneratorInterface {
 
     return {
       defCount: defKeys.length,
-      fontCss,
+      fontFaceCss,
       iconCss,
     }
+  }
+
+  public getCss(themeData: ThemeJson, themeId: string): ProcessedCss {
+    return this.processCss(themeData)
   }
 }

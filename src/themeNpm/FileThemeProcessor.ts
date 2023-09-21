@@ -3,8 +3,10 @@ import JSON5 from 'json5'
 import * as path from 'path'
 import * as vscode from 'vscode'
 import {
+  FileThemeProcessorObserver,
+  FileThemeProcessorState,
   GetThemeData,
-  ObserverableThemeProcessor,
+  ObserverableFileThemeProcessor,
   ThemeCacheData,
   ThemeData,
   ThemeFontDefinition,
@@ -13,24 +15,21 @@ import {
   ThemeJson,
   ThemeJsonIconDef,
   ThemeJsonIconDefs,
-  ThemeProcessorObserver,
-  ThemeProcessorState,
   ThemeSessionCacheData,
-} from './ThemeProcessor.interface'
+} from './FileThemeProcessor.interface'
 import { getActiveExtThemeData } from './utils/theme/getActiveExtThemeData'
 import { isHighContrastTheme } from './utils/theme/isHighContrastTheme'
 import { isLightTheme } from './utils/theme/isLightTheme'
 
-export class ThemeProcessor implements ObserverableThemeProcessor {
-  private _observers: Set<ThemeProcessorObserver>
+export class FileThemeProcessor implements ObserverableFileThemeProcessor {
+  private _observers: Set<FileThemeProcessorObserver>
   private readonly _cacheDuration = 604800 // 1 Week
   private readonly _cacheKey = 'themeProcessor-cache'
-  private _state: ThemeProcessorState = 'idle'
+  private _state: FileThemeProcessorState = 'idle'
 
   // globalState is used to store the data for the current theme.
   // This container stores data loaded during the current session to speed up reloading
   // If users try reloading a theme they already loaded.
-
   private _sessionCache: ThemeSessionCacheData = {}
 
   constructor(private readonly _ctx: vscode.ExtensionContext) {
@@ -53,6 +52,10 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
 
   private getFullThemeData(): ThemeCacheData | null {
     return this._ctx.globalState.get<ThemeCacheData>(this._cacheKey) ?? null
+  }
+
+  private getSessionCache(themeId: string): ThemeCacheData | null {
+    return this._sessionCache[themeId] ?? null
   }
 
   private getTimestamp(): number {
@@ -86,7 +89,33 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
     }
   }
 
-  private flattenData = (
+  private normaliseData = (
+    jsonData: ThemeJson,
+    isLight: boolean,
+    isHighContrast: boolean
+  ): ThemeData => {
+    let themeData: ThemeData = {
+      file: jsonData.file ?? undefined,
+      fileExtensions: { ...(jsonData.fileExtensions ?? {}) },
+      fileNames: { ...(jsonData.fileNames ?? {}) },
+      folder: jsonData.folder ?? undefined,
+      folderExpanded: jsonData.folderExpanded ?? undefined,
+      folderNames: { ...(jsonData.folderNames ?? {}) },
+      folderNamesExpanded: { ...(jsonData.folderNamesExpanded ?? {}) },
+      fonts: [],
+      iconDefinitions: {},
+      languageIds: { ...(jsonData.languageIds ?? {}) },
+      rootFolder: jsonData.rootFolder ?? undefined,
+      rootFolderExpanded: jsonData.rootFolderExpanded ?? undefined,
+    }
+
+    themeData = this.normaliseDeepData(themeData, isLight, jsonData.light)
+    themeData = this.normaliseDeepData(themeData, isHighContrast, jsonData.highContrast)
+
+    return themeData
+  }
+
+  private normaliseDeepData = (
     themeData: ThemeData,
     isThemeDeepDataType: boolean,
     deepData?: ThemeIconAssociation
@@ -113,44 +142,10 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
     return themeData
   }
 
-  private normaliseData = (
-    jsonData: ThemeJson,
-    isLight: boolean,
-    isHighContrast: boolean
-  ): ThemeData => {
-    let themeData: ThemeData = {
-      file: jsonData.file ?? undefined,
-      fileExtensions: { ...(jsonData.fileExtensions ?? {}) },
-      fileNames: { ...(jsonData.fileNames ?? {}) },
-      folder: jsonData.folder ?? undefined,
-      folderExpanded: jsonData.folderExpanded ?? undefined,
-      folderNames: { ...(jsonData.folderNames ?? {}) },
-      folderNamesExpanded: { ...(jsonData.folderNamesExpanded ?? {}) },
-      fonts: [],
-      iconDefinitions: {},
-      languageIds: { ...(jsonData.languageIds ?? {}) },
-      rootFolder: jsonData.rootFolder ?? undefined,
-      rootFolderExpanded: jsonData.rootFolderExpanded ?? undefined,
-    }
-
-    themeData = this.flattenData(themeData, isLight, jsonData.light)
-    themeData = this.flattenData(themeData, isHighContrast, jsonData.highContrast)
-
-    return themeData
-  }
-
   private notifyAll() {
     this._observers.forEach((observer) => {
       observer.notify()
     })
-  }
-
-  private getSessionCache(themeId: string): ThemeCacheData | null {
-    return this._sessionCache[themeId] ?? null
-  }
-
-  private setSessionCache(themeId: string, themeCacheData: ThemeCacheData) {
-    this._sessionCache[themeId] = themeCacheData
   }
 
   private async processThemeData() {
@@ -280,6 +275,10 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
     }
   }
 
+  private setSessionCache(themeId: string, themeCacheData: ThemeCacheData) {
+    this._sessionCache[themeId] = themeCacheData
+  }
+
   private async setThemeData(data: ThemeCacheData): Promise<void> {
     return this._ctx.globalState.update(this._cacheKey, data)
   }
@@ -309,11 +308,11 @@ export class ThemeProcessor implements ObserverableThemeProcessor {
     }
   }
 
-  public subscribe(observer: ThemeProcessorObserver) {
+  public subscribe(observer: FileThemeProcessorObserver) {
     this._observers.add(observer)
   }
 
-  public unsubscribe(observer: ThemeProcessorObserver): boolean {
+  public unsubscribe(observer: FileThemeProcessorObserver): boolean {
     return this._observers.delete(observer)
   }
 }

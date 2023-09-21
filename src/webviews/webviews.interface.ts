@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
 import { ConfigActions } from '../constants/config'
-import { GetThemeData, ThemeProcessorState } from '../themeNpm/ThemeProcessor.interface'
+import { FileThemeProcessorState, GetThemeData } from '../themeNpm/FileThemeProcessor.interface'
 
 export interface PostMessage<Payload, Actions> {
   action: Actions
@@ -33,7 +33,7 @@ export interface RenderVars {
   searchMinimum: number
   showRootFolder: boolean
   showTree: boolean
-  themeProcessorState: ThemeProcessorState
+  themeProcessorState: FileThemeProcessorState
 }
 
 export interface TemplateVars {

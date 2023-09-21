@@ -2,20 +2,23 @@ import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { ExtensionContext } from 'vscode'
 import { DEFAULT_THEME } from '../../../theme/constants'
-import { ThemeProcessor } from '../../../themeNpm/ThemeProcessor'
-import { ThemeCacheData, ThemeProcessorObserver } from '../../../themeNpm/ThemeProcessor.interface'
+import { FileThemeProcessor } from '../../../themeNpm/FileThemeProcessor'
+import {
+  FileThemeProcessorObserver,
+  ThemeCacheData,
+} from '../../../themeNpm/FileThemeProcessor.interface'
 import { getMockContext } from './mocks/mockContext'
 
-suite('Theme > ThemeProcessor()', () => {
+suite('Theme > FileThemeProcessor()', () => {
   let mockContext: ExtensionContext
   let getStore: sinon.SinonSpy
-  let themeProcessor: ThemeProcessor
+  let themeProcessor: FileThemeProcessor
   let updateStore: sinon.SinonSpy
 
   setup(() => {
     mockContext = getMockContext()
     getStore = sinon.spy(mockContext.globalState, 'get')
-    themeProcessor = new ThemeProcessor(mockContext)
+    themeProcessor = new FileThemeProcessor(mockContext)
     updateStore = sinon.spy(mockContext.globalState, 'update')
   })
 
@@ -62,7 +65,7 @@ suite('Theme > ThemeProcessor()', () => {
   })
 
   test('subscribe && unsubscribe work as expected', () => {
-    const observer = { notify: () => null } as ThemeProcessorObserver
+    const observer = { notify: () => null } as FileThemeProcessorObserver
 
     expect(themeProcessor.unsubscribe(observer)).to.be.false
     themeProcessor.subscribe(observer)

@@ -21,8 +21,8 @@ import {
 import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
-import { ThemeProcessor } from '../../themeNpm/ThemeProcessor'
-import { ThemeProcessorObserver } from '../../themeNpm/ThemeProcessor.interface'
+import { FileThemeProcessor } from '../../themeNpm/FileThemeProcessor'
+import { FileThemeProcessorObserver } from '../../themeNpm/FileThemeProcessor.interface'
 import { getTimestamp } from '../../utils/datetime/getTimestamp'
 import { HtmlData, PostMessage } from '../webviews.interface'
 import {
@@ -47,15 +47,17 @@ const {
   toggleFolderStateBulk,
 } = workspaceSlice.actions
 
-export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeProcessorObserver {
+export class WorkspaceViewProvider
+  implements vscode.WebviewViewProvider, FileThemeProcessorObserver
+{
   public static readonly viewType = EXT_WEBVIEW_WS
   private _view?: vscode.WebviewView
 
   constructor(
     private readonly _ctx: vscode.ExtensionContext,
-    private readonly _themeProcessor: ThemeProcessor
+    private readonly _fileThemeProcessor: FileThemeProcessor
   ) {
-    this._themeProcessor.subscribe(this)
+    this._fileThemeProcessor.subscribe(this)
   }
 
   public focusInput() {
@@ -114,7 +116,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
   private render() {
     if (this._view !== undefined) {
       const state = store.getState().ws
-      const themeData = state.state === 'list' ? this._themeProcessor.getThemeData() ?? null : null
+      const themeData = state.state === 'list' ? this._fileThemeProcessor.getThemeData() : null
 
       if (themeData !== null) {
         this.setOptions(this._view, themeData.localResourceRoots)
@@ -182,14 +184,6 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider, ThemeP
   }
 
   private setOptions = (webviewView: vscode.WebviewView, localResourceRoots: string[] = []) => {
-    /* if (localResourceRoots.length > 0) {
-      localResourceRoots.forEach((resouceRoot) => {
-        if (!this._resourceRootsPaths.includes(resouceRoot)) {
-          this._resourceRootsPaths.push(resouceRoot)
-        }
-      })
-    } */
-
     webviewView.webview.options = {
       enableScripts: true,
       localResourceRoots: [
