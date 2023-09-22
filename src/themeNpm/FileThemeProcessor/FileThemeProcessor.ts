@@ -2,6 +2,9 @@ import * as fs from 'fs'
 import JSON5 from 'json5'
 import * as path from 'path'
 import * as vscode from 'vscode'
+import { getActiveExtThemeData } from '../utils/theme/getActiveExtThemeData'
+import { isHighContrastTheme } from '../utils/theme/isHighContrastTheme'
+import { isLightTheme } from '../utils/theme/isLightTheme'
 import {
   FileThemeProcessorObserver,
   FileThemeProcessorState,
@@ -17,9 +20,6 @@ import {
   ThemeJsonIconDefs,
   ThemeSessionCacheData,
 } from './FileThemeProcessor.interface'
-import { getActiveExtThemeData } from './utils/theme/getActiveExtThemeData'
-import { isHighContrastTheme } from './utils/theme/isHighContrastTheme'
-import { isLightTheme } from './utils/theme/isLightTheme'
 
 export class FileThemeProcessor implements ObserverableFileThemeProcessor {
   private _observers: Set<FileThemeProcessorObserver>
@@ -260,8 +260,8 @@ export class FileThemeProcessor implements ObserverableFileThemeProcessor {
         timestamp: this.getTimestamp(),
       }
 
-      await this.setThemeData(themeCacheData)
       this.setSessionCache(activeFileiconTheme, themeCacheData)
+      await this.setThemeData(themeCacheData)
 
       this._state = 'ready'
       this.notifyAll()

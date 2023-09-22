@@ -12,7 +12,7 @@ import { GetHtml } from '../webviews/webviews.interface'
 const { joinPath } = vscode.Uri
 
 export const getHtml = <T>(
-  { extensionPath, htmlData, template, themeData }: GetHtml<T>,
+  { cssData, extensionPath, htmlData, template, themeData }: GetHtml<T>,
   nonce: string
 ): string => {
   const { state, title, webview } = htmlData
@@ -39,6 +39,7 @@ export const getHtml = <T>(
     {
       codiconsFolderUri,
       cspSource: webview.cspSource,
+      cssData,
       cssFolderUri,
       imgDarkFolderUri,
       imgLightFolderUri,

@@ -22,6 +22,7 @@ export const defaultTemplate = (
   webview: vscode.Webview
 ): string => {
   const {
+    cssData,
     codiconsFolderUri,
     cspSource,
     cssFolderUri,
@@ -56,7 +57,7 @@ export const defaultTemplate = (
         <title>${titleAttr}</title>
         <link href="${cssFolderUri}/${FS_WEBVIEW_WORKSPACE_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
         <link href="${codiconsFolderUri}/${FS_WEBVIEW_CODICONS_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
-        ${fileIconCss(nonce, themeData, webview)}
+        ${fileIconCss(nonce, themeData, cssData, webview)}
       </head>
 
       <body>

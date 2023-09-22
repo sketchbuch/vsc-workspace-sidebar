@@ -11,6 +11,7 @@ export const getMockTemplateVars = (
   isEmpty: boolean = false
 ): TemplateVars => {
   return {
+    cssData: null,
     cspSource: '34fdg5654dsf',
     codiconsFolderUri: isEmpty
       ? ({} as Uri)

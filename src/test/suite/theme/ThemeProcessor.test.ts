@@ -2,11 +2,11 @@ import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { ExtensionContext } from 'vscode'
 import { DEFAULT_THEME } from '../../../theme/constants'
-import { FileThemeProcessor } from '../../../themeNpm/FileThemeProcessor'
+import { FileThemeProcessor } from '../../../themeNpm/FileThemeProcessor/FileThemeProcessor'
 import {
   FileThemeProcessorObserver,
   ThemeCacheData,
-} from '../../../themeNpm/FileThemeProcessor.interface'
+} from '../../../themeNpm/FileThemeProcessor/FileThemeProcessor.interface'
 import { getMockContext } from './mocks/mockContext'
 
 suite('Theme > FileThemeProcessor()', () => {

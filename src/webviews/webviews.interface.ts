@@ -1,6 +1,10 @@
 import * as vscode from 'vscode'
 import { ConfigActions } from '../constants/config'
-import { FileThemeProcessorState, GetThemeData } from '../themeNpm/FileThemeProcessor.interface'
+import { ProcessedCss } from '../themeNpm/CssGenerator/CssGenerator.interface'
+import {
+  FileThemeProcessorState,
+  GetThemeData,
+} from '../themeNpm/FileThemeProcessor/FileThemeProcessor.interface'
 
 export interface PostMessage<Payload, Actions> {
   action: Actions
@@ -37,6 +41,7 @@ export interface RenderVars {
 }
 
 export interface TemplateVars {
+  cssData: ProcessedCss | null
   codiconsFolderUri: vscode.Uri
   cspSource: string
   cssFolderUri: vscode.Uri
@@ -56,6 +61,7 @@ export type GetHtmlTemplateFunc<TState> = (
 ) => string
 
 export interface GetHtml<TState> {
+  cssData: ProcessedCss | null
   extensionPath: vscode.Uri
   htmlData: HtmlData<TState>
   template: GetHtmlTemplateFunc<TState>

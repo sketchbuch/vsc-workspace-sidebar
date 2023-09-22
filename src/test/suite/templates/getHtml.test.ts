@@ -18,6 +18,7 @@ suite('Templates > getHtml()', () => {
 
   const getGetHtml = (template: GetHtmlTemplateFunc<WorkspaceState>): GetHtml<WorkspaceState> => {
     return {
+      cssData: null,
       extensionPath: mockExtensionUri,
       htmlData: {
         state: mockState,

@@ -21,8 +21,10 @@ import {
 import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
-import { FileThemeProcessor } from '../../themeNpm/FileThemeProcessor'
-import { FileThemeProcessorObserver } from '../../themeNpm/FileThemeProcessor.interface'
+import { CssGenerator } from '../../themeNpm/CssGenerator/CssGenerator'
+import { ProcessedCss } from '../../themeNpm/CssGenerator/CssGenerator.interface'
+import { FileThemeProcessor } from '../../themeNpm/FileThemeProcessor/FileThemeProcessor'
+import { FileThemeProcessorObserver } from '../../themeNpm/FileThemeProcessor/FileThemeProcessor.interface'
 import { getTimestamp } from '../../utils/datetime/getTimestamp'
 import { HtmlData, PostMessage } from '../webviews.interface'
 import {
@@ -52,18 +54,14 @@ export class WorkspaceViewProvider
 {
   public static readonly viewType = EXT_WEBVIEW_WS
   private _view?: vscode.WebviewView
+  private _cssGenerator: CssGenerator
 
   constructor(
     private readonly _ctx: vscode.ExtensionContext,
     private readonly _fileThemeProcessor: FileThemeProcessor
   ) {
+    this._cssGenerator = new CssGenerator(_ctx)
     this._fileThemeProcessor.subscribe(this)
-  }
-
-  public focusInput() {
-    if (this._view?.visible) {
-      this._view.webview.postMessage({ action: ClientActions.FOCUS_SEARCH })
-    }
   }
 
   private getCacheFiles() {
@@ -103,23 +101,19 @@ export class WorkspaceViewProvider
     return viewTitle
   }
 
-  public refresh(isRerender = false) {
-    if (isRerender) {
-      this.render()
-    } else {
-      vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
-      this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
-      store.dispatch(fetch())
-    }
-  }
-
   private render() {
     if (this._view !== undefined) {
       const state = store.getState().ws
+
       const themeData = state.state === 'list' ? this._fileThemeProcessor.getThemeData() : null
+      let cssData: ProcessedCss | null = null
 
       if (themeData !== null) {
         this.setOptions(this._view, themeData.localResourceRoots)
+
+        if (themeData.data && themeData.themeId) {
+          cssData = this._cssGenerator.getCss(themeData.data, themeData.themeId, this._view.webview)
+        }
       }
 
       this._view.title = this.getViewTitle(state)
@@ -132,9 +126,10 @@ export class WorkspaceViewProvider
 
       this._view.webview.html = getHtml<WorkspaceState>(
         {
+          cssData,
           extensionPath: this._ctx.extensionUri,
-          template: defaultTemplate,
           htmlData,
+          template: defaultTemplate,
           themeData,
         },
         crypto.randomBytes(16).toString('hex')
@@ -143,43 +138,6 @@ export class WorkspaceViewProvider
       // Suppress error when running in extension development host
     } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Test) {
       vscode.window.showErrorMessage(t('errors.viewNotFound'))
-    }
-  }
-
-  public toggleAllFolders(type: FolderState) {
-    store.dispatch(toggleFolderStateBulk(type))
-  }
-
-  public updateFileTree() {
-    store.dispatch(setFileTree())
-  }
-
-  public updateSort() {
-    const sort = this._ctx.globalState.get<SortIds>(EXT_SORT) ?? 'ascending'
-    store.dispatch(setPersistedState({ sort }))
-  }
-
-  public updateVisibleFiles() {
-    store.dispatch(setVisibleFiles())
-  }
-
-  public resolveWebviewView(webviewView: vscode.WebviewView) {
-    this._view = webviewView
-
-    store.subscribe(() => {
-      this.render()
-      this.stateChanged(store.getState().ws)
-    })
-
-    this.setupWebview(webviewView)
-    this.updateSort()
-
-    const cachedFiles = this.getCacheFiles()
-
-    if (cachedFiles) {
-      store.dispatch(list(cachedFiles))
-    } else {
-      store.dispatch(fetch())
     }
   }
 
@@ -296,10 +254,63 @@ export class WorkspaceViewProvider
     }
   }
 
+  public focusInput() {
+    if (this._view?.visible) {
+      this._view.webview.postMessage({ action: ClientActions.FOCUS_SEARCH })
+    }
+  }
+
   public notify() {
     // Only rerender if resolveWebviewView() has been called
     if (this._view !== undefined) {
       this.render()
     }
+  }
+
+  public refresh(isRerender = false) {
+    if (isRerender) {
+      this.render()
+    } else {
+      vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
+      this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
+      store.dispatch(fetch())
+    }
+  }
+
+  public resolveWebviewView(webviewView: vscode.WebviewView) {
+    this._view = webviewView
+
+    store.subscribe(() => {
+      this.render()
+      this.stateChanged(store.getState().ws)
+    })
+
+    this.setupWebview(webviewView)
+    this.updateSort()
+
+    const cachedFiles = this.getCacheFiles()
+
+    if (cachedFiles) {
+      store.dispatch(list(cachedFiles))
+    } else {
+      store.dispatch(fetch())
+    }
+  }
+
+  public toggleAllFolders(type: FolderState) {
+    store.dispatch(toggleFolderStateBulk(type))
+  }
+
+  public updateFileTree() {
+    store.dispatch(setFileTree())
+  }
+
+  public updateSort() {
+    const sort = this._ctx.globalState.get<SortIds>(EXT_SORT) ?? 'ascending'
+    store.dispatch(setPersistedState({ sort }))
+  }
+
+  public updateVisibleFiles() {
+    store.dispatch(setVisibleFiles())
   }
 }

@@ -5,25 +5,33 @@ import {
   ThemeJsonIconDef,
   ThemeJsonIconMap,
   ThemeJsonIconSingle,
-} from '../FileThemeProcessor.interface'
+} from '../FileThemeProcessor/FileThemeProcessor.interface'
 import { cleanFileIconKey } from '../utils/strings/cleanFileIconKey'
-import {
-  CssDefinition,
-  CssDefinitions,
-  CssGeneratorInterface,
-  CssProp,
-  ProcessedCss,
-} from './CssGenerator.interface'
+import { CssDefinition, CssDefinitions, CssProp, ProcessedCss } from './CssGenerator.interface'
 
-export class CssGenerator implements CssGeneratorInterface {
-  // private readonly _cacheKey = 'cssGenerator-cache'
+export class CssGenerator {
+  private readonly _baseClass: string = 'file-icon'
+  private _webview?: vscode.Webview
+  private readonly _cacheKey = 'cssGenerator-cache'
 
-  constructor(private _webview: vscode.Webview, private _baseClass: string = 'file-icon') {}
+  constructor(private readonly _ctx: vscode.ExtensionContext) {}
+
+  private async deleteCssData(): Promise<void> {
+    return this._ctx.globalState.update(this._cacheKey, undefined)
+  }
+
+  private getCssData(): ProcessedCss | null {
+    return this._ctx.globalState.get<ProcessedCss>(this._cacheKey) ?? null
+  }
 
   private getClass(iconKey: string): string {
     const cleanedIconKey = cleanFileIconKey(iconKey)
 
     return `.${this._baseClass}.${this._baseClass}-type-${cleanedIconKey}`
+  }
+
+  private async setCssData(data: ProcessedCss): Promise<void> {
+    return this._ctx.globalState.update(this._cacheKey, data)
   }
 
   private getClasses(
@@ -126,7 +134,7 @@ export class CssGenerator implements CssGeneratorInterface {
           const src = font.src
             .map(
               (fontSrc) =>
-                `url('${this._webview.asWebviewUri(vscode.Uri.file(fontSrc.path))}') format('${
+                `url('${this._webview?.asWebviewUri(vscode.Uri.file(fontSrc.path))}') format('${
                   fontSrc.format
                 }')`
             )
@@ -150,7 +158,7 @@ export class CssGenerator implements CssGeneratorInterface {
     if (iconDef.iconPath) {
       cssProps.push({
         key: 'background-image',
-        value: `url(${this._webview.asWebviewUri(vscode.Uri.file(iconDef.iconPath))})`,
+        value: `url(${this._webview?.asWebviewUri(vscode.Uri.file(iconDef.iconPath))})`,
       })
       cssProps.push({ key: 'content', value: '" "' })
     } else if (iconDef.fontCharacter || iconDef.fontColor) {
@@ -191,28 +199,42 @@ export class CssGenerator implements CssGeneratorInterface {
   }
 
   private processCss(themeData: ThemeJson): ProcessedCss {
+    const cacheData = this.getCssData()
+
+    if (cacheData) {
+      console.log('### cache HIT')
+
+      return cacheData
+    }
+
     const defs = this.getDefinitions(themeData)
     const defKeys = Object.keys(defs)
-    const fontFaceCss = this.getFontFace(themeData)
-    const iconCss = defKeys
-      .map((def: string) => {
-        return this.getClasses(
-          themeData.iconDefinitions[def],
-          defs[def],
-          !!themeData?.showLanguageModeIcons,
-          themeData.fonts
-        )
-      })
-      .join('')
 
-    return {
+    const cssData: ProcessedCss = {
       defCount: defKeys.length,
-      fontFaceCss,
-      iconCss,
+      fontFaceCss: this.getFontFace(themeData),
+      iconCss: defKeys
+        .map((def: string) => {
+          return this.getClasses(
+            themeData.iconDefinitions[def],
+            defs[def],
+            !!themeData?.showLanguageModeIcons,
+            themeData.fonts
+          )
+        })
+        .join(''),
     }
+
+    this.setCssData(cssData)
+
+    console.log('### cache MISS')
+
+    return cssData
   }
 
-  public getCss(themeData: ThemeJson, themeId: string): ProcessedCss {
+  public getCss(themeData: ThemeJson, themeId: string, webview: vscode.Webview): ProcessedCss {
+    this._webview = webview
+
     return this.processCss(themeData)
   }
 }
