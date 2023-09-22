@@ -1,11 +1,11 @@
 import * as vscode from 'vscode'
-import { ProcessedCss } from '../../../themeNpm/CssGenerator/CssGenerator.interface'
+import { CssData } from '../../../themeNpm/CssGenerator/CssGenerator.interface'
 import { GetThemeData } from '../../../themeNpm/FileThemeProcessor/FileThemeProcessor.interface'
 
 export const fileIconCss = (
   nonce: string,
   themeData: GetThemeData | null,
-  cssData: ProcessedCss | null,
+  cssData: CssData | null,
   webview: vscode.Webview
 ): string => {
   if (

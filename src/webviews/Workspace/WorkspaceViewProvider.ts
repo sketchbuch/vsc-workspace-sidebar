@@ -22,7 +22,7 @@ import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
 import { CssGenerator } from '../../themeNpm/CssGenerator/CssGenerator'
-import { ProcessedCss } from '../../themeNpm/CssGenerator/CssGenerator.interface'
+import { CssData } from '../../themeNpm/CssGenerator/CssGenerator.interface'
 import { FileThemeProcessor } from '../../themeNpm/FileThemeProcessor/FileThemeProcessor'
 import { FileThemeProcessorObserver } from '../../themeNpm/FileThemeProcessor/FileThemeProcessor.interface'
 import { getTimestamp } from '../../utils/datetime/getTimestamp'
@@ -60,7 +60,7 @@ export class WorkspaceViewProvider
     private readonly _ctx: vscode.ExtensionContext,
     private readonly _fileThemeProcessor: FileThemeProcessor
   ) {
-    this._cssGenerator = new CssGenerator(_ctx)
+    this._cssGenerator = new CssGenerator()
     this._fileThemeProcessor.subscribe(this)
   }
 
@@ -106,7 +106,7 @@ export class WorkspaceViewProvider
       const state = store.getState().ws
 
       const themeData = state.state === 'list' ? this._fileThemeProcessor.getThemeData() : null
-      let cssData: ProcessedCss | null = null
+      let cssData: CssData | null = null
 
       if (themeData !== null) {
         this.setOptions(this._view, themeData.localResourceRoots)

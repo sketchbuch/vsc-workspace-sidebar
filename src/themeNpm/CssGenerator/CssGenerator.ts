@@ -7,31 +7,31 @@ import {
   ThemeJsonIconSingle,
 } from '../FileThemeProcessor/FileThemeProcessor.interface'
 import { cleanFileIconKey } from '../utils/strings/cleanFileIconKey'
-import { CssDefinition, CssDefinitions, CssProp, ProcessedCss } from './CssGenerator.interface'
+import { CssCache, CssData, CssDefinition, CssDefinitions, CssProp } from './CssGenerator.interface'
 
 export class CssGenerator {
   private readonly _baseClass: string = 'file-icon'
   private _webview?: vscode.Webview
-  private readonly _cacheKey = 'cssGenerator-cache'
+  private readonly _sessionCache: CssCache = {}
 
-  constructor(private readonly _ctx: vscode.ExtensionContext) {}
+  constructor() {}
 
-  private async deleteCssData(): Promise<void> {
-    return this._ctx.globalState.update(this._cacheKey, undefined)
+  private getCssData(themeId: string): CssData | null {
+    if (this._sessionCache[themeId]) {
+      return this._sessionCache[themeId]
+    }
+
+    return null
   }
 
-  private getCssData(): ProcessedCss | null {
-    return this._ctx.globalState.get<ProcessedCss>(this._cacheKey) ?? null
+  private setCssData(themeId: string, data: CssData): void {
+    this._sessionCache[themeId] = data
   }
 
   private getClass(iconKey: string): string {
     const cleanedIconKey = cleanFileIconKey(iconKey)
 
     return `.${this._baseClass}.${this._baseClass}-type-${cleanedIconKey}`
-  }
-
-  private async setCssData(data: ProcessedCss): Promise<void> {
-    return this._ctx.globalState.update(this._cacheKey, data)
   }
 
   private getClasses(
@@ -140,9 +140,9 @@ export class CssGenerator {
             )
             .join(', ')
 
-          return `@font-face { font-family: '${font.id}'; src: ${src}; font-weight: ${font.weight}; font-style: ${font.style}; font-display: block; }`
+          return `@font-face { font-family: '${font.id}'; src: ${src}; font-weight: ${font.weight}; font-style: ${font.style}; font-display: block; }\n`
         })
-        .join('')
+        .join('\n')
     }
 
     return ''
@@ -198,19 +198,11 @@ export class CssGenerator {
     return cssProps
   }
 
-  private processCss(themeData: ThemeJson): ProcessedCss {
-    const cacheData = this.getCssData()
-
-    if (cacheData) {
-      console.log('### cache HIT')
-
-      return cacheData
-    }
-
+  private processCss(themeData: ThemeJson, themeId: string): CssData {
     const defs = this.getDefinitions(themeData)
     const defKeys = Object.keys(defs)
 
-    const cssData: ProcessedCss = {
+    const cssData: CssData = {
       defCount: defKeys.length,
       fontFaceCss: this.getFontFace(themeData),
       iconCss: defKeys
@@ -222,19 +214,23 @@ export class CssGenerator {
             themeData.fonts
           )
         })
-        .join(''),
+        .join('\n'),
     }
 
-    this.setCssData(cssData)
-
-    console.log('### cache MISS')
+    this.setCssData(themeId, cssData)
 
     return cssData
   }
 
-  public getCss(themeData: ThemeJson, themeId: string, webview: vscode.Webview): ProcessedCss {
+  public getCss(themeData: ThemeJson, themeId: string, webview: vscode.Webview): CssData {
     this._webview = webview
 
-    return this.processCss(themeData)
+    const cacheData = this.getCssData(themeId)
+
+    if (cacheData) {
+      return cacheData
+    }
+
+    return this.processCss(themeData, themeId)
   }
 }
