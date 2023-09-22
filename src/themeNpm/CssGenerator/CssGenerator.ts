@@ -11,7 +11,6 @@ import { CssCache, CssData, CssDefinition, CssDefinitions, CssProp } from './Css
 
 export class CssGenerator {
   private readonly _baseClass: string = 'file-icon'
-  private _webview?: vscode.Webview
   private readonly _sessionCache: CssCache = {}
 
   constructor() {}
@@ -35,12 +34,17 @@ export class CssGenerator {
   }
 
   private getClasses(
-    iconDef: ThemeJsonIconDef,
+    themeData: ThemeJson,
+    definition: string,
     classes: CssDefinition,
-    showLanguageModeIcons: boolean,
-    fonts: ThemeFontDefinition[]
+    webview: vscode.Webview
   ) {
-    const cssProps = this.getProps(iconDef, showLanguageModeIcons, fonts)
+    const cssProps = this.getProps(
+      themeData.iconDefinitions[definition],
+      !!themeData.showLanguageModeIcons,
+      themeData.fonts,
+      webview
+    )
 
     return `${classes.join('::before, ')}::before {
         ${cssProps
@@ -127,14 +131,14 @@ export class CssGenerator {
     return defs
   }
 
-  private getFontFace(themeData: ThemeJson): string {
+  private getFontFace(themeData: ThemeJson, webview: vscode.Webview): string {
     if (themeData.fonts.length > 0) {
       return themeData.fonts
         .map((font): string => {
           const src = font.src
             .map(
               (fontSrc) =>
-                `url('${this._webview?.asWebviewUri(vscode.Uri.file(fontSrc.path))}') format('${
+                `url('${webview.asWebviewUri(vscode.Uri.file(fontSrc.path))}') format('${
                   fontSrc.format
                 }')`
             )
@@ -151,14 +155,15 @@ export class CssGenerator {
   private getProps(
     iconDef: ThemeJsonIconDef,
     showLanguageModeIcons: boolean,
-    fonts: ThemeFontDefinition[]
+    fonts: ThemeFontDefinition[],
+    webview: vscode.Webview
   ): CssProp[] {
     const cssProps: CssProp[] = []
 
     if (iconDef.iconPath) {
       cssProps.push({
         key: 'background-image',
-        value: `url(${this._webview?.asWebviewUri(vscode.Uri.file(iconDef.iconPath))})`,
+        value: `url(${webview.asWebviewUri(vscode.Uri.file(iconDef.iconPath))})`,
       })
       cssProps.push({ key: 'content', value: '" "' })
     } else if (iconDef.fontCharacter || iconDef.fontColor) {
@@ -198,21 +203,22 @@ export class CssGenerator {
     return cssProps
   }
 
-  private processCss(themeData: ThemeJson, themeId: string): CssData {
+  public getCss(themeData: ThemeJson, themeId: string, webview: vscode.Webview): CssData {
+    const cacheData = this.getCssData(themeId)
+
+    if (cacheData) {
+      return cacheData
+    }
+
     const defs = this.getDefinitions(themeData)
     const defKeys = Object.keys(defs)
 
     const cssData: CssData = {
       defCount: defKeys.length,
-      fontFaceCss: this.getFontFace(themeData),
+      fontFaceCss: this.getFontFace(themeData, webview),
       iconCss: defKeys
         .map((def: string) => {
-          return this.getClasses(
-            themeData.iconDefinitions[def],
-            defs[def],
-            !!themeData?.showLanguageModeIcons,
-            themeData.fonts
-          )
+          return this.getClasses(themeData, def, defs[def], webview)
         })
         .join('\n'),
     }
@@ -220,17 +226,5 @@ export class CssGenerator {
     this.setCssData(themeId, cssData)
 
     return cssData
-  }
-
-  public getCss(themeData: ThemeJson, themeId: string, webview: vscode.Webview): CssData {
-    this._webview = webview
-
-    const cacheData = this.getCssData(themeId)
-
-    if (cacheData) {
-      return cacheData
-    }
-
-    return this.processCss(themeData, themeId)
   }
 }
