@@ -9,7 +9,7 @@
   "config.workspaceFolderDepth.description": "What depth of subfolders should also be looked in. Range: 0-25",
   "config.workspaceSearchMinimum.description": "The minimum number of workspace files required for the search box to be displayed. 0 will always show the search box. Range: 0-100",
   "config.workspaceShowFileIcons.description": "EXPERIMENTAL FEATURE. Show file icons next to workspaces, matching is mostly automatic, but can be configured. [See the readme for more information](https://github.com/sketchbuch/vsc-workspace-sidebar#readme).",
-  "config.workspaceShowFileIconsConfig.description": "Custom matching config for icons. [See the readme for more information](https://github.com/sketchbuch/vsc-workspace-sidebar#readme).",
+  "config.workspaceShowFileIconsConfig.description": "EXPERIMENTAL FEATURE. Custom matching config for icons. [See the readme for more information](https://github.com/sketchbuch/vsc-workspace-sidebar#readme).",
   "config.workspaceShowFolderHierarchy.description": "Show file tree instead of a flat list.",
   "config.workspaceShowPath.always": "Always show paths",
   "config.workspaceShowPath.asneeded": "Show paths when a workspace has the same label as another",
