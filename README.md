@@ -55,10 +55,3 @@ This extension is localised, if you want it in your language please send me a tr
 
 - Fixes issues with links in changelog
 - Fixes the view title when recollecting workspaces
-
-## Theme Todos
-
-- Fix notification in dark mode
-- Package as NPM package and use that,
-- See if the wbview can cache the css,
-- See if the fileiconkeys created in render vars can be worked out and cached in the webview
