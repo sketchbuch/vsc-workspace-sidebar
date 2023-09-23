@@ -153,6 +153,7 @@ export class FileThemeProcessor implements ObserverableFileThemeProcessor {
       this._state = 'loading'
       this.notifyAll() // Let webviews handle loading if they want
 
+      await this.deleteThemeData()
       const activeFileiconTheme = this.getFileiconTheme()
 
       // File icon themes disabled
@@ -162,8 +163,6 @@ export class FileThemeProcessor implements ObserverableFileThemeProcessor {
 
         return
       }
-
-      await this.deleteThemeData()
 
       const sessionCacheData = this.getSessionCache(activeFileiconTheme)
 

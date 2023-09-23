@@ -7,15 +7,22 @@ import {
   ThemeJsonIconSingle,
 } from '../FileThemeProcessor/FileThemeProcessor.interface'
 import { cleanFileIconKey } from '../utils/strings/cleanFileIconKey'
-import { CssCache, CssData, CssDefinition, CssDefinitions, CssProp } from './CssGenerator.interface'
+import {
+  CssCache,
+  CssData,
+  CssDefinition,
+  CssDefinitions,
+  CssGeneratorIntreface,
+  CssProp,
+} from './CssGenerator.interface'
 
-export class CssGenerator {
+export class CssGenerator implements CssGeneratorIntreface {
   private readonly _baseClass: string = 'file-icon'
   private readonly _sessionCache: CssCache = {}
 
   constructor() {}
 
-  private getCssData(themeId: string): CssData | null {
+  private getSessionCacheData(themeId: string): CssData | null {
     if (this._sessionCache[themeId]) {
       return this._sessionCache[themeId]
     }
@@ -23,7 +30,7 @@ export class CssGenerator {
     return null
   }
 
-  private setCssData(themeId: string, data: CssData): void {
+  private setSessionCacheData(themeId: string, data: CssData): void {
     this._sessionCache[themeId] = data
   }
 
@@ -204,10 +211,10 @@ export class CssGenerator {
   }
 
   public getCss(themeData: ThemeJson, themeId: string, webview: vscode.Webview): CssData {
-    const cacheData = this.getCssData(themeId)
+    const sessionCacheData = this.getSessionCacheData(themeId)
 
-    if (cacheData) {
-      return cacheData
+    if (sessionCacheData) {
+      return sessionCacheData
     }
 
     const defs = this.getDefinitions(themeData)
@@ -223,7 +230,7 @@ export class CssGenerator {
         .join('\n'),
     }
 
-    this.setCssData(themeId, cssData)
+    this.setSessionCacheData(themeId, cssData)
 
     return cssData
   }
