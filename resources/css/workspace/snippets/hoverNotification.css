@@ -19,10 +19,6 @@
   background-color: var(--vscode-selection-background);
 }
 
-.hover-notification--loading {
-  background: #d1e1f3;
-}
-
 .hover-notification__text {
   padding-left: 30px;
 }
