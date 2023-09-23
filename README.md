@@ -12,9 +12,9 @@ The currently active workspace is highlighted, or in tree mode, any folder if cl
 
 A search box is provided to allow you to search for a specific Workspace.
 
-![List View](./docs/images/listview.png)
-![Tree View](./docs/images/treeview.png)
-![Searching](./docs/images/search.png)
+![List View](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/listview.png)
+![Tree View](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/treeview.png)
+![Searching](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/search.png)
 
 File theme icons can also be displayed. For more information see [File Icon Themes](./docs//File%20Icon%20Themes.md).
 
@@ -51,7 +51,6 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-### [1.5.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.5.0...v1.5.1) (2023-08-25)
+### [1.6.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.5.1...v1.6.0) (2023-09-23)
 
-- Fixes issues with links in changelog
-- Fixes the view title when recollecting workspaces
+- Closes #81 - Support file icon themes

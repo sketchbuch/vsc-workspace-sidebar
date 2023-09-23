@@ -55,7 +55,7 @@ Also I don't change themes (colour or file icon) in VSCode, so if you find issue
 
 ### Examples
 
-![Emoji in Tree View](./images/treeview%20emoji.png)
-![Material in Tree View](./images/treeview%20material.png)
-![Seti Theme in Tree View](./images/treeview%20seti.png)
-![Seti Theme in List View](./images/listview%20seti.png)
+![Emoji in Tree View](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/treeview%20emoji.png)
+![Material in Tree View](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/treeview%20material.png)
+![Seti Theme in Tree View](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/treeview%20seti.png)
+![Seti Theme in List View](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/listview%20seti.png)

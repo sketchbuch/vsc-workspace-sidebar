@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.6.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.5.1...v1.6.0) (2023-09-23)
+
+- Closes #81 - Support file icon themes
+
 ## [1.5.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.5.0...v1.5.1) (2023-08-25)
 
 - Fixes issues with links in changelog
