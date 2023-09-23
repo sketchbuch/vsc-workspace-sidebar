@@ -4,7 +4,7 @@
 
 Adds a sidebar to VSCode that lists Workspaces and lets you open them in the current window or a new window.
 
-![alt text](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/preview.gif 'Workspace Sidebar Preview')
+![Workspace Sidebar Preview](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/preview.gif)
 
 Two display modes are available, a list view and a file tree view.
 
