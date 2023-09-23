@@ -1,10 +1,6 @@
 import * as vscode from 'vscode'
+import { CssData, FileThemeProcessorState, GetThemeData } from 'vscode-file-theme-processor'
 import { ConfigActions } from '../constants/config'
-import { CssData } from '../themeNpm/CssGenerator/CssGenerator.interface'
-import {
-  FileThemeProcessorState,
-  GetThemeData,
-} from '../themeNpm/FileThemeProcessor/FileThemeProcessor.interface'
 
 export interface PostMessage<Payload, Actions> {
   action: Actions

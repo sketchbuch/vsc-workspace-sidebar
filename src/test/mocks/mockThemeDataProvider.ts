@@ -1,5 +1,4 @@
-import { FileThemeProcessor } from '../../themeNpm/FileThemeProcessor/FileThemeProcessor'
-import { FileThemeProcessorObserver } from '../../themeNpm/FileThemeProcessor/FileThemeProcessor.interface'
+import { FileThemeProcessor, FileThemeProcessorObserver } from 'vscode-file-theme-processor'
 import { getMockThemeData } from './mockThemeData'
 
 export const mockThemeDataProvider = {

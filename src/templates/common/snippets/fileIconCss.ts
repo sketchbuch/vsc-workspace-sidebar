@@ -1,6 +1,5 @@
 import * as vscode from 'vscode'
-import { CssData } from '../../../themeNpm/CssGenerator/CssGenerator.interface'
-import { GetThemeData } from '../../../themeNpm/FileThemeProcessor/FileThemeProcessor.interface'
+import { CssData, GetThemeData } from 'vscode-file-theme-processor'
 
 export const fileIconCss = (
   nonce: string,

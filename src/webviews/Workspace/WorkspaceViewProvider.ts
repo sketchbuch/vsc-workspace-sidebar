@@ -1,6 +1,12 @@
 import crypto from 'crypto'
 import * as vscode from 'vscode'
 import { t } from 'vscode-ext-localisation'
+import {
+  CssData,
+  CssGenerator,
+  FileThemeProcessor,
+  FileThemeProcessorObserver,
+} from 'vscode-file-theme-processor'
 import { SortIds } from '../../commands/registerCommands'
 import { getActionsConfig } from '../../config/getConfig'
 import {
@@ -21,10 +27,6 @@ import {
 import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
-import { CssGenerator } from '../../themeNpm/CssGenerator/CssGenerator'
-import { CssData } from '../../themeNpm/CssGenerator/CssGenerator.interface'
-import { FileThemeProcessor } from '../../themeNpm/FileThemeProcessor/FileThemeProcessor'
-import { FileThemeProcessorObserver } from '../../themeNpm/FileThemeProcessor/FileThemeProcessor.interface'
 import { getTimestamp } from '../../utils/datetime/getTimestamp'
 import { HtmlData, PostMessage } from '../webviews.interface'
 import {

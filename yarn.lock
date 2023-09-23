@@ -8208,6 +8208,13 @@ vscode-ext-localisation@^1.1.0:
   dependencies:
     path "^0.12.7"
 
+vscode-file-theme-processor@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vscode-file-theme-processor/-/vscode-file-theme-processor-1.0.0.tgz#a3c84e4c15d297e82bfa67a7007947b3ef7444c1"
+  integrity sha512-HHZXTmLpq106+XHm8aVdeAYaS+D5KcKsfhGVh8/rE76xpZkIpRboL2EMXVmPTDoQXlZsNQaPD1gVM1pyWbOepA==
+  dependencies:
+    json5 "^2.2.3"
+
 vscode-test@^1.3.0:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/vscode-test/-/vscode-test-1.6.1.tgz#44254c67036de92b00fdd72f6ace5f1854e1a563"

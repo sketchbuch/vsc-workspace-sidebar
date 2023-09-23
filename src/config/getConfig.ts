@@ -1,4 +1,5 @@
 import { workspace } from 'vscode'
+import { ThemeId } from 'vscode-file-theme-processor'
 import {
   CONFIG_CLEAN_LABELS,
   CONFIG_CONDENSE_FILETREE,
@@ -13,7 +14,6 @@ import {
   ConfigActions,
   ConfigShowPaths,
 } from '../constants/config'
-import { ThemeId } from '../themeNpm/FileThemeProcessor/FileThemeProcessor.interface'
 import { FileIconKeysCustom } from '../webviews/webviews.interface'
 
 const { getConfiguration } = workspace

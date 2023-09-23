@@ -1,4 +1,4 @@
-import { cleanFileIconKey } from '../../../themeNpm/utils/strings/cleanFileIconKey'
+import { cleanFileIconKey } from 'vscode-file-theme-processor'
 
 export const fileIconFile = (icon: string): string => {
   return `

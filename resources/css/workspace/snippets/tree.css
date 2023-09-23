@@ -49,30 +49,3 @@
 .list__branch-list-item-folder.list__styled-item--selected .list__title {
   opacity: 1;
 }
-
-/* .list__branch-list-item-file:not(.list__styled-item--selected) {
-  background: rgba(255, 255, 255, 0.5);
-} */
-
-.list_branch-icon.file-icon {
-  display: flex;
-  height: 22px;
-  line-height: 22px;
-  top: 0.05rem;
-  width: 22px;
-}
-
-.list_branch-icon.file-icon::before {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  background-position: 0;
-  background-repeat: no-repeat;
-  background-size: 16px;
-  display: inline-block;
-  flex-shrink: 0;
-  height: 22px;
-  line-height: inherit !important;
-  margin-left: unset;
-  vertical-align: top;
-  width: 16px;
-}

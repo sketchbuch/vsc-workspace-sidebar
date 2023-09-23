@@ -1,5 +1,5 @@
+import { GetThemeData } from 'vscode-file-theme-processor'
 import { DEFAULT_THEME } from '../../theme/constants'
-import { GetThemeData } from '../../themeNpm/FileThemeProcessor/FileThemeProcessor.interface'
 
 export const getMockThemeData = (testData: Partial<GetThemeData> = {}): GetThemeData => {
   return {
