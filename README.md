@@ -2,16 +2,11 @@
 
 **(vsc-workspace-sidebar)**
 
-Adds a sidebar to VSCode that lists Workspaces and lets you open them in the current window or a new window. The results are cached for 12 Hours but there is a refresh button that you can click to recollect workspaces at any time.
+Adds a sidebar to VSCode that lists Workspaces and lets you open them in the current window or a new window.
 
-Two display modes are available:
+Two display modes are available, a list view and a file tree view. The currently active workspace is highlighted, or in tree mode, any folder if closed that contains the active workspace. A search box is provided to allow you to search for a specific Workspace.
 
-1. List - Can be sorted asc/desc
-2. File Tree - A representation of the file tree to all workspaces. Can be collapsed/expanded.
-
-The currently active workspace is highlighted, or in tree mode, any folder if closed that contains the active workspace
-
-A search box is provided to allow you to search for a specific Workspace.
+File theme icons can also be displayed. For more information see [File Icon Themes](./docs//File%20Icon%20Themes.md).
 
 ![alt text](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/preview.gif 'Workspace Sidebar Preview')
 
@@ -52,3 +47,10 @@ This extension is localised, if you want it in your language please send me a tr
 
 - Fixes issues with links in changelog
 - Fixes the view title when recollecting workspaces
+
+## Theme Todos
+
+- Fix notification in dark mode
+- Package as NPM package and use that,
+- See if the wbview can cache the css,
+- See if the fileiconkeys created in render vars can be worked out and cached in the webview
