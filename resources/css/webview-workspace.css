@@ -2,6 +2,7 @@
 @import './workspace/views/invalid.css';
 @import './workspace/views/list.css';
 @import './workspace/views/loading.css';
+@import './workspace/snippets/hoverNotification.css';
 
 :root {
   --ext-workspace-sidebar__search-offset: 32px;
@@ -43,7 +44,7 @@ body.vscode-dark img[data-theme='light'] {
   position: relative;
 }
 
-.view__message+.view__message {
+.view__message + .view__message {
   margin-top: 0.5rem;
 }
 
@@ -76,7 +77,6 @@ body.vscode-dark img[data-theme='light'] {
 .view__link:active {
   color: var(--vscode-textLink-activeForeground);
 }
-
 
 .a11y__screenreader-text {
   border: 0;

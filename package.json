@@ -4,7 +4,7 @@
   "displayName": "Workspace Sidebar",
   "version": "1.5.1",
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "bugs": {
     "url": "https://github.com/sketchbuch/vsc-workspace-sidebar/issues"
@@ -141,6 +141,18 @@
           ],
           "scope": "application",
           "type": "string"
+        },
+        "workspaceSidebar.showFileIcons": {
+          "default": true,
+          "markdownDescription": "%config.workspaceShowFileIcons.description%",
+          "scope": "application",
+          "type": "boolean"
+        },
+        "workspaceSidebar.showFileIconsConfig": {
+          "default": {},
+          "markdownDescription": "%config.workspaceShowFileIconsConfig.description%",
+          "scope": "application",
+          "type": "object"
         }
       }
     },
@@ -238,7 +250,9 @@
     "lint": "yarn lint:js && yarn lint:ts && yarn lint:prettier && yarn lint:css",
     "pretest": "yarn clean:dist && yarn build:dev && yarn lint",
     "test": "yarn clean:test && yarn typecheck",
+    "test:mocha": "mocha -w -ui tdd --",
     "typecheck": "tsc -p ./",
+    "typecheck:mocha": "tsc -w -p ./",
     "vscode:prepublish": "yarn clean:dist && yarn build:release"
   },
   "dependencies": {
@@ -246,7 +260,9 @@
     "@vscode/codicons": "^0.0.29",
     "@vscode/webview-ui-toolkit": "^1.2.2",
     "crypto": "^1.0.1",
-    "vscode-ext-localisation": "^1.1.1"
+    "json5": "^2.2.3",
+    "vscode-ext-localisation": "^1.1.0",
+    "vscode-file-theme-processor": "^1.0.0"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",

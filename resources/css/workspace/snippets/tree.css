@@ -2,7 +2,8 @@
   position: relative;
 }
 
-.list__styled-list--tree .list__text {
+.list[data-fileiconsactive='true'] .list__branch-list-item .list__text,
+.list[data-fileiconsactive='false'] .list__branch-list-item .list__text {
   padding-left: 18px;
 }
 
@@ -29,14 +30,16 @@
 }
 
 .list_branch-icon {
-  left: 20px;
+  height: 22px;
+  left: 16px;
   position: absolute;
-  top: 0.3rem;
+  top: 0.25rem;
+  width: 20px;
 }
 
 .list_branch-icon-empty {
-  min-width: 16px;
-  width: 16px;
+  min-width: 22px;
+  width: 20px;
 }
 
 .list__branch-list-item-folder .list__title {
@@ -46,7 +49,3 @@
 .list__branch-list-item-folder.list__styled-item--selected .list__title {
   opacity: 1;
 }
-
-/* .list__branch-list-item-file:not(.list__styled-item--selected) {
-  background: rgba(255, 255, 255, 0.5);
-} */

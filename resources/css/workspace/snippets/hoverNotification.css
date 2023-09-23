@@ -1,0 +1,43 @@
+.hover-notification {
+  background: var(--vscode-notifications-background);
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 8px 2px;
+  box-sizing: border-box;
+  color: var(--vscode-notifications-foreground);
+  left: 20px;
+  outline-color: var(--vscode-contrastBorder);
+  padding: 10px 5px;
+  position: fixed;
+  top: 32px;
+  touch-action: none;
+  width: calc(100% - 40px);
+  z-index: 10;
+}
+
+.hover-notification ::selection {
+  background-color: var(--vscode-selection-background);
+}
+
+.hover-notification__text {
+  padding-left: 30px;
+}
+
+.hover-notification__title {
+  color: var(--vscode-notifications-foreground);
+  margin: 0;
+}
+
+.hover-notification__message {
+  margin: 0;
+}
+
+.hover-notification__title + .hover-notification__message {
+  margin-top: 5px;
+}
+
+.hover-notification .hover-notification__icon {
+  color: var(--vscode-notificationsInfoIcon-foreground);
+  top: 10px;
+  left: 10px;
+}

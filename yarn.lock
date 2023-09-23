@@ -4825,7 +4825,7 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
-json5@^2.2.1:
+json5@^2.2.1, json5@^2.2.3:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.3.tgz#78cd6f1a19bdc12b73db5ad0c61efd66c1e29283"
   integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
@@ -8201,12 +8201,19 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vscode-ext-localisation@^1.1.1:
+vscode-ext-localisation@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/vscode-ext-localisation/-/vscode-ext-localisation-1.1.0.tgz#acf5cb18adcc69c44bb5388f8b3d892d7f6ba94c"
   integrity sha512-O07j8xDeOkx2isdZ7DfuhAbfuub9PMMtZxVTMnyHyGnzC6P8Wf78w/770SJDsssvQQ7HZXQ1ZWKmtLcQ87LKLg==
   dependencies:
     path "^0.12.7"
+
+vscode-file-theme-processor@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vscode-file-theme-processor/-/vscode-file-theme-processor-1.0.0.tgz#a3c84e4c15d297e82bfa67a7007947b3ef7444c1"
+  integrity sha512-HHZXTmLpq106+XHm8aVdeAYaS+D5KcKsfhGVh8/rE76xpZkIpRboL2EMXVmPTDoQXlZsNQaPD1gVM1pyWbOepA==
+  dependencies:
+    json5 "^2.2.3"
 
 vscode-test@^1.3.0:
   version "1.6.1"

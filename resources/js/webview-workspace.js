@@ -10,8 +10,6 @@
   const wsElements = document.querySelectorAll('.list__styled-item--unselected');
   const wsFolders = document.querySelectorAll('.list__branch-list-item-folder-closable');
 
-  console.log('### searchOptions', searchOptions.length)
-
   let searchTerm = '';
 
   const sendMessage = (action, payload) => {
@@ -83,9 +81,6 @@
 
       searchTerm = searchInput.value;
       handleSearchSubmit();
-
-
-      console.log('###', name, ariaPressed)
 
       if (ariaPressed) {
         sendMessage('SEARCH_CHECKBOX_DISABLE', name);

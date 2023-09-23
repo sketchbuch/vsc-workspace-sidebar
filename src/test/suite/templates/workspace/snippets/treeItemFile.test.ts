@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
+import * as fileIcons from '../../../../../templates/workspace/snippets/fileIconFile'
 import * as buttons from '../../../../../templates/workspace/snippets/listItemButtons'
 import * as selected from '../../../../../templates/workspace/snippets/listItemIcon'
 import * as icons from '../../../../../templates/workspace/snippets/treeIcons'
@@ -12,16 +13,18 @@ import { getMockState } from '../../../../mocks/mockState'
 suite('Templates > Workspace > Snippets: treeItemFile()', () => {
   const DEPTH = 0
   const file = { ...file1, showPath: false }
-  const mockRenderVars = getMockRenderVars()
+  const mockRenderVars = getMockRenderVars({ fileIconsActive: false })
   const mockState = getMockState()
 
   let buttonSpy: sinon.SinonSpy
+  let iconFileSpy: sinon.SinonSpy
   let iconTreeSpy: sinon.SinonSpy
   let indentSpy: sinon.SinonSpy
   let selectedIconSpy: sinon.SinonSpy
 
   setup(() => {
     buttonSpy = sinon.spy(buttons, 'listItemButtons')
+    iconFileSpy = sinon.spy(fileIcons, 'fileIconFile')
     iconTreeSpy = sinon.spy(icons, 'treeIconFile')
     indentSpy = sinon.spy(indent, 'treeIndent')
     selectedIconSpy = sinon.spy(selected, 'listItemIcon')
@@ -29,6 +32,7 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
 
   teardown(() => {
     buttonSpy.restore()
+    iconFileSpy.restore()
     iconTreeSpy.restore()
     indentSpy.restore()
     selectedIconSpy.restore()
@@ -47,6 +51,7 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
 
     sinon.assert.calledOnce(indentSpy)
     sinon.assert.calledOnce(iconTreeSpy)
+    sinon.assert.notCalled(iconFileSpy)
   })
 
   test('Renders correctly when selected', () => {
@@ -117,5 +122,13 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
     )
 
     expect(result).not.contains(`list__description`)
+  })
+
+  test('Renders file icon if needed', () => {
+    const file = { ...file1, showPath: true }
+    treeItemFile(file, DEPTH, mockState, getMockRenderVars({ fileIconsActive: true }))
+
+    sinon.assert.notCalled(iconTreeSpy)
+    sinon.assert.calledOnce(iconFileSpy)
   })
 })

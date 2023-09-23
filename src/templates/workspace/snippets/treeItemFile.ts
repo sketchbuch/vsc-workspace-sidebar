@@ -1,8 +1,10 @@
-import { RenderVars } from '../../../webviews/webviews.interface'
+import { getLangIcon } from '../../../theme/getLangIcon'
 import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { RenderVars } from '../../../webviews/webviews.interface'
 import { getFileTooltip } from '../../helpers/getFileTooltip'
 import { getLabel } from '../../helpers/getLabel'
 import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceButtons'
+import { fileIconFile } from './fileIconFile'
 import { listItemButtons } from './listItemButtons'
 import { listItemIcon } from './listItemIcon'
 import { treeIconFile } from './treeIcons'
@@ -21,7 +23,7 @@ export const treeItemFile = (
     isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
   }`
   const tooltip = getFileTooltip(renderVars, file, 'cur-win')
-  const { condenseFileTree } = renderVars
+  const { condenseFileTree, fileIconKeys, fileIconsActive, themeProcessorState } = renderVars
 
   const buttons: ConfigButtons = [
     {
@@ -40,13 +42,15 @@ export const treeItemFile = (
   }
 
   const itemButtons = getWorkspaceButtons({ buttons, renderVars })
+  const showFileIcon = fileIconsActive && themeProcessorState === 'ready'
+  const langIcon = showFileIcon ? getLangIcon(file.file, fileIconKeys) : ''
 
   return `
     <li class="${classes}" data-file="${file.file}" data-depth="${depth}">
       ${isSelected ? listItemIcon(renderVars) : ''}
       ${treeIndent(isRootLvlFile ? 0 : depth + 1)}
       <span class="list__element" title="${tooltip}">
-        ${treeIconFile()}
+        ${showFileIcon ? fileIconFile(langIcon) : treeIconFile()}
         <span class="list__text">
           <span class="list__title">${getLabel(label, search)}</span>
           ${showPath && condenseFileTree ? `<span class="list__description">${path}</span>` : ''}

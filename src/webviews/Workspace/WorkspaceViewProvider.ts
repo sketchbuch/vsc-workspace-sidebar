@@ -1,6 +1,12 @@
 import crypto from 'crypto'
 import * as vscode from 'vscode'
 import { t } from 'vscode-ext-localisation'
+import {
+  CssData,
+  CssGenerator,
+  FileThemeProcessor,
+  FileThemeProcessorObserver,
+} from 'vscode-file-theme-processor'
 import { SortIds } from '../../commands/registerCommands'
 import { getActionsConfig } from '../../config/getConfig'
 import {
@@ -21,7 +27,7 @@ import {
 import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
-import { GlobalState } from '../../types/ext'
+import { getTimestamp } from '../../utils/datetime/getTimestamp'
 import { HtmlData, PostMessage } from '../webviews.interface'
 import {
   WorkspacePmActions as Actions,
@@ -45,45 +51,40 @@ const {
   toggleFolderStateBulk,
 } = workspaceSlice.actions
 
-export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
+export class WorkspaceViewProvider
+  implements vscode.WebviewViewProvider, FileThemeProcessorObserver
+{
   public static readonly viewType = EXT_WEBVIEW_WS
   private _view?: vscode.WebviewView
+  private _cssGenerator: CssGenerator
 
   constructor(
-    private readonly _extensionUri: vscode.Uri,
-    private readonly _globalState: GlobalState,
-    private readonly _extMode: vscode.ExtensionMode
-  ) {}
-
-  public focusInput() {
-    if (this._view?.visible) {
-      this._view.webview.postMessage({ action: ClientActions.FOCUS_SEARCH })
-    }
+    private readonly _ctx: vscode.ExtensionContext,
+    private readonly _fileThemeProcessor: FileThemeProcessor
+  ) {
+    this._cssGenerator = new CssGenerator()
+    this._fileThemeProcessor.subscribe(this)
   }
 
   private getCacheFiles() {
-    const cachedData = this._globalState.get<WorkspaceCache>(EXT_WSSTATE_CACHE)
+    const cachedData = this._ctx.globalState.get<WorkspaceCache>(EXT_WSSTATE_CACHE)
 
     if (cachedData) {
       const { files, timestamp } = cachedData
 
       if (files && timestamp) {
-        const timestampNow = this.getTimestamp()
+        const timestampNow = getTimestamp()
         const timestampExpired = timestamp + EXT_WSSTATE_CACHE_DURATION
 
         if (timestampNow < timestampExpired) {
           return [...files]
         } else {
-          this._globalState.update(EXT_WSSTATE_CACHE, undefined)
+          this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
         }
       }
     }
 
     return null
-  }
-
-  private getTimestamp() {
-    return Math.floor(Date.now() / 1000)
   }
 
   private getViewTitle({ files, visibleFiles, search, state: view }: WorkspaceState) {
@@ -102,82 +103,60 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
     return viewTitle
   }
 
-  public refresh(isRerender = false) {
-    if (isRerender) {
-      this.render()
-    } else {
-      vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
-      this._globalState.update(EXT_WSSTATE_CACHE, undefined)
-      store.dispatch(fetch())
-    }
-  }
-
   private render() {
     if (this._view !== undefined) {
       const state = store.getState().ws
+
+      const themeData = state.state === 'list' ? this._fileThemeProcessor.getThemeData() : null
+      let cssData: CssData | null = null
+
+      if (themeData !== null) {
+        this.setOptions(this._view, themeData.localResourceRoots)
+
+        if (themeData.data && themeData.themeId) {
+          cssData = this._cssGenerator.getCss(themeData.data, themeData.themeId, this._view.webview)
+        }
+      }
+
       this._view.title = this.getViewTitle(state)
 
       const htmlData: HtmlData<WorkspaceState> = {
-        data: { ...state },
+        state: { ...state },
         title: this._view.title,
         webview: this._view.webview,
       }
 
       this._view.webview.html = getHtml<WorkspaceState>(
         {
-          extensionPath: this._extensionUri,
-          template: defaultTemplate,
+          cssData,
+          extensionPath: this._ctx.extensionUri,
           htmlData,
+          template: defaultTemplate,
+          themeData,
         },
         crypto.randomBytes(16).toString('hex')
       )
-    } else if (this._extMode !== vscode.ExtensionMode.Test) {
+
+      // Suppress error when running in extension development host
+    } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Test) {
       vscode.window.showErrorMessage(t('errors.viewNotFound'))
     }
   }
 
-  public toggleAllFolders(type: FolderState) {
-    store.dispatch(toggleFolderStateBulk(type))
-  }
-
-  public updateFileTree() {
-    store.dispatch(setFileTree())
-  }
-
-  public updateSort() {
-    const sort = this._globalState.get<SortIds>(EXT_SORT) ?? 'ascending'
-    store.dispatch(setPersistedState({ sort }))
-  }
-
-  public updateVisibleFiles() {
-    store.dispatch(setVisibleFiles())
-  }
-
-  public resolveWebviewView(webviewView: vscode.WebviewView) {
-    this._view = webviewView
-
-    store.subscribe(() => {
-      this.render()
-      this.stateChanged(store.getState().ws)
-    })
-
-    this.setupWebview(webviewView)
-    this.updateSort()
-
-    const cachedFiles = this.getCacheFiles()
-
-    if (cachedFiles) {
-      store.dispatch(list(cachedFiles))
-    } else {
-      store.dispatch(fetch())
+  private setOptions = (webviewView: vscode.WebviewView, localResourceRoots: string[] = []) => {
+    webviewView.webview.options = {
+      enableScripts: true,
+      localResourceRoots: [
+        this._ctx.extensionUri,
+        ...localResourceRoots.map((resouceRoot) => {
+          return vscode.Uri.parse(resouceRoot)
+        }),
+      ],
     }
   }
 
   private setupWebview(webviewView: vscode.WebviewView) {
-    webviewView.webview.options = {
-      enableScripts: true,
-      localResourceRoots: [this._extensionUri],
-    }
+    this.setOptions(webviewView)
 
     webviewView.webview.onDidReceiveMessage((message: PostMessage<Payload, Actions>) => {
       const { action, payload } = message
@@ -185,7 +164,7 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
       switch (action) {
         case Actions.FOLDER_CLICK:
           if (payload !== undefined) {
-            store.dispatch(toggleFolderState(payload.toString()))
+            store.dispatch(toggleFolderState(payload))
           }
           break
 
@@ -235,13 +214,16 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
           break
 
         case Actions.ERROR_MSG:
-          if (this._extMode !== vscode.ExtensionMode.Production && payload !== undefined) {
+          if (
+            this._ctx.extensionMode !== vscode.ExtensionMode.Production &&
+            payload !== undefined
+          ) {
             vscode.window.showErrorMessage(payload)
           }
           break
 
         default:
-          if (this._extMode !== vscode.ExtensionMode.Production) {
+          if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
             vscode.window.showErrorMessage(`Action not found: "${action}"`)
           }
           break
@@ -262,9 +244,9 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
         executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, true)
 
         if (files) {
-          this._globalState.update(EXT_WSSTATE_CACHE, {
+          this._ctx.globalState.update(EXT_WSSTATE_CACHE, {
             files,
-            timestamp: this.getTimestamp(),
+            timestamp: getTimestamp(),
           })
         }
         break
@@ -272,5 +254,65 @@ export class WorkspaceViewProvider implements vscode.WebviewViewProvider {
       default:
         break
     }
+  }
+
+  public focusInput() {
+    if (this._view?.visible) {
+      this._view.webview.postMessage({ action: ClientActions.FOCUS_SEARCH })
+    }
+  }
+
+  public notify() {
+    // Only rerender if resolveWebviewView() has been called
+    if (this._view !== undefined) {
+      this.render()
+    }
+  }
+
+  public refresh(isRerender = false) {
+    if (isRerender) {
+      this.render()
+    } else {
+      vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
+      this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
+      store.dispatch(fetch())
+    }
+  }
+
+  public resolveWebviewView(webviewView: vscode.WebviewView) {
+    this._view = webviewView
+
+    store.subscribe(() => {
+      this.render()
+      this.stateChanged(store.getState().ws)
+    })
+
+    this.setupWebview(webviewView)
+    this.updateSort()
+
+    const cachedFiles = this.getCacheFiles()
+
+    if (cachedFiles) {
+      store.dispatch(list(cachedFiles))
+    } else {
+      store.dispatch(fetch())
+    }
+  }
+
+  public toggleAllFolders(type: FolderState) {
+    store.dispatch(toggleFolderStateBulk(type))
+  }
+
+  public updateFileTree() {
+    store.dispatch(setFileTree())
+  }
+
+  public updateSort() {
+    const sort = this._ctx.globalState.get<SortIds>(EXT_SORT) ?? 'ascending'
+    store.dispatch(setPersistedState({ sort }))
+  }
+
+  public updateVisibleFiles() {
+    store.dispatch(setVisibleFiles())
   }
 }

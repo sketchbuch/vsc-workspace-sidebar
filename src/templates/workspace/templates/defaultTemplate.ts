@@ -1,3 +1,4 @@
+import * as vscode from 'vscode'
 import { t } from 'vscode-ext-localisation'
 import {
   FS_WEBVIEW_CODICONS_CSS,
@@ -7,6 +8,7 @@ import {
 } from '../../../constants/fs'
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { TemplateVars } from '../../../webviews/webviews.interface'
+import { fileIconCss } from '../../common/snippets/fileIconCss'
 import { metaTags } from '../../common/snippets/metaTags'
 import { getRenderVars } from '../../helpers/getRenderVars'
 import { errorView } from '../views/errorView'
@@ -14,9 +16,22 @@ import { invalidView } from '../views/invalidView'
 import { listView } from '../views/listView'
 import { loadingView } from '../views/loadingView'
 
-export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceState): string => {
-  const { codiconsFolderUri, cspSource, cssFolderUri, nonce, scriptFolderUri, title, uiFolderUri } =
-    templateVars
+export const defaultTemplate = (
+  templateVars: TemplateVars,
+  state: WorkspaceState,
+  webview: vscode.Webview
+): string => {
+  const {
+    cssData,
+    codiconsFolderUri,
+    cspSource,
+    cssFolderUri,
+    nonce,
+    scriptFolderUri,
+    themeData,
+    title,
+    uiFolderUri,
+  } = templateVars
   const { state: view } = state
   const renderVars = getRenderVars(templateVars)
 
@@ -42,6 +57,7 @@ export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceStat
         <title>${titleAttr}</title>
         <link href="${cssFolderUri}/${FS_WEBVIEW_WORKSPACE_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
         <link href="${codiconsFolderUri}/${FS_WEBVIEW_CODICONS_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
+        ${fileIconCss(nonce, themeData, cssData, webview)}
       </head>
 
       <body>

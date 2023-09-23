@@ -8,6 +8,8 @@
   "config.workspaceFolder.description": "Der Ordnerpfad, in dem nach Arbeitsbereichen gesucht werden soll. Falls leer, wird Ihr Home-Ordner benutzt. '~' wird auch unter Windows durch Ihren Home-Ordner ersetzt.",
   "config.workspaceFolderDepth.description": "Wie weit Unterordner auch durchsucht werden. -1 für keine Einschrängung",
   "config.workspaceSearchMinimum.description": "Die Mindestanzahl von Arbeitsbereichen, die für die Anzeige des Suchfeldes erforderlich ist. Bei 0 wird das Suchfeld immer anzeigt. Skala: 0-100",
+  "config.workspaceShowFileIcons.description": "EXPERIMENTELLE FUNKTION. Dateisymbole neben Arbeitsbereichen anzeigen, passende icons wird automatisch gefunden, kann aber auch konfiguriert werden. [Weitere Informationen finden Sie in der Readme-Datei](https://github.com/sketchbuch/vsc-workspace-sidebar#readme).",
+  "config.workspaceShowFileIconsConfig.description": "EXPERIMENTELLE FUNKTION. Benutzerdefinierte Konfiguration für Symbole. [Weitere Informationen finden Sie in der Readme-Datei](https://github.com/sketchbuch/vsc-workspace-sidebar#readme).",
   "config.workspaceShowFolderHierarchy.description": "Ordnerhierarchie statt einer flachen Liste anzeigen.",
   "config.workspaceShowPath.always": "Pfade immer anzeigen",
   "config.workspaceShowPath.asneeded": "Pfade anzeigen, wenn ein Arbeitsbereich dieselbe Bezeichnung wie eine anderer hat",
@@ -61,6 +63,9 @@
     "list": {
       "empty": {
         "title": "Keine Arbeitsbereiche gefunden"
+      },
+      "fileicons": {
+        "loadingMsg": "Dateithemadaten werden geladen"
       },
       "folder": {
         "open-plural": "Derzeit geöffnete Ordner:",
