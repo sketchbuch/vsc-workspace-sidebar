@@ -5,9 +5,9 @@ export const getNameSegments = (nameToSegment: string): string[] => {
     nameToSegment
       .toLowerCase()
       // Normalise keyword seperators
-      .replace(' ', '.')
-      .replace('_', '.')
-      .replace('-', '.')
+      .replace(/ /g, '.')
+      .replace(/_/g, '.')
+      .replace(/-/g, '.')
       .split('.')
   )
 }
