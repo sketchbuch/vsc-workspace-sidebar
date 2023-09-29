@@ -6,6 +6,7 @@ import {
   CssGenerator,
   FileThemeProcessor,
   FileThemeProcessorObserver,
+  FileThemeProcessorState,
 } from 'vscode-file-theme-processor'
 import { SortIds } from '../../commands/registerCommands'
 import { getActionsConfig } from '../../config/getConfig'
@@ -21,6 +22,7 @@ import {
   EXT_LOADED,
   EXT_SORT,
   EXT_WEBVIEW_WS,
+  EXT_WSCSS_CACHE,
   EXT_WSSTATE_CACHE,
   EXT_WSSTATE_CACHE_DURATION,
 } from '../../constants/ext'
@@ -35,6 +37,7 @@ import {
   FolderState,
   WorkspacePmPayload as Payload,
   WorkspaceCache,
+  WorkspaceCssCache,
   WorkspaceState,
 } from './WorkspaceViewProvider.interface'
 import { fetch } from './store/fetch'
@@ -110,11 +113,37 @@ export class WorkspaceViewProvider
       const themeData = state.state === 'list' ? this._fileThemeProcessor.getThemeData() : null
       let cssData: CssData | null = null
 
-      if (themeData !== null) {
-        this.setOptions(this._view, themeData.localResourceRoots)
+      if (themeData !== null && themeData.state === 'ready') {
+        console.log('### render()', themeData.themeId)
 
         if (themeData.data && themeData.themeId) {
-          cssData = this._cssGenerator.getCss(themeData.data, themeData.themeId, this._view.webview)
+          this.setOptions(this._view, themeData.localResourceRoots)
+
+          const cachedCssData = this._ctx.globalState.get<WorkspaceCssCache>(EXT_WSCSS_CACHE)
+          console.log('### render() - cachedCssData', cachedCssData?.themeId)
+
+          if (cachedCssData && cachedCssData.themeId === themeData.themeId) {
+            console.log('### render() - CSS Cache HIT', themeData.state)
+            cssData = cachedCssData.data
+          } else if (themeData.data && themeData.themeId) {
+            console.log('### render() - CSS Cache MISS', themeData.state)
+            cssData = this._cssGenerator.getCss(
+              themeData.data,
+              themeData.themeId,
+              this._view.webview
+            )
+
+            if (cssData) {
+              console.log('### render() - updating css cache')
+              const cssCacheData: WorkspaceCssCache = {
+                data: cssData,
+                themeId: themeData.themeId,
+              }
+              this._ctx.globalState.update(EXT_WSCSS_CACHE, cssCacheData)
+            } else {
+              console.log('### render() - themes switched off')
+            }
+          }
         }
       }
 
@@ -262,9 +291,13 @@ export class WorkspaceViewProvider
     }
   }
 
-  public notify() {
+  public notify(state: FileThemeProcessorState) {
     // Only rerender if resolveWebviewView() has been called
     if (this._view !== undefined) {
+      if (state === 'loading') {
+        this._ctx.globalState.update(EXT_WSCSS_CACHE, undefined)
+      }
+
       this.render()
     }
   }

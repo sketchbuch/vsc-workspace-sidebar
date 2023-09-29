@@ -1,4 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
+import { CssData } from 'vscode-file-theme-processor'
 import { SortIds } from '../../commands/registerCommands'
 import { FileTree } from './helpers/getFileTree'
 
@@ -16,6 +17,11 @@ export type Files = File[]
 export interface WorkspaceCache {
   files: WsFiles
   timestamp: number
+}
+
+export interface WorkspaceCssCache {
+  data: CssData
+  themeId: string
 }
 
 export type WorkspaceErrors = '' | 'FETCH'
