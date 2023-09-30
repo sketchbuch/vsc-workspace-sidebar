@@ -6,7 +6,7 @@ export const checkThemeSegments = (
   if (iconMatches.length > 0) {
     for (let seg of nameSegments) {
       for (const iconKey of iconMatches) {
-        if (seg === iconKey) {
+        if (seg === iconKey && iconKey !== 'workspace') {
           return iconKey
         }
       }
