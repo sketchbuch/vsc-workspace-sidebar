@@ -12,24 +12,29 @@ The currently active workspace is highlighted, or in tree mode, any folder if cl
 
 A search box is provided to allow you to search for a specific Workspace.
 
+## Example Screen Shots
+
 ![List View](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/listview.png)
 ![Tree View](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/treeview.png)
 ![Searching](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/search.png)
+![Seti Theme in Tree View](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/treeview%20seti.png)
 
-File theme icons can also be displayed. For more information see [File Icon Themes](./docs//File%20Icon%20Themes.md).
+File theme icons can also be displayed. For more information see the [File Icon Themes](./docs//File%20Icon%20Themes.md) documentation.
 
 ## Settings
 
-| Setting            | Description                                                                                                                                                                                                    | Default Value                        | Type          |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ------------- |
-| Actions            | What is the default action for clicking on a workspace. By default, clicking opens the workspace in the current window and the icon click in a new window. You can use this setting to reverse this behaviour. | Current Window                       | Dropdown List |
-| Clean Labels       | Should workspace labels be converted to Title Case? If not their filename will be used as-is.                                                                                                                  | True                                 | Boolean       |
-| Condense File Tree | Reduce visual noise by removing sufolders with only one workspace in. These workspace files will then be shown in their parent folder. Tree View only.                                                         | True                                 | Boolean       |
-| Depth              | The depth of subfolders to include in the search.                                                                                                                                                              | 0                                    | Number 0-25   |
-| Folder             | The folder to look for workspace files in. If Folder is empty, your home folder will be used. **~/** will also be replaced with your home folder.                                                              | None (your home folder will be used) | String        |
-| Search minimum     | The minimum number of workspaces required before the search box is displayed. 0 Will always display the search box.                                                                                            | 15                                   | Number 0-100  |
-| Show File Tree     | Display a tree of workspaces with collapsable folders instead of the default list.                                                                                                                             | False                                | Boolean       |
-| Show Paths         | Show the paths to the workspaces in the sidebar. Available options are: 'Always', 'Never', 'As needed' (will only display paths if there are duplicate labels). List View only.                                | As Needed                            | Dropdown List |
+| Setting                | Description                                                                                                                                                                                                    | Default Value                        | Type          |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ------------- |
+| Actions                | What is the default action for clicking on a workspace. By default, clicking opens the workspace in the current window and the icon click in a new window. You can use this setting to reverse this behaviour. | Current Window                       | Dropdown List |
+| Clean Labels           | Should workspace labels be converted to Title Case? If not their filename will be used as-is.                                                                                                                  | True                                 | Boolean       |
+| Condense File Tree     | Reduce visual noise by removing sufolders with only one workspace in. These workspace files will then be shown in their parent folder. Tree View only.                                                         | True                                 | Boolean       |
+| Depth                  | The depth of subfolders to include in the search.                                                                                                                                                              | 0                                    | Number 0-25   |
+| Folder                 | The folder to look for workspace files in. If Folder is empty, your home folder will be used. **~/** will also be replaced with your home folder.                                                              | None (your home folder will be used) | String        |
+| Search minimum         | The minimum number of workspaces required before the search box is displayed. 0 Will always display the search box.                                                                                            | 15                                   | Number 0-100  |
+| Show File Tree         | Display a tree of workspaces with collapsable folders instead of the default list.                                                                                                                             | False                                | Boolean       |
+| Show Paths             | Show the paths to the workspaces in the sidebar. Available options are: 'Always', 'Never', 'As needed' (will only display paths if there are duplicate labels). List View only.                                | As Needed                            | Dropdown List |
+| Show File Icons        | Show icons from the active file icon theme.                                                                                                                                                                    | true                                 | Boolean       |
+| Show File Icons Config | Config for file icon matching. See [File Icon Themes](./docs//File%20Icon%20Themes.md) documentation for more information.                                                                                     | {}                                   | Object        |
 
 In addition to the above, the tree view also respects the explorer setting "Compact Folders".
 
