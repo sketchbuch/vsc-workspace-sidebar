@@ -6,7 +6,6 @@ import {
   CONFIG_DEPTH,
   CONFIG_EXPLORER_COMPACT_FOLDERS,
   CONFIG_FOLDER,
-  CONFIG_GROUP_BY_FILEICON,
   CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_FILE_ICONS,
   CONFIG_SHOW_FILE_ICONS_CONFIG,
@@ -37,10 +36,6 @@ export const getDepthConfig = (): number => {
 
 export const getFolderConfig = (): string => {
   return getConfiguration().get('workspaceSidebar.folder') || CONFIG_FOLDER
-}
-
-export const getGroupByFileiconConfig = (): boolean => {
-  return getConfiguration().get('workspaceSidebar.groupByFileicon') ?? CONFIG_GROUP_BY_FILEICON
 }
 
 export const getSearchMinConfig = (): number => {

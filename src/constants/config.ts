@@ -3,7 +3,6 @@ export const CONFIG_CONDENSE_FILETREE = true
 export const CONFIG_DEPTH = 0
 export const CONFIG_EXPLORER_COMPACT_FOLDERS = true
 export const CONFIG_FOLDER = ''
-export const CONFIG_GROUP_BY_FILEICON = false
 export const CONFIG_SEARCH_MINIMUM = 15
 export const CONFIG_SHOW_FILE_ICONS = true
 export const CONFIG_SHOW_FILE_ICONS_CONFIG = {}

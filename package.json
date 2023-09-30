@@ -153,12 +153,6 @@
           "markdownDescription": "%config.workspaceShowFileIconsConfig.description%",
           "scope": "application",
           "type": "object"
-        },
-        "workspaceSidebar.groupByFileicon": {
-          "default": false,
-          "description": "%config.workspaceGroupByFileicon.description%",
-          "scope": "application",
-          "type": "boolean"
         }
       }
     },
