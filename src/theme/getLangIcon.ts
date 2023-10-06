@@ -13,7 +13,6 @@ export const getLangIcon = (file: string, fileIconKeys: FileIconKeys): string =>
   const pathSegments = getPathSegments(dir)
 
   if (fileExtensions) {
-    fallback = fileExtensions.find((iconKey) => iconKey === 'workspace') ?? fallback
     const segmentMatch = checkThemeSegments(nameSegments, pathSegments, fileExtensions)
 
     if (segmentMatch) {
@@ -27,10 +26,11 @@ export const getLangIcon = (file: string, fileIconKeys: FileIconKeys): string =>
         return customMatch
       }
     }
+
+    fallback = fileExtensions.find((iconKey) => iconKey === 'workspace') ?? fallback
   }
 
   if (languageIds) {
-    fallback = languageIds.find((iconKey) => iconKey === 'workspace') ?? fallback
     const segmentMatch = checkThemeSegments(nameSegments, pathSegments, languageIds)
 
     if (segmentMatch) {
@@ -44,6 +44,8 @@ export const getLangIcon = (file: string, fileIconKeys: FileIconKeys): string =>
         return customMatch
       }
     }
+
+    fallback = languageIds.find((iconKey) => iconKey === 'workspace') ?? fallback
   }
 
   return fallback
