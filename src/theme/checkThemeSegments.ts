@@ -1,3 +1,5 @@
+import { WORKSPACE_ICON } from './constants'
+
 export const checkThemeSegments = (
   nameSegments: string[],
   pathSegments: string[],
@@ -6,7 +8,7 @@ export const checkThemeSegments = (
   if (iconMatches.length > 0) {
     for (let seg of nameSegments) {
       for (const iconKey of iconMatches) {
-        if (seg === iconKey && iconKey !== 'workspace') {
+        if (seg === iconKey && iconKey !== WORKSPACE_ICON) {
           return iconKey
         }
       }

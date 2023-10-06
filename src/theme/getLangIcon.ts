@@ -2,12 +2,13 @@ import * as path from 'path'
 import { FileIconKeys } from '../webviews/webviews.interface'
 import { checkCustomSegments } from './checkCustomSegments'
 import { checkThemeSegments } from './checkThemeSegments'
+import { FILE_ICON, WORKSPACE_ICON } from './constants'
 import { getNameSegments, getPathSegments } from './getFileSegments'
 
 export const getLangIcon = (file: string, fileIconKeys: FileIconKeys): string => {
   const { custom, fileExtensions, languageIds } = fileIconKeys
   const { dir, name } = path.parse(file)
-  let fallback = fileIconKeys.file ? 'file' : ''
+  let fallback = fileIconKeys.file ? FILE_ICON : ''
 
   const nameSegments = getNameSegments(name)
   const pathSegments = getPathSegments(dir)
@@ -27,7 +28,7 @@ export const getLangIcon = (file: string, fileIconKeys: FileIconKeys): string =>
       }
     }
 
-    fallback = fileExtensions.find((iconKey) => iconKey === 'workspace') ?? fallback
+    fallback = fileExtensions.find((iconKey) => iconKey === WORKSPACE_ICON) ?? fallback
   }
 
   if (languageIds) {
@@ -45,7 +46,7 @@ export const getLangIcon = (file: string, fileIconKeys: FileIconKeys): string =>
       }
     }
 
-    fallback = languageIds.find((iconKey) => iconKey === 'workspace') ?? fallback
+    fallback = languageIds.find((iconKey) => iconKey === WORKSPACE_ICON) ?? fallback
   }
 
   return fallback
