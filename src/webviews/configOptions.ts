@@ -16,6 +16,8 @@ export const configOptions: ConfigOptions = [
   { config: `${WS_CONFIG}.folder`, type: 'refresh' },
   { config: `${WS_CONFIG}.folders.excluded`, type: 'refresh' },
   { config: `${WS_CONFIG}.searchMinimum`, type: 'rerender' },
+  { config: `${WS_CONFIG}.search.caseInsensitive`, type: 'rerender' },
+  { config: `${WS_CONFIG}.search.matchStart`, type: 'rerender' },
   { config: `${WS_CONFIG}.showFileIcons`, type: 'rerender' },
   { config: `${WS_CONFIG}.showFileIconsConfig`, type: 'rerender' },
   { config: `${WS_CONFIG}.showFolderHierarchy`, type: 'visible-files' },

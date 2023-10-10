@@ -142,6 +142,18 @@
             "minimum": 0,
             "scope": "application",
             "type": "number"
+          },
+          "workspaceSidebar.search.caseInsensitive": {
+            "default": false,
+            "description": "%config.workspace.search.caseInsensitive.description%",
+            "scope": "application",
+            "type": "boolean"
+          },
+          "workspaceSidebar.search.matchStart": {
+            "default": false,
+            "description": "%config.workspace.search.matchStart.description%",
+            "scope": "application",
+            "type": "boolean"
           }
         }
       },

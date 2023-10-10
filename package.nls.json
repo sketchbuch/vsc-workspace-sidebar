@@ -4,6 +4,8 @@
   "config.title.listview": "List View",
   "config.title.search": "Search",
   "config.title.treeview": "Tree View",
+  "config.workspace.search.caseInsensitive.description": "Case insensitive search",
+  "config.workspace.search.matchStart.description": "Search from the beginning of workspace name",
   "config.workspaceActions.cur-window": "Open in the current window, icon clicks will open in a new window.",
   "config.workspaceActions.description": "What action should be taken when clicking on a workspace in the sidebar?",
   "config.workspaceActions.new-window": "Open in a new window, icon clicks will open in the current window.",

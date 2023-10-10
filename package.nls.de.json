@@ -4,6 +4,8 @@
   "config.title.listview": "Liste Ansicht",
   "config.title.search": "Suche",
   "config.title.treeview": "Ordnerhierarchie Ansicht",
+  "config.workspace.search.caseInsensitive.description": "Suche ohne Berücksichtigung der Groß- und Kleinschreibung",
+  "config.workspace.search.matchStart.description": "Suche vom Anfang des Arbeitsbereichsnamens",
   "config.workspaceActions.cur-window": "Im aktuellen Fenster öffnen, Iconklicks werden in einem neuen Fenster geöffnet.",
   "config.workspaceActions.description": "Welche Aktion sollte beim Anklicken auf einen Arbeitsbereich ausgeführt werden?",
   "config.workspaceActions.new-window": "Im neuen Fenster öffnen, Iconklicks werden im aktuellen Fenster geöffnet.",
