@@ -1,5 +1,6 @@
 import { SortIds } from '../../../commands/registerCommands'
-import { getShowPathsConfig, getShowTreeConfig } from '../../../config/getConfig'
+import { getShowPathsConfig } from '../../../config/listview'
+import { getShowTreeConfig } from '../../../config/treeview'
 import { ConfigShowPaths } from '../../../constants/config'
 import { sortFilesByProp } from '../../../utils/arrays/sortFilesByProp'
 import { File, Files, SearchState } from '../WorkspaceViewProvider.interface'

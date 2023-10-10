@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { getShowTreeConfig } from '../config/getConfig'
+import { getShowTreeConfig } from '../config/treeview'
 import { isWorkspaceFile } from '../utils/fs/isWorkspaceFile'
 import { WorkspaceViewProvider } from './Workspace/WorkspaceViewProvider'
 import { ConfigOptions, EXPLORER_CONFIG, WS_CONFIG } from './configOptions'

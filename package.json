@@ -95,14 +95,6 @@
             "scope": "application",
             "type": "number"
           },
-          "workspaceSidebar.searchMinimum": {
-            "default": 15,
-            "description": "%config.workspaceSearchMinimum.description%",
-            "maximum": 100,
-            "minimum": 0,
-            "scope": "application",
-            "type": "number"
-          },
           "workspaceSidebar.showFileIcons": {
             "default": true,
             "markdownDescription": "%config.workspaceShowFileIcons.description%",
@@ -119,7 +111,6 @@
       },
       {
         "title": "%config.title.folders%",
-        "description": "%config.workspaceSidebar.folders.excluded.description%",
         "properties": {
           "workspaceSidebar.folder": {
             "default": "",
@@ -142,8 +133,20 @@
         }
       },
       {
+        "title": "%config.title.search%",
+        "properties": {
+          "workspaceSidebar.searchMinimum": {
+            "default": 15,
+            "description": "%config.workspaceSearchMinimum.description%",
+            "maximum": 100,
+            "minimum": 0,
+            "scope": "application",
+            "type": "number"
+          }
+        }
+      },
+      {
         "title": "%config.title.listview%",
-        "description": "%config.workspaceSidebar.folders.excluded.description%",
         "properties": {
           "workspaceSidebar.showPaths": {
             "default": "As needed",
@@ -165,7 +168,6 @@
       },
       {
         "title": "%config.title.treeview%",
-        "description": "%config.workspaceSidebar.folders.excluded.description%",
         "properties": {
           "workspaceSidebar.showFolderHierarchy": {
             "default": false,

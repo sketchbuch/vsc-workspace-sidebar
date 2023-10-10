@@ -1,14 +1,16 @@
+import { getFileiconThemeConfig } from '../../config/core'
 import {
   getActionsConfig,
-  getCondenseFileTreeConfig,
   getDepthConfig,
-  getFileiconThemeConfig,
-  getSearchMinConfig,
   getShowFileiconConfig,
   getShowFileiconsConfigConfig,
+} from '../../config/general'
+import { getSearchMinConfig } from '../../config/search'
+import {
+  getCondenseFileTreeConfig,
   getShowRootFolderConfig,
   getShowTreeConfig,
-} from '../../config/getConfig'
+} from '../../config/treeview'
 import { FileIconKeys, RenderVars, TemplateVars } from '../../webviews/webviews.interface'
 
 export const getRenderVars = ({

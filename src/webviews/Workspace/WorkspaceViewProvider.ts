@@ -8,7 +8,7 @@ import {
   FileThemeProcessorObserver,
 } from 'vscode-file-theme-processor'
 import { SortIds } from '../../commands/registerCommands'
-import { getActionsConfig } from '../../config/getConfig'
+import { getActionsConfig } from '../../config/general'
 import {
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,

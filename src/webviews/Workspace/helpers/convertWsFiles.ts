@@ -1,5 +1,6 @@
 import * as os from 'os'
-import { getCleanLabelsConfig, getFolderConfig } from '../../../config/getConfig'
+import { getFolderConfig } from '../../../config/folders'
+import { getCleanLabelsConfig } from '../../../config/general'
 import { isSelected } from '../../../utils/fs/isSelected'
 import { isWorkspaceFile } from '../../../utils/fs/isWorkspaceFile'
 import { File, WsFiles } from '../WorkspaceViewProvider.interface'

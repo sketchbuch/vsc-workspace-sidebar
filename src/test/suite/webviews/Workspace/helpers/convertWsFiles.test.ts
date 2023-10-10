@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
-import * as configs from '../../../../../config/getConfig'
+import * as generalConfigs from '../../../../../config/general'
 import { Files } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { convertWsFiles } from '../../../../../webviews/Workspace/helpers/convertWsFiles'
 
@@ -32,7 +32,7 @@ suite('Webviews > Workspace > Helpers > convertWsFiles():', () => {
   ]
 
   setup(() => {
-    cleanLabelsConfigStub = sinon.stub(configs, 'getCleanLabelsConfig').callsFake(() => true)
+    cleanLabelsConfigStub = sinon.stub(generalConfigs, 'getCleanLabelsConfig').callsFake(() => true)
   })
 
   teardown(() => {

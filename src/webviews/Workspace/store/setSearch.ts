@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { getShowTreeConfig } from '../../../config/getConfig'
+import { getShowTreeConfig } from '../../../config/treeview'
 import { WorkspacePmPayloadSearch, WorkspaceState } from '../WorkspaceViewProvider.interface'
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree'
 import { getFileTree } from '../helpers/getFileTree'

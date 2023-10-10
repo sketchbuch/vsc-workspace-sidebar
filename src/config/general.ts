@@ -2,7 +2,6 @@ import { workspace } from 'vscode'
 import {
   CONFIG_CLEAN_LABELS,
   CONFIG_DEPTH,
-  CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_FILE_ICONS,
   CONFIG_SHOW_FILE_ICONS_CONFIG,
   ConfigActions,
@@ -21,10 +20,6 @@ export const getCleanLabelsConfig = (): boolean => {
 
 export const getDepthConfig = (): number => {
   return workspace.getConfiguration().get('workspaceSidebar.depth') ?? CONFIG_DEPTH
-}
-
-export const getSearchMinConfig = (): number => {
-  return workspace.getConfiguration().get('workspaceSidebar.searchMinimum') ?? CONFIG_SEARCH_MINIMUM
 }
 
 export const getShowFileiconConfig = (): boolean => {

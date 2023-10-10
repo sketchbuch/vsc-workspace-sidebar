@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
-import * as configs from '../../../../../config/getConfig'
+import * as listConfigs from '../../../../../config/listview'
+import * as treeConfigs from '../../../../../config/treeview'
 import { ConfigShowPaths } from '../../../../../constants/config'
 import { getVisibleFiles } from '../../../../../webviews/Workspace/helpers/getVisibleFiles'
 import {
@@ -22,9 +23,9 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
   let pathsConfigStub: sinon.SinonStub
 
   setup(() => {
-    treeConfigStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => false)
+    treeConfigStub = sinon.stub(treeConfigs, 'getShowTreeConfig').callsFake(() => false)
     pathsConfigStub = sinon
-      .stub(configs, 'getShowPathsConfig')
+      .stub(listConfigs, 'getShowPathsConfig')
       .callsFake(() => ConfigShowPaths.ALWAYS)
   })
 

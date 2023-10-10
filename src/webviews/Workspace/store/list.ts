@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { getShowTreeConfig } from '../../../config/getConfig'
+import { getShowTreeConfig } from '../../../config/treeview'
 import { WorkspaceFiles, WorkspaceState } from '../WorkspaceViewProvider.interface'
 import { convertWsFiles } from '../helpers/convertWsFiles'
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree'

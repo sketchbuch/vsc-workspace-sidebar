@@ -1,10 +1,8 @@
 import * as os from 'os'
 import * as pathLib from 'path'
-import {
-  getCondenseFileTreeConfig,
-  getExplorerCompactFoldersConfig,
-  getFolderConfig,
-} from '../../../config/getConfig'
+import { getExplorerCompactFoldersConfig } from '../../../config/core'
+import { getFolderConfig } from '../../../config/folders'
+import { getCondenseFileTreeConfig } from '../../../config/treeview'
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
 import { Files } from '../WorkspaceViewProvider.interface'
 import { compactTree } from './compactTree'

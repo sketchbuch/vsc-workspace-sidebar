@@ -1,14 +1,15 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
-import * as configs from '../../../../../config/getConfig'
+import * as folderConfigs from '../../../../../config/folders'
+import * as treeConfigs from '../../../../../config/treeview'
 import { toggleFolderStateBulk } from '../../../../../webviews/Workspace/store/toggleFolderStateBulk'
 import {
-  getMockFileTree,
+  ROOT_FOLDER_PATH,
   getMockConvertedFiles,
   getMockFileList,
+  getMockFileTree,
   getMockFolderList,
   getMockVisibleFiles,
-  ROOT_FOLDER_PATH,
 } from '../../../../mocks/mockFileData'
 import { getMockState } from '../../../../mocks/mockState'
 
@@ -18,9 +19,11 @@ suite('Webviews > Workspace > Store > toggleFolderStateBulk()', () => {
   let treeConfigStub: sinon.SinonStub
 
   setup(() => {
-    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => true)
-    folderConfigStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_FOLDER_PATH)
-    treeConfigStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => false)
+    condenseConfigStub = sinon.stub(treeConfigs, 'getCondenseFileTreeConfig').callsFake(() => true)
+    folderConfigStub = sinon
+      .stub(folderConfigs, 'getFolderConfig')
+      .callsFake(() => ROOT_FOLDER_PATH)
+    treeConfigStub = sinon.stub(treeConfigs, 'getShowTreeConfig').callsFake(() => false)
   })
 
   teardown(() => {

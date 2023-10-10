@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { getShowTreeConfig } from '../../../config/getConfig'
+import { getShowTreeConfig } from '../../../config/treeview'
 import { FindWorkspaceFiles, findWorkspaceFiles } from '../../../utils/fs/findWorkspaceFiles'
 import { WorkspaceState, WorkspaceThunkAction } from '../WorkspaceViewProvider.interface'
 import { convertWsFiles } from '../helpers/convertWsFiles'

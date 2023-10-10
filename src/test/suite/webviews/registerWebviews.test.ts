@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
 import * as vscode from 'vscode'
-import * as configs from '../../../config/getConfig'
+import * as treeConfigs from '../../../config/treeview'
 import { FS_WS_EXT } from '../../../constants/fs'
 import { configOptions, WS_CONFIG } from '../../../webviews/configOptions'
 import { registerWebviews } from '../../../webviews/registerWebviews'
@@ -131,7 +131,7 @@ suite('Webviews > registerWebviews()', () => {
     let updateTreeSpy: sinon.SinonSpy
 
     setup(() => {
-      treeConfigStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => false)
+      treeConfigStub = sinon.stub(treeConfigs, 'getShowTreeConfig').callsFake(() => false)
       updateTreeSpy = sinon.spy(ws, 'updateFileTree')
     })
 

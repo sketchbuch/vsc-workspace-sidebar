@@ -2,6 +2,7 @@
   "config.title": "Workspace Sidebar",
   "config.title.folders": "Folders",
   "config.title.listview": "List View",
+  "config.title.search": "Search",
   "config.title.treeview": "Tree View",
   "config.workspaceActions.cur-window": "Open in the current window, icon clicks will open in a new window.",
   "config.workspaceActions.description": "What action should be taken when clicking on a workspace in the sidebar?",
