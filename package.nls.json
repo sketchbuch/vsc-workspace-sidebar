@@ -1,5 +1,8 @@
 {
   "config.title": "Workspace Sidebar",
+  "config.title.folders": "Folders",
+  "config.title.listview": "List View",
+  "config.title.treeview": "Tree View",
   "config.workspaceActions.cur-window": "Open in the current window, icon clicks will open in a new window.",
   "config.workspaceActions.description": "What action should be taken when clicking on a workspace in the sidebar?",
   "config.workspaceActions.new-window": "Open in a new window, icon clicks will open in the current window.",
@@ -15,6 +18,7 @@
   "config.workspaceShowPath.asneeded": "Show paths when a workspace has the same label as another",
   "config.workspaceShowPath.description": "Display paths to the workspace files in the sidebar. Either: 'Always', 'Never', or 'As needed' (only shows paths for workspaces with the same label).",
   "config.workspaceShowPath.never": "Never show paths",
+  "config.workspaceSidebar.folders.excluded.description": "Folders to exclude when looking for workspaces.",
   "ext.cmd.wsList.collapse-all": "Collapse all folders",
   "ext.cmd.wsList.expand-all": "Expand all folders",
   "ext.cmd.wsList.refresh": "Reload Workspaces",

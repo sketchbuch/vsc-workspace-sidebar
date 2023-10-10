@@ -63,99 +63,131 @@
         "title": "%ext.cmd.wsList.expand-all%"
       }
     ],
-    "configuration": {
-      "title": "%config.title%",
-      "properties": {
-        "workspaceSidebar.actions": {
-          "default": "Current Window",
-          "description": "%config.workspaceActions.description%",
-          "enum": [
-            "Current Window",
-            "New Window"
-          ],
-          "enumDescriptions": [
-            "%config.workspaceActions.cur-window%",
-            "%config.workspaceActions.new-window%"
-          ],
-          "scope": "application",
-          "type": "string"
-        },
-        "workspaceSidebar.cleanLabels": {
-          "default": true,
-          "description": "%config.workspaceCleanLabels.description%",
-          "scope": "application",
-          "type": "boolean"
-        },
-        "workspaceSidebar.depth": {
-          "default": 0,
-          "description": "%config.workspaceFolderDepth.description%",
-          "maximum": 25,
-          "minimum": 0,
-          "scope": "application",
-          "type": "number"
-        },
-        "workspaceSidebar.folder": {
-          "default": "",
-          "description": "%config.workspaceFolder.description%",
-          "scope": "application",
-          "type": "string"
-        },
-        "workspaceSidebar.searchMinimum": {
-          "default": 15,
-          "description": "%config.workspaceSearchMinimum.description%",
-          "maximum": 100,
-          "minimum": 0,
-          "scope": "application",
-          "type": "number"
-        },
-        "workspaceSidebar.showFolderHierarchy": {
-          "default": false,
-          "description": "%config.workspaceShowFolderHierarchy.description%",
-          "scope": "application",
-          "type": "boolean"
-        },
-        "workspaceSidebar.showRootFolder": {
-          "default": false,
-          "description": "Show root folder",
-          "scope": "application",
-          "type": "boolean"
-        },
-        "workspaceSidebar.condenseFileTree": {
-          "default": true,
-          "description": "%config.workspaceCondenseFileTree.description%",
-          "scope": "application",
-          "type": "boolean"
-        },
-        "workspaceSidebar.showPaths": {
-          "default": "As needed",
-          "description": "%config.workspaceShowPath.description%",
-          "enum": [
-            "Always",
-            "As needed",
-            "Never"
-          ],
-          "enumDescriptions": [
-            "%config.workspaceShowPath.always%",
-            "%config.workspaceShowPath.asneeded%",
-            "%config.workspaceShowPath.never%"
-          ],
-          "scope": "application",
-          "type": "string"
-        },
-        "workspaceSidebar.showFileIcons": {
-          "default": true,
-          "markdownDescription": "%config.workspaceShowFileIcons.description%",
-          "scope": "application",
-          "type": "boolean"
-        },
-        "workspaceSidebar.showFileIconsConfig": {
-          "default": {},
-          "markdownDescription": "%config.workspaceShowFileIconsConfig.description%",
-          "scope": "application",
-          "type": "object"
+    "configuration": [
+      {
+        "title": "%config.title%",
+        "properties": {
+          "workspaceSidebar.actions": {
+            "default": "Current Window",
+            "description": "%config.workspaceActions.description%",
+            "enum": [
+              "Current Window",
+              "New Window"
+            ],
+            "enumDescriptions": [
+              "%config.workspaceActions.cur-window%",
+              "%config.workspaceActions.new-window%"
+            ],
+            "scope": "application",
+            "type": "string"
+          },
+          "workspaceSidebar.cleanLabels": {
+            "default": true,
+            "description": "%config.workspaceCleanLabels.description%",
+            "scope": "application",
+            "type": "boolean"
+          },
+          "workspaceSidebar.depth": {
+            "default": 0,
+            "description": "%config.workspaceFolderDepth.description%",
+            "maximum": 25,
+            "minimum": 0,
+            "scope": "application",
+            "type": "number"
+          },
+          "workspaceSidebar.searchMinimum": {
+            "default": 15,
+            "description": "%config.workspaceSearchMinimum.description%",
+            "maximum": 100,
+            "minimum": 0,
+            "scope": "application",
+            "type": "number"
+          },
+          "workspaceSidebar.showFileIcons": {
+            "default": true,
+            "markdownDescription": "%config.workspaceShowFileIcons.description%",
+            "scope": "application",
+            "type": "boolean"
+          },
+          "workspaceSidebar.showFileIconsConfig": {
+            "default": {},
+            "markdownDescription": "%config.workspaceShowFileIconsConfig.description%",
+            "scope": "application",
+            "type": "object"
+          }
+        }
+      },
+      {
+        "title": "%config.title.folders%",
+        "description": "%config.workspaceSidebar.folders.excluded.description%",
+        "properties": {
+          "workspaceSidebar.folder": {
+            "default": "",
+            "description": "%config.workspaceFolder.description%",
+            "scope": "application",
+            "type": "string"
+          },
+          "workspaceSidebar.folders.excluded": {
+            "default": [
+              "node_modules",
+              "build",
+              "dist",
+              "out",
+              "public"
+            ],
+            "description": "%config.workspaceSidebar.folders.excluded.description%",
+            "scope": "application",
+            "type": "array"
+          }
+        }
+      },
+      {
+        "title": "%config.title.listview%",
+        "description": "%config.workspaceSidebar.folders.excluded.description%",
+        "properties": {
+          "workspaceSidebar.showPaths": {
+            "default": "As needed",
+            "description": "%config.workspaceShowPath.description%",
+            "enum": [
+              "Always",
+              "As needed",
+              "Never"
+            ],
+            "enumDescriptions": [
+              "%config.workspaceShowPath.always%",
+              "%config.workspaceShowPath.asneeded%",
+              "%config.workspaceShowPath.never%"
+            ],
+            "scope": "application",
+            "type": "string"
+          }
+        }
+      },
+      {
+        "title": "%config.title.treeview%",
+        "description": "%config.workspaceSidebar.folders.excluded.description%",
+        "properties": {
+          "workspaceSidebar.showFolderHierarchy": {
+            "default": false,
+            "description": "%config.workspaceShowFolderHierarchy.description%",
+            "scope": "application",
+            "type": "boolean"
+          },
+          "workspaceSidebar.showRootFolder": {
+            "default": false,
+            "description": "Show root folder",
+            "scope": "application",
+            "type": "boolean"
+          },
+          "workspaceSidebar.condenseFileTree": {
+            "default": true,
+            "description": "%config.workspaceCondenseFileTree.description%",
+            "scope": "application",
+            "type": "boolean"
+          }
         }
       }
-    },
+    ],
     "keybindings": [
       {
         "command": "vsc-workspace-sidebar-focus-search",
