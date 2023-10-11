@@ -96,3 +96,4 @@ This extension is localised, if you want it in your language please send me a tr
 - Added excluded folders to config to allow additional folders to be specified
 - Clean Labels no only requires a rerender rather than dumping the cache.
 - Update documentation
+- File icon matching updates
