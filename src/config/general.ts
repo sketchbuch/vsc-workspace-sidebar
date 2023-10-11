@@ -1,5 +1,6 @@
 import { workspace } from 'vscode'
 import {
+  CONFIG_CACHE_DURATION,
   CONFIG_CLEAN_LABELS,
   CONFIG_DEPTH,
   CONFIG_SHOW_FILE_ICONS,
@@ -12,6 +13,10 @@ export const getActionsConfig = (): ConfigActions => {
   return (
     workspace.getConfiguration().get('workspaceSidebar.actions') ?? ConfigActions.CURRENT_WINDOW
   )
+}
+
+export const getCacheDurationConfig = (): number => {
+  return workspace.getConfiguration().get('workspaceSidebar.cacheDuration') ?? CONFIG_CACHE_DURATION
 }
 
 export const getCleanLabelsConfig = (): boolean => {
