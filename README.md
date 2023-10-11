@@ -1,7 +1,5 @@
 # Workspace Sidebar
 
-**(vsc-workspace-sidebar)**
-
 Adds a sidebar to VSCode that lists Workspaces and lets you open them in the current window or a new window.
 
 ![Workspace Sidebar Preview](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/preview.gif)
@@ -25,13 +23,13 @@ File theme icons can also be displayed. For more information see the [File Icon 
 
 ### General
 
-| Setting                | Description                                                                                                                                                                                                    | Default Value  | Type          |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ------------- |
-| Actions                | What is the default action for clicking on a workspace. By default, clicking opens the workspace in the current window and the icon click in a new window. You can use this setting to reverse this behaviour. | Current Window | Dropdown List |
-| Clean Labels           | Should workspace labels be converted to Title Case? If not their filename will be used as-is.                                                                                                                  | True           | Boolean       |
-| Depth                  | The depth of subfolders to include in the search.                                                                                                                                                              | 0              | Number 0-25   |
-| Show File Icons        | Show icons from the active file icon theme.                                                                                                                                                                    | true           | Boolean       |
-| Show File Icons Config | Config for file icon matching. See [File Icon Themes](./docs//File%20Icon%20Themes.md) documentation for more information.                                                                                     | {}             | Object        |
+| Setting                | Description                                                                                                                                                                                             | Default Value  | Type          |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ------------- |
+| Actions                | The default action when clicking on a workspace. By default, clicking opens the workspace in the current window and the icon click in a new window. You can use this setting to reverse this behaviour. | Current Window | Dropdown List |
+| Clean Labels           | Should workspace labels be converted to Title Case? If not their filename will be used as-is.                                                                                                           | True           | Boolean       |
+| Depth                  | The depth of subfolders to include in the search.                                                                                                                                                       | 0              | Number 0-25   |
+| Show File Icons        | Show icons from the active file icon theme.                                                                                                                                                             | true           | Boolean       |
+| Show File Icons Config | Config for file icon matching. See [File Icon Themes](./docs//File%20Icon%20Themes.md) documentation for more information.                                                                              | {}             | Object        |
 
 ### Folders
 
