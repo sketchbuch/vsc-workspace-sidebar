@@ -88,7 +88,11 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Latest Version
 
-### [1.6.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.6.0...v1.6.1) (2023-09-30)
+### [1.7.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.6.1...v1.7.0) (2023-10-11)
 
-- Closes #85 - Sometimes the match only works if the first segment is matched
+- Closes [#87](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/87)
+- Removed cache duration. Cache will persist until manually refreshing or until certain config values are changed (see readme)
+- Added search options to config
+- Added excluded folders to config to allow additional folders to be specified
+- Clean Labels no only requires a rerender rather than dumping the cache.
 - Update documentation
