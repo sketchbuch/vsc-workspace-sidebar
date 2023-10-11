@@ -43,6 +43,7 @@ suite('Webviews > Workspace > Store > setFileTree()', () => {
           {
             files: [
               {
+                cleanedLabel: 'Vscode',
                 file: '/home/user/dev/code/vscode/Vscode.code-workspace',
                 isSelected: false,
                 label: 'Vscode',
@@ -50,6 +51,7 @@ suite('Webviews > Workspace > Store > setFileTree()', () => {
                 showPath: true,
               },
               {
+                cleanedLabel: 'Some Extension',
                 file: '/home/user/dev/code/vscode/some_ext/Some Extension.code-workspace',
                 isSelected: false,
                 label: 'Some Extension',

@@ -5,6 +5,7 @@ import { File } from '../../../../webviews/Workspace/WorkspaceViewProvider.inter
 suite('Utils > Arrays > sortFilesByProp()', () => {
   const PROP = 'label'
   const fileA: File = {
+    cleanedLabel: 'File A',
     file: '/a/file/to/compare-1.txt',
     isSelected: false,
     label: 'File A',
@@ -12,6 +13,7 @@ suite('Utils > Arrays > sortFilesByProp()', () => {
     showPath: false,
   }
   const fileB: File = {
+    cleanedLabel: 'File B',
     file: '/a/file/to/compare-2.txt',
     isSelected: false,
     label: 'File B',

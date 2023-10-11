@@ -4,6 +4,7 @@ import * as listConfigs from '../../../../../config/listview'
 import * as treeConfigs from '../../../../../config/treeview'
 import { ConfigShowPaths } from '../../../../../constants/config'
 import { getVisibleFiles } from '../../../../../webviews/Workspace/helpers/getVisibleFiles'
+import { Files } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import {
   file2,
   file4,
@@ -164,22 +165,24 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
 
       const files = filesUnsorted.map((file) => {
         if (file.path.includes(FOLDER1)) {
-          return { ...file, label: 'Same label' }
+          return { ...file, cleanedLabel: 'Same label', label: 'Same label' }
         }
 
         return { ...file }
       })
 
-      const expectedFiles = [
+      const expectedFiles: Files = [
         { ...getMockConvertedFiles()[3], showPath: false },
         {
           ...getMockConvertedFiles()[0],
           showPath: true,
+          cleanedLabel: 'Same label',
           label: 'Same label',
         },
         {
           ...getMockConvertedFiles()[1],
           showPath: true,
+          cleanedLabel: 'Same label',
           label: 'Same label',
         },
         { ...getMockConvertedFiles()[2], showPath: false },

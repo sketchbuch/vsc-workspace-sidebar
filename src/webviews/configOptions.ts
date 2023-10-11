@@ -10,7 +10,7 @@ export const EXPLORER_CONFIG = 'explorer'
 export const configOptions: ConfigOptions = [
   { config: `${EXPLORER_CONFIG}.compactFolders`, type: 'tree' },
   { config: `${WS_CONFIG}.actions`, type: 'rerender' },
-  { config: `${WS_CONFIG}.cleanLabels`, type: 'refresh' },
+  { config: `${WS_CONFIG}.cleanLabels`, type: 'rerender' },
   { config: `${WS_CONFIG}.condenseFileTree`, type: 'tree' },
   { config: `${WS_CONFIG}.depth`, type: 'refresh' },
   { config: `${WS_CONFIG}.folder`, type: 'refresh' },

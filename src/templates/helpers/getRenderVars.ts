@@ -1,6 +1,7 @@
 import { getFileiconThemeConfig } from '../../config/core'
 import {
   getActionsConfig,
+  getCleanLabelsConfig,
   getDepthConfig,
   getShowFileiconConfig,
   getShowFileiconsConfigConfig,
@@ -18,6 +19,7 @@ export const getRenderVars = ({
   imgLightFolderUri,
   themeData,
 }: TemplateVars): RenderVars => {
+  const cleanLabels = getCleanLabelsConfig()
   const showFileiconConfig = getShowFileiconConfig()
   const curFileIconTheme = getFileiconThemeConfig()
   const fileIconsActive = showFileiconConfig && !!curFileIconTheme
@@ -62,6 +64,7 @@ export const getRenderVars = ({
   }
 
   return {
+    cleanLabels,
     clickAction: getActionsConfig(),
     condenseFileTree: getCondenseFileTreeConfig(),
     depth: getDepthConfig(),

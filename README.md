@@ -66,7 +66,7 @@ In addition to the above, the tree view also respects the explorer setting "Comp
 
 The collected workspaces are cached. You can clear the cache and recollect workspaces by clicking on the refresh icon.
 
-A change in the config values: Clean Labels, Depth, Excluded Folders, and Folder will automatically dump the cache and cause workspaces to be recollected.
+A change in the config values: Depth, Excluded Folders, and Folder will automatically dump the cache and cause workspaces to be recollected.
 
 The cache will also be dumped if any workspaces are created in the folders in the current workspace.
 

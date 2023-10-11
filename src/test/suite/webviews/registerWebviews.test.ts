@@ -88,7 +88,7 @@ suite('Webviews > registerWebviews()', () => {
 
     ;[
       { opt: '.actions', isRerender: true },
-      { opt: '.cleanLabels', isRerender: false },
+      { opt: '.cleanLabels', isRerender: true },
       { opt: '.depth', isRerender: false },
       { opt: '.folder', isRerender: false },
       { opt: '.searchMinimum', isRerender: true },

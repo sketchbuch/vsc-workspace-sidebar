@@ -3,6 +3,7 @@ import { SortIds } from '../../commands/registerCommands'
 import { FileTree } from './helpers/getFileTree'
 
 export interface File {
+  cleanedLabel: string
   file: string
   isSelected: boolean
   label: string

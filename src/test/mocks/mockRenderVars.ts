@@ -1,5 +1,6 @@
 import { Uri } from 'vscode'
 import {
+  CONFIG_CLEAN_LABELS,
   CONFIG_CONDENSE_FILETREE,
   CONFIG_DEPTH,
   CONFIG_SEARCH_MINIMUM,
@@ -16,6 +17,7 @@ const baseUri = {
 
 export const getMockRenderVars = (renderVars: Partial<RenderVars> = {}): RenderVars => {
   return {
+    cleanLabels: CONFIG_CLEAN_LABELS,
     clickAction: ConfigActions.CURRENT_WINDOW,
     condenseFileTree: CONFIG_CONDENSE_FILETREE,
     depth: CONFIG_DEPTH,
