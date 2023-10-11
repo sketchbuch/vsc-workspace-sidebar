@@ -9,6 +9,5 @@ export const EXT_WSLIST_ITEM_LOADING_CTX = `${EXT_WSLIST_VIEW_ID}-loading`
 
 // Global State
 export const EXT_WSSTATE_CACHE = `${EXT}-cache`
-export const EXT_WSSTATE_CACHE_DURATION = 43200 // 12 Hours
 export const EXT_SORT = `${EXT}-sort`
 export const EXT_WEBVIEW_WS = `${EXT}-webview-workspace`

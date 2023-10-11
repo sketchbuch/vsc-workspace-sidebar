@@ -8,7 +8,7 @@ import {
   FileThemeProcessorObserver,
 } from 'vscode-file-theme-processor'
 import { SortIds } from '../../commands/registerCommands'
-import { getActionsConfig } from '../../config/general'
+import { getActionsConfig, getCacheDurationConfig } from '../../config/general'
 import { getSearchCaseInsensitiveConfig, getSearchMatchStartConfig } from '../../config/search'
 import {
   CMD_OPEN_CUR_WIN,
@@ -18,13 +18,7 @@ import {
   CMD_VSC_SET_CTX,
 } from '../../constants/commands'
 import { ConfigActions } from '../../constants/config'
-import {
-  EXT_LOADED,
-  EXT_SORT,
-  EXT_WEBVIEW_WS,
-  EXT_WSSTATE_CACHE,
-  EXT_WSSTATE_CACHE_DURATION,
-} from '../../constants/ext'
+import { EXT_LOADED, EXT_SORT, EXT_WEBVIEW_WS, EXT_WSSTATE_CACHE } from '../../constants/ext'
 import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
@@ -74,10 +68,13 @@ export class WorkspaceViewProvider
       const { files, timestamp } = cachedData
 
       if (files && timestamp) {
+        const cacheDuration = getCacheDurationConfig()
         const timestampNow = getTimestamp()
-        const timestampExpired = timestamp + EXT_WSSTATE_CACHE_DURATION
+        const timestampExpired = timestamp + cacheDuration
 
-        if (timestampNow < timestampExpired) {
+        console.log('### cacheDuration', cacheDuration)
+
+        if (cacheDuration === 0 || timestampNow < timestampExpired) {
           return [...files]
         } else {
           this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
