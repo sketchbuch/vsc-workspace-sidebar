@@ -1,3 +1,4 @@
+import * as path from 'path'
 import { Uri } from 'vscode'
 import { TemplateVars } from '../../webviews/webviews.interface'
 import { getMockUri } from './mockExtensionUri'
@@ -18,14 +19,14 @@ export const getMockTemplateVars = (
       : getMockUri('', {
           scheme: 'file',
           authority: 'localhost',
-          path: '/resources/css/codicons',
+          path: path.join('resources', 'css', 'codicons'),
         }),
     cssFolderUri: isEmpty
       ? ({} as Uri)
       : getMockUri('', {
           scheme: 'file',
           authority: 'localhost',
-          path: '/resources/css',
+          path: path.join('resources', 'css'),
         }),
     imgDarkFolderUri: isEmpty ? ({} as Uri) : getMockUri('', { ...imgDarkFolderUri }),
     imgLightFolderUri: isEmpty ? ({} as Uri) : getMockUri('', { ...imgLightFolderUri }),
@@ -35,7 +36,7 @@ export const getMockTemplateVars = (
       : getMockUri('', {
           scheme: 'file',
           authority: 'localhost',
-          path: '/resources/js',
+          path: path.join('resources', 'js'),
         }),
     themeData: getMockThemeData(),
     title: 'Workspaces',
@@ -44,7 +45,7 @@ export const getMockTemplateVars = (
       : getMockUri('', {
           scheme: 'file',
           authority: 'localhost',
-          path: '/resources/js/toolkit',
+          path: path.join('resources', 'js', 'toolkit'),
         }),
     ...templateVars,
   }

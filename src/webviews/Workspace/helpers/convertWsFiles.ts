@@ -16,7 +16,7 @@ export const convertWsFiles = (wsFiles: WsFiles, selected: string): File[] => {
     return {
       cleanedLabel: getLabel(file, true),
       file,
-      isSelected: isSelected(file, selected, process.platform),
+      isSelected: isSelected(file, selected),
       label: getLabel(file, false),
       path: getPath(file, folder, osHomeDir),
       showPath: true,

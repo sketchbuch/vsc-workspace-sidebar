@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+import * as path from 'path'
 import { Files } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { convertWsFiles } from '../../../../../webviews/Workspace/helpers/convertWsFiles'
 
@@ -6,8 +7,8 @@ suite('Webviews > Workspace > Helpers > convertWsFiles():', () => {
   const FILE_NAME1 = 'First Project'
   const FILE_NAME2 = 'Second_WORK-Space'
   const FILE1 = `${FILE_NAME1}.code-workspace`
-  const FILE_PATH2 = `some/folder`
-  const FILE2 = `/${FILE_PATH2}/${FILE_NAME2}.code-workspace`
+  const FILE_PATH2 = path.join('some', 'folder')
+  const FILE2 = path.join(FILE_PATH2, `${FILE_NAME2}.code-workspace`)
   const files = [FILE1, 'Wrong.ext', FILE2]
 
   const expected: Files = [

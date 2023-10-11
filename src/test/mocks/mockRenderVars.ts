@@ -1,3 +1,4 @@
+import * as path from 'path'
 import { Uri } from 'vscode'
 import {
   CONFIG_CLEAN_LABELS,
@@ -23,8 +24,8 @@ export const getMockRenderVars = (renderVars: Partial<RenderVars> = {}): RenderV
     depth: CONFIG_DEPTH,
     fileIconKeys: {},
     fileIconsActive: false,
-    imgDarkFolderUri: { ...baseUri, path: '/resources/imgages/dark' } as Uri,
-    imgLightFolderUri: { ...baseUri, path: '/resources/imgages/light' } as Uri,
+    imgDarkFolderUri: { ...baseUri, path: path.join('/resources', 'images', 'dark') } as Uri,
+    imgLightFolderUri: { ...baseUri, path: path.join('/resources', 'images', 'light') } as Uri,
     searchMinimum: CONFIG_SEARCH_MINIMUM,
     showRootFolder: CONFIG_SHOW_ROOT_FOLDER,
     showTree: CONFIG_SHOW_HIERARCHY,
