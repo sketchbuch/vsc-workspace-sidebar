@@ -44,7 +44,7 @@ export enum WorkspaceSearchCheckboxes {
   MATCH_START = 'MATCH_START',
 }
 
-export interface WorkspacePersistedState {
+export interface WorkspaceSort {
   sort: SortIds
 }
 

@@ -8,8 +8,8 @@ import { invalid } from './invalid'
 import { list } from './list'
 import { loading } from './loading'
 import { setFileTree } from './setFileTree'
-import { setPersistedState } from './setPersistedState'
 import { setSearch } from './setSearch'
+import { setSort } from './setSort'
 import { setVisibleFiles } from './setVisibleFiles'
 import { toggleFolderState } from './toggleFolderState'
 import { toggleFolderStateBulk } from './toggleFolderStateBulk'
@@ -51,7 +51,7 @@ export const workspaceSlice = createSlice({
     list,
     loading,
     setFileTree,
-    setPersistedState,
+    setSort,
     setSearch,
     setVisibleFiles,
     toggleFolderState,

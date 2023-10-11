@@ -22,6 +22,10 @@ export const registerWebviews = (
         for (const { config, type } of configOptions) {
           if (affectsConfiguration(config)) {
             switch (type) {
+              case 'search':
+                workspaceViewProvider.updateSearch()
+                break
+
               case 'tree':
                 const showTree = getShowTreeConfig()
 
