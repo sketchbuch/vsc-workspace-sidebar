@@ -21,7 +21,6 @@
   "config.workspaceShowPath.asneeded": "Show paths when a workspace has the same label as another",
   "config.workspaceShowPath.description": "Display paths to the workspace files in the sidebar. Either: 'Always', 'Never', or 'As needed' (only shows paths for workspaces with the same label).",
   "config.workspaceShowPath.never": "Never show paths",
-  "config.workspaceSidebar.cacheDuration.description": "The time in seconds that workspaces are cached, the default cache duration is 12 hours. Set to 0 seconds if you don't want the caches to ever expire.",
   "config.workspaceSidebar.folders.excluded.description": "Folders to exclude when looking for workspaces.",
   "ext.cmd.wsList.collapse-all": "Collapse all folders",
   "ext.cmd.wsList.expand-all": "Expand all folders",

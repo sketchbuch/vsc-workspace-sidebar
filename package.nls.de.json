@@ -21,7 +21,6 @@
   "config.workspaceShowPath.asneeded": "Pfade anzeigen, wenn ein Arbeitsbereich dieselbe Bezeichnung wie eine anderer hat",
   "config.workspaceShowPath.description": "Zeigen Sie Pfade zu den Arbeitsbereichsdateien an. Entweder: 'Immer', 'Nie', oder 'Nach Bedarf' (zeigt nur Pfade für Arbeitsbereiche mit derselben Bezeichnung an).",
   "config.workspaceShowPath.never": "Pfade nie anzeigen",
-  "config.workspaceSidebar.cacheDuration.description": "Die Zeit in Sekunden, die Arbeitsbereiche zwischengespeichert werden. Die Standard-Cache-Dauer beträgt 12 Stunden. 0 Sekunden bedeute, dass die Caches niemals ablaufen werden.",
   "config.workspaceSidebar.folders.excluded.description": "Ordner, die bei der Suche nach Arbeitsbereichen ausgeschlossen werden sollen.",
   "ext.cmd.wsList.collapse-all": "Alle Ordner zuklappen",
   "ext.cmd.wsList.expand-all": "Alle Ordner aufklappen",

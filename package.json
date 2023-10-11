@@ -81,13 +81,6 @@
             "scope": "application",
             "type": "string"
           },
-          "workspaceSidebar.cacheDuration": {
-            "default": 43200,
-            "description": "%config.workspaceSidebar.cacheDuration.description%",
-            "minimum": 0,
-            "scope": "application",
-            "type": "number"
-          },
           "workspaceSidebar.cleanLabels": {
             "default": true,
             "description": "%config.workspaceCleanLabels.description%",

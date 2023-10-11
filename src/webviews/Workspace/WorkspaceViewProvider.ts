@@ -8,7 +8,7 @@ import {
   FileThemeProcessorObserver,
 } from 'vscode-file-theme-processor'
 import { SortIds } from '../../commands/registerCommands'
-import { getActionsConfig, getCacheDurationConfig } from '../../config/general'
+import { getActionsConfig } from '../../config/general'
 import { getSearchCaseInsensitiveConfig, getSearchMatchStartConfig } from '../../config/search'
 import {
   CMD_OPEN_CUR_WIN,
@@ -68,17 +68,7 @@ export class WorkspaceViewProvider
       const { files, timestamp } = cachedData
 
       if (files && timestamp) {
-        const cacheDuration = getCacheDurationConfig()
-        const timestampNow = getTimestamp()
-        const timestampExpired = timestamp + cacheDuration
-
-        console.log('### cacheDuration', cacheDuration)
-
-        if (cacheDuration === 0 || timestampNow < timestampExpired) {
-          return [...files]
-        } else {
-          this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
-        }
+        return [...files]
       }
     }
 

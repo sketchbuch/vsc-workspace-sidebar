@@ -1,7 +1,6 @@
 export const CONFIG_CLEAN_LABELS = true
 export const CONFIG_CONDENSE_FILETREE = true
 export const CONFIG_DEPTH = 0
-export const CONFIG_CACHE_DURATION = 43200
 export const CONFIG_EXCLUDED_FOLDERS = []
 export const CONFIG_EXPLORER_COMPACT_FOLDERS = true
 export const CONFIG_FOLDER = ''
