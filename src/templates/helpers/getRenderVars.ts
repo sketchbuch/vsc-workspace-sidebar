@@ -1,14 +1,17 @@
+import { getFileiconThemeConfig } from '../../config/core'
 import {
   getActionsConfig,
-  getCondenseFileTreeConfig,
+  getCleanLabelsConfig,
   getDepthConfig,
-  getFileiconThemeConfig,
-  getSearchMinConfig,
   getShowFileiconConfig,
   getShowFileiconsConfigConfig,
+} from '../../config/general'
+import { getSearchMinConfig } from '../../config/search'
+import {
+  getCondenseFileTreeConfig,
   getShowRootFolderConfig,
   getShowTreeConfig,
-} from '../../config/getConfig'
+} from '../../config/treeview'
 import { FileIconKeys, RenderVars, TemplateVars } from '../../webviews/webviews.interface'
 
 export const getRenderVars = ({
@@ -16,6 +19,7 @@ export const getRenderVars = ({
   imgLightFolderUri,
   themeData,
 }: TemplateVars): RenderVars => {
+  const cleanLabels = getCleanLabelsConfig()
   const showFileiconConfig = getShowFileiconConfig()
   const curFileIconTheme = getFileiconThemeConfig()
   const fileIconsActive = showFileiconConfig && !!curFileIconTheme
@@ -60,6 +64,7 @@ export const getRenderVars = ({
   }
 
   return {
+    cleanLabels,
     clickAction: getActionsConfig(),
     condenseFileTree: getCondenseFileTreeConfig(),
     depth: getDepthConfig(),

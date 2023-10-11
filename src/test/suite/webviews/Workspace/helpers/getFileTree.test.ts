@@ -1,7 +1,9 @@
 import { expect } from 'chai'
 import os from 'os'
 import * as sinon from 'sinon'
-import * as configs from '../../../../../config/getConfig'
+import * as coreConfigs from '../../../../../config/core'
+import * as foldersConfigs from '../../../../../config/folders'
+import * as treeConfigs from '../../../../../config/treeview'
 import * as compact from '../../../../../webviews/Workspace/helpers/compactTree'
 import * as condense from '../../../../../webviews/Workspace/helpers/condenseTree'
 import { getFileTree } from '../../../../../webviews/Workspace/helpers/getFileTree'
@@ -22,12 +24,14 @@ suite('Webviews > Workspace > Helpers > getFileTree():', () => {
 
   setup(() => {
     compactConfigStub = sinon
-      .stub(configs, 'getExplorerCompactFoldersConfig')
+      .stub(coreConfigs, 'getExplorerCompactFoldersConfig')
       .callsFake(() => false)
     compactSpy = sinon.spy(compact, 'compactTree')
-    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => true)
+    condenseConfigStub = sinon.stub(treeConfigs, 'getCondenseFileTreeConfig').callsFake(() => true)
     condenseSpy = sinon.spy(condense, 'condenseTree')
-    folderConfigStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_FOLDER_USERPATH)
+    folderConfigStub = sinon
+      .stub(foldersConfigs, 'getFolderConfig')
+      .callsFake(() => ROOT_FOLDER_USERPATH)
     osHomeStub = sinon.stub(os, 'homedir').callsFake(() => OS_HOMEFOLDER)
   })
 

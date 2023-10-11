@@ -1,6 +1,9 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
-import * as configs from '../../../../config/getConfig'
+import * as coreConfigs from '../../../../config/core'
+import * as generalConfigs from '../../../../config/general'
+import * as searchConfigs from '../../../../config/search'
+import * as treeConfigs from '../../../../config/treeview'
 import {
   CONFIG_CONDENSE_FILETREE,
   CONFIG_DEPTH,
@@ -29,29 +32,29 @@ suite('Templates > Helpers > getRenderVars():', () => {
 
   setup(() => {
     actionsConfigStub = sinon
-      .stub(configs, 'getActionsConfig')
+      .stub(generalConfigs, 'getActionsConfig')
       .callsFake(() => ConfigActions.CURRENT_WINDOW)
     condenseFileTreeConfigStub = sinon
-      .stub(configs, 'getCondenseFileTreeConfig')
+      .stub(treeConfigs, 'getCondenseFileTreeConfig')
       .callsFake(() => CONFIG_CONDENSE_FILETREE)
-    depthConfigStub = sinon.stub(configs, 'getDepthConfig').callsFake(() => CONFIG_DEPTH)
+    depthConfigStub = sinon.stub(generalConfigs, 'getDepthConfig').callsFake(() => CONFIG_DEPTH)
     getFileIconThemeConfigStub = sinon
-      .stub(configs, 'getFileiconThemeConfig')
+      .stub(coreConfigs, 'getFileiconThemeConfig')
       .callsFake(() => DEFAULT_THEME)
     searchMinConfigStub = sinon
-      .stub(configs, 'getSearchMinConfig')
+      .stub(searchConfigs, 'getSearchMinConfig')
       .callsFake(() => CONFIG_SEARCH_MINIMUM)
     showFileIconConfigStub = sinon
-      .stub(configs, 'getShowFileiconConfig')
+      .stub(generalConfigs, 'getShowFileiconConfig')
       .callsFake(() => CONFIG_SHOW_FILE_ICONS)
     showFileiconsConfigConfigStub = sinon
-      .stub(configs, 'getShowFileiconsConfigConfig')
+      .stub(generalConfigs, 'getShowFileiconsConfigConfig')
       .callsFake(() => CONFIG_SHOW_FILE_ICONS_CONFIG)
     showRootConfigStub = sinon
-      .stub(configs, 'getShowRootFolderConfig')
+      .stub(treeConfigs, 'getShowRootFolderConfig')
       .callsFake(() => CONFIG_SHOW_ROOT_FOLDER)
     showTreeConfigStub = sinon
-      .stub(configs, 'getShowTreeConfig')
+      .stub(treeConfigs, 'getShowTreeConfig')
       .callsFake(() => CONFIG_SHOW_HIERARCHY)
   })
 

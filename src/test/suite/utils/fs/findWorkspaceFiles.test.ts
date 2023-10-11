@@ -2,7 +2,8 @@ import { expect } from 'chai'
 import mockFs from 'mock-fs'
 import * as path from 'path'
 import * as sinon from 'sinon'
-import * as configs from '../../../../config/getConfig'
+import * as foldersConfigs from '../../../../config/folders'
+import * as generalConfigs from '../../../../config/general'
 import { FS_WS_FILETYPE } from '../../../../constants/fs'
 import * as utils from '../../../../utils/fs/collectFilesFromFolder'
 import { findWorkspaceFiles } from '../../../../utils/fs/findWorkspaceFiles'
@@ -23,8 +24,8 @@ suite('Utils > Fs > findWorkspaceFiles()', () => {
   })
 
   setup(() => {
-    configFolderStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => FOLDER)
-    configDepthStub = sinon.stub(configs, 'getDepthConfig').callsFake(() => 1)
+    configFolderStub = sinon.stub(foldersConfigs, 'getFolderConfig').callsFake(() => FOLDER)
+    configDepthStub = sinon.stub(generalConfigs, 'getDepthConfig').callsFake(() => 1)
   })
 
   teardown(() => {

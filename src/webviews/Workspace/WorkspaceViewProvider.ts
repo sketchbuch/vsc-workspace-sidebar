@@ -8,7 +8,8 @@ import {
   FileThemeProcessorObserver,
 } from 'vscode-file-theme-processor'
 import { SortIds } from '../../commands/registerCommands'
-import { getActionsConfig } from '../../config/getConfig'
+import { getActionsConfig } from '../../config/general'
+import { getSearchCaseInsensitiveConfig, getSearchMatchStartConfig } from '../../config/search'
 import {
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,
@@ -17,13 +18,7 @@ import {
   CMD_VSC_SET_CTX,
 } from '../../constants/commands'
 import { ConfigActions } from '../../constants/config'
-import {
-  EXT_LOADED,
-  EXT_SORT,
-  EXT_WEBVIEW_WS,
-  EXT_WSSTATE_CACHE,
-  EXT_WSSTATE_CACHE_DURATION,
-} from '../../constants/ext'
+import { EXT_LOADED, EXT_SORT, EXT_WEBVIEW_WS, EXT_WSSTATE_CACHE } from '../../constants/ext'
 import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
@@ -44,7 +39,7 @@ const { executeCommand } = vscode.commands
 const {
   list,
   setFileTree,
-  setPersistedState,
+  setSort,
   setSearch,
   setVisibleFiles,
   toggleFolderState,
@@ -73,14 +68,7 @@ export class WorkspaceViewProvider
       const { files, timestamp } = cachedData
 
       if (files && timestamp) {
-        const timestampNow = getTimestamp()
-        const timestampExpired = timestamp + EXT_WSSTATE_CACHE_DURATION
-
-        if (timestampNow < timestampExpired) {
-          return [...files]
-        } else {
-          this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
-        }
+        return [...files]
       }
     }
 
@@ -158,7 +146,7 @@ export class WorkspaceViewProvider
   private setupWebview(webviewView: vscode.WebviewView) {
     this.setOptions(webviewView)
 
-    webviewView.webview.onDidReceiveMessage((message: PostMessage<Payload, Actions>) => {
+    webviewView.webview.onDidReceiveMessage(async (message: PostMessage<Payload, Actions>) => {
       const { action, payload } = message
 
       switch (action) {
@@ -201,11 +189,10 @@ export class WorkspaceViewProvider
         case Actions.SEARCH_CHECKBOX_DISABLE:
         case Actions.SEARCH_CHECKBOX_ENABLE:
           if (payload !== undefined) {
-            const searchState = {
-              [payload]: action === Actions.SEARCH_CHECKBOX_ENABLE,
-            }
+            const setting = `workspaceSidebar.search.${payload}`
+            const newSettingValue = action === Actions.SEARCH_CHECKBOX_ENABLE
 
-            store.dispatch(setSearch(searchState))
+            vscode.workspace.getConfiguration().update(setting, newSettingValue, true)
           }
           break
 
@@ -288,6 +275,7 @@ export class WorkspaceViewProvider
     })
 
     this.setupWebview(webviewView)
+    this.updateSearch()
     this.updateSort()
 
     const cachedFiles = this.getCacheFiles()
@@ -307,9 +295,18 @@ export class WorkspaceViewProvider
     store.dispatch(setFileTree())
   }
 
+  public updateSearch() {
+    store.dispatch(
+      setSearch({
+        caseInsensitive: getSearchCaseInsensitiveConfig(),
+        matchStart: getSearchMatchStartConfig(),
+      })
+    )
+  }
+
   public updateSort() {
     const sort = this._ctx.globalState.get<SortIds>(EXT_SORT) ?? 'ascending'
-    store.dispatch(setPersistedState({ sort }))
+    store.dispatch(setSort({ sort }))
   }
 
   public updateVisibleFiles() {

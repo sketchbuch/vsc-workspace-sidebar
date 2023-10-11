@@ -1,6 +1,8 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
-import * as configs from '../../../../../config/getConfig'
+import * as coreConfigs from '../../../../../config/core'
+import * as foldersConfigs from '../../../../../config/folders'
+import * as treeConfigs from '../../../../../config/treeview'
 import { setSearch } from '../../../../../webviews/Workspace/store/setSearch'
 import {
   file4,
@@ -21,10 +23,14 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
   let treeConfigStub: sinon.SinonStub
 
   setup(() => {
-    compactConfigStub = sinon.stub(configs, 'getExplorerCompactFoldersConfig').callsFake(() => true)
-    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => true)
-    folderConfigStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_FOLDER_PATH)
-    treeConfigStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => false)
+    compactConfigStub = sinon
+      .stub(coreConfigs, 'getExplorerCompactFoldersConfig')
+      .callsFake(() => true)
+    condenseConfigStub = sinon.stub(treeConfigs, 'getCondenseFileTreeConfig').callsFake(() => true)
+    folderConfigStub = sinon
+      .stub(foldersConfigs, 'getFolderConfig')
+      .callsFake(() => ROOT_FOLDER_PATH)
+    treeConfigStub = sinon.stub(treeConfigs, 'getShowTreeConfig').callsFake(() => false)
   })
 
   teardown(() => {

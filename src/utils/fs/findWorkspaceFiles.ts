@@ -1,5 +1,6 @@
 import * as os from 'os'
-import { getDepthConfig, getFolderConfig } from '../../config/getConfig'
+import { getFolderConfig } from '../../config/folders'
+import { getDepthConfig } from '../../config/general'
 import { FS_WS_FILETYPE } from '../../constants/fs'
 import {
   FileErrorResult,

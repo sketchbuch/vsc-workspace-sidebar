@@ -1,21 +1,22 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { workspace, WorkspaceConfiguration } from 'vscode'
+import { getExplorerCompactFoldersConfig, getFileiconThemeConfig } from '../../../config/core'
+import { getFolderConfig } from '../../../config/folders'
 import {
   getActionsConfig,
   getCleanLabelsConfig,
-  getCondenseFileTreeConfig,
   getDepthConfig,
-  getExplorerCompactFoldersConfig,
-  getFileiconThemeConfig,
-  getFolderConfig,
-  getSearchMinConfig,
   getShowFileiconConfig,
   getShowFileiconsConfigConfig,
-  getShowPathsConfig,
+} from '../../../config/general'
+import { getShowPathsConfig } from '../../../config/listview'
+import { getSearchMinConfig } from '../../../config/search'
+import {
+  getCondenseFileTreeConfig,
   getShowRootFolderConfig,
   getShowTreeConfig,
-} from '../../../config/getConfig'
+} from '../../../config/treeview'
 import {
   CONFIG_CLEAN_LABELS,
   CONFIG_CONDENSE_FILETREE,

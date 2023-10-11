@@ -17,20 +17,22 @@ export const treeItemFile = (
   renderVars: RenderVars
 ): string => {
   const { search } = state
-  const { isSelected, label, path, showPath } = file
+  const { cleanedLabel, file: dataFile, isSelected, label, path, showPath } = file
   const isRootLvlFile = depth < 0
   const classes = `list__branch-list-item list__branch-list-item-file list__styled-item ${
     isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
   }`
   const tooltip = getFileTooltip(renderVars, file, 'cur-win')
-  const { condenseFileTree, fileIconKeys, fileIconsActive, themeProcessorState } = renderVars
+  const { cleanLabels, condenseFileTree, fileIconKeys, fileIconsActive, themeProcessorState } =
+    renderVars
 
+  const visibleLabel = cleanLabels ? cleanedLabel : label
   const buttons: ConfigButtons = [
     {
       codicon: 'browser',
-      file: file.file,
+      file: dataFile,
       key: 'open-filemanager',
-      label: file.label,
+      label: visibleLabel,
     },
   ]
 
@@ -43,16 +45,16 @@ export const treeItemFile = (
 
   const itemButtons = getWorkspaceButtons({ buttons, renderVars })
   const showFileIcon = fileIconsActive && themeProcessorState === 'ready'
-  const langIcon = showFileIcon ? getLangIcon(file.file, fileIconKeys) : ''
+  const langIcon = showFileIcon ? getLangIcon(dataFile, fileIconKeys) : ''
 
   return `
-    <li class="${classes}" data-file="${file.file}" data-depth="${depth}">
+    <li class="${classes}" data-file="${dataFile}" data-depth="${depth}">
       ${isSelected ? listItemIcon(renderVars) : ''}
       ${treeIndent(isRootLvlFile ? 0 : depth + 1)}
       <span class="list__element" title="${tooltip}">
         ${showFileIcon ? fileIconFile(langIcon) : treeIconFile()}
         <span class="list__text">
-          <span class="list__title">${getLabel(label, search)}</span>
+          <span class="list__title">${getLabel(visibleLabel, search)}</span>
           ${showPath && condenseFileTree ? `<span class="list__description">${path}</span>` : ''}
         </span>
         ${listItemButtons(itemButtons)}

@@ -1,4 +1,4 @@
-import { getShowTreeConfig } from '../../../config/getConfig'
+import { getShowTreeConfig } from '../../../config/treeview'
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree'
 import { getFileTree } from '../helpers/getFileTree'
 import { getVisibleFiles } from '../helpers/getVisibleFiles'

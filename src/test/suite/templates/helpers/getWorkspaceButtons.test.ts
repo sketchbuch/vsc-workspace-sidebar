@@ -29,6 +29,7 @@ suite('Templates > Helpers > getWorkspaceButtons():', () => {
       },
       {
         file: {
+          cleanedLabel: newWinLabel,
           file: newWinFile,
           isSelected: false,
           label: newWinLabel,
@@ -76,6 +77,7 @@ suite('Templates > Helpers > getWorkspaceButtons():', () => {
       {
         codicon: 'test',
         file: {
+          cleanedLabel: newWinLabel,
           file: newWinFile,
           isSelected: false,
           label: newWinLabel,

@@ -10,19 +10,20 @@ import { listItemIcon } from './listItemIcon'
 
 export const listItem = (file: File, state: WorkspaceState, renderVars: RenderVars): string => {
   const { search } = state
-  const { file: dataFile, isSelected, label, path, showPath } = file
+  const { cleanedLabel, file: dataFile, isSelected, label, path, showPath } = file
   const tooltip = getFileTooltip(renderVars, file, 'cur-win')
   const classes = `list__styled-item ${
     isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
   }`
-  const { fileIconKeys, fileIconsActive, themeProcessorState } = renderVars
+  const { cleanLabels, fileIconKeys, fileIconsActive, themeProcessorState } = renderVars
 
+  const visibleLabel = cleanLabels ? cleanedLabel : label
   const buttons: ConfigButtons = [
     {
       codicon: 'browser',
-      file: file.file,
+      file: dataFile,
       key: 'open-filemanager',
-      label: file.label,
+      label: visibleLabel,
     },
   ]
 
@@ -35,7 +36,7 @@ export const listItem = (file: File, state: WorkspaceState, renderVars: RenderVa
 
   const itemButtons = getWorkspaceButtons({ buttons, renderVars })
   const showFileIcons = fileIconsActive && themeProcessorState === 'ready'
-  const langIcon = showFileIcons ? getLangIcon(file.file, fileIconKeys) : ''
+  const langIcon = showFileIcons ? getLangIcon(dataFile, fileIconKeys) : ''
 
   return `
     <li class="list__item list__list-styled-item ${classes}" data-file="${dataFile}">
@@ -43,7 +44,7 @@ export const listItem = (file: File, state: WorkspaceState, renderVars: RenderVa
         ${isSelected ? listItemIcon(renderVars) : ''}
         ${showFileIcons ? fileIconFile(langIcon) : ''}
         <span class="list__text">
-          <span class="list__title">${getLabel(label, search)}</span>
+          <span class="list__title">${getLabel(visibleLabel, search)}</span>
           ${showPath ? `<span class="list__description">${path}</span>` : ''}
         </span>
         ${listItemButtons(itemButtons)}

@@ -24,6 +24,7 @@ export const SEARCH_TERM_LOWERCASE = 'react'
 export const FOLDER1 = 'code'
 export const SUBFOLDER1 = 'vscode'
 export const file1: File = {
+  cleanedLabel: 'Vscode',
   file: `${ROOT_FOLDER_PATH}/${FOLDER1}/${SUBFOLDER1}/Vscode.${EXT}`,
   isSelected: false,
   label: 'Vscode',
@@ -34,6 +35,7 @@ export const file1: File = {
 export const FOLDER2 = 'code/vscode'
 export const SUBFOLDER2 = 'some_ext'
 export const file2: File = {
+  cleanedLabel: 'Some Extension',
   file: `${ROOT_FOLDER_PATH}/${FOLDER2}/${SUBFOLDER2}/Some Extension.${EXT}`,
   isSelected: false,
   label: 'Some Extension',
@@ -44,6 +46,7 @@ export const file2: File = {
 export const FOLDER3 = 'flutter'
 export const SUBFOLDER3 = 'todo'
 export const file3: File = {
+  cleanedLabel: 'Todo List',
   file: `${ROOT_FOLDER_PATH}/${FOLDER3}/${SUBFOLDER3}/Todo List.${EXT}`,
   isSelected: false,
   label: 'Todo List',
@@ -54,6 +57,7 @@ export const file3: File = {
 export const FOLDER4 = 'react'
 export const SUBFOLDER4 = 'router'
 export const file4: File = {
+  cleanedLabel: 'React Router',
   file: `${ROOT_FOLDER_PATH}/${FOLDER4}/${SUBFOLDER4}/React Router.${EXT}`,
   isSelected: false,
   label: 'React Router',

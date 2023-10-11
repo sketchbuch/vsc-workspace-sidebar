@@ -1,5 +1,7 @@
 import { SortIds } from '../../../commands/registerCommands'
-import { getShowPathsConfig, getShowTreeConfig } from '../../../config/getConfig'
+import { getCleanLabelsConfig } from '../../../config/general'
+import { getShowPathsConfig } from '../../../config/listview'
+import { getShowTreeConfig } from '../../../config/treeview'
 import { ConfigShowPaths } from '../../../constants/config'
 import { sortFilesByProp } from '../../../utils/arrays/sortFilesByProp'
 import { File, Files, SearchState } from '../WorkspaceViewProvider.interface'
@@ -8,6 +10,7 @@ import { findDuplicates } from './findDuplicates'
 export const getVisibleFiles = (wsFiles: Files, search: SearchState, sort: SortIds) => {
   const showTree = getShowTreeConfig()
   const showPaths = getShowPathsConfig()
+  const cleanLabels = getCleanLabelsConfig()
 
   const { caseInsensitive, matchStart, term } = search
   let visibleFiles = [...wsFiles]
@@ -22,7 +25,7 @@ export const getVisibleFiles = (wsFiles: Files, search: SearchState, sort: SortI
   }
 
   if (!showTree) {
-    visibleFiles.sort(sortFilesByProp('label'))
+    visibleFiles.sort(sortFilesByProp(cleanLabels ? 'cleanedLabel' : 'label'))
 
     if (sort === 'descending') {
       visibleFiles.reverse()

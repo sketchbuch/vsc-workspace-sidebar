@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
-import * as configs from '../../../../../config/getConfig'
+import * as foldersConfigs from '../../../../../config/folders'
+import * as treeConfigs from '../../../../../config/treeview'
 import { getAllFoldersFromTree } from '../../../../../webviews/Workspace/helpers/getAllFoldersFromTree'
 import {
   getMockFileTree,
@@ -13,8 +14,10 @@ suite('Webviews > Workspace > Helpers > getAllFoldersFromTree():', () => {
   let folderConfigStub: sinon.SinonStub
 
   setup(() => {
-    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => true)
-    folderConfigStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_FOLDER_PATH)
+    condenseConfigStub = sinon.stub(treeConfigs, 'getCondenseFileTreeConfig').callsFake(() => true)
+    folderConfigStub = sinon
+      .stub(foldersConfigs, 'getFolderConfig')
+      .callsFake(() => ROOT_FOLDER_PATH)
   })
 
   teardown(() => {

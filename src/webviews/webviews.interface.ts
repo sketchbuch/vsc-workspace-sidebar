@@ -23,6 +23,7 @@ export type FileIconKeys = {
 }
 
 export interface RenderVars {
+  cleanLabels: boolean
   clickAction: ConfigActions
   condenseFileTree: boolean
   depth: number

@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { getShowTreeConfig } from '../config/getConfig'
+import { getShowTreeConfig } from '../config/treeview'
 import { isWorkspaceFile } from '../utils/fs/isWorkspaceFile'
 import { WorkspaceViewProvider } from './Workspace/WorkspaceViewProvider'
 import { ConfigOptions, EXPLORER_CONFIG, WS_CONFIG } from './configOptions'
@@ -22,6 +22,10 @@ export const registerWebviews = (
         for (const { config, type } of configOptions) {
           if (affectsConfiguration(config)) {
             switch (type) {
+              case 'search':
+                workspaceViewProvider.updateSearch()
+                break
+
               case 'tree':
                 const showTree = getShowTreeConfig()
 

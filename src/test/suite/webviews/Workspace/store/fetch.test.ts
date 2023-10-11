@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
-import * as configs from '../../../../../config/getConfig'
+import * as foldersConfigs from '../../../../../config/folders'
+import * as treeConfigs from '../../../../../config/treeview'
 import {
   fetchFulfilled,
   fetchPending,
@@ -21,9 +22,11 @@ suite('Webviews > Workspace > Store > fetch()', () => {
   let treeConfigStub: sinon.SinonStub
 
   setup(() => {
-    condenseConfigStub = sinon.stub(configs, 'getCondenseFileTreeConfig').callsFake(() => true)
-    folderConfigStub = sinon.stub(configs, 'getFolderConfig').callsFake(() => ROOT_FOLDER_PATH)
-    treeConfigStub = sinon.stub(configs, 'getShowTreeConfig').callsFake(() => false)
+    condenseConfigStub = sinon.stub(treeConfigs, 'getCondenseFileTreeConfig').callsFake(() => true)
+    folderConfigStub = sinon
+      .stub(foldersConfigs, 'getFolderConfig')
+      .callsFake(() => ROOT_FOLDER_PATH)
+    treeConfigStub = sinon.stub(treeConfigs, 'getShowTreeConfig').callsFake(() => false)
   })
 
   teardown(() => {
