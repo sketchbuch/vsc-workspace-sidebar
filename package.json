@@ -133,6 +133,27 @@
         }
       },
       {
+        "title": "%config.title.listview%",
+        "properties": {
+          "workspaceSidebar.showPaths": {
+            "default": "As needed",
+            "description": "%config.workspaceShowPath.description%",
+            "enum": [
+              "Always",
+              "As needed",
+              "Never"
+            ],
+            "enumDescriptions": [
+              "%config.workspaceShowPath.always%",
+              "%config.workspaceShowPath.asneeded%",
+              "%config.workspaceShowPath.never%"
+            ],
+            "scope": "application",
+            "type": "string"
+          }
+        }
+      },
+      {
         "title": "%config.title.search%",
         "properties": {
           "workspaceSidebar.searchMinimum": {
@@ -154,27 +175,6 @@
             "description": "%config.workspace.search.matchStart.description%",
             "scope": "application",
             "type": "boolean"
-          }
-        }
-      },
-      {
-        "title": "%config.title.listview%",
-        "properties": {
-          "workspaceSidebar.showPaths": {
-            "default": "As needed",
-            "description": "%config.workspaceShowPath.description%",
-            "enum": [
-              "Always",
-              "As needed",
-              "Never"
-            ],
-            "enumDescriptions": [
-              "%config.workspaceShowPath.always%",
-              "%config.workspaceShowPath.asneeded%",
-              "%config.workspaceShowPath.never%"
-            ],
-            "scope": "application",
-            "type": "string"
           }
         }
       },
