@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+import * as path from 'path'
 import * as sinon from 'sinon'
 import * as coreConfigs from '../../../../../config/core'
 import * as foldersConfigs from '../../../../../config/folders'
@@ -35,7 +36,7 @@ suite('Webviews > Workspace > Store > setFileTree()', () => {
     const expectedState = getMockState({
       fileTree: {
         files: [],
-        folderPath: '/home/user/dev',
+        folderPath: path.join('home', 'user', 'dev'),
         folderPathSegment: 'dev',
         isRoot: true,
         label: 'dev',
@@ -44,30 +45,38 @@ suite('Webviews > Workspace > Store > setFileTree()', () => {
             files: [
               {
                 cleanedLabel: 'Vscode',
-                file: '/home/user/dev/code/vscode/Vscode.code-workspace',
+                file: path.join('home', 'user', 'dev', 'code', 'vscode', 'Vscode.code-workspace'),
                 isSelected: false,
                 label: 'Vscode',
-                path: 'code/vscode',
+                path: path.join('code', 'vscode'),
                 showPath: true,
               },
               {
                 cleanedLabel: 'Some Extension',
-                file: '/home/user/dev/code/vscode/some_ext/Some Extension.code-workspace',
+                file: path.join(
+                  'home',
+                  'user',
+                  'dev',
+                  'code',
+                  'vscode',
+                  'some_ext',
+                  'Some Extension.code-workspace'
+                ),
                 isSelected: false,
                 label: 'Some Extension',
-                path: 'code/vscode/some_ext',
+                path: path.join('code', 'vscode', 'some_ext'),
                 showPath: true,
               },
             ],
-            folderPath: '/home/user/dev/code/vscode',
-            folderPathSegment: 'code/vscode',
+            folderPath: path.join('home', 'user', 'dev', 'code', 'vscode'),
+            folderPathSegment: path.join('code', 'vscode'),
             isRoot: false,
-            label: 'code/vscode',
+            label: path.join('code', 'vscode'),
             sub: [],
           },
         ],
       },
-      treeFolders: ['code/vscode'],
+      treeFolders: [path.join('code', 'vscode')],
       visibleFiles: [file1, file2],
     })
 

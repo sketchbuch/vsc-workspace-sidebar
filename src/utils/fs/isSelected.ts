@@ -1,5 +1,7 @@
-export const isSelected = (file: string, selected: string, platform: string) => {
-  if (platform === 'win32') {
+import { isWindows } from '../os/isWindows'
+
+export const isSelected = (file: string, selected: string) => {
+  if (isWindows()) {
     return file.toLowerCase() === selected.toLowerCase()
   }
 

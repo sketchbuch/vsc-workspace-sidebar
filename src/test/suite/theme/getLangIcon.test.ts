@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+import * as path from 'path'
 import { FS_WS_FILETYPE } from '../../../constants/fs'
 import { getLangIcon } from '../../../theme/getLangIcon'
 import { FileIconKeys } from '../../../webviews/webviews.interface'
@@ -12,11 +13,11 @@ suite('Themes > getLangIcon():', () => {
   const NAME = 'py'
   const FILE_NAME = `${NAME}-app-google`
   const PATH = 'python'
-  const OS_HOME = '/home/user'
-  const CONFIG_FOLDER = `${OS_HOME}/dev`
+  const OS_HOME = path.join('home', 'user')
+  const CONFIG_FOLDER = path.join(OS_HOME, 'dev')
 
   const getFile = ({ fileName = FILE_NAME, folder = PATH }: GetFile): string => {
-    return `${CONFIG_FOLDER}/${folder}/${fileName}.${FS_WS_FILETYPE}`
+    return path.join(CONFIG_FOLDER, folder, `${fileName}.${FS_WS_FILETYPE}`)
   }
 
   const testThemeIcons = (themeElement: 'fileExtensions' | 'languageIds') => {

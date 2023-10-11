@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+import * as path from 'path'
 import { getLastPathSegment } from '../../../../utils/fs/getLastPathSegment'
 
 suite('Utils > Fs > getLastPathSegment()', () => {
@@ -9,7 +10,7 @@ suite('Utils > Fs > getLastPathSegment()', () => {
   })
 
   test('Returns the last part of the path if there is a slash', () => {
-    expect(getLastPathSegment('folder/file.txt')).to.equal('file.txt')
-    expect(getLastPathSegment('folder/subfolder')).to.equal('subfolder')
+    expect(getLastPathSegment(path.join('folder', 'file.txt'))).to.equal('file.txt')
+    expect(getLastPathSegment(path.join('folder', 'subfolder'))).to.equal('subfolder')
   })
 })
