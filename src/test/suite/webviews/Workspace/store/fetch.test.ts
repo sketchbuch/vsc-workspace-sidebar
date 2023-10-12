@@ -85,7 +85,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       expect(state).not.to.eql(expectedState)
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: { files: [], result: 'none' },
+        payload: { files: [], result: 'ok' },
         type: 'ws/list',
       })
       expect(state).to.eql(expectedState)
@@ -114,7 +114,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       expect(state).not.to.eql(expectedState)
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: { files: getMockFileList(), result: 'none' },
+        payload: { files: getMockFileList(), result: 'ok' },
         type: 'ws/list',
       })
       expect(state.visibleFiles).to.eql(expectedState.visibleFiles)
@@ -142,7 +142,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       expect(state).not.to.eql(expectedState)
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: { files: getMockFileList(), result: 'none' },
+        payload: { files: getMockFileList(), result: 'ok' },
         type: 'ws/list',
       })
       expect(state.visibleFiles).to.eql(expectedState.visibleFiles)
@@ -170,7 +170,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       expect(state).not.to.eql(expectedState)
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: { files: getMockFileList(), result: 'none' },
+        payload: { files: getMockFileList(), result: 'ok' },
         type: 'ws/list',
       })
       expect(state.visibleFiles).to.eql(expectedState.visibleFiles)
@@ -198,7 +198,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       expect(state).not.to.eql(expectedState)
       fetchFulfilled(state, {
         meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: { files: getMockFileList(), result: 'none' },
+        payload: { files: getMockFileList(), result: 'ok' },
         type: 'ws/list',
       })
       expect(state.visibleFiles).to.eql(expectedState.visibleFiles)

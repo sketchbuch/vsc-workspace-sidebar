@@ -2,7 +2,7 @@ import { getFoldersConfig } from '../../config/folders'
 import { AllRootFoldersResult } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { FindRootFolderFilesNew, findRootFolderFilesNew } from './findRootFolderFilesNew'
 
-interface FindAllRootFolderFiles {
+export interface FindAllRootFolderFiles {
   rootFolders: FindRootFolderFilesNew[]
   result: AllRootFoldersResult
 }
@@ -13,13 +13,15 @@ export const findAllRootFolderFiles = async (): Promise<FindAllRootFolderFiles> 
   if (folders.length > 0) {
     const rootFolders: FindRootFolderFilesNew[] = []
 
-    folders.forEach(async (folder) => {
-      const files = await findRootFolderFilesNew(folder)
+    for (let index = 0; index < folders.length; index++) {
+      const files = await findRootFolderFilesNew(folders[index])
       rootFolders.push(files)
-    })
+    }
 
-    return Promise.resolve({ rootFolders, result: 'folders' })
+    const success = rootFolders.every((rootFolder) => rootFolder.result === 'ok')
+
+    return Promise.resolve({ rootFolders, result: success ? 'success' : 'partial-success' })
   }
 
-  return Promise.resolve({ rootFolders: [], result: 'no-folders' })
+  return Promise.resolve({ rootFolders: [], result: 'no-root-folders' })
 }

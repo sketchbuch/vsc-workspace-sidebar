@@ -26,7 +26,7 @@ export const fetchFulfilled = (
   } else {
     const showTree = getShowTreeConfig()
 
-    state.invalidReason = 'none'
+    state.invalidReason = 'ok'
     state.isFolderInvalid = false
     state.state = 'list'
     state.visibleFiles = getVisibleFiles(state.convertedFiles, state.search, state.sort)
@@ -38,7 +38,7 @@ export const fetchFulfilled = (
 
 export const fetchPending = (state: WorkspaceState) => {
   state.state = 'loading'
-  state.invalidReason = 'none'
+  state.invalidReason = 'ok'
   state.isFolderInvalid = false
 }
 

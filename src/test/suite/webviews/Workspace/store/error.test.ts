@@ -14,7 +14,7 @@ suite('Webviews > Workspace > Store > error()', () => {
     const expectedState = getMockState({
       error: 'FETCH',
       files: [],
-      invalidReason: 'none',
+      invalidReason: 'ok',
       isFolderInvalid: false,
       state: 'error',
     })

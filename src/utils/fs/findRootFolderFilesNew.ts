@@ -2,7 +2,7 @@ import * as os from 'os'
 import { getDepthConfig } from '../../config/general'
 import { FS_WS_FILETYPE } from '../../constants/fs'
 import {
-  FindFileResultNew,
+  FindFileResult,
   WorkspaceFiles,
 } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { checkFile } from './checkFile'
@@ -11,7 +11,7 @@ import { collectFilesFromFolder } from './collectFilesFromFolder'
 export interface FindRootFolderFilesNew {
   baseFolder: string
   files: WorkspaceFiles
-  result: FindFileResultNew
+  result: FindFileResult
 }
 
 export const findRootFolderFilesNew = async (folder: string): Promise<FindRootFolderFilesNew> => {
@@ -27,7 +27,7 @@ export const findRootFolderFilesNew = async (folder: string): Promise<FindRootFo
     return Promise.resolve({
       baseFolder,
       files: files,
-      result: files.length > 0 ? 'workspaces-found' : 'no-workspaces',
+      result: files.length > 0 ? 'ok' : 'no-workspaces',
     })
   }
 

@@ -56,10 +56,9 @@ export type WorkspacePmPayloadSearch = Partial<SearchState>
 export type WorkspacePmPayloadToggleFolderState = string
 export type WorkspaceToggleFolderStateBulk = FolderState
 
-export type AllRootFoldersResult = 'folders' | 'no-folders'
+export type AllRootFoldersResult = 'no-root-folders' | 'partial-success' | 'success'
 
-export type FindFileResultNew = 'invalid-folder' | 'no-workspaces' | 'workspaces-found'
-export type FindFileResult = 'invalid-folder' | 'no-workspaces' | 'none'
+export type FindFileResult = 'invalid-folder' | 'no-root-folders' | 'no-workspaces' | 'ok'
 
 export interface SearchState {
   caseInsensitive: boolean
@@ -67,11 +66,9 @@ export interface SearchState {
   term: string
 }
 
-export type WorkspaceState = {
+export type WorkspaceStateCommon = {
   closedFolders: string[]
-  convertedFiles: Files
   error: WorkspaceErrors
-  files: WorkspaceFiles
   fileTree: FileTree | null
   invalidReason: FindFileResult
   isFolderInvalid: boolean
@@ -79,10 +76,33 @@ export type WorkspaceState = {
   selected: string
   sort: SortIds
   state: WorkspaceStates
-  treeFolders: string[]
-  visibleFiles: Files
   wsType: WsType
 }
+
+export type WorkspaceStateSingleRoot = {
+  convertedFiles: Files
+  files: WorkspaceFiles
+  fileTree: FileTree | null
+  treeFolders: string[]
+  visibleFiles: Files
+}
+
+export type WorkspaceStateMultiRootItem = {
+  baseFolder: string
+  convertedFiles: Files
+  files: WorkspaceFiles
+  fileTree: FileTree | null
+  treeFolders: string[]
+  visibleFiles: Files
+}
+
+export type WorkspaceStateMultiRoot = {
+  rootFolders: WorkspaceStateMultiRootItem[]
+}
+
+export type WorkspaceState = WorkspaceStateCommon &
+  WorkspaceStateSingleRoot &
+  WorkspaceStateMultiRoot
 
 export type WorkspaceStates = 'error' | 'invalid' | 'list' | 'loading'
 export type WsType = 'none' | 'ws' | 'folder'

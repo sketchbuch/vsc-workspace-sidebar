@@ -20,7 +20,7 @@ export const list = (state: WorkspaceState, action: PayloadAction<WorkspaceFiles
   } else {
     const showTree = getShowTreeConfig()
 
-    state.invalidReason = 'none'
+    state.invalidReason = 'ok'
     state.isFolderInvalid = false
     state.state = 'list'
     state.visibleFiles = getVisibleFiles(state.convertedFiles, state.search, state.sort)

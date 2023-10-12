@@ -24,7 +24,7 @@ export const findRootFolderFiles = async (): Promise<FindRootFolderFiles> => {
   if (isFolder) {
     const files = await collectFilesFromFolder(baseFolder, FS_WS_FILETYPE, maxDepth, 0)
 
-    return Promise.resolve({ files: files, result: files.length > 0 ? 'none' : 'no-workspaces' })
+    return Promise.resolve({ files: files, result: files.length > 0 ? 'ok' : 'no-workspaces' })
   }
 
   return Promise.resolve({ files: [], result: 'invalid-folder' })

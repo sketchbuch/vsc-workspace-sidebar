@@ -4,6 +4,7 @@ import { SearchState, WorkspaceState } from '../WorkspaceViewProvider.interface'
 import { getWsType } from '../helpers/getWsType'
 import { error } from './error'
 import { fetch, fetchFulfilled, fetchPending, fetchRejected } from './fetch'
+import { fetchNew, fetchNewFulfilled, fetchNewPending, fetchNewRejected } from './fetchNew'
 import { invalid } from './invalid'
 import { list } from './list'
 import { loading } from './loading'
@@ -23,10 +24,11 @@ export const initialSearchState: SearchState = {
 export const initialState: WorkspaceState = {
   closedFolders: [],
   convertedFiles: [],
+  rootFolders: [],
   error: '',
   files: [],
   fileTree: null,
-  invalidReason: 'none',
+  invalidReason: 'ok',
   isFolderInvalid: false,
   search: { ...initialSearchState },
   selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',
@@ -43,6 +45,9 @@ export const workspaceSlice = createSlice({
     builder.addCase(fetch.pending, fetchPending)
     builder.addCase(fetch.rejected, fetchRejected)
     builder.addCase(fetch.fulfilled, fetchFulfilled)
+    builder.addCase(fetchNew.pending, fetchNewPending)
+    builder.addCase(fetchNew.rejected, fetchNewRejected)
+    builder.addCase(fetchNew.fulfilled, fetchNewFulfilled)
   },
   name: 'ws',
   reducers: {

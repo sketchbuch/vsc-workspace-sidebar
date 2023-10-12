@@ -23,7 +23,6 @@ import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
 import { getTimestamp } from '../../utils/datetime/getTimestamp'
-import { findAllRootFolderFiles } from '../../utils/fs/findAllRootFolderFiles'
 import { HtmlData, PostMessage } from '../webviews.interface'
 import {
   WorkspacePmActions as Actions,
@@ -34,6 +33,7 @@ import {
   WorkspaceState,
 } from './WorkspaceViewProvider.interface'
 import { fetch } from './store/fetch'
+import { fetchNew } from './store/fetchNew'
 import { workspaceSlice } from './store/workspaceSlice'
 
 const { executeCommand } = vscode.commands
@@ -92,14 +92,8 @@ export class WorkspaceViewProvider
     return viewTitle
   }
 
-  private async temp() {
-    const temp = await findAllRootFolderFiles()
-    console.log('### temp', temp)
-  }
-
   private render() {
     if (this._view !== undefined) {
-      this.temp()
       const state = store.getState().ws
 
       const themeData = state.state === 'list' ? this._fileThemeProcessor.getThemeData() : null
@@ -292,6 +286,7 @@ export class WorkspaceViewProvider
     } else {
       store.dispatch(fetch())
     }
+    store.dispatch(fetchNew())
   }
 
   public toggleAllFolders(type: FolderState) {
