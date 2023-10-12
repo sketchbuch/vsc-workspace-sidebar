@@ -23,6 +23,7 @@ import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
 import { getTimestamp } from '../../utils/datetime/getTimestamp'
+import { findAllRootFolderFiles } from '../../utils/fs/findAllRootFolderFiles'
 import { HtmlData, PostMessage } from '../webviews.interface'
 import {
   WorkspacePmActions as Actions,
@@ -91,8 +92,14 @@ export class WorkspaceViewProvider
     return viewTitle
   }
 
+  private async temp() {
+    const temp = await findAllRootFolderFiles()
+    console.log('### temp', temp)
+  }
+
   private render() {
     if (this._view !== undefined) {
+      this.temp()
       const state = store.getState().ws
 
       const themeData = state.state === 'list' ? this._fileThemeProcessor.getThemeData() : null

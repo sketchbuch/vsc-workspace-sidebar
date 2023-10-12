@@ -56,7 +56,10 @@ export type WorkspacePmPayloadSearch = Partial<SearchState>
 export type WorkspacePmPayloadToggleFolderState = string
 export type WorkspaceToggleFolderStateBulk = FolderState
 
-export type FileErrorResult = 'invalid-folder' | 'no-workspaces' | 'none'
+export type AllRootFoldersResult = 'folders' | 'no-folders'
+
+export type FindFileResultNew = 'invalid-folder' | 'no-workspaces' | 'workspaces-found'
+export type FindFileResult = 'invalid-folder' | 'no-workspaces' | 'none'
 
 export interface SearchState {
   caseInsensitive: boolean
@@ -70,7 +73,7 @@ export type WorkspaceState = {
   error: WorkspaceErrors
   files: WorkspaceFiles
   fileTree: FileTree | null
-  invalidReason: FileErrorResult
+  invalidReason: FindFileResult
   isFolderInvalid: boolean
   search: SearchState
   selected: string

@@ -6,10 +6,10 @@ import * as foldersConfigs from '../../../../config/folders'
 import * as generalConfigs from '../../../../config/general'
 import { FS_WS_FILETYPE } from '../../../../constants/fs'
 import * as utils from '../../../../utils/fs/collectFilesFromFolder'
-import { findWorkspaceFiles } from '../../../../utils/fs/findWorkspaceFiles'
+import { findRootFolderFiles } from '../../../../utils/fs/findRootFolderFiles'
 import { mockFsStructure } from '../../../mocks/mockFsStructure'
 
-suite('Utils > Fs > findWorkspaceFiles()', () => {
+suite('Utils > Fs > findRootFolderFiles()', () => {
   const FOLDER = 'find-workspace-files'
 
   let configFolderStub: sinon.SinonStub
@@ -36,7 +36,7 @@ suite('Utils > Fs > findWorkspaceFiles()', () => {
   test('invalid-folder object is returned if the folder is not a folder', () => {
     configFolderStub.callsFake(() => 'a.file')
 
-    return findWorkspaceFiles().then((wsFiles) => {
+    return findRootFolderFiles().then((wsFiles) => {
       expect(wsFiles).to.eql({ files: [], result: 'invalid-folder' })
     })
   })
@@ -44,7 +44,7 @@ suite('Utils > Fs > findWorkspaceFiles()', () => {
   test('no-workspaces object is returned if the folder contains no workspace files', () => {
     configFolderStub.callsFake(() => 'get-filenames-of-type')
 
-    return findWorkspaceFiles().then((wsFiles) => {
+    return findRootFolderFiles().then((wsFiles) => {
       expect(wsFiles).to.eql({ files: [], result: 'no-workspaces' })
     })
   })
@@ -52,7 +52,7 @@ suite('Utils > Fs > findWorkspaceFiles()', () => {
   test('valid object is returned if the folder contains files of correct type', () => {
     const collectSpy = sinon.spy(utils, 'collectFilesFromFolder')
 
-    return findWorkspaceFiles().then((wsFiles) => {
+    return findRootFolderFiles().then((wsFiles) => {
       expect(wsFiles).to.eql({
         files: [
           path.join(FOLDER, 'WS 0.code-workspace'),
