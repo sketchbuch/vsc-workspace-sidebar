@@ -32,7 +32,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
 
             return `
               <section class="list__list-section">
-                <h3 class="list__list-rootLabel">${baseFolderLabel}</h3>
+                <h3 class="list__list-section-label">${baseFolderLabel}</h3>
                 <ul class="list__list list__styled-list${
                   isFileTree !== null ? ' list__styled-list--tree' : ''
                 }">
