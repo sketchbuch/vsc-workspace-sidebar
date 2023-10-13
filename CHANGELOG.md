@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.7.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.7.0...v1.7.1) (2023-10-12)
+
+- Closes [#89](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/89)
+- Fixed rendering of file icons on windows
+
 ## [1.7.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.6.1...v1.7.0) (2023-10-11)
 
 - Closes [#87](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/87)
