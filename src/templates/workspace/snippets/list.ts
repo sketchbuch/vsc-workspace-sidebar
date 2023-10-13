@@ -7,9 +7,8 @@ import { tree } from './tree'
 export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
   console.log('### list()')
   const { rootFolders, search } = state
-  const { files, fileTree, visibleFiles } = rootFolders[1]
+  const { files, visibleFiles } = rootFolders[1]
   const { showTree } = renderVars
-  const isFileTree = showTree && fileTree !== null
 
   console.log('### visibleFiles', visibleFiles)
 
