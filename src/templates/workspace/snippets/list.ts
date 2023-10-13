@@ -7,14 +7,13 @@ import { tree } from './tree'
 export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
   console.log('### list()')
   const { rootFolders, search } = state
-  const { files, visibleFiles } = rootFolders[1]
   const { showTree } = renderVars
+  const noFiles = rootFolders.every((rootFolder) => rootFolder.files.length === 0)
+  const noVisibleFiles = rootFolders.every((rootFolder) => rootFolder.visibleFiles.length === 0)
 
-  console.log('### visibleFiles', visibleFiles)
-
-  if (files.length === 0) {
+  if (noFiles) {
     return ''
-  } else if (visibleFiles.length === 0 && search) {
+  } else if (noVisibleFiles && search) {
     return `
       <div class="list__searchedout">
         <p>${t('workspace.list.search.noMatch')}</p>
