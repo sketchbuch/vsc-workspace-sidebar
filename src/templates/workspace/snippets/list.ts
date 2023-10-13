@@ -8,12 +8,12 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
   console.log('### list()')
   const { rootFolders, search } = state
   const { showTree } = renderVars
-  const noFiles = rootFolders.every((rootFolder) => rootFolder.files.length === 0)
-  const noVisibleFiles = rootFolders.every((rootFolder) => rootFolder.visibleFiles.length === 0)
+  const isFileless = rootFolders.every((rootFolder) => rootFolder.files.length === 0)
+  const isSearchedOut = rootFolders.every((rootFolder) => rootFolder.visibleFiles.length === 0)
 
-  if (noFiles) {
+  if (isFileless) {
     return ''
-  } else if (noVisibleFiles && search) {
+  } else if (search && isSearchedOut) {
     return `
       <div class="list__searchedout">
         <p>${t('workspace.list.search.noMatch')}</p>
