@@ -4,6 +4,7 @@ import { WorkspaceFiles, WorkspaceState } from '../WorkspaceViewProvider.interfa
 import { convertWsFiles } from '../helpers/convertWsFiles'
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree'
 import { getFileTree } from '../helpers/getFileTree'
+import { getFileTreeNew } from '../helpers/getFileTreeNew'
 import { getVisibleFiles } from '../helpers/getVisibleFiles'
 
 export const list = (state: WorkspaceState, action: PayloadAction<WorkspaceFiles>): void => {
@@ -14,6 +15,7 @@ export const list = (state: WorkspaceState, action: PayloadAction<WorkspaceFiles
     state.fileTree = null
     state.invalidReason = 'no-workspaces'
     state.isFolderInvalid = true
+    state.rootFolders = []
     state.state = 'invalid'
     state.treeFolders = []
     state.visibleFiles = []
@@ -27,5 +29,22 @@ export const list = (state: WorkspaceState, action: PayloadAction<WorkspaceFiles
     state.fileTree = showTree ? getFileTree(state.visibleFiles) : null
     state.treeFolders =
       showTree && state.fileTree !== null ? getAllFoldersFromTree(state.fileTree) : []
+
+    state.rootFolders = state.rootFolders.map((rootFolder) => {
+      const files = action.payload
+      const convertedFiles = convertWsFiles(files, state.selected)
+      const visibleFiles = getVisibleFiles(convertedFiles, state.search, state.sort)
+      const fileTree = showTree ? getFileTreeNew(rootFolder.baseFolder, visibleFiles) : null
+      const treeFolders = showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : []
+
+      return {
+        ...rootFolder,
+        convertedFiles,
+        files,
+        fileTree,
+        treeFolders,
+        visibleFiles,
+      }
+    })
   }
 }

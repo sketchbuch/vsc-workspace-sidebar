@@ -108,3 +108,5 @@ This extension is localised, if you want it in your language please send me a tr
 - Have a total cound of all visible files
 - Move getLastPathSegment() to strings
 - Add option to sort base folders by baseFolderLabel
+- Search uses wrong value (vsc)
+- Cleanup reducers

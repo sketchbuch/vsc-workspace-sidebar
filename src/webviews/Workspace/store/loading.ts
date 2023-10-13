@@ -5,6 +5,7 @@ export const loading = (state: WorkspaceState): void => {
   state.files = []
   state.invalidReason = 'ok'
   state.isFolderInvalid = false
+  state.rootFolders = []
   state.selected = ''
   state.state = 'loading'
 }

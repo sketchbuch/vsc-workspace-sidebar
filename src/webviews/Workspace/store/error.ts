@@ -6,5 +6,6 @@ export const error = (state: WorkspaceState, action: PayloadAction<WorkspaceErro
   state.files = []
   state.invalidReason = 'ok'
   state.isFolderInvalid = false
+  state.rootFolders = []
   state.state = 'error'
 }

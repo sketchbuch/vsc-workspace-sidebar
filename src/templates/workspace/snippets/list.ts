@@ -24,12 +24,17 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
       <div class="list__list-wrapper">
         ${rootFolders
           .map((rootFolder) => {
-            const { baseFolderLabel, fileTree, visibleFiles } = rootFolder
+            const { baseFolder, baseFolderLabel, fileTree, visibleFiles } = rootFolder
+
+            if (visibleFiles.length < 1) {
+              return ''
+            }
+
             const isFileTree = showTree && fileTree !== null
 
             return `
               <section class="list__list-section">
-                <h3 class="list__list-section-label">${baseFolderLabel}</h3>
+                <h3 class="list__list-section-label" title="${baseFolderLabel} (${baseFolder})">${baseFolderLabel}</h3>
                 <ul class="list__list list__styled-list${
                   isFileTree !== null ? ' list__styled-list--tree' : ''
                 }">

@@ -18,7 +18,6 @@ export const fetchNewFulfilled = (
   action: WorkspaceThunkAction<FindAllRootFolderFiles>
 ) => {
   console.log('### fetchNewFulfilled()')
-  //console.log('### fetchNewFulfilled()', action.payload.rootFolders.length)
 
   if (action.payload.result === 'no-root-folders') {
     console.log('### fetchNewFulfilled() - invalid')
@@ -50,8 +49,6 @@ export const fetchNewFulfilled = (
       }
     })
   }
-
-  // console.log('### state.rootFolders', state.rootFolders)
 }
 
 export const fetchNewPending = (state: WorkspaceState) => {
