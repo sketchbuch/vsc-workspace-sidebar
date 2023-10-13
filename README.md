@@ -98,3 +98,13 @@ This extension is localised, if you want it in your language please send me a tr
 - Clean Labels no only requires a rerender rather than dumping the cache.
 - Update documentation
 - File icon matching updates
+
+## Multiroot Todo
+
+- Get rid of old functions
+- Use old folder path as fallback
+- Mark old folder as deprecated
+- Conside visiblefiles and convertedfiles just have references to an id
+- Have a total cound of all visible files
+- Move getLastPathSegment() to strings
+- Add option to sort base folders by baseFolderLabel

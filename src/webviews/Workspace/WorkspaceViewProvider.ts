@@ -38,7 +38,6 @@ import { workspaceSlice } from './store/workspaceSlice'
 
 const { executeCommand } = vscode.commands
 const {
-  list,
   setFileTree,
   setSort,
   setSearch,
@@ -282,11 +281,13 @@ export class WorkspaceViewProvider
     const cachedFiles = this.getCacheFiles()
 
     if (cachedFiles) {
-      store.dispatch(list(cachedFiles))
+      //sstore.dispatch(list(cachedFiles))
+      store.dispatch(fetch())
+      store.dispatch(fetchNew())
     } else {
       store.dispatch(fetch())
+      store.dispatch(fetchNew())
     }
-    store.dispatch(fetchNew())
   }
 
   public toggleAllFolders(type: FolderState) {

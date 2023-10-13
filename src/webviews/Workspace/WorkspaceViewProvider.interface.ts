@@ -67,7 +67,6 @@ export interface SearchState {
 }
 
 export type WorkspaceStateCommon = {
-  closedFolders: string[]
   error: WorkspaceErrors
   fileTree: FileTree | null
   invalidReason: FindFileResult
@@ -80,6 +79,7 @@ export type WorkspaceStateCommon = {
 }
 
 export type WorkspaceStateSingleRoot = {
+  closedFolders: string[]
   convertedFiles: Files
   files: WorkspaceFiles
   fileTree: FileTree | null
@@ -89,12 +89,8 @@ export type WorkspaceStateSingleRoot = {
 
 export type WorkspaceStateMultiRootItem = {
   baseFolder: string
-  convertedFiles: Files
-  files: WorkspaceFiles
-  fileTree: FileTree | null
-  treeFolders: string[]
-  visibleFiles: Files
-}
+  baseFolderLabel: string
+} & WorkspaceStateSingleRoot
 
 export type WorkspaceStateMultiRoot = {
   rootFolders: WorkspaceStateMultiRootItem[]

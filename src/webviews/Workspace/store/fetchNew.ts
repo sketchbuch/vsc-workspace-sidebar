@@ -4,6 +4,7 @@ import {
   FindAllRootFolderFiles,
   findAllRootFolderFiles,
 } from '../../../utils/fs/findAllRootFolderFiles'
+import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
 import { WorkspaceState, WorkspaceThunkAction } from '../WorkspaceViewProvider.interface'
 import { convertWsFiles } from '../helpers/convertWsFiles'
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree'
@@ -16,14 +17,17 @@ export const fetchNewFulfilled = (
   state: WorkspaceState,
   action: WorkspaceThunkAction<FindAllRootFolderFiles>
 ) => {
-  console.log('### fetchNewFulfilled()', action.payload.rootFolders.length)
+  console.log('### fetchNewFulfilled()')
+  //console.log('### fetchNewFulfilled()', action.payload.rootFolders.length)
 
   if (action.payload.result === 'no-root-folders') {
-    state.invalidReason = 'no-root-folders'
+    console.log('### fetchNewFulfilled() - invalid')
+    state.invalidReason = action.payload.result
     state.isFolderInvalid = true
     state.rootFolders = []
     state.state = 'invalid'
   } else {
+    console.log('### fetchNewFulfilled() - valid')
     const showTree = getShowTreeConfig()
 
     state.invalidReason = 'ok'
@@ -36,6 +40,8 @@ export const fetchNewFulfilled = (
 
       return {
         baseFolder,
+        baseFolderLabel: getLastPathSegment(baseFolder),
+        closedFolders: [],
         convertedFiles,
         files,
         fileTree,
@@ -43,10 +49,9 @@ export const fetchNewFulfilled = (
         visibleFiles,
       }
     })
-    state.state = 'list'
   }
 
-  console.log('### state.rootFolders', state.rootFolders)
+  // console.log('### state.rootFolders', state.rootFolders)
 }
 
 export const fetchNewPending = (state: WorkspaceState) => {

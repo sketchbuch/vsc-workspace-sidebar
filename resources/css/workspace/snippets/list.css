@@ -9,11 +9,15 @@
   padding: 0;
 }
 
-.list[data-showsearch='true'] .list__styled-list {
+.list__list-wrapper {
+  position: relative;
+}
+
+.list[data-showsearch='true'] .list__list-wrapper {
   padding-top: var(--ext-workspace-sidebar__search-offset);
 }
 
-.list[data-folderopen='true'] .list__styled-list {
+.list[data-folderopen='true'] .list__list-wrapper {
   padding-top: 0;
 }
 
@@ -183,4 +187,22 @@
 
 .list__styled-item--selected mark {
   color: var(--vscode-editor-foreground);
+}
+
+.list__list-section {
+  position: relative;
+}
+
+.list__list-section + .list__list-section {
+  margin-top: 0.9rem;
+}
+
+.list__list-rootLabel {
+  font-size: 11px;
+  margin: 0.3rem 0;
+  overflow: hidden;
+  padding: 0 20px;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
 }

@@ -13,6 +13,7 @@ export const fetchFulfilled = (
   state: WorkspaceState,
   action: WorkspaceThunkAction<FindRootFolderFiles>
 ) => {
+  console.log('### fetchFulfilled()')
   state.files = action.payload.files
   state.convertedFiles = action.payload ? convertWsFiles(action.payload.files, state.selected) : []
 
