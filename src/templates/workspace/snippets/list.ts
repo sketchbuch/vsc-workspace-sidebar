@@ -5,15 +5,14 @@ import { listItem } from './listItem'
 import { tree } from './tree'
 
 export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
-  console.log('### list()')
   const { rootFolders, search } = state
   const { showTree } = renderVars
-  const isFileless = rootFolders.every((rootFolder) => rootFolder.files.length === 0)
-  const isSearchedOut = rootFolders.every((rootFolder) => rootFolder.visibleFiles.length === 0)
+  const isFileless = rootFolders.every(({ files }) => files.length === 0)
+  const isSearchedOut = search && rootFolders.every(({ visibleFiles }) => visibleFiles.length === 0)
 
   if (isFileless) {
     return ''
-  } else if (search && isSearchedOut) {
+  } else if (isSearchedOut) {
     return `
       <div class="list__searchedout">
         <p>${t('workspace.list.search.noMatch')}</p>
@@ -47,13 +46,3 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
       </div>
     `
 }
-
-/* <ul class="list__list list__styled-list${
-  isFileTree !== null ? ' list__styled-list--tree' : ''
-}">
-  ${
-    isFileTree
-      ? tree(fileTree, 0, state, renderVars)
-      : visibleFiles.map((file) => listItem(file, state, renderVars)).join('')
-  }
-</ul> */
