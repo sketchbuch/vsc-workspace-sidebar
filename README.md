@@ -110,3 +110,4 @@ This extension is localised, if you want it in your language please send me a tr
 - Correct view title counts
 - Update provider where commented out
 - Update doc images inc. preview
+- Update list reducer once cache works
