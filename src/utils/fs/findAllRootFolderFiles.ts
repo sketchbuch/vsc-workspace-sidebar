@@ -1,9 +1,9 @@
 import { getFoldersConfig } from '../../config/folders'
 import { AllRootFoldersResult } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
-import { FindRootFolderFilesNew, findRootFolderFilesNew } from './findRootFolderFilesNew'
+import { FindRootFolderFiles, findRootFolderFiles } from './findRootFolderFiles'
 
 export interface FindAllRootFolderFiles {
-  rootFolders: FindRootFolderFilesNew[]
+  rootFolders: FindRootFolderFiles[]
   result: AllRootFoldersResult
 }
 
@@ -11,10 +11,10 @@ export const findAllRootFolderFiles = async (): Promise<FindAllRootFolderFiles> 
   const folders = getFoldersConfig()
 
   if (folders.length > 0) {
-    const rootFolders: FindRootFolderFilesNew[] = []
+    const rootFolders: FindRootFolderFiles[] = []
 
     for (let index = 0; index < folders.length; index++) {
-      const files = await findRootFolderFilesNew(folders[index])
+      const files = await findRootFolderFiles(folders[index])
       rootFolders.push(files)
     }
 
