@@ -11,8 +11,6 @@ export const CONFIG_SEARCH_MINIMUM = 15
 export const CONFIG_SHOW_FILE_ICONS = true
 export const CONFIG_SHOW_FILE_ICONS_CONFIG = {}
 export const CONFIG_SHOW_HIERARCHY = false
-export const CONFIG_SHOW_ROOT_FOLDER = false
-
 export enum ConfigActions {
   CURRENT_WINDOW = 'Current Window',
   NEW_WINDOW = 'New Window',

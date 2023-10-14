@@ -23,5 +23,4 @@ export const configOptions: ConfigOptions = [
   { config: `${WS_CONFIG}.showFileIconsConfig`, type: 'rerender' },
   { config: `${WS_CONFIG}.showFolderHierarchy`, type: 'visible-files' },
   { config: `${WS_CONFIG}.showPaths`, type: 'visible-files' },
-  { config: `${WS_CONFIG}.showRootFolder`, type: 'tree' },
 ]

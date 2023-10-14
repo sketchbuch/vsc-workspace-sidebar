@@ -107,7 +107,6 @@ This extension is localised, if you want it in your language please send me a tr
 - Move getLastPathSegment() to strings
 - Search uses wrong value (vsc)
 - Cleanup reducers
-- Remove showrootfolder and also rendering of root folder
 - Correct view title counts
 - Update provider where commented out
 - Update doc images inc. preview

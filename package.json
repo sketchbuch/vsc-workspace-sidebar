@@ -193,12 +193,6 @@
             "scope": "application",
             "type": "boolean"
           },
-          "workspaceSidebar.showRootFolder": {
-            "default": false,
-            "description": "%config.showRootFolder.description%",
-            "scope": "application",
-            "type": "boolean"
-          },
           "workspaceSidebar.condenseFileTree": {
             "default": true,
             "description": "%config.condenseFileTree.description%",

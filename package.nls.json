@@ -17,7 +17,6 @@
   "config.showPaths.asneeded": "Show paths when a workspace has the same label as another",
   "config.showPaths.description": "Display paths to the workspace files in the sidebar. Either: 'Always', 'Never', or 'As needed' (only shows paths for workspaces with the same label).",
   "config.showPaths.never": "Never show paths",
-  "config.showRootFolder.description": "Case insensitive search",
   "config.title.folders": "Folders",
   "config.title.listview": "List View",
   "config.title.search": "Search",
