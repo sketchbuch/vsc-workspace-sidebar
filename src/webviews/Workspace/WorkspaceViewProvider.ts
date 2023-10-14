@@ -28,7 +28,8 @@ import {
   WorkspacePmClientActions as ClientActions,
   FolderState,
   WorkspacePmPayload as Payload,
-  WorkspaceCache,
+  WorkspaceCacheRootFolders,
+  WorkspaceRootFolderCache,
   WorkspaceState,
 } from './WorkspaceViewProvider.interface'
 import { fetch } from './store/fetch'
@@ -36,9 +37,10 @@ import { workspaceSlice } from './store/workspaceSlice'
 
 const { executeCommand } = vscode.commands
 const {
+  list,
   setFileTree,
-  setSort,
   setSearch,
+  setSort,
   setVisibleFiles,
   toggleFolderState,
   toggleFolderStateBulk,
@@ -60,14 +62,10 @@ export class WorkspaceViewProvider
   }
 
   private getCacheFiles() {
-    const cachedData = this._ctx.globalState.get<WorkspaceCache>(EXT_WSSTATE_CACHE)
+    const cachedData = this._ctx.globalState.get<WorkspaceRootFolderCache>(EXT_WSSTATE_CACHE)
 
-    if (cachedData) {
-      const { files, timestamp } = cachedData
-
-      if (files && timestamp) {
-        return [...files]
-      }
+    if (cachedData && cachedData.rootFolders) {
+      return cachedData.rootFolders
     }
 
     return null
@@ -94,8 +92,7 @@ export class WorkspaceViewProvider
   private render() {
     if (this._view !== undefined) {
       const state = store.getState().ws
-
-      console.log('### state', state)
+      console.log('### state', state.state, state)
 
       const themeData = state.state === 'list' ? this._fileThemeProcessor.getThemeData() : null
       let cssData: CssData | null = null
@@ -221,7 +218,7 @@ export class WorkspaceViewProvider
   }
 
   private stateChanged(newState: WorkspaceState) {
-    const { state } = newState
+    const { fileCount, rootFolders, state } = newState
 
     switch (state) {
       case 'error':
@@ -232,12 +229,25 @@ export class WorkspaceViewProvider
       case 'list':
         executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, true)
 
-        /* if (files) {
+        if (fileCount) {
+          const reducedRootFolders = rootFolders.reduce<WorkspaceCacheRootFolders>(
+            (allRoots, curRoot) => {
+              return [
+                ...allRoots,
+                {
+                  baseFolder: curRoot.baseFolder,
+                  files: curRoot.files,
+                },
+              ]
+            },
+            []
+          )
+          console.log('### setting cache')
+
           this._ctx.globalState.update(EXT_WSSTATE_CACHE, {
-            files,
-            timestamp: getTimestamp(),
+            rootFolders: reducedRootFolders,
           })
-        } */
+        }
         break
 
       default:
@@ -263,6 +273,7 @@ export class WorkspaceViewProvider
       this.render()
     } else {
       vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
+      console.log('### dropping cache')
       this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
       store.dispatch(fetch())
     }
@@ -283,9 +294,10 @@ export class WorkspaceViewProvider
     const cachedFiles = this.getCacheFiles()
 
     if (cachedFiles) {
-      //sstore.dispatch(list(cachedFiles))
-      store.dispatch(fetch())
+      console.log('### cache HIT')
+      store.dispatch(list(cachedFiles))
     } else {
+      console.log('### cache MISS')
       store.dispatch(fetch())
     }
   }

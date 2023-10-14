@@ -14,10 +14,16 @@ export interface File {
 
 export type Files = File[]
 
-export interface WorkspaceCache {
-  files: WsFiles
-  timestamp: number
+export interface WorkspaceRootFolderCache {
+  rootFolders: WorkspaceCacheRootFolder[]
 }
+
+export interface WorkspaceCacheRootFolder {
+  baseFolder: string
+  files: WorkspaceFiles
+}
+
+export type WorkspaceCacheRootFolders = WorkspaceCacheRootFolder[]
 
 export type WorkspaceErrors = '' | 'FETCH'
 
