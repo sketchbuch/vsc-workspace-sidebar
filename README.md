@@ -108,4 +108,6 @@ This extension is localised, if you want it in your language please send me a tr
 - Search uses wrong value (vsc)
 - Cleanup reducers
 - Remove showrootfolder and also rendering of root folder
-- correct view title counts
+- Correct view title counts
+- Update provider where commented out
+- Update doc images inc. preview
