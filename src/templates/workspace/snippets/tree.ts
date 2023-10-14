@@ -28,12 +28,12 @@ export const tree = (
   // If this is the root level, and show root folder is false,
   // ignore the root folder and just show the subfolders/subworkspaces
   if (isRoot) {
-    if (!showRootFolder) {
-      children = sortTreeChildren([...sub, ...files])
-      fileDepth = -1
-      treeDepth = depth
-      showItemFolder = false
-    }
+    //if (!showRootFolder) {
+    children = sortTreeChildren([...sub, ...files])
+    fileDepth = -1
+    treeDepth = depth
+    showItemFolder = false
+    //}
   }
 
   if (showItemFolder && !isClosed) {

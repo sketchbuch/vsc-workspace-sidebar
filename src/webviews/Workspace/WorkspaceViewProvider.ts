@@ -22,7 +22,6 @@ import { EXT_LOADED, EXT_SORT, EXT_WEBVIEW_WS, EXT_WSSTATE_CACHE } from '../../c
 import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
-import { getTimestamp } from '../../utils/datetime/getTimestamp'
 import { HtmlData, PostMessage } from '../webviews.interface'
 import {
   WorkspacePmActions as Actions,
@@ -32,7 +31,6 @@ import {
   WorkspaceCache,
   WorkspaceState,
 } from './WorkspaceViewProvider.interface'
-import { fetch } from './store/fetch'
 import { fetchNew } from './store/fetchNew'
 import { workspaceSlice } from './store/workspaceSlice'
 
@@ -75,10 +73,10 @@ export class WorkspaceViewProvider
     return null
   }
 
-  private getViewTitle({ files, visibleFiles, search, state: view }: WorkspaceState) {
+  private getViewTitle({ search, state: view }: WorkspaceState) {
     let viewTitle = t('views.title')
 
-    if (view === 'list' && files !== null) {
+    /*     if (view === 'list' && files !== null) {
       viewTitle = t(
         search ? 'workspace.list.titleCount.searched' : 'workspace.list.titleCount.default',
         {
@@ -86,7 +84,7 @@ export class WorkspaceViewProvider
           total: files.length.toString(),
         }
       )
-    }
+    } */
 
     return viewTitle
   }
@@ -219,7 +217,7 @@ export class WorkspaceViewProvider
   }
 
   private stateChanged(newState: WorkspaceState) {
-    const { files, state } = newState
+    const { state } = newState
 
     switch (state) {
       case 'error':
@@ -230,12 +228,12 @@ export class WorkspaceViewProvider
       case 'list':
         executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, true)
 
-        if (files) {
+        /* if (files) {
           this._ctx.globalState.update(EXT_WSSTATE_CACHE, {
             files,
             timestamp: getTimestamp(),
           })
-        }
+        } */
         break
 
       default:
@@ -262,7 +260,7 @@ export class WorkspaceViewProvider
     } else {
       vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
       this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
-      store.dispatch(fetch())
+      store.dispatch(fetchNew())
     }
   }
 
@@ -282,10 +280,8 @@ export class WorkspaceViewProvider
 
     if (cachedFiles) {
       //sstore.dispatch(list(cachedFiles))
-      store.dispatch(fetch())
       store.dispatch(fetchNew())
     } else {
-      store.dispatch(fetch())
       store.dispatch(fetchNew())
     }
   }

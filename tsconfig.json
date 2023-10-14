@@ -15,16 +15,14 @@
     "target": "es6"
   },
   "exclude": [
-    ".cache", 
-    ".vscode-test", 
-    "/test",
-    "build",
-    "dist",
-    "node_modules",
-    "out",
-    "resources/js/**/*",
+    ".cache",
+    ".vscode-test",
+    "test/",
+    "build/",
+    "dist/",
+    "node_modules/",
+    "out/",
+    "resources/js/**/*"
   ],
-  "include": [
-    "src/**/*",
-  ]
+  "include": ["src/**/*"]
 }

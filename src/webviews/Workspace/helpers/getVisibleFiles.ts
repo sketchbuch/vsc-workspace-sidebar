@@ -17,7 +17,8 @@ export const getVisibleFiles = (wsFiles: Files, search: SearchState, sort: SortI
 
   if (term) {
     visibleFiles = visibleFiles.filter((file) => {
-      const label = caseInsensitive ? file.label.toLowerCase() : file.label
+      const visibleLabel = cleanLabels ? file.cleanedLabel : file.label
+      const label = caseInsensitive ? visibleLabel.toLowerCase() : visibleLabel
       const searchTerm = caseInsensitive ? term.toLowerCase() : term
 
       return matchStart ? label.startsWith(searchTerm) : label.includes(searchTerm)

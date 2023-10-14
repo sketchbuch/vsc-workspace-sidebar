@@ -66,11 +66,11 @@ export interface SearchState {
   term: string
 }
 
-export type WorkspaceStateCommon = {
+export type WorkspaceState = {
   error: WorkspaceErrors
-  fileTree: FileTree | null
   invalidReason: FindFileResult
   isFolderInvalid: boolean
+  rootFolders: WorkspaceStateRootFolder[]
   search: SearchState
   selected: string
   sort: SortIds
@@ -78,27 +78,16 @@ export type WorkspaceStateCommon = {
   wsType: WsType
 }
 
-export type WorkspaceStateSingleRoot = {
+export type WorkspaceStateRootFolder = {
   closedFolders: string[]
   convertedFiles: Files
   files: WorkspaceFiles
   fileTree: FileTree | null
   treeFolders: string[]
   visibleFiles: Files
-}
-
-export type WorkspaceStateMultiRootItem = {
   baseFolder: string
   baseFolderLabel: string
-} & WorkspaceStateSingleRoot
-
-export type WorkspaceStateMultiRoot = {
-  rootFolders: WorkspaceStateMultiRootItem[]
 }
-
-export type WorkspaceState = WorkspaceStateCommon &
-  WorkspaceStateSingleRoot &
-  WorkspaceStateMultiRoot
 
 export type WorkspaceStates = 'error' | 'invalid' | 'list' | 'loading'
 export type WsType = 'none' | 'ws' | 'folder'

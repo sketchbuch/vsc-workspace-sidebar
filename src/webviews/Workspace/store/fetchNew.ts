@@ -27,14 +27,15 @@ export const fetchNewFulfilled = (
 
     state.invalidReason = 'ok'
     state.isFolderInvalid = false
+    state.state = 'list'
+
     state.rootFolders = action.payload.rootFolders.map(({ baseFolder, files }) => {
       const convertedFiles = convertWsFilesNew(baseFolder, files, state.selected)
       const visibleFiles = getVisibleFiles(convertedFiles, state.search, state.sort)
       const fileTree = showTree ? getFileTreeNew(baseFolder, visibleFiles) : null
+      const treeFolders = showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : []
 
       console.log('### fileTree', fileTree)
-
-      const treeFolders = showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : []
 
       return {
         baseFolder,

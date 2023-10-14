@@ -5,18 +5,6 @@ export const toggleFolderStateBulk = (
   state: WorkspaceState,
   action: PayloadAction<WorkspaceToggleFolderStateBulk>
 ): void => {
-  if (action.payload === 'expand' && state.closedFolders.length) {
-    state.closedFolders = []
-  } else if (
-    action.payload === 'collapse' &&
-    state.visibleFiles.length &&
-    state.treeFolders.length > 0
-  ) {
-    if (state.closedFolders.length !== state.treeFolders.length) {
-      state.closedFolders = [...state.treeFolders]
-    }
-  }
-
   state.rootFolders = state.rootFolders.map((rootFolder) => {
     const newFolder = { ...rootFolder }
 
@@ -34,5 +22,6 @@ export const toggleFolderStateBulk = (
 
     return newFolder
   })
+
   console.log('### state.rootFolders', state.rootFolders)
 }

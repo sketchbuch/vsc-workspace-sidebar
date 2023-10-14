@@ -9,10 +9,14 @@ import { list } from '../snippets/list'
 import { searchForm } from '../snippets/searchForm'
 
 export const listView = (state: WorkspaceState, renderVars: RenderVars): string => {
-  if (state.files.length > 0) {
+  const fileCount = state.rootFolders.reduce<number>((count, rootFolder) => {
+    return count + rootFolder.files.length
+  }, 0)
+
+  if (fileCount > 0) {
     const wsFolders = workspace.workspaceFolders ? [...workspace.workspaceFolders] : undefined
     const { fileIconsActive, searchMinimum, themeProcessorState } = renderVars
-    const showSearch = searchMinimum === 0 || state.files.length >= searchMinimum
+    const showSearch = searchMinimum === 0 || fileCount >= searchMinimum
 
     return `
         <section class="view list" data-fileiconsactive="${fileIconsActive}" data-folderopen="${
