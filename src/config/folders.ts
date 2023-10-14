@@ -6,7 +6,15 @@ export const getFolderConfig = (): string => {
 }
 
 export const getFoldersConfig = (): string[] => {
-  return workspace.getConfiguration().get('workspaceSidebar.folders') || CONFIG_FOLDERS
+  const oldFolder = getFolderConfig()
+  const folders: string[] =
+    workspace.getConfiguration().get('workspaceSidebar.folders') || CONFIG_FOLDERS
+
+  if (folders.length === 0 && oldFolder) {
+    folders.push(oldFolder)
+  }
+
+  return folders
 }
 
 export const getExcludedFoldersConfig = (): string[] => {
