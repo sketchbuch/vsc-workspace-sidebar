@@ -114,6 +114,7 @@
         "properties": {
           "workspaceSidebar.folder": {
             "default": "",
+            "deprecationMessage": "%config.folder.deprecationMessage%",
             "description": "%config.folder.description%",
             "scope": "application",
             "type": "string"
