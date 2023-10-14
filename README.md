@@ -96,11 +96,8 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Multiroot Todo
 
-- Use old folder path as fallback
 - Conside visiblefiles and convertedfiles just have references to an id
 - Move getLastPathSegment() to strings
-- Search uses wrong value (vsc)
-- Cleanup reducers
 - Correct view title counts
 - Update provider where commented out
 - Update doc images inc. preview
@@ -108,3 +105,4 @@ This extension is localised, if you want it in your language please send me a tr
 - Add properties for array/object config options
 - Handle error/invalid state
 - Update tests
+- Condense description needs link to readme
