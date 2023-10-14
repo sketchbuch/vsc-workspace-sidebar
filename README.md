@@ -97,7 +97,6 @@ This extension is localised, if you want it in your language please send me a tr
 ## Multiroot Todo
 
 - Use old folder path as fallback
-- Mark old folder as deprecated
 - Conside visiblefiles and convertedfiles just have references to an id
 - Move getLastPathSegment() to strings
 - Search uses wrong value (vsc)
@@ -106,3 +105,4 @@ This extension is localised, if you want it in your language please send me a tr
 - Update provider where commented out
 - Update doc images inc. preview
 - Update list reducer once cache works
+- Add properties for array/object config options
