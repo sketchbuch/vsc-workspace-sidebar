@@ -18,12 +18,16 @@ export const fetchFulfilled = (
   action: WorkspaceThunkAction<FindAllRootFolderFiles>
 ) => {
   if (action.payload.result === 'no-root-folders') {
+    state.fileCount = 0
     state.invalidReason = action.payload.result
     state.isFolderInvalid = true
     state.rootFolders = []
     state.state = 'invalid'
+    state.visibleFileCount = 0
   } else {
     const showTree = getShowTreeConfig()
+    let fileCount = 0
+    let visibleFileCount = 0
 
     state.invalidReason = 'ok'
     state.isFolderInvalid = false
@@ -34,6 +38,9 @@ export const fetchFulfilled = (
       const visibleFiles = getVisibleFiles(convertedFiles, state.search, state.sort)
       const fileTree = showTree ? getFileTree(baseFolder, visibleFiles) : null
       const treeFolders = showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : []
+
+      fileCount += files.length
+      visibleFileCount += visibleFiles.length
 
       return {
         baseFolder,
@@ -46,6 +53,9 @@ export const fetchFulfilled = (
         visibleFiles,
       }
     })
+
+    state.fileCount = fileCount
+    state.visibleFileCount = visibleFileCount
   }
 }
 

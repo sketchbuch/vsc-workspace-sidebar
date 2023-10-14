@@ -5,14 +5,12 @@ import { listItem } from './listItem'
 import { tree } from './tree'
 
 export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
-  const { rootFolders, search } = state
+  const { fileCount, rootFolders, search, visibleFileCount } = state
   const { showTree } = renderVars
-  const isFileless = rootFolders.every(({ files }) => files.length === 0)
-  const isSearchedOut = search && rootFolders.every(({ visibleFiles }) => visibleFiles.length === 0)
 
-  if (isFileless) {
+  if (fileCount < 1) {
     return ''
-  } else if (isSearchedOut) {
+  } else if (search && visibleFileCount < 1) {
     return `
       <div class="list__searchedout">
         <p>${t('workspace.list.search.noMatch')}</p>

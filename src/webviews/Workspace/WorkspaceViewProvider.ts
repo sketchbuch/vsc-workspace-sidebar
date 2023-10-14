@@ -73,18 +73,20 @@ export class WorkspaceViewProvider
     return null
   }
 
-  private getViewTitle({ search, state: view }: WorkspaceState) {
+  private getViewTitle({ fileCount, search, state: view, visibleFileCount }: WorkspaceState) {
     let viewTitle = t('views.title')
 
-    /*     if (view === 'list' && files !== null) {
-      viewTitle = t(
-        search ? 'workspace.list.titleCount.searched' : 'workspace.list.titleCount.default',
-        {
-          matches: visibleFiles.length.toString(),
-          total: files.length.toString(),
-        }
-      )
-    } */
+    if (view === 'list' && fileCount > 0) {
+      const titleKey = search
+        ? 'workspace.list.titleCount.searched'
+        : 'workspace.list.titleCount.default'
+      const placeholders = {
+        matches: visibleFileCount.toString(),
+        total: fileCount.toString(),
+      }
+
+      viewTitle = t(titleKey, placeholders)
+    }
 
     return viewTitle
   }
@@ -92,6 +94,8 @@ export class WorkspaceViewProvider
   private render() {
     if (this._view !== undefined) {
       const state = store.getState().ws
+
+      console.log('### state', state)
 
       const themeData = state.state === 'list' ? this._fileThemeProcessor.getThemeData() : null
       let cssData: CssData | null = null

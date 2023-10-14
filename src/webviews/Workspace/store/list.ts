@@ -15,9 +15,13 @@ export const list = (state: WorkspaceState, action: PayloadAction<WorkspaceFiles
     state.invalidReason = 'no-workspaces'
     state.isFolderInvalid = true
     state.rootFolders = []
+    state.fileCount = 0
+    state.visibleFileCount = 0
     state.state = 'invalid'
-  } else { */
+  }*/
   const showTree = getShowTreeConfig()
+  let fileCount = 0
+  let visibleFileCount = 0
 
   state.invalidReason = 'ok'
   state.isFolderInvalid = false
@@ -30,6 +34,9 @@ export const list = (state: WorkspaceState, action: PayloadAction<WorkspaceFiles
     const fileTree = showTree ? getFileTree(rootFolder.baseFolder, visibleFiles) : null
     const treeFolders = showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : []
 
+    fileCount += files.length
+    visibleFileCount += visibleFiles.length
+
     return {
       ...rootFolder,
       convertedFiles,
@@ -39,5 +46,7 @@ export const list = (state: WorkspaceState, action: PayloadAction<WorkspaceFiles
       visibleFiles,
     }
   })
-  //}
+
+  state.fileCount = fileCount
+  state.visibleFileCount = visibleFileCount
 }

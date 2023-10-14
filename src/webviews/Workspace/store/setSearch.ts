@@ -10,6 +10,7 @@ export const setSearch = (
   action: PayloadAction<WorkspacePmPayloadSearch>
 ): void => {
   const showTree = getShowTreeConfig()
+  let visibleFileCount = 0
 
   state.search = { ...state.search, ...action.payload }
 
@@ -18,6 +19,8 @@ export const setSearch = (
     const fileTree = showTree ? getFileTree(rootFolder.baseFolder, visibleFiles) : null
     const treeFolders = showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : []
 
+    visibleFileCount += visibleFiles.length
+
     return {
       ...rootFolder,
       fileTree,
@@ -25,4 +28,6 @@ export const setSearch = (
       visibleFiles,
     }
   })
+
+  state.visibleFileCount = visibleFileCount
 }

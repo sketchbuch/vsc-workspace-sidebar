@@ -106,3 +106,4 @@ This extension is localised, if you want it in your language please send me a tr
 - Handle error/invalid state
 - Update tests
 - Condense description needs link to readme
+- Rename state.state to view

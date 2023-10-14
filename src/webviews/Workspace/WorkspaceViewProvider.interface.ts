@@ -68,6 +68,7 @@ export interface SearchState {
 
 export type WorkspaceState = {
   error: WorkspaceErrors
+  fileCount: number
   invalidReason: FindFileResult
   isFolderInvalid: boolean
   rootFolders: WorkspaceStateRootFolder[]
@@ -75,6 +76,7 @@ export type WorkspaceState = {
   selected: string
   sort: SortIds
   state: WorkspaceStates
+  visibleFileCount: number
   wsType: WsType
 }
 
