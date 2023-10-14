@@ -15,13 +15,13 @@ export interface FindRootFolderFilesNew {
 }
 
 export const findRootFolderFilesNew = async (folder: string): Promise<FindRootFolderFilesNew> => {
-  const maxDepth = getDepthConfig()
   const homeDir = os.homedir()
   const baseFolder = folder ? folder.replace(`~`, homeDir) : homeDir
 
   const { isFolder } = checkFile(baseFolder)
 
   if (isFolder) {
+    const maxDepth = getDepthConfig()
     const files = await collectFilesFromFolder(baseFolder, FS_WS_FILETYPE, maxDepth, 0)
 
     return Promise.resolve({

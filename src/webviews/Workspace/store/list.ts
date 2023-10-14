@@ -2,6 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { getShowTreeConfig } from '../../../config/treeview'
 import { WorkspaceFiles, WorkspaceState } from '../WorkspaceViewProvider.interface'
 import { convertWsFiles } from '../helpers/convertWsFiles'
+import { convertWsFilesNew } from '../helpers/convertWsFilesNew'
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree'
 import { getFileTree } from '../helpers/getFileTree'
 import { getFileTreeNew } from '../helpers/getFileTreeNew'
@@ -32,7 +33,7 @@ export const list = (state: WorkspaceState, action: PayloadAction<WorkspaceFiles
 
     state.rootFolders = state.rootFolders.map((rootFolder) => {
       const files = action.payload
-      const convertedFiles = convertWsFiles(files, state.selected)
+      const convertedFiles = convertWsFilesNew(rootFolder.baseFolder, files, state.selected)
       const visibleFiles = getVisibleFiles(convertedFiles, state.search, state.sort)
       const fileTree = showTree ? getFileTreeNew(rootFolder.baseFolder, visibleFiles) : null
       const treeFolders = showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : []

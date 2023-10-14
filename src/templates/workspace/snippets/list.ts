@@ -36,11 +36,11 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
               <section class="list__list-section">
                 <h3 class="list__list-section-label" title="${baseFolderLabel} (${baseFolder})">${baseFolderLabel}</h3>
                 <ul class="list__list list__styled-list${
-                  isFileTree !== null ? ' list__styled-list--tree' : ''
+                  isFileTree ? ' list__styled-list--tree' : ''
                 }">
                   ${
                     isFileTree
-                      ? tree(fileTree, 0, state, renderVars)
+                      ? tree(fileTree, 0, rootFolder.closedFolders, state, renderVars)
                       : visibleFiles.map((file) => listItem(file, state, renderVars)).join('')
                   }
                 </ul>

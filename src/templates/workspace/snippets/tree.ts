@@ -12,12 +12,14 @@ const isFile = (item: File | FileTree): item is File => {
 export const tree = (
   branch: FileTree,
   depth: number,
+  closedFolders: string[],
   state: WorkspaceState,
   renderVars: RenderVars
 ): string => {
   const { showRootFolder } = renderVars
   const { files, folderPathSegment, isRoot, sub } = branch
-  const isClosed = state.closedFolders.includes(folderPathSegment)
+  const isClosed = closedFolders.includes(folderPathSegment)
+
   let children: TreeChildren = []
   let fileDepth = depth
   let treeDepth = depth + 1
@@ -47,7 +49,7 @@ export const tree = (
               if (isFile(child)) {
                 return treeItemFile(child, fileDepth, state, renderVars)
               } else {
-                return tree(child, treeDepth, state, renderVars)
+                return tree(child, treeDepth, closedFolders, state, renderVars)
               }
             })
             .join('')

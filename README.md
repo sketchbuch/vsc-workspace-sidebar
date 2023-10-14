@@ -110,3 +110,4 @@ This extension is localised, if you want it in your language please send me a tr
 - Add option to sort base folders by baseFolderLabel
 - Search uses wrong value (vsc)
 - Cleanup reducers
+- Remove showrootfolder and also rendering of root folder

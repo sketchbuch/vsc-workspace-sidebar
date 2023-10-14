@@ -34,4 +34,5 @@ export const toggleFolderStateBulk = (
 
     return newFolder
   })
+  console.log('### state.rootFolders', state.rootFolders)
 }
