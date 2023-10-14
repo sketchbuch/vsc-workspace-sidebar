@@ -106,3 +106,5 @@ This extension is localised, if you want it in your language please send me a tr
 - Update doc images inc. preview
 - Update list reducer once cache works
 - Add properties for array/object config options
+- Handle error/invalid state
+- Update tests
