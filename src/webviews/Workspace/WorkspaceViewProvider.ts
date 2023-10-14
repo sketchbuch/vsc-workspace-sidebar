@@ -31,7 +31,7 @@ import {
   WorkspaceCache,
   WorkspaceState,
 } from './WorkspaceViewProvider.interface'
-import { fetchNew } from './store/fetchNew'
+import { fetch } from './store/fetch'
 import { workspaceSlice } from './store/workspaceSlice'
 
 const { executeCommand } = vscode.commands
@@ -260,7 +260,7 @@ export class WorkspaceViewProvider
     } else {
       vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
       this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
-      store.dispatch(fetchNew())
+      store.dispatch(fetch())
     }
   }
 
@@ -280,9 +280,9 @@ export class WorkspaceViewProvider
 
     if (cachedFiles) {
       //sstore.dispatch(list(cachedFiles))
-      store.dispatch(fetchNew())
+      store.dispatch(fetch())
     } else {
-      store.dispatch(fetchNew())
+      store.dispatch(fetch())
     }
   }
 

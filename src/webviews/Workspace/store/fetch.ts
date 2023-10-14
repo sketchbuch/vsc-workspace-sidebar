@@ -6,14 +6,14 @@ import {
 } from '../../../utils/fs/findAllRootFolderFiles'
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
 import { WorkspaceState, WorkspaceThunkAction } from '../WorkspaceViewProvider.interface'
-import { convertWsFilesNew } from '../helpers/convertWsFilesNew'
+import { convertWsFiles } from '../helpers/convertWsFiles'
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree'
-import { getFileTreeNew } from '../helpers/getFileTreeNew'
+import { getFileTree } from '../helpers/getFileTree'
 import { getVisibleFiles } from '../helpers/getVisibleFiles'
 
-export const fetchNew = createAsyncThunk('fetchNew', findAllRootFolderFiles)
+export const fetch = createAsyncThunk('fetch', findAllRootFolderFiles)
 
-export const fetchNewFulfilled = (
+export const fetchFulfilled = (
   state: WorkspaceState,
   action: WorkspaceThunkAction<FindAllRootFolderFiles>
 ) => {
@@ -30,12 +30,10 @@ export const fetchNewFulfilled = (
     state.state = 'list'
 
     state.rootFolders = action.payload.rootFolders.map(({ baseFolder, files }) => {
-      const convertedFiles = convertWsFilesNew(baseFolder, files, state.selected)
+      const convertedFiles = convertWsFiles(baseFolder, files, state.selected)
       const visibleFiles = getVisibleFiles(convertedFiles, state.search, state.sort)
-      const fileTree = showTree ? getFileTreeNew(baseFolder, visibleFiles) : null
+      const fileTree = showTree ? getFileTree(baseFolder, visibleFiles) : null
       const treeFolders = showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : []
-
-      console.log('### fileTree', fileTree)
 
       return {
         baseFolder,
@@ -51,13 +49,13 @@ export const fetchNewFulfilled = (
   }
 }
 
-export const fetchNewPending = (state: WorkspaceState) => {
+export const fetchPending = (state: WorkspaceState) => {
   state.state = 'loading'
   state.invalidReason = 'ok'
   state.isFolderInvalid = false
 }
 
-export const fetchNewRejected = (state: WorkspaceState) => {
+export const fetchRejected = (state: WorkspaceState) => {
   state.error = 'FETCH'
   state.state = 'error'
 }

@@ -16,7 +16,7 @@ export const tree = (
   state: WorkspaceState,
   renderVars: RenderVars
 ): string => {
-  const { showRootFolder } = renderVars
+  // const { showRootFolder } = renderVars
   const { files, folderPathSegment, isRoot, sub } = branch
   const isClosed = closedFolders.includes(folderPathSegment)
 

@@ -1,7 +1,6 @@
 import * as os from 'os'
 import * as pathLib from 'path'
 import { getExplorerCompactFoldersConfig } from '../../../config/core'
-import { getFolderConfig } from '../../../config/folders'
 import { getCondenseFileTreeConfig } from '../../../config/treeview'
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
 import { Files } from '../WorkspaceViewProvider.interface'
@@ -23,11 +22,10 @@ type FolderList = {
   [key: string]: FileTree
 }
 
-export const getFileTree = (files: Files): FileTree => {
+export const getFileTree = (configFolder: string, files: Files): FileTree => {
   const homeDir = os.homedir()
   const condense = getCondenseFileTreeConfig()
   const compact = getExplorerCompactFoldersConfig()
-  const configFolder = getFolderConfig()
   const rootFolder = getLastPathSegment(configFolder)
 
   let tree: FileTree = {

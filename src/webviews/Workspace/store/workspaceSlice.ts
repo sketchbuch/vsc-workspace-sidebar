@@ -3,7 +3,7 @@ import * as vscode from 'vscode'
 import { SearchState, WorkspaceState } from '../WorkspaceViewProvider.interface'
 import { getWsType } from '../helpers/getWsType'
 import { error } from './error'
-import { fetchNew, fetchNewFulfilled, fetchNewPending, fetchNewRejected } from './fetchNew'
+import { fetch, fetchFulfilled, fetchPending, fetchRejected } from './fetch'
 import { invalid } from './invalid'
 import { list } from './list'
 import { loading } from './loading'
@@ -35,9 +35,9 @@ export const initialState: WorkspaceState = {
 export const workspaceSlice = createSlice({
   initialState: { ...initialState },
   extraReducers: (builder) => {
-    builder.addCase(fetchNew.pending, fetchNewPending)
-    builder.addCase(fetchNew.rejected, fetchNewRejected)
-    builder.addCase(fetchNew.fulfilled, fetchNewFulfilled)
+    builder.addCase(fetch.pending, fetchPending)
+    builder.addCase(fetch.rejected, fetchRejected)
+    builder.addCase(fetch.fulfilled, fetchFulfilled)
   },
   name: 'ws',
   reducers: {
