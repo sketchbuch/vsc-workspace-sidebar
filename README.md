@@ -98,13 +98,11 @@ This extension is localised, if you want it in your language please send me a tr
 
 - Conside visiblefiles and convertedfiles just have references to an id
 - Update doc images inc. preview
-- Update list reducer once cache works
 - Add properties for array/object config options
 - Handle error/invalid state
 - Update tests
 - Condense description needs link to readme
 - Rename state.state to view
-- Change cache key
 - Find out where WorkspaceFiles is used
 - See what command wrappers can be removed
 - Cache seems to be set to often, like when searching
