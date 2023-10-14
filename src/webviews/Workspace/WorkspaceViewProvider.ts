@@ -135,7 +135,7 @@ export class WorkspaceViewProvider
       localResourceRoots: [
         this._ctx.extensionUri,
         ...localResourceRoots.map((resouceRoot) => {
-          return vscode.Uri.parse(resouceRoot)
+          return vscode.Uri.file(resouceRoot)
         }),
       ],
     }
