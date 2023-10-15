@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import * as os from 'os'
 import { getShowTreeConfig } from '../../../config/treeview'
 import {
   FindAllRootFolderFiles,
@@ -17,7 +18,6 @@ export const fetchFulfilled = (
   state: WorkspaceState,
   action: WorkspaceThunkAction<FindAllRootFolderFiles>
 ) => {
-  console.log('### fetchFulfilled')
   if (action.payload.result === 'no-root-folders') {
     state.fileCount = 0
     state.invalidReason = action.payload.result
@@ -26,6 +26,7 @@ export const fetchFulfilled = (
     state.state = 'invalid'
     state.visibleFileCount = 0
   } else {
+    const homeDir = os.homedir()
     const showTree = getShowTreeConfig()
     let fileCount = 0
     let visibleFileCount = 0
@@ -34,22 +35,23 @@ export const fetchFulfilled = (
     state.isFolderInvalid = false
     state.state = 'list'
 
-    state.rootFolders = action.payload.rootFolders.map(({ baseFolder, files }) => {
-      const convertedFiles = convertWsFiles(baseFolder, files, state.selected)
+    state.rootFolders = action.payload.rootFolders.map(({ files, folderPath }) => {
+      const convertedFiles = convertWsFiles(folderPath, files, state.selected)
       const visibleFiles = getVisibleFiles(convertedFiles, state.search, state.sort)
-      const fileTree = showTree ? getFileTree(baseFolder, visibleFiles) : null
+      const fileTree = showTree ? getFileTree(folderPath, visibleFiles) : null
       const treeFolders = showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : []
 
       fileCount += files.length
       visibleFileCount += visibleFiles.length
 
       return {
-        baseFolder,
-        baseFolderLabel: getLastPathSegment(baseFolder),
         closedFolders: [],
         convertedFiles,
         files,
         fileTree,
+        folderName: getLastPathSegment(folderPath),
+        folderPath,
+        folderPathShort: folderPath.replace(homeDir, `~`),
         treeFolders,
         visibleFiles,
       }

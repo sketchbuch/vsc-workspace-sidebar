@@ -1,3 +1,4 @@
+import * as os from 'os'
 import path from 'path'
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree'
@@ -15,7 +16,9 @@ export const treeItemFolder = (
   state: WorkspaceState,
   renderVars: RenderVars
 ): string => {
+  const homeDir = os.homedir()
   const { folderPath, folderPathSegment, isRoot, label } = folder
+  const folderPathShort = folderPath.replace(homeDir, `~`)
   const indicateSelected = isClosed && state.selected.includes(`${folderPathSegment}${path.sep}`)
 
   let folderClasses = `list__branch-list-item list__branch-list-item-folder list__styled-item`
@@ -40,10 +43,10 @@ export const treeItemFolder = (
   const folderButtons = getWorkspaceButtons({ buttons, renderVars })
 
   return `
-      <li class="${folderClasses}" data-folder="${folderPathSegment}" data-depth="${depth}">
+      <li aria-label="${folderPathShort}" class="${folderClasses}" data-depth="${depth}" data-folder="${folderPathSegment}" title="${folderPathShort}">
         ${indicateSelected ? listItemIcon(renderVars) : ''}
         ${treeIndent(depth)}
-        <span class="list__element" title="${label}">
+        <span class="list__element">
           ${isClosed ? treeIconClosed() : treeIconOpen()}
           <span class="list__text">
             <span class="list__title">${label}</span>

@@ -14,8 +14,12 @@ export const findAllRootFolderFiles = async (): Promise<FindAllRootFolderFiles> 
     const rootFolders: FindRootFolderFiles[] = []
 
     for (let index = 0; index < folders.length; index++) {
-      const files = await findRootFolderFiles(folders[index])
-      rootFolders.push(files)
+      const folder = folders[index].trim()
+
+      if (folder) {
+        const files = await findRootFolderFiles(folder)
+        rootFolders.push(files)
+      }
     }
 
     const success = rootFolders.every((rootFolder) => rootFolder.result === 'ok')

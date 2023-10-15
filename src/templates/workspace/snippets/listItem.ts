@@ -39,8 +39,8 @@ export const listItem = (file: File, state: WorkspaceState, renderVars: RenderVa
   const langIcon = showFileIcons ? getLangIcon(dataFile, fileIconKeys) : ''
 
   return `
-    <li class="list__item list__list-styled-item ${classes}" data-file="${dataFile}">
-      <span class="list__element" tabindex="0" title="${tooltip}">
+    <li aria-label="${tooltip}" class="list__item list__list-styled-item ${classes}" data-file="${dataFile}" title="${tooltip}">
+      <span class="list__element" tabindex="0">
         ${isSelected ? listItemIcon(renderVars) : ''}
         ${showFileIcons ? fileIconFile(langIcon) : ''}
         <span class="list__text">

@@ -48,10 +48,10 @@ export const treeItemFile = (
   const langIcon = showFileIcon ? getLangIcon(dataFile, fileIconKeys) : ''
 
   return `
-    <li class="${classes}" data-file="${dataFile}" data-depth="${depth}">
+    <li aria-label="${tooltip}" class="${classes}" data-depth="${depth}" data-file="${dataFile}" title="${tooltip}">
       ${isSelected ? listItemIcon(renderVars) : ''}
       ${treeIndent(isRootLvlFile ? 0 : depth + 1)}
-      <span class="list__element" title="${tooltip}">
+      <span class="list__element">
         ${showFileIcon ? fileIconFile(langIcon) : treeIconFile()}
         <span class="list__text">
           <span class="list__title">${getLabel(visibleLabel, search)}</span>

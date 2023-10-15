@@ -6,7 +6,7 @@ export const setFileTree = (state: WorkspaceState): void => {
   state.rootFolders = state.rootFolders.map((rootFolder) => {
     const newFolder = { ...rootFolder }
 
-    newFolder.fileTree = getFileTree(rootFolder.baseFolder, rootFolder.visibleFiles)
+    newFolder.fileTree = getFileTree(rootFolder.folderPath, rootFolder.visibleFiles)
     newFolder.treeFolders =
       rootFolder.fileTree !== null ? getAllFoldersFromTree(rootFolder.fileTree) : []
 

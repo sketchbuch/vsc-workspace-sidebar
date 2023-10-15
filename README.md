@@ -106,3 +106,4 @@ This extension is localised, if you want it in your language please send me a tr
 - Find out where WorkspaceFiles is used
 - See what command wrappers can be removed
 - Cache seems to be set to often, like when searching
+- Handle multiple root folders with the same folder name (labels)

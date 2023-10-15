@@ -19,7 +19,7 @@ export interface WorkspaceRootFolderCache {
 }
 
 export interface WorkspaceCacheRootFolder {
-  baseFolder: string
+  folderPath: string
   files: WorkspaceFiles
 }
 
@@ -91,10 +91,13 @@ export type WorkspaceStateRootFolder = {
   convertedFiles: Files
   files: WorkspaceFiles
   fileTree: FileTree | null
+  folderName: string
+  /**
+   * The folder with ~ replaced with the users homedir
+   */
+  folderPath: string
   treeFolders: string[]
   visibleFiles: Files
-  baseFolder: string
-  baseFolderLabel: string
 }
 
 export type WorkspaceStates = 'error' | 'invalid' | 'list' | 'loading'

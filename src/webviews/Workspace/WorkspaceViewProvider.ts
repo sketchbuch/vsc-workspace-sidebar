@@ -235,7 +235,7 @@ export class WorkspaceViewProvider
               return [
                 ...allRoots,
                 {
-                  baseFolder: curRoot.baseFolder,
+                  folderPath: curRoot.folderPath,
                   files: curRoot.files,
                 },
               ]
@@ -273,7 +273,6 @@ export class WorkspaceViewProvider
       this.render()
     } else {
       vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
-      console.log('### dropping cache')
       this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
       store.dispatch(fetch())
     }
@@ -294,10 +293,8 @@ export class WorkspaceViewProvider
     const cachedFiles = this.getCacheFiles()
 
     if (cachedFiles) {
-      console.log('### cache HIT')
       store.dispatch(list(cachedFiles))
     } else {
-      console.log('### cache MISS')
       store.dispatch(fetch())
     }
   }
