@@ -98,8 +98,9 @@ This extension is localised, if you want it in your language please send me a tr
 
 - Conside visiblefiles and convertedfiles just have references to an id
 - Update doc images inc. preview
-- Add properties for array/object config options
+- Add properties for array/object config options or show examples as markdown.
 - Handle error/invalid state
 - Update tests
 - Condense description needs link to readme
 - See what command wrappers can be removed
+- Move search options to a sub-property?

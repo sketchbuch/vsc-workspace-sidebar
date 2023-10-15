@@ -123,7 +123,11 @@
             "default": [],
             "description": "%config.folders.description%",
             "scope": "application",
-            "type": "array"
+            "type": "array",
+            "properties": {
+              "type": "string",
+              "description": "folder name"
+            }
           },
           "workspaceSidebar.folders.excluded": {
             "default": [

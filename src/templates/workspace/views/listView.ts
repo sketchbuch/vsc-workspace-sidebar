@@ -17,6 +17,7 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
     const wsFolders = workspace.workspaceFolders ? [...workspace.workspaceFolders] : undefined
     const { fileIconsActive, searchMinimum, themeProcessorState } = renderVars
     const showSearch = searchMinimum === 0 || fileCount >= searchMinimum
+    const isLoading = themeProcessorState === 'loading'
 
     return `
         <section class="view list" data-fileiconsactive="${fileIconsActive}" data-folderopen="${
@@ -24,11 +25,7 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
     }" data-showsearch="${showSearch}" >
           ${folderList(state, wsFolders)}
           ${searchForm(state, showSearch)}
-          ${
-            themeProcessorState === 'loading'
-              ? hoverNotification({ title: t('workspace.list.fileicons.loadingMsg') })
-              : ''
-          }
+          ${isLoading ? hoverNotification({ title: t('workspace.list.fileicons.loadingMsg') }) : ''}
           ${list(state, renderVars)}
         </section>
       `
