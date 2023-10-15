@@ -1,11 +1,15 @@
 import * as os from 'os'
 import { isSelected } from '../../../utils/fs/isSelected'
 import { isWorkspaceFile } from '../../../utils/fs/isWorkspaceFile'
-import { File, WsFiles } from '../WorkspaceViewProvider.interface'
+import { File, WorkspaceFiles } from '../WorkspaceViewProvider.interface'
 import { getLabel } from './getLabel'
 import { getPath } from './getPath'
 
-export const convertWsFiles = (folder: string, wsFiles: WsFiles, selected: string): File[] => {
+export const convertWsFiles = (
+  folder: string,
+  wsFiles: WorkspaceFiles,
+  selected: string
+): File[] => {
   const osHomeDir = os.homedir()
 
   const filteredFiles = [...wsFiles].filter((file) => isWorkspaceFile(file, 'file'))

@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import { WsFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { WorkspaceFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { getFilenamesOfType } from './getFilenamesOfType'
 import { isHiddenFile } from './isHiddenFile'
 
@@ -11,7 +11,7 @@ export const collectFilesFromFolder = async (
   fileType: string,
   maxDepth: number,
   curDepth: number
-): Promise<WsFiles> => {
+): Promise<WorkspaceFiles> => {
   if (curDepth <= maxDepth) {
     try {
       const filenames = await fs.promises.readdir(folder).then((files) => {

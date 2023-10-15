@@ -83,7 +83,7 @@ export type WorkspaceState = {
   sort: SortIds
   state: WorkspaceStates
   visibleFileCount: number
-  wsType: WsType
+  wsType: WorkspaceType
 }
 
 export type WorkspaceStateRootFolder = {
@@ -101,11 +101,10 @@ export type WorkspaceStateRootFolder = {
 }
 
 export type WorkspaceStates = 'error' | 'invalid' | 'list' | 'loading'
-export type WsType = 'none' | 'ws' | 'folder'
 
-export type WsFiles = string[]
+export type WorkspaceType = 'none' | 'ws' | 'folder'
 
-export type WorkspaceFiles = WsFiles
+export type WorkspaceFiles = string[]
 
 export type WorkspaceThunkAction<Payload> = PayloadAction<
   Payload,

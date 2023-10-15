@@ -61,6 +61,15 @@ export class WorkspaceViewProvider
     this._fileThemeProcessor.subscribe(this)
   }
 
+  private async dumpCache() {
+    await vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
+    await this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
+
+    store.dispatch(fetch()).then(() => {
+      this.updateCache(store.getState().ws)
+    })
+  }
+
   private getCacheFiles() {
     const cachedData = this._ctx.globalState.get<WorkspaceRootFolderCache>(EXT_WSSTATE_CACHE)
 
@@ -165,18 +174,18 @@ export class WorkspaceViewProvider
               cmd = clickAction === ConfigActions.NEW_WINDOW ? CMD_OPEN_CUR_WIN : CMD_OPEN_NEW_WIN
             }
 
-            executeCommand(cmd, payload, true)
+            await executeCommand(cmd, payload, true)
           }
           break
 
         case Actions.ICON_CLICK_FILEMANAGER:
           if (payload) {
-            executeCommand('revealFileInOS', vscode.Uri.file(payload))
+            await executeCommand('revealFileInOS', vscode.Uri.file(payload))
           }
           break
 
         case Actions.SAVE_WS:
-          executeCommand(CMD_VSC_SAVE_WS_AS)
+          await executeCommand(CMD_VSC_SAVE_WS_AS)
           break
 
         case Actions.SEARCH:
@@ -191,12 +200,12 @@ export class WorkspaceViewProvider
             const setting = `workspaceSidebar.search.${payload}`
             const newSettingValue = action === Actions.SEARCH_CHECKBOX_ENABLE
 
-            vscode.workspace.getConfiguration().update(setting, newSettingValue, true)
+            await vscode.workspace.getConfiguration().update(setting, newSettingValue, true)
           }
           break
 
         case Actions.SHOW_SETTINGS:
-          executeCommand(CMD_VSC_OPEN_SETTINGS, 'workspaceSidebar')
+          await executeCommand(CMD_VSC_OPEN_SETTINGS, 'workspaceSidebar')
           break
 
         case Actions.ERROR_MSG:
@@ -217,18 +226,26 @@ export class WorkspaceViewProvider
     })
   }
 
-  private stateChanged(newState: WorkspaceState) {
-    const { fileCount, rootFolders, state } = newState
+  private async stateChanged(newState: WorkspaceState) {
+    const { state } = newState
 
     switch (state) {
       case 'error':
       case 'invalid':
-        executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, true)
+      case 'list':
+        await executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, true)
         break
 
-      case 'list':
-        executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, true)
+      default:
+        break
+    }
+  }
 
+  private async updateCache(newState: WorkspaceState) {
+    const { fileCount, rootFolders, state } = newState
+
+    switch (state) {
+      case 'list':
         if (fileCount) {
           const reducedRootFolders = rootFolders.reduce<WorkspaceCacheRootFolders>(
             (allRoots, curRoot) => {
@@ -242,9 +259,8 @@ export class WorkspaceViewProvider
             },
             []
           )
-          console.log('### setting cache')
 
-          this._ctx.globalState.update(EXT_WSSTATE_CACHE, {
+          await this._ctx.globalState.update(EXT_WSSTATE_CACHE, {
             rootFolders: reducedRootFolders,
           })
         }
@@ -272,9 +288,7 @@ export class WorkspaceViewProvider
     if (isRerender) {
       this.render()
     } else {
-      vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
-      this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
-      store.dispatch(fetch())
+      this.dumpCache()
     }
   }
 
@@ -295,7 +309,9 @@ export class WorkspaceViewProvider
     if (cachedFiles) {
       store.dispatch(list(cachedFiles))
     } else {
-      store.dispatch(fetch())
+      store.dispatch(fetch()).then(() => {
+        this.updateCache(store.getState().ws)
+      })
     }
   }
 
