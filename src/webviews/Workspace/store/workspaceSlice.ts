@@ -29,7 +29,7 @@ export const initialState: WorkspaceState = {
   search: { ...initialSearchState },
   selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',
   sort: 'ascending',
-  state: 'loading',
+  view: 'loading',
   visibleFileCount: 0,
   wsType: getWsType(vscode.workspace.workspaceFile, vscode.workspace.workspaceFolders),
 }

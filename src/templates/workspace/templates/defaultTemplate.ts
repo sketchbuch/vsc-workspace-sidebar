@@ -32,7 +32,7 @@ export const defaultTemplate = (
     title,
     uiFolderUri,
   } = templateVars
-  const { state: view } = state
+  const { view } = state
   const renderVars = getRenderVars(templateVars)
 
   let titleAttr = t('views.title')

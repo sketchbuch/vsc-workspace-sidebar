@@ -7,6 +7,6 @@ export const loading = (state: WorkspaceState): void => {
   state.isFolderInvalid = false
   state.rootFolders = []
   state.selected = ''
-  state.state = 'loading'
+  state.view = 'loading'
   state.visibleFileCount = 0
 }

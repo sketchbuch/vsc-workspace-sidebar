@@ -41,7 +41,7 @@ export const list = (
 
   state.invalidReason = 'ok'
   state.isFolderInvalid = false
-  state.state = 'list'
+  state.view = 'list'
   state.fileCount = fileCount
   state.visibleFileCount = visibleFileCount
 }

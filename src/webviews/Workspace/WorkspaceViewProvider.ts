@@ -80,7 +80,7 @@ export class WorkspaceViewProvider
     return null
   }
 
-  private getViewTitle({ fileCount, search, state: view, visibleFileCount }: WorkspaceState) {
+  private getViewTitle({ fileCount, search, view, visibleFileCount }: WorkspaceState) {
     let viewTitle = t('views.title')
 
     if (view === 'list' && fileCount > 0) {
@@ -101,9 +101,9 @@ export class WorkspaceViewProvider
   private render() {
     if (this._view !== undefined) {
       const state = store.getState().ws
-      console.log('### state', state.state, state)
+      console.log('### state', state.view, state)
 
-      const themeData = state.state === 'list' ? this._fileThemeProcessor.getThemeData() : null
+      const themeData = state.view === 'list' ? this._fileThemeProcessor.getThemeData() : null
       let cssData: CssData | null = null
 
       if (themeData !== null) {
@@ -227,9 +227,9 @@ export class WorkspaceViewProvider
   }
 
   private async stateChanged(newState: WorkspaceState) {
-    const { state } = newState
+    const { view } = newState
 
-    switch (state) {
+    switch (view) {
       case 'error':
       case 'invalid':
       case 'list':
@@ -242,9 +242,9 @@ export class WorkspaceViewProvider
   }
 
   private async updateCache(newState: WorkspaceState) {
-    const { fileCount, rootFolders, state } = newState
+    const { fileCount, rootFolders, view } = newState
 
-    switch (state) {
+    switch (view) {
       case 'list':
         if (fileCount) {
           const reducedRootFolders = rootFolders.reduce<WorkspaceCacheRootFolders>(

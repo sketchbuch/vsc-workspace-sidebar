@@ -104,4 +104,3 @@ This extension is localised, if you want it in your language please send me a tr
 - Condense description needs link to readme
 - Rename state.state to view
 - See what command wrappers can be removed
-- Handle multiple root folders with the same folder name (labels)

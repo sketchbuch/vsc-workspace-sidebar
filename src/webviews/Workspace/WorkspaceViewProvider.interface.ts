@@ -81,7 +81,7 @@ export type WorkspaceState = {
   search: SearchState
   selected: string
   sort: SortIds
-  state: WorkspaceStates
+  view: WorkspaceView
   visibleFileCount: number
   wsType: WorkspaceType
 }
@@ -100,7 +100,7 @@ export type WorkspaceStateRootFolder = {
   visibleFiles: Files
 }
 
-export type WorkspaceStates = 'error' | 'invalid' | 'list' | 'loading'
+export type WorkspaceView = 'error' | 'invalid' | 'list' | 'loading'
 
 export type WorkspaceType = 'none' | 'ws' | 'folder'
 

@@ -23,7 +23,7 @@ export const fetchFulfilled = (
     state.invalidReason = action.payload.result
     state.isFolderInvalid = true
     state.rootFolders = []
-    state.state = 'invalid'
+    state.view = 'invalid'
     state.visibleFileCount = 0
   } else {
     const homeDir = os.homedir()
@@ -33,7 +33,7 @@ export const fetchFulfilled = (
 
     state.invalidReason = 'ok'
     state.isFolderInvalid = false
-    state.state = 'list'
+    state.view = 'list'
 
     state.rootFolders = action.payload.rootFolders.map(({ files, folderPath }) => {
       const convertedFiles = convertWsFiles(folderPath, files, state.selected)
@@ -63,12 +63,12 @@ export const fetchFulfilled = (
 }
 
 export const fetchPending = (state: WorkspaceState) => {
-  state.state = 'loading'
+  state.view = 'loading'
   state.invalidReason = 'ok'
   state.isFolderInvalid = false
 }
 
 export const fetchRejected = (state: WorkspaceState) => {
   state.error = 'FETCH'
-  state.state = 'error'
+  state.view = 'error'
 }
