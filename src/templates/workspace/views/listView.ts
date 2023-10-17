@@ -9,14 +9,10 @@ import { list } from '../snippets/list'
 import { searchForm } from '../snippets/searchForm'
 
 export const listView = (state: WorkspaceState, renderVars: RenderVars): string => {
-  const fileCount = state.rootFolders.reduce<number>((count, rootFolder) => {
-    return count + rootFolder.files.length
-  }, 0)
-
-  if (fileCount > 0) {
+  if (state.fileCount > 0) {
     const wsFolders = workspace.workspaceFolders ? [...workspace.workspaceFolders] : undefined
     const { fileIconsActive, searchMinimum, themeProcessorState } = renderVars
-    const showSearch = searchMinimum === 0 || fileCount >= searchMinimum
+    const showSearch = searchMinimum === 0 || state.fileCount >= searchMinimum
     const isLoading = themeProcessorState === 'loading'
 
     return `
@@ -38,6 +34,8 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
             <span class="view__message-icon codicon codicon-error"></span>
             ${t('workspace.list.empty.title')}
           </span>
+        </p>
+        <p class="view__message">
           ${settingsLink()}
         </p>
       </section>

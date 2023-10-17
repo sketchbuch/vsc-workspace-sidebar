@@ -1,4 +1,4 @@
-import { PayloadAction } from '@reduxjs/toolkit'
+import { PayloadAction, SerializedError } from '@reduxjs/toolkit'
 import { SortIds } from '../../commands/registerCommands'
 import { FileTree } from './helpers/getFileTree'
 
@@ -25,7 +25,7 @@ export interface WorkspaceCacheRootFolder {
 
 export type WorkspaceCacheRootFolders = WorkspaceCacheRootFolder[]
 
-export type WorkspaceErrors = '' | 'FETCH'
+export type WorkspaceErrors = '' | 'DEFAULT' | 'FETCH'
 
 // Messages sent by the FE
 export enum WorkspacePmActions {
@@ -62,9 +62,9 @@ export type WorkspacePmPayloadSearch = Partial<SearchState>
 export type WorkspacePmPayloadToggleFolderState = string
 export type WorkspaceToggleFolderStateBulk = FolderState
 
-export type AllRootFoldersResult = 'no-root-folders' | 'partial-success' | 'success'
+export type AllRootFoldersResult = 'invalid-folder' | 'no-root-folders' | 'no-workspaces' | 'none'
 
-export type FindFileResult = 'invalid-folder' | 'no-root-folders' | 'no-workspaces' | 'ok'
+export type FindFileResult = 'invalid-folder' | 'no-root-folders' | 'no-workspaces' | 'none'
 
 export interface SearchState {
   caseInsensitive: boolean
@@ -72,8 +72,11 @@ export interface SearchState {
   term: string
 }
 
+export type WorkspaceStateErrorObj = SerializedError | null
+
 export type WorkspaceState = {
   error: WorkspaceErrors
+  errorObj: WorkspaceStateErrorObj
   fileCount: number
   invalidReason: FindFileResult
   isFolderInvalid: boolean
@@ -106,13 +109,33 @@ export type WorkspaceType = 'none' | 'ws' | 'folder'
 
 export type WorkspaceFiles = string[]
 
-export type WorkspaceThunkAction<Payload> = PayloadAction<
+export type WorkspaceThunkAction<Payload, Meta> = PayloadAction<Payload, ActionType, Meta>
+
+export type WorkspaceThunkErrorAction<Payload, Meta> = PayloadAction<
   Payload,
-  string,
-  {
-    arg: void
-    requestId: string
-    requestStatus: 'fulfilled'
-  },
-  never
+  ActionType,
+  Meta,
+  SerializedError
 >
+
+type ActionMetaCommon = {
+  aborted?: boolean
+  arg?: void
+  condition?: boolean
+  rejectedWithValue?: boolean
+  requestId: string
+}
+
+export type ActionMetaFulfilled = {
+  requestStatus: 'fulfilled'
+} & ActionMetaCommon
+
+export type ActionMetaPending = {
+  requestStatus: 'pending'
+} & ActionMetaCommon
+
+export type ActionMetaRejected = {
+  requestStatus: 'rejected'
+} & ActionMetaCommon
+
+type ActionType = string

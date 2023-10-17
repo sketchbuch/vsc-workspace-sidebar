@@ -6,7 +6,13 @@ import {
   findAllRootFolderFiles,
 } from '../../../utils/fs/findAllRootFolderFiles'
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
-import { WorkspaceState, WorkspaceThunkAction } from '../WorkspaceViewProvider.interface'
+import {
+  ActionMetaFulfilled,
+  ActionMetaRejected,
+  WorkspaceState,
+  WorkspaceThunkAction,
+  WorkspaceThunkErrorAction,
+} from '../WorkspaceViewProvider.interface'
 import { convertWsFiles } from '../helpers/convertWsFiles'
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree'
 import { getFileTree } from '../helpers/getFileTree'
@@ -16,8 +22,10 @@ export const fetch = createAsyncThunk('fetch', findAllRootFolderFiles)
 
 export const fetchFulfilled = (
   state: WorkspaceState,
-  action: WorkspaceThunkAction<FindAllRootFolderFiles>
+  action: WorkspaceThunkAction<FindAllRootFolderFiles, ActionMetaFulfilled>
 ) => {
+  console.log('### fetchFulfilled()', action)
+
   if (action.payload.result === 'no-root-folders') {
     state.fileCount = 0
     state.invalidReason = action.payload.result
@@ -31,7 +39,7 @@ export const fetchFulfilled = (
     let fileCount = 0
     let visibleFileCount = 0
 
-    state.invalidReason = 'ok'
+    state.invalidReason = 'none'
     state.isFolderInvalid = false
     state.view = 'list'
 
@@ -63,12 +71,18 @@ export const fetchFulfilled = (
 }
 
 export const fetchPending = (state: WorkspaceState) => {
+  console.log('### fetchPending()')
   state.view = 'loading'
-  state.invalidReason = 'ok'
+  state.invalidReason = 'none'
   state.isFolderInvalid = false
 }
 
-export const fetchRejected = (state: WorkspaceState) => {
+export const fetchRejected = (
+  state: WorkspaceState,
+  action: WorkspaceThunkErrorAction<unknown, ActionMetaRejected>
+) => {
+  console.log('### fetchRejected()', action.error)
   state.error = 'FETCH'
+  state.errorObj = action.error
   state.view = 'error'
 }
