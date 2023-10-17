@@ -1,33 +1,43 @@
 import { getFoldersConfig } from '../../config/folders'
-import { AllRootFoldersResult } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
-import { FindRootFolderFiles } from './findRootFolderFiles'
+import { FindFileResult } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { FindRootFolderFiles, findRootFolderFiles } from './findRootFolderFiles'
 
 export interface FindAllRootFolderFiles {
   rootFolders: FindRootFolderFiles[]
-  result: AllRootFoldersResult
+  result: FindFileResult
 }
 
 export const findAllRootFolderFiles = async (): Promise<FindAllRootFolderFiles> => {
-  console.log('### findAllRootFolderFiles()')
-  throw new Error('findAllRootFolderFiles error')
   const folders = getFoldersConfig()
 
   if (folders.length > 0) {
-    return Promise.resolve({ rootFolders: [], result: 'no-workspaces' })
-    /*     const rootFolders: FindRootFolderFiles[] = []
+    const rootFolders: FindRootFolderFiles[] = []
+    const invalidFolders: string[] = []
+    const noWorkspaces: string[] = []
 
     for (let index = 0; index < folders.length; index++) {
       const folder = folders[index].trim()
 
       if (folder) {
-        const files = await findRootFolderFiles(folder)
-        rootFolders.push(files)
+        const rootFolder = await findRootFolderFiles(folder)
+
+        if (rootFolder.result === 'no-workspaces') {
+          noWorkspaces.push(folder)
+        } else if (rootFolder.result === 'invalid-folder') {
+          invalidFolders.push(folder)
+        }
+
+        rootFolders.push(rootFolder)
       }
     }
 
-    const success = rootFolders.every((rootFolder) => rootFolder.result === 'ok')
+    if (invalidFolders.length === folders.length) {
+      return Promise.resolve({ rootFolders: [], result: 'invalid-folder' })
+    } else if (noWorkspaces.length === folders.length) {
+      return Promise.resolve({ rootFolders: [], result: 'no-workspaces' })
+    }
 
-    return Promise.resolve({ rootFolders, result: success ? 'success' : 'partial-success' }) */
+    return Promise.resolve({ rootFolders, result: 'none' })
   }
 
   return Promise.resolve({ rootFolders: [], result: 'no-root-folders' })

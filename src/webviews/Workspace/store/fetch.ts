@@ -26,7 +26,7 @@ export const fetchFulfilled = (
 ) => {
   console.log('### fetchFulfilled()', action)
 
-  if (action.payload.result === 'no-root-folders') {
+  if (action.payload.result !== 'none') {
     state.fileCount = 0
     state.invalidReason = action.payload.result
     state.isFolderInvalid = true
@@ -43,7 +43,7 @@ export const fetchFulfilled = (
     state.isFolderInvalid = false
     state.view = 'list'
 
-    state.rootFolders = action.payload.rootFolders.map(({ files, folderPath }) => {
+    state.rootFolders = action.payload.rootFolders.map(({ files, folderPath, result }) => {
       const convertedFiles = convertWsFiles(folderPath, files, state.selected)
       const visibleFiles = getVisibleFiles(convertedFiles, state.search, state.sort)
       const fileTree = showTree ? getFileTree(folderPath, visibleFiles) : null
@@ -71,7 +71,6 @@ export const fetchFulfilled = (
 }
 
 export const fetchPending = (state: WorkspaceState) => {
-  console.log('### fetchPending()')
   state.view = 'loading'
   state.invalidReason = 'none'
   state.isFolderInvalid = false
@@ -81,7 +80,6 @@ export const fetchRejected = (
   state: WorkspaceState,
   action: WorkspaceThunkErrorAction<unknown, ActionMetaRejected>
 ) => {
-  console.log('### fetchRejected()', action.error)
   state.error = 'FETCH'
   state.errorObj = action.error
   state.view = 'error'

@@ -61,14 +61,14 @@
         "title": "Beim Suchen nach Arbeitsbereichen ist ein Fehler aufgetreten"
       },
       "noRootFolders": {
-        "title": "No root folders specified. Please edit the config option 'workspaceSidebar.folders'"
+        "title": "Keine Stammordner angegeben. Bitte bearbeiten Sie die Konfigurationsoption 'workspaceSidebar.folders'."
       },
       "notDirectory": {
-        "title": "Der Ordnerpfad ist kein Verzeichnis"
+        "title": "Keiner der Stammordner ist ein Verzeichnis"
       },
       "noWorkspaces": {
-        "hintDepth": "Die aktuelle Suchtiefe ist 0, das bedeutet, dass nur der Stammordner des Arbeitsbereichs nach Arbeitsbereichsdateien durchsucht wird.",
-        "hintSettings": "Versuchen Sie, die Suchtiefe zu erhöhen oder den Ordnerpfad zu ändern.",
+        "hintDepth": "Die aktuelle Suchtiefe ist 0, dass nur die Stammordner nach Arbeitsbereichsdateien durchsucht werden",
+        "hintSettings": "Versuchen Sie, die Suchtiefe zu erhöhen oder die Ordner zu ändern.",
         "title": "Keine Arbeitsbereiche gefunden"
       }
     },

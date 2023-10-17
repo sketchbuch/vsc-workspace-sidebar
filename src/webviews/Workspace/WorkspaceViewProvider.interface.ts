@@ -62,8 +62,6 @@ export type WorkspacePmPayloadSearch = Partial<SearchState>
 export type WorkspacePmPayloadToggleFolderState = string
 export type WorkspaceToggleFolderStateBulk = FolderState
 
-export type AllRootFoldersResult = 'invalid-folder' | 'no-root-folders' | 'no-workspaces' | 'none'
-
 export type FindFileResult = 'invalid-folder' | 'no-root-folders' | 'no-workspaces' | 'none'
 
 export interface SearchState {
