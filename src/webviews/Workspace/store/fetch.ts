@@ -24,8 +24,6 @@ export const fetchFulfilled = (
   state: WorkspaceState,
   action: WorkspaceThunkAction<FindAllRootFolderFiles, ActionMetaFulfilled>
 ) => {
-  console.log('### fetchFulfilled()', action)
-
   if (action.payload.result !== 'none') {
     state.fileCount = 0
     state.invalidReason = action.payload.result

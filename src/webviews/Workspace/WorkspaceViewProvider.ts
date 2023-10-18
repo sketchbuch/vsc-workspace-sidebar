@@ -101,7 +101,6 @@ export class WorkspaceViewProvider
   private render() {
     if (this._view !== undefined) {
       const state = store.getState().ws
-      console.log('### state', state.view, state)
 
       const themeData = state.view === 'list' ? this._fileThemeProcessor.getThemeData() : null
       let cssData: CssData | null = null
