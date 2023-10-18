@@ -24,7 +24,7 @@ export const initialState: WorkspaceState = {
   error: '',
   errorObj: null,
   fileCount: 0,
-  invalidReason: 'none',
+  invalidReason: 'ok',
   isFolderInvalid: false,
   rootFolders: [],
   search: { ...initialSearchState },

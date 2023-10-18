@@ -30,13 +30,13 @@ export const findRootFolderFiles = async (folder: string): Promise<FindRootFolde
     return Promise.resolve({
       files: files,
       folderPath,
-      result: files.length > 0 ? 'none' : 'no-workspaces',
+      result: files.length > 0 ? 'ok' : 'no-workspaces',
     })
   }
 
   return Promise.resolve({
     files: [],
-    folderPath: '',
+    folderPath,
     result: 'invalid-folder',
   })
 }

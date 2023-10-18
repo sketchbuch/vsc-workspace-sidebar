@@ -24,7 +24,7 @@ export const fetchFulfilled = (
   state: WorkspaceState,
   action: WorkspaceThunkAction<FindAllRootFolderFiles, ActionMetaFulfilled>
 ) => {
-  if (action.payload.result !== 'none') {
+  if (action.payload.result !== 'ok') {
     state.fileCount = 0
     state.invalidReason = action.payload.result
     state.isFolderInvalid = true
@@ -37,7 +37,7 @@ export const fetchFulfilled = (
     let fileCount = 0
     let visibleFileCount = 0
 
-    state.invalidReason = 'none'
+    state.invalidReason = 'ok'
     state.isFolderInvalid = false
     state.view = 'list'
 
@@ -58,6 +58,7 @@ export const fetchFulfilled = (
         folderName: getLastPathSegment(folderPath),
         folderPath,
         folderPathShort: folderPath.replace(homeDir, `~`),
+        result,
         treeFolders,
         visibleFiles,
       }
@@ -70,7 +71,7 @@ export const fetchFulfilled = (
 
 export const fetchPending = (state: WorkspaceState) => {
   state.view = 'loading'
-  state.invalidReason = 'none'
+  state.invalidReason = 'ok'
   state.isFolderInvalid = false
 }
 

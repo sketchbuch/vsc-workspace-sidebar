@@ -62,7 +62,7 @@ export type WorkspacePmPayloadSearch = Partial<SearchState>
 export type WorkspacePmPayloadToggleFolderState = string
 export type WorkspaceToggleFolderStateBulk = FolderState
 
-export type FindFileResult = 'invalid-folder' | 'no-root-folders' | 'no-workspaces' | 'none'
+export type FindFileResult = 'invalid-folder' | 'no-root-folders' | 'no-workspaces' | 'ok'
 
 export interface SearchState {
   caseInsensitive: boolean
@@ -76,6 +76,9 @@ export type WorkspaceState = {
   error: WorkspaceErrors
   errorObj: WorkspaceStateErrorObj
   fileCount: number
+  /**
+   * The invalid reson for all root folders
+   */
   invalidReason: FindFileResult
   isFolderInvalid: boolean
   rootFolders: WorkspaceStateRootFolder[]
@@ -97,6 +100,7 @@ export type WorkspaceStateRootFolder = {
    * The folder with ~ replaced with the users homedir
    */
   folderPath: string
+  result: FindFileResult
   treeFolders: string[]
   visibleFiles: Files
 }

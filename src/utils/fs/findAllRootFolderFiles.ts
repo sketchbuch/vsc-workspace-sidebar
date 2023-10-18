@@ -35,9 +35,9 @@ export const findAllRootFolderFiles = async (): Promise<FindAllRootFolderFiles> 
       return Promise.resolve({ rootFolders: [], result: 'invalid-folder' })
     } else if (noWorkspaces.length === folders.length) {
       return Promise.resolve({ rootFolders: [], result: 'no-workspaces' })
-    }
+    } // Else, Some root folders are empty or invalid - List view will handle these
 
-    return Promise.resolve({ rootFolders, result: 'none' })
+    return Promise.resolve({ rootFolders, result: 'ok' })
   }
 
   return Promise.resolve({ rootFolders: [], result: 'no-root-folders' })

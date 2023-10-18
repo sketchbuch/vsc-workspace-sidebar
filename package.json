@@ -200,7 +200,7 @@
           },
           "workspaceSidebar.condenseFileTree": {
             "default": true,
-            "description": "%config.condenseFileTree.description%",
+            "markdownDescription": "%config.condenseFileTree.description%",
             "scope": "application",
             "type": "boolean"
           }

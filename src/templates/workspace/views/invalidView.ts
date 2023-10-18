@@ -13,7 +13,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
           <p class="view__message">
             <span class="view__message-title">
               <span class="view__message-icon codicon codicon-error"></span>
-              ${t('workspace.inValid.notDirectory.title')} - 1
+              ${t('workspace.inValid.notDirectory.title')}
             </span>
           </p>
           <p class="view__message">
@@ -28,7 +28,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
           <p class="view__message">
             <span class="view__message-title">
               <span class="view__message-icon codicon codicon-error"></span>
-              ${t('workspace.inValid.noRootFolders.title')} - 2
+              ${t('workspace.inValid.noRootFolders.title')}
             </span>
           </p>
           <p class="view__message">
@@ -43,7 +43,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
           <p class="view__message">
             <span class="view__message-title">
               <span class="view__message-icon codicon codicon-error"></span>
-              ${t('workspace.inValid.noWorkspaces.title')} - 3
+              ${t('workspace.inValid.noWorkspaces.title')}
             </span>
           </p>
           ${
@@ -73,7 +73,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
           <p class="view__message">
             <span class="view__message-title">
               <span class="view__message-icon codicon codicon-error"></span>
-              ${t('workspace.inValid.default.title')} - 4
+              ${t('workspace.inValid.default.title')}
             </span>
           </p>
           <p class="view__message">

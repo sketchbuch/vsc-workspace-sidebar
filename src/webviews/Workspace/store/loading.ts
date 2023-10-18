@@ -4,7 +4,7 @@ export const loading = (state: WorkspaceState): void => {
   state.error = ''
   state.errorObj = null
   state.fileCount = 0
-  state.invalidReason = 'none'
+  state.invalidReason = 'ok'
   state.isFolderInvalid = false
   state.rootFolders = []
   state.selected = ''

@@ -34,12 +34,13 @@ export const list = (
       folderName: getLastPathSegment(folderPath),
       folderPath,
       folderPathShort: folderPath.replace(homeDir, `~`),
+      result: files.length < 1 ? 'no-workspaces' : 'ok',
       treeFolders,
       visibleFiles,
     }
   })
 
-  state.invalidReason = 'none'
+  state.invalidReason = 'ok'
   state.isFolderInvalid = false
   state.view = 'list'
   state.fileCount = fileCount

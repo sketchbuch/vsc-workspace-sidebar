@@ -206,3 +206,7 @@
   text-transform: uppercase;
   white-space: nowrap;
 }
+
+.rootfolder__message {
+  padding: 0.3rem 20px;
+}
