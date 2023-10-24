@@ -24,10 +24,10 @@ import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
 import { HtmlData, PostMessage } from '../webviews.interface'
 import {
-  WorkspacePmActions as Actions,
-  WorkspacePmClientActions as ClientActions,
+  PostMsgActionsBackend as Actions,
+  PostMsgActionsFrontend as ClientActions,
   FolderState,
-  WorkspacePmPayload as Payload,
+  Payload,
   WorkspaceCacheRootFolders,
   WorkspaceState,
 } from './WorkspaceViewProvider.interface'

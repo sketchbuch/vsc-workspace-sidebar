@@ -34,8 +34,8 @@ export const fetchFulfilled = (
   } else {
     const homeDir = os.homedir()
     const showTree = getShowTreeConfig()
-    console.log('### fetch showTree', showTree)
-    console.log('### fetch sort', state.sort)
+    /* console.log('### fetch showTree', showTree)
+    console.log('### fetch sort', state.sort) */
     let fileCount = 0
     let visibleFileCount = 0
 

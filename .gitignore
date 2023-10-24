@@ -5,7 +5,7 @@
 dist/
 node_modules/
 out/
-test/
+/test
 
 # Files
 *.code-workspace

@@ -65,9 +65,9 @@ export const getMockRootFolders = (
   let fileCount = 0
   let visibleFileCount = 0
 
-  console.log('### getMockRootFolders showTree', showTree)
+  /*   console.log('### getMockRootFolders showTree', showTree)
   console.log('### getMockRootFolders sortConverted', sortConverted)
-  console.log('### getMockRootFolders sortVsible', sortVsible)
+  console.log('### getMockRootFolders sortVsible', sortVsible) */
 
   const rootFolders = rootFoldersFiles.map(({ files, folderPath, result }) => {
     const convertedFiles = getMockConvertedFiles(sortConverted)

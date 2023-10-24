@@ -1,12 +1,9 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import {
-  WorkspacePmPayloadToggleFolderState,
-  WorkspaceState,
-} from '../WorkspaceViewProvider.interface'
+import { PayloadToggleFolderState, WorkspaceState } from '../WorkspaceViewProvider.interface'
 
 export const toggleFolderState = (
   state: WorkspaceState,
-  action: PayloadAction<WorkspacePmPayloadToggleFolderState>
+  action: PayloadAction<PayloadToggleFolderState>
 ): void => {
   if (action.payload) {
     state.rootFolders = state.rootFolders.map((rootFolder) => {

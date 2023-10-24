@@ -27,8 +27,10 @@ export type WorkspaceCacheRootFolders = WorkspaceCacheRootFolder[]
 
 export type WorkspaceErrors = '' | 'DEFAULT' | 'FETCH'
 
-// Messages sent by the FE
-export enum WorkspacePmActions {
+/**
+ * Messages sent by the FE
+ */
+export enum PostMsgActionsBackend {
   ERROR_MSG = 'ERROR_MSG',
   FOLDER_CLICK = 'FOLDER_CLICK',
   ICON_CLICK = 'ICON_CLICK',
@@ -41,8 +43,10 @@ export enum WorkspacePmActions {
   SHOW_SETTINGS = 'SHOW_SETTINGS',
 }
 
-// Messages received by the FE
-export enum WorkspacePmClientActions {
+/**
+ * Messages received by the FE
+ */
+export enum PostMsgActionsFrontend {
   FOCUS_SEARCH = 'FOCUS_SEARCH',
 }
 
@@ -56,11 +60,11 @@ export interface WorkspaceSort {
 }
 
 export type FolderState = 'collapse' | 'expand'
-export type WorkspacePmPayload = string
-export type WorkspacePmPayloadSearchTerm = string
-export type WorkspacePmPayloadSearch = Partial<SearchState>
-export type WorkspacePmPayloadToggleFolderState = string
-export type WorkspaceToggleFolderStateBulk = FolderState
+
+export type Payload = string
+export type PayloadSearch = Partial<SearchState>
+export type PayloadToggleFolderState = string
+export type PayloadToggleFolderStateBulk = FolderState
 
 export type FindFileResult = 'invalid-folder' | 'no-root-folders' | 'no-workspaces' | 'ok'
 

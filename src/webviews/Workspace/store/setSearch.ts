@@ -1,14 +1,11 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { getShowTreeConfig } from '../../../config/treeview'
-import { WorkspacePmPayloadSearch, WorkspaceState } from '../WorkspaceViewProvider.interface'
+import { PayloadSearch, WorkspaceState } from '../WorkspaceViewProvider.interface'
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree'
 import { getFileTree } from '../helpers/getFileTree'
 import { getVisibleFiles } from '../helpers/getVisibleFiles'
 
-export const setSearch = (
-  state: WorkspaceState,
-  action: PayloadAction<WorkspacePmPayloadSearch>
-): void => {
+export const setSearch = (state: WorkspaceState, action: PayloadAction<PayloadSearch>): void => {
   const showTree = getShowTreeConfig()
   let visibleFileCount = 0
 
