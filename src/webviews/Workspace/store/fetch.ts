@@ -80,6 +80,6 @@ export const fetchRejected = (
   action: WorkspaceThunkErrorAction<unknown, ActionMetaRejected>
 ) => {
   state.error = 'FETCH'
-  state.errorObj = action.error
+  state.errorObj = action.error ?? null
   state.view = 'error'
 }

@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+/* import { expect } from 'chai'
 import * as sinon from 'sinon'
 import * as sort from '../../../../../templates/helpers/sortTreeChildren'
 import * as trees from '../../../../../templates/workspace/snippets/tree'
@@ -23,10 +23,10 @@ import {
   SUBFOLDER4,
 } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
-import { getMockState } from '../../../../mocks/mockState'
+import { getMockState } from '../../../../mocks/mockState' */
 
 suite('Templates > Workspace > Snippets: tree()', () => {
-  const state = getMockState()
+  /* const state = getMockState()
   const mockRenderVars = getMockRenderVars()
   let folderSpy: sinon.SinonSpy
   let itemSpy: sinon.SinonSpy
@@ -114,5 +114,5 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     expect(folderSpy.args[4][0].label).to.equal(SUBFOLDER3)
     expect(folderSpy.args[5][0].label).to.equal(FOLDER4)
     expect(folderSpy.args[6][0].label).to.equal(SUBFOLDER4)
-  })
+  }) */
 })

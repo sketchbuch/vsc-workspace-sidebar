@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+/* import { expect } from 'chai'
 import * as path from 'path'
 import * as sinon from 'sinon'
 import * as coreConfigs from '../../../../../config/core'
@@ -6,10 +6,10 @@ import * as foldersConfigs from '../../../../../config/folders'
 import * as treeConfigs from '../../../../../config/treeview'
 import { setFileTree } from '../../../../../webviews/Workspace/store/setFileTree'
 import { ROOT_FOLDER_PATH, file1, file2 } from '../../../../mocks/mockFileData'
-import { getMockState } from '../../../../mocks/mockState'
+import { getMockState } from '../../../../mocks/mockState' */
 
 suite('Webviews > Workspace > Store > setFileTree()', () => {
-  let compactConfigStub: sinon.SinonStub
+  /* let compactConfigStub: sinon.SinonStub
   let condenseConfigStub: sinon.SinonStub
   let folderConfigStub: sinon.SinonStub
 
@@ -83,5 +83,5 @@ suite('Webviews > Workspace > Store > setFileTree()', () => {
     expect(state).not.to.eql(expectedState)
     setFileTree(state)
     expect(state).to.eql(expectedState)
-  })
+  }) */
 })

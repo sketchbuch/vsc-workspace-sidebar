@@ -7,18 +7,21 @@ import {
 
 export const getSearchCaseInsensitiveConfig = (): boolean => {
   return (
-    workspace.getConfiguration().get('workspaceSidebar.search.caseInsensitive') ??
+    workspace.getConfiguration().get<boolean>('workspaceSidebar.search.caseInsensitive') ??
     CONFIG_SEARCH_CASE_INSENSITIVE
   )
 }
 
 export const getSearchMatchStartConfig = (): boolean => {
   return (
-    workspace.getConfiguration().get('workspaceSidebar.search.matchStart') ??
+    workspace.getConfiguration().get<boolean>('workspaceSidebar.search.matchStart') ??
     CONFIG_SEARCH_MATCH_START
   )
 }
 
 export const getSearchMinConfig = (): number => {
-  return workspace.getConfiguration().get('workspaceSidebar.searchMinimum') ?? CONFIG_SEARCH_MINIMUM
+  return (
+    workspace.getConfiguration().get<number>('workspaceSidebar.searchMinimum') ??
+    CONFIG_SEARCH_MINIMUM
+  )
 }

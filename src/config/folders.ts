@@ -7,18 +7,28 @@ const getFolderConfig = (): string => {
 
 export const getFoldersConfig = (): string[] => {
   const oldFolder = getFolderConfig()
-  const folders: string[] =
-    workspace.getConfiguration().get('workspaceSidebar.folders') || CONFIG_FOLDERS
+  const rootFolders =
+    workspace.getConfiguration().get<string[]>('workspaceSidebar.rootFolders') ?? CONFIG_FOLDERS
+  let folders: string[] = []
 
-  if (folders.length === 0 && oldFolder) {
+  if (rootFolders.length === 0 && oldFolder) {
     folders.push(oldFolder)
+  } else if (rootFolders.length > 1) {
+    folders = [...new Set(rootFolders)] // Remove duplicates
   }
 
   return folders
 }
 
 export const getExcludedFoldersConfig = (): string[] => {
-  return (
-    workspace.getConfiguration().get('workspaceSidebar.folders.excluded') ?? CONFIG_EXCLUDED_FOLDERS
-  )
+  const excludedFolders =
+    workspace.getConfiguration().get<string[]>('workspaceSidebar.folders.excluded') ??
+    CONFIG_EXCLUDED_FOLDERS
+  let folders: string[] = []
+
+  if (excludedFolders.length > 1) {
+    folders = [...new Set(excludedFolders)] // Remove duplicates
+  }
+
+  return folders
 }

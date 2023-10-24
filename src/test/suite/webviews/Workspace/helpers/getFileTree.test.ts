@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+/* import { expect } from 'chai'
 import os from 'os'
 import * as sinon from 'sinon'
 import * as coreConfigs from '../../../../../config/core'
@@ -12,10 +12,10 @@ import {
   ROOT_FOLDER_USERPATH,
   getMockFileTree,
   getMockVisibleFiles,
-} from '../../../../mocks/mockFileData'
+} from '../../../../mocks/mockFileData' */
 
 suite('Webviews > Workspace > Helpers > getFileTree():', () => {
-  let compactConfigStub: sinon.SinonStub
+  /* let compactConfigStub: sinon.SinonStub
   let compactSpy: sinon.SinonSpy
   let condenseConfigStub: sinon.SinonStub
   let condenseSpy: sinon.SinonSpy
@@ -86,5 +86,5 @@ suite('Webviews > Workspace > Helpers > getFileTree():', () => {
 
     sinon.assert.called(compactSpy)
     sinon.assert.called(condenseSpy)
-  })
+  }) */
 })

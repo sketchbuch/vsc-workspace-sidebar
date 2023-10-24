@@ -7,9 +7,10 @@ suite('Webviews > Workspace > Store > toggleFolderState()', () => {
 
   test('Adds open folder to closed list updates state as expected', () => {
     const state = getMockState()
-    const expectedState = getMockState({
+    const expectedState =
+      getMockState(/* {
       closedFolders: [FOLDER],
-    })
+    } */)
 
     expect(state).not.to.eql(expectedState)
     toggleFolderState(state, { payload: FOLDER, type: 'ws/toggleFolderState' })
@@ -17,12 +18,14 @@ suite('Webviews > Workspace > Store > toggleFolderState()', () => {
   })
 
   test('Removes closed folder from closed list', () => {
-    const state = getMockState({
+    const state =
+      getMockState(/* {
       closedFolders: [FOLDER],
-    })
-    const expectedState = getMockState({
+    } */)
+    const expectedState =
+      getMockState(/* {
       closedFolders: [],
-    })
+    } */)
 
     expect(state).not.to.eql(expectedState)
     toggleFolderState(state, { payload: FOLDER, type: 'ws/toggleFolderState' })

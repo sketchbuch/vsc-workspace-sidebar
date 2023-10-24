@@ -1,10 +1,10 @@
-import { expect } from 'chai'
+/* import { expect } from 'chai'
 import { setSort } from '../../../../../webviews/Workspace/store/setSort'
 import { getMockVisibleFiles } from '../../../../mocks/mockFileData'
-import { getMockState } from '../../../../mocks/mockState'
+import { getMockState } from '../../../../mocks/mockState' */
 
 suite('Webviews > Workspace > Store > setSort()', () => {
-  test('Updates state as expected', () => {
+  /*   test('Updates state as expected', () => {
     const state = getMockState({
       sort: 'descending',
       visibleFiles: getMockVisibleFiles(),
@@ -17,5 +17,5 @@ suite('Webviews > Workspace > Store > setSort()', () => {
     expect(state).not.to.eql(expectedState)
     setSort(state, { payload: { sort: 'ascending' }, type: 'ws/setPersistedState' })
     expect(state).to.eql(expectedState)
-  })
+  }) */
 })

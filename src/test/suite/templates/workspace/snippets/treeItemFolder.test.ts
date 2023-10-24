@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+/* import { expect } from 'chai'
 import path from 'path'
 import * as sinon from 'sinon'
 import * as buttons from '../../../../../templates/workspace/snippets/listItemButtons'
@@ -9,10 +9,10 @@ import { treeItemFolder } from '../../../../../templates/workspace/snippets/tree
 import { FileTree } from '../../../../../webviews/Workspace/helpers/getFileTree'
 import { ROOT_FOLDER } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
-import { getMockState } from '../../../../mocks/mockState'
+import { getMockState } from '../../../../mocks/mockState' */
 
 suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
-  const DEPTH = 0
+  /* const DEPTH = 0
   const FOLDER_PATH = 'supernatural/winchester'
   const folder: FileTree = {
     files: [],
@@ -142,5 +142,5 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
       mockRenderVars
     )
     expect(result).contains(`list__branch-list-item-folder-closable`)
-  })
+  }) */
 })

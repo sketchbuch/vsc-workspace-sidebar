@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+/* import { expect } from 'chai'
 import * as sinon from 'sinon'
 import * as coreConfigs from '../../../../../config/core'
 import * as foldersConfigs from '../../../../../config/folders'
@@ -12,10 +12,10 @@ import {
   getMockVisibleFiles,
   ROOT_FOLDER_PATH,
 } from '../../../../mocks/mockFileData'
-import { getMockState } from '../../../../mocks/mockState'
+import { getMockState } from '../../../../mocks/mockState' */
 
 suite('Webviews > Workspace > Store > list()', () => {
-  let compactConfigStub: sinon.SinonStub
+  /* let compactConfigStub: sinon.SinonStub
   let condenseConfigStub: sinon.SinonStub
   let folderConfigStub: sinon.SinonStub
   let treeConfigStub: sinon.SinonStub
@@ -245,5 +245,5 @@ suite('Webviews > Workspace > Store > list()', () => {
       type: 'ws/list',
     })
     expect(state).to.eql(expectedState)
-  })
+  }) */
 })

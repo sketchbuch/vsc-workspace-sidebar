@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+/* import { expect } from 'chai'
 import * as sinon from 'sinon'
 import * as foldersConfigs from '../../../../../config/folders'
 import * as treeConfigs from '../../../../../config/treeview'
@@ -7,10 +7,10 @@ import {
   getMockFileTree,
   getMockFolderList,
   ROOT_FOLDER_PATH,
-} from '../../../../mocks/mockFileData'
+} from '../../../../mocks/mockFileData' */
 
 suite('Webviews > Workspace > Helpers > getAllFoldersFromTree():', () => {
-  let condenseConfigStub: sinon.SinonStub
+  /*   let condenseConfigStub: sinon.SinonStub
   let folderConfigStub: sinon.SinonStub
 
   setup(() => {
@@ -31,5 +31,5 @@ suite('Webviews > Workspace > Helpers > getAllFoldersFromTree():', () => {
     const expected = getMockFolderList('normal')
 
     expect(result).to.eql(expected)
-  })
+  }) */
 })

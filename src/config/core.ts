@@ -4,10 +4,12 @@ import { CONFIG_EXPLORER_COMPACT_FOLDERS } from '../constants/config'
 
 export const getExplorerCompactFoldersConfig = (): boolean => {
   return (
-    workspace.getConfiguration().get('explorer.compactFolders') ?? CONFIG_EXPLORER_COMPACT_FOLDERS
+    workspace.getConfiguration().get<boolean>('explorer.compactFolders') ??
+    CONFIG_EXPLORER_COMPACT_FOLDERS
   )
 }
 
+// TODO - Use typed get() syntax
 export const getFileiconThemeConfig = (): ThemeId => {
   return workspace.getConfiguration('workbench').iconTheme
 }

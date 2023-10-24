@@ -10,16 +10,19 @@ import { FileIconKeysCustom } from '../webviews/webviews.interface'
 
 export const getActionsConfig = (): ConfigActions => {
   return (
-    workspace.getConfiguration().get('workspaceSidebar.actions') ?? ConfigActions.CURRENT_WINDOW
+    workspace.getConfiguration().get<ConfigActions>('workspaceSidebar.actions') ??
+    ConfigActions.CURRENT_WINDOW
   )
 }
 
 export const getCleanLabelsConfig = (): boolean => {
-  return workspace.getConfiguration().get('workspaceSidebar.cleanLabels') ?? CONFIG_CLEAN_LABELS
+  return (
+    workspace.getConfiguration().get<boolean>('workspaceSidebar.cleanLabels') ?? CONFIG_CLEAN_LABELS
+  )
 }
 
 export const getDepthConfig = (): number => {
-  return workspace.getConfiguration().get('workspaceSidebar.depth') ?? CONFIG_DEPTH
+  return workspace.getConfiguration().get<number>('workspaceSidebar.depth') ?? CONFIG_DEPTH
 }
 
 export const getShowFileiconConfig = (): boolean => {
@@ -28,9 +31,10 @@ export const getShowFileiconConfig = (): boolean => {
   )
 }
 
+// TODO - Remove duplicate keys and array items
 export const getShowFileiconsConfigConfig = (): FileIconKeysCustom => {
   return (
-    workspace.getConfiguration().get('workspaceSidebar.showFileIconsConfig') ??
+    workspace.getConfiguration().get<FileIconKeysCustom>('workspaceSidebar.showFileIconsConfig') ??
     CONFIG_SHOW_FILE_ICONS_CONFIG
   )
 }

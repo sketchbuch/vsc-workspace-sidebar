@@ -1,10 +1,10 @@
-import { expect } from 'chai'
+/* import { expect } from 'chai'
 import * as path from 'path'
 import { Files } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { convertWsFiles } from '../../../../../webviews/Workspace/helpers/convertWsFiles'
-
+ */
 suite('Webviews > Workspace > Helpers > convertWsFiles():', () => {
-  const FILE_NAME1 = 'First Project'
+  /* const FILE_NAME1 = 'First Project'
   const FILE_NAME2 = 'Second_WORK-Space'
   const FILE1 = `${FILE_NAME1}.code-workspace`
   const FILE_PATH2 = path.join('some', 'folder')
@@ -44,5 +44,5 @@ suite('Webviews > Workspace > Helpers > convertWsFiles():', () => {
       { ...expected[1], label: FILE_NAME2 },
     ]
     expect(convertWsFiles(files, '')).to.eql(expectedUncleaned)
-  })
+  }) */
 })

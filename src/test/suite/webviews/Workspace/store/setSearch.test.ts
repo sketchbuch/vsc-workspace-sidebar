@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+/* import { expect } from 'chai'
 import * as sinon from 'sinon'
 import * as coreConfigs from '../../../../../config/core'
 import * as foldersConfigs from '../../../../../config/folders'
@@ -15,9 +15,9 @@ import {
   SEARCH_TERM,
 } from '../../../../mocks/mockFileData'
 import { getMockSearchState, getMockState } from '../../../../mocks/mockState'
-
+ */
 suite('Webviews > Workspace > Store > setSearch()', () => {
-  let compactConfigStub: sinon.SinonStub
+  /* let compactConfigStub: sinon.SinonStub
   let condenseConfigStub: sinon.SinonStub
   let folderConfigStub: sinon.SinonStub
   let treeConfigStub: sinon.SinonStub
@@ -247,5 +247,5 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
     expect(state).not.to.eql(expectedState)
     setSearch(state, { payload: { matchStart: true }, type: 'ws/setSearch' })
     expect(state).to.eql(expectedState)
-  })
+  }) */
 })

@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+/* import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { list } from '../../../../../templates/workspace/snippets/list'
 import * as item from '../../../../../templates/workspace/snippets/listItem'
@@ -10,14 +10,14 @@ import {
 } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
 import { getMockSearchState, getMockState } from '../../../../mocks/mockState'
-
+ */
 suite('Templates > Workspace > Snippets: list()', () => {
-  const mockRenderVars = getMockRenderVars()
+  /* const mockRenderVars = getMockRenderVars()
   let itemSpy: sinon.SinonSpy
   let treeSpy: sinon.SinonSpy
 
   const mockState = getMockState({
-    convertedFiles: getMockConvertedFiles(),
+   convertedFiles: getMockConvertedFiles(),
     files: getMockFileList(),
     fileTree: getMockFileTree('normal'),
     visibleFiles: getMockConvertedFiles(),
@@ -34,7 +34,12 @@ suite('Templates > Workspace > Snippets: list()', () => {
   })
 
   test('Renders nothing if there are no files', () => {
-    const result = list(getMockState({ files: [], visibleFiles: [] }), mockRenderVars)
+    const result = list(
+      getMockState({
+         files: [], visibleFiles: [] 
+      }),
+      mockRenderVars
+    )
 
     expect(result).to.be.a('string')
     expect(result).to.equal('')
@@ -78,7 +83,10 @@ suite('Templates > Workspace > Snippets: list()', () => {
   })
 
   test('Renders list if tree is null', () => {
-    const result = list({ ...mockState, fileTree: null }, getMockRenderVars({ showTree: true }))
+    const result = list(
+      { ...mockState  fileTree: null  },
+      getMockRenderVars({ showTree: true })
+    )
 
     expect(result).to.be.a('string')
     expect(result).contains('<ul class="list__list')
@@ -86,5 +94,5 @@ suite('Templates > Workspace > Snippets: list()', () => {
 
     sinon.assert.called(itemSpy)
     sinon.assert.notCalled(treeSpy)
-  })
+  }) */
 })

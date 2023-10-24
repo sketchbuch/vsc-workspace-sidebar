@@ -5,8 +5,10 @@ export const error = (
   state: WorkspaceState,
   action: PayloadAction<WorkspaceStateErrorObj>
 ): void => {
+  const errorObj: WorkspaceStateErrorObj = action.payload ?? null
+
   state.error = 'DEFAULT'
-  state.errorObj = action.payload
+  state.errorObj = errorObj
   state.fileCount = 0
   state.invalidReason = 'ok'
   state.isFolderInvalid = false

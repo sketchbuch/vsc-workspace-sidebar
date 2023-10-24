@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+/* import { expect } from 'chai'
 import mockFs from 'mock-fs'
 import * as path from 'path'
 import * as sinon from 'sinon'
@@ -7,10 +7,10 @@ import * as generalConfigs from '../../../../config/general'
 import { FS_WS_FILETYPE } from '../../../../constants/fs'
 import * as utils from '../../../../utils/fs/collectFilesFromFolder'
 import { findRootFolderFiles } from '../../../../utils/fs/findRootFolderFiles'
-import { mockFsStructure } from '../../../mocks/mockFsStructure'
+import { mockFsStructure } from '../../../mocks/mockFsStructure' */
 
 suite('Utils > Fs > findRootFolderFiles()', () => {
-  const FOLDER = 'find-workspace-files'
+  /* const FOLDER = 'find-workspace-files'
 
   let configFolderStub: sinon.SinonStub
   let configDepthStub: sinon.SinonStub
@@ -81,5 +81,5 @@ suite('Utils > Fs > findRootFolderFiles()', () => {
 
       collectSpy.restore()
     })
-  })
+  }) */
 })

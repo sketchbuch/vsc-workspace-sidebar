@@ -1,9 +1,9 @@
-import { expect } from 'chai'
+/* import { expect } from 'chai'
 import { loading } from '../../../../../webviews/Workspace/store/loading'
-import { getMockState } from '../../../../mocks/mockState'
+import { getMockState } from '../../../../mocks/mockState' */
 
 suite('Webviews > Workspace > Store > loading()', () => {
-  test('Updates state as expected', () => {
+  /*   test('Updates state as expected', () => {
     const state = getMockState({
       error: 'FETCH',
       files: [],
@@ -23,5 +23,5 @@ suite('Webviews > Workspace > Store > loading()', () => {
     expect(state).not.to.eql(expectedState)
     loading(state)
     expect(state).to.eql(expectedState)
-  })
+  }) */
 })

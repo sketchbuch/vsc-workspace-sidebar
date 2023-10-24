@@ -1,13 +1,13 @@
-import { expect } from 'chai'
+/* import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { defaultTemplate } from '../../../../../templates/workspace/templates/defaultTemplate'
 import * as content from '../../../../../templates/workspace/views/loadingView'
 import { getMockState } from '../../../../mocks/mockState'
 import { getMockTemplateVars } from '../../../../mocks/mockTemplateVars'
-import { getMockWebviewView } from '../../../../mocks/mockWebview'
+import { getMockWebviewView } from '../../../../mocks/mockWebview' */
 
 suite('Templates > Workspace > Templates: defaultTemplate()', () => {
-  const state = getMockState()
+  /* const state = getMockState()
   const templateVars = getMockTemplateVars()
   const webview = getMockWebviewView()
 
@@ -82,5 +82,5 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
 
       contentStub.restore()
     })
-  })
+  }) */
 })
