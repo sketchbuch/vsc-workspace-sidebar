@@ -29,11 +29,13 @@ import {
   fetchRejected,
 } from '../../../../../webviews/Workspace/store/fetch'
 import {
-  ActionMetaRejected,
+  ActionMetaFulfilled,
   WorkspaceState,
-  WorkspaceThunkErrorAction,
+  WorkspaceStateRootFolder,
+  WorkspaceThunkAction,
 } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { OS_HOMEFOLDER, ROOT_FOLDER_PATH } from '../../../../mocks/mockFileData'
+import { FindAllRootFolderFiles } from '../../../../../utils/fs/findAllRootFolderFiles'
 
 suite.only('Webviews > Workspace > Store > fetch()', () => {
   let compactFoldersConfigStub: sinon.SinonStub
@@ -98,7 +100,7 @@ suite.only('Webviews > Workspace > Store > fetch()', () => {
       meta: { arg: undefined, requestId: '', requestStatus: 'rejected' },
       payload: null,
       type: 'ws/fetchRejected',
-    } as WorkspaceThunkErrorAction<unknown, ActionMetaRejected>)
+    })
     expect(state).to.eql(expectedState)
   })
 
@@ -114,7 +116,17 @@ suite.only('Webviews > Workspace > Store > fetch()', () => {
       view: 'list',
     }
 
-    test.only('Valid folder - tree - updates state as expected', () => {
+    const getAction = (
+      rootFolders: WorkspaceStateRootFolder[]
+    ): WorkspaceThunkAction<FindAllRootFolderFiles, ActionMetaFulfilled> => {
+      return {
+        meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
+        payload: { result: 'ok', rootFolders },
+        type: 'ws/list',
+      }
+    }
+
+    test('Valid folder - tree - updates state as expected', () => {
       condenseConfigStub.callsFake(() => false)
       treeConfigStub.callsFake(() => true)
 
@@ -126,15 +138,11 @@ suite.only('Webviews > Workspace > Store > fetch()', () => {
       })
 
       expect(state).not.to.eql(expectedState)
-      fetchFulfilled(state, {
-        meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: { result: 'ok', rootFolders: mockRootFolders.rootFolders },
-        type: 'ws/list',
-      })
+      fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
       expect(state).to.eql(expectedState)
     })
 
-    test.only('Valid folder - tree condensed - updates state as expected', () => {
+    test('Valid folder - tree condensed - updates state as expected', () => {
       treeConfigStub.callsFake(() => true)
 
       const mockRootFolders = getMockRootFolders({
@@ -148,15 +156,11 @@ suite.only('Webviews > Workspace > Store > fetch()', () => {
       })
 
       expect(state).not.to.eql(expectedState)
-      fetchFulfilled(state, {
-        meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: { result: 'ok', rootFolders: mockRootFolders.rootFolders },
-        type: 'ws/list',
-      })
+      fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
       expect(state).to.eql(expectedState)
     })
 
-    test.only('Valid folder - list asc - updates state as expected', () => {
+    test('Valid folder - list asc - updates state as expected', () => {
       const mockRootFolders = getMockRootFolders({
         showTree: false,
         sortVsible: 'asc',
@@ -168,15 +172,11 @@ suite.only('Webviews > Workspace > Store > fetch()', () => {
       })
 
       expect(state).not.to.eql(expectedState)
-      fetchFulfilled(state, {
-        meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: { result: 'ok', rootFolders: mockRootFolders.rootFolders },
-        type: 'ws/list',
-      })
+      fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
       expect(state).to.eql(expectedState)
     })
 
-    test.only('Valid folder - list desc - updates state as expected', () => {
+    test('Valid folder - list desc - updates state as expected', () => {
       const mockRootFolders = getMockRootFolders({
         showTree: false,
         sortVsible: 'desc',
@@ -189,11 +189,7 @@ suite.only('Webviews > Workspace > Store > fetch()', () => {
       })
 
       expect(state).not.to.eql(expectedState)
-      fetchFulfilled(state, {
-        meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: { result: 'ok', rootFolders: mockRootFolders.rootFolders },
-        type: 'ws/list',
-      })
+      fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
       expect(state).to.eql(expectedState)
     })
   })
