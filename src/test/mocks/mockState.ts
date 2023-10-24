@@ -6,6 +6,7 @@ import {
   WorkspaceState,
 } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import {
+  GetFileTreeType,
   getMockConvertedFiles,
   getMockFileList,
   getMockFileTree,
@@ -13,6 +14,7 @@ import {
   getMockVisibleFiles,
   OS_HOMEFOLDER,
   ROOT_FOLDER_PATH,
+  SortDir,
 } from './mockFileData'
 
 export const getMockState = (state: Partial<WorkspaceState> = {}): WorkspaceState => {
@@ -31,21 +33,45 @@ export const getMockSearchState = (state: Partial<SearchState> = {}): SearchStat
   }
 }
 
+type GetMockRootFolders = {
+  fileTreeType: GetFileTreeType
+  rootFoldersFiles: FindRootFolderFiles[]
+  showTree: boolean
+  sortConverted: SortDir | undefined
+  sortVsible: SortDir | undefined
+}
+
 const defaultRootFolderFiles: FindRootFolderFiles[] = [
   { files: getMockFileList(), folderPath: ROOT_FOLDER_PATH, result: 'ok' },
 ]
 
+const defaultGetMockRootFoldersConfig: GetMockRootFolders = {
+  fileTreeType: 'normal',
+  rootFoldersFiles: defaultRootFolderFiles,
+  showTree: false,
+  sortConverted: undefined,
+  sortVsible: undefined,
+}
+
 export const getMockRootFolders = (
-  rootFoldersFiles: FindRootFolderFiles[] = defaultRootFolderFiles
+  config: Partial<GetMockRootFolders> = {}
 ): Pick<WorkspaceState, 'fileCount' | 'rootFolders' | 'visibleFileCount'> => {
+  const { fileTreeType, rootFoldersFiles, showTree, sortConverted, sortVsible } = {
+    ...defaultGetMockRootFoldersConfig,
+    ...config,
+  }
   let fileCount = 0
   let visibleFileCount = 0
 
+  console.log('### getMockRootFolders showTree', showTree)
+  console.log('### getMockRootFolders sortConverted', sortConverted)
+  console.log('### getMockRootFolders sortVsible', sortVsible)
+
   const rootFolders = rootFoldersFiles.map(({ files, folderPath, result }) => {
-    const convertedFiles = getMockConvertedFiles()
-    const visibleFiles = getMockVisibleFiles()
-    const fileTree = getMockFileTree('normal')
-    const treeFolders: string[] = getMockFolderList('normal')
+    const convertedFiles = getMockConvertedFiles(sortConverted)
+    const visibleFiles = getMockVisibleFiles(sortVsible)
+    const fileTree = showTree ? getMockFileTree(fileTreeType) : null
+    const treeFolders: string[] = showTree ? getMockFolderList(fileTreeType) : []
 
     fileCount += files.length
     visibleFileCount += visibleFiles.length
