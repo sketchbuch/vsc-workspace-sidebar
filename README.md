@@ -99,3 +99,4 @@ This extension is localised, if you want it in your language please send me a tr
 - Update doc images inc. preview
 - Update tests
 - Condense description needs link to readme
+- Show paths should only apply if there are duplicate labels in the root folder, across root folders it should not matter

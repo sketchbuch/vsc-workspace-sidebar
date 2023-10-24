@@ -2,7 +2,6 @@ import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { workspace, WorkspaceConfiguration } from 'vscode'
 import { getExplorerCompactFoldersConfig, getFileiconThemeConfig } from '../../../config/core'
-import { getFolderConfig } from '../../../config/folders'
 import {
   getActionsConfig,
   getCleanLabelsConfig,
@@ -12,22 +11,16 @@ import {
 } from '../../../config/general'
 import { getShowPathsConfig } from '../../../config/listview'
 import { getSearchMinConfig } from '../../../config/search'
-import {
-  getCondenseFileTreeConfig,
-  getShowRootFolderConfig,
-  getShowTreeConfig,
-} from '../../../config/treeview'
+import { getCondenseFileTreeConfig, getShowTreeConfig } from '../../../config/treeview'
 import {
   CONFIG_CLEAN_LABELS,
   CONFIG_CONDENSE_FILETREE,
   CONFIG_DEPTH,
   CONFIG_EXPLORER_COMPACT_FOLDERS,
-  CONFIG_FOLDER,
   CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_FILE_ICONS,
   CONFIG_SHOW_FILE_ICONS_CONFIG,
   CONFIG_SHOW_HIERARCHY,
-  CONFIG_SHOW_ROOT_FOLDER,
   ConfigActions,
   ConfigShowPaths,
 } from '../../../constants/config'
@@ -68,20 +61,12 @@ suite.skip('Config > getConfig:', () => {
     expect(getDepthConfig()).to.equal(CONFIG_DEPTH)
   })
 
-  test('getFolderConfig() returns the default if no config value is set', () => {
-    expect(getFolderConfig()).to.equal(CONFIG_FOLDER)
-  })
-
   test('getSearchMinConfig() returns the default if no config value is set', () => {
     expect(getSearchMinConfig()).to.equal(CONFIG_SEARCH_MINIMUM)
   })
 
   test('getShowPathsConfig() returns the default if no config value is set', () => {
     expect(getShowPathsConfig()).to.equal(ConfigShowPaths.NEVER)
-  })
-
-  test('getShowRootFolderConfig() returns the default if no config value is set', () => {
-    expect(getShowRootFolderConfig()).to.equal(CONFIG_SHOW_ROOT_FOLDER)
   })
 
   test('getShowTreeConfig() returns the default if no config value is set', () => {

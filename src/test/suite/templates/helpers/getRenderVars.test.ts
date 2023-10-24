@@ -11,7 +11,6 @@ import {
   CONFIG_SHOW_FILE_ICONS,
   CONFIG_SHOW_FILE_ICONS_CONFIG,
   CONFIG_SHOW_HIERARCHY,
-  CONFIG_SHOW_ROOT_FOLDER,
   ConfigActions,
 } from '../../../../constants/config'
 import { getRenderVars } from '../../../../templates/helpers/getRenderVars'
@@ -27,7 +26,6 @@ suite('Templates > Helpers > getRenderVars():', () => {
   let searchMinConfigStub: sinon.SinonStub
   let showFileIconConfigStub: sinon.SinonStub
   let showFileiconsConfigConfigStub: sinon.SinonStub
-  let showRootConfigStub: sinon.SinonStub
   let showTreeConfigStub: sinon.SinonStub
 
   setup(() => {
@@ -50,9 +48,6 @@ suite('Templates > Helpers > getRenderVars():', () => {
     showFileiconsConfigConfigStub = sinon
       .stub(generalConfigs, 'getShowFileiconsConfigConfig')
       .callsFake(() => CONFIG_SHOW_FILE_ICONS_CONFIG)
-    showRootConfigStub = sinon
-      .stub(treeConfigs, 'getShowRootFolderConfig')
-      .callsFake(() => CONFIG_SHOW_ROOT_FOLDER)
     showTreeConfigStub = sinon
       .stub(treeConfigs, 'getShowTreeConfig')
       .callsFake(() => CONFIG_SHOW_HIERARCHY)
@@ -66,7 +61,6 @@ suite('Templates > Helpers > getRenderVars():', () => {
     searchMinConfigStub.restore()
     showFileIconConfigStub.restore()
     showFileiconsConfigConfigStub.restore()
-    showRootConfigStub.restore()
     showTreeConfigStub.restore()
   })
 
@@ -78,7 +72,6 @@ suite('Templates > Helpers > getRenderVars():', () => {
     expect(result.condenseFileTree).to.eql(CONFIG_CONDENSE_FILETREE)
     expect(result.depth).to.eql(CONFIG_DEPTH)
     expect(result.searchMinimum).to.eql(CONFIG_SEARCH_MINIMUM)
-    expect(result.showRootFolder).to.eql(CONFIG_SHOW_ROOT_FOLDER)
     expect(result.showTree).to.eql(CONFIG_SHOW_HIERARCHY)
   })
 
