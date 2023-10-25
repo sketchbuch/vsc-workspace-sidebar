@@ -30,6 +30,7 @@ import {
 } from '../../../../../webviews/Workspace/store/fetch'
 import {
   ActionMetaFulfilled,
+  FindFileResult,
   WorkspaceState,
   WorkspaceStateRootFolder,
   WorkspaceThunkAction,
@@ -104,7 +105,80 @@ suite.only('Webviews > Workspace > Store > fetch()', () => {
     expect(state).to.eql(expectedState)
   })
 
-  suite('Fulfilled:', () => {
+  suite('Fulfilled (Error):', () => {
+    const getAction = (
+      result: FindFileResult
+    ): WorkspaceThunkAction<FindAllRootFolderFiles, ActionMetaFulfilled> => {
+      return {
+        meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
+        payload: { result, rootFolders: [] },
+        type: 'ws/list',
+      }
+    }
+
+    const intialState: Partial<WorkspaceState> = {
+      invalidReason: 'ok',
+      isFolderInvalid: false,
+      view: 'loading',
+    }
+    const defaultExpectedState: Partial<WorkspaceState> = {
+      fileCount: 0,
+      isFolderInvalid: true,
+      rootFolders: [],
+      view: 'invalid',
+      visibleFileCount: 0,
+    }
+
+    test('Invalid Folder updates state as expected', () => {
+      condenseConfigStub.callsFake(() => false)
+      treeConfigStub.callsFake(() => true)
+
+      const result = 'invalid-folder'
+      const state = getMockState(intialState)
+      const expectedState = getMockState({
+        ...defaultExpectedState,
+        invalidReason: result,
+      })
+
+      expect(state).not.to.eql(expectedState)
+      fetchFulfilled(state, getAction(result))
+      expect(state).to.eql(expectedState)
+    })
+
+    test('No Root Folders updates state as expected', () => {
+      condenseConfigStub.callsFake(() => false)
+      treeConfigStub.callsFake(() => true)
+
+      const result = 'no-root-folders'
+      const state = getMockState(intialState)
+      const expectedState = getMockState({
+        ...defaultExpectedState,
+        invalidReason: result,
+      })
+
+      expect(state).not.to.eql(expectedState)
+      fetchFulfilled(state, getAction(result))
+      expect(state).to.eql(expectedState)
+    })
+
+    test('No Workspaces updates state as expected', () => {
+      condenseConfigStub.callsFake(() => false)
+      treeConfigStub.callsFake(() => true)
+
+      const result = 'no-workspaces'
+      const state = getMockState(intialState)
+      const expectedState = getMockState({
+        ...defaultExpectedState,
+        invalidReason: result,
+      })
+
+      expect(state).not.to.eql(expectedState)
+      fetchFulfilled(state, getAction(result))
+      expect(state).to.eql(expectedState)
+    })
+  })
+
+  suite.only('Fulfilled (Success):', () => {
     const getAction = (
       rootFolders: WorkspaceStateRootFolder[]
     ): WorkspaceThunkAction<FindAllRootFolderFiles, ActionMetaFulfilled> => {
@@ -126,94 +200,79 @@ suite.only('Webviews > Workspace > Store > fetch()', () => {
       view: 'list',
     }
 
-    test('Result not "ok" - updates state as expected', () => {
-      condenseConfigStub.callsFake(() => false)
-      treeConfigStub.callsFake(() => true)
+    suite('List:', () => {
+      test('Sort "asc" updates state as expected', () => {
+        const mockRootFolders = getMockRootFolders({
+          showTree: false,
+          sortVsible: 'asc',
+        })
+        const state = getMockState(intialState)
+        const expectedState = getMockState({
+          ...defaultExpectedState,
+          ...mockRootFolders,
+        })
 
-      const state = getMockState(intialState)
-      const expectedState = getMockState({
-        fileCount: 0,
-        invalidReason: 'invalid-folder',
-        isFolderInvalid: true,
-        rootFolders: [],
-        view: 'invalid',
-        visibleFileCount: 0,
+        expect(state).not.to.eql(expectedState)
+        fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
+        expect(state).to.eql(expectedState)
       })
 
-      expect(state).not.to.eql(expectedState)
-      fetchFulfilled(state, {
-        meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: { result: 'invalid-folder', rootFolders: [] },
-        type: 'ws/list',
+      test('Sort "desc" updates state as expected', () => {
+        const mockRootFolders = getMockRootFolders({
+          showTree: false,
+          sortVsible: 'desc',
+        })
+        const state = getMockState({
+          ...intialState,
+          sort: 'descending',
+        })
+        const expectedState = getMockState({
+          ...defaultExpectedState,
+          ...mockRootFolders,
+          sort: 'descending',
+        })
+
+        expect(state).not.to.eql(expectedState)
+        fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
+        expect(state).to.eql(expectedState)
       })
-      expect(state).to.eql(expectedState)
     })
 
-    test('Valid folder - tree - updates state as expected', () => {
-      condenseConfigStub.callsFake(() => false)
-      treeConfigStub.callsFake(() => true)
+    suite('Tree:', () => {
+      test('Normal updates state as expected', () => {
+        condenseConfigStub.callsFake(() => false)
+        treeConfigStub.callsFake(() => true)
 
-      const mockRootFolders = getMockRootFolders({ showTree: true })
-      const state = getMockState(intialState)
-      const expectedState = getMockState({
-        ...defaultExpectedState,
-        ...mockRootFolders,
+        const mockRootFolders = getMockRootFolders({ showTree: true })
+        const state = getMockState(intialState)
+        const expectedState = getMockState({
+          ...defaultExpectedState,
+          ...mockRootFolders,
+        })
+
+        expect(state).not.to.eql(expectedState)
+        fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
+        expect(state).to.eql(expectedState)
       })
 
-      expect(state).not.to.eql(expectedState)
-      fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
-      expect(state).to.eql(expectedState)
-    })
+      test('Condensed updates state as expected', () => {
+        condenseConfigStub.callsFake(() => true)
+        treeConfigStub.callsFake(() => true)
 
-    test('Valid folder - tree condensed - updates state as expected', () => {
-      treeConfigStub.callsFake(() => true)
+        const mockRootFolders = getMockRootFolders({
+          fileTreeType: 'condensed',
+          showTree: true,
+        })
+        const state = getMockState(intialState)
+        const expectedState = getMockState({
+          ...defaultExpectedState,
+          ...mockRootFolders,
+        })
 
-      const mockRootFolders = getMockRootFolders({
-        fileTreeType: 'condensed',
-        showTree: true,
+        expect(state).not.to.eql(expectedState)
+        fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
+        expect(state).to.eql(expectedState)
       })
-      const state = getMockState(intialState)
-      const expectedState = getMockState({
-        ...defaultExpectedState,
-        ...mockRootFolders,
-      })
-
-      expect(state).not.to.eql(expectedState)
-      fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
-      expect(state).to.eql(expectedState)
-    })
-
-    test('Valid folder - list asc - updates state as expected', () => {
-      const mockRootFolders = getMockRootFolders({
-        showTree: false,
-        sortVsible: 'asc',
-      })
-      const state = getMockState(intialState)
-      const expectedState = getMockState({
-        ...defaultExpectedState,
-        ...mockRootFolders,
-      })
-
-      expect(state).not.to.eql(expectedState)
-      fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
-      expect(state).to.eql(expectedState)
-    })
-
-    test('Valid folder - list desc - updates state as expected', () => {
-      const mockRootFolders = getMockRootFolders({
-        showTree: false,
-        sortVsible: 'desc',
-      })
-      const state = getMockState({ ...intialState, sort: 'descending' })
-      const expectedState = getMockState({
-        ...defaultExpectedState,
-        ...mockRootFolders,
-        sort: 'descending',
-      })
-
-      expect(state).not.to.eql(expectedState)
-      fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
-      expect(state).to.eql(expectedState)
     })
   })
 })
