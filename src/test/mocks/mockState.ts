@@ -17,13 +17,28 @@ import {
   SortDir,
 } from './mockFileData'
 
-export const getMockState = (state: Partial<WorkspaceState> = {}): WorkspaceState => {
-  return {
-    ...initialState,
-    selected: '',
-    wsType: 'ws',
-    ...state,
-  }
+type GetMockRootFolders = Pick<WorkspaceState, 'fileCount' | 'rootFolders' | 'visibleFileCount'>
+
+type GetMockRootFoldersConfig = {
+  fileTreeType: GetFileTreeType
+  rootFoldersFiles: FindRootFolderFiles[]
+  searchTerm: string
+  showTree: boolean
+  sortConverted: SortDir | undefined
+  sortVsible: SortDir | undefined
+}
+
+const defaultRootFolderFiles: FindRootFolderFiles[] = [
+  { files: getMockFileList(), folderPath: ROOT_FOLDER_PATH, result: 'ok' },
+]
+
+const defaultGetMockRootFoldersConfig: GetMockRootFoldersConfig = {
+  fileTreeType: 'normal',
+  rootFoldersFiles: defaultRootFolderFiles,
+  searchTerm: '',
+  showTree: false,
+  sortConverted: undefined,
+  sortVsible: undefined,
 }
 
 export const getMockSearchState = (state: Partial<SearchState> = {}): SearchState => {
@@ -33,45 +48,28 @@ export const getMockSearchState = (state: Partial<SearchState> = {}): SearchStat
   }
 }
 
-type GetMockRootFoldersConfig = {
-  fileTreeType: GetFileTreeType
-  rootFoldersFiles: FindRootFolderFiles[]
-  showTree: boolean
-  sortConverted: SortDir | undefined
-  sortVsible: SortDir | undefined
-}
-
-type GetMockRootFolders = Pick<WorkspaceState, 'fileCount' | 'rootFolders' | 'visibleFileCount'>
-
-const defaultRootFolderFiles: FindRootFolderFiles[] = [
-  { files: getMockFileList(), folderPath: ROOT_FOLDER_PATH, result: 'ok' },
-]
-
-const defaultGetMockRootFoldersConfig: GetMockRootFoldersConfig = {
-  fileTreeType: 'normal',
-  rootFoldersFiles: defaultRootFolderFiles,
-  showTree: false,
-  sortConverted: undefined,
-  sortVsible: undefined,
+export const getMockState = (state: Partial<WorkspaceState> = {}): WorkspaceState => {
+  return {
+    ...initialState,
+    selected: '',
+    wsType: 'ws',
+    ...state,
+  }
 }
 
 export const getMockRootFolders = (
   config: Partial<GetMockRootFoldersConfig> = {}
 ): GetMockRootFolders => {
-  const { fileTreeType, rootFoldersFiles, showTree, sortConverted, sortVsible } = {
+  const { fileTreeType, rootFoldersFiles, searchTerm, showTree, sortConverted, sortVsible } = {
     ...defaultGetMockRootFoldersConfig,
     ...config,
   }
   let fileCount = 0
   let visibleFileCount = 0
 
-  /*   console.log('### getMockRootFolders showTree', showTree)
-  console.log('### getMockRootFolders sortConverted', sortConverted)
-  console.log('### getMockRootFolders sortVsible', sortVsible) */
-
   const rootFolders = rootFoldersFiles.map(({ files, folderPath, result }) => {
     const convertedFiles = getMockConvertedFiles(sortConverted)
-    const visibleFiles = getMockVisibleFiles(sortVsible)
+    const visibleFiles = getMockVisibleFiles(sortVsible, searchTerm)
     const fileTree = showTree ? getMockFileTree(fileTreeType) : null
     const treeFolders: string[] = showTree ? getMockFolderList(fileTreeType) : []
 

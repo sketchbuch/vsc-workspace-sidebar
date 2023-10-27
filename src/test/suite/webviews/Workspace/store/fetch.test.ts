@@ -22,7 +22,7 @@ import * as sinon from 'sinon'
 import * as coreConfigs from '../../../../../config/core'
 import * as foldersConfigs from '../../../../../config/folders'
 import * as treeConfigs from '../../../../../config/treeview'
-import { getMockRootFolders, getMockState } from '../../../../mocks/mockState'
+import { getMockRootFolders, getMockSearchState, getMockState } from '../../../../mocks/mockState'
 import {
   fetchFulfilled,
   fetchPending,
@@ -35,7 +35,7 @@ import {
   WorkspaceStateRootFolder,
   WorkspaceThunkAction,
 } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
-import { OS_HOMEFOLDER, ROOT_FOLDER_PATH } from '../../../../mocks/mockFileData'
+import { OS_HOMEFOLDER, ROOT_FOLDER_PATH, SEARCH_TERM } from '../../../../mocks/mockFileData'
 import { FindAllRootFolderFiles } from '../../../../../utils/fs/findAllRootFolderFiles'
 
 suite.only('Webviews > Workspace > Store > fetch()', () => {
@@ -178,7 +178,7 @@ suite.only('Webviews > Workspace > Store > fetch()', () => {
     })
   })
 
-  suite.only('Fulfilled (Success):', () => {
+  suite('Fulfilled (Success):', () => {
     const getAction = (
       rootFolders: WorkspaceStateRootFolder[]
     ): WorkspaceThunkAction<FindAllRootFolderFiles, ActionMetaFulfilled> => {
@@ -236,14 +236,61 @@ suite.only('Webviews > Workspace > Store > fetch()', () => {
         fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
         expect(state).to.eql(expectedState)
       })
+
+      test('Sort "asc" searched updates state as expected', () => {
+        const mockRootFolders = getMockRootFolders({
+          searchTerm: SEARCH_TERM,
+          showTree: false,
+          sortVsible: 'asc',
+        })
+        const search = getMockSearchState({ term: SEARCH_TERM })
+        const state = getMockState({ ...intialState, search })
+        const expectedState = getMockState({
+          ...defaultExpectedState,
+          ...mockRootFolders,
+          search,
+        })
+
+        expect(state).not.to.eql(expectedState)
+        fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
+        expect(state).to.eql(expectedState)
+      })
+
+      test('Sort "desc" searched updates state as expected', () => {
+        const mockRootFolders = getMockRootFolders({
+          searchTerm: SEARCH_TERM,
+          showTree: false,
+          sortVsible: 'desc',
+        })
+        const search = getMockSearchState({ term: SEARCH_TERM })
+        const state = getMockState({
+          ...intialState,
+          search,
+          sort: 'descending',
+        })
+        const expectedState = getMockState({
+          ...defaultExpectedState,
+          ...mockRootFolders,
+          search,
+          sort: 'descending',
+        })
+
+        expect(state).not.to.eql(expectedState)
+        fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
+        expect(state).to.eql(expectedState)
+      })
     })
 
     suite('Tree:', () => {
       test('Normal updates state as expected', () => {
+        compactFoldersConfigStub.callsFake(() => false)
         condenseConfigStub.callsFake(() => false)
         treeConfigStub.callsFake(() => true)
 
-        const mockRootFolders = getMockRootFolders({ showTree: true })
+        const mockRootFolders = getMockRootFolders({
+          fileTreeType: 'normal',
+          showTree: true,
+        })
         const state = getMockState(intialState)
         const expectedState = getMockState({
           ...defaultExpectedState,
@@ -256,6 +303,7 @@ suite.only('Webviews > Workspace > Store > fetch()', () => {
       })
 
       test('Condensed updates state as expected', () => {
+        compactFoldersConfigStub.callsFake(() => false)
         condenseConfigStub.callsFake(() => true)
         treeConfigStub.callsFake(() => true)
 
@@ -267,6 +315,115 @@ suite.only('Webviews > Workspace > Store > fetch()', () => {
         const expectedState = getMockState({
           ...defaultExpectedState,
           ...mockRootFolders,
+        })
+
+        expect(state).not.to.eql(expectedState)
+        fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
+        expect(state).to.eql(expectedState)
+      })
+
+      test('Condensed/searched updates state as expected', () => {
+        compactFoldersConfigStub.callsFake(() => false)
+        condenseConfigStub.callsFake(() => true)
+        treeConfigStub.callsFake(() => true)
+
+        const mockRootFolders = getMockRootFolders({
+          fileTreeType: 'condensed-searched',
+          searchTerm: SEARCH_TERM,
+          showTree: true,
+        })
+        const search = getMockSearchState({ term: SEARCH_TERM })
+        const state = getMockState({ ...intialState, search })
+        const expectedState = getMockState({
+          ...defaultExpectedState,
+          ...mockRootFolders,
+          search,
+        })
+
+        expect(state).not.to.eql(expectedState)
+        fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
+        expect(state).to.eql(expectedState)
+      })
+
+      test('Compacted updates state as expected', () => {
+        compactFoldersConfigStub.callsFake(() => true)
+        condenseConfigStub.callsFake(() => false)
+        treeConfigStub.callsFake(() => true)
+
+        const mockRootFolders = getMockRootFolders({
+          fileTreeType: 'compacted',
+          showTree: true,
+        })
+        const state = getMockState(intialState)
+        const expectedState = getMockState({
+          ...defaultExpectedState,
+          ...mockRootFolders,
+        })
+
+        expect(state).not.to.eql(expectedState)
+        fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
+        expect(state).to.eql(expectedState)
+      })
+
+      test('Compacted/searched updates state as expected', () => {
+        compactFoldersConfigStub.callsFake(() => true)
+        condenseConfigStub.callsFake(() => false)
+        treeConfigStub.callsFake(() => true)
+
+        const mockRootFolders = getMockRootFolders({
+          fileTreeType: 'compacted-searched',
+          searchTerm: SEARCH_TERM,
+          showTree: true,
+        })
+        const search = getMockSearchState({ term: SEARCH_TERM })
+        const state = getMockState({ ...intialState, search })
+        const expectedState = getMockState({
+          ...defaultExpectedState,
+          ...mockRootFolders,
+          search,
+        })
+
+        expect(state).not.to.eql(expectedState)
+        fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
+        expect(state).to.eql(expectedState)
+      })
+
+      test('Compacted/condensed updates state as expected', () => {
+        compactFoldersConfigStub.callsFake(() => true)
+        condenseConfigStub.callsFake(() => true)
+        treeConfigStub.callsFake(() => true)
+
+        const mockRootFolders = getMockRootFolders({
+          fileTreeType: 'compacted-condensed',
+          showTree: true,
+        })
+        const state = getMockState(intialState)
+        const expectedState = getMockState({
+          ...defaultExpectedState,
+          ...mockRootFolders,
+        })
+
+        expect(state).not.to.eql(expectedState)
+        fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
+        expect(state).to.eql(expectedState)
+      })
+
+      test('Compacted/condensed/searched updates state as expected', () => {
+        compactFoldersConfigStub.callsFake(() => true)
+        condenseConfigStub.callsFake(() => true)
+        treeConfigStub.callsFake(() => true)
+
+        const mockRootFolders = getMockRootFolders({
+          fileTreeType: 'compacted-condensed-searched',
+          searchTerm: SEARCH_TERM,
+          showTree: true,
+        })
+        const search = getMockSearchState({ term: SEARCH_TERM })
+        const state = getMockState({ ...intialState, search })
+        const expectedState = getMockState({
+          ...defaultExpectedState,
+          ...mockRootFolders,
+          search,
         })
 
         expect(state).not.to.eql(expectedState)

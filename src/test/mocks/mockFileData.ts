@@ -86,7 +86,6 @@ export const getMockFolderList = (type: GetFileTreeType): string[] => {
       return [file4.path]
 
     case 'compacted-condensed-searched':
-
     case 'condensed-searched':
       return [FOLDER4]
 
@@ -98,26 +97,33 @@ export const getMockFolderList = (type: GetFileTreeType): string[] => {
   }
 }
 
-export const getMockVisibleFiles = (sortDir?: SortDir): Files => {
+export const getMockVisibleFiles = (sortDir?: SortDir, term: string = ''): Files => {
   const sortedFiles = [
     { ...file4, showPath: false },
     { ...file2, showPath: false },
     { ...file3, showPath: false },
     { ...file1, showPath: false },
   ]
-
-  if (sortDir === 'asc') {
-    return sortedFiles
-  } else if (sortDir === 'desc') {
-    return sortedFiles.reverse()
-  }
-
-  return [
+  const unsortedFiles = [
     { ...file1, showPath: false },
     { ...file2, showPath: false },
     { ...file3, showPath: false },
     { ...file4, showPath: false },
   ]
+  let files = unsortedFiles
+
+  if (sortDir === 'asc') {
+    files = sortedFiles
+  } else if (sortDir === 'desc') {
+    files = sortedFiles.reverse()
+  }
+
+  if (term) {
+    const lcTerm = term.toLowerCase()
+    files = files.filter((file) => file.label.toLowerCase().includes(lcTerm))
+  }
+
+  return files
 }
 
 export const getMockConvertedFiles = (sortDir?: SortDir): Files => {
