@@ -1,21 +1,3 @@
-/* import { expect } from 'chai'
-import * as sinon from 'sinon'
-import * as foldersConfigs from '../../../../../config/folders'
-import * as treeConfigs from '../../../../../config/treeview'
-import {
-  fetchFulfilled,
-  fetchPending,
-  fetchRejected,
-} from '../../../../../webviews/Workspace/store/fetch'
-import {
-  ROOT_FOLDER_PATH,
-  getMockConvertedFiles,
-  getMockFileList,
-  getMockFileTree,
-  getMockVisibleFiles,
-} from '../../../../mocks/mockFileData'
-import { getMockState } from '../../../../mocks/mockState' */
-
 import { expect } from 'chai'
 import os from 'os'
 import * as sinon from 'sinon'
@@ -38,7 +20,7 @@ import {
 import { OS_HOMEFOLDER, ROOT_FOLDER_PATH, SEARCH_TERM } from '../../../../mocks/mockFileData'
 import { FindAllRootFolderFiles } from '../../../../../utils/fs/findAllRootFolderFiles'
 
-suite.only('Webviews > Workspace > Store > fetch()', () => {
+suite('Webviews > Workspace > Store > fetch()', () => {
   let compactFoldersConfigStub: sinon.SinonStub
   let condenseConfigStub: sinon.SinonStub
   let osStub: sinon.SinonStub

@@ -1,27 +1,34 @@
-/* import { expect } from 'chai'
+import { expect } from 'chai'
 import { loading } from '../../../../../webviews/Workspace/store/loading'
-import { getMockState } from '../../../../mocks/mockState' */
+import { getMockState } from '../../../../mocks/mockState'
 
 suite('Webviews > Workspace > Store > loading()', () => {
-  /*   test('Updates state as expected', () => {
+  test('Updates state as expected', () => {
     const state = getMockState({
       error: 'FETCH',
-      files: [],
+      errorObj: null,
+      fileCount: 0,
+      invalidReason: 'ok',
       isFolderInvalid: true,
+      rootFolders: [],
       selected: 'sdasd',
-      state: 'error',
+      view: 'loading',
+      visibleFileCount: 0,
     })
     const expectedState = getMockState({
       error: '',
-      files: [],
+      errorObj: null,
+      fileCount: 0,
       invalidReason: 'ok',
       isFolderInvalid: false,
+      rootFolders: [],
       selected: '',
-      state: 'loading',
+      view: 'loading',
+      visibleFileCount: 0,
     })
 
     expect(state).not.to.eql(expectedState)
     loading(state)
     expect(state).to.eql(expectedState)
-  }) */
+  })
 })

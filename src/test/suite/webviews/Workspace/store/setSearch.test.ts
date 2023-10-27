@@ -1,23 +1,14 @@
-/* import { expect } from 'chai'
+import { expect } from 'chai'
 import * as sinon from 'sinon'
 import * as coreConfigs from '../../../../../config/core'
 import * as foldersConfigs from '../../../../../config/folders'
 import * as treeConfigs from '../../../../../config/treeview'
 import { setSearch } from '../../../../../webviews/Workspace/store/setSearch'
-import {
-  file4,
-  getMockConvertedFiles,
-  getMockFileList,
-  getMockFileTree,
-  getMockFolderList,
-  getMockVisibleFiles,
-  ROOT_FOLDER_PATH,
-  SEARCH_TERM,
-} from '../../../../mocks/mockFileData'
-import { getMockSearchState, getMockState } from '../../../../mocks/mockState'
- */
-suite('Webviews > Workspace > Store > setSearch()', () => {
-  /* let compactConfigStub: sinon.SinonStub
+import { ROOT_FOLDER_PATH, SEARCH_TERM } from '../../../../mocks/mockFileData'
+import { getMockRootFolders, getMockSearchState, getMockState } from '../../../../mocks/mockState'
+
+suite.only('Webviews > Workspace > Store > setSearch()', () => {
+  let compactConfigStub: sinon.SinonStub
   let condenseConfigStub: sinon.SinonStub
   let folderConfigStub: sinon.SinonStub
   let treeConfigStub: sinon.SinonStub
@@ -28,8 +19,8 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
       .callsFake(() => true)
     condenseConfigStub = sinon.stub(treeConfigs, 'getCondenseFileTreeConfig').callsFake(() => true)
     folderConfigStub = sinon
-      .stub(foldersConfigs, 'getFolderConfig')
-      .callsFake(() => ROOT_FOLDER_PATH)
+      .stub(foldersConfigs, 'getFoldersConfig')
+      .callsFake(() => [ROOT_FOLDER_PATH])
     treeConfigStub = sinon.stub(treeConfigs, 'getShowTreeConfig').callsFake(() => false)
   })
 
@@ -40,166 +31,169 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
     treeConfigStub.restore()
   })
 
-  test('Invalid folder updates state as expected', () => {
-    const state = getMockState({
-      files: [],
-      fileTree: getMockFileTree('normal'),
-      visibleFiles: getMockVisibleFiles(),
-    })
-    const expectedState = getMockState({
-      search: getMockSearchState({ term: SEARCH_TERM }),
-      visibleFiles: [],
+  suite('List:', () => {
+    setup(() => {
+      treeConfigStub.callsFake(() => false)
     })
 
-    expect(state).not.to.eql(expectedState)
-    setSearch(state, { payload: { term: SEARCH_TERM }, type: 'ws/setSearch' })
-    expect(state).to.eql(expectedState)
+    test('Sort "asc" updates state as expected', () => {
+      const mockRootFolders = getMockRootFolders({
+        fileTreeType: 'normal',
+      })
+      const mockExpecetedRootFolders = getMockRootFolders({
+        fileTreeType: 'searched',
+        searchTerm: SEARCH_TERM,
+      })
+      const state = getMockState({
+        ...mockRootFolders,
+      })
+      const expectedState = getMockState({
+        ...mockExpecetedRootFolders,
+        search: getMockSearchState({ term: SEARCH_TERM }),
+      })
+
+      expect(state).not.to.eql(expectedState)
+      setSearch(state, { payload: { term: SEARCH_TERM }, type: 'ws/setSearch' })
+      expect(state).to.eql(expectedState)
+    })
+
+    test('Sort "desc" updates state as expected', () => {
+      const mockRootFolders = getMockRootFolders({
+        fileTreeType: 'normal',
+        sortConverted: 'desc',
+        sortVsible: 'desc',
+      })
+      const mockExpecetedRootFolders = getMockRootFolders({
+        fileTreeType: 'searched',
+        searchTerm: SEARCH_TERM,
+        sortConverted: 'desc',
+        sortVsible: 'desc',
+      })
+      const state = getMockState({
+        ...mockRootFolders,
+      })
+      const expectedState = getMockState({
+        ...mockExpecetedRootFolders,
+        search: getMockSearchState({ term: SEARCH_TERM }),
+      })
+
+      expect(state).not.to.eql(expectedState)
+      setSearch(state, { payload: { term: SEARCH_TERM }, type: 'ws/setSearch' })
+      expect(state).to.eql(expectedState)
+    })
   })
 
-  test('Valid folder - tree uncompacted & uncondensed - updates state as expected', () => {
-    compactConfigStub.callsFake(() => false)
-    condenseConfigStub.callsFake(() => false)
-    treeConfigStub.callsFake(() => true)
+  suite('Tree:', () => {
+    test('Normal updates state as expected', () => {
+      compactConfigStub.callsFake(() => false)
+      condenseConfigStub.callsFake(() => false)
+      treeConfigStub.callsFake(() => true)
 
-    const state = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      visibleFiles: getMockVisibleFiles(),
-    })
-    const expectedState = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      fileTree: getMockFileTree('searched'),
-      search: getMockSearchState({ term: SEARCH_TERM }),
-      treeFolders: getMockFolderList('searched'),
-      visibleFiles: [{ ...file4, showPath: false }],
+      const mockRootFolders = getMockRootFolders({
+        fileTreeType: 'normal',
+        showTree: true,
+      })
+      const mockExpecetedRootFolders = getMockRootFolders({
+        fileTreeType: 'searched',
+        searchTerm: SEARCH_TERM,
+        showTree: true,
+      })
+      const state = getMockState({
+        ...mockRootFolders,
+      })
+      const expectedState = getMockState({
+        ...mockExpecetedRootFolders,
+        search: getMockSearchState({ term: SEARCH_TERM }),
+      })
+
+      expect(state).not.to.eql(expectedState)
+      setSearch(state, { payload: { term: SEARCH_TERM }, type: 'ws/setSearch' })
+      expect(state).to.eql(expectedState)
     })
 
-    expect(state).not.to.eql(expectedState)
-    setSearch(state, { payload: { term: SEARCH_TERM }, type: 'ws/setSearch' })
-    expect(state).to.eql(expectedState)
+    test('Condensed updates state as expected', () => {
+      compactConfigStub.callsFake(() => false)
+      condenseConfigStub.callsFake(() => true)
+      treeConfigStub.callsFake(() => true)
+
+      const mockRootFolders = getMockRootFolders({
+        fileTreeType: 'condensed',
+        showTree: true,
+      })
+      const mockExpecetedRootFolders = getMockRootFolders({
+        fileTreeType: 'condensed-searched',
+        searchTerm: SEARCH_TERM,
+        showTree: true,
+      })
+      const state = getMockState({
+        ...mockRootFolders,
+      })
+      const expectedState = getMockState({
+        ...mockExpecetedRootFolders,
+        search: getMockSearchState({ term: SEARCH_TERM }),
+      })
+
+      expect(state).not.to.eql(expectedState)
+      setSearch(state, { payload: { term: SEARCH_TERM }, type: 'ws/setSearch' })
+      expect(state).to.eql(expectedState)
+    })
+
+    test('Compacted updates state as expected', () => {
+      compactConfigStub.callsFake(() => true)
+      condenseConfigStub.callsFake(() => false)
+      treeConfigStub.callsFake(() => true)
+
+      const mockRootFolders = getMockRootFolders({
+        fileTreeType: 'compacted',
+        showTree: true,
+      })
+      const mockExpecetedRootFolders = getMockRootFolders({
+        fileTreeType: 'compacted-searched',
+        searchTerm: SEARCH_TERM,
+        showTree: true,
+      })
+      const state = getMockState({
+        ...mockRootFolders,
+      })
+      const expectedState = getMockState({
+        ...mockExpecetedRootFolders,
+        search: getMockSearchState({ term: SEARCH_TERM }),
+      })
+
+      expect(state).not.to.eql(expectedState)
+      setSearch(state, { payload: { term: SEARCH_TERM }, type: 'ws/setSearch' })
+      expect(state).to.eql(expectedState)
+    })
+
+    test('Compacted & condensed updates state as expected', () => {
+      compactConfigStub.callsFake(() => true)
+      condenseConfigStub.callsFake(() => true)
+      treeConfigStub.callsFake(() => true)
+
+      const mockRootFolders = getMockRootFolders({
+        fileTreeType: 'compacted-condensed',
+        showTree: true,
+      })
+      const mockExpecetedRootFolders = getMockRootFolders({
+        fileTreeType: 'compacted-condensed-searched',
+        searchTerm: SEARCH_TERM,
+        showTree: true,
+      })
+      const state = getMockState({
+        ...mockRootFolders,
+      })
+      const expectedState = getMockState({
+        ...mockExpecetedRootFolders,
+        search: getMockSearchState({ term: SEARCH_TERM }),
+      })
+
+      expect(state).not.to.eql(expectedState)
+      setSearch(state, { payload: { term: SEARCH_TERM }, type: 'ws/setSearch' })
+      expect(state).to.eql(expectedState)
+    })
   })
 
-  test('Valid folder - tree uncompacted & condensed - updates state as expected', () => {
-    compactConfigStub.callsFake(() => false)
-    condenseConfigStub.callsFake(() => true)
-    treeConfigStub.callsFake(() => true)
-
-    const state = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      visibleFiles: getMockVisibleFiles(),
-    })
-
-    const expectedState = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      fileTree: getMockFileTree('condensed-searched'),
-      search: getMockSearchState({ term: SEARCH_TERM }),
-      treeFolders: getMockFolderList('condensed-searched'),
-      visibleFiles: [{ ...file4, showPath: false }],
-    })
-
-    expect(state).not.to.eql(expectedState)
-    setSearch(state, { payload: { term: SEARCH_TERM }, type: 'ws/setSearch' })
-    expect(state).to.eql(expectedState)
-  })
-
-  test('Valid folder - tree compacted & uncondensed - updates state as expected', () => {
-    compactConfigStub.callsFake(() => true)
-    condenseConfigStub.callsFake(() => false)
-    treeConfigStub.callsFake(() => true)
-
-    const state = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      visibleFiles: getMockVisibleFiles(),
-    })
-
-    const expectedState = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      fileTree: getMockFileTree('compacted-searched'),
-      search: getMockSearchState({ term: SEARCH_TERM }),
-      treeFolders: getMockFolderList('compacted-searched'),
-      visibleFiles: [{ ...file4, showPath: false }],
-    })
-
-    expect(state).not.to.eql(expectedState)
-    setSearch(state, { payload: { term: SEARCH_TERM }, type: 'ws/setSearch' })
-    expect(state).to.eql(expectedState)
-  })
-
-  test('Valid folder - tree compacted & condensed - updates state as expected', () => {
-    compactConfigStub.callsFake(() => true)
-    condenseConfigStub.callsFake(() => true)
-    treeConfigStub.callsFake(() => true)
-
-    const state = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      visibleFiles: getMockVisibleFiles(),
-    })
-
-    const expectedState = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      fileTree: getMockFileTree('compacted-condensed-searched'),
-      search: getMockSearchState({ term: SEARCH_TERM }),
-      treeFolders: getMockFolderList('compacted-condensed-searched'),
-      visibleFiles: [{ ...file4, showPath: false }],
-    })
-
-    expect(state).not.to.eql(expectedState)
-    setSearch(state, { payload: { term: SEARCH_TERM }, type: 'ws/setSearch' })
-    expect(state).to.eql(expectedState)
-  })
-
-  test('Valid folder - list asc - updates state as expected', () => {
-    const state = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      sort: 'ascending',
-      visibleFiles: getMockVisibleFiles(),
-    })
-
-    const expectedState = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      fileTree: null,
-      search: getMockSearchState({ term: SEARCH_TERM }),
-      sort: 'ascending',
-      treeFolders: [],
-      visibleFiles: [{ ...file4, showPath: false }],
-    })
-
-    expect(state).not.to.eql(expectedState)
-    setSearch(state, { payload: { term: SEARCH_TERM }, type: 'ws/setSearch' })
-    expect(state).to.eql(expectedState)
-  })
-
-  test('Valid folder - list desc - updates state as expected', () => {
-    const state = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      sort: 'descending',
-      visibleFiles: getMockVisibleFiles(),
-    })
-
-    const expectedState = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      fileTree: null,
-      search: getMockSearchState({ term: SEARCH_TERM }),
-      sort: 'descending',
-      treeFolders: [],
-      visibleFiles: [{ ...file4, showPath: false }],
-    })
-
-    expect(state).not.to.eql(expectedState)
-    setSearch(state, { payload: { term: SEARCH_TERM }, type: 'ws/setSearch' })
-    expect(state).to.eql(expectedState)
-  })
+  /* 
 
   test('caseInsensitive updates correctly', () => {
     const state = getMockState({
@@ -247,5 +241,5 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
     expect(state).not.to.eql(expectedState)
     setSearch(state, { payload: { matchStart: true }, type: 'ws/setSearch' })
     expect(state).to.eql(expectedState)
-  }) */
+  })  */
 })
