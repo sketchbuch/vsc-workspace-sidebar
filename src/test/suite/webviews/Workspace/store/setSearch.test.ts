@@ -7,7 +7,7 @@ import { setSearch } from '../../../../../webviews/Workspace/store/setSearch'
 import { ROOT_FOLDER_PATH, SEARCH_TERM } from '../../../../mocks/mockFileData'
 import { getMockRootFolders, getMockSearchState, getMockState } from '../../../../mocks/mockState'
 
-suite.only('Webviews > Workspace > Store > setSearch()', () => {
+suite('Webviews > Workspace > Store > setSearch()', () => {
   let compactConfigStub: sinon.SinonStub
   let condenseConfigStub: sinon.SinonStub
   let folderConfigStub: sinon.SinonStub
@@ -192,54 +192,4 @@ suite.only('Webviews > Workspace > Store > setSearch()', () => {
       expect(state).to.eql(expectedState)
     })
   })
-
-  /* 
-
-  test('caseInsensitive updates correctly', () => {
-    const state = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      search: getMockSearchState({ term: SEARCH_TERM }),
-      sort: 'ascending',
-      visibleFiles: getMockVisibleFiles(),
-    })
-
-    const expectedState = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      fileTree: null,
-      search: getMockSearchState({ caseInsensitive: true, term: SEARCH_TERM }),
-      sort: 'ascending',
-      treeFolders: [],
-      visibleFiles: [{ ...file4, showPath: false }],
-    })
-
-    expect(state).not.to.eql(expectedState)
-    setSearch(state, { payload: { caseInsensitive: true }, type: 'ws/setSearch' })
-    expect(state).to.eql(expectedState)
-  })
-
-  test('matchStart updates correctly', () => {
-    const state = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      search: getMockSearchState({ term: SEARCH_TERM }),
-      sort: 'ascending',
-      visibleFiles: getMockVisibleFiles(),
-    })
-
-    const expectedState = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      fileTree: null,
-      search: getMockSearchState({ matchStart: true, term: SEARCH_TERM }),
-      sort: 'ascending',
-      treeFolders: [],
-      visibleFiles: [{ ...file4, showPath: false }],
-    })
-
-    expect(state).not.to.eql(expectedState)
-    setSearch(state, { payload: { matchStart: true }, type: 'ws/setSearch' })
-    expect(state).to.eql(expectedState)
-  })  */
 })

@@ -2,95 +2,106 @@ import { expect } from 'chai'
 import * as sinon from 'sinon'
 import * as treeConfigs from '../../../../../config/treeview'
 import { toggleFolderStateBulk } from '../../../../../webviews/Workspace/store/toggleFolderStateBulk'
-import { getMockState } from '../../../../mocks/mockState'
+import { getMockRootFolders, getMockState } from '../../../../mocks/mockState'
 
 suite('Webviews > Workspace > Store > toggleFolderStateBulk()', () => {
+  const closedFolders = ['vsc', 'react', 'react/test']
   let condenseConfigStub: sinon.SinonStub
-  let treeConfigStub: sinon.SinonStub
 
   setup(() => {
     condenseConfigStub = sinon.stub(treeConfigs, 'getCondenseFileTreeConfig').callsFake(() => true)
-
-    treeConfigStub = sinon.stub(treeConfigs, 'getShowTreeConfig').callsFake(() => false)
   })
 
   teardown(() => {
     condenseConfigStub.restore()
-    treeConfigStub.restore()
   })
 
-  test('"expand" clears closedFolders, if there were any', () => {
-    const state = getMockState({
-      /* closedFolders: ['vsc', 'react', 'react/test'], */
+  test('Does not change state if visibleFileCount is 0', () => {
+    const mockRootFolders = getMockRootFolders({
+      fileTreeType: 'normal',
+      showTree: true,
     })
-    const expectedState = getMockState()
+    mockRootFolders.visibleFileCount = 0
 
-    expect(state).not.to.eql(expectedState)
-    toggleFolderStateBulk(state, { payload: 'expand', type: 'ws/toggleFolderStateBulk' })
-    expect(state).to.eql(expectedState)
-  })
-
-  test('"expand" does nothing if there are no closedFolders', () => {
-    const state = getMockState()
-    const expectedState = getMockState()
+    const state = getMockState({ ...mockRootFolders })
+    const expectedState = getMockState({ ...mockRootFolders })
 
     expect(state).to.eql(expectedState)
     toggleFolderStateBulk(state, { payload: 'expand', type: 'ws/toggleFolderStateBulk' })
     expect(state).to.eql(expectedState)
   })
 
-  test('"collapse" does nothing if there are no visibleFiles', () => {
-    const state = getMockState()
-    const expectedState = getMockState()
+  suite('Expand:', () => {
+    test('Opens closed folders', () => {
+      const mockRootFolders = getMockRootFolders({
+        closedFolders,
+        fileTreeType: 'normal',
+        showTree: true,
+      })
+      const mockExpectedRootFolders = getMockRootFolders({
+        fileTreeType: 'normal',
+        showTree: true,
+      })
 
-    expect(state).to.eql(expectedState)
-    toggleFolderStateBulk(state, { payload: 'collapse', type: 'ws/toggleFolderStateBulk' })
-    expect(state).to.eql(expectedState)
+      const state = getMockState({ ...mockRootFolders })
+      const expectedState = getMockState({ ...mockExpectedRootFolders })
+
+      expect(state).not.to.eql(expectedState)
+      toggleFolderStateBulk(state, { payload: 'expand', type: 'ws/toggleFolderStateBulk' })
+      expect(state).to.eql(expectedState)
+    })
   })
 
-  test('"collapse" does nothing if all folders are closed', () => {
-    const state = getMockState({
-      /* convertedFiles: getMockConvertedFiles(), */
-      /* closedFolders: getMockFolderList('normal'),
-      files: getMockFileList(),
-      fileTree: getMockFileTree('normal'),
-      treeFolders: getMockFolderList('normal'),
-      visibleFiles: getMockVisibleFiles(), */
-    })
-    const expectedState = getMockState({
-      /* convertedFiles: getMockConvertedFiles(), */
-      /* closedFolders: getMockFolderList('normal'), */
-      /* files: getMockFileList(), */
-      /* fileTree: getMockFileTree('normal'), */
-      /* treeFolders: getMockFolderList('normal'), */
-      /* visibleFiles: getMockVisibleFiles(), */
+  suite('Collapse:', () => {
+    test('Closes open folders', () => {
+      const mockRootFolders = getMockRootFolders({
+        closedFolders,
+        fileTreeType: 'normal',
+        showTree: true,
+      })
+      const mockExpectedRootFolders = getMockRootFolders({
+        fileTreeType: 'normal',
+        showTree: true,
+      })
+
+      const state = getMockState({ ...mockRootFolders })
+      const expectedState = getMockState({ ...mockExpectedRootFolders })
+
+      expect(state).not.to.eql(expectedState)
+      toggleFolderStateBulk(state, { payload: 'expand', type: 'ws/toggleFolderStateBulk' })
+      expect(state).to.eql(expectedState)
     })
 
-    expect(state).to.eql(expectedState)
-    toggleFolderStateBulk(state, { payload: 'collapse', type: 'ws/toggleFolderStateBulk' })
-    expect(state).to.eql(expectedState)
-  })
+    test('Does nothing if there are no visibleFiles', () => {
+      const mockRootFolders = getMockRootFolders({
+        closedFolders,
+        fileTreeType: 'normal',
+        showTree: true,
+      })
+      mockRootFolders.rootFolders[0].visibleFiles = []
 
-  test('"collapse" will close all folders if some are still open', () => {
-    const state = getMockState({
-      /* convertedFiles: getMockConvertedFiles(),
-      closedFolders: [...getMockFolderList('normal').slice(0, 1)],
-      files: getMockFileList(),
-      fileTree: getMockFileTree('normal'),
-      treeFolders: getMockFolderList('normal'),
-      visibleFiles: getMockVisibleFiles(), */
-    })
-    const expectedState = getMockState({
-      /* convertedFiles: getMockConvertedFiles(),
-      closedFolders: getMockFolderList('normal'),
-      files: getMockFileList(),
-      fileTree: getMockFileTree('normal'),
-      treeFolders: getMockFolderList('normal'),
-      visibleFiles: getMockVisibleFiles(), */
+      const state = getMockState({ ...mockRootFolders })
+      const expectedState = getMockState({ ...mockRootFolders })
+
+      expect(state).to.eql(expectedState)
+      toggleFolderStateBulk(state, { payload: 'collapse', type: 'ws/toggleFolderStateBulk' })
+      expect(state).to.eql(expectedState)
     })
 
-    expect(state).not.to.eql(expectedState)
-    toggleFolderStateBulk(state, { payload: 'collapse', type: 'ws/toggleFolderStateBulk' })
-    expect(state).to.eql(expectedState)
+    test('Does nothing if there are no treeFolders', () => {
+      const mockRootFolders = getMockRootFolders({
+        closedFolders,
+        fileTreeType: 'normal',
+        showTree: true,
+      })
+      mockRootFolders.rootFolders[0].treeFolders = []
+
+      const state = getMockState({ ...mockRootFolders })
+      const expectedState = getMockState({ ...mockRootFolders })
+
+      expect(state).to.eql(expectedState)
+      toggleFolderStateBulk(state, { payload: 'collapse', type: 'ws/toggleFolderStateBulk' })
+      expect(state).to.eql(expectedState)
+    })
   })
 })

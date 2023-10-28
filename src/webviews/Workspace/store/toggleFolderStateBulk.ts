@@ -1,10 +1,14 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { WorkspaceState, PayloadToggleFolderStateBulk } from '../WorkspaceViewProvider.interface'
+import { PayloadToggleFolderStateBulk, WorkspaceState } from '../WorkspaceViewProvider.interface'
 
 export const toggleFolderStateBulk = (
   state: WorkspaceState,
   action: PayloadAction<PayloadToggleFolderStateBulk>
 ): void => {
+  if (state.visibleFileCount < 1) {
+    return
+  }
+
   state.rootFolders = state.rootFolders.map((rootFolder) => {
     const newFolder = { ...rootFolder }
 

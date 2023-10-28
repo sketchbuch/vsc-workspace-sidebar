@@ -20,6 +20,7 @@ import {
 type GetMockRootFolders = Pick<WorkspaceState, 'fileCount' | 'rootFolders' | 'visibleFileCount'>
 
 type GetMockRootFoldersConfig = {
+  closedFolders: string[]
   fileTreeType: GetFileTreeType
   rootFoldersFiles: FindRootFolderFiles[]
   searchTerm: string
@@ -33,6 +34,7 @@ const defaultRootFolderFiles: FindRootFolderFiles[] = [
 ]
 
 const defaultGetMockRootFoldersConfig: GetMockRootFoldersConfig = {
+  closedFolders: [],
   fileTreeType: 'normal',
   rootFoldersFiles: defaultRootFolderFiles,
   searchTerm: '',
@@ -60,7 +62,15 @@ export const getMockState = (state: Partial<WorkspaceState> = {}): WorkspaceStat
 export const getMockRootFolders = (
   config: Partial<GetMockRootFoldersConfig> = {}
 ): GetMockRootFolders => {
-  const { fileTreeType, rootFoldersFiles, searchTerm, showTree, sortConverted, sortVsible } = {
+  const {
+    closedFolders,
+    fileTreeType,
+    rootFoldersFiles,
+    searchTerm,
+    showTree,
+    sortConverted,
+    sortVsible,
+  } = {
     ...defaultGetMockRootFoldersConfig,
     ...config,
   }
@@ -77,7 +87,7 @@ export const getMockRootFolders = (
     visibleFileCount += visibleFiles.length
 
     return {
-      closedFolders: [],
+      closedFolders,
       convertedFiles,
       files,
       fileTree,
