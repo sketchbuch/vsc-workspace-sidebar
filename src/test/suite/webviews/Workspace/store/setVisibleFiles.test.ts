@@ -7,7 +7,7 @@ import { setVisibleFiles } from '../../../../../webviews/Workspace/store/setVisi
 import { ROOT_FOLDER_PATH } from '../../../../mocks/mockFileData'
 import { getMockRootFolders, getMockState } from '../../../../mocks/mockState'
 
-suite.only('Webviews > Workspace > Store > setVisibleFiles()', () => {
+suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
   let compactConfigStub: sinon.SinonStub
   let condenseConfigStub: sinon.SinonStub
   let folderConfigStub: sinon.SinonStub
