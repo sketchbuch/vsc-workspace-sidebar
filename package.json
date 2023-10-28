@@ -119,9 +119,9 @@
             "scope": "application",
             "type": "string"
           },
-          "workspaceSidebar.folders": {
+          "workspaceSidebar.rootFolders": {
             "default": [],
-            "description": "%config.folders.description%",
+            "description": "%config.rootFolders.description%",
             "scope": "application",
             "type": "array",
             "properties": {
@@ -177,13 +177,13 @@
           },
           "workspaceSidebar.search.caseInsensitive": {
             "default": false,
-            "description": "%config.workspace.search.caseInsensitive.description%",
+            "description": "%config.search.caseInsensitive.description%",
             "scope": "application",
             "type": "boolean"
           },
           "workspaceSidebar.search.matchStart": {
             "default": false,
-            "description": "%config.workspace.search.matchStart.description%",
+            "description": "%config.search.matchStart.description%",
             "scope": "application",
             "type": "boolean"
           }
