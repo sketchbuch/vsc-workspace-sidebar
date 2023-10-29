@@ -1,4 +1,3 @@
-import * as vscode from 'vscode'
 import { t } from 'vscode-ext-localisation'
 import {
   FS_WEBVIEW_CODICONS_CSS,
@@ -16,11 +15,7 @@ import { invalidView } from '../views/invalidView'
 import { listView } from '../views/listView'
 import { loadingView } from '../views/loadingView'
 
-export const defaultTemplate = (
-  templateVars: TemplateVars,
-  state: WorkspaceState,
-  webview: vscode.Webview
-): string => {
+export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceState): string => {
   const {
     cssData,
     codiconsFolderUri,

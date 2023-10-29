@@ -50,11 +50,7 @@ export interface TemplateVars {
   uiFolderUri: vscode.Uri
 }
 
-export type GetHtmlTemplateFunc<TState> = (
-  templateVars: TemplateVars,
-  state: TState,
-  webview: vscode.Webview
-) => string
+export type GetHtmlTemplateFunc<TState> = (templateVars: TemplateVars, state: TState) => string
 
 export interface GetHtml<TState> {
   cssData: CssData | null

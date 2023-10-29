@@ -49,7 +49,6 @@ export const getHtml = <T>(
       title,
       uiFolderUri,
     },
-    state,
-    htmlData.webview
+    state
   )
 }
