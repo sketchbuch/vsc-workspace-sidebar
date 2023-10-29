@@ -102,3 +102,4 @@ This extension is localised, if you want it in your language please send me a tr
 - Show paths should only apply if there are duplicate labels in the root folder, across root folders it should not matter
 - Show paths maybe needed if there are workspaces with the same name and the folders are compacted (tree)
 - Check if toggleFolderState needs to check if the correct root folder is being checked
+- Check if home folder is used if no folders

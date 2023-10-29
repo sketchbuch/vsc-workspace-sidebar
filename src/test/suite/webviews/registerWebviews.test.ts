@@ -3,7 +3,15 @@ import * as sinon from 'sinon'
 import * as vscode from 'vscode'
 import * as treeConfigs from '../../../config/treeview'
 import { FS_WS_EXT } from '../../../constants/fs'
-import { configOptions, WS_CONFIG } from '../../../webviews/configOptions'
+import {
+  configOptions,
+  refreshConfigOptions,
+  rerenderConfigOptions,
+  searchConfigOptions,
+  treeConfigOptions,
+  visibleFilesConfigOptions,
+  WS_CONFIG,
+} from '../../../webviews/configOptions'
 import { registerWebviews } from '../../../webviews/registerWebviews'
 import { WorkspaceViewProvider } from '../../../webviews/Workspace/WorkspaceViewProvider'
 import { getMockContext } from '../../mocks/mockContext'
@@ -46,8 +54,7 @@ suite('Webviews > registerWebviews()', () => {
 
   const getAffectsConfigSpy = (configKey: string) => {
     return sinon.spy(
-      (configPath: string) =>
-        configPath === `${WS_CONFIG}${configKey}` || configPath.includes(WS_CONFIG)
+      (configPath: string) => configPath === configKey || configPath.includes(WS_CONFIG)
     )
   }
 
@@ -55,6 +62,20 @@ suite('Webviews > registerWebviews()', () => {
     const configOpt = configOptions.find((opt) => opt.config.includes(optionWanted))
 
     return configOpt ? [configOpt] : []
+  }
+
+  const testRefreshOption = (opt: string, isRerender: boolean) => {
+    test(opt, () => {
+      const affectsConfigSpy = getAffectsConfigSpy(opt)
+      const configOpts = getConfigOptions(opt)
+
+      registerWebviews(mockContext, ws, configOpts)
+      callChangeConfigCallaback(affectsConfigSpy)
+
+      sinon.assert.callCount(affectsConfigSpy, 2) // Check for WS_CONFIG and CONFIG_OPTION
+      sinon.assert.callCount(refreshSpy, 1)
+      expect(refreshSpy.getCalls()[0].args[0]).to.equal(isRerender)
+    })
   }
 
   test('Sets up webview as expected', () => {
@@ -71,33 +92,48 @@ suite('Webviews > registerWebviews()', () => {
     createStub.restore()
   })
 
-  suite('Config changes that call refresh():', () => {
-    const testOption = (opt: string, isRerender: boolean) => {
-      test(`${WS_CONFIG}${opt}`, () => {
+  suite('Refresh config options:', () => {
+    refreshConfigOptions.forEach((opt) => {
+      testRefreshOption(opt.config, false)
+    })
+  })
+
+  suite('Rerender config options:', () => {
+    rerenderConfigOptions.forEach((opt) => {
+      testRefreshOption(opt.config, true)
+    })
+  })
+
+  suite('Search config options:', () => {
+    let searchSpy: sinon.SinonSpy
+
+    setup(() => {
+      searchSpy = sinon.spy(ws, 'updateSearch')
+    })
+
+    teardown(() => {
+      searchSpy.restore()
+    })
+
+    const testOption = (opt: string) => {
+      test(opt, () => {
         const affectsConfigSpy = getAffectsConfigSpy(opt)
         const configOpts = getConfigOptions(opt)
 
         registerWebviews(mockContext, ws, configOpts)
         callChangeConfigCallaback(affectsConfigSpy)
 
-        sinon.assert.callCount(affectsConfigSpy, 2) // Check for WS_CONFIG and CONFIG_OPTION
-        sinon.assert.callCount(refreshSpy, 1)
-        expect(refreshSpy.getCalls()[0].args[0]).to.equal(isRerender)
+        sinon.assert.callCount(searchSpy, 1)
+        sinon.assert.callCount(searchSpy, 1)
       })
     }
 
-    ;[
-      { opt: '.actions', isRerender: true },
-      { opt: '.cleanLabels', isRerender: true },
-      { opt: '.depth', isRerender: false },
-      { opt: '.folder', isRerender: false },
-      { opt: '.searchMinimum', isRerender: true },
-    ].forEach((opt) => {
-      testOption(opt.opt, opt.isRerender)
+    searchConfigOptions.forEach((opt) => {
+      testOption(opt.config)
     })
   })
 
-  suite('Config changes that call updateVisibleFiles():', () => {
+  suite('Visible files config options:', () => {
     let updateVisibleSpy: sinon.SinonSpy
 
     setup(() => {
@@ -109,7 +145,7 @@ suite('Webviews > registerWebviews()', () => {
     })
 
     const testOption = (opt: string) => {
-      test(`${WS_CONFIG}${opt}`, () => {
+      test(opt, () => {
         const affectsConfigSpy = getAffectsConfigSpy(opt)
         const configOpts = getConfigOptions(opt)
 
@@ -121,12 +157,12 @@ suite('Webviews > registerWebviews()', () => {
       })
     }
 
-    ;['.showFolderHierarchy', '.showPaths'].forEach((opt: string) => {
-      testOption(opt)
+    visibleFilesConfigOptions.forEach((opt) => {
+      testOption(opt.config)
     })
   })
 
-  suite('Config changes that call updateFileTree():', () => {
+  suite('Tree config options:', () => {
     let treeConfigStub: sinon.SinonStub
     let updateTreeSpy: sinon.SinonSpy
 
@@ -141,7 +177,7 @@ suite('Webviews > registerWebviews()', () => {
     })
 
     const testOption = (opt: string, isTree: boolean) => {
-      test(`${WS_CONFIG}${opt} - ${isTree ? 'Tree' : 'Flat List'}`, () => {
+      test(`${opt} - ${isTree ? 'Tree' : 'Flat List'}`, () => {
         treeConfigStub.callsFake(() => isTree)
 
         const affectsConfigSpy = getAffectsConfigSpy(opt)
@@ -155,14 +191,9 @@ suite('Webviews > registerWebviews()', () => {
       })
     }
 
-    const treeOptions = ['.condenseFileTree', '.showRootFolder']
-
-    treeOptions.forEach((opt: string) => {
-      testOption(opt, false)
-    })
-
-    treeOptions.forEach((opt: string) => {
-      testOption(opt, true)
+    treeConfigOptions.forEach((opt) => {
+      testOption(opt.config, false)
+      testOption(opt.config, true)
     })
   })
 
