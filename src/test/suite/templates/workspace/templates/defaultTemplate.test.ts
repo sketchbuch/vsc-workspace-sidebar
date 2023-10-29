@@ -1,13 +1,14 @@
-/* import { expect } from 'chai'
+import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { defaultTemplate } from '../../../../../templates/workspace/templates/defaultTemplate'
 import * as content from '../../../../../templates/workspace/views/loadingView'
 import { getMockState } from '../../../../mocks/mockState'
 import { getMockTemplateVars } from '../../../../mocks/mockTemplateVars'
-import { getMockWebviewView } from '../../../../mocks/mockWebview' */
+import { getMockThemeData } from '../../../../mocks/mockThemeData'
+import { getMockWebviewView } from '../../../../mocks/mockWebview'
 
 suite('Templates > Workspace > Templates: defaultTemplate()', () => {
-  /* const state = getMockState()
+  const state = getMockState()
   const templateVars = getMockTemplateVars()
   const webview = getMockWebviewView()
 
@@ -33,7 +34,7 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
       const TITLE = '2/10'
       const result = defaultTemplate(
         getMockTemplateVars({ title: TITLE }),
-        getMockState({ state: 'list' }),
+        getMockState({ view: 'list' }),
         webview.webview
       )
       expect(result).contains(`<title>Workspaces: ${TITLE}</title>`)
@@ -82,5 +83,74 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
 
       contentStub.restore()
     })
-  }) */
+  })
+
+  suite('File Icon CSS:', () => {
+    const fileIconCss = '<style id="file-icon-css"'
+
+    test('Not rendered if no cssData is null', () => {
+      const templateVars = getMockTemplateVars({ cssData: null })
+      const result = defaultTemplate(templateVars, state, webview.webview)
+
+      expect(result).not.contains(fileIconCss)
+    })
+
+    test('Not rendered if no themeData is null', () => {
+      const templateVars = getMockTemplateVars({ themeData: null })
+      const result = defaultTemplate(templateVars, state, webview.webview)
+
+      expect(result).not.contains(fileIconCss)
+    })
+
+    test('Not rendered if themeData.state is error', () => {
+      const themeData = getMockThemeData({ state: 'error' })
+      const templateVars = getMockTemplateVars({ themeData })
+      const result = defaultTemplate(templateVars, state, webview.webview)
+
+      expect(result).not.contains(fileIconCss)
+    })
+
+    test('Not rendered if themeData.state is idle', () => {
+      const themeData = getMockThemeData({ state: 'idle' })
+      const templateVars = getMockTemplateVars({ themeData })
+      const result = defaultTemplate(templateVars, state, webview.webview)
+
+      expect(result).not.contains(fileIconCss)
+    })
+
+    test('Not rendered if themeData.state is loading', () => {
+      const themeData = getMockThemeData({ state: 'loading' })
+      const templateVars = getMockTemplateVars({ themeData })
+      const result = defaultTemplate(templateVars, state, webview.webview)
+
+      expect(result).not.contains(fileIconCss)
+    })
+
+    test('Not rendered if themeData.data is null', () => {
+      const themeData = getMockThemeData({ data: null, state: 'ready' })
+      const templateVars = getMockTemplateVars({ themeData })
+      const result = defaultTemplate(templateVars, state, webview.webview)
+
+      expect(result).not.contains(fileIconCss)
+    })
+
+    test('Not rendered if themeData.themeId is null', () => {
+      const templateVars = getMockTemplateVars()
+      const result = defaultTemplate(templateVars, state, webview.webview)
+
+      expect(result).not.contains(fileIconCss)
+    })
+
+    test('Renders if themeData and cssData are ok', () => {
+      const templateVars = getMockTemplateVars({
+        cssData: {
+          defCount: 1,
+          fontFaceCss: '',
+          iconCss: '',
+        },
+      })
+      const result = defaultTemplate(templateVars, state, webview.webview)
+      expect(result).contains(`<style id="file-icon-css"`)
+    })
+  })
 })
