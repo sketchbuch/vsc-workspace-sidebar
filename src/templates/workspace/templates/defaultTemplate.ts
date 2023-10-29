@@ -57,7 +57,7 @@ export const defaultTemplate = (
         <title>${titleAttr}</title>
         <link href="${cssFolderUri}/${FS_WEBVIEW_WORKSPACE_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
         <link href="${codiconsFolderUri}/${FS_WEBVIEW_CODICONS_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
-        ${fileIconCss(nonce, themeData, cssData, webview)}
+        ${fileIconCss(nonce, themeData, cssData)}
       </head>
 
       <body>
