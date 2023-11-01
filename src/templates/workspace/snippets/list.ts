@@ -11,7 +11,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
 
   if (fileCount < 1) {
     return ''
-  } else if (search && visibleFileCount < 1) {
+  } else if (search.term && visibleFileCount < 1) {
     return `
       <div class="list__searchedout">
         <p>${t('workspace.list.search.noMatch')}</p>

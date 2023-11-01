@@ -1,27 +1,17 @@
-/* import { expect } from 'chai'
+import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { list } from '../../../../../templates/workspace/snippets/list'
 import * as item from '../../../../../templates/workspace/snippets/listItem'
 import * as tree from '../../../../../templates/workspace/snippets/tree'
-import {
-  getMockConvertedFiles,
-  getMockFileList,
-  getMockFileTree,
-} from '../../../../mocks/mockFileData'
+import { SEARCH_TERM } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
 import { getMockSearchState, getMockState } from '../../../../mocks/mockState'
- */
-suite('Templates > Workspace > Snippets: list()', () => {
-  /* const mockRenderVars = getMockRenderVars()
+
+suite.only('Templates > Workspace > Snippets: list()', () => {
+  const mockState = getMockState()
+  const mockRenderVars = getMockRenderVars()
   let itemSpy: sinon.SinonSpy
   let treeSpy: sinon.SinonSpy
-
-  const mockState = getMockState({
-   convertedFiles: getMockConvertedFiles(),
-    files: getMockFileList(),
-    fileTree: getMockFileTree('normal'),
-    visibleFiles: getMockConvertedFiles(),
-  })
 
   setup(() => {
     itemSpy = sinon.spy(item, 'listItem')
@@ -34,12 +24,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
   })
 
   test('Renders nothing if there are no files', () => {
-    const result = list(
-      getMockState({
-         files: [], visibleFiles: [] 
-      }),
-      mockRenderVars
-    )
+    const result = list(getMockState({ fileCount: 0 }), mockRenderVars)
 
     expect(result).to.be.a('string')
     expect(result).to.equal('')
@@ -48,9 +33,8 @@ suite('Templates > Workspace > Snippets: list()', () => {
   test('Renders search-out message if no visibleFiles and search is in progress', () => {
     const result = list(
       getMockState({
-        files: getMockFileList(),
-        search: getMockSearchState({ term: 'VSCode' }),
-        visibleFiles: [],
+        search: getMockSearchState({ term: SEARCH_TERM }),
+        visibleFileCount: 0,
       }),
       mockRenderVars
     )
@@ -59,6 +43,19 @@ suite('Templates > Workspace > Snippets: list()', () => {
     expect(result).contains('<div class="list__searchedout">')
     expect(result).contains('No workspaces matched your search terms')
   })
+
+  test.only('Renders list if not tree view', () => {
+    const result = list(mockState, mockRenderVars)
+
+    expect(result).to.be.a('string')
+    expect(result).contains('<ul class="list__list')
+    expect(result).not.contains('list__styled-list--tree')
+
+    sinon.assert.callCount(itemSpy, mockState.visibleFiles.length)
+    sinon.assert.notCalled(treeSpy)
+  })
+
+  /* 
 
   test('Renders list if not tree view', () => {
     const result = list(mockState, mockRenderVars)
