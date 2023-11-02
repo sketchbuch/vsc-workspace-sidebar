@@ -1,30 +1,36 @@
 import { expect } from 'chai'
+import os from 'os'
 import * as sinon from 'sinon'
 import { list } from '../../../../../templates/workspace/snippets/list'
 import * as item from '../../../../../templates/workspace/snippets/listItem'
+import * as rfm from '../../../../../templates/workspace/snippets/rootFolderMessage'
 import * as tree from '../../../../../templates/workspace/snippets/tree'
-import { SEARCH_TERM } from '../../../../mocks/mockFileData'
+import { OS_HOMEFOLDER, SEARCH_TERM } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
-import { getMockSearchState, getMockState } from '../../../../mocks/mockState'
+import { getMockRootFolders, getMockSearchState, getMockState } from '../../../../mocks/mockState'
 
-suite.only('Templates > Workspace > Snippets: list()', () => {
-  const mockState = getMockState()
-  const mockRenderVars = getMockRenderVars()
+suite('Templates > Workspace > Snippets: list()', () => {
   let itemSpy: sinon.SinonSpy
+  let osStub: sinon.SinonSpy
+  let rfMsg: sinon.SinonSpy
   let treeSpy: sinon.SinonSpy
 
   setup(() => {
     itemSpy = sinon.spy(item, 'listItem')
+    osStub = sinon.stub(os, 'homedir').callsFake(() => OS_HOMEFOLDER)
+    rfMsg = sinon.spy(rfm, 'rootFolderMessage')
     treeSpy = sinon.spy(tree, 'tree')
   })
 
   teardown(() => {
     itemSpy.restore()
+    osStub.restore()
+    rfMsg.restore()
     treeSpy.restore()
   })
 
   test('Renders nothing if there are no files', () => {
-    const result = list(getMockState({ fileCount: 0 }), mockRenderVars)
+    const result = list(getMockState({ fileCount: 0 }), getMockRenderVars())
 
     expect(result).to.be.a('string')
     expect(result).to.equal('')
@@ -33,10 +39,11 @@ suite.only('Templates > Workspace > Snippets: list()', () => {
   test('Renders search-out message if no visibleFiles and search is in progress', () => {
     const result = list(
       getMockState({
+        fileCount: 1,
         search: getMockSearchState({ term: SEARCH_TERM }),
         visibleFileCount: 0,
       }),
-      mockRenderVars
+      getMockRenderVars()
     )
 
     expect(result).to.be.a('string')
@@ -44,32 +51,27 @@ suite.only('Templates > Workspace > Snippets: list()', () => {
     expect(result).contains('No workspaces matched your search terms')
   })
 
-  test.only('Renders list if not tree view', () => {
-    const result = list(mockState, mockRenderVars)
-
-    expect(result).to.be.a('string')
-    expect(result).contains('<ul class="list__list')
-    expect(result).not.contains('list__styled-list--tree')
-
-    sinon.assert.callCount(itemSpy, mockState.visibleFiles.length)
-    sinon.assert.notCalled(treeSpy)
-  })
-
-  /* 
-
   test('Renders list if not tree view', () => {
+    const mockRootFolders = getMockRootFolders({ showTree: false })
+    const mockState = getMockState({ ...mockRootFolders })
+    const mockRenderVars = getMockRenderVars({ showTree: false })
+
     const result = list(mockState, mockRenderVars)
 
     expect(result).to.be.a('string')
     expect(result).contains('<ul class="list__list')
     expect(result).not.contains('list__styled-list--tree')
 
-    sinon.assert.callCount(itemSpy, mockState.visibleFiles.length)
+    sinon.assert.callCount(itemSpy, mockState.visibleFileCount)
     sinon.assert.notCalled(treeSpy)
   })
 
   test('Renders tree if tree view', () => {
-    const result = list(mockState, getMockRenderVars({ showTree: true }))
+    const mockRootFolders = getMockRootFolders({ showTree: true })
+    const mockState = getMockState({ ...mockRootFolders })
+    const mockRenderVars = getMockRenderVars({ showTree: true })
+
+    const result = list(mockState, mockRenderVars)
 
     expect(result).to.be.a('string')
     expect(result).contains('<ul class="list__list')
@@ -80,10 +82,11 @@ suite.only('Templates > Workspace > Snippets: list()', () => {
   })
 
   test('Renders list if tree is null', () => {
-    const result = list(
-      { ...mockState  fileTree: null  },
-      getMockRenderVars({ showTree: true })
-    )
+    const mockRootFolders = getMockRootFolders({ showTree: false })
+    const mockState = getMockState({ ...mockRootFolders })
+    const mockRenderVars = getMockRenderVars({ showTree: true })
+
+    const result = list(mockState, mockRenderVars)
 
     expect(result).to.be.a('string')
     expect(result).contains('<ul class="list__list')
@@ -91,5 +94,5 @@ suite.only('Templates > Workspace > Snippets: list()', () => {
 
     sinon.assert.called(itemSpy)
     sinon.assert.notCalled(treeSpy)
-  }) */
+  })
 })
