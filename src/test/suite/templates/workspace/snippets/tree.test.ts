@@ -1,4 +1,4 @@
-/* import { expect } from 'chai'
+import { expect } from 'chai'
 import * as sinon from 'sinon'
 import * as sort from '../../../../../templates/helpers/sortTreeChildren'
 import * as trees from '../../../../../templates/workspace/snippets/tree'
@@ -7,27 +7,24 @@ import * as item from '../../../../../templates/workspace/snippets/treeItemFile'
 import * as folder from '../../../../../templates/workspace/snippets/treeItemFolder'
 import { FileTree } from '../../../../../webviews/Workspace/helpers/getFileTree'
 import {
-  file1,
-  file2,
-  file3,
-  file4,
   FOLDER1,
   FOLDER3,
   FOLDER4,
-  getMockFileList,
-  getMockFileTree,
   ROOT_FOLDER,
   SUBFOLDER1,
   SUBFOLDER2,
   SUBFOLDER3,
   SUBFOLDER4,
+  file1,
+  file2,
+  file3,
+  file4,
+  getMockFileList,
 } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
-import { getMockState } from '../../../../mocks/mockState' */
+import { getMockRootFolders, getMockState } from '../../../../mocks/mockState'
 
 suite('Templates > Workspace > Snippets: tree()', () => {
-  /* const state = getMockState()
-  const mockRenderVars = getMockRenderVars()
   let folderSpy: sinon.SinonSpy
   let itemSpy: sinon.SinonSpy
   let sortSpy: sinon.SinonSpy
@@ -65,39 +62,37 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     treeSpy.restore()
   })
 
-  test('An empty tree will render just the root folder', () => {
-    const result = tree(emptyRootTree, 0, state, getMockRenderVars({ showRootFolder: true }))
+  test('An empty tree will render nothing', () => {
+    const mockRootFolders = getMockRootFolders({ showTree: true })
+    const state = getMockState({ ...mockRootFolders })
+    const renderVars = getMockRenderVars()
+
+    const result = tree(emptyRootTree, 0, [], state, renderVars)
 
     expect(result).to.be.a('string')
 
-    sinon.assert.calledOnce(folderSpy)
+    sinon.assert.notCalled(folderSpy)
     sinon.assert.notCalled(itemSpy)
     sinon.assert.calledOnce(sortSpy)
     sinon.assert.calledOnce(treeSpy)
   })
 
-  test('Children are not sorted if a folder is closed', () => {
-    tree(closedFolderTree, 0, { ...state, closedFolders: [FOLDER1] }, mockRenderVars)
+  test('Children are not sorted if a non-root folder is closed', () => {
+    const mockRootFolders = getMockRootFolders({ closedFolders: [FOLDER1], showTree: true })
+    const state = getMockState({ ...mockRootFolders })
+    const renderVars = getMockRenderVars()
+
+    tree(closedFolderTree, 0, [FOLDER1], state, renderVars)
+
     sinon.assert.notCalled(sortSpy)
   })
 
-  test('Root folder is rendered if there are root level files', () => {
-    const rootChildrenFileTree: FileTree = { ...getMockFileTree('normal'), files: [{ ...file1 }] }
-    tree(rootChildrenFileTree, 0, state, getMockRenderVars({ showRootFolder: true }))
-
-    expect(folderSpy.args[0][0].folderPathSegment).to.equal(ROOT_FOLDER)
-  })
-
-  test('Root folder is not rendered if there are no root level files', () => {
-    tree(getMockFileTree('normal'), 0, state, mockRenderVars)
-
-    expect(folderSpy.args[0][0].folderPathSegment).not.to.equal(ROOT_FOLDER)
-    expect(folderSpy.args[0][1]).to.equal(0) // Depth should have been zero for at least one non-root folder
-    expect(folderSpy.args[0][0].folderPathSegment).to.equal(FOLDER1)
-  })
-
   test('All files/folders are rendered', () => {
-    tree(getMockFileTree('normal'), 0, state, mockRenderVars)
+    const mockRootFolders = getMockRootFolders({ fileTreeType: 'normal', showTree: true })
+    const state = getMockState({ ...mockRootFolders })
+    const renderVars = getMockRenderVars()
+
+    tree(mockRootFolders.rootFolders[0]?.fileTree!, 0, [], state, renderVars)
 
     sinon.assert.callCount(itemSpy, getMockFileList().length)
     // Order like this due to child sorting
@@ -114,5 +109,5 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     expect(folderSpy.args[4][0].label).to.equal(SUBFOLDER3)
     expect(folderSpy.args[5][0].label).to.equal(FOLDER4)
     expect(folderSpy.args[6][0].label).to.equal(SUBFOLDER4)
-  }) */
+  })
 })

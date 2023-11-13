@@ -1,13 +1,10 @@
 import { RenderVars } from '../../../webviews/webviews.interface'
 import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree'
-import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { isFile } from '../../helpers/isFile'
 import { sortTreeChildren, TreeChildren } from '../../helpers/sortTreeChildren'
 import { treeItemFile } from './treeItemFile'
 import { treeItemFolder } from './treeItemFolder'
-
-const isFile = (item: File | FileTree): item is File => {
-  return (item as File).file !== undefined
-}
 
 export const tree = (
   branch: FileTree,
@@ -21,16 +18,15 @@ export const tree = (
 
   let children: TreeChildren = []
   let fileDepth = depth
-  let treeDepth = depth + 1
   let showItemFolder = true
+  let treeDepth = depth + 1
 
-  // If this is the root level, and show root folder is false,
-  // ignore the root folder and just show the subfolders/subworkspaces
+  // If this is the root level, ignore the root folder and just show the subfolders/subworkspaces
   if (isRoot) {
     children = sortTreeChildren([...sub, ...files])
     fileDepth = -1
-    treeDepth = depth
     showItemFolder = false
+    treeDepth = depth
   }
 
   if (showItemFolder && !isClosed) {

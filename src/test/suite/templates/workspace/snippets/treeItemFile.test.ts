@@ -44,9 +44,7 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
     expect(result).to.be.a('string')
     expect(result).contains(`data-file="${file.file}"`)
     expect(result).contains(`data-depth="${DEPTH}"`)
-    expect(result).contains(
-      `<span class="list__element" title="Open '${file.label}' in this window">`
-    )
+    expect(result).contains(`title="Open '${file.label}' in this window">`)
     expect(result).contains(`<span class="list__title">${file.label}</span>`)
 
     sinon.assert.calledOnce(indentSpy)
@@ -130,5 +128,13 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
 
     sinon.assert.notCalled(iconTreeSpy)
     sinon.assert.calledOnce(iconFileSpy)
+  })
+
+  test('Renders tree icon if no file icons', () => {
+    const file = { ...file1, showPath: true }
+    treeItemFile(file, DEPTH, mockState, getMockRenderVars({ fileIconsActive: false }))
+
+    sinon.assert.calledOnce(iconTreeSpy)
+    sinon.assert.notCalled(iconFileSpy)
   })
 })
