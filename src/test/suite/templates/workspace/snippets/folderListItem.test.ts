@@ -10,7 +10,9 @@ suite('Templates > Workspace > Snippets: folderListItem()', () => {
 
     expect(result).to.be.a('string')
     expect(result).not.to.equal('')
-    expect(result).contains(folder.name)
-    expect(result).contains(folder.uri.fsPath)
+    expect(result).contains(`title="${folder.name}`)
+    expect(result).contains(`<span class="list__title">${folder.name}</span>`)
+    expect(result).contains(`data-file="${folder.uri.fsPath}`)
+    expect(result).contains(`<span class="list__description">${folder.uri.fsPath}</span>`)
   })
 })
