@@ -12,7 +12,7 @@ export const refreshConfigOptions: ConfigOptions = [
   { config: `${WS_CONFIG}.depth`, type: 'refresh' },
   { config: `${WS_CONFIG}.folder`, type: 'refresh' },
   { config: `${WS_CONFIG}.folders.excluded`, type: 'refresh' },
-  { config: `${WS_CONFIG}.folders`, type: 'refresh' },
+  { config: `${WS_CONFIG}.rootFolders`, type: 'refresh' },
 ]
 
 export const rerenderConfigOptions: ConfigOptions = [
