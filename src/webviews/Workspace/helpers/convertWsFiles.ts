@@ -10,20 +10,16 @@ export const convertWsFiles = (
   wsFiles: WorkspaceFiles,
   selected: string
 ): File[] => {
-  const osHomeDir = os.homedir()
-
-  const filteredFiles = [...wsFiles].filter((file) => isWorkspaceFile(file, 'file'))
-
-  const convertedFiles = filteredFiles.map((file): File => {
-    return {
-      cleanedLabel: getLabel(file, true),
-      file,
-      isSelected: isSelected(file, selected),
-      label: getLabel(file, false),
-      path: getPath(file, folder, osHomeDir),
-      showPath: true,
-    }
-  })
-
-  return convertedFiles
+  return [...wsFiles]
+    .filter((file) => isWorkspaceFile(file, 'file'))
+    .map((file): File => {
+      return {
+        cleanedLabel: getLabel(file, true),
+        file,
+        isSelected: isSelected(file, selected),
+        label: getLabel(file, false),
+        path: getPath(file, folder, os.homedir()),
+        showPath: true,
+      }
+    })
 }

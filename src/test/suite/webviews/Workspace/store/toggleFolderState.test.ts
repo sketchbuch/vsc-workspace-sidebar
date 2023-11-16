@@ -20,7 +20,10 @@ suite('Webviews > Workspace > Store > toggleFolderState()', () => {
     const expectedState = getMockState({ ...mockExpectedRootFolders })
 
     expect(state).not.to.eql(expectedState)
-    toggleFolderState(state, { payload: FOLDER, type: 'ws/toggleFolderState' })
+    toggleFolderState(state, {
+      payload: { folder: FOLDER, folderPath: mockRootFolders.rootFolders[0].folderPath },
+      type: 'ws/toggleFolderState',
+    })
     expect(state).to.eql(expectedState)
   })
 
@@ -39,7 +42,10 @@ suite('Webviews > Workspace > Store > toggleFolderState()', () => {
     const expectedState = getMockState({ ...mockExpectedRootFolders })
 
     expect(state).not.to.eql(expectedState)
-    toggleFolderState(state, { payload: FOLDER, type: 'ws/toggleFolderState' })
+    toggleFolderState(state, {
+      payload: { folder: FOLDER, folderPath: mockRootFolders.rootFolders[0].folderPath },
+      type: 'ws/toggleFolderState',
+    })
     expect(state).to.eql(expectedState)
   })
 
@@ -48,34 +54,31 @@ suite('Webviews > Workspace > Store > toggleFolderState()', () => {
     const expectedState = getMockState()
 
     expect(state).to.eql(expectedState)
-    toggleFolderState(state, { payload: '', type: 'ws/toggleFolderState' })
+    toggleFolderState(state, {
+      payload: { folder: '', folderPath: '' },
+      type: 'ws/toggleFolderState',
+    })
     expect(state).to.eql(expectedState)
   })
 
-  /*   test('Adds open folder to closed list updates state as expected', () => {
-    const state = getMockState()
-    const expectedState =
-      getMockState({
-      closedFolders: [FOLDER],
+  test('Leaves state as-is if folderPath does not match rootFolder.folderPath', () => {
+    const mockRootFolders = getMockRootFolders({
+      fileTreeType: 'normal',
+      showTree: true,
+    })
+    const mockExpectedRootFolders = getMockRootFolders({
+      fileTreeType: 'normal',
+      showTree: true,
     })
 
-    expect(state).not.to.eql(expectedState)
-    toggleFolderState(state, { payload: FOLDER, type: 'ws/toggleFolderState' })
+    const state = getMockState({ ...mockRootFolders })
+    const expectedState = getMockState({ ...mockExpectedRootFolders })
+
+    expect(state).to.eql(expectedState)
+    toggleFolderState(state, {
+      payload: { folder: FOLDER, folderPath: '/some/other/url' },
+      type: 'ws/toggleFolderState',
+    })
     expect(state).to.eql(expectedState)
   })
-
-  test('Removes closed folder from closed list', () => {
-    const state =
-      getMockState({
-      closedFolders: [FOLDER],
-    })
-    const expectedState =
-      getMockState({
-      closedFolders: [],
-    })
-
-    expect(state).not.to.eql(expectedState)
-    toggleFolderState(state, { payload: FOLDER, type: 'ws/toggleFolderState' })
-    expect(state).to.eql(expectedState)
-  }) */
 })
