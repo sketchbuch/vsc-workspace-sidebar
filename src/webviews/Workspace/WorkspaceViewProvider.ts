@@ -29,6 +29,7 @@ import {
   FolderState,
   Payload,
   WorkspaceCacheRootFolders,
+  WorkspaceRootFolderCache,
   WorkspaceState,
 } from './WorkspaceViewProvider.interface'
 import { fetch } from './store/fetch'
@@ -70,14 +71,13 @@ export class WorkspaceViewProvider
   }
 
   private getCacheFiles() {
-    return null
-    /*     const cachedData = this._ctx.globalState.get<WorkspaceRootFolderCache>(EXT_WSSTATE_CACHE)
+    const cachedData = this._ctx.globalState.get<WorkspaceRootFolderCache>(EXT_WSSTATE_CACHE)
 
     if (cachedData && cachedData.rootFolders) {
       return cachedData.rootFolders
     }
 
-    return null */
+    return null
   }
 
   private getViewTitle({ fileCount, search, view, visibleFileCount }: WorkspaceState) {
@@ -159,7 +159,7 @@ export class WorkspaceViewProvider
       switch (action) {
         case Actions.FOLDER_CLICK:
           if (payload !== undefined) {
-            store.dispatch(toggleFolderState(payload))
+            store.dispatch(toggleFolderState(JSON.parse(payload)))
           }
           break
 

@@ -29,7 +29,7 @@
 
   const handleFolderClick = (event) => {
     event.stopPropagation();
-    sendMessage('FOLDER_CLICK', event.currentTarget.dataset.folder);
+    sendMessage('FOLDER_CLICK', JSON.stringify({ folder: event.currentTarget.dataset.folder, folderPath: event.currentTarget.dataset.folderpath }));
   };
 
   const handleIconClick = (event) => {

@@ -33,11 +33,10 @@ File theme icons can also be displayed. For more information see the [File Icon 
 
 ### Folders
 
-| Setting  | Description                                                                                                                                                                | Default Value                                        | Type                               |
-| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ---------------------------------- |
-|          |
-| Folders  | The folders to look for workspace files in. If not set, your home folder will be used. **~/** will also be replaced with your home folder in all folders within the array. | []                                                   | Array of absolute paths to folders |
-| Excluded | Folders to exclude when searching for workspace files                                                                                                                      | [ "node_modules", "build", "dist", "out", "public" ] | Array of folder names              |
+| Setting      | Description                                                                                                                     | Default Value                                        | Type                               |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ---------------------------------- |
+| Excluded     | Folders to exclude when searching for workspace files                                                                           | [ "node_modules", "build", "dist", "out", "public" ] | Array of folder names              |
+| Root Folders | The folders to look for workspace files in. **~/** will also be replaced with your home folder in all folders within the array. | []                                                   | Array of absolute paths to folders |
 
 ### List View
 
@@ -97,9 +96,6 @@ This extension is localised, if you want it in your language please send me a tr
 ## Multiroot Todo
 
 - Update doc images inc. preview
-- Update tests
-- Condense description needs link to readme
 - Show paths should only apply if there are duplicate labels in the root folder, across root folders it should not matter
 - Show paths maybe needed if there are workspaces with the same name and the folders are compacted (tree)
 - Check if toggleFolderState needs to check if the correct root folder is being checked
-- Check if home folder is used if no folders

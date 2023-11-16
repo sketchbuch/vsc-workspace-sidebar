@@ -63,7 +63,10 @@ export type FolderState = 'collapse' | 'expand'
 
 export type Payload = string
 export type PayloadSearch = Partial<SearchState>
-export type PayloadToggleFolderState = string
+export type PayloadToggleFolderState = {
+  folder: string
+  folderPath: string
+}
 export type PayloadToggleFolderStateBulk = FolderState
 
 export type FindFileResult = 'invalid-folder' | 'no-root-folders' | 'no-workspaces' | 'ok'

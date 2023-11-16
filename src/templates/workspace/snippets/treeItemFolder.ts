@@ -43,7 +43,7 @@ export const treeItemFolder = (
   const folderButtons = getWorkspaceButtons({ buttons, renderVars })
 
   return `
-      <li aria-label="${folderPathShort}" class="${folderClasses}" data-depth="${depth}" data-folder="${folderPathSegment}" title="${folderPathShort}">
+      <li aria-label="${folderPathShort}" class="${folderClasses}" data-depth="${depth}" data-folder="${folderPathSegment}" data-folderpath="${folderPath}" title="${folderPathShort}">
         ${indicateSelected ? listItemIcon(renderVars) : ''}
         ${treeIndent(depth)}
         <span class="list__element">
