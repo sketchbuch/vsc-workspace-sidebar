@@ -9,7 +9,7 @@ import { fileIconFile } from './fileIconFile'
 import { listItemButtons } from './listItemButtons'
 import { listItemIcon } from './listItemIcon'
 import { treeIconDummy, treeIconFile } from './treeIcons'
-import { treeIndent } from './treeIndent'
+import { listIndent } from './treeIndent'
 
 export const listItem = (file: File, state: WorkspaceState, renderVars: RenderVars): string => {
   const { search } = state
@@ -45,7 +45,7 @@ export const listItem = (file: File, state: WorkspaceState, renderVars: RenderVa
   return `
     <li aria-label="${tooltip}" class="list__item list__list-styled-item ${classes}" data-file="${dataFile}" title="${tooltip}">
       ${isSelected ? listItemIcon(renderVars) : ''}
-      ${treeIndent(1)}
+      ${listIndent()}
       <span class="list__element" tabindex="0">
         ${
           showFileIcons

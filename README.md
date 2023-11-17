@@ -102,5 +102,6 @@ This extension is localised, if you want it in your language please send me a tr
 - Highlight needs to be restricted to root folder
 - Add remove root folder icon
 - Add add folder icon
-- List: render default ws icon if none like in trees
 - Rename treeiconfile
+- Move and test listIndent
+- Move indent sizes to vars

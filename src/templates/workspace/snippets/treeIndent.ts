@@ -14,3 +14,7 @@ export const treeIndent = (depth: number): string => {
 
   return `<div class="list_branch-indent-box">${indents}</div>`
 }
+
+export const listIndent = (): string => {
+  return `<div class="list_branch-indent-box"><div class="list_branch-indent list_branch-indent-list"></div></div>`
+}

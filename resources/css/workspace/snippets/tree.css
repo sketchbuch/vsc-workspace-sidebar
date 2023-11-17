@@ -20,6 +20,10 @@
   width: 10px;
 }
 
+.list_branch-indent-list {
+  width: 18px;
+}
+
 .list__styled-list--tree:hover .list_branch-indent {
   border-left-color: var(--vscode-tree-indentGuidesStroke);
 }
@@ -38,7 +42,7 @@
 }
 
 .list[data-fileiconsactive='false'] .list_branch-icon-empty + .list__text {
-  padding-left: 8px;
+  padding-left: 0;
 }
 
 .list[data-fileiconsactive='true'] .list__branch-list-item .list_branch-icon-empty + .list__text,
