@@ -89,7 +89,7 @@
         },
         "openFilemanager": {
           "ariaLabel": "Öffnen Sie den Ordner '{{label}}' in Ihrem Dateimanager",
-          "tooltip": "Öffnen Sie '{{label}}' in Ihrem Dateimanager"
+          "tooltip": "Öffnen Sie den Ordner '{{label}}' in Ihrem Dateimanager"
         }
       },
       "notDirectory": {

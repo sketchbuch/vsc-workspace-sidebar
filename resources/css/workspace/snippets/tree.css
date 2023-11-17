@@ -2,11 +2,6 @@
   position: relative;
 }
 
-.list[data-fileiconsactive='true'] .list__branch-list-item .list__text,
-.list[data-fileiconsactive='false'] .list__branch-list-item .list__text {
-  padding-left: 18px;
-}
-
 .list_branch-indent-box {
   display: inline-flex;
   flex-direction: row;
@@ -38,8 +33,17 @@
 }
 
 .list_branch-icon-empty {
-  min-width: 22px;
-  width: 20px;
+  min-width: 8px;
+  width: 8px;
+}
+
+.list[data-fileiconsactive='false'] .list_branch-icon-empty + .list__text {
+  padding-left: 8px;
+}
+
+.list[data-fileiconsactive='true'] .list__branch-list-item .list_branch-icon-empty + .list__text,
+.list[data-fileiconsactive='false'] .list__branch-list-item .list_branch-icon-empty + .list__text {
+  padding-left: 18px;
 }
 
 .list__branch-list-item-folder .list__title {
@@ -48,4 +52,18 @@
 
 .list__branch-list-item-folder.list__styled-item--selected .list__title {
   opacity: 1;
+}
+
+.list__branch-list-item-folder--root {
+  color: var(--vscode-editor-foreground);
+  font-size: 11px;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.list__branch-list-item-folder--root .list__element {
+  font-size: inherit;
 }

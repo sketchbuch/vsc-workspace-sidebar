@@ -13,21 +13,13 @@ export const tree = (
   state: WorkspaceState,
   renderVars: RenderVars
 ): string => {
-  const { files, folderPathSegment, isRoot, sub } = branch
+  const { files, folderPathSegment, sub } = branch
   const isClosed = closedFolders.includes(folderPathSegment)
 
   let children: TreeChildren = []
   let fileDepth = depth
   let showItemFolder = true
   let treeDepth = depth + 1
-
-  // If this is the root level, ignore the root folder and just show the subfolders/subworkspaces
-  if (isRoot) {
-    children = sortTreeChildren([...sub, ...files])
-    fileDepth = -1
-    showItemFolder = false
-    treeDepth = depth
-  }
 
   if (showItemFolder && !isClosed) {
     children = sortTreeChildren([...sub, ...files])

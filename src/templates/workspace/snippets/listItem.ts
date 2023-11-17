@@ -1,3 +1,4 @@
+import { getFileiconThemeConfig } from '../../../config/core'
 import { getLangIcon } from '../../../theme/getLangIcon'
 import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { RenderVars } from '../../../webviews/webviews.interface'
@@ -7,6 +8,8 @@ import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceBu
 import { fileIconFile } from './fileIconFile'
 import { listItemButtons } from './listItemButtons'
 import { listItemIcon } from './listItemIcon'
+import { treeIconDummy, treeIconFile } from './treeIcons'
+import { treeIndent } from './treeIndent'
 
 export const listItem = (file: File, state: WorkspaceState, renderVars: RenderVars): string => {
   const { search } = state
@@ -37,12 +40,20 @@ export const listItem = (file: File, state: WorkspaceState, renderVars: RenderVa
   const itemButtons = getWorkspaceButtons({ buttons, renderVars })
   const showFileIcons = fileIconsActive && themeProcessorState === 'ready'
   const langIcon = showFileIcons ? getLangIcon(dataFile, fileIconKeys) : ''
+  const isFileThemeActive = Boolean(getFileiconThemeConfig())
 
   return `
     <li aria-label="${tooltip}" class="list__item list__list-styled-item ${classes}" data-file="${dataFile}" title="${tooltip}">
+      ${isSelected ? listItemIcon(renderVars) : ''}
+      ${treeIndent(1)}
       <span class="list__element" tabindex="0">
-        ${isSelected ? listItemIcon(renderVars) : ''}
-        ${showFileIcons ? fileIconFile(langIcon) : ''}
+        ${
+          showFileIcons
+            ? fileIconFile(langIcon)
+            : isFileThemeActive
+            ? treeIconFile()
+            : treeIconDummy()
+        }
         <span class="list__text">
           <span class="list__title">${getLabel(visibleLabel, search)}</span>
           ${showPath ? `<span class="list__description">${path}</span>` : ''}

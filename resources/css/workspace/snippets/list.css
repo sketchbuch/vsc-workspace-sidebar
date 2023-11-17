@@ -66,8 +66,9 @@
   touch-action: none;
 }
 
+.list[data-fileiconsactive='true'] .list__text,
 .list[data-fileiconsactive='false'] .list__text {
-  padding-left: 1px;
+  padding-left: 18px;
 }
 
 .list__description {
@@ -191,20 +192,6 @@
 
 .list__list-section {
   position: relative;
-}
-
-.list__list-section + .list__list-section {
-  margin-top: 0.9rem;
-}
-
-.list__list-section-label {
-  font-size: 11px;
-  margin: 0.3rem 0;
-  overflow: hidden;
-  padding: 0 20px;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  white-space: nowrap;
 }
 
 .rootfolder__message {

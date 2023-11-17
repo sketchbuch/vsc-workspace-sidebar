@@ -1,3 +1,4 @@
+import { getFileiconThemeConfig } from '../../../config/core'
 import { getLangIcon } from '../../../theme/getLangIcon'
 import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { RenderVars } from '../../../webviews/webviews.interface'
@@ -7,7 +8,7 @@ import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceBu
 import { fileIconFile } from './fileIconFile'
 import { listItemButtons } from './listItemButtons'
 import { listItemIcon } from './listItemIcon'
-import { treeIconFile } from './treeIcons'
+import { treeIconDummy, treeIconFile } from './treeIcons'
 import { treeIndent } from './treeIndent'
 
 export const treeItemFile = (
@@ -46,13 +47,20 @@ export const treeItemFile = (
   const itemButtons = getWorkspaceButtons({ buttons, renderVars })
   const showFileIcon = fileIconsActive && themeProcessorState === 'ready'
   const langIcon = showFileIcon ? getLangIcon(dataFile, fileIconKeys) : ''
+  const isFileThemeActive = Boolean(getFileiconThemeConfig())
 
   return `
     <li aria-label="${tooltip}" class="${classes}" data-depth="${depth}" data-file="${dataFile}" title="${tooltip}">
       ${isSelected ? listItemIcon(renderVars) : ''}
       ${treeIndent(isRootLvlFile ? 0 : depth + 1)}
       <span class="list__element">
-        ${showFileIcon ? fileIconFile(langIcon) : treeIconFile()}
+        ${
+          showFileIcon
+            ? fileIconFile(langIcon)
+            : isFileThemeActive
+            ? treeIconFile()
+            : treeIconDummy()
+        }
         <span class="list__text">
           <span class="list__title">${getLabel(visibleLabel, search)}</span>
           ${showPath && condenseFileTree ? `<span class="list__description">${path}</span>` : ''}

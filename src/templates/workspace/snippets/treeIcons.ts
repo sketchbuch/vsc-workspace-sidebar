@@ -15,3 +15,9 @@ export const treeIconFile = (): string => {
       <div class="list_branch-icon codicon codicon-record-small"></div>
     `
 }
+
+export const treeIconDummy = (): string => {
+  return `
+      <div class="list_branch-icon list_branch-icon-empty"></div>
+    `
+}

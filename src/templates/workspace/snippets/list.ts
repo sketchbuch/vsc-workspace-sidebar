@@ -1,10 +1,10 @@
-import * as os from 'os'
 import { t } from 'vscode-ext-localisation'
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { RenderVars } from '../../../webviews/webviews.interface'
 import { listItem } from './listItem'
 import { rootFolderMessage } from './rootFolderMessage'
 import { tree } from './tree'
+import { treeItemFolder } from './treeItemFolder'
 
 export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
   const { fileCount, rootFolders, search, visibleFileCount } = state
@@ -20,7 +20,6 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
   }
 
   const { showTree } = renderVars
-  const homeDir = os.homedir()
 
   return `
       <div class="list__list-wrapper">
@@ -32,7 +31,6 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
               return ''
             }
 
-            const folderPathShort = folderPath.replace(homeDir, `~`)
             const isFileTree = showTree && fileTree !== null
             const classes =
               'list__list list__styled-list' + (isFileTree ? ' list__styled-list--tree' : '')
@@ -40,7 +38,6 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
 
             return `
               <section class="list__list-section">
-                <h3 aria-label="${folderPathShort}" class="list__list-section-label" title="${folderPathShort}">${folderName}</h3>
                 ${isRootPathError ? `${rootFolderMessage(result, renderVars)}` : ''}
                 ${
                   !isRootPathError
@@ -48,7 +45,21 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
                           ${
                             isFileTree
                               ? tree(fileTree, 0, rootFolder.closedFolders, state, renderVars)
-                              : visibleFiles
+                              : treeItemFolder(
+                                  {
+                                    files: [],
+                                    folderPath,
+                                    folderPathSegment: folderName,
+                                    isRoot: true,
+                                    label: folderName,
+                                    sub: [],
+                                  },
+                                  0,
+                                  false,
+                                  state,
+                                  renderVars
+                                ) +
+                                visibleFiles
                                   .map((file) => listItem(file, state, renderVars))
                                   .join('')
                           }

@@ -8,7 +8,7 @@
   const searchInput = document.querySelector('#searchWorkspaces');
   const viewLinks = document.querySelectorAll('.view__link');
   const wsElements = document.querySelectorAll('.list__styled-item--unselected');
-  const wsFolders = document.querySelectorAll('.list__branch-list-item-folder-closable');
+  const wsFolders = document.querySelectorAll('.list__branch-list-item-folder--closable');
 
   let searchTerm = '';
 

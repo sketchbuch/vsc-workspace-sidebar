@@ -21,14 +21,14 @@ export const treeItemFolder = (
   const folderPathShort = folderPath.replace(homeDir, `~`)
   const indicateSelected = isClosed && state.selected.includes(`${folderPathSegment}${path.sep}`)
 
-  let folderClasses = `list__branch-list-item list__branch-list-item-folder list__styled-item`
+  let folderClasses = `list__branch-list-item list__branch-list-item-folder list__styled-item list__branch-list-item-folder--closable`
 
   if (indicateSelected) {
     folderClasses += ' list__styled-item--selected'
   }
 
-  if (!isRoot) {
-    folderClasses += ' list__branch-list-item-folder-closable'
+  if (isRoot) {
+    folderClasses += ' list__branch-list-item-folder--root'
   }
 
   const buttons: ConfigButtons = [

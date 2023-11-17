@@ -96,5 +96,11 @@ This extension is localised, if you want it in your language please send me a tr
 ## Multiroot Todo
 
 - Update doc images inc. preview
-- Show paths should only apply if there are duplicate labels in the root folder, across root folders it should not matter
-- Show paths maybe needed if there are workspaces with the same name and the folders are compacted (tree)
+- bULK COLLAPSE AND ROOT FOLDERS
+- Add ws count to root folders
+- If not searching, remove 31/31 and just show 31
+- Highlight needs to be restricted to root folder
+- Add remove root folder icon
+- Add add folder icon
+- List: render default ws icon if none like in trees
+- Rename treeiconfile

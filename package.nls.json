@@ -89,7 +89,7 @@
         },
         "openFilemanager": {
           "ariaLabel": "Open folder containing '{{label}}' in your file manager",
-          "tooltip": "Open '{{label}}' in your file manager"
+          "tooltip": "Open folder containing '{{label}}' in your file manage"
         }
       },
       "notDirectory": {

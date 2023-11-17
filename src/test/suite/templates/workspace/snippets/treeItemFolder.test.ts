@@ -85,7 +85,7 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
         mockRenderVars
       )
 
-      expect(result).not.contains(`list__branch-list-item-folder-closable`)
+      expect(result).not.contains(`list__branch-list-item-folder--closable`)
     })
 
     test('Non-root folders have closable class', () => {
@@ -97,7 +97,7 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
         mockRenderVars
       )
 
-      expect(result).contains(`list__branch-list-item-folder-closable`)
+      expect(result).contains(`list__branch-list-item-folder--closable`)
     })
   })
 
