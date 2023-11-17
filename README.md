@@ -105,3 +105,5 @@ This extension is localised, if you want it in your language please send me a tr
 - Rename treeiconfile
 - Move and test listIndent
 - Move indent sizes to vars
+- Set tree folders to just the root if not tree view
+- Get list collapse working
