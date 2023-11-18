@@ -84,7 +84,7 @@ export class WorkspaceViewProvider
     let viewTitle = t('views.title')
 
     if (view === 'list' && fileCount > 0) {
-      const titleKey = search
+      const titleKey = search.term
         ? 'workspace.list.titleCount.searched'
         : 'workspace.list.titleCount.default'
       const placeholders = {
