@@ -1,9 +1,7 @@
-import { expect } from 'chai'
+/* import { expect } from 'chai'
 import * as sinon from 'sinon'
-import * as fileIcons from '../../../../../templates/workspace/snippets/fileIconFile'
-import { listItem } from '../../../../../templates/workspace/snippets/listItem'
-import * as buttons from '../../../../../templates/workspace/snippets/listItemButtons'
-import * as icons from '../../../../../templates/workspace/snippets/listItemIcon'
+import * as buttons from '../../../../../templates/workspace/snippets/itemButtons'
+import * as icons from '../../../../../templates/workspace/snippets/itemIcons'
 import { file1 } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
 import { getMockState } from '../../../../mocks/mockState'
@@ -33,9 +31,9 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
   })
 
   test('Renders selected files correctly', () => {
-    const btnSpy = sinon.spy(buttons, 'listItemButtons')
-    const iconSpy = sinon.spy(icons, 'listItemIcon')
-    const iconFileSpy = sinon.spy(fileIcons, 'fileIconFile')
+    const btnSpy = sinon.spy(buttons, 'itemButtons')
+    const iconSpy = sinon.spy(icons, 'itemIconSelected')
+    const iconFileSpy = sinon.spy(icons, 'itemIconFiletheme')
 
     const file = { ...file1, isSelected: true, showPath: false }
     const result = listItem(file, mockState, mockRenderVars)
@@ -64,9 +62,9 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
   })
 
   test('Renders unselected files correctly', () => {
-    const btnSpy = sinon.spy(buttons, 'listItemButtons')
-    const iconSpy = sinon.spy(icons, 'listItemIcon')
-    const iconFileSpy = sinon.spy(fileIcons, 'fileIconFile')
+    const btnSpy = sinon.spy(buttons, 'itemButtons')
+    const iconSpy = sinon.spy(icons, 'itemIconSelected')
+    const iconFileSpy = sinon.spy(icons, 'itemIconFiletheme')
 
     const file = { ...file1, showPath: false }
     const result = listItem(file, mockState, mockRenderVars)
@@ -101,7 +99,7 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
   })
 
   test('Renders file icon if needed', () => {
-    const iconFileSpy = sinon.spy(fileIcons, 'fileIconFile')
+    const iconFileSpy = sinon.spy(icons, 'itemIconFiletheme')
 
     const file = { ...file1, isSelected: true, showPath: false }
     listItem(file, mockState, getMockRenderVars({ fileIconsActive: true }))
@@ -110,3 +108,4 @@ suite('Templates > Workspace > Snippets: listItem()', () => {
     iconFileSpy.restore()
   })
 })
+ */

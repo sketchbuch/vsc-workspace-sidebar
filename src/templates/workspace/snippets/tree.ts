@@ -3,8 +3,8 @@ import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree'
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { isFile } from '../../helpers/isFile'
 import { sortTreeChildren, TreeChildren } from '../../helpers/sortTreeChildren'
-import { treeItemFile } from './treeItemFile'
-import { treeItemFolder } from './treeItemFolder'
+import { itemFile } from './itemFile'
+import { itemFolder } from './itemFolder'
 
 export const tree = (
   branch: FileTree,
@@ -26,13 +26,13 @@ export const tree = (
   }
 
   return `
-    ${showItemFolder ? treeItemFolder(branch, depth, isClosed, state, renderVars) : ''}
+    ${showItemFolder ? itemFolder(branch, depth, isClosed, state, renderVars) : ''}
     ${
       children.length > 0
         ? children
             .map((child) => {
               if (isFile(child)) {
-                return treeItemFile(child, fileDepth, state, renderVars)
+                return itemFile({ depth: fileDepth, file: child, renderVars, state })
               } else {
                 return tree(child, treeDepth, closedFolders, state, renderVars)
               }

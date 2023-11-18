@@ -1,11 +1,11 @@
 import { expect } from 'chai'
 import { WorkspaceButton } from '../../../../../templates/helpers/getWorkspaceButtons'
-import { listItemButton } from '../../../../../templates/workspace/snippets/listItemButton'
+import { itemButton } from '../../../../../templates/workspace/snippets/itemButton'
 import { File } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { file1 } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
 
-suite('Templates > Workspace > Snippets: listItemButton()', () => {
+suite('Templates > Workspace > Snippets: itemButton()', () => {
   const file: File = { ...file1, showPath: false }
   const button: WorkspaceButton = {
     ariaLabel: 'not important',
@@ -17,7 +17,7 @@ suite('Templates > Workspace > Snippets: listItemButton()', () => {
 
   test('Renders codicon button correctly', () => {
     const codicon = 'typescript'
-    const result = listItemButton({ ...button, codicon })
+    const result = itemButton({ ...button, codicon })
 
     expect(result).to.be.a('string')
     expect(result).contains('class="list__button"')
@@ -26,7 +26,7 @@ suite('Templates > Workspace > Snippets: listItemButton()', () => {
   })
 
   test('Renders image button correctly', () => {
-    const result = listItemButton(button)
+    const result = itemButton(button)
 
     expect(result).to.be.a('string')
     expect(result).contains('class="list__button"')

@@ -5,28 +5,28 @@ import { RenderVars } from '../../../webviews/webviews.interface'
 import { getFileTooltip } from '../../helpers/getFileTooltip'
 import { getLabel } from '../../helpers/getLabel'
 import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceButtons'
-import { fileIconFile } from './fileIconFile'
-import { listItemButtons } from './listItemButtons'
-import { listItemIcon } from './listItemIcon'
-import { treeIconDummy, treeIconFile } from './treeIcons'
-import { treeIndent } from './treeIndent'
+import { itemButtons } from './itemButtons'
+import { itemIconDummy, itemIconFile, itemIconFiletheme, itemIconSelected } from './itemIcons'
+import { ItemIndentProps, itemIndent } from './itemIndent'
 
-export const treeItemFile = (
-  file: File,
-  depth: number,
-  state: WorkspaceState,
+export type ItemFileProps = {
+  depth?: number
+  file: File
   renderVars: RenderVars
-): string => {
+  state: WorkspaceState
+}
+
+export const itemFile = ({ depth, file, renderVars, state }: ItemFileProps): string => {
   const { search } = state
   const { cleanedLabel, file: dataFile, isSelected, label, path, showPath } = file
-  const isRootLvlFile = depth < 0
-  const classes = `list__branch-list-item list__branch-list-item-file list__styled-item ${
-    isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
-  }`
-  const tooltip = getFileTooltip(renderVars, file, 'cur-win')
   const { cleanLabels, condenseFileTree, fileIconKeys, fileIconsActive, themeProcessorState } =
     renderVars
 
+  const isTree = depth !== undefined
+  const isRootLvlFile = isTree && depth ? depth < 0 : -1
+  const showDescription = isTree ? showPath && condenseFileTree : showPath
+
+  const tooltip = getFileTooltip(renderVars, file, 'cur-win')
   const visibleLabel = cleanLabels ? cleanedLabel : label
   const buttons: ConfigButtons = [
     {
@@ -43,29 +43,42 @@ export const treeItemFile = (
       file,
     })
   }
+  let classes = `list__styled-item ${
+    isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
+  }`
 
-  const itemButtons = getWorkspaceButtons({ buttons, renderVars })
+  const workspaceButtons = getWorkspaceButtons({ buttons, renderVars })
   const showFileIcon = fileIconsActive && themeProcessorState === 'ready'
   const langIcon = showFileIcon ? getLangIcon(dataFile, fileIconKeys) : ''
   const isFileThemeActive = Boolean(getFileiconThemeConfig())
 
+  const indentProps: ItemIndentProps = { isList: true }
+
+  if (isTree) {
+    indentProps.depth = isRootLvlFile ? 0 : depth + 1
+    indentProps.isList = false
+    classes += ' list__branch-list-item list__branch-list-item-file'
+  }
+
   return `
-    <li aria-label="${tooltip}" class="${classes}" data-depth="${depth}" data-file="${dataFile}" title="${tooltip}">
-      ${isSelected ? listItemIcon(renderVars) : ''}
-      ${treeIndent(isRootLvlFile ? 0 : depth + 1)}
+    <li aria-label="${tooltip}" class="${classes}" data-depth="${
+    depth ?? 0
+  }" data-file="${dataFile}" title="${tooltip}">
+      ${isSelected ? itemIconSelected(renderVars) : ''}
+      ${itemIndent(indentProps)}
       <span class="list__element">
         ${
           showFileIcon
-            ? fileIconFile(langIcon)
+            ? itemIconFiletheme(langIcon)
             : isFileThemeActive
-            ? treeIconFile()
-            : treeIconDummy()
+            ? itemIconFile()
+            : itemIconDummy()
         }
         <span class="list__text">
           <span class="list__title">${getLabel(visibleLabel, search)}</span>
-          ${showPath && condenseFileTree ? `<span class="list__description">${path}</span>` : ''}
+          ${showDescription ? `<span class="list__description">${path}</span>` : ''}
         </span>
-        ${listItemButtons(itemButtons)}
+        ${itemButtons(workspaceButtons)}
       </span>
     </li>
   `

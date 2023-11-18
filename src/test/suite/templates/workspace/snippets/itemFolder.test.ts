@@ -2,17 +2,16 @@ import { expect } from 'chai'
 import os from 'os'
 import * as path from 'path'
 import * as sinon from 'sinon'
-import * as buttons from '../../../../../templates/workspace/snippets/listItemButtons'
-import * as selected from '../../../../../templates/workspace/snippets/listItemIcon'
-import * as icons from '../../../../../templates/workspace/snippets/treeIcons'
-import * as indent from '../../../../../templates/workspace/snippets/treeIndent'
-import { treeItemFolder } from '../../../../../templates/workspace/snippets/treeItemFolder'
+import * as buttons from '../../../../../templates/workspace/snippets/itemButtons'
+import { itemFolder } from '../../../../../templates/workspace/snippets/itemFolder'
+import * as icons from '../../../../../templates/workspace/snippets/itemIcons'
+import * as indent from '../../../../../templates/workspace/snippets/itemIndent'
 import { FileTree } from '../../../../../webviews/Workspace/helpers/getFileTree'
 import { OS_HOMEFOLDER, ROOT_FOLDER } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
 import { getMockRootFolders, getMockState } from '../../../../mocks/mockState'
 
-suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
+suite('Templates > Workspace > Snippets: itemFolder()', () => {
   const DEPTH = 0
   const FOLDER_PATH = 'supernatural/winchester'
   const folder: FileTree = {
@@ -35,12 +34,12 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
   let selectedIconSpy: sinon.SinonSpy
 
   setup(() => {
-    btnSpy = sinon.spy(buttons, 'listItemButtons')
-    iconClosedSpy = sinon.spy(icons, 'treeIconClosed')
-    iconOpenSpy = sinon.spy(icons, 'treeIconOpen')
-    indentSpy = sinon.spy(indent, 'treeIndent')
+    btnSpy = sinon.spy(buttons, 'itemButtons')
+    iconClosedSpy = sinon.spy(icons, 'itemIconClosed')
+    iconOpenSpy = sinon.spy(icons, 'itemIconOpen')
+    indentSpy = sinon.spy(indent, 'itemIndent')
     osStub = sinon.stub(os, 'homedir').callsFake(() => OS_HOMEFOLDER)
-    selectedIconSpy = sinon.spy(selected, 'listItemIcon')
+    selectedIconSpy = sinon.spy(icons, 'itemIconSelected')
   })
 
   teardown(() => {
@@ -53,7 +52,7 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
   })
 
   test('Renders correctly', () => {
-    const result = treeItemFolder(folder, DEPTH, false, mockState, mockRenderVars)
+    const result = itemFolder(folder, DEPTH, false, mockState, mockRenderVars)
 
     expect(result).to.be.a('string')
     expect(result).contains(`data-folder="${folder.folderPathSegment}"`)
@@ -77,7 +76,7 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
 
   suite('Closable class:', () => {
     test('Root folders do not have closable class', () => {
-      const result = treeItemFolder(
+      const result = itemFolder(
         { ...folder, isRoot: true },
         DEPTH,
         false,
@@ -89,7 +88,7 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
     })
 
     test('Non-root folders have closable class', () => {
-      const result = treeItemFolder(
+      const result = itemFolder(
         { ...folder, isRoot: false },
         DEPTH,
         false,
@@ -106,14 +105,14 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
       const mockRootFolders = getMockRootFolders({ closedFolders: [FOLDER_PATH], showTree: true })
       const mockState = getMockState({ ...mockRootFolders })
 
-      treeItemFolder(folder, DEPTH, true, mockState, mockRenderVars)
+      itemFolder(folder, DEPTH, true, mockState, mockRenderVars)
 
       sinon.assert.calledOnce(iconClosedSpy)
       sinon.assert.notCalled(iconOpenSpy)
     })
 
     test('Open icon shown if not closed', () => {
-      treeItemFolder(folder, DEPTH, false, mockState, mockRenderVars)
+      itemFolder(folder, DEPTH, false, mockState, mockRenderVars)
 
       sinon.assert.notCalled(iconClosedSpy)
       sinon.assert.calledOnce(iconOpenSpy)
@@ -122,7 +121,7 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
 
   suite('Selected indicator:', () => {
     test('Not shown if not selected', () => {
-      const result = treeItemFolder(folder, DEPTH, false, mockState, mockRenderVars)
+      const result = itemFolder(folder, DEPTH, false, mockState, mockRenderVars)
 
       expect(result).to.be.a('string')
       expect(result).not.contains(`list__styled-item--selected`)
@@ -133,7 +132,7 @@ suite('Templates > Workspace > Snippets: treeItemFolder()', () => {
     test('Shown if selected & closed', () => {
       const mockRootFolders = getMockRootFolders({ closedFolders: [FOLDER_PATH], showTree: true })
       const mockState = getMockState({ ...mockRootFolders })
-      const result = treeItemFolder(
+      const result = itemFolder(
         folder,
         DEPTH,
         true,

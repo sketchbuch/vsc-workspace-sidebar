@@ -1,10 +1,10 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
 import * as sort from '../../../../../templates/helpers/sortTreeChildren'
+import * as item from '../../../../../templates/workspace/snippets/itemFile'
+import * as folder from '../../../../../templates/workspace/snippets/itemFolder'
 import * as trees from '../../../../../templates/workspace/snippets/tree'
 import { tree } from '../../../../../templates/workspace/snippets/tree'
-import * as item from '../../../../../templates/workspace/snippets/treeItemFile'
-import * as folder from '../../../../../templates/workspace/snippets/treeItemFolder'
 import { FileTree } from '../../../../../webviews/Workspace/helpers/getFileTree'
 import {
   FOLDER1,
@@ -49,8 +49,8 @@ suite('Templates > Workspace > Snippets: tree()', () => {
   }
 
   setup(() => {
-    folderSpy = sinon.spy(folder, 'treeItemFolder')
-    itemSpy = sinon.spy(item, 'treeItemFile')
+    folderSpy = sinon.spy(folder, 'itemFolder')
+    itemSpy = sinon.spy(item, 'itemFile')
     sortSpy = sinon.spy(sort, 'sortTreeChildren')
     treeSpy = sinon.spy(trees, 'tree')
   })

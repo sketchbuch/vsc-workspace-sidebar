@@ -1,16 +1,16 @@
 import { expect } from 'chai'
-import { treeIndent } from '../../../../../templates/workspace/snippets/treeIndent'
+import { itemIndent } from '../../../../../templates/workspace/snippets/itemIndent'
 
-suite('Templates > Workspace > Snippets: treeIndent()', () => {
+suite('Templates > Workspace > Snippets: itemIndent()', () => {
   test('Renders an empty string for depth 0', () => {
-    const result = treeIndent(0)
+    const result = itemIndent({ depth: 0 })
 
     expect(result).to.be.a('string')
     expect(result).to.equal('')
   })
 
   test('Renders an indent div for each depth level', () => {
-    const result = treeIndent(2)
+    const result = itemIndent({ depth: 2 })
 
     expect(result).to.be.a('string')
     expect(result).contains(`<div class="list_branch-indent-box">`)

@@ -1,8 +1,8 @@
 import { expect } from 'chai'
 import os from 'os'
 import * as sinon from 'sinon'
+import * as item from '../../../../../templates/workspace/snippets/itemFile'
 import { list } from '../../../../../templates/workspace/snippets/list'
-import * as item from '../../../../../templates/workspace/snippets/listItem'
 import * as rfm from '../../../../../templates/workspace/snippets/rootFolderMessage'
 import * as tree from '../../../../../templates/workspace/snippets/tree'
 import { OS_HOMEFOLDER, SEARCH_TERM } from '../../../../mocks/mockFileData'
@@ -16,7 +16,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
   let treeSpy: sinon.SinonSpy
 
   setup(() => {
-    itemSpy = sinon.spy(item, 'listItem')
+    itemSpy = sinon.spy(item, 'itemFile')
     osStub = sinon.stub(os, 'homedir').callsFake(() => OS_HOMEFOLDER)
     rfMsg = sinon.spy(rfm, 'rootFolderMessage')
     treeSpy = sinon.spy(tree, 'tree')

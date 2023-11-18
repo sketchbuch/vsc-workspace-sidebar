@@ -1,16 +1,14 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
-import * as fileIcons from '../../../../../templates/workspace/snippets/fileIconFile'
-import * as buttons from '../../../../../templates/workspace/snippets/listItemButtons'
-import * as selected from '../../../../../templates/workspace/snippets/listItemIcon'
-import * as icons from '../../../../../templates/workspace/snippets/treeIcons'
-import * as indent from '../../../../../templates/workspace/snippets/treeIndent'
-import { treeItemFile } from '../../../../../templates/workspace/snippets/treeItemFile'
+import * as buttons from '../../../../../templates/workspace/snippets/itemButtons'
+import { itemFile } from '../../../../../templates/workspace/snippets/itemFile'
+import * as icons from '../../../../../templates/workspace/snippets/itemIcons'
+import * as indent from '../../../../../templates/workspace/snippets/itemIndent'
 import { file1 } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
 import { getMockState } from '../../../../mocks/mockState'
 
-suite('Templates > Workspace > Snippets: treeItemFile()', () => {
+suite('Templates > Workspace > Snippets: itemFile()', () => {
   const DEPTH = 0
   const file = { ...file1, showPath: false }
   const mockRenderVars = getMockRenderVars({ fileIconsActive: false })
@@ -23,11 +21,11 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
   let selectedIconSpy: sinon.SinonSpy
 
   setup(() => {
-    buttonSpy = sinon.spy(buttons, 'listItemButtons')
-    iconFileSpy = sinon.spy(fileIcons, 'fileIconFile')
-    iconTreeSpy = sinon.spy(icons, 'treeIconFile')
-    indentSpy = sinon.spy(indent, 'treeIndent')
-    selectedIconSpy = sinon.spy(selected, 'listItemIcon')
+    buttonSpy = sinon.spy(buttons, 'itemButtons')
+    iconFileSpy = sinon.spy(icons, 'itemIconFiletheme')
+    iconTreeSpy = sinon.spy(icons, 'itemIconFile')
+    indentSpy = sinon.spy(indent, 'itemIndent')
+    selectedIconSpy = sinon.spy(icons, 'itemIconSelected')
   })
 
   teardown(() => {
@@ -39,7 +37,12 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
   })
 
   test('Renders correctly', () => {
-    const result = treeItemFile(file, DEPTH, mockState, mockRenderVars)
+    const result = itemFile({
+      depth: DEPTH,
+      file,
+      renderVars: mockRenderVars,
+      state: mockState,
+    })
 
     expect(result).to.be.a('string')
     expect(result).contains(`data-file="${file.file}"`)
@@ -54,7 +57,12 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
 
   test('Renders correctly when selected', () => {
     const file = { ...file1, showPath: false, isSelected: true }
-    const result = treeItemFile(file, DEPTH, mockState, mockRenderVars)
+    const result = itemFile({
+      depth: DEPTH,
+      file,
+      renderVars: mockRenderVars,
+      state: mockState,
+    })
 
     expect(result).contains(`list__styled-item--selected`)
 
@@ -73,7 +81,12 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
   })
 
   test('Renders correctly when not selected', () => {
-    const result = treeItemFile(file, DEPTH, mockState, mockRenderVars)
+    const result = itemFile({
+      depth: DEPTH,
+      file,
+      renderVars: mockRenderVars,
+      state: mockState,
+    })
 
     expect(result).contains(`list__styled-item--unselected`)
 
@@ -100,31 +113,36 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
 
   test('Renders description if condensed', () => {
     const file = { ...file1, showPath: true }
-    const result = treeItemFile(
+    const result = itemFile({
+      depth: DEPTH,
       file,
-      DEPTH,
-      mockState,
-      getMockRenderVars({ condenseFileTree: true })
-    )
+      renderVars: getMockRenderVars({ condenseFileTree: true }),
+      state: mockState,
+    })
 
     expect(result).contains(`list__description`)
   })
 
   test('Does not render description if not condensed', () => {
     const file = { ...file1, showPath: true }
-    const result = treeItemFile(
+    const result = itemFile({
+      depth: DEPTH,
       file,
-      DEPTH,
-      mockState,
-      getMockRenderVars({ condenseFileTree: false })
-    )
+      renderVars: getMockRenderVars({ condenseFileTree: false }),
+      state: mockState,
+    })
 
     expect(result).not.contains(`list__description`)
   })
 
   test('Renders file icon if needed', () => {
     const file = { ...file1, showPath: true }
-    treeItemFile(file, DEPTH, mockState, getMockRenderVars({ fileIconsActive: true }))
+    itemFile({
+      depth: DEPTH,
+      file,
+      renderVars: getMockRenderVars({ fileIconsActive: true }),
+      state: mockState,
+    })
 
     sinon.assert.notCalled(iconTreeSpy)
     sinon.assert.calledOnce(iconFileSpy)
@@ -132,7 +150,12 @@ suite('Templates > Workspace > Snippets: treeItemFile()', () => {
 
   test('Renders tree icon if no file icons', () => {
     const file = { ...file1, showPath: true }
-    treeItemFile(file, DEPTH, mockState, getMockRenderVars({ fileIconsActive: false }))
+    itemFile({
+      depth: DEPTH,
+      file,
+      renderVars: getMockRenderVars({ fileIconsActive: false }),
+      state: mockState,
+    })
 
     sinon.assert.calledOnce(iconTreeSpy)
     sinon.assert.notCalled(iconFileSpy)

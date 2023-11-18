@@ -4,12 +4,11 @@ import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvide
 import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree'
 import { RenderVars } from '../../../webviews/webviews.interface'
 import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceButtons'
-import { listItemButtons } from './listItemButtons'
-import { listItemIcon } from './listItemIcon'
-import { treeIconClosed, treeIconOpen } from './treeIcons'
-import { treeIndent } from './treeIndent'
+import { itemButtons } from './itemButtons'
+import { itemIconClosed, itemIconOpen, itemIconSelected } from './itemIcons'
+import { itemIndent } from './itemIndent'
 
-export const treeItemFolder = (
+export const itemFolder = (
   folder: FileTree,
   depth: number,
   isClosed: boolean,
@@ -44,14 +43,14 @@ export const treeItemFolder = (
 
   return `
       <li aria-label="${folderPathShort}" class="${folderClasses}" data-depth="${depth}" data-folder="${folderPathSegment}" data-folderpath="${folderPath}" title="${folderPathShort}">
-        ${indicateSelected ? listItemIcon(renderVars) : ''}
-        ${treeIndent(depth)}
+        ${indicateSelected ? itemIconSelected(renderVars) : ''}
+        ${itemIndent({ depth })}
         <span class="list__element">
-          ${isClosed ? treeIconClosed() : treeIconOpen()}
+          ${isClosed ? itemIconClosed() : itemIconOpen()}
           <span class="list__text">
             <span class="list__title">${label}</span>
           </span>
-          ${listItemButtons(folderButtons)}
+          ${itemButtons(folderButtons)}
         </span>
       </li>
     `

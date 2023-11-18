@@ -1,10 +1,10 @@
 import { t } from 'vscode-ext-localisation'
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { RenderVars } from '../../../webviews/webviews.interface'
-import { listItem } from './listItem'
+import { itemFile } from './itemFile'
+import { itemFolder } from './itemFolder'
 import { rootFolderMessage } from './rootFolderMessage'
 import { tree } from './tree'
-import { treeItemFolder } from './treeItemFolder'
 
 export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
   const { fileCount, rootFolders, search, visibleFileCount } = state
@@ -45,7 +45,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
                           ${
                             isFileTree
                               ? tree(fileTree, 0, rootFolder.closedFolders, state, renderVars)
-                              : treeItemFolder(
+                              : itemFolder(
                                   {
                                     files: [],
                                     folderPath,
@@ -60,7 +60,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
                                   renderVars
                                 ) +
                                 visibleFiles
-                                  .map((file) => listItem(file, state, renderVars))
+                                  .map((file) => itemFile({ file, state, renderVars }))
                                   .join('')
                           }
                         </ul>`

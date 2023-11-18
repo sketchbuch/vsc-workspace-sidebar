@@ -1,7 +1,7 @@
 import { getImgUrls } from '../../getImgUrls'
 import { WorkspaceButton } from '../../helpers/getWorkspaceButtons'
 
-export const listItemButton = ({
+export const itemButton = ({
   ariaLabel,
   codicon,
   file,
