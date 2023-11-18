@@ -26,7 +26,7 @@ export const fetchFulfilled = (
 ) => {
   if (action.payload.result !== 'ok') {
     state.fileCount = 0
-    state.invalidReason = action.payload.result
+    state.result = action.payload.result
     state.isFolderInvalid = true
     state.rootFolders = []
     state.view = 'invalid'
@@ -38,7 +38,7 @@ export const fetchFulfilled = (
     let fileCount = 0
     let visibleFileCount = 0
 
-    state.invalidReason = 'ok'
+    state.result = 'ok'
     state.isFolderInvalid = false
     state.view = 'list'
 
@@ -72,7 +72,7 @@ export const fetchFulfilled = (
 
 export const fetchPending = (state: WorkspaceState) => {
   state.view = 'loading'
-  state.invalidReason = 'ok'
+  state.result = 'ok'
   state.isFolderInvalid = false
 }
 

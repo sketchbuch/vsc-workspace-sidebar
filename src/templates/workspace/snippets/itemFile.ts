@@ -23,7 +23,7 @@ export const itemFile = ({ depth, file, renderVars, state }: ItemFileProps): str
     renderVars
 
   const isTree = depth !== undefined
-  const isRootLvlFile = isTree && depth ? depth < 0 : -1
+  const isRootLvlFile = isTree && depth === 0
   const showDescription = isTree ? showPath && condenseFileTree : showPath
 
   const tooltip = getFileTooltip(renderVars, file, 'cur-win')
@@ -43,6 +43,7 @@ export const itemFile = ({ depth, file, renderVars, state }: ItemFileProps): str
       file,
     })
   }
+
   let classes = `list__styled-item ${
     isSelected ? 'list__styled-item--selected' : 'list__styled-item--unselected'
   }`
@@ -55,7 +56,7 @@ export const itemFile = ({ depth, file, renderVars, state }: ItemFileProps): str
   const indentProps: ItemIndentProps = { isList: true }
 
   if (isTree) {
-    indentProps.depth = isRootLvlFile ? 0 : depth + 1
+    indentProps.depth = isRootLvlFile ? 1 : depth + 1
     indentProps.isList = false
     classes += ' list__branch-list-item list__branch-list-item-file'
   }

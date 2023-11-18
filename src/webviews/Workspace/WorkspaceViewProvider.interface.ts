@@ -83,11 +83,11 @@ export type WorkspaceState = {
   error: WorkspaceErrors
   errorObj: WorkspaceStateErrorObj
   fileCount: number
-  /**
-   * The invalid reson for all root folders
-   */
-  invalidReason: FindFileResult
   isFolderInvalid: boolean
+  /**
+   * The result for all root folders
+   */
+  result: FindFileResult
   rootFolders: WorkspaceStateRootFolder[]
   search: SearchState
   selected: string

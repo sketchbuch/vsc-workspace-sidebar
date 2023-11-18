@@ -6,14 +6,14 @@ suite('Webviews > Workspace > Store > error()', () => {
   test('Updates state as expected', () => {
     const state = getMockState({
       error: '',
-      invalidReason: 'invalid-folder',
+      result: 'invalid-folder',
       isFolderInvalid: true,
       view: 'invalid',
     })
     const expectedState = getMockState({
       error: 'DEFAULT',
       errorObj: { message: 'some error' },
-      invalidReason: 'ok',
+      result: 'ok',
       isFolderInvalid: false,
       view: 'error',
     })

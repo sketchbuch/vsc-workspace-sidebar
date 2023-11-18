@@ -58,7 +58,7 @@ suite('Webviews > Workspace > Store > list()', () => {
     view: 'invalid',
   }
   const defaultExpectedState: Partial<WorkspaceState> = {
-    invalidReason: 'ok',
+    result: 'ok',
     isFolderInvalid: false,
     view: 'list',
   }

@@ -32,7 +32,7 @@ suite('Templates > Workspace > View: invalidView()', () => {
 
   test('Renders an invalid-folder error', () => {
     const result = invalidView(
-      getMockState({ invalidReason: 'invalid-folder' }),
+      getMockState({ result: 'invalid-folder' }),
       getMockRenderVars({ depth: 1 })
     )
 
@@ -41,7 +41,7 @@ suite('Templates > Workspace > View: invalidView()', () => {
 
   test('Renders a no-workspaces error', () => {
     const result = invalidView(
-      getMockState({ invalidReason: 'no-workspaces' }),
+      getMockState({ result: 'no-workspaces' }),
       getMockRenderVars({ depth: 1 })
     )
 
@@ -54,7 +54,7 @@ suite('Templates > Workspace > View: invalidView()', () => {
 
   test('Renders a no-workspaces error (zero depth)', () => {
     const result = invalidView(
-      getMockState({ invalidReason: 'no-workspaces' }),
+      getMockState({ result: 'no-workspaces' }),
       getMockRenderVars({ depth: 0 })
     )
 

@@ -6,7 +6,7 @@ import { settingsLink } from '../../common/snippets/settingsLink'
 export const invalidView = (state: WorkspaceState, renderVars: RenderVars): string => {
   const isDepthZero = renderVars.depth === 0
 
-  switch (state.invalidReason) {
+  switch (state.result) {
     case 'invalid-folder':
       return `
         <section class="view invalid">

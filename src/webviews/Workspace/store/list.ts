@@ -40,7 +40,7 @@ export const list = (
     }
   })
 
-  state.invalidReason = 'ok'
+  state.result = 'ok'
   state.isFolderInvalid = false
   state.view = 'list'
   state.fileCount = fileCount

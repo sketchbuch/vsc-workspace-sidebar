@@ -4,12 +4,7 @@ import * as sinon from 'sinon'
 import * as coreConfigs from '../../../../../config/core'
 import * as foldersConfigs from '../../../../../config/folders'
 import * as treeConfigs from '../../../../../config/treeview'
-import { getMockRootFolders, getMockSearchState, getMockState } from '../../../../mocks/mockState'
-import {
-  fetchFulfilled,
-  fetchPending,
-  fetchRejected,
-} from '../../../../../webviews/Workspace/store/fetch'
+import { FindAllRootFolderFiles } from '../../../../../utils/fs/findAllRootFolderFiles'
 import {
   ActionMetaFulfilled,
   FindFileResult,
@@ -17,8 +12,13 @@ import {
   WorkspaceStateRootFolder,
   WorkspaceThunkAction,
 } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import {
+  fetchFulfilled,
+  fetchPending,
+  fetchRejected,
+} from '../../../../../webviews/Workspace/store/fetch'
 import { OS_HOMEFOLDER, ROOT_FOLDER_PATH, SEARCH_TERM } from '../../../../mocks/mockFileData'
-import { FindAllRootFolderFiles } from '../../../../../utils/fs/findAllRootFolderFiles'
+import { getMockRootFolders, getMockSearchState, getMockState } from '../../../../mocks/mockState'
 
 suite('Webviews > Workspace > Store > fetch()', () => {
   let compactFoldersConfigStub: sinon.SinonStub
@@ -49,12 +49,12 @@ suite('Webviews > Workspace > Store > fetch()', () => {
 
   test('Pending updates state as expected', () => {
     const state = getMockState({
-      invalidReason: 'invalid-folder',
+      result: 'invalid-folder',
       isFolderInvalid: true,
       view: 'invalid',
     })
     const expectedState = getMockState({
-      invalidReason: 'ok',
+      result: 'ok',
       isFolderInvalid: false,
       view: 'loading',
     })
@@ -99,7 +99,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
     }
 
     const intialState: Partial<WorkspaceState> = {
-      invalidReason: 'ok',
+      result: 'ok',
       isFolderInvalid: false,
       view: 'loading',
     }
@@ -119,7 +119,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       const state = getMockState(intialState)
       const expectedState = getMockState({
         ...defaultExpectedState,
-        invalidReason: result,
+        result: result,
       })
 
       expect(state).not.to.eql(expectedState)
@@ -135,7 +135,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       const state = getMockState(intialState)
       const expectedState = getMockState({
         ...defaultExpectedState,
-        invalidReason: result,
+        result: result,
       })
 
       expect(state).not.to.eql(expectedState)
@@ -151,7 +151,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       const state = getMockState(intialState)
       const expectedState = getMockState({
         ...defaultExpectedState,
-        invalidReason: result,
+        result: result,
       })
 
       expect(state).not.to.eql(expectedState)
@@ -177,7 +177,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       view: 'invalid',
     }
     const defaultExpectedState: Partial<WorkspaceState> = {
-      invalidReason: 'ok',
+      result: 'ok',
       isFolderInvalid: false,
       view: 'list',
     }
