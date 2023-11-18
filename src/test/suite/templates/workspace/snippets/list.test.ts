@@ -2,21 +2,29 @@ import { expect } from 'chai'
 import os from 'os'
 import * as sinon from 'sinon'
 import * as item from '../../../../../templates/workspace/snippets/itemFile'
+import * as itemFolder from '../../../../../templates/workspace/snippets/itemFolder'
 import { list } from '../../../../../templates/workspace/snippets/list'
 import * as rfm from '../../../../../templates/workspace/snippets/rootFolderMessage'
 import * as tree from '../../../../../templates/workspace/snippets/tree'
 import { OS_HOMEFOLDER, SEARCH_TERM } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
-import { getMockRootFolders, getMockSearchState, getMockState } from '../../../../mocks/mockState'
+import {
+  defaultRootFolderFiles,
+  getMockRootFolders,
+  getMockSearchState,
+  getMockState,
+} from '../../../../mocks/mockState'
 
 suite('Templates > Workspace > Snippets: list()', () => {
   let itemSpy: sinon.SinonSpy
-  let osStub: sinon.SinonSpy
+  let itemFolderSpy: sinon.SinonSpy
+  let osStub: sinon.SinonStub
   let rfMsg: sinon.SinonSpy
   let treeSpy: sinon.SinonSpy
 
   setup(() => {
     itemSpy = sinon.spy(item, 'itemFile')
+    itemFolderSpy = sinon.spy(itemFolder, 'itemFolder')
     osStub = sinon.stub(os, 'homedir').callsFake(() => OS_HOMEFOLDER)
     rfMsg = sinon.spy(rfm, 'rootFolderMessage')
     treeSpy = sinon.spy(tree, 'tree')
@@ -24,6 +32,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
 
   teardown(() => {
     itemSpy.restore()
+    itemFolderSpy.restore()
     osStub.restore()
     rfMsg.restore()
     treeSpy.restore()
@@ -62,6 +71,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
     expect(result).contains('<ul class="list__list')
     expect(result).not.contains('list__styled-list--tree')
 
+    sinon.assert.called(itemFolderSpy)
     sinon.assert.callCount(itemSpy, mockState.visibleFileCount)
     sinon.assert.notCalled(treeSpy)
   })
@@ -78,7 +88,6 @@ suite('Templates > Workspace > Snippets: list()', () => {
     expect(result).contains('list__styled-list--tree')
 
     sinon.assert.called(treeSpy)
-    sinon.assert.notCalled(itemSpy)
   })
 
   test('Renders list if tree is null', () => {
@@ -92,7 +101,42 @@ suite('Templates > Workspace > Snippets: list()', () => {
     expect(result).contains('<ul class="list__list')
     expect(result).not.contains('list__styled-list--tree')
 
+    sinon.assert.called(itemFolderSpy)
     sinon.assert.called(itemSpy)
+    sinon.assert.notCalled(treeSpy)
+  })
+
+  test('Renders rootFolderMessage if rootFolder.result is "invalid-folder"', () => {
+    const mockRootFolders = getMockRootFolders({
+      rootFoldersFiles: [{ ...defaultRootFolderFiles[0], result: 'invalid-folder' }],
+      showTree: false,
+    })
+    const mockState = getMockState({ ...mockRootFolders })
+    const mockRenderVars = getMockRenderVars({ showTree: true })
+
+    const result = list(mockState, mockRenderVars)
+
+    expect(result).to.be.a('string')
+    sinon.assert.called(rfMsg)
+    sinon.assert.notCalled(itemFolderSpy)
+    sinon.assert.notCalled(itemSpy)
+    sinon.assert.notCalled(treeSpy)
+  })
+
+  test('Renders rootFolderMessage if rootFolder.result is "no-workspaces"', () => {
+    const mockRootFolders = getMockRootFolders({
+      rootFoldersFiles: [{ ...defaultRootFolderFiles[0], result: 'no-workspaces' }],
+      showTree: false,
+    })
+    const mockState = getMockState({ ...mockRootFolders })
+    const mockRenderVars = getMockRenderVars({ showTree: true })
+
+    const result = list(mockState, mockRenderVars)
+
+    expect(result).to.be.a('string')
+    sinon.assert.called(rfMsg)
+    sinon.assert.notCalled(itemFolderSpy)
+    sinon.assert.notCalled(itemSpy)
     sinon.assert.notCalled(treeSpy)
   })
 })

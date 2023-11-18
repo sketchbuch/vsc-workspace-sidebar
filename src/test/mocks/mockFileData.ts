@@ -74,26 +74,27 @@ export const getMockFileList = () => [file1.file, file2.file, file3.file, file4.
 export const getMockFolderList = (type: GetFileTreeType): string[] => {
   switch (type) {
     case 'compacted-condensed':
-      return [FOLDER2, FOLDER3, FOLDER4]
+      return [ROOT_FOLDER, FOLDER2, FOLDER3, FOLDER4]
 
     case 'compacted':
-      return [FOLDER2, file3.path, file4.path]
+      return [ROOT_FOLDER, FOLDER2, file3.path, file4.path]
 
     case 'condensed':
-      return [FOLDER1, FOLDER2, FOLDER3, FOLDER4]
+      return [ROOT_FOLDER, FOLDER1, FOLDER2, FOLDER3, FOLDER4]
 
     case 'compacted-searched':
-      return [file4.path]
+      return [ROOT_FOLDER, file4.path]
 
     case 'compacted-condensed-searched':
     case 'condensed-searched':
-      return [FOLDER4]
+      return [ROOT_FOLDER, FOLDER4]
 
     case 'searched':
-      return [FOLDER4, file4.path]
+      return [ROOT_FOLDER, FOLDER4, file4.path]
 
+    case 'normal':
     default:
-      return [FOLDER1, FOLDER2, file2.path, FOLDER3, file3.path, FOLDER4, file4.path]
+      return [ROOT_FOLDER, FOLDER1, FOLDER2, file2.path, FOLDER3, file3.path, FOLDER4, file4.path]
   }
 }
 

@@ -29,7 +29,7 @@ type GetMockRootFoldersConfig = {
   sortVsible: SortDir | undefined
 }
 
-const defaultRootFolderFiles: FindRootFolderFiles[] = [
+export const defaultRootFolderFiles: FindRootFolderFiles[] = [
   { files: getMockFileList(), folderPath: ROOT_FOLDER_PATH, result: 'ok' },
 ]
 

@@ -13,32 +13,31 @@ export const tree = (
   state: WorkspaceState,
   renderVars: RenderVars
 ): string => {
-  const { files, folderPathSegment, sub } = branch
+  const { files, folderPathSegment, isRoot, sub } = branch
   const isClosed = closedFolders.includes(folderPathSegment)
 
   let children: TreeChildren = []
   let fileDepth = depth
-  let showItemFolder = true
   let treeDepth = depth + 1
 
-  if (showItemFolder && !isClosed) {
+  if (!isClosed) {
     children = sortTreeChildren([...sub, ...files])
   }
 
+  if (!isRoot && children.length < 1) {
+    return ''
+  }
+
   return `
-    ${showItemFolder ? itemFolder(branch, depth, isClosed, state, renderVars) : ''}
-    ${
-      children.length > 0
-        ? children
-            .map((child) => {
-              if (isFile(child)) {
-                return itemFile({ depth: fileDepth, file: child, renderVars, state })
-              } else {
-                return tree(child, treeDepth, closedFolders, state, renderVars)
-              }
-            })
-            .join('')
-        : ''
-    }
+    ${itemFolder(branch, depth, isClosed, state, renderVars)}
+    ${children
+      .map((child) => {
+        if (isFile(child)) {
+          return itemFile({ depth: fileDepth, file: child, renderVars, state })
+        } else {
+          return tree(child, treeDepth, closedFolders, state, renderVars)
+        }
+      })
+      .join('')}
   `
 }

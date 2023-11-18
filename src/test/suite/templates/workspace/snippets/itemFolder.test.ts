@@ -59,6 +59,10 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
     expect(result).contains(`title="~/${FOLDER_PATH}"`)
     expect(result).contains(`data-depth="${DEPTH}"`)
     expect(result).contains(`<span class="list__title">${folder.label}</span>`)
+    expect(result).contains('list__branch-list-item')
+    expect(result).contains('list__branch-list-item-folder')
+    expect(result).contains('list__styled-item')
+    expect(result).contains('list__branch-list-item-folder--closable')
 
     sinon.assert.callCount(btnSpy, 1)
     sinon.assert.calledWith(btnSpy, [
@@ -67,36 +71,37 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
         codicon: 'browser',
         file: folder.folderPath,
         renderVars: mockRenderVars,
-        tooltip: `Open '${folder.label}' in your file manager`,
+        tooltip: `Open folder containing '${folder.label}' in your file manager`,
         type: 'open-filemanager',
       },
     ])
     sinon.assert.calledOnce(indentSpy)
   })
 
-  suite('Closable class:', () => {
-    test('Root folders do not have closable class', () => {
-      const result = itemFolder(
-        { ...folder, isRoot: true },
-        DEPTH,
-        false,
-        mockState,
-        mockRenderVars
-      )
+  test('Root folders have root class', () => {
+    const result = itemFolder({ ...folder, isRoot: true }, DEPTH, false, mockState, mockRenderVars)
 
-      expect(result).not.contains(`list__branch-list-item-folder--closable`)
+    expect(result).contains(`list__branch-list-item-folder--root`)
+  })
+
+  suite('Indent:', () => {
+    test('Does not render indent if depth 0', () => {
+      const mockRootFolders = getMockRootFolders({ showTree: true })
+      const mockState = getMockState({ ...mockRootFolders })
+
+      const result = itemFolder(folder, 0, true, mockState, mockRenderVars)
+
+      expect(result).not.contains(`list_branch-indent-box`)
+      expect(result).not.contains(`list_branch-indent`)
     })
 
-    test('Non-root folders have closable class', () => {
-      const result = itemFolder(
-        { ...folder, isRoot: false },
-        DEPTH,
-        false,
-        mockState,
-        mockRenderVars
-      )
+    test('Renders indent if depth >= 1', () => {
+      const mockRootFolders = getMockRootFolders({ showTree: true })
+      const mockState = getMockState({ ...mockRootFolders })
 
-      expect(result).contains(`list__branch-list-item-folder--closable`)
+      const result = itemFolder(folder, 1, true, mockState, mockRenderVars)
+
+      expect(result).contains(`list_branch-indent-box`)
     })
   })
 

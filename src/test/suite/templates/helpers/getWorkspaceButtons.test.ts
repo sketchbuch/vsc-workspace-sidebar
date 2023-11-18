@@ -50,7 +50,7 @@ suite('Templates > Helpers > getWorkspaceButtons():', () => {
         ariaLabel: `Open folder containing '${newWinLabel}' in your file manager`,
         file: buttons[0].file,
         renderVars: mockRenderVars,
-        tooltip: `Open '${newWinLabel}' in your file manager`,
+        tooltip: `Open folder containing '${newWinLabel}' in your file manager`,
         type: buttons[0].key,
       },
       {
@@ -99,7 +99,7 @@ suite('Templates > Helpers > getWorkspaceButtons():', () => {
         codicon: 'test',
         file: buttons[0].file,
         renderVars: mockRenderVars,
-        tooltip: `Open '${newWinLabel}' in your file manager`,
+        tooltip: `Open folder containing '${newWinLabel}' in your file manager`,
         type: buttons[0].key,
       },
       {

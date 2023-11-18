@@ -3,6 +3,7 @@ import * as sinon from 'sinon'
 import * as icons from '../../../../../templates/getImgUrls'
 import {
   itemIconClosed,
+  itemIconDummy,
   itemIconFile,
   itemIconFiletheme,
   itemIconOpen,
@@ -13,13 +14,6 @@ import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
 suite('Templates > Workspace > Snippets: itemIcons', () => {
   const mockRenderVars = getMockRenderVars()
 
-  test('itemIconOpen()', () => {
-    const result = itemIconOpen()
-
-    expect(result).to.be.a('string')
-    expect(result).contains(`list_branch-icon codicon codicon-chevron-down`)
-  })
-
   test('itemIconClosed()', () => {
     const result = itemIconClosed()
 
@@ -27,14 +21,35 @@ suite('Templates > Workspace > Snippets: itemIcons', () => {
     expect(result).contains(`list_branch-icon codicon codicon-chevron-right`)
   })
 
+  test('itemIconDummy()', () => {
+    const result = itemIconDummy()
+
+    expect(result).to.be.a('string')
+    expect(result).contains(`list_branch-icon list_branch-icon-empty`)
+  })
+
   test('itemIconFile()', () => {
     const result = itemIconFile()
 
     expect(result).to.be.a('string')
-    expect(result).contains(`list_branch-icon codicon codicon-record-smal`)
+    expect(result).contains(`list_branch-icon codicon codicon-record-small`)
   })
 
-  test('Renders correctly', () => {
+  test('itemIconFiletheme()', () => {
+    const result = itemIconFiletheme('c++')
+
+    expect(result).to.be.a('string')
+    expect(result).contains(`list_branch-icon file-icon file-icon-type-cpp"`)
+  })
+
+  test('itemIconOpen()', () => {
+    const result = itemIconOpen()
+
+    expect(result).to.be.a('string')
+    expect(result).contains(`list_branch-icon codicon codicon-chevron-down`)
+  })
+
+  test('itemIconSelected()', () => {
     const spy = sinon.spy(icons, 'getImgUrls')
 
     const result = itemIconSelected(mockRenderVars)
@@ -48,13 +63,5 @@ suite('Templates > Workspace > Snippets: itemIcons', () => {
     sinon.assert.calledWith(spy, mockRenderVars, 'check')
 
     spy.restore()
-  })
-
-  test('itemIconFiletheme()', () => {
-    const result = itemIconFiletheme('c++')
-    console.log('### result', result)
-
-    expect(result).to.be.a('string')
-    expect(result).contains(`list_branch-icon file-icon file-icon-type-cpp"`)
   })
 })

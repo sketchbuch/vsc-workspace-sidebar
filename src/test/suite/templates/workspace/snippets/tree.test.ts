@@ -48,6 +48,15 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     sub: [],
   }
 
+  const emptySubTree: FileTree = {
+    files: [],
+    folderPath: '',
+    folderPathSegment: ROOT_FOLDER,
+    isRoot: false,
+    label: ROOT_FOLDER,
+    sub: [],
+  }
+
   setup(() => {
     folderSpy = sinon.spy(folder, 'itemFolder')
     itemSpy = sinon.spy(item, 'itemFile')
@@ -62,7 +71,23 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     treeSpy.restore()
   })
 
-  test('An empty tree will render nothing', () => {
+  test('An empty subtree will render nothing', () => {
+    const mockRootFolders = getMockRootFolders({ showTree: true })
+    const state = getMockState({ ...mockRootFolders })
+    const renderVars = getMockRenderVars()
+
+    const result = tree(emptySubTree, 0, [], state, renderVars)
+
+    expect(result).to.be.a('string')
+    expect(result).to.be.empty
+
+    sinon.assert.notCalled(folderSpy)
+    sinon.assert.notCalled(itemSpy)
+    sinon.assert.calledOnce(sortSpy)
+    sinon.assert.calledOnce(treeSpy)
+  })
+
+  test('An empty root tree will render a folder', () => {
     const mockRootFolders = getMockRootFolders({ showTree: true })
     const state = getMockState({ ...mockRootFolders })
     const renderVars = getMockRenderVars()
@@ -71,7 +96,7 @@ suite('Templates > Workspace > Snippets: tree()', () => {
 
     expect(result).to.be.a('string')
 
-    sinon.assert.notCalled(folderSpy)
+    sinon.assert.calledOnce(folderSpy)
     sinon.assert.notCalled(itemSpy)
     sinon.assert.calledOnce(sortSpy)
     sinon.assert.calledOnce(treeSpy)
@@ -96,18 +121,19 @@ suite('Templates > Workspace > Snippets: tree()', () => {
 
     sinon.assert.callCount(itemSpy, getMockFileList().length)
     // Order like this due to child sorting
-    expect(itemSpy.args[0][0].label).to.equal(file1.label)
-    expect(itemSpy.args[1][0].label).to.equal(file2.label)
-    expect(itemSpy.args[2][0].label).to.equal(file3.label)
-    expect(itemSpy.args[3][0].label).to.equal(file4.label)
+    expect(itemSpy.args[0][0].file.label).to.equal(file1.label)
+    expect(itemSpy.args[1][0].file.label).to.equal(file2.label)
+    expect(itemSpy.args[2][0].file.label).to.equal(file3.label)
+    expect(itemSpy.args[3][0].file.label).to.equal(file4.label)
 
-    sinon.assert.callCount(folderSpy, 7)
-    expect(folderSpy.args[0][0].label).to.equal(FOLDER1)
-    expect(folderSpy.args[1][0].label).to.equal(SUBFOLDER1)
-    expect(folderSpy.args[2][0].label).to.equal(SUBFOLDER2)
-    expect(folderSpy.args[3][0].label).to.equal(FOLDER3)
-    expect(folderSpy.args[4][0].label).to.equal(SUBFOLDER3)
-    expect(folderSpy.args[5][0].label).to.equal(FOLDER4)
-    expect(folderSpy.args[6][0].label).to.equal(SUBFOLDER4)
+    sinon.assert.callCount(folderSpy, 8)
+    expect(folderSpy.args[0][0].label).to.equal(ROOT_FOLDER)
+    expect(folderSpy.args[1][0].label).to.equal(FOLDER1)
+    expect(folderSpy.args[2][0].label).to.equal(SUBFOLDER1)
+    expect(folderSpy.args[3][0].label).to.equal(SUBFOLDER2)
+    expect(folderSpy.args[4][0].label).to.equal(FOLDER3)
+    expect(folderSpy.args[5][0].label).to.equal(SUBFOLDER3)
+    expect(folderSpy.args[6][0].label).to.equal(FOLDER4)
+    expect(folderSpy.args[7][0].label).to.equal(SUBFOLDER4)
   })
 })
