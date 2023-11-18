@@ -30,7 +30,7 @@ suite('Templates > Workspace > Snippets: tree()', () => {
   let sortSpy: sinon.SinonSpy
   let treeSpy: sinon.SinonSpy
 
-  const closedFolderTree: FileTree = {
+  const closedSubTree: FileTree = {
     files: [],
     folderPath: '',
     folderPathSegment: FOLDER1,
@@ -71,7 +71,7 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     treeSpy.restore()
   })
 
-  test('An empty subtree will render nothing', () => {
+  test('An empty unclosed subtree will render nothing', () => {
     const mockRootFolders = getMockRootFolders({ showTree: true })
     const state = getMockState({ ...mockRootFolders })
     const renderVars = getMockRenderVars()
@@ -84,6 +84,21 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     sinon.assert.notCalled(folderSpy)
     sinon.assert.notCalled(itemSpy)
     sinon.assert.calledOnce(sortSpy)
+    sinon.assert.calledOnce(treeSpy)
+  })
+
+  test('An empty closed subtree will render a folder', () => {
+    const mockRootFolders = getMockRootFolders({ closedFolders: [FOLDER1], showTree: true })
+    const state = getMockState({ ...mockRootFolders })
+    const renderVars = getMockRenderVars()
+
+    const result = tree(closedSubTree, 0, [FOLDER1], state, renderVars)
+
+    expect(result).to.be.a('string')
+
+    sinon.assert.called(folderSpy)
+    sinon.assert.notCalled(itemSpy)
+    sinon.assert.notCalled(sortSpy)
     sinon.assert.calledOnce(treeSpy)
   })
 
@@ -107,7 +122,7 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     const state = getMockState({ ...mockRootFolders })
     const renderVars = getMockRenderVars()
 
-    tree(closedFolderTree, 0, [FOLDER1], state, renderVars)
+    tree(closedSubTree, 0, [FOLDER1], state, renderVars)
 
     sinon.assert.notCalled(sortSpy)
   })

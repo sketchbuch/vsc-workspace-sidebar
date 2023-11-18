@@ -22,10 +22,10 @@ export const tree = (
 
   if (!isClosed) {
     children = sortTreeChildren([...sub, ...files])
-  }
 
-  if (!isRoot && children.length < 1) {
-    return ''
+    if (!isRoot && children.length < 1) {
+      return ''
+    }
   }
 
   return `

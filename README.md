@@ -103,3 +103,4 @@ This extension is localised, if you want it in your language please send me a tr
 - Set tree folders to just the root if not tree view
 - Get list collapse working
 - Link cache to version
+- Closing folder removes them from list
