@@ -97,8 +97,6 @@ This extension is localised, if you want it in your language please send me a tr
 
 - Update doc images inc. preview
 - bULK COLLAPSE AND ROOT FOLDERS
-- If not searching, remove 31/31 and just show 31
-- Highlight needs to be restricted to root folder
 - Add remove root folder icon
 - Add add folder icon
 - Move indent sizes to vars
