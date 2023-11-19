@@ -76,32 +76,68 @@ export type WorkspaceStateErrorObj = SerializedError | null
 export type WorkspaceState = {
   error: WorkspaceErrors
   errorObj: WorkspaceStateErrorObj
+  /**
+   * The total number of workspace files for all root folders.
+   */
   fileCount: number
   isFolderInvalid: boolean
   /**
-   * The result for all root folders
+   * The result of the file collection for all root folders.
    */
   result: FindFileResult
   rootFolders: WorkspaceStateRootFolder[]
   search: SearchState
   selected: string
+  /**
+   * The current view the state is in.
+   */
   view: WorkspaceView
+  /**
+   * The total number of visible workspace files for all root folders.
+   */
   visibleFileCount: number
+  /**
+   * The type of workspace that is currently open.
+   */
   wsType: WorkspaceType
 }
 
 export type WorkspaceStateRootFolder = {
+  /**
+   * The names of all folders. Either all folders in the tree, or just the root folder in list view.
+   */
+  allFolders: string[]
+  /**
+   * The names of all folders that are closed.
+   */
   closedFolders: string[]
+  /**
+   * The files, converted to a form useable by this extension.
+   */
   convertedFiles: Files
+  /**
+   * An array of absolute file paths to all workspace files.
+   */
   files: WorkspaceFiles
+  /**
+   * A representation of the file tree for rendering - which could be collapsed and/or condensed depending upon settings.
+   */
   fileTree: FileTree | null
+  /**
+   * The name of the actual folder.
+   */
   folderName: string
   /**
-   * The folder with ~ replaced with the users homedir
+   * The absolute folder path with ~ replaced with the users homedir.
    */
   folderPath: string
+  /**
+   * The result of the file collection for this root folder.
+   */
   result: FindFileResult
-  treeFolders: string[]
+  /**
+   * The converted files that are currently visible
+   */
   visibleFiles: Files
 }
 
