@@ -1,6 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { PayloadToggleFolderStateBulk, WorkspaceState } from '../WorkspaceViewProvider.interface'
 
+type RootFolderRef = string[]
+
 export const toggleFolderStateBulk = (
   state: WorkspaceState,
   action: PayloadAction<PayloadToggleFolderStateBulk>
@@ -9,26 +11,41 @@ export const toggleFolderStateBulk = (
     return
   }
 
+  const { payload } = action
+  const rootFoldersClosed: RootFolderRef = []
+  const allSubFoldersClosed: RootFolderRef = []
+  const someSubFoldersClosed: RootFolderRef = []
+
+  state.rootFolders.forEach(({ closedFolders, folderPath, treeFolders }) => {
+    const [root, ...subFolders] = treeFolders
+
+    if (closedFolders.includes(root)) {
+      rootFoldersClosed.push(folderPath)
+    } else if (closedFolders.length === subFolders.length) {
+      allSubFoldersClosed.push(folderPath)
+    } else {
+      someSubFoldersClosed.push(folderPath)
+    }
+  })
+
   state.rootFolders = state.rootFolders.map((rootFolder) => {
     const newFolder = { ...rootFolder }
+    const { closedFolders, folderPath, treeFolders, visibleFiles } = rootFolder
+    const [_, ...subFolders] = treeFolders
 
-    if (action.payload === 'expand' && rootFolder.closedFolders.length) {
-      newFolder.closedFolders = []
-    } else if (
-      action.payload === 'collapse' &&
-      rootFolder.visibleFiles.length &&
-      rootFolder.treeFolders.length > 0
-    ) {
-      const [root, ...otherFolders] = rootFolder.treeFolders
-
-      const isRootClosed = rootFolder.closedFolders.includes(root)
-      const isOnlyRootOpen = rootFolder.closedFolders.length === otherFolders.length
-      const areSubsOpen = rootFolder.closedFolders.length < otherFolders.length
-
-      if (isOnlyRootOpen) {
-        newFolder.closedFolders = [...rootFolder.treeFolders]
-      } else if (areSubsOpen && !isRootClosed) {
-        newFolder.closedFolders = [...otherFolders]
+    if (payload === 'expand' && closedFolders.length) {
+      if (rootFoldersClosed.includes(folderPath)) {
+        newFolder.closedFolders = [...subFolders]
+      } else if (allSubFoldersClosed.includes(folderPath)) {
+        newFolder.closedFolders = []
+      }
+    } else if (payload === 'collapse' && visibleFiles.length && treeFolders.length > 0) {
+      if (!rootFoldersClosed.includes(folderPath)) {
+        if (allSubFoldersClosed.includes(folderPath) && someSubFoldersClosed.length < 1) {
+          newFolder.closedFolders = [...treeFolders]
+        } else {
+          newFolder.closedFolders = [...subFolders]
+        }
       }
     }
 

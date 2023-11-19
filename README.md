@@ -96,7 +96,6 @@ This extension is localised, if you want it in your language please send me a tr
 ## Multiroot Todo
 
 - Update doc images inc. preview
-- bULK COLLAPSE AND ROOT FOLDERS
 - Add remove root folder icon
 - Add add folder icon
 - Move indent sizes to vars
