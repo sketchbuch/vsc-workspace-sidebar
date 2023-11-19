@@ -220,12 +220,12 @@
         {
           "command": "vsc-workspace-sidebar-collapse-all",
           "group": "navigation@0",
-          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded && config.workspaceSidebar.showFolderHierarchy"
+          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded"
         },
         {
           "command": "vsc-workspace-sidebar-expand-all",
           "group": "navigation@1",
-          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded && config.workspaceSidebar.showFolderHierarchy"
+          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded"
         },
         {
           "command": "vsc-workspace-sidebar-sort",

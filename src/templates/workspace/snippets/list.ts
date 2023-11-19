@@ -25,7 +25,8 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
       <div class="list__list-wrapper">
         ${rootFolders
           .map((rootFolder) => {
-            const { fileTree, folderName, folderPath, result, visibleFiles } = rootFolder
+            const { closedFolders, fileTree, folderName, folderPath, result, visibleFiles } =
+              rootFolder
 
             if (search.term && visibleFiles.length < 1) {
               return ''
@@ -35,6 +36,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
             const classes =
               'list__list list__styled-list' + (isFileTree ? ' list__styled-list--tree' : '')
             let isRootPathError = result === 'invalid-folder' || result === 'no-workspaces'
+            const isClosed = closedFolders.includes(folderName)
 
             return `
               <section class="list__list-section">
@@ -45,7 +47,11 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
                           ${
                             isFileTree
                               ? tree(fileTree, 0, rootFolder.closedFolders, state, renderVars)
-                              : itemFolder(
+                              : ''
+                          }
+                          ${
+                            !isFileTree
+                              ? itemFolder(
                                   {
                                     files: [],
                                     folderPath,
@@ -55,13 +61,18 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
                                     sub: [],
                                   },
                                   0,
-                                  false,
+                                  isClosed,
                                   state,
                                   renderVars
-                                ) +
-                                visibleFiles
+                                )
+                              : ''
+                          }
+                          ${
+                            !isFileTree && !isClosed
+                              ? visibleFiles
                                   .map((file) => itemFile({ file, state, renderVars }))
                                   .join('')
+                              : ''
                           }
                         </ul>`
                     : ''

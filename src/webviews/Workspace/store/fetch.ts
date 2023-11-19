@@ -43,10 +43,12 @@ export const fetchFulfilled = (
     state.view = 'list'
 
     state.rootFolders = action.payload.rootFolders.map(({ files, folderPath, result }) => {
+      const folderName = getLastPathSegment(folderPath)
       const convertedFiles = convertWsFiles(folderPath, files, state.selected)
       const visibleFiles = getVisibleFiles(convertedFiles, state.search, state.sort)
       const fileTree = showTree ? getFileTree(folderPath, visibleFiles) : null
-      const treeFolders = showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : []
+      const treeFolders =
+        showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : [folderName]
 
       fileCount += files.length
       visibleFileCount += visibleFiles.length
