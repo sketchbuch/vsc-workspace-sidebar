@@ -12,7 +12,6 @@ export type GetFileTreeType =
   | 'condensed'
   | 'normal'
   | 'searched'
-export type SortDir = 'asc' | 'desc'
 
 export const OS_HOMEFOLDER = path.join('home', 'user')
 export const ROOT_FOLDER = 'dev'
@@ -98,45 +97,24 @@ export const getMockFolderList = (type: GetFileTreeType): string[] => {
   }
 }
 
-export const getMockVisibleFiles = (sortDir?: SortDir, term: string = ''): Files => {
-  const sortedFiles = [
+export const getMockVisibleFiles = (term: string = ''): Files => {
+  let sortedFiles = [
     { ...file4, showPath: false },
     { ...file2, showPath: false },
     { ...file3, showPath: false },
     { ...file1, showPath: false },
   ]
-  const unsortedFiles = [
-    { ...file1, showPath: false },
-    { ...file2, showPath: false },
-    { ...file3, showPath: false },
-    { ...file4, showPath: false },
-  ]
-  let files = unsortedFiles
-
-  if (sortDir === 'asc') {
-    files = sortedFiles
-  } else if (sortDir === 'desc') {
-    files = sortedFiles.reverse()
-  }
 
   if (term) {
     const lcTerm = term.toLowerCase()
-    files = files.filter((file) => file.label.toLowerCase().includes(lcTerm))
+    sortedFiles = sortedFiles.filter((file) => file.label.toLowerCase().includes(lcTerm))
   }
 
-  return files
+  return sortedFiles
 }
 
-export const getMockConvertedFiles = (sortDir?: SortDir): Files => {
-  const sortedFiles = [{ ...file4 }, { ...file2 }, { ...file3 }, { ...file1 }]
-
-  if (sortDir === 'asc') {
-    return sortedFiles
-  } else if (sortDir === 'desc') {
-    return sortedFiles.reverse()
-  }
-
-  return [{ ...file1 }, { ...file2 }, { ...file3 }, { ...file4 }]
+export const getMockConvertedFiles = (): Files => {
+  return [{ ...file4 }, { ...file2 }, { ...file3 }, { ...file1 }]
 }
 
 export const getMockFileTree = (type: GetFileTreeType): FileTree => {

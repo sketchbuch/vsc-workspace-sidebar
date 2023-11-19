@@ -24,10 +24,9 @@
   "config.title.listview": "Liste Ansicht",
   "config.title.search": "Suche",
   "config.title.treeview": "Ordnerhierarchie Ansicht",
-  "ext.cmd.wsList.collapse-all": "Alle Ordner zuklappen",
-  "ext.cmd.wsList.expand-all": "Alle Ordner aufklappen",
-  "ext.cmd.wsList.refresh": "Arbeitsbereiche neu laden",
-  "ext.cmd.wsList.sort": "Arbeitsbereiche sortieren",
+  "ext.cmd.wsList.collapse-all": "Zuklappen",
+  "ext.cmd.wsList.expand-all": "Aufklappen",
+  "ext.cmd.wsList.refresh": "Arbeitsbereiche neu einsammeln",
   "ext.cmd.wsListItem.checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",
   "ext.cmd.wsListItem.open.curWindow": "In aktuellem Fenster öffnen",
   "ext.cmd.wsListItem.open.newWindow": "In neuem Fenster öffnen",
@@ -35,16 +34,6 @@
   "viewsContainers.activitybar.title": "Arbeitsbereiche",
   "errors": {
     "viewNotFound": "Workspace Sidebar: WebviewView nicht gefunden"
-  },
-  "sort": {
-    "ascending": {
-      "description": "Sortieren von a-z",
-      "label": "Aufsteigend"
-    },
-    "descending": {
-      "description": "Sortieren von z-a",
-      "label": "Absteigend"
-    }
   },
   "workspace": {
     "checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",

@@ -186,7 +186,6 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       test('Sort "asc" updates state as expected', () => {
         const mockRootFolders = getMockRootFolders({
           showTree: false,
-          sortVsible: 'asc',
         })
         const state = getMockState(intialState)
         const expectedState = getMockState({
@@ -199,31 +198,10 @@ suite('Webviews > Workspace > Store > fetch()', () => {
         expect(state).to.eql(expectedState)
       })
 
-      test('Sort "desc" updates state as expected', () => {
-        const mockRootFolders = getMockRootFolders({
-          showTree: false,
-          sortVsible: 'desc',
-        })
-        const state = getMockState({
-          ...intialState,
-          sort: 'descending',
-        })
-        const expectedState = getMockState({
-          ...defaultExpectedState,
-          ...mockRootFolders,
-          sort: 'descending',
-        })
-
-        expect(state).not.to.eql(expectedState)
-        fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
-        expect(state).to.eql(expectedState)
-      })
-
       test('Sort "asc" searched updates state as expected', () => {
         const mockRootFolders = getMockRootFolders({
           searchTerm: SEARCH_TERM,
           showTree: false,
-          sortVsible: 'asc',
         })
         const search = getMockSearchState({ term: SEARCH_TERM })
         const state = getMockState({ ...intialState, search })
@@ -231,30 +209,6 @@ suite('Webviews > Workspace > Store > fetch()', () => {
           ...defaultExpectedState,
           ...mockRootFolders,
           search,
-        })
-
-        expect(state).not.to.eql(expectedState)
-        fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
-        expect(state).to.eql(expectedState)
-      })
-
-      test('Sort "desc" searched updates state as expected', () => {
-        const mockRootFolders = getMockRootFolders({
-          searchTerm: SEARCH_TERM,
-          showTree: false,
-          sortVsible: 'desc',
-        })
-        const search = getMockSearchState({ term: SEARCH_TERM })
-        const state = getMockState({
-          ...intialState,
-          search,
-          sort: 'descending',
-        })
-        const expectedState = getMockState({
-          ...defaultExpectedState,
-          ...mockRootFolders,
-          search,
-          sort: 'descending',
         })
 
         expect(state).not.to.eql(expectedState)

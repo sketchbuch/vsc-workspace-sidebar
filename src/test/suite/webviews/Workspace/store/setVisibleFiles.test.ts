@@ -45,50 +45,18 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
 
       const mockRootFolders = getMockRootFolders({
         showTree: false,
-        sortVsible: 'asc',
       })
       mockRootFolders.visibleFileCount = 0
       mockRootFolders.rootFolders[0].visibleFiles = []
       const mockExpectedRootFolders = getMockRootFolders({
         showTree: false,
-        sortVsible: 'asc',
       })
 
       const state = getMockState({
         ...mockRootFolders,
-        sort: 'ascending',
       })
       const expectedState = getMockState({
         ...mockExpectedRootFolders,
-        sort: 'ascending',
-      })
-
-      expect(state).not.to.eql(expectedState)
-      setVisibleFiles(state)
-      expect(state).to.eql(expectedState)
-    })
-
-    test('Desc updates state as expected', () => {
-      treeConfigStub.callsFake(() => false)
-
-      const mockRootFolders = getMockRootFolders({
-        showTree: false,
-        sortVsible: 'desc',
-      })
-      mockRootFolders.visibleFileCount = 0
-      mockRootFolders.rootFolders[0].visibleFiles = []
-      const mockExpectedRootFolders = getMockRootFolders({
-        showTree: false,
-        sortVsible: 'desc',
-      })
-
-      const state = getMockState({
-        ...mockRootFolders,
-        sort: 'descending',
-      })
-      const expectedState = getMockState({
-        ...mockExpectedRootFolders,
-        sort: 'descending',
       })
 
       expect(state).not.to.eql(expectedState)

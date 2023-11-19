@@ -96,10 +96,8 @@ This extension is localised, if you want it in your language please send me a tr
 ## Multiroot Todo
 
 - Update doc images inc. preview
-- Add remove root folder icon
-- Add add folder icon
 - Move indent sizes to vars
-- Set tree folders to just the root if not tree view
-- Get list collapse working
 - Link cache to version
-- Closing folder removes them from list
+- Loading view - suggest exclude folders to speed up
+- Error view - suggest checking root folders /excludes
+- Folder needs rendering if showing root folder error message

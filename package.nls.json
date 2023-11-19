@@ -24,10 +24,9 @@
   "config.title.listview": "List View",
   "config.title.search": "Search",
   "config.title.treeview": "Tree View",
-  "ext.cmd.wsList.collapse-all": "Collapse all folders",
-  "ext.cmd.wsList.expand-all": "Expand all folders",
-  "ext.cmd.wsList.refresh": "Reload Workspaces",
-  "ext.cmd.wsList.sort": "Sort Workspaces",
+  "ext.cmd.wsList.collapse-all": "Collapse",
+  "ext.cmd.wsList.expand-all": "Expand",
+  "ext.cmd.wsList.refresh": "Re-collect Workspaces",
   "ext.cmd.wsListItem.checkSettings": "Check the extension settings",
   "ext.cmd.wsListItem.open.curWindow": "Open in this window",
   "ext.cmd.wsListItem.open.newWindow": "Open in a new window",
@@ -35,16 +34,6 @@
   "viewsContainers.activitybar.title": "Workspaces",
   "errors": {
     "viewNotFound": "Workspace Sidebar: WebviewView not found"
-  },
-  "sort": {
-    "ascending": {
-      "description": "Sort from a-z",
-      "label": "Ascending"
-    },
-    "descending": {
-      "description": "Sort from z-a",
-      "label": "Descending"
-    }
   },
   "workspace": {
     "checkSettings": "Check extension settings",

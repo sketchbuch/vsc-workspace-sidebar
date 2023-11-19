@@ -9,7 +9,7 @@ export const setVisibleFiles = (state: WorkspaceState): void => {
   let visibleFileCount = 0
 
   state.rootFolders = state.rootFolders.map((rootFolder) => {
-    const visibleFiles = getVisibleFiles(rootFolder.convertedFiles, state.search, state.sort)
+    const visibleFiles = getVisibleFiles(rootFolder.convertedFiles, state.search)
     const fileTree = showTree ? getFileTree(rootFolder.folderPath, visibleFiles) : null
     const treeFolders =
       showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : [rootFolder.folderName]

@@ -56,31 +56,6 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
       setSearch(state, { payload: { term: SEARCH_TERM }, type: 'ws/setSearch' })
       expect(state).to.eql(expectedState)
     })
-
-    test('Sort "desc" updates state as expected', () => {
-      const mockRootFolders = getMockRootFolders({
-        fileTreeType: 'normal',
-        sortConverted: 'desc',
-        sortVsible: 'desc',
-      })
-      const mockExpecetedRootFolders = getMockRootFolders({
-        fileTreeType: 'searched',
-        searchTerm: SEARCH_TERM,
-        sortConverted: 'desc',
-        sortVsible: 'desc',
-      })
-      const state = getMockState({
-        ...mockRootFolders,
-      })
-      const expectedState = getMockState({
-        ...mockExpecetedRootFolders,
-        search: getMockSearchState({ term: SEARCH_TERM }),
-      })
-
-      expect(state).not.to.eql(expectedState)
-      setSearch(state, { payload: { term: SEARCH_TERM }, type: 'ws/setSearch' })
-      expect(state).to.eql(expectedState)
-    })
   })
 
   suite('Tree:', () => {

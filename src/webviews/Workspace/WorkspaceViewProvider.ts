@@ -7,7 +7,6 @@ import {
   FileThemeProcessor,
   FileThemeProcessorObserver,
 } from 'vscode-file-theme-processor'
-import { SortIds } from '../../commands/registerCommands'
 import { getActionsConfig } from '../../config/general'
 import { getSearchCaseInsensitiveConfig, getSearchMatchStartConfig } from '../../config/search'
 import {
@@ -18,7 +17,7 @@ import {
   CMD_VSC_SET_CTX,
 } from '../../constants/commands'
 import { ConfigActions } from '../../constants/config'
-import { EXT_LOADED, EXT_SORT, EXT_WEBVIEW_WS, EXT_WSSTATE_CACHE } from '../../constants/ext'
+import { EXT_LOADED, EXT_WEBVIEW_WS, EXT_WSSTATE_CACHE } from '../../constants/ext'
 import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
@@ -36,15 +35,8 @@ import { fetch } from './store/fetch'
 import { workspaceSlice } from './store/workspaceSlice'
 
 const { executeCommand } = vscode.commands
-const {
-  list,
-  setFileTree,
-  setSearch,
-  setSort,
-  setVisibleFiles,
-  toggleFolderState,
-  toggleFolderStateBulk,
-} = workspaceSlice.actions
+const { list, setFileTree, setSearch, setVisibleFiles, toggleFolderState, toggleFolderStateBulk } =
+  workspaceSlice.actions
 
 export class WorkspaceViewProvider
   implements vscode.WebviewViewProvider, FileThemeProcessorObserver
@@ -301,7 +293,6 @@ export class WorkspaceViewProvider
 
     this.setupWebview(webviewView)
     this.updateSearch()
-    this.updateSort()
 
     const cachedFiles = this.getCacheFiles()
 
@@ -329,11 +320,6 @@ export class WorkspaceViewProvider
         matchStart: getSearchMatchStartConfig(),
       })
     )
-  }
-
-  public updateSort() {
-    const sort = this._ctx.globalState.get<SortIds>(EXT_SORT) ?? 'ascending'
-    store.dispatch(setSort({ sort }))
   }
 
   public updateVisibleFiles() {

@@ -1,5 +1,4 @@
 import { PayloadAction, SerializedError } from '@reduxjs/toolkit'
-import { SortIds } from '../../commands/registerCommands'
 import { FileTree } from './helpers/getFileTree'
 
 export interface File {
@@ -54,11 +53,6 @@ export enum WorkspaceSearchCheckboxes {
   CASE_INSENSITIVE = 'CASE_INSENSITIVE',
   MATCH_START = 'MATCH_START',
 }
-
-export interface WorkspaceSort {
-  sort: SortIds
-}
-
 export type FolderState = 'collapse' | 'expand'
 
 export type Payload = string
@@ -91,7 +85,6 @@ export type WorkspaceState = {
   rootFolders: WorkspaceStateRootFolder[]
   search: SearchState
   selected: string
-  sort: SortIds
   view: WorkspaceView
   visibleFileCount: number
   wsType: WorkspaceType
