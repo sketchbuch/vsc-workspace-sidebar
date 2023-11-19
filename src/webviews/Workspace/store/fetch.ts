@@ -47,13 +47,14 @@ export const fetchFulfilled = (
       const convertedFiles = convertWsFiles(folderPath, files, state.selected)
       const visibleFiles = getVisibleFiles(convertedFiles, state.search)
       const fileTree = showTree ? getFileTree(folderPath, visibleFiles) : null
-      const treeFolders =
+      const allFolders =
         showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : [folderName]
 
       fileCount += files.length
       visibleFileCount += visibleFiles.length
 
       return {
+        allFolders,
         closedFolders: [],
         convertedFiles,
         files,
@@ -62,7 +63,6 @@ export const fetchFulfilled = (
         folderPath,
         folderPathShort: folderPath.replace(homeDir, `~`),
         result,
-        treeFolders,
         visibleFiles,
       }
     })

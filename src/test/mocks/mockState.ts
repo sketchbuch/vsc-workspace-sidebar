@@ -68,12 +68,13 @@ export const getMockRootFolders = (
     const convertedFiles = getMockConvertedFiles()
     const visibleFiles = getMockVisibleFiles(searchTerm)
     const fileTree = showTree ? getMockFileTree(fileTreeType) : null
-    const treeFolders: string[] = showTree ? getMockFolderList(fileTreeType) : []
+    const allFolders: string[] = showTree ? getMockFolderList(fileTreeType) : []
 
     fileCount += files.length
     visibleFileCount += visibleFiles.length
 
     return {
+      allFolders,
       closedFolders,
       convertedFiles,
       files,
@@ -82,7 +83,6 @@ export const getMockRootFolders = (
       folderPath,
       folderPathShort: folderPath.replace(OS_HOMEFOLDER, `~`),
       result,
-      treeFolders,
       visibleFiles,
     }
   })

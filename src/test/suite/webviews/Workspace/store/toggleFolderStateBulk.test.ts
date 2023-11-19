@@ -88,13 +88,13 @@ suite('Webviews > Workspace > Store > toggleFolderStateBulk()', () => {
       expect(state).to.eql(expectedState)
     })
 
-    test('Does nothing if there are no treeFolders', () => {
+    test('Does nothing if there are no allFolders', () => {
       const mockRootFolders = getMockRootFolders({
         closedFolders,
         fileTreeType: 'normal',
         showTree: true,
       })
-      mockRootFolders.rootFolders[0].treeFolders = []
+      mockRootFolders.rootFolders[0].allFolders = []
 
       const state = getMockState({ ...mockRootFolders })
       const expectedState = getMockState({ ...mockRootFolders })

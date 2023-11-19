@@ -22,13 +22,14 @@ export const list = (
     const convertedFiles = convertWsFiles(folderPath, files, state.selected)
     const visibleFiles = getVisibleFiles(convertedFiles, state.search)
     const fileTree = showTree ? getFileTree(folderPath, visibleFiles) : null
-    const treeFolders =
+    const allFolders =
       showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : [folderName]
 
     fileCount += files.length
     visibleFileCount += visibleFiles.length
 
     return {
+      allFolders,
       closedFolders: [],
       convertedFiles,
       files,
@@ -37,7 +38,6 @@ export const list = (
       folderPath,
       folderPathShort: folderPath.replace(homeDir, `~`),
       result: files.length < 1 ? 'no-workspaces' : 'ok',
-      treeFolders,
       visibleFiles,
     }
   })

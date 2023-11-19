@@ -16,8 +16,8 @@ export const toggleFolderStateBulk = (
   const allSubFoldersClosed: RootFolderRef = []
   const someSubFoldersClosed: RootFolderRef = []
 
-  state.rootFolders.forEach(({ closedFolders, folderPath, treeFolders }) => {
-    const [root, ...subFolders] = treeFolders
+  state.rootFolders.forEach(({ allFolders, closedFolders, folderPath }) => {
+    const [root, ...subFolders] = allFolders
 
     if (closedFolders.includes(root)) {
       rootFoldersClosed.push(folderPath)
@@ -30,8 +30,8 @@ export const toggleFolderStateBulk = (
 
   state.rootFolders = state.rootFolders.map((rootFolder) => {
     const newFolder = { ...rootFolder }
-    const { closedFolders, folderPath, treeFolders, visibleFiles } = rootFolder
-    const [_, ...subFolders] = treeFolders
+    const { allFolders, closedFolders, folderPath, visibleFiles } = rootFolder
+    const [_, ...subFolders] = allFolders
 
     if (payload === 'expand' && closedFolders.length) {
       if (rootFoldersClosed.includes(folderPath)) {
@@ -39,10 +39,10 @@ export const toggleFolderStateBulk = (
       } else if (allSubFoldersClosed.includes(folderPath)) {
         newFolder.closedFolders = []
       }
-    } else if (payload === 'collapse' && visibleFiles.length && treeFolders.length > 0) {
+    } else if (payload === 'collapse' && visibleFiles.length && allFolders.length > 0) {
       if (!rootFoldersClosed.includes(folderPath)) {
         if (allSubFoldersClosed.includes(folderPath) && someSubFoldersClosed.length < 1) {
-          newFolder.closedFolders = [...treeFolders]
+          newFolder.closedFolders = [...allFolders]
         } else {
           newFolder.closedFolders = [...subFolders]
         }

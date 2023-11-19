@@ -43,7 +43,7 @@ suite('Webviews > Workspace > Store > setFileTree()', () => {
     })
 
     mockRootFolders.rootFolders[0].fileTree = null
-    mockRootFolders.rootFolders[0].treeFolders = []
+    mockRootFolders.rootFolders[0].allFolders = []
 
     const state = getMockState({
       ...mockRootFolders,

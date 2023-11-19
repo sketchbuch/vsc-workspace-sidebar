@@ -14,15 +14,15 @@ export const setSearch = (state: WorkspaceState, action: PayloadAction<PayloadSe
   state.rootFolders = state.rootFolders.map((rootFolder) => {
     const visibleFiles = getVisibleFiles(rootFolder.convertedFiles, state.search)
     const fileTree = showTree ? getFileTree(rootFolder.folderPath, visibleFiles) : null
-    const treeFolders =
+    const allFolders =
       showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : [rootFolder.folderName]
 
     visibleFileCount += visibleFiles.length
 
     return {
       ...rootFolder,
+      allFolders,
       fileTree,
-      treeFolders,
       visibleFiles,
     }
   })
