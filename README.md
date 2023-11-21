@@ -96,8 +96,4 @@ This extension is localised, if you want it in your language please send me a tr
 ## Multiroot Todo
 
 - Update doc images inc. preview
-- Move indent sizes to vars
-- Link cache to version
-- Loading view - suggest exclude folders to speed up
-- Error view - suggest checking root folders /excludes
 - Folder needs rendering if showing root folder error message
