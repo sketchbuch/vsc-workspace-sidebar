@@ -11,8 +11,14 @@ export type FileTrees = FileTree[]
 
 export interface FileTree {
   files: Files
-  folderPath: string // Absolute path to the folder
-  folderPathSegment: string // Used to help ID closed folders
+  /**
+   * Absolute path to the folder
+   */
+  folderPath: string
+  /**
+   * Used to help ID closed folders
+   */
+  folderPathSegment: string
   isRoot: boolean
   label: string
   sub: FileTrees

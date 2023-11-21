@@ -97,24 +97,33 @@ export const getMockFolderList = (type: GetFileTreeType): string[] => {
   }
 }
 
-export const getMockVisibleFiles = (term: string = ''): Files => {
-  let sortedFiles = [
-    { ...file4, showPath: false },
+export const getMockVisibleFiles = (term: string = '', sort: boolean = false): Files => {
+  let files = [
+    { ...file1, showPath: false },
     { ...file2, showPath: false },
     { ...file3, showPath: false },
-    { ...file1, showPath: false },
+    { ...file4, showPath: false },
   ]
+
+  if (sort) {
+    files = [
+      { ...file4, showPath: false },
+      { ...file2, showPath: false },
+      { ...file3, showPath: false },
+      { ...file1, showPath: false },
+    ]
+  }
 
   if (term) {
     const lcTerm = term.toLowerCase()
-    sortedFiles = sortedFiles.filter((file) => file.label.toLowerCase().includes(lcTerm))
+    files = files.filter((file) => file.label.toLowerCase().includes(lcTerm))
   }
 
-  return sortedFiles
+  return files
 }
 
 export const getMockConvertedFiles = (): Files => {
-  return [{ ...file4 }, { ...file2 }, { ...file3 }, { ...file1 }]
+  return [{ ...file1 }, { ...file2 }, { ...file3 }, { ...file4 }]
 }
 
 export const getMockFileTree = (type: GetFileTreeType): FileTree => {

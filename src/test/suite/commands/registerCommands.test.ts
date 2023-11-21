@@ -35,7 +35,7 @@ suite('Commands > registerCommands()', () => {
   })
 
   test('Regsiters the correct commands', () => {
-    const CMD_COUNT = 7
+    const CMD_COUNT = 6
     registerCommands(mockContext, ws)
 
     expect(mockContext.subscriptions).to.have.length(CMD_COUNT)
@@ -87,7 +87,7 @@ suite('Commands > registerCommands()', () => {
     const wsSpy = sinon.spy(ws, 'focusInput')
     registerCommands(mockContext, ws)
 
-    const regCall = regCmdStub.getCalls()[4]
+    const regCall = regCmdStub.getCalls()[3]
     const callback = regCall.args[1]
     callback()
     expect(regCall.args[0]).to.equal(CMD_FOCUS_SEARCH)
@@ -100,7 +100,7 @@ suite('Commands > registerCommands()', () => {
     const wsSpy = sinon.spy(ws, 'toggleAllFolders')
     registerCommands(mockContext, ws)
 
-    const regCall = regCmdStub.getCalls()[5]
+    const regCall = regCmdStub.getCalls()[4]
     const callback = regCall.args[1]
     callback()
     expect(regCall.args[0]).to.equal(CMD_COLLAPSE)
@@ -114,7 +114,7 @@ suite('Commands > registerCommands()', () => {
     const wsSpy = sinon.spy(ws, 'toggleAllFolders')
     registerCommands(mockContext, ws)
 
-    const regCall = regCmdStub.getCalls()[6]
+    const regCall = regCmdStub.getCalls()[5]
     const callback = regCall.args[1]
     callback()
     expect(regCall.args[0]).to.equal(CMD_EXPAND)

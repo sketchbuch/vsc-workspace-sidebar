@@ -6,7 +6,9 @@ import { ConfigShowPaths } from '../../../../../constants/config'
 import { getVisibleFiles } from '../../../../../webviews/Workspace/helpers/getVisibleFiles'
 import { Files } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import {
+  file1,
   file2,
+  file3,
   file4,
   FOLDER1,
   getMockConvertedFiles,
@@ -17,8 +19,7 @@ import { getMockSearchState } from '../../../../mocks/mockState'
 
 suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
   const filesUnsorted = getMockConvertedFiles()
-  const filesAsc = getMockConvertedFiles()
-  const filesDesc = getMockConvertedFiles()
+  const filesSorted = [{ ...file4 }, { ...file2 }, { ...file3 }, { ...file1 }]
 
   let treeConfigStub: sinon.SinonStub
   let pathsConfigStub: sinon.SinonStub
@@ -112,44 +113,25 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
     })
   })
 
-  suite('Sorting:', () => {
-    test('Correctly sorts "ascending"', () => {
-      const result = getVisibleFiles(filesUnsorted, getMockSearchState())
-      expect(result).to.eql(filesAsc)
-    })
-
-    test('Correctly sorts "descending"', () => {
-      const result = getVisibleFiles(filesUnsorted, getMockSearchState())
-      expect(result).to.eql(filesDesc)
-    })
-
-    test('No sorting when using tree view', () => {
-      treeConfigStub.callsFake(() => true)
-
-      const result = getVisibleFiles(filesDesc, getMockSearchState())
-      expect(result).to.eql(filesDesc)
-
-      const resultDescending = getVisibleFiles(filesAsc, getMockSearchState())
-      expect(resultDescending).to.eql(filesAsc)
-    })
-  })
-
   suite('Show paths:', () => {
-    test('"Never" returns filesAsc with showPath: "false"', () => {
+    test('"Never" returns files with showPath: "false"', () => {
       pathsConfigStub.callsFake(() => ConfigShowPaths.NEVER)
-      const expectedFiles = filesAsc.map((file) => {
+      const expectedFiles = filesSorted.map((file) => {
         return { ...file, showPath: false }
       })
 
-      const result = getVisibleFiles(filesAsc, getMockSearchState())
+      const result = getVisibleFiles(filesUnsorted, getMockSearchState())
       expect(result).to.eql(expectedFiles)
     })
 
-    test('"Always" returns filesAsc with showPath: "false"', () => {
+    test('"Always" returns files with showPath: "false"', () => {
       pathsConfigStub.callsFake(() => ConfigShowPaths.ALWAYS)
+      const expectedFiles = filesSorted.map((file) => {
+        return { ...file, showPath: true }
+      })
 
-      const result = getVisibleFiles(filesAsc, getMockSearchState())
-      expect(result).to.eql(filesAsc)
+      const result = getVisibleFiles(filesUnsorted, getMockSearchState())
+      expect(result).to.eql(expectedFiles)
     })
 
     test('"As needed" returns files with showPath: "true" for files with duplicate labels', () => {
