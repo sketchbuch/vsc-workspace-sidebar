@@ -80,12 +80,32 @@ suite('Webviews > Workspace > Store > toggleFolderStateBulk()', () => {
 
     test('Opens all subfolders, if root folder is open', () => {
       const mockRootFolders = getMockRootFolders({
-        closedFolders: closedFoldersAll,
+        closedFolders: closedFoldersAllSub,
         fileTreeType: 'normal',
         showTree: true,
       })
       const mockExpectedRootFolders = getMockRootFolders({
-        closedFolders: closedFoldersAllSub,
+        closedFolders: [],
+        fileTreeType: 'normal',
+        showTree: true,
+      })
+
+      const state = getMockState({ ...mockRootFolders })
+      const expectedState = getMockState({ ...mockExpectedRootFolders })
+
+      expect(state).not.to.eql(expectedState)
+      toggleFolderStateBulk(state, { payload: 'expand', type: 'ws/toggleFolderStateBulk' })
+      expect(state).to.eql(expectedState)
+    })
+
+    test('Opens all subfolders, if some subfolders are open', () => {
+      const mockRootFolders = getMockRootFolders({
+        closedFolders: closedFoldersSomeSub,
+        fileTreeType: 'normal',
+        showTree: true,
+      })
+      const mockExpectedRootFolders = getMockRootFolders({
+        closedFolders: [],
         fileTreeType: 'normal',
         showTree: true,
       })

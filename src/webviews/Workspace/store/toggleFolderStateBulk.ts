@@ -36,7 +36,10 @@ export const toggleFolderStateBulk = (
     if (payload === 'expand' && closedFolders.length > 0) {
       if (rootFoldersClosed.includes(folderPath)) {
         newFolder.closedFolders = [...subFolders]
-      } else if (allSubFoldersClosed.includes(folderPath)) {
+      } else if (
+        allSubFoldersClosed.includes(folderPath) ||
+        someSubFoldersClosed.includes(folderPath)
+      ) {
         newFolder.closedFolders = []
       }
     } else if (payload === 'collapse' && visibleFiles.length && allFolders.length > 0) {
