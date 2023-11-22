@@ -92,8 +92,3 @@ This extension is localised, if you want it in your language please send me a tr
 
 - Closes [#89](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/89)
 - Fixed rendering of file icons on windows
-
-## Multiroot Todo
-
-- Update doc images inc. preview
-- Folder needs rendering if showing root folder error message

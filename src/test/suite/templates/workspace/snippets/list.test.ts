@@ -118,7 +118,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
 
     expect(result).to.be.a('string')
     sinon.assert.called(rfMsg)
-    sinon.assert.notCalled(itemFolderSpy)
+    sinon.assert.called(itemFolderSpy)
     sinon.assert.notCalled(itemSpy)
     sinon.assert.notCalled(treeSpy)
   })
@@ -135,7 +135,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
 
     expect(result).to.be.a('string')
     sinon.assert.called(rfMsg)
-    sinon.assert.notCalled(itemFolderSpy)
+    sinon.assert.called(itemFolderSpy)
     sinon.assert.notCalled(itemSpy)
     sinon.assert.notCalled(treeSpy)
   })

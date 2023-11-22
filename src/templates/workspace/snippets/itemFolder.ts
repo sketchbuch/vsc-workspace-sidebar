@@ -13,7 +13,8 @@ export const itemFolder = (
   depth: number,
   isClosed: boolean,
   state: WorkspaceState,
-  renderVars: RenderVars
+  renderVars: RenderVars,
+  isFolderError: boolean = false
 ): string => {
   const homeDir = os.homedir()
   const { folderPath, folderPathSegment, isRoot, label } = folder
@@ -42,16 +43,16 @@ export const itemFolder = (
   const folderButtons = getWorkspaceButtons({ buttons, renderVars })
 
   return `
-      <li aria-label="${folderPathShort}" class="${folderClasses}" data-depth="${depth}" data-folder="${folderPathSegment}" data-folderpath="${folderPath}" title="${folderPathShort}">
-        ${indicateSelected ? itemIconSelected(renderVars) : ''}
-        ${itemIndent({ depth })}
-        <span class="list__element">
-          ${isClosed ? itemIconClosed() : itemIconOpen()}
-          <span class="list__text">
-            <span class="list__title">${label}</span>
-          </span>
-          ${itemButtons(folderButtons)}
+    <li aria-label="${folderPathShort}" class="${folderClasses}" data-depth="${depth}" data-folder="${folderPathSegment}" data-folderpath="${folderPath}" title="${folderPathShort}">
+      ${!isFolderError && indicateSelected ? itemIconSelected(renderVars) : ''}
+      ${itemIndent({ depth })}
+      <span class="list__element">
+        ${isClosed ? itemIconClosed() : itemIconOpen()}
+        <span class="list__text">
+          <span class="list__title">${label}</span>
         </span>
-      </li>
-    `
+        ${isFolderError ? '' : itemButtons(folderButtons)}
+      </span>
+    </li>
+  `
 }

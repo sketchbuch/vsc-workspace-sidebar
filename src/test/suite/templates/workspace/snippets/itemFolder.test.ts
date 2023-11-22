@@ -78,6 +78,27 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
     sinon.assert.calledOnce(indentSpy)
   })
 
+  test('Renders correctly if isFolderError is "true"', () => {
+    const result = itemFolder(folder, DEPTH, false, mockState, mockRenderVars, true)
+
+    expect(result).to.be.a('string')
+    expect(result).contains(`data-folder="${folder.folderPathSegment}"`)
+    expect(result).contains(`title="~/${FOLDER_PATH}"`)
+    expect(result).contains(`data-depth="${DEPTH}"`)
+    expect(result).contains(`<span class="list__title">${folder.label}</span>`)
+    expect(result).contains('list__branch-list-item')
+    expect(result).contains('list__branch-list-item-folder')
+    expect(result).contains('list__styled-item')
+    expect(result).contains('list__branch-list-item-folder--closable')
+
+    sinon.assert.notCalled(btnSpy)
+    sinon.assert.notCalled(iconClosedSpy)
+    sinon.assert.notCalled(selectedIconSpy)
+    sinon.assert.notCalled(iconClosedSpy)
+    sinon.assert.calledOnce(iconOpenSpy)
+    sinon.assert.calledOnce(indentSpy)
+  })
+
   test('Root folders have root class', () => {
     const result = itemFolder({ ...folder, isRoot: true }, DEPTH, false, mockState, mockRenderVars)
 

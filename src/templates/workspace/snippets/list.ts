@@ -1,5 +1,6 @@
 import { t } from 'vscode-ext-localisation'
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree'
 import { RenderVars } from '../../../webviews/webviews.interface'
 import { itemFile } from './itemFile'
 import { itemFolder } from './itemFolder'
@@ -37,10 +38,25 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
               'list__list list__styled-list' + (isFileTree ? ' list__styled-list--tree' : '')
             let isRootPathError = result === 'invalid-folder' || result === 'no-workspaces'
             const isClosed = closedFolders.includes(folderName)
+            const rootFolderFile: FileTree = {
+              files: [],
+              folderPath,
+              folderPathSegment: folderName,
+              isRoot: true,
+              label: folderName,
+              sub: [],
+            }
 
             return `
               <section class="list__list-section">
-                ${isRootPathError ? `${rootFolderMessage(result, renderVars)}` : ''}
+                ${
+                  isRootPathError
+                    ? `
+                      ${itemFolder(rootFolderFile, 0, false, state, renderVars, true)}
+                      ${rootFolderMessage(result, renderVars)}
+                    `
+                    : ''
+                }
                 ${
                   !isRootPathError
                     ? `<ul class="${classes}">
@@ -51,20 +67,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
                           }
                           ${
                             !isFileTree
-                              ? itemFolder(
-                                  {
-                                    files: [],
-                                    folderPath,
-                                    folderPathSegment: folderName,
-                                    isRoot: true,
-                                    label: folderName,
-                                    sub: [],
-                                  },
-                                  0,
-                                  isClosed,
-                                  state,
-                                  renderVars
-                                )
+                              ? itemFolder(rootFolderFile, 0, isClosed, state, renderVars)
                               : ''
                           }
                           ${
@@ -74,7 +77,8 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
                                   .join('')
                               : ''
                           }
-                        </ul>`
+                        </ul>
+                      `
                     : ''
                 }
               </section>
