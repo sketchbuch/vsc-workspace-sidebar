@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+import * as path from 'path'
 import {
   ConfigButtons,
   getWorkspaceButtons,
@@ -18,7 +19,7 @@ suite('Templates > Helpers > getWorkspaceButtons():', () => {
   })
 
   test('Returns expected buttons if there is button data', () => {
-    const newWinFile = '/sdcsdc/dcdsc'
+    const newWinFile = `${path.sep}sdcsdc${path.sep}dcdsc`
     const newWinLabel = 'scddscsd'
 
     const buttons: ConfigButtons = [
@@ -33,7 +34,7 @@ suite('Templates > Helpers > getWorkspaceButtons():', () => {
           file: newWinFile,
           isSelected: false,
           label: newWinLabel,
-          path: '/sdcsdc/dcdsc',
+          path: newWinFile,
           showPath: false,
         },
         key: 'new-window',
@@ -50,7 +51,7 @@ suite('Templates > Helpers > getWorkspaceButtons():', () => {
         ariaLabel: `Open folder containing '${newWinLabel}' in your file manager`,
         file: buttons[0].file,
         renderVars: mockRenderVars,
-        tooltip: `Open '${newWinLabel}' in your file manager`,
+        tooltip: `Open folder containing '${newWinLabel}' in your file manager`,
         type: buttons[0].key,
       },
       {
@@ -64,7 +65,7 @@ suite('Templates > Helpers > getWorkspaceButtons():', () => {
   })
 
   test('Returns expected buttons if there is button data with codicons', () => {
-    const newWinFile = '/sdcsdc/dcdsc'
+    const newWinFile = `${path.sep}sdcsdc${path.sep}dcdsc`
     const newWinLabel = 'scddscsd'
 
     const buttons: ConfigButtons = [
@@ -81,7 +82,7 @@ suite('Templates > Helpers > getWorkspaceButtons():', () => {
           file: newWinFile,
           isSelected: false,
           label: newWinLabel,
-          path: '/sdcsdc/dcdsc',
+          path: newWinFile,
           showPath: false,
         },
         key: 'new-window',
@@ -99,7 +100,7 @@ suite('Templates > Helpers > getWorkspaceButtons():', () => {
         codicon: 'test',
         file: buttons[0].file,
         renderVars: mockRenderVars,
-        tooltip: `Open '${newWinLabel}' in your file manager`,
+        tooltip: `Open folder containing '${newWinLabel}' in your file manager`,
         type: buttons[0].key,
       },
       {

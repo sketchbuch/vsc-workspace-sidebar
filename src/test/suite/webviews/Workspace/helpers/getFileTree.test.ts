@@ -30,8 +30,8 @@ suite('Webviews > Workspace > Helpers > getFileTree():', () => {
     condenseConfigStub = sinon.stub(treeConfigs, 'getCondenseFileTreeConfig').callsFake(() => true)
     condenseSpy = sinon.spy(condense, 'condenseTree')
     folderConfigStub = sinon
-      .stub(foldersConfigs, 'getFolderConfig')
-      .callsFake(() => ROOT_FOLDER_USERPATH)
+      .stub(foldersConfigs, 'getFoldersConfig')
+      .callsFake(() => [ROOT_FOLDER_USERPATH])
     osHomeStub = sinon.stub(os, 'homedir').callsFake(() => OS_HOMEFOLDER)
   })
 
@@ -48,7 +48,7 @@ suite('Webviews > Workspace > Helpers > getFileTree():', () => {
     compactConfigStub.callsFake(() => false)
     condenseConfigStub.callsFake(() => false)
 
-    const result = getFileTree(getMockVisibleFiles())
+    const result = getFileTree(ROOT_FOLDER_USERPATH, getMockVisibleFiles())
     expect(result).to.eql(getMockFileTree('normal'))
 
     sinon.assert.notCalled(condenseSpy)
@@ -59,7 +59,7 @@ suite('Webviews > Workspace > Helpers > getFileTree():', () => {
     compactConfigStub.callsFake(() => false)
     condenseConfigStub.callsFake(() => true)
 
-    const result = getFileTree(getMockVisibleFiles())
+    const result = getFileTree(ROOT_FOLDER_USERPATH, getMockVisibleFiles())
     expect(result).to.eql(getMockFileTree('condensed'))
 
     sinon.assert.callCount(condenseSpy, 5)
@@ -70,7 +70,7 @@ suite('Webviews > Workspace > Helpers > getFileTree():', () => {
     compactConfigStub.callsFake(() => true)
     condenseConfigStub.callsFake(() => false)
 
-    const result = getFileTree(getMockVisibleFiles())
+    const result = getFileTree(ROOT_FOLDER_USERPATH, getMockVisibleFiles())
     expect(result).to.eql(getMockFileTree('compacted'))
 
     sinon.assert.called(compactSpy)
@@ -81,7 +81,7 @@ suite('Webviews > Workspace > Helpers > getFileTree():', () => {
     compactConfigStub.callsFake(() => true)
     condenseConfigStub.callsFake(() => true)
 
-    const result = getFileTree(getMockVisibleFiles())
+    const result = getFileTree(ROOT_FOLDER_USERPATH, getMockVisibleFiles())
     expect(result).to.eql(getMockFileTree('compacted-condensed'))
 
     sinon.assert.called(compactSpy)

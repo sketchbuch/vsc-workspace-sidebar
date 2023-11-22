@@ -1,31 +1,50 @@
 import { PayloadAction } from '@reduxjs/toolkit'
+import * as os from 'os'
 import { getShowTreeConfig } from '../../../config/treeview'
-import { WorkspaceFiles, WorkspaceState } from '../WorkspaceViewProvider.interface'
+import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
+import { WorkspaceCacheRootFolders, WorkspaceState } from '../WorkspaceViewProvider.interface'
 import { convertWsFiles } from '../helpers/convertWsFiles'
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree'
 import { getFileTree } from '../helpers/getFileTree'
 import { getVisibleFiles } from '../helpers/getVisibleFiles'
 
-export const list = (state: WorkspaceState, action: PayloadAction<WorkspaceFiles>): void => {
-  state.files = action.payload
-  state.convertedFiles = action.payload ? convertWsFiles(action.payload, state.selected) : []
+export const list = (
+  state: WorkspaceState,
+  action: PayloadAction<WorkspaceCacheRootFolders>
+): void => {
+  const homeDir = os.homedir()
+  const showTree = getShowTreeConfig()
+  let fileCount = 0
+  let visibleFileCount = 0
 
-  if (state.files.length === 0) {
-    state.fileTree = null
-    state.invalidReason = 'no-workspaces'
-    state.isFolderInvalid = true
-    state.state = 'invalid'
-    state.treeFolders = []
-    state.visibleFiles = []
-  } else {
-    const showTree = getShowTreeConfig()
+  state.rootFolders = action.payload.map(({ files, folderPath }) => {
+    const folderName = getLastPathSegment(folderPath)
+    const convertedFiles = convertWsFiles(folderPath, files, state.selected)
+    const visibleFiles = getVisibleFiles(convertedFiles, state.search)
+    const fileTree = showTree ? getFileTree(folderPath, visibleFiles) : null
+    const allFolders =
+      showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : [folderName]
 
-    state.invalidReason = 'none'
-    state.isFolderInvalid = false
-    state.state = 'list'
-    state.visibleFiles = getVisibleFiles(state.convertedFiles, state.search, state.sort)
-    state.fileTree = showTree ? getFileTree(state.visibleFiles) : null
-    state.treeFolders =
-      showTree && state.fileTree !== null ? getAllFoldersFromTree(state.fileTree) : []
-  }
+    fileCount += files.length
+    visibleFileCount += visibleFiles.length
+
+    return {
+      allFolders,
+      closedFolders: [],
+      convertedFiles,
+      files,
+      fileTree,
+      folderName: getLastPathSegment(folderPath),
+      folderPath,
+      folderPathShort: folderPath.replace(homeDir, `~`),
+      result: files.length < 1 ? 'no-workspaces' : 'ok',
+      visibleFiles,
+    }
+  })
+
+  state.result = 'ok'
+  state.isFolderInvalid = false
+  state.view = 'list'
+  state.fileCount = fileCount
+  state.visibleFileCount = visibleFileCount
 }

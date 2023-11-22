@@ -68,6 +68,10 @@ body.vscode-dark img[data-theme='light'] {
   padding-left: 24px;
 }
 
+.view__message-description-tinytext {
+  font-size: 10px;
+}
+
 .view__link {
   cursor: pointer;
   color: var(--vscode-textLink-foreground);

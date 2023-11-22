@@ -1,4 +1,3 @@
-import * as vscode from 'vscode'
 import { t } from 'vscode-ext-localisation'
 import {
   FS_WEBVIEW_CODICONS_CSS,
@@ -16,11 +15,7 @@ import { invalidView } from '../views/invalidView'
 import { listView } from '../views/listView'
 import { loadingView } from '../views/loadingView'
 
-export const defaultTemplate = (
-  templateVars: TemplateVars,
-  state: WorkspaceState,
-  webview: vscode.Webview
-): string => {
+export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceState): string => {
   const {
     cssData,
     codiconsFolderUri,
@@ -32,7 +27,7 @@ export const defaultTemplate = (
     title,
     uiFolderUri,
   } = templateVars
-  const { state: view } = state
+  const { view } = state
   const renderVars = getRenderVars(templateVars)
 
   let titleAttr = t('views.title')
@@ -57,7 +52,7 @@ export const defaultTemplate = (
         <title>${titleAttr}</title>
         <link href="${cssFolderUri}/${FS_WEBVIEW_WORKSPACE_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
         <link href="${codiconsFolderUri}/${FS_WEBVIEW_CODICONS_CSS}" nonce="${nonce}" rel="stylesheet" type="text/css">
-        ${fileIconCss(nonce, themeData, cssData, webview)}
+        ${fileIconCss(nonce, themeData, cssData)}
       </head>
 
       <body>

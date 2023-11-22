@@ -1,10 +1,10 @@
 import * as path from 'path'
-import { WsFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { WorkspaceFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { checkFile } from './checkFile'
 
 export const getFilenamesOfType = (
   requiredType: 'folders' | 'files',
-  filenames: WsFiles,
+  filenames: WorkspaceFiles,
   folder: string,
   fileType: string
 ) => {
@@ -22,5 +22,5 @@ export const getFilenamesOfType = (
     }
 
     return allFiles
-  }, [] as WsFiles)
+  }, [] as WorkspaceFiles)
 }

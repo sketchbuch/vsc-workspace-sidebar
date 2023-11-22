@@ -7,11 +7,7 @@ import {
   getShowFileiconsConfigConfig,
 } from '../../config/general'
 import { getSearchMinConfig } from '../../config/search'
-import {
-  getCondenseFileTreeConfig,
-  getShowRootFolderConfig,
-  getShowTreeConfig,
-} from '../../config/treeview'
+import { getCondenseFileTreeConfig, getShowTreeConfig } from '../../config/treeview'
 import { FileIconKeys, RenderVars, TemplateVars } from '../../webviews/webviews.interface'
 
 export const getRenderVars = ({
@@ -73,7 +69,6 @@ export const getRenderVars = ({
     imgDarkFolderUri,
     imgLightFolderUri,
     searchMinimum: getSearchMinConfig(),
-    showRootFolder: getShowRootFolderConfig(),
     showTree: getShowTreeConfig(),
     themeProcessorState: themeData?.state ?? 'idle',
   }

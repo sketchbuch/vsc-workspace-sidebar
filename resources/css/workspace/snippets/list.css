@@ -9,11 +9,15 @@
   padding: 0;
 }
 
-.list[data-showsearch='true'] .list__styled-list {
+.list__list-wrapper {
+  position: relative;
+}
+
+.list[data-showsearch='true'] .list__list-wrapper {
   padding-top: var(--ext-workspace-sidebar__search-offset);
 }
 
-.list[data-folderopen='true'] .list__styled-list {
+.list[data-folderopen='true'] .list__list-wrapper {
   padding-top: 0;
 }
 
@@ -62,8 +66,9 @@
   touch-action: none;
 }
 
+.list[data-fileiconsactive='true'] .list__text,
 .list[data-fileiconsactive='false'] .list__text {
-  padding-left: 1px;
+  padding-left: 18px;
 }
 
 .list__description {
@@ -183,4 +188,15 @@
 
 .list__styled-item--selected mark {
   color: var(--vscode-editor-foreground);
+}
+
+.list__list-section {
+  position: relative;
+}
+
+.rootfolder__message {
+  list-style: none;
+  margin: 0;
+  padding: 0.3rem 20px;
+  padding-left: 40px;
 }

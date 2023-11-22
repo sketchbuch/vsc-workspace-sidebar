@@ -32,36 +32,36 @@ suite('Templates > Workspace > View: invalidView()', () => {
 
   test('Renders an invalid-folder error', () => {
     const result = invalidView(
-      getMockState({ invalidReason: 'invalid-folder' }),
-      getMockRenderVars()
+      getMockState({ result: 'invalid-folder' }),
+      getMockRenderVars({ depth: 1 })
     )
 
-    expect(result).contains('Folder path is not a directory')
+    expect(result).contains('None of the root folders are directories')
   })
 
   test('Renders a no-workspaces error', () => {
     const result = invalidView(
-      getMockState({ invalidReason: 'no-workspaces' }),
+      getMockState({ result: 'no-workspaces' }),
       getMockRenderVars({ depth: 1 })
     )
 
-    expect(result).contains('Folder contains no workspaces')
-    expect(result).contains('Try increasing the search depth or change the folder path.')
+    expect(result).contains('Folders contain no workspaces')
+    expect(result).contains('Try increasing the search depth or change the folders.')
     expect(result).not.contains(
-      'The current search depth is 0, this means that only the root workspace folder will be searched in for workspace files.'
+      'The current search depth is 0, this means that only the root folders will be searched in for workspace files.'
     )
   })
 
   test('Renders a no-workspaces error (zero depth)', () => {
     const result = invalidView(
-      getMockState({ invalidReason: 'no-workspaces' }),
+      getMockState({ result: 'no-workspaces' }),
       getMockRenderVars({ depth: 0 })
     )
 
-    expect(result).contains('Folder contains no workspaces')
-    expect(result).contains('Try increasing the search depth or change the folder path.')
+    expect(result).contains('Folders contain no workspaces')
+    expect(result).contains('Try increasing the search depth or change the folders.')
     expect(result).contains(
-      'The current search depth is 0, this means that only the root workspace folder will be searched in for workspace files.'
+      'The current search depth is 0, this means that only the root folders will be searched in for workspace files.'
     )
   })
 })

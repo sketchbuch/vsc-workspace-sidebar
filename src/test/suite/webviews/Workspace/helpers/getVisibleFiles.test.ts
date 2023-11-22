@@ -6,7 +6,9 @@ import { ConfigShowPaths } from '../../../../../constants/config'
 import { getVisibleFiles } from '../../../../../webviews/Workspace/helpers/getVisibleFiles'
 import { Files } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import {
+  file1,
   file2,
+  file3,
   file4,
   FOLDER1,
   getMockConvertedFiles,
@@ -17,8 +19,7 @@ import { getMockSearchState } from '../../../../mocks/mockState'
 
 suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
   const filesUnsorted = getMockConvertedFiles()
-  const filesAsc = getMockConvertedFiles('asc')
-  const filesDesc = getMockConvertedFiles('desc')
+  const filesSorted = [{ ...file4 }, { ...file2 }, { ...file3 }, { ...file1 }]
 
   let treeConfigStub: sinon.SinonStub
   let pathsConfigStub: sinon.SinonStub
@@ -40,8 +41,7 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
       test('Search correctly filters when case sensitive and there is not a match', () => {
         const result = getVisibleFiles(
           filesUnsorted,
-          getMockSearchState({ caseInsensitive: false, term: SEARCH_TERM_LOWERCASE }),
-          'ascending'
+          getMockSearchState({ caseInsensitive: false, term: SEARCH_TERM_LOWERCASE })
         )
 
         expect(result).to.eql([])
@@ -50,8 +50,7 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
       test('Search correctly filters when case sensitive and there is a match', () => {
         const result = getVisibleFiles(
           filesUnsorted,
-          getMockSearchState({ caseInsensitive: false, term: SEARCH_TERM }),
-          'ascending'
+          getMockSearchState({ caseInsensitive: false, term: SEARCH_TERM })
         )
 
         expect(result).to.eql([file4])
@@ -60,8 +59,7 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
       test('Search correctly filters when case insensitive and there is not a match', () => {
         const result = getVisibleFiles(
           filesUnsorted,
-          getMockSearchState({ caseInsensitive: true, term: 'No Match' }),
-          'ascending'
+          getMockSearchState({ caseInsensitive: true, term: 'No Match' })
         )
 
         expect(result).to.eql([])
@@ -70,8 +68,7 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
       test('Search correctly filters when case insensitive and there is a match', () => {
         const result = getVisibleFiles(
           filesUnsorted,
-          getMockSearchState({ caseInsensitive: true, term: SEARCH_TERM }),
-          'ascending'
+          getMockSearchState({ caseInsensitive: true, term: SEARCH_TERM })
         )
         expect(result).to.eql([file4])
       })
@@ -81,8 +78,7 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
       test('Search correctly filters when matchStart and there is not a match', () => {
         const result = getVisibleFiles(
           filesUnsorted,
-          getMockSearchState({ matchStart: true, term: 'Extension' }),
-          'ascending'
+          getMockSearchState({ matchStart: true, term: 'Extension' })
         )
 
         expect(result).to.eql([])
@@ -91,8 +87,7 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
       test('Search correctly filters when matchStart and there is a match', () => {
         const result = getVisibleFiles(
           filesUnsorted,
-          getMockSearchState({ matchStart: true, term: 'Some' }),
-          'ascending'
+          getMockSearchState({ matchStart: true, term: 'Some' })
         )
 
         expect(result).to.eql([file2])
@@ -101,8 +96,7 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
       test('Search correctly filters when not matchStart and there is not a match', () => {
         const result = getVisibleFiles(
           filesUnsorted,
-          getMockSearchState({ matchStart: false, term: 'No Match' }),
-          'ascending'
+          getMockSearchState({ matchStart: false, term: 'No Match' })
         )
 
         expect(result).to.eql([])
@@ -111,8 +105,7 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
       test('Search correctly filters when not matchStart and there is a match', () => {
         const result = getVisibleFiles(
           filesUnsorted,
-          getMockSearchState({ matchStart: false, term: 'Extension' }),
-          'ascending'
+          getMockSearchState({ matchStart: false, term: 'Extension' })
         )
 
         expect(result).to.eql([file2])
@@ -120,44 +113,25 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
     })
   })
 
-  suite('Sorting:', () => {
-    test('Correctly sorts "ascending"', () => {
-      const result = getVisibleFiles(filesUnsorted, getMockSearchState(), 'ascending')
-      expect(result).to.eql(filesAsc)
-    })
-
-    test('Correctly sorts "descending"', () => {
-      const result = getVisibleFiles(filesUnsorted, getMockSearchState(), 'descending')
-      expect(result).to.eql(filesDesc)
-    })
-
-    test('No sorting when using tree view', () => {
-      treeConfigStub.callsFake(() => true)
-
-      const result = getVisibleFiles(filesDesc, getMockSearchState(), 'ascending')
-      expect(result).to.eql(filesDesc)
-
-      const resultDescending = getVisibleFiles(filesAsc, getMockSearchState(), 'descending')
-      expect(resultDescending).to.eql(filesAsc)
-    })
-  })
-
   suite('Show paths:', () => {
-    test('"Never" returns filesAsc with showPath: "false"', () => {
+    test('"Never" returns files with showPath: "false"', () => {
       pathsConfigStub.callsFake(() => ConfigShowPaths.NEVER)
-      const expectedFiles = filesAsc.map((file) => {
+      const expectedFiles = filesSorted.map((file) => {
         return { ...file, showPath: false }
       })
 
-      const result = getVisibleFiles(filesAsc, getMockSearchState(), 'ascending')
+      const result = getVisibleFiles(filesUnsorted, getMockSearchState())
       expect(result).to.eql(expectedFiles)
     })
 
-    test('"Always" returns filesAsc with showPath: "false"', () => {
+    test('"Always" returns files with showPath: "false"', () => {
       pathsConfigStub.callsFake(() => ConfigShowPaths.ALWAYS)
+      const expectedFiles = filesSorted.map((file) => {
+        return { ...file, showPath: true }
+      })
 
-      const result = getVisibleFiles(filesAsc, getMockSearchState(), 'ascending')
-      expect(result).to.eql(filesAsc)
+      const result = getVisibleFiles(filesUnsorted, getMockSearchState())
+      expect(result).to.eql(expectedFiles)
     })
 
     test('"As needed" returns files with showPath: "true" for files with duplicate labels', () => {
@@ -188,7 +162,7 @@ suite('Webviews > Workspace > Helpers > getVisibleFiles():', () => {
         { ...getMockConvertedFiles()[2], showPath: false },
       ]
 
-      const result = getVisibleFiles(files, getMockSearchState(), 'ascending')
+      const result = getVisibleFiles(files, getMockSearchState())
       expect(result).to.eql(expectedFiles)
     })
   })

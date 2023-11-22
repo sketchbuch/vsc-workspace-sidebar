@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
 import * as vscode from 'vscode'
-import { registerCommands, SortIds } from '../../../commands/registerCommands'
+import { registerCommands } from '../../../commands/registerCommands'
 import {
   CMD_COLLAPSE,
   CMD_EXPAND,
@@ -9,7 +9,6 @@ import {
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,
   CMD_REFRESH,
-  CMD_SORT,
   CMD_VSC_OPEN_WS,
 } from '../../../constants/commands'
 import { WorkspaceViewProvider } from '../../../webviews/Workspace/WorkspaceViewProvider'
@@ -36,7 +35,7 @@ suite('Commands > registerCommands()', () => {
   })
 
   test('Regsiters the correct commands', () => {
-    const CMD_COUNT = 7
+    const CMD_COUNT = 6
     registerCommands(mockContext, ws)
 
     expect(mockContext.subscriptions).to.have.length(CMD_COUNT)
@@ -84,62 +83,11 @@ suite('Commands > registerCommands()', () => {
     wsSpy.restore()
   })
 
-  suite('CMD_SORT:', () => {
-    const testSort = (curSort: SortIds, newSort: SortIds) => {
-      let title = `Calls refresh() if "${curSort}" and "${newSort}" is picked`
-
-      if (curSort === newSort) {
-        title = `Does NOT call refresh() if "${curSort}" and "${newSort}" is picked`
-      }
-
-      test(title, async () => {
-        const globalGetStub = sinon.stub(mockContext.globalState, 'get').returns(curSort)
-        const globalUpdateSpy = sinon.spy(mockContext.globalState, 'update')
-
-        const description = newSort === 'ascending' ? 'Sort from a-z' : 'Sort from z-a'
-        const label = newSort === 'ascending' ? 'Ascending' : 'Descending'
-
-        const qpStub = sinon
-          .stub(vscode.window, 'showQuickPick')
-          .returns(Promise.resolve({ description, id: newSort, label }))
-        const wsSpy = sinon.spy(ws, 'updateSort')
-        registerCommands(mockContext, ws)
-
-        const regCall = regCmdStub.getCalls()[3]
-        const callback = regCall.args[1]
-        await callback()
-        expect(regCall.args[0]).to.equal(CMD_SORT)
-
-        if (curSort === newSort) {
-          sinon.assert.callCount(globalGetStub, 1)
-          sinon.assert.callCount(globalUpdateSpy, 0)
-          sinon.assert.callCount(qpStub, 1)
-          sinon.assert.callCount(wsSpy, 0)
-        } else {
-          sinon.assert.callCount(globalGetStub, 2)
-          sinon.assert.callCount(globalUpdateSpy, 1)
-          sinon.assert.callCount(qpStub, 1)
-          sinon.assert.callCount(wsSpy, 1)
-        }
-
-        globalGetStub.restore()
-        globalUpdateSpy.restore()
-        qpStub.restore()
-        wsSpy.restore()
-      })
-    }
-
-    testSort('ascending', 'descending')
-    testSort('descending', 'ascending')
-    testSort('ascending', 'ascending')
-    testSort('descending', 'descending')
-  })
-
   test('CMD_FOCUS_SEARCH behaves as expected', () => {
     const wsSpy = sinon.spy(ws, 'focusInput')
     registerCommands(mockContext, ws)
 
-    const regCall = regCmdStub.getCalls()[4]
+    const regCall = regCmdStub.getCalls()[3]
     const callback = regCall.args[1]
     callback()
     expect(regCall.args[0]).to.equal(CMD_FOCUS_SEARCH)
@@ -152,7 +100,7 @@ suite('Commands > registerCommands()', () => {
     const wsSpy = sinon.spy(ws, 'toggleAllFolders')
     registerCommands(mockContext, ws)
 
-    const regCall = regCmdStub.getCalls()[5]
+    const regCall = regCmdStub.getCalls()[4]
     const callback = regCall.args[1]
     callback()
     expect(regCall.args[0]).to.equal(CMD_COLLAPSE)
@@ -166,7 +114,7 @@ suite('Commands > registerCommands()', () => {
     const wsSpy = sinon.spy(ws, 'toggleAllFolders')
     registerCommands(mockContext, ws)
 
-    const regCall = regCmdStub.getCalls()[6]
+    const regCall = regCmdStub.getCalls()[5]
     const callback = regCall.args[1]
     callback()
     expect(regCall.args[0]).to.equal(CMD_EXPAND)

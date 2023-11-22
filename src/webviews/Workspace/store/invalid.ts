@@ -1,7 +1,9 @@
 import { WorkspaceState } from '../WorkspaceViewProvider.interface'
 
 export const invalid = (state: WorkspaceState): void => {
-  state.files = []
+  state.fileCount = 0
   state.isFolderInvalid = true
-  state.state = 'invalid'
+  state.rootFolders = []
+  state.view = 'invalid'
+  state.visibleFileCount = 0
 }

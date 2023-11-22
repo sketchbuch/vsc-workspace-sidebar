@@ -33,10 +33,10 @@ File theme icons can also be displayed. For more information see the [File Icon 
 
 ### Folders
 
-| Setting  | Description                                                                                                                                                                                                                                                   | Default Value                                        | Type   |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ------ |
-| Folder   | The folder to look for workspace files in. If Folder is empty, your home folder will be used. **~/** will also be replaced with your home folder. Currently only one folder is supported, this will be changed in a future version to allow multiple folders. | None (your home folder will be used)                 | String |
-| Excluded | Folders to exclude when searching for workspace files                                                                                                                                                                                                         | [ "node_modules", "build", "dist", "out", "public" ] | Array  |
+| Setting      | Description                                                                                                                     | Default Value                                        | Type                               |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ---------------------------------- |
+| Excluded     | Folders to exclude when searching for workspace files                                                                           | [ "node_modules", "build", "dist", "out", "public" ] | Array of folder names              |
+| Root Folders | The folders to look for workspace files in. **~/** will also be replaced with your home folder in all folders within the array. | []                                                   | Array of absolute paths to folders |
 
 ### List View
 

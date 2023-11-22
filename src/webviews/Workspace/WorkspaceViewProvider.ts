@@ -7,7 +7,6 @@ import {
   FileThemeProcessor,
   FileThemeProcessorObserver,
 } from 'vscode-file-theme-processor'
-import { SortIds } from '../../commands/registerCommands'
 import { getActionsConfig } from '../../config/general'
 import { getSearchCaseInsensitiveConfig, getSearchMatchStartConfig } from '../../config/search'
 import {
@@ -18,33 +17,26 @@ import {
   CMD_VSC_SET_CTX,
 } from '../../constants/commands'
 import { ConfigActions } from '../../constants/config'
-import { EXT_LOADED, EXT_SORT, EXT_WEBVIEW_WS, EXT_WSSTATE_CACHE } from '../../constants/ext'
+import { EXT_LOADED, EXT_WEBVIEW_WS, EXT_WSSTATE_CACHE } from '../../constants/ext'
 import { store } from '../../store/redux'
 import { getHtml } from '../../templates/getHtml'
 import { defaultTemplate } from '../../templates/workspace/templates/defaultTemplate'
-import { getTimestamp } from '../../utils/datetime/getTimestamp'
 import { HtmlData, PostMessage } from '../webviews.interface'
 import {
-  WorkspacePmActions as Actions,
-  WorkspacePmClientActions as ClientActions,
+  PostMsgActionsBackend as Actions,
+  PostMsgActionsFrontend as ClientActions,
   FolderState,
-  WorkspacePmPayload as Payload,
-  WorkspaceCache,
+  Payload,
+  WorkspaceCacheRootFolders,
+  WorkspaceRootFolderCache,
   WorkspaceState,
 } from './WorkspaceViewProvider.interface'
 import { fetch } from './store/fetch'
 import { workspaceSlice } from './store/workspaceSlice'
 
 const { executeCommand } = vscode.commands
-const {
-  list,
-  setFileTree,
-  setSort,
-  setSearch,
-  setVisibleFiles,
-  toggleFolderState,
-  toggleFolderStateBulk,
-} = workspaceSlice.actions
+const { list, setFileTree, setSearch, setVisibleFiles, toggleFolderState, toggleFolderStateBulk } =
+  workspaceSlice.actions
 
 export class WorkspaceViewProvider
   implements vscode.WebviewViewProvider, FileThemeProcessorObserver
@@ -61,31 +53,38 @@ export class WorkspaceViewProvider
     this._fileThemeProcessor.subscribe(this)
   }
 
+  private async dumpCache() {
+    await vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
+    await this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
+
+    store.dispatch(fetch()).then(() => {
+      this.updateCache(store.getState().ws)
+    })
+  }
+
   private getCacheFiles() {
-    const cachedData = this._ctx.globalState.get<WorkspaceCache>(EXT_WSSTATE_CACHE)
+    const cachedData = this._ctx.globalState.get<WorkspaceRootFolderCache>(EXT_WSSTATE_CACHE)
 
-    if (cachedData) {
-      const { files, timestamp } = cachedData
-
-      if (files && timestamp) {
-        return [...files]
-      }
+    if (cachedData && cachedData.rootFolders) {
+      return cachedData.rootFolders
     }
 
     return null
   }
 
-  private getViewTitle({ files, visibleFiles, search, state: view }: WorkspaceState) {
+  private getViewTitle({ fileCount, search, view, visibleFileCount }: WorkspaceState) {
     let viewTitle = t('views.title')
 
-    if (view === 'list' && files !== null) {
-      viewTitle = t(
-        search ? 'workspace.list.titleCount.searched' : 'workspace.list.titleCount.default',
-        {
-          matches: visibleFiles.length.toString(),
-          total: files.length.toString(),
-        }
-      )
+    if (view === 'list' && fileCount > 0) {
+      const titleKey = search.term
+        ? 'workspace.list.titleCount.searched'
+        : 'workspace.list.titleCount.default'
+      const placeholders = {
+        matches: visibleFileCount.toString(),
+        total: fileCount.toString(),
+      }
+
+      viewTitle = t(titleKey, placeholders)
     }
 
     return viewTitle
@@ -95,7 +94,7 @@ export class WorkspaceViewProvider
     if (this._view !== undefined) {
       const state = store.getState().ws
 
-      const themeData = state.state === 'list' ? this._fileThemeProcessor.getThemeData() : null
+      const themeData = state.view === 'list' ? this._fileThemeProcessor.getThemeData() : null
       let cssData: CssData | null = null
 
       if (themeData !== null) {
@@ -152,7 +151,7 @@ export class WorkspaceViewProvider
       switch (action) {
         case Actions.FOLDER_CLICK:
           if (payload !== undefined) {
-            store.dispatch(toggleFolderState(payload))
+            store.dispatch(toggleFolderState(JSON.parse(payload)))
           }
           break
 
@@ -166,18 +165,18 @@ export class WorkspaceViewProvider
               cmd = clickAction === ConfigActions.NEW_WINDOW ? CMD_OPEN_CUR_WIN : CMD_OPEN_NEW_WIN
             }
 
-            executeCommand(cmd, payload, true)
+            await executeCommand(cmd, payload, true)
           }
           break
 
         case Actions.ICON_CLICK_FILEMANAGER:
           if (payload) {
-            executeCommand('revealFileInOS', vscode.Uri.file(payload))
+            await executeCommand('revealFileInOS', vscode.Uri.file(payload))
           }
           break
 
         case Actions.SAVE_WS:
-          executeCommand(CMD_VSC_SAVE_WS_AS)
+          await executeCommand(CMD_VSC_SAVE_WS_AS)
           break
 
         case Actions.SEARCH:
@@ -192,12 +191,12 @@ export class WorkspaceViewProvider
             const setting = `workspaceSidebar.search.${payload}`
             const newSettingValue = action === Actions.SEARCH_CHECKBOX_ENABLE
 
-            vscode.workspace.getConfiguration().update(setting, newSettingValue, true)
+            await vscode.workspace.getConfiguration().update(setting, newSettingValue, true)
           }
           break
 
         case Actions.SHOW_SETTINGS:
-          executeCommand(CMD_VSC_OPEN_SETTINGS, 'workspaceSidebar')
+          await executeCommand(CMD_VSC_OPEN_SETTINGS, 'workspaceSidebar')
           break
 
         case Actions.ERROR_MSG:
@@ -218,22 +217,42 @@ export class WorkspaceViewProvider
     })
   }
 
-  private stateChanged(newState: WorkspaceState) {
-    const { files, state } = newState
+  private async stateChanged(newState: WorkspaceState) {
+    const { view } = newState
 
-    switch (state) {
+    switch (view) {
       case 'error':
       case 'invalid':
-        executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, true)
+      case 'list':
+        await executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, true)
         break
 
-      case 'list':
-        executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, true)
+      default:
+        break
+    }
+  }
 
-        if (files) {
-          this._ctx.globalState.update(EXT_WSSTATE_CACHE, {
-            files,
-            timestamp: getTimestamp(),
+  private async updateCache(newState: WorkspaceState) {
+    const { fileCount, rootFolders, view } = newState
+
+    switch (view) {
+      case 'list':
+        if (fileCount) {
+          const reducedRootFolders = rootFolders.reduce<WorkspaceCacheRootFolders>(
+            (allRoots, curRoot) => {
+              return [
+                ...allRoots,
+                {
+                  folderPath: curRoot.folderPath,
+                  files: curRoot.files,
+                },
+              ]
+            },
+            []
+          )
+
+          await this._ctx.globalState.update(EXT_WSSTATE_CACHE, {
+            rootFolders: reducedRootFolders,
           })
         }
         break
@@ -260,9 +279,7 @@ export class WorkspaceViewProvider
     if (isRerender) {
       this.render()
     } else {
-      vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
-      this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
-      store.dispatch(fetch())
+      this.dumpCache()
     }
   }
 
@@ -276,14 +293,15 @@ export class WorkspaceViewProvider
 
     this.setupWebview(webviewView)
     this.updateSearch()
-    this.updateSort()
 
     const cachedFiles = this.getCacheFiles()
 
     if (cachedFiles) {
       store.dispatch(list(cachedFiles))
     } else {
-      store.dispatch(fetch())
+      store.dispatch(fetch()).then(() => {
+        this.updateCache(store.getState().ws)
+      })
     }
   }
 
@@ -302,11 +320,6 @@ export class WorkspaceViewProvider
         matchStart: getSearchMatchStartConfig(),
       })
     )
-  }
-
-  public updateSort() {
-    const sort = this._ctx.globalState.get<SortIds>(EXT_SORT) ?? 'ascending'
-    store.dispatch(setSort({ sort }))
   }
 
   public updateVisibleFiles() {

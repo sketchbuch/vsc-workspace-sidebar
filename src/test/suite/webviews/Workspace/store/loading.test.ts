@@ -6,18 +6,25 @@ suite('Webviews > Workspace > Store > loading()', () => {
   test('Updates state as expected', () => {
     const state = getMockState({
       error: 'FETCH',
-      files: [],
+      errorObj: null,
+      fileCount: 0,
+      result: 'ok',
       isFolderInvalid: true,
+      rootFolders: [],
       selected: 'sdasd',
-      state: 'error',
+      view: 'loading',
+      visibleFileCount: 0,
     })
     const expectedState = getMockState({
       error: '',
-      files: [],
-      invalidReason: 'none',
+      errorObj: null,
+      fileCount: 0,
+      result: 'ok',
       isFolderInvalid: false,
+      rootFolders: [],
       selected: '',
-      state: 'loading',
+      view: 'loading',
+      visibleFileCount: 0,
     })
 
     expect(state).not.to.eql(expectedState)

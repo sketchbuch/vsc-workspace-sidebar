@@ -1,10 +1,18 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { WorkspaceErrors, WorkspaceState } from '../WorkspaceViewProvider.interface'
+import { WorkspaceState, WorkspaceStateErrorObj } from '../WorkspaceViewProvider.interface'
 
-export const error = (state: WorkspaceState, action: PayloadAction<WorkspaceErrors>): void => {
-  state.error = action.payload
-  state.files = []
-  state.invalidReason = 'none'
+export const error = (
+  state: WorkspaceState,
+  action: PayloadAction<WorkspaceStateErrorObj>
+): void => {
+  const errorObj: WorkspaceStateErrorObj = action.payload ?? null
+
+  state.error = 'DEFAULT'
+  state.errorObj = errorObj
+  state.fileCount = 0
+  state.result = 'ok'
   state.isFolderInvalid = false
-  state.state = 'error'
+  state.rootFolders = []
+  state.view = 'error'
+  state.visibleFileCount = 0
 }

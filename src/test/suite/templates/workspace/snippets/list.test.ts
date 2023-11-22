@@ -1,40 +1,45 @@
 import { expect } from 'chai'
+import os from 'os'
 import * as sinon from 'sinon'
+import * as item from '../../../../../templates/workspace/snippets/itemFile'
+import * as itemFolder from '../../../../../templates/workspace/snippets/itemFolder'
 import { list } from '../../../../../templates/workspace/snippets/list'
-import * as item from '../../../../../templates/workspace/snippets/listItem'
+import * as rfm from '../../../../../templates/workspace/snippets/rootFolderMessage'
 import * as tree from '../../../../../templates/workspace/snippets/tree'
-import {
-  getMockConvertedFiles,
-  getMockFileList,
-  getMockFileTree,
-} from '../../../../mocks/mockFileData'
+import { OS_HOMEFOLDER, SEARCH_TERM } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
-import { getMockSearchState, getMockState } from '../../../../mocks/mockState'
+import {
+  defaultRootFolderFiles,
+  getMockRootFolders,
+  getMockSearchState,
+  getMockState,
+} from '../../../../mocks/mockState'
 
 suite('Templates > Workspace > Snippets: list()', () => {
-  const mockRenderVars = getMockRenderVars()
   let itemSpy: sinon.SinonSpy
+  let itemFolderSpy: sinon.SinonSpy
+  let osStub: sinon.SinonStub
+  let rfMsg: sinon.SinonSpy
   let treeSpy: sinon.SinonSpy
 
-  const mockState = getMockState({
-    convertedFiles: getMockConvertedFiles(),
-    files: getMockFileList(),
-    fileTree: getMockFileTree('normal'),
-    visibleFiles: getMockConvertedFiles(),
-  })
-
   setup(() => {
-    itemSpy = sinon.spy(item, 'listItem')
+    itemSpy = sinon.spy(item, 'itemFile')
+    itemFolderSpy = sinon.spy(itemFolder, 'itemFolder')
+    osStub = sinon.stub(os, 'homedir').callsFake(() => OS_HOMEFOLDER)
+    rfMsg = sinon.spy(rfm, 'rootFolderMessage')
     treeSpy = sinon.spy(tree, 'tree')
   })
 
   teardown(() => {
     itemSpy.restore()
+    itemFolderSpy.restore()
+    osStub.restore()
+    rfMsg.restore()
     treeSpy.restore()
   })
 
   test('Renders nothing if there are no files', () => {
-    const result = list(getMockState({ files: [], visibleFiles: [] }), mockRenderVars)
+    const result = list(getMockState({ fileCount: 0 }), getMockRenderVars())
 
     expect(result).to.be.a('string')
     expect(result).to.equal('')
@@ -43,11 +48,11 @@ suite('Templates > Workspace > Snippets: list()', () => {
   test('Renders search-out message if no visibleFiles and search is in progress', () => {
     const result = list(
       getMockState({
-        files: getMockFileList(),
-        search: getMockSearchState({ term: 'VSCode' }),
-        visibleFiles: [],
+        fileCount: 1,
+        search: getMockSearchState({ term: SEARCH_TERM }),
+        visibleFileCount: 0,
       }),
-      mockRenderVars
+      getMockRenderVars()
     )
 
     expect(result).to.be.a('string')
@@ -56,35 +61,82 @@ suite('Templates > Workspace > Snippets: list()', () => {
   })
 
   test('Renders list if not tree view', () => {
+    const mockRootFolders = getMockRootFolders({ showTree: false })
+    const mockState = getMockState({ ...mockRootFolders })
+    const mockRenderVars = getMockRenderVars({ showTree: false })
+
     const result = list(mockState, mockRenderVars)
 
     expect(result).to.be.a('string')
     expect(result).contains('<ul class="list__list')
     expect(result).not.contains('list__styled-list--tree')
 
-    sinon.assert.callCount(itemSpy, mockState.visibleFiles.length)
+    sinon.assert.called(itemFolderSpy)
+    sinon.assert.callCount(itemSpy, mockState.visibleFileCount)
     sinon.assert.notCalled(treeSpy)
   })
 
   test('Renders tree if tree view', () => {
-    const result = list(mockState, getMockRenderVars({ showTree: true }))
+    const mockRootFolders = getMockRootFolders({ showTree: true })
+    const mockState = getMockState({ ...mockRootFolders })
+    const mockRenderVars = getMockRenderVars({ showTree: true })
+
+    const result = list(mockState, mockRenderVars)
 
     expect(result).to.be.a('string')
     expect(result).contains('<ul class="list__list')
     expect(result).contains('list__styled-list--tree')
 
     sinon.assert.called(treeSpy)
-    sinon.assert.notCalled(itemSpy)
   })
 
   test('Renders list if tree is null', () => {
-    const result = list({ ...mockState, fileTree: null }, getMockRenderVars({ showTree: true }))
+    const mockRootFolders = getMockRootFolders({ showTree: false })
+    const mockState = getMockState({ ...mockRootFolders })
+    const mockRenderVars = getMockRenderVars({ showTree: true })
+
+    const result = list(mockState, mockRenderVars)
 
     expect(result).to.be.a('string')
     expect(result).contains('<ul class="list__list')
     expect(result).not.contains('list__styled-list--tree')
 
+    sinon.assert.called(itemFolderSpy)
     sinon.assert.called(itemSpy)
+    sinon.assert.notCalled(treeSpy)
+  })
+
+  test('Renders rootFolderMessage if rootFolder.result is "invalid-folder"', () => {
+    const mockRootFolders = getMockRootFolders({
+      rootFoldersFiles: [{ ...defaultRootFolderFiles[0], result: 'invalid-folder' }],
+      showTree: false,
+    })
+    const mockState = getMockState({ ...mockRootFolders })
+    const mockRenderVars = getMockRenderVars({ showTree: true })
+
+    const result = list(mockState, mockRenderVars)
+
+    expect(result).to.be.a('string')
+    sinon.assert.called(rfMsg)
+    sinon.assert.called(itemFolderSpy)
+    sinon.assert.notCalled(itemSpy)
+    sinon.assert.notCalled(treeSpy)
+  })
+
+  test('Renders rootFolderMessage if rootFolder.result is "no-workspaces"', () => {
+    const mockRootFolders = getMockRootFolders({
+      rootFoldersFiles: [{ ...defaultRootFolderFiles[0], result: 'no-workspaces' }],
+      showTree: false,
+    })
+    const mockState = getMockState({ ...mockRootFolders })
+    const mockRenderVars = getMockRenderVars({ showTree: true })
+
+    const result = list(mockState, mockRenderVars)
+
+    expect(result).to.be.a('string')
+    sinon.assert.called(rfMsg)
+    sinon.assert.called(itemFolderSpy)
+    sinon.assert.notCalled(itemSpy)
     sinon.assert.notCalled(treeSpy)
   })
 })

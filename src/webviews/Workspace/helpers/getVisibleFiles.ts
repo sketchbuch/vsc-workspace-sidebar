@@ -1,4 +1,3 @@
-import { SortIds } from '../../../commands/registerCommands'
 import { getCleanLabelsConfig } from '../../../config/general'
 import { getShowPathsConfig } from '../../../config/listview'
 import { getShowTreeConfig } from '../../../config/treeview'
@@ -7,7 +6,7 @@ import { sortFilesByProp } from '../../../utils/arrays/sortFilesByProp'
 import { File, Files, SearchState } from '../WorkspaceViewProvider.interface'
 import { findDuplicates } from './findDuplicates'
 
-export const getVisibleFiles = (wsFiles: Files, search: SearchState, sort: SortIds) => {
+export const getVisibleFiles = (wsFiles: Files, search: SearchState) => {
   const showTree = getShowTreeConfig()
   const showPaths = getShowPathsConfig()
   const cleanLabels = getCleanLabelsConfig()
@@ -17,7 +16,8 @@ export const getVisibleFiles = (wsFiles: Files, search: SearchState, sort: SortI
 
   if (term) {
     visibleFiles = visibleFiles.filter((file) => {
-      const label = caseInsensitive ? file.label.toLowerCase() : file.label
+      const visibleLabel = cleanLabels ? file.cleanedLabel : file.label
+      const label = caseInsensitive ? visibleLabel.toLowerCase() : visibleLabel
       const searchTerm = caseInsensitive ? term.toLowerCase() : term
 
       return matchStart ? label.startsWith(searchTerm) : label.includes(searchTerm)
@@ -26,10 +26,6 @@ export const getVisibleFiles = (wsFiles: Files, search: SearchState, sort: SortI
 
   if (!showTree) {
     visibleFiles.sort(sortFilesByProp(cleanLabels ? 'cleanedLabel' : 'label'))
-
-    if (sort === 'descending') {
-      visibleFiles.reverse()
-    }
   }
 
   if (showPaths === ConfigShowPaths.AS_NEEEDED) {

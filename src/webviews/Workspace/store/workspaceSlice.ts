@@ -9,7 +9,6 @@ import { list } from './list'
 import { loading } from './loading'
 import { setFileTree } from './setFileTree'
 import { setSearch } from './setSearch'
-import { setSort } from './setSort'
 import { setVisibleFiles } from './setVisibleFiles'
 import { toggleFolderState } from './toggleFolderState'
 import { toggleFolderStateBulk } from './toggleFolderStateBulk'
@@ -21,19 +20,16 @@ export const initialSearchState: SearchState = {
 }
 
 export const initialState: WorkspaceState = {
-  closedFolders: [],
-  convertedFiles: [],
   error: '',
-  files: [],
-  fileTree: null,
-  invalidReason: 'none',
+  errorObj: null,
+  fileCount: 0,
+  result: 'ok',
   isFolderInvalid: false,
+  rootFolders: [],
   search: { ...initialSearchState },
   selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',
-  sort: 'ascending',
-  state: 'loading',
-  treeFolders: [],
-  visibleFiles: [],
+  view: 'loading',
+  visibleFileCount: 0,
   wsType: getWsType(vscode.workspace.workspaceFile, vscode.workspace.workspaceFolders),
 }
 
@@ -51,7 +47,6 @@ export const workspaceSlice = createSlice({
     list,
     loading,
     setFileTree,
-    setSort,
     setSearch,
     setVisibleFiles,
     toggleFolderState,

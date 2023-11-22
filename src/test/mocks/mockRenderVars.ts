@@ -6,7 +6,6 @@ import {
   CONFIG_DEPTH,
   CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_HIERARCHY,
-  CONFIG_SHOW_ROOT_FOLDER,
   ConfigActions,
 } from '../../constants/config'
 import { RenderVars } from '../../webviews/webviews.interface'
@@ -27,7 +26,6 @@ export const getMockRenderVars = (renderVars: Partial<RenderVars> = {}): RenderV
     imgDarkFolderUri: { ...baseUri, path: path.join('/resources', 'images', 'dark') } as Uri,
     imgLightFolderUri: { ...baseUri, path: path.join('/resources', 'images', 'light') } as Uri,
     searchMinimum: CONFIG_SEARCH_MINIMUM,
-    showRootFolder: CONFIG_SHOW_ROOT_FOLDER,
     showTree: CONFIG_SHOW_HIERARCHY,
     themeProcessorState: 'ready',
     ...renderVars,

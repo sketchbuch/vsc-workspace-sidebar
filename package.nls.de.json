@@ -1,31 +1,32 @@
 {
   "config.title": "Workspace Sidebar",
+  "config.actions.cur-window": "Im aktuellen Fenster öffnen, Iconklicks werden in einem neuen Fenster geöffnet.",
+  "config.actions.description": "Welche Aktion sollte beim Anklicken auf einen Arbeitsbereich ausgeführt werden?",
+  "config.actions.new-window": "Im neuen Fenster öffnen, Iconklicks werden im aktuellen Fenster geöffnet.",
+  "config.cleanLabels.description": "Pfade in Title Case formattieren. Deaktivieren Sie die Option, um die Namen der Arbeitsbereichsdateien unverändert zu lassen.",
+  "config.condenseFileTree.description": "Komprimieren Sie der Ordnerhierarchie, um visuelles Störunegn von Ordnern zu reduzieren (siehe Readme).",
+  "config.depth.description": "Wie weit Unterordner auch durchsucht werden. -1 für keine Einschrängung",
+  "config.folder.deprecationMessage": "Es werden jetzt mehrere Stammordner unterstützt. Bitte verwenden Sie stattdessen 'workspaceSidebar.folders'. Diese Option wird in einer zukünftigen Version entfernt.",
+  "config.folder.description": "Der Ordnerpfad, in dem nach Arbeitsbereichen gesucht werden soll. Falls leer, wird Ihr Home-Ordner benutzt. '~' wird auch unter Windows durch Ihren Home-Ordner ersetzt.",
+  "config.folders.excluded.description": "Ordner, die bei der Suche nach Arbeitsbereichen ausgeschlossen werden sollen.",
+  "config.rootFolders.description": "Die Ordner, in denen nach Arbeitsbereichsdateien gesucht werden soll",
+  "config.search.caseInsensitive.description": "Suche ohne Berücksichtigung der Groß- und Kleinschreibung",
+  "config.search.matchStart.description": "Suche vom Anfang des Arbeitsbereichsnamens",
+  "config.searchMinimum.description": "Die Mindestanzahl von Arbeitsbereichen, die für die Anzeige des Suchfeldes erforderlich ist. Bei 0 wird das Suchfeld immer anzeigt. Skala: 0-100",
+  "config.showFileIcons.description": "EXPERIMENTELLE FUNKTION. Dateisymbole neben Arbeitsbereichen anzeigen, passende icons wird automatisch gefunden, kann aber auch konfiguriert werden. [Weitere Informationen finden Sie in der Readme-Datei](https://github.com/sketchbuch/vsc-workspace-sidebar#readme).",
+  "config.showFileIconsConfig.description": "EXPERIMENTELLE FUNKTION. Benutzerdefinierte Konfiguration für Symbole. [Weitere Informationen finden Sie in der Readme-Datei](https://github.com/sketchbuch/vsc-workspace-sidebar#readme).",
+  "config.showFolderHierarchy.description": "Ordnerhierarchie statt einer flachen Liste anzeigen.",
+  "config.showPaths.always": "Pfade immer anzeigen",
+  "config.showPaths.asneeded": "Pfade anzeigen, wenn ein Arbeitsbereich dieselbe Bezeichnung wie eine anderer hat",
+  "config.showPaths.description": "Zeigen Sie Pfade zu den Arbeitsbereichsdateien an. Entweder: 'Immer', 'Nie', oder 'Nach Bedarf' (zeigt nur Pfade für Arbeitsbereiche mit derselben Bezeichnung an).",
+  "config.showPaths.never": "Pfade nie anzeigen",
   "config.title.folders": "Ordner",
   "config.title.listview": "Liste Ansicht",
   "config.title.search": "Suche",
   "config.title.treeview": "Ordnerhierarchie Ansicht",
-  "config.workspace.search.caseInsensitive.description": "Suche ohne Berücksichtigung der Groß- und Kleinschreibung",
-  "config.workspace.search.matchStart.description": "Suche vom Anfang des Arbeitsbereichsnamens",
-  "config.workspaceActions.cur-window": "Im aktuellen Fenster öffnen, Iconklicks werden in einem neuen Fenster geöffnet.",
-  "config.workspaceActions.description": "Welche Aktion sollte beim Anklicken auf einen Arbeitsbereich ausgeführt werden?",
-  "config.workspaceActions.new-window": "Im neuen Fenster öffnen, Iconklicks werden im aktuellen Fenster geöffnet.",
-  "config.workspaceCleanLabels.description": "Pfade in Title Case formattieren. Deaktivieren Sie die Option, um die Namen der Arbeitsbereichsdateien unverändert zu lassen.",
-  "config.workspaceCondenseFileTree.description": "Komprimieren Sie der Ordnerhierarchie, um visuelles Störunegn von Ordnern zu reduzieren (siehe Readme).",
-  "config.workspaceFolder.description": "Der Ordnerpfad, in dem nach Arbeitsbereichen gesucht werden soll. Falls leer, wird Ihr Home-Ordner benutzt. '~' wird auch unter Windows durch Ihren Home-Ordner ersetzt.",
-  "config.workspaceFolderDepth.description": "Wie weit Unterordner auch durchsucht werden. -1 für keine Einschrängung",
-  "config.workspaceSearchMinimum.description": "Die Mindestanzahl von Arbeitsbereichen, die für die Anzeige des Suchfeldes erforderlich ist. Bei 0 wird das Suchfeld immer anzeigt. Skala: 0-100",
-  "config.workspaceShowFileIcons.description": "EXPERIMENTELLE FUNKTION. Dateisymbole neben Arbeitsbereichen anzeigen, passende icons wird automatisch gefunden, kann aber auch konfiguriert werden. [Weitere Informationen finden Sie in der Readme-Datei](https://github.com/sketchbuch/vsc-workspace-sidebar#readme).",
-  "config.workspaceShowFileIconsConfig.description": "EXPERIMENTELLE FUNKTION. Benutzerdefinierte Konfiguration für Symbole. [Weitere Informationen finden Sie in der Readme-Datei](https://github.com/sketchbuch/vsc-workspace-sidebar#readme).",
-  "config.workspaceShowFolderHierarchy.description": "Ordnerhierarchie statt einer flachen Liste anzeigen.",
-  "config.workspaceShowPath.always": "Pfade immer anzeigen",
-  "config.workspaceShowPath.asneeded": "Pfade anzeigen, wenn ein Arbeitsbereich dieselbe Bezeichnung wie eine anderer hat",
-  "config.workspaceShowPath.description": "Zeigen Sie Pfade zu den Arbeitsbereichsdateien an. Entweder: 'Immer', 'Nie', oder 'Nach Bedarf' (zeigt nur Pfade für Arbeitsbereiche mit derselben Bezeichnung an).",
-  "config.workspaceShowPath.never": "Pfade nie anzeigen",
-  "config.workspaceSidebar.folders.excluded.description": "Ordner, die bei der Suche nach Arbeitsbereichen ausgeschlossen werden sollen.",
-  "ext.cmd.wsList.collapse-all": "Alle Ordner zuklappen",
-  "ext.cmd.wsList.expand-all": "Alle Ordner aufklappen",
-  "ext.cmd.wsList.refresh": "Arbeitsbereiche neu laden",
-  "ext.cmd.wsList.sort": "Arbeitsbereiche sortieren",
+  "ext.cmd.wsList.collapse-all": "Zuklappen",
+  "ext.cmd.wsList.expand-all": "Aufklappen",
+  "ext.cmd.wsList.refresh": "Arbeitsbereiche neu einsammeln",
   "ext.cmd.wsListItem.checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",
   "ext.cmd.wsListItem.open.curWindow": "In aktuellem Fenster öffnen",
   "ext.cmd.wsListItem.open.newWindow": "In neuem Fenster öffnen",
@@ -33,16 +34,6 @@
   "viewsContainers.activitybar.title": "Arbeitsbereiche",
   "errors": {
     "viewNotFound": "Workspace Sidebar: WebviewView nicht gefunden"
-  },
-  "sort": {
-    "ascending": {
-      "description": "Sortieren von a-z",
-      "label": "Aufsteigend"
-    },
-    "descending": {
-      "description": "Sortieren von z-a",
-      "label": "Absteigend"
-    }
   },
   "workspace": {
     "checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",
@@ -58,19 +49,19 @@
       "default": {
         "title": "Beim Suchen nach Arbeitsbereichen ist ein Fehler aufgetreten"
       },
+      "noRootFolders": {
+        "title": "Keine Stammordner angegeben. Bitte bearbeiten Sie die Konfigurationsoption 'workspaceSidebar.folders'."
+      },
       "notDirectory": {
-        "title": "Der Ordnerpfad ist kein Verzeichnis"
+        "title": "Keiner der Stammordner ist ein Verzeichnis"
       },
       "noWorkspaces": {
-        "hintDepth": "Die aktuelle Suchtiefe ist 0, das bedeutet, dass nur der Stammordner des Arbeitsbereichs nach Arbeitsbereichsdateien durchsucht wird.",
-        "hintSettings": "Versuchen Sie, die Suchtiefe zu erhöhen oder den Ordnerpfad zu ändern.",
+        "hintDepth": "Die aktuelle Suchtiefe ist 0, dass nur die Stammordner nach Arbeitsbereichsdateien durchsucht werden",
+        "hintSettings": "Versuchen Sie, die Suchtiefe zu erhöhen oder die Ordner zu ändern.",
         "title": "Keine Arbeitsbereiche gefunden"
       }
     },
     "list": {
-      "empty": {
-        "title": "Keine Arbeitsbereiche gefunden"
-      },
       "fileicons": {
         "loadingMsg": "Dateithemadaten werden geladen"
       },
@@ -87,8 +78,16 @@
         },
         "openFilemanager": {
           "ariaLabel": "Öffnen Sie den Ordner '{{label}}' in Ihrem Dateimanager",
-          "tooltip": "Öffnen Sie '{{label}}' in Ihrem Dateimanager"
+          "tooltip": "Öffnen Sie den Ordner '{{label}}' in Ihrem Dateimanager"
         }
+      },
+      "notDirectory": {
+        "title": "Der Ordner ist kein Verzeichnis"
+      },
+      "noWorkspaces": {
+        "hintDepth": "Die aktuelle Suchtiefe ist 0, das bedeutet, dass keine Unterordner durchsucht werden.",
+        "hintSettings": "Versuchen Sie, die Suchtiefe zu erhöhen oder den Ordnerpfad zu ändern.",
+        "title": "Keine Arbeitsbereiche gefunden"
       },
       "search": {
         "ariaLabel": "Arbeitsbereiche durchsuchen",

@@ -5,12 +5,24 @@ import { getVisibleFiles } from '../helpers/getVisibleFiles'
 import { WorkspaceState } from '../WorkspaceViewProvider.interface'
 
 export const setVisibleFiles = (state: WorkspaceState): void => {
-  if (state.files.length > 0) {
-    const showTree = getShowTreeConfig()
+  const showTree = getShowTreeConfig()
+  let visibleFileCount = 0
 
-    state.visibleFiles = getVisibleFiles(state.convertedFiles, state.search, state.sort)
-    state.fileTree = showTree ? getFileTree(state.visibleFiles) : null
-    state.treeFolders =
-      showTree && state.fileTree !== null ? getAllFoldersFromTree(state.fileTree) : []
-  }
+  state.rootFolders = state.rootFolders.map((rootFolder) => {
+    const visibleFiles = getVisibleFiles(rootFolder.convertedFiles, state.search)
+    const fileTree = showTree ? getFileTree(rootFolder.folderPath, visibleFiles) : null
+    const allFolders =
+      showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : [rootFolder.folderName]
+
+    visibleFileCount += visibleFiles.length
+
+    return {
+      ...rootFolder,
+      allFolders,
+      fileTree,
+      visibleFiles,
+    }
+  })
+
+  state.visibleFileCount = visibleFileCount
 }

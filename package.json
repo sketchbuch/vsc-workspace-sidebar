@@ -2,7 +2,7 @@
   "name": "vsc-workspace-sidebar",
   "description": "Adds a sidebar to VSCode that lists Workspaces and lets you open them in the current window or a new window.",
   "displayName": "Workspace Sidebar",
-  "version": "1.7.1",
+  "version": "2.0.0-beta-2",
   "activationEvents": [
     "onStartupFinished"
   ],
@@ -39,14 +39,6 @@
         "title": "%ext.cmd.wsListItem.checkSettings%"
       },
       {
-        "command": "vsc-workspace-sidebar-sort",
-        "icon": {
-          "light": "./resources/images/light/sort.svg",
-          "dark": "./resources/images/dark/sort.svg"
-        },
-        "title": "%ext.cmd.wsList.sort%"
-      },
-      {
         "command": "vsc-workspace-sidebar-collapse-all",
         "icon": {
           "light": "./resources/images/light/collapse-all.svg",
@@ -69,27 +61,27 @@
         "properties": {
           "workspaceSidebar.actions": {
             "default": "Current Window",
-            "description": "%config.workspaceActions.description%",
+            "description": "%config.actions.description%",
             "enum": [
               "Current Window",
               "New Window"
             ],
             "enumDescriptions": [
-              "%config.workspaceActions.cur-window%",
-              "%config.workspaceActions.new-window%"
+              "%config.actions.cur-window%",
+              "%config.actions.new-window%"
             ],
             "scope": "application",
             "type": "string"
           },
           "workspaceSidebar.cleanLabels": {
             "default": true,
-            "description": "%config.workspaceCleanLabels.description%",
+            "description": "%config.cleanLabels.description%",
             "scope": "application",
             "type": "boolean"
           },
           "workspaceSidebar.depth": {
             "default": 0,
-            "description": "%config.workspaceFolderDepth.description%",
+            "description": "%config.depth.description%",
             "maximum": 25,
             "minimum": 0,
             "scope": "application",
@@ -97,13 +89,13 @@
           },
           "workspaceSidebar.showFileIcons": {
             "default": true,
-            "markdownDescription": "%config.workspaceShowFileIcons.description%",
+            "markdownDescription": "%config.showFileIcons.description%",
             "scope": "application",
             "type": "boolean"
           },
           "workspaceSidebar.showFileIconsConfig": {
             "default": {},
-            "markdownDescription": "%config.workspaceShowFileIconsConfig.description%",
+            "markdownDescription": "%config.showFileIconsConfig.description%",
             "scope": "application",
             "type": "object"
           }
@@ -114,9 +106,20 @@
         "properties": {
           "workspaceSidebar.folder": {
             "default": "",
-            "description": "%config.workspaceFolder.description%",
+            "deprecationMessage": "%config.folder.deprecationMessage%",
+            "description": "%config.folder.description%",
             "scope": "application",
             "type": "string"
+          },
+          "workspaceSidebar.rootFolders": {
+            "default": [],
+            "description": "%config.rootFolders.description%",
+            "scope": "application",
+            "type": "array",
+            "properties": {
+              "type": "string",
+              "description": "folder name"
+            }
           },
           "workspaceSidebar.folders.excluded": {
             "default": [
@@ -126,7 +129,7 @@
               "out",
               "public"
             ],
-            "description": "%config.workspaceSidebar.folders.excluded.description%",
+            "description": "%config.folders.excluded.description%",
             "scope": "application",
             "type": "array"
           }
@@ -137,16 +140,16 @@
         "properties": {
           "workspaceSidebar.showPaths": {
             "default": "As needed",
-            "description": "%config.workspaceShowPath.description%",
+            "description": "%config.showPaths.description%",
             "enum": [
               "Always",
               "As needed",
               "Never"
             ],
             "enumDescriptions": [
-              "%config.workspaceShowPath.always%",
-              "%config.workspaceShowPath.asneeded%",
-              "%config.workspaceShowPath.never%"
+              "%config.showPaths.always%",
+              "%config.showPaths.asneeded%",
+              "%config.showPaths.never%"
             ],
             "scope": "application",
             "type": "string"
@@ -158,7 +161,7 @@
         "properties": {
           "workspaceSidebar.searchMinimum": {
             "default": 15,
-            "description": "%config.workspaceSearchMinimum.description%",
+            "description": "%config.searchMinimum.description%",
             "maximum": 100,
             "minimum": 0,
             "scope": "application",
@@ -166,13 +169,13 @@
           },
           "workspaceSidebar.search.caseInsensitive": {
             "default": false,
-            "description": "%config.workspace.search.caseInsensitive.description%",
+            "description": "%config.search.caseInsensitive.description%",
             "scope": "application",
             "type": "boolean"
           },
           "workspaceSidebar.search.matchStart": {
             "default": false,
-            "description": "%config.workspace.search.matchStart.description%",
+            "description": "%config.search.matchStart.description%",
             "scope": "application",
             "type": "boolean"
           }
@@ -183,19 +186,13 @@
         "properties": {
           "workspaceSidebar.showFolderHierarchy": {
             "default": false,
-            "description": "%config.workspaceShowFolderHierarchy.description%",
-            "scope": "application",
-            "type": "boolean"
-          },
-          "workspaceSidebar.showRootFolder": {
-            "default": false,
-            "description": "Show root folder",
+            "description": "%config.showFolderHierarchy.description%",
             "scope": "application",
             "type": "boolean"
           },
           "workspaceSidebar.condenseFileTree": {
             "default": true,
-            "description": "%config.workspaceCondenseFileTree.description%",
+            "markdownDescription": "%config.condenseFileTree.description%",
             "scope": "application",
             "type": "boolean"
           }
@@ -215,17 +212,12 @@
         {
           "command": "vsc-workspace-sidebar-collapse-all",
           "group": "navigation@0",
-          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded && config.workspaceSidebar.showFolderHierarchy"
+          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded"
         },
         {
           "command": "vsc-workspace-sidebar-expand-all",
           "group": "navigation@1",
-          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded && config.workspaceSidebar.showFolderHierarchy"
-        },
-        {
-          "command": "vsc-workspace-sidebar-sort",
-          "group": "navigation@2",
-          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded && !config.workspaceSidebar.showFolderHierarchy"
+          "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded"
         },
         {
           "command": "vsc-workspace-sidebar-refresh",

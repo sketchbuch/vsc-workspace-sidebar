@@ -9,10 +9,11 @@ import { list } from '../snippets/list'
 import { searchForm } from '../snippets/searchForm'
 
 export const listView = (state: WorkspaceState, renderVars: RenderVars): string => {
-  if (state.files.length > 0) {
+  if (state.fileCount > 0) {
     const wsFolders = workspace.workspaceFolders ? [...workspace.workspaceFolders] : undefined
     const { fileIconsActive, searchMinimum, themeProcessorState } = renderVars
-    const showSearch = searchMinimum === 0 || state.files.length >= searchMinimum
+    const showSearch = searchMinimum === 0 || state.fileCount >= searchMinimum
+    const isLoading = themeProcessorState === 'loading'
 
     return `
         <section class="view list" data-fileiconsactive="${fileIconsActive}" data-folderopen="${
@@ -20,11 +21,7 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
     }" data-showsearch="${showSearch}" >
           ${folderList(state, wsFolders)}
           ${searchForm(state, showSearch)}
-          ${
-            themeProcessorState === 'loading'
-              ? hoverNotification({ title: t('workspace.list.fileicons.loadingMsg') })
-              : ''
-          }
+          ${isLoading ? hoverNotification({ title: t('workspace.list.fileicons.loadingMsg') }) : ''}
           ${list(state, renderVars)}
         </section>
       `
@@ -37,6 +34,8 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
             <span class="view__message-icon codicon codicon-error"></span>
             ${t('workspace.list.empty.title')}
           </span>
+        </p>
+        <p class="view__message">
           ${settingsLink()}
         </p>
       </section>

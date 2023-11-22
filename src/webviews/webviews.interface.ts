@@ -32,7 +32,6 @@ export interface RenderVars {
   imgDarkFolderUri: vscode.Uri
   imgLightFolderUri: vscode.Uri
   searchMinimum: number
-  showRootFolder: boolean
   showTree: boolean
   themeProcessorState: FileThemeProcessorState
 }
@@ -51,11 +50,7 @@ export interface TemplateVars {
   uiFolderUri: vscode.Uri
 }
 
-export type GetHtmlTemplateFunc<TState> = (
-  templateVars: TemplateVars,
-  state: TState,
-  webview: vscode.Webview
-) => string
+export type GetHtmlTemplateFunc<TState> = (templateVars: TemplateVars, state: TState) => string
 
 export interface GetHtml<TState> {
   cssData: CssData | null

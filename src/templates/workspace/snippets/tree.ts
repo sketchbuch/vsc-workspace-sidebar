@@ -1,57 +1,43 @@
 import { RenderVars } from '../../../webviews/webviews.interface'
 import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree'
-import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { isFile } from '../../helpers/isFile'
 import { sortTreeChildren, TreeChildren } from '../../helpers/sortTreeChildren'
-import { treeItemFile } from './treeItemFile'
-import { treeItemFolder } from './treeItemFolder'
-
-const isFile = (item: File | FileTree): item is File => {
-  return (item as File).file !== undefined
-}
+import { itemFile } from './itemFile'
+import { itemFolder } from './itemFolder'
 
 export const tree = (
   branch: FileTree,
   depth: number,
+  closedFolders: string[],
   state: WorkspaceState,
   renderVars: RenderVars
 ): string => {
-  const { showRootFolder } = renderVars
   const { files, folderPathSegment, isRoot, sub } = branch
-  const isClosed = state.closedFolders.includes(folderPathSegment)
+  const isClosed = closedFolders.includes(folderPathSegment)
+
   let children: TreeChildren = []
   let fileDepth = depth
   let treeDepth = depth + 1
-  let showItemFolder = true
 
-  // If this is the root level, and show root folder is false,
-  // ignore the root folder and just show the subfolders/subworkspaces
-  if (isRoot) {
-    if (!showRootFolder) {
-      children = sortTreeChildren([...sub, ...files])
-      fileDepth = -1
-      treeDepth = depth
-      showItemFolder = false
-    }
-  }
-
-  if (showItemFolder && !isClosed) {
+  if (!isClosed) {
     children = sortTreeChildren([...sub, ...files])
+
+    if (!isRoot && children.length < 1) {
+      return ''
+    }
   }
 
   return `
-    ${showItemFolder ? treeItemFolder(branch, depth, isClosed, state, renderVars) : ''}
-    ${
-      children.length > 0
-        ? children
-            .map((child) => {
-              if (isFile(child)) {
-                return treeItemFile(child, fileDepth, state, renderVars)
-              } else {
-                return tree(child, treeDepth, state, renderVars)
-              }
-            })
-            .join('')
-        : ''
-    }
+    ${itemFolder(branch, depth, isClosed, state, renderVars)}
+    ${children
+      .map((child) => {
+        if (isFile(child)) {
+          return itemFile({ depth: fileDepth, file: child, renderVars, state })
+        } else {
+          return tree(child, treeDepth, closedFolders, state, renderVars)
+        }
+      })
+      .join('')}
   `
 }

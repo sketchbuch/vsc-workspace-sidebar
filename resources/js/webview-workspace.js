@@ -8,7 +8,7 @@
   const searchInput = document.querySelector('#searchWorkspaces');
   const viewLinks = document.querySelectorAll('.view__link');
   const wsElements = document.querySelectorAll('.list__styled-item--unselected');
-  const wsFolders = document.querySelectorAll('.list__branch-list-item-folder-closable');
+  const wsFolders = document.querySelectorAll('.list__branch-list-item-folder--closable');
 
   let searchTerm = '';
 
@@ -29,7 +29,7 @@
 
   const handleFolderClick = (event) => {
     event.stopPropagation();
-    sendMessage('FOLDER_CLICK', event.currentTarget.dataset.folder);
+    sendMessage('FOLDER_CLICK', JSON.stringify({ folder: event.currentTarget.dataset.folder, folderPath: event.currentTarget.dataset.folderpath }));
   };
 
   const handleIconClick = (event) => {

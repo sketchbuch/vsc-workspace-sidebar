@@ -1,16 +1,17 @@
 # Folders
+.cache/
+.parcel-cache/
 .vscode-test/
-/.parcel-cache
-/.cache
-/dist
-/out
+dist/
+node_modules/
+out/
 /test
-node_modules
 
 # Files
 *.code-workspace
 *.DS_Store
 *.vsix
+*.zip
 audit-report.html
-Temp.txt
 pnpm run-error.log
+Temp.txt

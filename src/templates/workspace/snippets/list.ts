@@ -1,16 +1,18 @@
 import { t } from 'vscode-ext-localisation'
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree'
 import { RenderVars } from '../../../webviews/webviews.interface'
-import { listItem } from './listItem'
+import { itemFile } from './itemFile'
+import { itemFolder } from './itemFolder'
+import { rootFolderMessage } from './rootFolderMessage'
 import { tree } from './tree'
 
 export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
-  const { files, search, visibleFiles } = state
-  const { showTree } = renderVars
+  const { fileCount, rootFolders, search, visibleFileCount } = state
 
-  if (files.length === 0) {
+  if (fileCount < 1) {
     return ''
-  } else if (visibleFiles.length === 0 && search) {
+  } else if (search.term && visibleFileCount < 1) {
     return `
       <div class="list__searchedout">
         <p>${t('workspace.list.search.noMatch')}</p>
@@ -18,15 +20,71 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
     `
   }
 
+  const { showTree } = renderVars
+
   return `
-      <ul class="list__list list__styled-list${
-        showTree && state.fileTree !== null ? ' list__styled-list--tree' : ''
-      }">
-        ${
-          showTree && state.fileTree !== null
-            ? tree(state.fileTree, 0, state, renderVars)
-            : visibleFiles.map((file) => listItem(file, state, renderVars)).join('')
-        }
-      </ul>
+      <div class="list__list-wrapper">
+        ${rootFolders
+          .map((rootFolder) => {
+            const { closedFolders, fileTree, folderName, folderPath, result, visibleFiles } =
+              rootFolder
+
+            if (search.term && visibleFiles.length < 1) {
+              return ''
+            }
+
+            const isFileTree = showTree && fileTree !== null
+            const classes =
+              'list__list list__styled-list' + (isFileTree ? ' list__styled-list--tree' : '')
+            let isRootPathError = result === 'invalid-folder' || result === 'no-workspaces'
+            const isClosed = closedFolders.includes(folderName)
+            const rootFolderFile: FileTree = {
+              files: [],
+              folderPath,
+              folderPathSegment: folderName,
+              isRoot: true,
+              label: folderName,
+              sub: [],
+            }
+
+            return `
+              <section class="list__list-section">
+                ${
+                  isRootPathError
+                    ? `
+                      ${itemFolder(rootFolderFile, 0, false, state, renderVars, true)}
+                      ${rootFolderMessage(result, renderVars)}
+                    `
+                    : ''
+                }
+                ${
+                  !isRootPathError
+                    ? `<ul class="${classes}">
+                          ${
+                            isFileTree
+                              ? tree(fileTree, 0, rootFolder.closedFolders, state, renderVars)
+                              : ''
+                          }
+                          ${
+                            !isFileTree
+                              ? itemFolder(rootFolderFile, 0, isClosed, state, renderVars)
+                              : ''
+                          }
+                          ${
+                            !isFileTree && !isClosed
+                              ? visibleFiles
+                                  .map((file) => itemFile({ file, state, renderVars }))
+                                  .join('')
+                              : ''
+                          }
+                        </ul>
+                      `
+                    : ''
+                }
+              </section>
+            `
+          })
+          .join('')}
+      </div>
     `
 }

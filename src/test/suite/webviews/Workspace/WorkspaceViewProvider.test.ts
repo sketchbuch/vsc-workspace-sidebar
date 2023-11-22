@@ -1,4 +1,3 @@
-import { expect } from 'chai'
 import sinon from 'sinon'
 import * as vscode from 'vscode'
 import { store } from '../../../../store/redux'
@@ -57,20 +56,6 @@ suite('Webviews > Workspace > WorkspaceViewProvider():', () => {
 
     sinon.assert.called(dispatchSpy)
     sinon.assert.called(getHtmlSpy)
-  })
-
-  test('updateSort()', () => {
-    stateSpy.callsFake(() => 'descending')
-
-    expect(store.getState().ws.sort).to.equal('ascending')
-
-    ws.resolveWebviewView(getMockWebviewView())
-    ws.updateSort()
-
-    sinon.assert.called(dispatchSpy)
-    sinon.assert.called(getHtmlSpy)
-
-    expect(store.getState().ws.sort).to.equal('descending')
   })
 
   test('updateVisibleFiles()', () => {

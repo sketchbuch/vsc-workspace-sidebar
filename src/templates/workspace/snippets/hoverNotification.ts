@@ -12,11 +12,11 @@ export const hoverNotification = ({ message, title }: NotificationProps): string
         <span class="hover-notification__icon view__message-icon ">
           <span class="codicon codicon-loading codicon-modifier-spin"></span>
         </span>
-        <div  class="hover-notification__text">
+        <div class="hover-notification__text">
           ${
             title
               ? `
-            <p  class="hover-notification__title">
+            <p class="hover-notification__title">
               <strong>${title}</strong>
             </p>
           `
@@ -25,7 +25,7 @@ export const hoverNotification = ({ message, title }: NotificationProps): string
           ${
             message
               ? `
-            <p  class="hover-notification__message">
+            <p class="hover-notification__message">
             ${message}
             </p>
           `

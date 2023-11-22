@@ -1,25 +1,22 @@
 import * as fs from 'fs'
-import { WsFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { getExcludedFoldersConfig } from '../../config/folders'
+import { WorkspaceFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { getFilenamesOfType } from './getFilenamesOfType'
 import { isHiddenFile } from './isHiddenFile'
-
-const foldersToIgnore = ['node_modules', 'out', 'dist', 'build', 'public'] // Folders that slow down collection or won't have workspace files in
-const foldersToAllow = ['.vscode'] // Some users store workspaces files here
 
 export const collectFilesFromFolder = async (
   folder: string,
   fileType: string,
   maxDepth: number,
   curDepth: number
-): Promise<WsFiles> => {
+): Promise<WorkspaceFiles> => {
+  const excludedFoldersConfig = getExcludedFoldersConfig()
+
   if (curDepth <= maxDepth) {
     try {
       const filenames = await fs.promises.readdir(folder).then((files) => {
         return files.reduce((allFiles: string[], curFile) => {
-          if (
-            foldersToAllow.includes(curFile) ||
-            (!isHiddenFile(curFile) && !foldersToIgnore.includes(curFile))
-          ) {
+          if (!isHiddenFile(curFile) && !excludedFoldersConfig.includes(curFile)) {
             return [...allFiles, curFile]
           }
 

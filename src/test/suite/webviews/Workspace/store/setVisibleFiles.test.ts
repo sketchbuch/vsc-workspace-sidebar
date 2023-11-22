@@ -4,15 +4,8 @@ import * as coreConfigs from '../../../../../config/core'
 import * as foldersConfigs from '../../../../../config/folders'
 import * as treeConfigs from '../../../../../config/treeview'
 import { setVisibleFiles } from '../../../../../webviews/Workspace/store/setVisibleFiles'
-import {
-  getMockConvertedFiles,
-  getMockFileList,
-  getMockFileTree,
-  getMockFolderList,
-  getMockVisibleFiles,
-  ROOT_FOLDER_PATH,
-} from '../../../../mocks/mockFileData'
-import { getMockState } from '../../../../mocks/mockState'
+import { ROOT_FOLDER_PATH } from '../../../../mocks/mockFileData'
+import { getMockRootFolders, getMockState } from '../../../../mocks/mockState'
 
 suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
   let compactConfigStub: sinon.SinonStub
@@ -26,8 +19,8 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
       .callsFake(() => true)
     condenseConfigStub = sinon.stub(treeConfigs, 'getCondenseFileTreeConfig').callsFake(() => true)
     folderConfigStub = sinon
-      .stub(foldersConfigs, 'getFolderConfig')
-      .callsFake(() => ROOT_FOLDER_PATH)
+      .stub(foldersConfigs, 'getFoldersConfig')
+      .callsFake(() => [ROOT_FOLDER_PATH])
     treeConfigStub = sinon.stub(treeConfigs, 'getShowTreeConfig').callsFake(() => false)
   })
 
@@ -38,137 +31,151 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
     treeConfigStub.restore()
   })
 
-  test('No files updates state as expected', () => {
-    const state = getMockState()
+  test('No root folders updates state as expected', () => {
+    const state = getMockState({ rootFolders: [] })
     const expectedState = getMockState()
 
     setVisibleFiles(state)
     expect(state).to.eql(expectedState)
   })
 
-  test('With files - tree uncompacted & uncondensed - updates state as expected', () => {
-    compactConfigStub.callsFake(() => false)
-    condenseConfigStub.callsFake(() => false)
-    treeConfigStub.callsFake(() => true)
+  suite('List:', () => {
+    test('Asc updates state as expected', () => {
+      treeConfigStub.callsFake(() => false)
 
-    const state = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-    })
-    const expectedState = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      fileTree: getMockFileTree('normal'),
-      treeFolders: getMockFolderList('normal'),
-      visibleFiles: getMockVisibleFiles(),
-    })
+      const mockRootFolders = getMockRootFolders({
+        showTree: false,
+      })
+      mockRootFolders.visibleFileCount = 0
+      mockRootFolders.rootFolders[0].visibleFiles = []
+      const mockExpectedRootFolders = getMockRootFolders({
+        showTree: false,
+      })
 
-    expect(state).not.to.eql(expectedState)
-    setVisibleFiles(state)
-    expect(state).to.eql(expectedState)
+      const state = getMockState({
+        ...mockRootFolders,
+      })
+      const expectedState = getMockState({
+        ...mockExpectedRootFolders,
+      })
+
+      expect(state).not.to.eql(expectedState)
+      setVisibleFiles(state)
+      expect(state).to.eql(expectedState)
+    })
   })
 
-  test('With files - tree uncompacted & condensed - updates state as expected', () => {
-    compactConfigStub.callsFake(() => false)
-    condenseConfigStub.callsFake(() => true)
-    treeConfigStub.callsFake(() => true)
+  suite('Tree:', () => {
+    test('Normal updates state as expected', () => {
+      compactConfigStub.callsFake(() => false)
+      condenseConfigStub.callsFake(() => false)
+      treeConfigStub.callsFake(() => true)
 
-    const state = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-    })
-    const expectedState = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      fileTree: getMockFileTree('condensed'),
-      treeFolders: getMockFolderList('condensed'),
-      visibleFiles: getMockVisibleFiles(),
-    })
+      const mockRootFolders = getMockRootFolders({
+        fileTreeType: 'normal',
+        showTree: true,
+      })
+      mockRootFolders.visibleFileCount = 0
+      mockRootFolders.rootFolders[0].visibleFiles = []
+      const mockExpectedRootFolders = getMockRootFolders({
+        fileTreeType: 'normal',
+        showTree: true,
+      })
 
-    expect(state).not.to.eql(expectedState)
-    setVisibleFiles(state)
-    expect(state).to.eql(expectedState)
-  })
+      const state = getMockState({
+        ...mockRootFolders,
+      })
+      const expectedState = getMockState({
+        ...mockExpectedRootFolders,
+      })
 
-  test('With files - tree compacted & uncondensed - updates state as expected', () => {
-    compactConfigStub.callsFake(() => true)
-    condenseConfigStub.callsFake(() => false)
-    treeConfigStub.callsFake(() => true)
-
-    const state = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-    })
-    const expectedState = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      fileTree: getMockFileTree('compacted'),
-      treeFolders: getMockFolderList('compacted'),
-      visibleFiles: getMockVisibleFiles(),
+      expect(state).not.to.eql(expectedState)
+      setVisibleFiles(state)
+      expect(state).to.eql(expectedState)
     })
 
-    expect(state).not.to.eql(expectedState)
-    setVisibleFiles(state)
-    expect(state).to.eql(expectedState)
-  })
+    test('Condensed updates state as expected', () => {
+      compactConfigStub.callsFake(() => false)
+      condenseConfigStub.callsFake(() => true)
+      treeConfigStub.callsFake(() => true)
 
-  test('With files - tree compacted & condensed - updates state as expected', () => {
-    compactConfigStub.callsFake(() => true)
-    condenseConfigStub.callsFake(() => true)
-    treeConfigStub.callsFake(() => true)
+      const mockRootFolders = getMockRootFolders({
+        fileTreeType: 'condensed',
+        showTree: true,
+      })
+      mockRootFolders.visibleFileCount = 0
+      mockRootFolders.rootFolders[0].visibleFiles = []
+      const mockExpectedRootFolders = getMockRootFolders({
+        fileTreeType: 'condensed',
+        showTree: true,
+      })
 
-    const state = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-    })
-    const expectedState = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      fileTree: getMockFileTree('compacted-condensed'),
-      treeFolders: getMockFolderList('compacted-condensed'),
-      visibleFiles: getMockVisibleFiles(),
-    })
+      const state = getMockState({
+        ...mockRootFolders,
+      })
+      const expectedState = getMockState({
+        ...mockExpectedRootFolders,
+      })
 
-    expect(state).not.to.eql(expectedState)
-    setVisibleFiles(state)
-    expect(state).to.eql(expectedState)
-  })
-
-  test('With files - list asc - updates state as expected', () => {
-    const state = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      sort: 'ascending',
-    })
-    const expectedState = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      fileTree: null,
-      sort: 'ascending',
-      visibleFiles: getMockVisibleFiles('asc'),
+      expect(state).not.to.eql(expectedState)
+      setVisibleFiles(state)
+      expect(state).to.eql(expectedState)
     })
 
-    expect(state).not.to.eql(expectedState)
-    setVisibleFiles(state)
-    expect(state).to.eql(expectedState)
-  })
+    test('Compacted updates state as expected', () => {
+      compactConfigStub.callsFake(() => true)
+      condenseConfigStub.callsFake(() => false)
+      treeConfigStub.callsFake(() => true)
 
-  test('With files - list desc - updates state as expected', () => {
-    const state = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      sort: 'descending',
-    })
-    const expectedState = getMockState({
-      convertedFiles: getMockConvertedFiles(),
-      files: getMockFileList(),
-      fileTree: null,
-      sort: 'descending',
-      visibleFiles: getMockVisibleFiles('desc'),
+      const mockRootFolders = getMockRootFolders({
+        fileTreeType: 'compacted',
+        showTree: true,
+      })
+      mockRootFolders.visibleFileCount = 0
+      mockRootFolders.rootFolders[0].visibleFiles = []
+      const mockExpectedRootFolders = getMockRootFolders({
+        fileTreeType: 'compacted',
+        showTree: true,
+      })
+
+      const state = getMockState({
+        ...mockRootFolders,
+      })
+      const expectedState = getMockState({
+        ...mockExpectedRootFolders,
+      })
+
+      expect(state).not.to.eql(expectedState)
+      setVisibleFiles(state)
+      expect(state).to.eql(expectedState)
     })
 
-    expect(state).not.to.eql(expectedState)
-    setVisibleFiles(state)
-    expect(state).to.eql(expectedState)
+    test('Compacted & condensed updates state as expected', () => {
+      compactConfigStub.callsFake(() => true)
+      condenseConfigStub.callsFake(() => true)
+      treeConfigStub.callsFake(() => true)
+
+      const mockRootFolders = getMockRootFolders({
+        fileTreeType: 'compacted-condensed',
+        showTree: true,
+      })
+      mockRootFolders.visibleFileCount = 0
+      mockRootFolders.rootFolders[0].visibleFiles = []
+      const mockExpectedRootFolders = getMockRootFolders({
+        fileTreeType: 'compacted-condensed',
+        showTree: true,
+      })
+
+      const state = getMockState({
+        ...mockRootFolders,
+      })
+      const expectedState = getMockState({
+        ...mockExpectedRootFolders,
+      })
+
+      expect(state).not.to.eql(expectedState)
+      setVisibleFiles(state)
+      expect(state).to.eql(expectedState)
+    })
   })
 })

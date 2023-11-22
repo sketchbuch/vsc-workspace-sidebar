@@ -1,5 +1,4 @@
-import { PayloadAction } from '@reduxjs/toolkit'
-import { SortIds } from '../../commands/registerCommands'
+import { PayloadAction, SerializedError } from '@reduxjs/toolkit'
 import { FileTree } from './helpers/getFileTree'
 
 export interface File {
@@ -14,15 +13,23 @@ export interface File {
 
 export type Files = File[]
 
-export interface WorkspaceCache {
-  files: WsFiles
-  timestamp: number
+export interface WorkspaceRootFolderCache {
+  rootFolders: WorkspaceCacheRootFolder[]
 }
 
-export type WorkspaceErrors = '' | 'FETCH'
+export interface WorkspaceCacheRootFolder {
+  folderPath: string
+  files: WorkspaceFiles
+}
 
-// Messages sent by the FE
-export enum WorkspacePmActions {
+export type WorkspaceCacheRootFolders = WorkspaceCacheRootFolder[]
+
+export type WorkspaceErrors = '' | 'DEFAULT' | 'FETCH'
+
+/**
+ * Messages sent by the FE
+ */
+export enum PostMsgActionsBackend {
   ERROR_MSG = 'ERROR_MSG',
   FOLDER_CLICK = 'FOLDER_CLICK',
   ICON_CLICK = 'ICON_CLICK',
@@ -35,8 +42,10 @@ export enum WorkspacePmActions {
   SHOW_SETTINGS = 'SHOW_SETTINGS',
 }
 
-// Messages received by the FE
-export enum WorkspacePmClientActions {
+/**
+ * Messages received by the FE
+ */
+export enum PostMsgActionsFrontend {
   FOCUS_SEARCH = 'FOCUS_SEARCH',
 }
 
@@ -44,19 +53,17 @@ export enum WorkspaceSearchCheckboxes {
   CASE_INSENSITIVE = 'CASE_INSENSITIVE',
   MATCH_START = 'MATCH_START',
 }
-
-export interface WorkspaceSort {
-  sort: SortIds
-}
-
 export type FolderState = 'collapse' | 'expand'
-export type WorkspacePmPayload = string
-export type WorkspacePmPayloadSearchTerm = string
-export type WorkspacePmPayloadSearch = Partial<SearchState>
-export type WorkspacePmPayloadToggleFolderState = string
-export type WorkspaceToggleFolderStateBulk = FolderState
 
-export type FileErrorResult = 'invalid-folder' | 'no-workspaces' | 'none'
+export type Payload = string
+export type PayloadSearch = Partial<SearchState>
+export type PayloadToggleFolderState = {
+  folder: string
+  folderPath: string
+}
+export type PayloadToggleFolderStateBulk = FolderState
+
+export type FindFileResult = 'invalid-folder' | 'no-root-folders' | 'no-workspaces' | 'ok'
 
 export interface SearchState {
   caseInsensitive: boolean
@@ -64,37 +71,109 @@ export interface SearchState {
   term: string
 }
 
+export type WorkspaceStateErrorObj = SerializedError | null
+
 export type WorkspaceState = {
-  closedFolders: string[]
-  convertedFiles: Files
   error: WorkspaceErrors
-  files: WorkspaceFiles
-  fileTree: FileTree | null
-  invalidReason: FileErrorResult
+  errorObj: WorkspaceStateErrorObj
+  /**
+   * The total number of workspace files for all root folders.
+   */
+  fileCount: number
   isFolderInvalid: boolean
+  /**
+   * The result of the file collection for all root folders.
+   */
+  result: FindFileResult
+  rootFolders: WorkspaceStateRootFolder[]
   search: SearchState
   selected: string
-  sort: SortIds
-  state: WorkspaceStates
-  treeFolders: string[]
-  visibleFiles: Files
-  wsType: WsType
+  /**
+   * The current view the state is in.
+   */
+  view: WorkspaceView
+  /**
+   * The total number of visible workspace files for all root folders.
+   */
+  visibleFileCount: number
+  /**
+   * The type of workspace that is currently open.
+   */
+  wsType: WorkspaceType
 }
 
-export type WorkspaceStates = 'error' | 'invalid' | 'list' | 'loading'
-export type WsType = 'none' | 'ws' | 'folder'
+export type WorkspaceStateRootFolder = {
+  /**
+   * The names of all folders. Either all folders in the tree, or just the root folder in list view.
+   */
+  allFolders: string[]
+  /**
+   * The names of all folders that are closed.
+   */
+  closedFolders: string[]
+  /**
+   * The files, converted to a form useable by this extension.
+   */
+  convertedFiles: Files
+  /**
+   * An array of absolute file paths to all workspace files.
+   */
+  files: WorkspaceFiles
+  /**
+   * A representation of the file tree for rendering - which could be collapsed and/or condensed depending upon settings.
+   */
+  fileTree: FileTree | null
+  /**
+   * The name of the actual folder.
+   */
+  folderName: string
+  /**
+   * The absolute folder path with ~ replaced with the users homedir.
+   */
+  folderPath: string
+  /**
+   * The result of the file collection for this root folder.
+   */
+  result: FindFileResult
+  /**
+   * The converted files that are currently visible
+   */
+  visibleFiles: Files
+}
 
-export type WsFiles = string[]
+export type WorkspaceView = 'error' | 'invalid' | 'list' | 'loading'
 
-export type WorkspaceFiles = WsFiles
+export type WorkspaceType = 'none' | 'ws' | 'folder'
 
-export type WorkspaceThunkAction<Payload> = PayloadAction<
+export type WorkspaceFiles = string[]
+
+export type WorkspaceThunkAction<Payload, Meta> = PayloadAction<Payload, ActionType, Meta>
+
+export type WorkspaceThunkErrorAction<Payload, Meta> = PayloadAction<
   Payload,
-  string,
-  {
-    arg: void
-    requestId: string
-    requestStatus: 'fulfilled'
-  },
-  never
+  ActionType,
+  Meta,
+  SerializedError
 >
+
+type ActionMetaCommon = {
+  aborted?: boolean
+  arg?: void
+  condition?: boolean
+  rejectedWithValue?: boolean
+  requestId: string
+}
+
+export type ActionMetaFulfilled = {
+  requestStatus: 'fulfilled'
+} & ActionMetaCommon
+
+export type ActionMetaPending = {
+  requestStatus: 'pending'
+} & ActionMetaCommon
+
+export type ActionMetaRejected = {
+  requestStatus: 'rejected'
+} & ActionMetaCommon
+
+type ActionType = string
