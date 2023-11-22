@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+import * as path from 'path'
 import * as sinon from 'sinon'
 import * as treeConfigs from '../../../../../config/treeview'
 import { toggleFolderStateBulk } from '../../../../../webviews/Workspace/store/toggleFolderStateBulk'
@@ -9,23 +10,27 @@ suite('Webviews > Workspace > Store > toggleFolderStateBulk()', () => {
   const closedFoldersAll = [
     ROOT_FOLDER,
     'code',
-    'code/vscode',
-    'code/vscode/some_ext',
+    `code${path.sep}vscode`,
+    `code${path.sep}vscode${path.sep}some_ext`,
     'flutter',
-    'flutter/todo',
+    `flutter${path.sep}todo`,
     'react',
-    'react/router',
+    `react${path.sep}router`,
   ]
   const closedFoldersAllSub = [
     'code',
-    'code/vscode',
-    'code/vscode/some_ext',
+    `code${path.sep}vscode`,
+    `code${path.sep}vscode${path.sep}some_ext`,
     'flutter',
-    'flutter/todo',
+    `flutter${path.sep}todo`,
     'react',
-    'react/router',
+    `react${path.sep}router`,
   ]
-  const closedFoldersSomeSub = ['code/vscode/some_ext', 'react', 'react/router']
+  const closedFoldersSomeSub = [
+    `code${path.sep}vscode${path.sep}some_ext`,
+    'react',
+    `react${path.sep}router`,
+  ]
 
   let condenseConfigStub: sinon.SinonStub
 
