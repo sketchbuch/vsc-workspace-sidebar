@@ -1,7 +1,7 @@
 import { t } from 'vscode-ext-localisation'
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { RenderVars } from '../../../webviews/webviews.interface'
-import { settingsLink } from '../../common/snippets/settingsLink'
+import { viewLink } from '../../common/snippets/viewLink'
 
 export const errorView = (state: WorkspaceState, renderVars: RenderVars): string => {
   const { error, errorObj } = state
@@ -17,7 +17,9 @@ export const errorView = (state: WorkspaceState, renderVars: RenderVars): string
         </span>
       </p>
       <p class="view__message">
-        ${settingsLink()}
+        <span class="view__message-description">
+          ${viewLink(t('workspace.links.checkSettings'), 'SETTINGS')}
+        </span>
       </p>
       ${
         showStackTrace

@@ -6,7 +6,7 @@
   "config.cleanLabels.description": "Pfade in Title Case formattieren. Deaktivieren Sie die Option, um die Namen der Arbeitsbereichsdateien unverändert zu lassen.",
   "config.condenseFileTree.description": "Komprimieren Sie der Ordnerhierarchie, um visuelles Störunegn von Ordnern zu reduzieren (siehe Readme).",
   "config.depth.description": "Wie weit Unterordner auch durchsucht werden. -1 für keine Einschrängung",
-  "config.folder.deprecationMessage": "Es werden jetzt mehrere Stammordner unterstützt. Bitte verwenden Sie stattdessen 'workspaceSidebar.folders'. Diese Option wird in einer zukünftigen Version entfernt.",
+  "config.folder.deprecationMessage": "Es werden jetzt mehrere Stammordner unterstützt. Bitte verwenden Sie stattdessen 'workspaceSidebar.rootFolders'. Diese Option wird in einer zukünftigen Version entfernt.",
   "config.folder.description": "Der Ordnerpfad, in dem nach Arbeitsbereichen gesucht werden soll. Falls leer, wird Ihr Home-Ordner benutzt. '~' wird auch unter Windows durch Ihren Home-Ordner ersetzt.",
   "config.folders.excluded.description": "Ordner, die bei der Suche nach Arbeitsbereichen ausgeschlossen werden sollen.",
   "config.rootFolders.description": "Die Ordner, in denen nach Arbeitsbereichsdateien gesucht werden soll",
@@ -24,8 +24,8 @@
   "config.title.listview": "Liste Ansicht",
   "config.title.search": "Suche",
   "config.title.treeview": "Ordnerhierarchie Ansicht",
-  "ext.cmd.wsList.collapse-all": "Zuklappen",
-  "ext.cmd.wsList.expand-all": "Aufklappen",
+  "ext.cmd.wsList.collapse-all": "Ordner zuklappen",
+  "ext.cmd.wsList.expand-all": "Ordner aufklappen",
   "ext.cmd.wsList.refresh": "Arbeitsbereiche neu einsammeln",
   "ext.cmd.wsListItem.checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",
   "ext.cmd.wsListItem.open.curWindow": "In aktuellem Fenster öffnen",
@@ -36,7 +36,6 @@
     "viewNotFound": "Workspace Sidebar: WebviewView nicht gefunden"
   },
   "workspace": {
-    "checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",
     "error": {
       "default": {
         "title": "Ein unbekannter Fehler ist aufgetreten"
@@ -50,7 +49,7 @@
         "title": "Beim Suchen nach Arbeitsbereichen ist ein Fehler aufgetreten"
       },
       "noRootFolders": {
-        "title": "Keine Stammordner angegeben. Bitte bearbeiten Sie die Konfigurationsoption 'workspaceSidebar.folders'."
+        "title": "Keine Stammordner angegeben. Bitte bearbeiten Sie die Konfigurationsoption 'workspaceSidebar.rootFolders'."
       },
       "notDirectory": {
         "title": "Keiner der Stammordner ist ein Verzeichnis"
@@ -60,6 +59,10 @@
         "hintSettings": "Versuchen Sie, die Suchtiefe zu erhöhen oder die Ordner zu ändern.",
         "title": "Keine Arbeitsbereiche gefunden"
       }
+    },
+    "links": {
+      "checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",
+      "excludeFolders": "Ordner auszuschließen"
     },
     "list": {
       "fileicons": {
@@ -106,6 +109,7 @@
       }
     },
     "loading": {
+      "description": "Wenn dies lange dauert, versuchen Sie, ",
       "title": "Arbeitsbereiche wird gesucht..."
     }
   }

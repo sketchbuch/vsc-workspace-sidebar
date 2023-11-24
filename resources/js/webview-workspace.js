@@ -65,7 +65,7 @@
 
   const handleViewLinkClick = (event) => {
     event.stopPropagation();
-    sendMessage('SHOW_SETTINGS');
+    sendMessage('VIEW_LINK', event.target.getAttribute('data-type'));
   };
 
   const handleSearchOptionClick = (event) => {

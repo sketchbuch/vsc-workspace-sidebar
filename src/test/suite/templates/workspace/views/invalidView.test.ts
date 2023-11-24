@@ -1,11 +1,21 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
-import * as settings from '../../../../../templates/common/snippets/settingsLink'
+import * as links from '../../../../../templates/common/snippets/viewLink'
 import { invalidView } from '../../../../../templates/workspace/views/invalidView'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
 import { getMockState } from '../../../../mocks/mockState'
 
 suite('Templates > Workspace > View: invalidView()', () => {
+  let vlSpy: sinon.SinonSpy
+
+  setup(() => {
+    vlSpy = sinon.spy(links, 'viewLink')
+  })
+
+  teardown(() => {
+    vlSpy.restore()
+  })
+
   test('Renders the base view', () => {
     const result = invalidView(getMockState(), getMockRenderVars())
 
@@ -16,18 +26,23 @@ suite('Templates > Workspace > View: invalidView()', () => {
   })
 
   test('Renders a settings link', () => {
-    const spy = sinon.spy(settings, 'settingsLink')
-
     invalidView(getMockState(), getMockRenderVars())
 
-    sinon.assert.callCount(spy, 1)
-    spy.restore()
+    sinon.assert.callCount(vlSpy, 1)
+    sinon.assert.calledWith(vlSpy, 'Check extension settings', 'SETTINGS')
   })
 
-  test('Renders a generic error', () => {
-    const result = invalidView(getMockState(), getMockRenderVars())
+  test('Renders an no-root-folders error', () => {
+    const result = invalidView(
+      getMockState({ result: 'no-root-folders' }),
+      getMockRenderVars({ depth: 1 })
+    )
 
-    expect(result).contains('Something went wrong whilst collecting workspaces')
+    expect(result).contains(
+      "No root folders specified. Please edit the config option 'workspaceSidebar.rootFolders'"
+    )
+    sinon.assert.callCount(vlSpy, 1)
+    sinon.assert.calledWith(vlSpy, 'Check extension settings', 'ROOT_FOLDERS')
   })
 
   test('Renders an invalid-folder error', () => {
@@ -37,6 +52,8 @@ suite('Templates > Workspace > View: invalidView()', () => {
     )
 
     expect(result).contains('None of the root folders are directories')
+    sinon.assert.callCount(vlSpy, 1)
+    sinon.assert.calledWith(vlSpy, 'Check extension settings', 'SETTINGS')
   })
 
   test('Renders a no-workspaces error', () => {
@@ -50,6 +67,8 @@ suite('Templates > Workspace > View: invalidView()', () => {
     expect(result).not.contains(
       'The current search depth is 0, this means that only the root folders will be searched in for workspace files.'
     )
+    sinon.assert.callCount(vlSpy, 1)
+    sinon.assert.calledWith(vlSpy, 'Check extension settings', 'SETTINGS')
   })
 
   test('Renders a no-workspaces error (zero depth)', () => {
@@ -63,5 +82,15 @@ suite('Templates > Workspace > View: invalidView()', () => {
     expect(result).contains(
       'The current search depth is 0, this means that only the root folders will be searched in for workspace files.'
     )
+    sinon.assert.callCount(vlSpy, 1)
+    sinon.assert.calledWith(vlSpy, 'Check extension settings', 'SETTINGS')
+  })
+
+  test('Renders an generic error in other cases', () => {
+    const result = invalidView(getMockState({ result: 'ok' }), getMockRenderVars({ depth: 1 }))
+
+    expect(result).contains('Something went wrong whilst collecting workspaces')
+    sinon.assert.callCount(vlSpy, 1)
+    sinon.assert.calledWith(vlSpy, 'Check extension settings', 'SETTINGS')
   })
 })

@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
-import * as settings from '../../../../../templates/common/snippets/settingsLink'
+import * as links from '../../../../../templates/common/snippets/viewLink'
 import * as folder from '../../../../../templates/workspace/snippets/folderList'
 import * as notification from '../../../../../templates/workspace/snippets/hoverNotification'
 import * as list from '../../../../../templates/workspace/snippets/list'
@@ -14,7 +14,7 @@ suite('Templates > Workspace > View: listView()', () => {
   let listSpy: sinon.SinonSpy
   let notficationSpy: sinon.SinonSpy
   let searchSpy: sinon.SinonSpy
-  let settingsSpy: sinon.SinonSpy
+  let vlSpy: sinon.SinonSpy
 
   const mockRenderVars = getMockRenderVars({ themeProcessorState: 'ready' })
   const mockRootFolders = getMockRootFolders()
@@ -24,7 +24,7 @@ suite('Templates > Workspace > View: listView()', () => {
     listSpy = sinon.spy(list, 'list')
     notficationSpy = sinon.spy(notification, 'hoverNotification')
     searchSpy = sinon.spy(search, 'searchForm')
-    settingsSpy = sinon.spy(settings, 'settingsLink')
+    vlSpy = sinon.spy(links, 'viewLink')
   })
 
   teardown(() => {
@@ -32,7 +32,7 @@ suite('Templates > Workspace > View: listView()', () => {
     listSpy.restore()
     notficationSpy.restore()
     searchSpy.restore()
-    settingsSpy.restore()
+    vlSpy.restore()
   })
 
   test('Renders correctly if there are no files', () => {
@@ -43,7 +43,8 @@ suite('Templates > Workspace > View: listView()', () => {
     expect(result).not.to.equal('')
     expect(result).contains('class="view list list--empty"')
 
-    sinon.assert.callCount(settingsSpy, 1)
+    sinon.assert.callCount(vlSpy, 1)
+    sinon.assert.calledWith(vlSpy, 'Check extension settings', 'SETTINGS')
   })
 
   test('Renders correctly if there are files', () => {

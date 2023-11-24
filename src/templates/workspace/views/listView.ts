@@ -2,7 +2,7 @@ import { workspace } from 'vscode'
 import { t } from 'vscode-ext-localisation'
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { RenderVars } from '../../../webviews/webviews.interface'
-import { settingsLink } from '../../common/snippets/settingsLink'
+import { viewLink } from '../../common/snippets/viewLink'
 import { folderList } from '../snippets/folderList'
 import { hoverNotification } from '../snippets/hoverNotification'
 import { list } from '../snippets/list'
@@ -36,7 +36,7 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
           </span>
         </p>
         <p class="view__message">
-          ${settingsLink()}
+          ${viewLink(t('workspace.links.checkSettings'), 'SETTINGS')}
         </p>
       </section>
     `
