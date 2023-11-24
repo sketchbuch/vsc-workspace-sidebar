@@ -195,8 +195,16 @@ export class WorkspaceViewProvider
           }
           break
 
-        case Actions.SHOW_SETTINGS:
-          await executeCommand(CMD_VSC_OPEN_SETTINGS, 'workspaceSidebar')
+        case Actions.VIEW_LINK:
+          if (payload === 'ROOT_FOLDERS') {
+            await executeCommand(CMD_VSC_OPEN_SETTINGS, 'workspaceSidebar.rootFolders')
+          }
+          if (payload === 'EXCLUDE_FOLDERS') {
+            await executeCommand(CMD_VSC_OPEN_SETTINGS, 'workspaceSidebar.folders.excluded')
+          } else {
+            await executeCommand(CMD_VSC_OPEN_SETTINGS, 'workspaceSidebar')
+          }
+
           break
 
         case Actions.ERROR_MSG:

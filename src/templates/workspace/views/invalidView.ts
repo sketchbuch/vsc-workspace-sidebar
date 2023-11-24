@@ -1,7 +1,7 @@
 import { t } from 'vscode-ext-localisation'
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { RenderVars } from '../../../webviews/webviews.interface'
-import { settingsLink } from '../../common/snippets/settingsLink'
+import { viewLink } from '../../common/snippets/viewLink'
 
 export const invalidView = (state: WorkspaceState, renderVars: RenderVars): string => {
   const isDepthZero = renderVars.depth === 0
@@ -17,7 +17,9 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
             </span>
           </p>
           <p class="view__message">
-            ${settingsLink()}
+            <span class="view__message-description">
+              ${viewLink(t('workspace.links.checkSettings'), 'SETTINGS')}
+            </span>
           </p>
         </section>
       `
@@ -32,7 +34,9 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
             </span>
           </p>
           <p class="view__message">
-            ${settingsLink()}
+            <span class="view__message-description">
+              ${viewLink(t('workspace.links.checkSettings'), 'ROOT_FOLDERS')}
+            </span>
           </p>
         </section>
       `
@@ -62,7 +66,9 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
             </span>
           </p>
           <p class="view__message">
-            ${settingsLink()}
+            <span class="view__message-description">
+              ${viewLink(t('workspace.links.checkSettings'), 'SETTINGS')}
+            </span>
           </p>
         </section>
       `
@@ -77,7 +83,9 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
             </span>
           </p>
           <p class="view__message">
-            ${settingsLink()}
+            <span class="view__message-description">
+              ${viewLink(t('workspace.links.checkSettings'), 'SETTINGS')}
+            </span>
           </p>
         </section>
       `

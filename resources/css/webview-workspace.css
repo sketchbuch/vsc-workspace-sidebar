@@ -66,6 +66,7 @@ body.vscode-dark img[data-theme='light'] {
   margin: 0;
   margin-top: 0.2rem;
   padding-left: 24px;
+  line-height: 1.1rem;
 }
 
 .view__message-description-tinytext {

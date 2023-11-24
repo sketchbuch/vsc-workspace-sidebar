@@ -26,6 +26,8 @@ export type WorkspaceCacheRootFolders = WorkspaceCacheRootFolder[]
 
 export type WorkspaceErrors = '' | 'DEFAULT' | 'FETCH'
 
+export type ViewLinkType = 'EXCLUDE_FOLDERS' | 'ROOT_FOLDERS' | 'SETTINGS'
+
 /**
  * Messages sent by the FE
  */
@@ -39,7 +41,7 @@ export enum PostMsgActionsBackend {
   SEARCH = 'SEARCH',
   SEARCH_CHECKBOX_DISABLE = 'SEARCH_CHECKBOX_DISABLE',
   SEARCH_CHECKBOX_ENABLE = 'SEARCH_CHECKBOX_ENABLE',
-  SHOW_SETTINGS = 'SHOW_SETTINGS',
+  VIEW_LINK = 'VIEW_LINK',
 }
 
 /**
