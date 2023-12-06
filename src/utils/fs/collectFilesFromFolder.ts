@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import { getExcludedFoldersConfig } from '../../config/folders'
 import { WorkspaceFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { getFilenamesOfType } from './getFilenamesOfType'
+import { getLastPathSegment } from './getLastPathSegment'
 import { isHiddenFile } from './isHiddenFile'
 
 export const collectFilesFromFolder = async (
@@ -11,25 +12,21 @@ export const collectFilesFromFolder = async (
   curDepth: number
 ): Promise<WorkspaceFiles> => {
   const excludedFoldersConfig = getExcludedFoldersConfig()
+  const lastFolder = getLastPathSegment(folder)
 
-  if (curDepth <= maxDepth) {
+  if (curDepth <= maxDepth && !excludedFoldersConfig.includes(lastFolder)) {
     try {
-      const filenames = await fs.promises.readdir(folder) /* .then((files) => {
+      const filenames = await fs.promises.readdir(folder).then((files) => {
         return files.reduce((allFiles: string[], curFile) => {
-          if (isHiddenFile(curFile)) {
-            console.log('### hidden', curFile)
-          }
-          if ( !isHiddenFile(curFile) &&  !excludedFoldersConfig.includes(curFile)) {
+          if (!excludedFoldersConfig.includes(curFile)) {
             return [...allFiles, curFile]
           }
 
           return allFiles
         }, [])
-      }) */
+      })
 
-      const folders = getFilenamesOfType('folders', filenames, folder, fileType).filter(
-        (file) => !excludedFoldersConfig.includes(file)
-      )
+      const folders = getFilenamesOfType('folders', filenames, folder, fileType)
       let files = getFilenamesOfType('files', filenames, folder, fileType).filter(
         (file) => !isHiddenFile(file)
       )

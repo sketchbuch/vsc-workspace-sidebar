@@ -127,7 +127,9 @@
               "build",
               "dist",
               "out",
-              "public"
+              "public",
+              ".cache",
+              ".git"
             ],
             "description": "%config.folders.excluded.description%",
             "scope": "application",
