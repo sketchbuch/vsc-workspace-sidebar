@@ -34,7 +34,7 @@ export const list = (
       convertedFiles,
       files,
       fileTree,
-      folderName: getLastPathSegment(folderPath),
+      folderName: folderName || folderPath,
       folderPath,
       folderPathShort: folderPath.replace(homeDir, `~`),
       result: files.length < 1 ? 'no-workspaces' : 'ok',
