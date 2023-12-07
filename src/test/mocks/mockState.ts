@@ -80,7 +80,7 @@ export const getMockRootFolders = (
       convertedFiles,
       files,
       fileTree,
-      folderName: getLastPathSegment(folderPath),
+      folderName: getLastPathSegment(folderPath) || folderPath,
       folderPath,
       folderPathShort: folderPath.replace(OS_HOMEFOLDER, `~`),
       result,
