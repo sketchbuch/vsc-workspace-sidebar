@@ -1,3 +1,4 @@
+import * as pathLib from 'path'
 import { getCleanLabelsConfig } from '../../../config/general'
 import { getShowPathsConfig } from '../../../config/listview'
 import { getShowTreeConfig } from '../../../config/treeview'
@@ -29,11 +30,13 @@ export const getVisibleFiles = (wsFiles: Files, search: SearchState) => {
   }
 
   if (showPaths === ConfigShowPaths.AS_NEEEDED) {
-    const labels = visibleFiles.map((file) => file.label)
-    const dups = findDuplicates(labels)
+    const checks = visibleFiles.map(({ label, path }) =>
+      showTree ? `${label}-${path.split(pathLib.sep)[0]}` : label
+    )
+    const dups = findDuplicates(checks)
 
-    visibleFiles = visibleFiles.map((file: File) => {
-      if (!dups.includes(file.label)) {
+    visibleFiles = visibleFiles.map((file: File, index: number) => {
+      if (!dups.includes(checks[index])) {
         return { ...file, showPath: false }
       }
 

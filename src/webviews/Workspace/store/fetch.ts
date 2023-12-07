@@ -59,7 +59,7 @@ export const fetchFulfilled = (
         convertedFiles,
         files,
         fileTree,
-        folderName: getLastPathSegment(folderPath) || folderPath,
+        folderName: folderName || folderPath,
         folderPath,
         folderPathShort: folderPath.replace(homeDir, `~`),
         result,
