@@ -32,6 +32,7 @@ import {
   WorkspaceRootFolderCache,
   WorkspaceState,
 } from './WorkspaceViewProvider.interface'
+import { getNewRootFolderConfig } from './helpers/getNewRootFolderConfig'
 import { fetch } from './store/fetch'
 import { workspaceSlice } from './store/workspaceSlice'
 
@@ -177,7 +178,16 @@ export class WorkspaceViewProvider
           break
 
         case Actions.SAVE_WS:
+          const wsFolders = vscode.workspace.workspaceFolders
+            ? [...vscode.workspace.workspaceFolders]
+            : []
+          const newRootFolderConfig = getNewRootFolderConfig(wsFolders)
+
+          await vscode.workspace
+            .getConfiguration()
+            .update('workspaceSidebar.rootFolders', newRootFolderConfig, true)
           await executeCommand(CMD_VSC_SAVE_WS_AS)
+
           break
 
         case Actions.SEARCH:

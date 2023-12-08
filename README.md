@@ -92,3 +92,7 @@ This extension is localised, if you want it in your language please send me a tr
 
 - Closes [#89](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/89)
 - Fixed rendering of file icons on windows
+
+## Todo
+
+- Why was new folder not triggering a reload?

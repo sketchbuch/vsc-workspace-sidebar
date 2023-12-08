@@ -14,6 +14,20 @@ export const getFoldersConfig = (): string[] => {
     folders = [...new Set(rootFolders)] // Remove duplicates
   }
 
+  folders = folders.map((folder) => {
+    let newFolder = folder
+
+    if (folder.startsWith('/~')) {
+      newFolder = newFolder.slice(1)
+    }
+
+    if (folder.endsWith('/')) {
+      newFolder = newFolder.slice(0, -1)
+    }
+
+    return newFolder
+  })
+
   return folders
 }
 
