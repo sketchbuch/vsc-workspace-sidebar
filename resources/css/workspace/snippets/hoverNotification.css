@@ -5,7 +5,7 @@
   box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 8px 2px;
   box-sizing: border-box;
   color: var(--vscode-notifications-foreground);
-  left: 20px;
+  left: var(--ext-workspace-sidebar__padding-h);
   outline-color: var(--vscode-contrastBorder);
   padding: 10px 5px;
   position: fixed;

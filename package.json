@@ -2,7 +2,7 @@
   "name": "vsc-workspace-sidebar",
   "description": "Adds a sidebar to VSCode that lists Workspaces and lets you open them in the current window or a new window.",
   "displayName": "Workspace Sidebar",
-  "version": "2.0.0-beta-2",
+  "version": "2.0.0-beta-3",
   "activationEvents": [
     "onStartupFinished"
   ],
@@ -127,7 +127,9 @@
               "build",
               "dist",
               "out",
-              "public"
+              "public",
+              ".cache",
+              ".git"
             ],
             "description": "%config.folders.excluded.description%",
             "scope": "application",
@@ -300,7 +302,7 @@
     "crypto": "^1.0.1",
     "json5": "^2.2.3",
     "vscode-ext-localisation": "^1.1.0",
-    "vscode-file-theme-processor": "^1.0.3"
+    "vscode-file-theme-processor": "^1.0.4"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",

@@ -6,6 +6,7 @@ import {
   CssGenerator,
   FileThemeProcessor,
   FileThemeProcessorObserver,
+  FileThemeProcessorState,
 } from 'vscode-file-theme-processor'
 import { getActionsConfig } from '../../config/general'
 import { getSearchCaseInsensitiveConfig, getSearchMatchStartConfig } from '../../config/search'
@@ -276,9 +277,8 @@ export class WorkspaceViewProvider
     }
   }
 
-  public notify() {
-    // Only rerender if resolveWebviewView() has been called
-    if (this._view !== undefined) {
+  public notify(state: FileThemeProcessorState) {
+    if (this._view !== undefined && state === 'ready') {
       this.render()
     }
   }

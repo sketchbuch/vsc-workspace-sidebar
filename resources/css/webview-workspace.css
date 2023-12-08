@@ -6,6 +6,8 @@
 
 :root {
   --ext-workspace-sidebar__search-offset: 32px;
+  --ext-workspace-sidebar__padding-v: 0.3rem;
+  --ext-workspace-sidebar__padding-h: 20px;
 }
 
 body {

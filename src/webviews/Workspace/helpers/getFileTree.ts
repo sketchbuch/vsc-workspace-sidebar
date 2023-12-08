@@ -39,7 +39,7 @@ export const getFileTree = (configFolder: string, files: Files): FileTree => {
     folderPath: configFolder.replace(`~`, homeDir),
     folderPathSegment: rootFolder,
     isRoot: true,
-    label: rootFolder,
+    label: rootFolder || configFolder,
     sub: [],
   }
 

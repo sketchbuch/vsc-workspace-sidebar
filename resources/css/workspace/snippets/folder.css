@@ -8,13 +8,13 @@
 
 .list__folder-title {
   margin: 0.7rem 0;
-  padding: 0 20px;
+  padding: 0 var(--ext-workspace-sidebar__padding-h);
   padding-top: 0.5rem;
 }
 
 .list__folder-controls {
   padding-bottom: 0.7rem;
-  padding-top: 0.3rem;
+  padding-top: var(--ext-workspace-sidebar__padding-v);
   text-align: center;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .list__folder-divider {
-  padding: 0 20px;
+  padding: 0 var(--ext-workspace-sidebar__padding-h);
 }
 
 .list__folder-vscodedivider {
