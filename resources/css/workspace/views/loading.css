@@ -1,3 +1,3 @@
 .loading {
-  padding: 0.3rem 20px;
+  padding: var(--ext-workspace-sidebar__padding-v) var(--ext-workspace-sidebar__padding-h);
 }

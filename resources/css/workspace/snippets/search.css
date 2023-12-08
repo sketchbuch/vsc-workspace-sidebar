@@ -7,7 +7,7 @@
   height: var(--ext-workspace-sidebar__search-offset);
   justify-content: flex-start;
   left: 0;
-  padding: 0 20px;
+  padding: 0 var(--ext-workspace-sidebar__padding-h);
   position: fixed;
   top: 0;
   width: 100%;
@@ -34,13 +34,13 @@
 
 .list__searchedout {
   color: var(--vscode-foreground);
-  padding: 0.3rem 20px;
+  padding: var(--ext-workspace-sidebar__padding-v) var(--ext-workspace-sidebar__padding-h);
   padding-top: var(--ext-workspace-sidebar__search-offset);
 }
 
 .list__searchedout p {
   margin: 0;
-  padding: 0.3rem 0;
+  padding: var(--ext-workspace-sidebar__padding-v) 0;
 }
 
 .searchBox__options-section {

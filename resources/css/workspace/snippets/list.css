@@ -22,7 +22,7 @@
 }
 
 .list--empty {
-  padding: 0.3rem 20px;
+  padding: var(--ext-workspace-sidebar__padding-v) var(--ext-workspace-sidebar__padding-h);
 }
 
 .list__styled-item {
@@ -41,7 +41,7 @@
   font-size: var(--vscode-font-size);
   margin: 0;
   min-width: 0;
-  padding: 0.3rem 20px;
+  padding: var(--ext-workspace-sidebar__padding-v) var(--ext-workspace-sidebar__padding-h);
   position: relative;
   text-decoration: none;
   touch-action: none;
@@ -60,7 +60,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding-left: 20px;
+  padding-left: var(--ext-workspace-sidebar__padding-h);
   position: relative;
   text-decoration: none;
   touch-action: none;
@@ -197,6 +197,6 @@
 .rootfolder__message {
   list-style: none;
   margin: 0;
-  padding: 0.3rem 20px;
+  padding: var(--ext-workspace-sidebar__padding-v) var(--ext-workspace-sidebar__padding-h);
   padding-left: 40px;
 }
