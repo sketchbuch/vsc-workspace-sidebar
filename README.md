@@ -30,20 +30,15 @@ File theme icons can also be displayed. For more information see the [File Icon 
 | Depth                  | The depth of subfolders to include in the search.                                                                                                                                                       | 0              | Number 0-25   |
 | Show File Icons        | Show icons from the active file icon theme.                                                                                                                                                             | true           | Boolean       |
 | Show File Icons Config | Config for file icon matching. See [File Icon Themes](./docs//File%20Icon%20Themes.md) documentation for more information.                                                                              | {}             | Object        |
+| Show Paths             | Show the paths to the workspaces in the sidebar. Available options are: 'Always', 'Never', 'As needed'. This will only display paths if there are duplicate labels in the same folder.                  | As Needed      | Dropdown List |
 
 ### Folders
 
-| Setting                | Description                                                                                                                                                                       | Default Value                                                          | Type                               |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------- |
-| Exclude Hidden Folders | Should hidden folders be excluded when looking for workspaces? This can speed up searching. f you turn this option off you will need to add a lot of folders to Excluded Folders. | True                                                                   | Boolean                            |
-| Excluded Folders       | Folders to exclude when searching for workspace files                                                                                                                             | [ "node_modules", "build", "dist", "out", "public", ".cache", ".git" ] | Array of folder names              |
-| Root Folders           | The folders to look for workspace files in. **~/** will also be replaced with your home folder in all folders within the array.                                                   | []                                                                     | Array of absolute paths to folders |
-
-### List View
-
-| Setting    | Description                                                                                                                                                                     | Default Value | Type          |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ------------- |
-| Show Paths | Show the paths to the workspaces in the sidebar. Available options are: 'Always', 'Never', 'As needed' (will only display paths if there are duplicate labels). List View only. | As Needed     | Dropdown List |
+| Setting                | Description                                                                                                                                                                        | Default Value                                                          | Type                               |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------- |
+| Exclude Hidden Folders | Should hidden folders be excluded when looking for workspaces? This can speed up searching. If you turn this option off you will need to add a lot of folders to Excluded Folders. | True                                                                   | Boolean                            |
+| Excluded Folders       | Folders to exclude when searching for workspace files                                                                                                                              | [ "node_modules", "build", "dist", "out", "public", ".cache", ".git" ] | Array of folder names              |
+| Root Folders           | The folders to look for workspace files in. **~/** will also be replaced with your home folder in all folders within the array.                                                    | []                                                                     | Array of absolute paths to folders |
 
 ### Search
 
@@ -55,21 +50,59 @@ File theme icons can also be displayed. For more information see the [File Icon 
 
 ### Tree View
 
-| Setting               | Description                                                                                                                                            | Default Value | Type    |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------- | ------- |
-| Condense File Tree    | Reduce visual noise by removing sufolders with only one workspace in. These workspace files will then be shown in their parent folder. Tree View only. | True          | Boolean |
-| Show Folder Hierarchy | Display a file tree of workspaces with collapsable folders instead of the default list.                                                                | False         | Boolean |
-| Show Root Folder      | Show the root folder when rendering a file tree.                                                                                                       | False         | Boolean |
+| Setting               | Description                                                                                                                                                                            | Default Value | Type    |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ------- |
+| Condense File Tree    | Reduce visual noise by removing sufolders with only one workspace in. These workspace files will then be shown in their parent folder. Tree View only. See below for more information. | True          | Boolean |
+| Show Folder Hierarchy | Display a file tree of workspaces with collapsable folders instead of the default list.                                                                                                | False         | Boolean |
+| Show Root Folder      | Show the root folder when rendering a file tree.                                                                                                                                       | False         | Boolean |
 
-In addition to the above, the tree view also respects the explorer setting "Compact Folders".
+## Compact / Condense Folders
+
+Tree view also respects the explorer setting "Compact Folders".
+This will combine empty folders in the tree into one folder:
+
+```
+> Some
+   > Deep
+      > Folder
+         - workspace.code-workspace
+```
+
+Will be displayed as:
+
+```
+> Some / Deep / Folder
+   - workspace.code-workspace
+```
+
+This is an explorer setting and not part of this extension's settings.
+
+Condense file Tree will render workspaces in their parent folder if there is only one workspace in a folder:
+
+```
+> React
+   > To-Do List
+      - todo_list.code-workspace
+   > Naughts and Crosses
+      - naughts_and_crosses.code-workspace
+   > Suspense Test
+      - suspense_test.code-workspace
+```
+
+Will be displayed as:
+
+```
+> React
+   - todo_list.code-workspace
+   - naughts_and_crosses.code-workspace
+   - suspense_test.code-workspace
+```
 
 ## Workspace Cache
 
 The collected workspaces are cached. You can clear the cache and recollect workspaces by clicking on the refresh icon.
 
 A change in the config values: Depth, Excluded Folders, Exclude Hidden Folders, and Root Folders will automatically dump the cache and cause workspaces to be recollected.
-
-The cache will also be dumped if any workspaces are created in the folders in the current workspace.
 
 ## Translations
 
@@ -98,3 +131,4 @@ This extension is localised, if you want it in your language please send me a tr
 
 - Why was new folder not triggering a reload?
 - Add option to exclude all hidden folders
+- Remove watcher
