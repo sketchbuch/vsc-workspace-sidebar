@@ -17,7 +17,10 @@ export interface FindRootFolderFiles {
   result: FindFileResult
 }
 
-export const findRootFolderFiles = async (folder: string): Promise<FindRootFolderFiles> => {
+export const findRootFolderFiles = async (
+  folder: string,
+  excludedFolders: string[]
+): Promise<FindRootFolderFiles> => {
   const homeDir = os.homedir()
   const folderPath = folder.replace(`~`, homeDir)
 
@@ -25,7 +28,13 @@ export const findRootFolderFiles = async (folder: string): Promise<FindRootFolde
 
   if (isFolder) {
     const maxDepth = getDepthConfig()
-    const files = await collectFilesFromFolder(folderPath, FS_WS_FILETYPE, maxDepth, 0)
+    const files = await collectFilesFromFolder(
+      folderPath,
+      FS_WS_FILETYPE,
+      maxDepth,
+      0,
+      excludedFolders
+    )
 
     return Promise.resolve({
       files: files,

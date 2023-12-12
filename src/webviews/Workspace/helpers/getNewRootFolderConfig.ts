@@ -1,6 +1,8 @@
 import * as os from 'os'
+import * as path from 'path'
 import * as vscode from 'vscode'
 import { getFoldersConfig } from '../../../config/folders'
+import { isWindows } from '../../../utils/os/isWindows'
 
 export const getNewRootFolderConfig = (wsFolders: vscode.WorkspaceFolder[]): string[] => {
   const oldConfigFolders = getFoldersConfig()
@@ -8,7 +10,15 @@ export const getNewRootFolderConfig = (wsFolders: vscode.WorkspaceFolder[]): str
   if (wsFolders.length > 0) {
     const homeDir = os.homedir()
     const folders = wsFolders.map(({ uri }) => uri.fsPath.replace(homeDir, `~`).replace('/~', `~`))
-    const configFolders = oldConfigFolders.map((folder) => folder.replace(homeDir, `~`))
+    const configFolders = oldConfigFolders.map((folder) => {
+      let newFolder = folder.replace(homeDir, `~`)
+
+      if (isWindows()) {
+        newFolder = newFolder.replace(/^([A-Z]):/, (match) => match.toLowerCase())
+      }
+
+      return newFolder
+    })
     const newFolders: string[] = []
 
     // Find folders that are not in the config, or that do not start with a config folder
@@ -36,6 +46,8 @@ export const getNewRootFolderConfig = (wsFolders: vscode.WorkspaceFolder[]): str
 
       return configFolder
     })
+
+    configFolders.forEach((folder) => console.log(path.parse(folder)))
 
     return [
       ...new Set([

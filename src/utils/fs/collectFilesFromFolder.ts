@@ -1,5 +1,4 @@
 import * as fs from 'fs'
-import { getExcludedFoldersConfig } from '../../config/folders'
 import { WorkspaceFiles } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { getFilenamesOfType } from './getFilenamesOfType'
 import { getLastPathSegment } from './getLastPathSegment'
@@ -9,16 +8,16 @@ export const collectFilesFromFolder = async (
   folder: string,
   fileType: string,
   maxDepth: number,
-  curDepth: number
+  curDepth: number,
+  excludedFolders: string[]
 ): Promise<WorkspaceFiles> => {
-  const excludedFoldersConfig = getExcludedFoldersConfig()
   const lastFolder = getLastPathSegment(folder)
 
-  if (curDepth <= maxDepth && !excludedFoldersConfig.includes(lastFolder)) {
+  if (curDepth <= maxDepth && !excludedFolders.includes(lastFolder)) {
     try {
       const filenames = await fs.promises.readdir(folder).then((files) => {
         return files.reduce((allFiles: string[], curFile) => {
-          if (!excludedFoldersConfig.includes(curFile)) {
+          if (!excludedFolders.includes(curFile)) {
             return [...allFiles, curFile]
           }
 
@@ -37,7 +36,8 @@ export const collectFilesFromFolder = async (
             folders[index],
             fileType,
             maxDepth,
-            curDepth + 1
+            curDepth + 1,
+            excludedFolders
           )
           files = [...files, ...subFiles]
         }

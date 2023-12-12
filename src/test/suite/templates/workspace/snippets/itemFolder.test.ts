@@ -16,7 +16,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
   const FOLDER_PATH = 'supernatural/winchester'
   const folder: FileTree = {
     files: [],
-    folderPath: path.join(OS_HOMEFOLDER, FOLDER_PATH),
+    folderPath: `${OS_HOMEFOLDER}/${FOLDER_PATH}`,
     folderPathSegment: FOLDER_PATH,
     isRoot: true,
     label: ROOT_FOLDER,

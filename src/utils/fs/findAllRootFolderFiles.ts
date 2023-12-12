@@ -1,4 +1,4 @@
-import { getFoldersConfig } from '../../config/folders'
+import { getExcludedFoldersConfig, getFoldersConfig } from '../../config/folders'
 import { FindFileResult } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { FindRootFolderFiles, findRootFolderFiles } from './findRootFolderFiles'
 
@@ -11,6 +11,7 @@ export const findAllRootFolderFiles = async (): Promise<FindAllRootFolderFiles> 
   const folders = getFoldersConfig()
 
   if (folders.length > 0) {
+    const excludedFoldersConfig = getExcludedFoldersConfig()
     const rootFolders: FindRootFolderFiles[] = []
     const invalidFolders: string[] = []
     const noWorkspaces: string[] = []
@@ -19,7 +20,7 @@ export const findAllRootFolderFiles = async (): Promise<FindAllRootFolderFiles> 
       const folder = folders[index].trim()
 
       if (folder) {
-        const rootFolder = await findRootFolderFiles(folder)
+        const rootFolder = await findRootFolderFiles(folder, excludedFoldersConfig)
 
         if (rootFolder.result === 'no-workspaces') {
           noWorkspaces.push(folder)
