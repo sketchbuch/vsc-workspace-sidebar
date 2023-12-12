@@ -1,5 +1,3 @@
-import * as os from 'os'
-import { getDepthConfig } from '../../config/general'
 import { FS_WS_FILETYPE } from '../../constants/fs'
 import {
   FindFileResult,
@@ -17,24 +15,34 @@ export interface FindRootFolderFiles {
   result: FindFileResult
 }
 
-export const findRootFolderFiles = async (
-  folder: string,
+export type FindRootFolderFilesConfig = {
   excludedFolders: string[]
-): Promise<FindRootFolderFiles> => {
-  const homeDir = os.homedir()
+  excludeHiddenFolders: boolean
+  folder: string
+  homeDir: string
+  maxDepth: number
+}
+
+export const findRootFolderFiles = async ({
+  excludedFolders,
+  excludeHiddenFolders,
+  folder,
+  homeDir,
+  maxDepth,
+}: FindRootFolderFilesConfig): Promise<FindRootFolderFiles> => {
   const folderPath = folder.replace(`~`, homeDir)
 
   const { isFolder } = checkFile(folderPath)
 
   if (isFolder) {
-    const maxDepth = getDepthConfig()
-    const files = await collectFilesFromFolder(
-      folderPath,
-      FS_WS_FILETYPE,
+    const files = await collectFilesFromFolder({
+      curDepth: 0,
+      excludedFolders,
+      excludeHiddenFolders,
+      fileType: FS_WS_FILETYPE,
+      folder: folderPath,
       maxDepth,
-      0,
-      excludedFolders
-    )
+    })
 
     return Promise.resolve({
       files: files,

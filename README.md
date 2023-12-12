@@ -33,10 +33,11 @@ File theme icons can also be displayed. For more information see the [File Icon 
 
 ### Folders
 
-| Setting      | Description                                                                                                                     | Default Value                                                          | Type                               |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------- |
-| Excluded     | Folders to exclude when searching for workspace files                                                                           | [ "node_modules", "build", "dist", "out", "public", ".cache", ".git" ] | Array of folder names              |
-| Root Folders | The folders to look for workspace files in. **~/** will also be replaced with your home folder in all folders within the array. | []                                                                     | Array of absolute paths to folders |
+| Setting                | Description                                                                                                                                                                       | Default Value                                                          | Type                               |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------- |
+| Exclude Hidden Folders | Should hidden folders be excluded when looking for workspaces? This can speed up searching. f you turn this option off you will need to add a lot of folders to Excluded Folders. | True                                                                   | Boolean                            |
+| Excluded Folders       | Folders to exclude when searching for workspace files                                                                                                                             | [ "node_modules", "build", "dist", "out", "public", ".cache", ".git" ] | Array of folder names              |
+| Root Folders           | The folders to look for workspace files in. **~/** will also be replaced with your home folder in all folders within the array.                                                   | []                                                                     | Array of absolute paths to folders |
 
 ### List View
 
@@ -66,7 +67,7 @@ In addition to the above, the tree view also respects the explorer setting "Comp
 
 The collected workspaces are cached. You can clear the cache and recollect workspaces by clicking on the refresh icon.
 
-A change in the config values: Depth, Excluded Folders, and Folder will automatically dump the cache and cause workspaces to be recollected.
+A change in the config values: Depth, Excluded Folders, Exclude Hidden Folders, and Root Folders will automatically dump the cache and cause workspaces to be recollected.
 
 The cache will also be dumped if any workspaces are created in the folders in the current workspace.
 
