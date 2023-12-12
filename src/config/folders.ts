@@ -1,5 +1,10 @@
 import { workspace } from 'vscode'
-import { CONFIG_EXCLUDED_FOLDERS, CONFIG_FOLDER, CONFIG_FOLDERS } from '../constants/config'
+import {
+  CONFIG_EXCLUDED_FOLDERS,
+  CONFIG_EXCLUDE_HIDDEN_FODLERS,
+  CONFIG_FOLDER,
+  CONFIG_FOLDERS,
+} from '../constants/config'
 
 export const getFoldersConfig = (): string[] => {
   const oldFolder =
@@ -42,4 +47,11 @@ export const getExcludedFoldersConfig = (): string[] => {
   }
 
   return folders
+}
+
+export const getExcludeHiddenFoldersConfig = (): boolean => {
+  return (
+    workspace.getConfiguration().get('workspaceSidebar.excludeHiddenFolders') ??
+    CONFIG_EXCLUDE_HIDDEN_FODLERS
+  )
 }
