@@ -1,5 +1,4 @@
 import * as os from 'os'
-import * as path from 'path'
 import * as vscode from 'vscode'
 import { getFoldersConfig } from '../../../config/folders'
 import { isWindows } from '../../../utils/os/isWindows'
@@ -9,15 +8,19 @@ export const getNewRootFolderConfig = (wsFolders: vscode.WorkspaceFolder[]): str
 
   if (wsFolders.length > 0) {
     const homeDir = os.homedir()
-    const folders = wsFolders.map(({ uri }) => uri.fsPath.replace(homeDir, `~`).replace('/~', `~`))
-    const configFolders = oldConfigFolders.map((folder) => {
-      let newFolder = folder.replace(homeDir, `~`)
-
+    const folders = wsFolders.map(({ uri }) => {
       if (isWindows()) {
-        newFolder = newFolder.replace(/^([A-Z]):/, (match) => match.toLowerCase())
+        return uri.fsPath.replace(/^([A-Z]):/, (match) => match.toLowerCase())
       }
 
-      return newFolder
+      return uri.fsPath.replace(homeDir, `~`).replace('/~', `~`)
+    })
+    const configFolders = oldConfigFolders.map((folder) => {
+      if (isWindows()) {
+        return folder.replace(/^([A-Z]):/, (match) => match.toLowerCase())
+      }
+
+      return folder.replace(homeDir, `~`)
     })
     const newFolders: string[] = []
 
@@ -47,7 +50,7 @@ export const getNewRootFolderConfig = (wsFolders: vscode.WorkspaceFolder[]): str
       return configFolder
     })
 
-    configFolders.forEach((folder) => console.log(path.parse(folder)))
+    //configFolders.forEach((folder) => console.log('### folder', path.parse(folder)))
 
     return [
       ...new Set([

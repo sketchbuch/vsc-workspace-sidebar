@@ -1,21 +1,22 @@
 import { expect } from 'chai'
 import os from 'os'
-import * as path from 'path'
 import * as sinon from 'sinon'
 import * as vscode from 'vscode'
 import * as foldersConfigs from '../../../../../config/folders'
+import * as windows from '../../../../../utils/os/isWindows'
 import { getNewRootFolderConfig } from '../../../../../webviews/Workspace/helpers/getNewRootFolderConfig'
-import { OS_HOMEFOLDER } from '../../../../mocks/mockFileData'
+import { OS_WIN_HOMEFOLDER } from '../../../../mocks/mockFileData'
 
-suite('Config > Helpers > getNewRootFolderConfig():', () => {
+suite('Config > Helpers > getNewRootFolderConfig() | Windows:', () => {
   let foldersConfigStub: sinon.SinonStub
+  let isWindowsStub: sinon.SinonStub
   let osStub: sinon.SinonStub
 
-  const getPath = (folder: string, subfolder?: string, useFulRoot: boolean = false): string => {
-    let pathStr = path.join(useFulRoot ? OS_HOMEFOLDER : '~', folder)
+  const getPath = (folder: string, subfolder?: string): string => {
+    let pathStr = `${OS_WIN_HOMEFOLDER}\\${folder}`
 
     if (subfolder) {
-      pathStr = path.join(pathStr, subfolder)
+      pathStr = `${pathStr}\\${subfolder}`
     }
 
     return pathStr
@@ -32,11 +33,13 @@ suite('Config > Helpers > getNewRootFolderConfig():', () => {
 
   setup(() => {
     foldersConfigStub = sinon.stub(foldersConfigs, 'getFoldersConfig').callsFake(() => defaultPaths)
-    osStub = sinon.stub(os, 'homedir').callsFake(() => OS_HOMEFOLDER)
+    isWindowsStub = sinon.stub(windows, 'isWindows').callsFake(() => true)
+    osStub = sinon.stub(os, 'homedir').callsFake(() => OS_WIN_HOMEFOLDER)
   })
 
   teardown(() => {
     foldersConfigStub.restore()
+    isWindowsStub.restore()
     osStub.restore()
   })
 
@@ -79,7 +82,7 @@ suite('Config > Helpers > getNewRootFolderConfig():', () => {
   test('Existing order of replaced folders is maintained', () => {
     foldersConfigStub.callsFake(() => [
       getPath('Music', 'Songs'),
-      getPath('Dev', 'Vsc', true),
+      getPath('Dev', 'Vsc'),
       getPath('Public'),
       getPath('Temp'),
     ])

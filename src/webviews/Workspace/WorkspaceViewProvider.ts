@@ -1,6 +1,8 @@
 import crypto from 'crypto'
 import * as vscode from 'vscode'
 import { t } from 'vscode-ext-localisation'
+import * as path from 'path'
+import * as os from 'os'
 import {
   CssData,
   CssGenerator,
@@ -133,6 +135,7 @@ export class WorkspaceViewProvider
   }
 
   private setOptions = (webviewView: vscode.WebviewView, localResourceRoots: string[] = []) => {
+    vscode.window.showErrorMessage(`SEP: ${path.sep} - OS: ${os.homedir}`)
     webviewView.webview.options = {
       enableScripts: true,
       localResourceRoots: [

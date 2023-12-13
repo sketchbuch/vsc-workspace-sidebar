@@ -9,7 +9,7 @@ import * as finder from '../../../../utils/fs/findRootFolderFiles'
 import { FindRootFolderFilesConfig } from '../../../../utils/fs/findRootFolderFiles'
 import { OS_HOMEFOLDER, ROOT_FOLDER_PATH } from '../../../mocks/mockFileData'
 
-suite.only('Utils > Fs > findAllRootFolderFiles()', async () => {
+suite('Utils > Fs > findAllRootFolderFiles()', async () => {
   let collectFilesStub: sinon.SinonStub
   let excludedFoldersConfigStub: sinon.SinonStub
   let findRootFolderFilesStub: sinon.SinonStub
