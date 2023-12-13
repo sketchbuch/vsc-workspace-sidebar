@@ -17,14 +17,28 @@ suite('Utils > Fs > collectFilesFromFolder()', () => {
   })
 
   test('Should return an array with one file if max depth is 0', async () => {
-    const wsFiles = await collectFilesFromFolder(FOLDER, FILE_TYPE, 0, 0, [])
+    const wsFiles = await collectFilesFromFolder({
+      curDepth: 0,
+      excludedFolders: [],
+      excludeHiddenFolders: true,
+      fileType: FILE_TYPE,
+      folder: FOLDER,
+      maxDepth: 0,
+    })
 
     expect(wsFiles).to.have.length(1)
     expect(wsFiles[0]).contains('file-1.txt')
   })
 
   test('Should return an array with four files if max depth allows searching subfolders', async () => {
-    const wsFiles = await collectFilesFromFolder(FOLDER, FILE_TYPE, MAX_DEPTH, 0, [])
+    const wsFiles = await collectFilesFromFolder({
+      curDepth: 0,
+      excludedFolders: [],
+      excludeHiddenFolders: true,
+      fileType: FILE_TYPE,
+      folder: FOLDER,
+      maxDepth: MAX_DEPTH,
+    })
 
     expect(wsFiles).to.have.length(4)
     expect(wsFiles[0]).contains('file-1.txt')
@@ -34,7 +48,27 @@ suite('Utils > Fs > collectFilesFromFolder()', () => {
   })
 
   test('Should return an empty array if the folder is in the excluded folders config', async () => {
-    const wsFiles = await collectFilesFromFolder(FOLDER, FILE_TYPE, MAX_DEPTH, 0, [FOLDER])
+    const wsFiles = await collectFilesFromFolder({
+      curDepth: 0,
+      excludedFolders: [FOLDER],
+      excludeHiddenFolders: true,
+      fileType: FILE_TYPE,
+      folder: FOLDER,
+      maxDepth: MAX_DEPTH,
+    })
+
+    expect(wsFiles).to.have.length(0)
+  })
+
+  test('Should return an empty array if the folder is hidden and hidden folders are excluded', async () => {
+    const wsFiles = await collectFilesFromFolder({
+      curDepth: 0,
+      excludedFolders: [],
+      excludeHiddenFolders: true,
+      fileType: FILE_TYPE,
+      folder: `/temp/.${FOLDER}`,
+      maxDepth: MAX_DEPTH,
+    })
 
     expect(wsFiles).to.have.length(0)
   })
