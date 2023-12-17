@@ -3,15 +3,27 @@ import * as path from 'path'
 import * as sinon from 'sinon'
 import * as vscode from 'vscode'
 import * as foldersConfigs from '../../../../../config/folders'
+import { isWindows } from '../../../../../utils/os/isWindows'
 import { getNewRootFolderConfig } from '../../../../../webviews/Workspace/helpers/getNewRootFolderConfig'
-import { OS_HOMEFOLDER } from '../../../../mocks/mockFileData'
+import { OS_HOMEFOLDER, OS_HOMEFOLDER_WIN } from '../../../../mocks/mockFileData'
 
 suite('Config > Helpers > getNewRootFolderConfig():', function () {
-  const defaultPaths = [
-    `${path.sep}${path.join(OS_HOMEFOLDER, 'Dev')}`,
-    `${path.sep}${path.join(OS_HOMEFOLDER, 'Public')}`,
-    `${path.sep}${path.join(OS_HOMEFOLDER, 'Temp')}`,
-  ]
+  const isWin = isWindows()
+
+  const getPath = (folder: string): string => {
+    if (isWin) {
+      console.log('###### WINDOWS')
+
+      return path.join(OS_HOMEFOLDER_WIN, folder)
+    }
+
+    console.log('###### NOT WINDOWS')
+
+    return `${path.sep}${path.join(OS_HOMEFOLDER, folder)}`
+  }
+
+  const defaultPaths = [getPath('Dev'), getPath('Public'), getPath('Temp')]
+
   let foldersConfigStub: sinon.SinonStub
 
   setup(() => {
@@ -23,7 +35,7 @@ suite('Config > Helpers > getNewRootFolderConfig():', function () {
   })
 
   test('New folders are added', () => {
-    const filePath = `${path.sep}${path.join(OS_HOMEFOLDER, 'Pictures')}`
+    const filePath = getPath('Pictures')
     const result = getNewRootFolderConfig([
       {
         index: 0,
@@ -32,6 +44,9 @@ suite('Config > Helpers > getNewRootFolderConfig():', function () {
       },
     ])
 
-    expect(result).to.eql([filePath, ...defaultPaths])
+    expect(result).to.eql([
+      isWin ? filePath.charAt(0).toLowerCase() + filePath.slice(1) : filePath,
+      ...defaultPaths,
+    ])
   })
 })

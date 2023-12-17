@@ -13,6 +13,8 @@ export type GetFileTreeType =
   | 'normal'
   | 'searched'
 
+export const OS_HOMEFOLDER_WIN = 'C:\\User\\User'
+
 export const OS_HOMEFOLDER = path.join('home', 'user')
 export const ROOT_FOLDER = 'dev'
 export const ROOT_FOLDER_USERPATH = path.join('~', ROOT_FOLDER)
