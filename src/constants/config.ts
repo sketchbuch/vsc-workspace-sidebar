@@ -5,6 +5,7 @@ export const CONFIG_EXCLUDED_FOLDERS = []
 export const CONFIG_EXPLORER_COMPACT_FOLDERS = true
 export const CONFIG_FOLDER = ''
 export const CONFIG_FOLDERS = []
+export const CONFIG_EXCLUDE_HIDDEN_FODLERS = true
 export const CONFIG_SEARCH_CASE_INSENSITIVE = false
 export const CONFIG_SEARCH_MATCH_START = false
 export const CONFIG_SEARCH_MINIMUM = 15

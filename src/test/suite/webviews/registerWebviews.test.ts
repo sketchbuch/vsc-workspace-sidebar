@@ -2,7 +2,6 @@ import { expect } from 'chai'
 import * as sinon from 'sinon'
 import * as vscode from 'vscode'
 import * as treeConfigs from '../../../config/treeview'
-import { FS_WS_EXT } from '../../../constants/fs'
 import {
   configOptions,
   refreshConfigOptions,
@@ -15,7 +14,6 @@ import {
 import { registerWebviews } from '../../../webviews/registerWebviews'
 import { WorkspaceViewProvider } from '../../../webviews/Workspace/WorkspaceViewProvider'
 import { getMockContext } from '../../mocks/mockContext'
-import { getMockUri } from '../../mocks/mockExtensionUri'
 import { mockThemeDataProvider } from '../../mocks/mockThemeDataProvider'
 
 // TODO - Add test for explorer compact folders
@@ -79,17 +77,12 @@ suite('Webviews > registerWebviews()', () => {
   }
 
   test('Sets up webview as expected', () => {
-    const createStub = sinon.stub(vscode.workspace, 'onDidCreateFiles')
-
     registerWebviews(mockContext, ws, configOptions)
 
-    expect(mockContext.subscriptions).to.have.length(3)
+    expect(mockContext.subscriptions).to.have.length(2)
     sinon.assert.callCount(configStub, 1)
-    sinon.assert.callCount(createStub, 1)
     sinon.assert.callCount(regWebviewStub, 1)
     sinon.assert.callCount(tdpSpy, 1)
-
-    createStub.restore()
   })
 
   suite('Refresh config options:', () => {
@@ -194,40 +187,6 @@ suite('Webviews > registerWebviews()', () => {
     treeConfigOptions.forEach((opt) => {
       testOption(opt.config, false)
       testOption(opt.config, true)
-    })
-  })
-
-  suite('Creating a workspace file:', () => {
-    let createSpy: sinon.SinonSpy
-
-    setup(() => {
-      createSpy = sinon.spy(vscode.workspace, 'onDidCreateFiles')
-    })
-
-    teardown(() => {
-      createSpy.restore()
-    })
-
-    const callCreateCallaback = (files: vscode.Uri[]) => {
-      const eventCallback = createSpy.getCalls()[0].args[0]
-      eventCallback({
-        files,
-      } as vscode.FileCreateEvent)
-    }
-
-    test('Calls refresh() if a file is a code-workspace file', () => {
-      registerWebviews(mockContext, ws, configOptions)
-      callCreateCallaback([getMockUri(FS_WS_EXT)])
-
-      sinon.assert.callCount(refreshSpy, 1)
-      expect(refreshSpy.getCalls()[0].args[0]).to.equal(undefined)
-    })
-
-    test('Does NOT call refresh() if no file is a code-workspace file', () => {
-      registerWebviews(mockContext, ws, configOptions)
-      callCreateCallaback([getMockUri()])
-
-      sinon.assert.callCount(refreshSpy, 0)
     })
   })
 })

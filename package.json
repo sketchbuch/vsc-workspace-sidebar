@@ -104,6 +104,12 @@
       {
         "title": "%config.title.folders%",
         "properties": {
+          "workspaceSidebar.excludeHiddenFolders": {
+            "default": true,
+            "description": "%config.excludeHiddenFolders.description%",
+            "scope": "application",
+            "type": "boolean"
+          },
           "workspaceSidebar.folder": {
             "default": "",
             "deprecationMessage": "%config.folder.deprecationMessage%",

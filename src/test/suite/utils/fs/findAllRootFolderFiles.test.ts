@@ -1,23 +1,30 @@
 import { expect } from 'chai'
+import os from 'os'
 import * as sinon from 'sinon'
-import * as foldersConfigs from '../../../../config/folders'
+import * as folders from '../../../../config/folders'
+import { CONFIG_EXCLUDE_HIDDEN_FODLERS } from '../../../../constants/config'
 import * as collect from '../../../../utils/fs/collectFilesFromFolder'
 import { findAllRootFolderFiles } from '../../../../utils/fs/findAllRootFolderFiles'
 import * as finder from '../../../../utils/fs/findRootFolderFiles'
-import { ROOT_FOLDER_PATH } from '../../../mocks/mockFileData'
+import { FindRootFolderFilesConfig } from '../../../../utils/fs/findRootFolderFiles'
+import { OS_HOMEFOLDER, ROOT_FOLDER_PATH } from '../../../mocks/mockFileData'
 
 suite('Utils > Fs > findAllRootFolderFiles()', async () => {
   let collectFilesStub: sinon.SinonStub
+  let excludedFoldersConfigStub: sinon.SinonStub
   let findRootFolderFilesStub: sinon.SinonStub
-  let folderConfigStub: sinon.SinonStub
+  let foldersConfigStub: sinon.SinonStub
+  let hiddenFoldersConfigStub: sinon.SinonStub
+  let osStub: sinon.SinonStub
 
   setup(() => {
     collectFilesStub = sinon
       .stub(collect, 'collectFilesFromFolder')
       .callsFake(async () => Promise.resolve([]))
+    excludedFoldersConfigStub = sinon.stub(folders, 'getExcludedFoldersConfig').callsFake(() => [])
     findRootFolderFilesStub = sinon
       .stub(finder, 'findRootFolderFiles')
-      .callsFake(async (folder: string) => {
+      .callsFake(async (config: FindRootFolderFilesConfig) => {
         const response: finder.FindRootFolderFiles = {
           files: [],
           folderPath: '',
@@ -26,19 +33,24 @@ suite('Utils > Fs > findAllRootFolderFiles()', async () => {
 
         return Promise.resolve(response)
       })
-    folderConfigStub = sinon
-      .stub(foldersConfigs, 'getFoldersConfig')
-      .callsFake(() => [ROOT_FOLDER_PATH])
+    foldersConfigStub = sinon.stub(folders, 'getFoldersConfig').callsFake(() => [ROOT_FOLDER_PATH])
+    hiddenFoldersConfigStub = sinon
+      .stub(folders, 'getExcludeHiddenFoldersConfig')
+      .callsFake(() => CONFIG_EXCLUDE_HIDDEN_FODLERS)
+    osStub = sinon.stub(os, 'homedir').callsFake(() => OS_HOMEFOLDER)
   })
 
   teardown(() => {
     collectFilesStub.restore()
+    excludedFoldersConfigStub.restore()
     findRootFolderFilesStub.restore()
-    folderConfigStub.restore()
+    foldersConfigStub.restore()
+    hiddenFoldersConfigStub.restore()
+    osStub.restore()
   })
 
   test('No root folders returns expected result', async () => {
-    folderConfigStub.callsFake(() => [])
+    foldersConfigStub.callsFake(() => [])
 
     const result = await findAllRootFolderFiles()
     expect(result).to.eql({ rootFolders: [], result: 'no-root-folders' })

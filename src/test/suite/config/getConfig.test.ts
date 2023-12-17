@@ -2,6 +2,7 @@ import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { workspace, WorkspaceConfiguration } from 'vscode'
 import { getExplorerCompactFoldersConfig, getFileiconThemeConfig } from '../../../config/core'
+import { getExcludeHiddenFoldersConfig } from '../../../config/folders'
 import {
   getActionsConfig,
   getCleanLabelsConfig,
@@ -16,6 +17,7 @@ import {
   CONFIG_CLEAN_LABELS,
   CONFIG_CONDENSE_FILETREE,
   CONFIG_DEPTH,
+  CONFIG_EXCLUDE_HIDDEN_FODLERS,
   CONFIG_EXPLORER_COMPACT_FOLDERS,
   CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_FILE_ICONS,
@@ -87,5 +89,9 @@ suite.skip('Config > getConfig:', () => {
 
   test('getFileiconThemeConfig() returns the default if no config value is set', () => {
     expect(getFileiconThemeConfig()).to.equal('vs-seti')
+  })
+
+  test('getExcludeHiddenFoldersConfig() returns the default if no config value is set', () => {
+    expect(getExcludeHiddenFoldersConfig()).to.equal(CONFIG_EXCLUDE_HIDDEN_FODLERS)
   })
 })
