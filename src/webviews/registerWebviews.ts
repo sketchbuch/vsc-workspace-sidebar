@@ -1,6 +1,5 @@
 import * as vscode from 'vscode'
 import { getShowTreeConfig } from '../config/treeview'
-import { isWorkspaceFile } from '../utils/fs/isWorkspaceFile'
 import { WorkspaceViewProvider } from './Workspace/WorkspaceViewProvider'
 import { ConfigOptions, EXPLORER_CONFIG, WS_CONFIG } from './configOptions'
 
@@ -50,15 +49,6 @@ export const registerWebviews = (
     }
   )
 
-  const createFiles = vscode.workspace.onDidCreateFiles((event: vscode.FileCreateEvent) => {
-    const isWorkspace = event.files.some((file) => isWorkspaceFile(file.path, file.scheme))
-
-    if (isWorkspace) {
-      workspaceViewProvider.refresh()
-    }
-  })
-
   context.subscriptions.push(regWebview)
   context.subscriptions.push(configChange)
-  context.subscriptions.push(createFiles)
 }

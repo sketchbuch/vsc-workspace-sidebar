@@ -14,6 +14,7 @@ import {
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,
   CMD_VSC_OPEN_SETTINGS,
+  CMD_VSC_SAVE_WS_AS,
   CMD_VSC_SET_CTX,
 } from '../../constants/commands'
 import { ConfigActions } from '../../constants/config'
@@ -181,12 +182,11 @@ export class WorkspaceViewProvider
             ? [...vscode.workspace.workspaceFolders]
             : []
           const newRootFolderConfig = getNewRootFolderConfig(wsFolders)
-          console.log('### newRootFolderConfig', newRootFolderConfig)
 
-          /* await vscode.workspace
+          await vscode.workspace
             .getConfiguration()
-            .update('workspaceSidebar.rootFolders', newRootFolderConfig, true) */
-          //await executeCommand(CMD_VSC_SAVE_WS_AS)
+            .update('workspaceSidebar.rootFolders', newRootFolderConfig, true)
+          await executeCommand(CMD_VSC_SAVE_WS_AS)
 
           break
 
