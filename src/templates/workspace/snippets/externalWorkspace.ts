@@ -4,7 +4,7 @@ import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewP
 import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree'
 import { getLabel } from '../../../webviews/Workspace/helpers/getLabel'
 import { RenderVars } from '../../../webviews/webviews.interface'
-import { getListClass } from '../../helpers/getListClass'
+import { getListClasses } from '../../helpers/getListClasses'
 import { itemFile } from './itemFile'
 import { itemFolder } from './itemFolder'
 
@@ -23,7 +23,7 @@ export const externalWorkspace = (state: WorkspaceState, renderVars: RenderVars)
       path,
       showPath: false,
     }
-    const classes = getListClass(showTree)
+    const classes = getListClasses(showTree)
     const fileTree: FileTree = {
       files: [],
       folderPath: path,
