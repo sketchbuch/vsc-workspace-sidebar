@@ -28,7 +28,7 @@ export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceStat
     uiFolderUri,
   } = templateVars
   const { view } = state
-  const renderVars = getRenderVars(templateVars)
+  const renderVars = getRenderVars(templateVars, state)
 
   let titleAttr = t('views.title')
   let content = ''

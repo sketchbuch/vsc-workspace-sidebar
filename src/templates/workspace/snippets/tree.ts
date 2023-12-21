@@ -29,7 +29,7 @@ export const tree = (
   }
 
   return `
-    ${itemFolder(branch, depth, isClosed, state, renderVars)}
+    ${itemFolder({ folder: branch, depth, isClosed, state, renderVars })}
     ${children
       .map((child) => {
         if (isFile(child)) {

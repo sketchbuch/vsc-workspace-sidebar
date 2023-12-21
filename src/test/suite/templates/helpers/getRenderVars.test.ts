@@ -15,6 +15,7 @@ import {
 } from '../../../../constants/config'
 import { getRenderVars } from '../../../../templates/helpers/getRenderVars'
 import { DEFAULT_THEME } from '../../../../theme/constants'
+import { getMockState } from '../../../mocks/mockState'
 import { getMockTemplateVars } from '../../../mocks/mockTemplateVars'
 import { getMockThemeData } from '../../../mocks/mockThemeData'
 
@@ -64,9 +65,12 @@ suite('Templates > Helpers > getRenderVars():', () => {
     showTreeConfigStub.restore()
   })
 
+  const mockState = getMockState()
+  const mockTemplateVars = getMockTemplateVars()
+
   test('Config options are as expected', () => {
     const mockTemplateVars = getMockTemplateVars()
-    const result = getRenderVars(mockTemplateVars)
+    const result = getRenderVars(mockTemplateVars, mockState)
 
     expect(result.clickAction).to.eql(ConfigActions.CURRENT_WINDOW)
     expect(result.condenseFileTree).to.eql(CONFIG_CONDENSE_FILETREE)
@@ -76,8 +80,7 @@ suite('Templates > Helpers > getRenderVars():', () => {
   })
 
   test('Light/dark urls are as expected', () => {
-    const mockTemplateVars = getMockTemplateVars()
-    const result = getRenderVars(mockTemplateVars)
+    const result = getRenderVars(mockTemplateVars, mockState)
 
     expect(result.imgDarkFolderUri).to.eql(mockTemplateVars.imgDarkFolderUri)
     expect(result.imgLightFolderUri).to.eql(mockTemplateVars.imgLightFolderUri)
@@ -85,14 +88,13 @@ suite('Templates > Helpers > getRenderVars():', () => {
 
   test('themeProcessorState is "idle" if no themeData', () => {
     const mockTemplateVars = getMockTemplateVars({ themeData: null })
-    const result = getRenderVars(mockTemplateVars)
+    const result = getRenderVars(mockTemplateVars, mockState)
 
     expect(result.themeProcessorState).to.eql('idle')
   })
 
   test('themeProcessorState is themeData.state if themeData', () => {
-    const mockTemplateVars = getMockTemplateVars()
-    const result = getRenderVars(mockTemplateVars)
+    const result = getRenderVars(mockTemplateVars, mockState)
 
     expect(result.themeProcessorState).to.eql('ready')
   })
@@ -100,8 +102,7 @@ suite('Templates > Helpers > getRenderVars():', () => {
   test('fileIconsActive is "false" if config option deactivated', () => {
     showFileIconConfigStub.callsFake(() => false)
 
-    const mockTemplateVars = getMockTemplateVars()
-    const result = getRenderVars(mockTemplateVars)
+    const result = getRenderVars(mockTemplateVars, mockState)
 
     expect(result.fileIconsActive).to.be.false
   })
@@ -110,8 +111,7 @@ suite('Templates > Helpers > getRenderVars():', () => {
     showFileIconConfigStub.callsFake(() => true)
     getFileIconThemeConfigStub.callsFake(() => null)
 
-    const mockTemplateVars = getMockTemplateVars()
-    const result = getRenderVars(mockTemplateVars)
+    const result = getRenderVars(mockTemplateVars, mockState)
 
     expect(result.fileIconsActive).to.be.false
   })
@@ -120,8 +120,7 @@ suite('Templates > Helpers > getRenderVars():', () => {
     showFileIconConfigStub.callsFake(() => true)
     getFileIconThemeConfigStub.callsFake(() => DEFAULT_THEME)
 
-    const mockTemplateVars = getMockTemplateVars()
-    const result = getRenderVars(mockTemplateVars)
+    const result = getRenderVars(mockTemplateVars, mockState)
 
     expect(result.fileIconsActive).to.be.true
   })
@@ -135,7 +134,7 @@ suite('Templates > Helpers > getRenderVars():', () => {
 
     const mockThemeData = getMockThemeData({ data: null })
     const mockTemplateVars = getMockTemplateVars({ themeData: mockThemeData })
-    const result = getRenderVars(mockTemplateVars)
+    const result = getRenderVars(mockTemplateVars, mockState)
 
     expect(result.fileIconKeys).to.eql({})
   })
@@ -149,8 +148,7 @@ suite('Templates > Helpers > getRenderVars():', () => {
     showFileIconConfigStub.callsFake(() => true)
     getFileIconThemeConfigStub.callsFake(() => DEFAULT_THEME)
 
-    const mockTemplateVars = getMockTemplateVars()
-    const result = getRenderVars(mockTemplateVars)
+    const result = getRenderVars(mockTemplateVars, mockState)
 
     expect(result.fileIconKeys).to.eql({
       custom: {

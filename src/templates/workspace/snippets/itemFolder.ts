@@ -8,20 +8,35 @@ import { itemButtons } from './itemButtons'
 import { itemIconClosed, itemIconOpen, itemIconSelected } from './itemIcons'
 import { itemIndent } from './itemIndent'
 
-export const itemFolder = (
-  folder: FileTree,
-  depth: number,
-  isClosed: boolean,
-  state: WorkspaceState,
-  renderVars: RenderVars,
-  isFolderError: boolean = false
-): string => {
+export type ItemFolderProps = {
+  depth: number
+  folder: FileTree
+  isClosable?: boolean
+  isClosed: boolean
+  isFolderError?: boolean
+  renderVars: RenderVars
+  state: WorkspaceState
+}
+
+export const itemFolder = ({
+  depth,
+  folder,
+  isClosable = true,
+  isClosed,
+  isFolderError = false,
+  renderVars,
+  state,
+}: ItemFolderProps): string => {
   const homeDir = os.homedir()
   const { folderPath, folderPathSegment, isRoot, label } = folder
   const folderPathShort = folderPath.replace(homeDir, `~`)
   const indicateSelected = isClosed && state.selected.includes(`${folderPathSegment}${path.sep}`)
 
-  let folderClasses = `list__branch-list-item list__branch-list-item-folder list__styled-item list__branch-list-item-folder--closable`
+  let folderClasses = `list__branch-list-item list__branch-list-item-folder list__styled-item`
+
+  if (isClosable) {
+    folderClasses += ' list__branch-list-item-folder--closable'
+  }
 
   if (indicateSelected) {
     folderClasses += ' list__styled-item--selected'

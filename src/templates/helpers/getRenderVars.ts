@@ -8,13 +8,14 @@ import {
 } from '../../config/general'
 import { getSearchMinConfig } from '../../config/search'
 import { getCondenseFileTreeConfig, getShowTreeConfig } from '../../config/treeview'
+import { WorkspaceState } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { FileIconKeys, RenderVars, TemplateVars } from '../../webviews/webviews.interface'
+import { isExternalWs } from './isExternalWs'
 
-export const getRenderVars = ({
-  imgDarkFolderUri,
-  imgLightFolderUri,
-  themeData,
-}: TemplateVars): RenderVars => {
+export const getRenderVars = (
+  { imgDarkFolderUri, imgLightFolderUri, themeData }: TemplateVars,
+  state: WorkspaceState
+): RenderVars => {
   const cleanLabels = getCleanLabelsConfig()
   const showFileiconConfig = getShowFileiconConfig()
   const curFileIconTheme = getFileiconThemeConfig()
@@ -66,6 +67,7 @@ export const getRenderVars = ({
     depth: getDepthConfig(),
     fileIconKeys,
     fileIconsActive,
+    isExternalWs: isExternalWs(state),
     imgDarkFolderUri,
     imgLightFolderUri,
     searchMinimum: getSearchMinConfig(),

@@ -14,8 +14,8 @@ export const folderList = (
         : 'workspace.list.folder.open-plural'
 
     return `
-      <div class="list__folder">
-        <p class="list__folder-title">
+      <div class="list__folder list__styled-pusher">
+        <p class="list__folder-title list__styled-pusher-title">
           <strong>
             ${t(title)}
           </strong>
@@ -25,13 +25,13 @@ export const folderList = (
           ${workspaceFolders.map((folder) => folderListItem(folder)).join('')}
         </ul>
 
-        <div class="list__folder-controls">
+        <div class="list__folder-controls list__styled-pusher-controls">
           <vscode-button class="list__folder-save" id="saveFolderAsWorkspace">
             ${t('workspace.list.folder.saveButton')}
           </vscode-button>
         </div>
 
-        <div class="list__folder-divider">
+        <div class="list__folder-divider list__styled-pusher-divider">
           <vscode-divider class="list__folder-vscodedivider"></vscode-divider>
         </div
       </div>

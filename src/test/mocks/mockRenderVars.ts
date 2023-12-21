@@ -25,6 +25,7 @@ export const getMockRenderVars = (renderVars: Partial<RenderVars> = {}): RenderV
     fileIconsActive: false,
     imgDarkFolderUri: { ...baseUri, path: path.join('/resources', 'images', 'dark') } as Uri,
     imgLightFolderUri: { ...baseUri, path: path.join('/resources', 'images', 'light') } as Uri,
+    isExternalWs: false,
     searchMinimum: CONFIG_SEARCH_MINIMUM,
     showTree: CONFIG_SHOW_HIERARCHY,
     themeProcessorState: 'ready',

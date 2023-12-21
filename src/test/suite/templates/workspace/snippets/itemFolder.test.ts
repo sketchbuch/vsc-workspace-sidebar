@@ -52,7 +52,13 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
   })
 
   test('Renders correctly', () => {
-    const result = itemFolder(folder, DEPTH, false, mockState, mockRenderVars)
+    const result = itemFolder({
+      depth: DEPTH,
+      folder,
+      isClosed: false,
+      renderVars: mockRenderVars,
+      state: mockState,
+    })
 
     expect(result).to.be.a('string')
     expect(result).contains(`data-folder="${folder.folderPathSegment}"`)
@@ -79,7 +85,14 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
   })
 
   test('Renders correctly if isFolderError is "true"', () => {
-    const result = itemFolder(folder, DEPTH, false, mockState, mockRenderVars, true)
+    const result = itemFolder({
+      depth: DEPTH,
+      folder,
+      isClosed: false,
+      isFolderError: true,
+      renderVars: mockRenderVars,
+      state: mockState,
+    })
 
     expect(result).to.be.a('string')
     expect(result).contains(`data-folder="${folder.folderPathSegment}"`)
@@ -100,7 +113,13 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
   })
 
   test('Root folders have root class', () => {
-    const result = itemFolder({ ...folder, isRoot: true }, DEPTH, false, mockState, mockRenderVars)
+    const result = itemFolder({
+      depth: DEPTH,
+      folder: { ...folder, isRoot: true },
+      isClosed: false,
+      renderVars: mockRenderVars,
+      state: mockState,
+    })
 
     expect(result).contains(`list__branch-list-item-folder--root`)
   })
@@ -110,7 +129,13 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
       const mockRootFolders = getMockRootFolders({ showTree: true })
       const mockState = getMockState({ ...mockRootFolders })
 
-      const result = itemFolder(folder, 0, true, mockState, mockRenderVars)
+      const result = itemFolder({
+        depth: 0,
+        folder,
+        isClosed: true,
+        renderVars: mockRenderVars,
+        state: mockState,
+      })
 
       expect(result).not.contains(`list_branch-indent-box`)
       expect(result).not.contains(`list_branch-indent`)
@@ -120,7 +145,13 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
       const mockRootFolders = getMockRootFolders({ showTree: true })
       const mockState = getMockState({ ...mockRootFolders })
 
-      const result = itemFolder(folder, 1, true, mockState, mockRenderVars)
+      const result = itemFolder({
+        depth: 1,
+        folder,
+        isClosed: true,
+        renderVars: mockRenderVars,
+        state: mockState,
+      })
 
       expect(result).contains(`list_branch-indent-box`)
     })
@@ -131,14 +162,26 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
       const mockRootFolders = getMockRootFolders({ closedFolders: [FOLDER_PATH], showTree: true })
       const mockState = getMockState({ ...mockRootFolders })
 
-      itemFolder(folder, DEPTH, true, mockState, mockRenderVars)
+      itemFolder({
+        depth: DEPTH,
+        folder,
+        isClosed: true,
+        renderVars: mockRenderVars,
+        state: mockState,
+      })
 
       sinon.assert.calledOnce(iconClosedSpy)
       sinon.assert.notCalled(iconOpenSpy)
     })
 
     test('Open icon shown if not closed', () => {
-      itemFolder(folder, DEPTH, false, mockState, mockRenderVars)
+      itemFolder({
+        depth: DEPTH,
+        folder,
+        isClosed: false,
+        renderVars: mockRenderVars,
+        state: mockState,
+      })
 
       sinon.assert.notCalled(iconClosedSpy)
       sinon.assert.calledOnce(iconOpenSpy)
@@ -147,7 +190,13 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
 
   suite('Selected indicator:', () => {
     test('Not shown if not selected', () => {
-      const result = itemFolder(folder, DEPTH, false, mockState, mockRenderVars)
+      const result = itemFolder({
+        depth: DEPTH,
+        folder,
+        isClosed: false,
+        renderVars: mockRenderVars,
+        state: mockState,
+      })
 
       expect(result).to.be.a('string')
       expect(result).not.contains(`list__styled-item--selected`)
@@ -158,16 +207,16 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
     test('Shown if selected & closed', () => {
       const mockRootFolders = getMockRootFolders({ closedFolders: [FOLDER_PATH], showTree: true })
       const mockState = getMockState({ ...mockRootFolders })
-      const result = itemFolder(
+      const result = itemFolder({
+        depth: DEPTH,
         folder,
-        DEPTH,
-        true,
-        {
+        isClosed: true,
+        renderVars: mockRenderVars,
+        state: {
           ...mockState,
           selected: `${FOLDER_PATH}${path.sep}`,
         },
-        mockRenderVars
-      )
+      })
 
       expect(result).to.be.a('string')
       expect(result).contains(`list__styled-item--selected`)

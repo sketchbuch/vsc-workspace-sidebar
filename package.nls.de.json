@@ -66,6 +66,9 @@
       "excludeFolders": "Ordner auszuschließen"
     },
     "list": {
+      "extWs": {
+        "saveButton": "Zu Stammordnern hinzufügen"
+      },
       "fileicons": {
         "loadingMsg": "Dateithemadaten werden geladen"
       },
@@ -78,7 +81,8 @@
         "newWindow": {
           "openCurWin": "'{{label}}' in diesem Fenster öffnen",
           "openNewWin": "'{{label}}' in einem neuen Fenster öffnen",
-          "selected": "Aktueller Arbeitsbereich"
+          "selected": "Aktueller Arbeitsbereich",
+          "selectedExt": "Aktueller Arbeitsbereich (nicht innerhalb der Stammordner)"
         },
         "openFilemanager": {
           "ariaLabel": "Öffnen Sie den Ordner '{{label}}' in Ihrem Dateimanager",

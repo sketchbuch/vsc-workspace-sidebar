@@ -2,6 +2,7 @@ import { t } from 'vscode-ext-localisation'
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree'
 import { RenderVars } from '../../../webviews/webviews.interface'
+import { getListClass } from '../../helpers/getListClass'
 import { itemFile } from './itemFile'
 import { itemFolder } from './itemFolder'
 import { rootFolderMessage } from './rootFolderMessage'
@@ -34,8 +35,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
             }
 
             const isFileTree = showTree && fileTree !== null
-            const classes =
-              'list__list list__styled-list' + (isFileTree ? ' list__styled-list--tree' : '')
+            const classes = getListClass(isFileTree)
             let isRootPathError = result === 'invalid-folder' || result === 'no-workspaces'
             const isClosed = closedFolders.includes(folderName)
             const rootFolderFile: FileTree = {
@@ -52,7 +52,14 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
                 ${
                   isRootPathError
                     ? `
-                      ${itemFolder(rootFolderFile, 0, false, state, renderVars, true)}
+                      ${itemFolder({
+                        depth: 0,
+                        folder: rootFolderFile,
+                        isClosed: false,
+                        isFolderError: true,
+                        renderVars,
+                        state,
+                      })}
                       ${rootFolderMessage(result, renderVars)}
                     `
                     : ''
@@ -67,7 +74,13 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
                           }
                           ${
                             !isFileTree
-                              ? itemFolder(rootFolderFile, 0, isClosed, state, renderVars)
+                              ? itemFolder({
+                                  depth: 0,
+                                  folder: rootFolderFile,
+                                  isClosed,
+                                  renderVars,
+                                  state,
+                                })
                               : ''
                           }
                           ${
