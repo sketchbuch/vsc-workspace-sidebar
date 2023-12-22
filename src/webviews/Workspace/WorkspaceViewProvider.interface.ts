@@ -32,6 +32,7 @@ export type ViewLinkType = 'EXCLUDE_FOLDERS' | 'ROOT_FOLDERS' | 'SETTINGS'
  * Messages sent by the FE
  */
 export enum PostMsgActionsBackend {
+  ADD_TO_ROOTS = 'ADD_TO_ROOTS',
   ERROR_MSG = 'ERROR_MSG',
   FOLDER_CLICK = 'FOLDER_CLICK',
   ICON_CLICK = 'ICON_CLICK',

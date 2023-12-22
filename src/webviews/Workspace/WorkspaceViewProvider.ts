@@ -177,6 +177,7 @@ export class WorkspaceViewProvider
           }
           break
 
+        case Actions.ADD_TO_ROOTS:
         case Actions.SAVE_WS:
           const wsFolders = vscode.workspace.workspaceFolders
             ? [...vscode.workspace.workspaceFolders]
@@ -186,7 +187,11 @@ export class WorkspaceViewProvider
           await vscode.workspace
             .getConfiguration()
             .update('workspaceSidebar.rootFolders', newRootFolderConfig, true)
-          await executeCommand(CMD_VSC_SAVE_WS_AS)
+
+          if (action === Actions.SAVE_WS) {
+            await executeCommand(CMD_VSC_SAVE_WS_AS)
+            this.render()
+          }
 
           break
 

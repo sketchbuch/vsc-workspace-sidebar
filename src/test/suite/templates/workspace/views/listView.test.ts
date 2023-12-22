@@ -61,6 +61,64 @@ suite('Templates > Workspace > View: listView()', () => {
     sinon.assert.callCount(searchSpy, 1)
   })
 
+  suite('Section attributes:', () => {
+    const mockState = getMockState({ ...mockRootFolders })
+
+    test('Renders data-extws="true" if isExternalWs is true', () => {
+      const result = listView(mockState, getMockRenderVars({ isExternalWs: true }))
+      expect(result).contains('data-extws="true"')
+    })
+
+    test('Renders data-extws="false" if isExternalWs is false', () => {
+      const result = listView(mockState, getMockRenderVars({ isExternalWs: false }))
+      expect(result).contains('data-extws="false"')
+    })
+
+    test('Renders data-fileiconsactive="true" if fileIconsActive is true', () => {
+      const result = listView(mockState, getMockRenderVars({ fileIconsActive: true }))
+      expect(result).contains('data-fileiconsactive="true"')
+    })
+
+    test('Renders data-fileiconsactive="false" if fileIconsActive is false', () => {
+      const result = listView(mockState, getMockRenderVars({ fileIconsActive: false }))
+      expect(result).contains('data-fileiconsactive="false"')
+    })
+
+    test('Renders data-folderopen="true" if wsType is folder', () => {
+      const result = listView(
+        getMockState({ ...mockRootFolders, wsType: 'folder' }),
+        mockRenderVars
+      )
+
+      expect(result).contains('data-folderopen="true"')
+    })
+
+    test('Renders data-folderopen="false" if wsType is none', () => {
+      const result = listView(getMockState({ ...mockRootFolders, wsType: 'none' }), mockRenderVars)
+      expect(result).contains('data-folderopen="false"')
+    })
+
+    test('Renders data-folderopen="false" if wsType is ws', () => {
+      const result = listView(getMockState({ ...mockRootFolders, wsType: 'ws' }), mockRenderVars)
+      expect(result).contains('data-folderopen="false"')
+    })
+
+    test('Renders data-showsearch="true" if searchMinimum less than fileCount', () => {
+      const result = listView(mockState, getMockRenderVars({ searchMinimum: 2 }))
+      expect(result).contains('data-showsearch="true"')
+    })
+
+    test('Renders data-showsearch="false" if searchMinimum greater than fileCount', () => {
+      const result = listView(mockState, getMockRenderVars({ searchMinimum: 100 }))
+      expect(result).contains('data-showsearch="false"')
+    })
+
+    test('Renders data-showsearch="true" if searchMinimum is 0', () => {
+      const result = listView(mockState, getMockRenderVars({ searchMinimum: 0 }))
+      expect(result).contains('data-showsearch="true"')
+    })
+  })
+
   suite('Hover Notification:', () => {
     const mockState = getMockState({ ...mockRootFolders })
 

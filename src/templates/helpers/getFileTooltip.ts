@@ -6,7 +6,7 @@ import { RenderVars } from '../../webviews/webviews.interface'
 type TooltipType = 'cur-win' | 'new-win'
 
 export const getFileTooltip = (renderVars: RenderVars, file: File, type?: TooltipType): string => {
-  const { cleanLabels, clickAction } = renderVars
+  const { cleanLabels, clickAction, isExternalWs } = renderVars
   const isDefault = clickAction === ConfigActions.CURRENT_WINDOW
 
   const { cleanedLabel, isSelected, label, path, showPath } = file
@@ -14,7 +14,9 @@ export const getFileTooltip = (renderVars: RenderVars, file: File, type?: Toolti
 
   let tooltip = visibleLabel
 
-  if (isSelected) {
+  if (isSelected && isExternalWs) {
+    tooltip = t('workspace.list.itemButtons.newWindow.selectedExt')
+  } else if (isSelected) {
     tooltip = t('workspace.list.itemButtons.newWindow.selected')
   } else if ((isDefault && type === 'new-win') || (!isDefault && type === 'cur-win')) {
     tooltip = t('workspace.list.itemButtons.newWindow.openNewWin', { label: visibleLabel })

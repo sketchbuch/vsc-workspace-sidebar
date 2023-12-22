@@ -66,6 +66,9 @@
       "excludeFolders": "exclude folders"
     },
     "list": {
+      "extWs": {
+        "saveButton": "Add to Root Folders"
+      },
       "fileicons": {
         "loadingMsg": "Loading file theme data"
       },
@@ -78,7 +81,8 @@
         "newWindow": {
           "openCurWin": "Open '{{label}}' in this window",
           "openNewWin": "Open '{{label}}' in a new window",
-          "selected": "Current workspace"
+          "selected": "Current workspace",
+          "selectedExt": "Current workspace (not within root folders)"
         },
         "openFilemanager": {
           "ariaLabel": "Open folder containing '{{label}}' in your file manager",

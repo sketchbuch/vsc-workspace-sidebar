@@ -2,6 +2,7 @@
   const vscode = acquireVsCodeApi();
 
   const folderSaveBtn = document.querySelector('#saveFolderAsWorkspace');
+  const addToFolderRootsBtn = document.querySelector('#addToFolderRoots');
   const newWindowIconBtns = document.querySelectorAll('.list__button[data-type="new-window"]');
   const filemanagerIconBtns = document.querySelectorAll('.list__button[data-type="open-filemanager"]');
   const searchOptions = document.querySelectorAll('.searchBox__options-button--toggle');
@@ -22,6 +23,9 @@
     vscode.postMessage(message);
   };
 
+  const handleAddToRootFoldersClick = () => {
+    sendMessage('ADD_TO_ROOTS');
+  };
   const handleElementClick = (event) => {
     event.stopPropagation();
     sendMessage('MAIN_CLICK', event.currentTarget.dataset.file);
@@ -126,6 +130,10 @@
       folderSaveBtn.addEventListener('click', handleSaveFolderClick);
     }
 
+    if (addToFolderRootsBtn) {
+      addToFolderRootsBtn.addEventListener('click', handleAddToRootFoldersClick);
+    }
+
     if (searchInput && document.activeElement.id !== 'searchWorkspaces') {
       searchInput.focus();
     }
@@ -178,6 +186,10 @@
 
     if (folderSaveBtn) {
       folderSaveBtn.removeEventListener('click', handleSaveFolderClick);
+    }
+
+    if (addToFolderRootsBtn) {
+      addToFolderRootsBtn.removeEventListener('click', handleAddToRootFoldersClick);
     }
   });
 })();

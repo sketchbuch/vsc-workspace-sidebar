@@ -12,12 +12,8 @@ suite('Config > Helpers > getNewRootFolderConfig():', function () {
 
   const getPath = (folder: string): string => {
     if (isWin) {
-      console.log('###### WINDOWS')
-
       return path.join(OS_HOMEFOLDER_WIN, folder)
     }
-
-    console.log('###### NOT WINDOWS')
 
     return `${path.sep}${path.join(OS_HOMEFOLDER, folder)}`
   }

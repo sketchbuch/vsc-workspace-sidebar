@@ -18,6 +18,12 @@ suite('Templates > Helpers > getFileTooltip():', () => {
     expect(getFileTooltip(mockRenderVars, fileSelected)).to.equal('Current workspace')
   })
 
+  test('Returns selected tooltip if selected outside of root folders', () => {
+    expect(getFileTooltip({ ...mockRenderVars, isExternalWs: true }, fileSelected)).to.equal(
+      'Current workspace (not within root folders)'
+    )
+  })
+
   suite('Click action is CURRENT_WINDOW:', () => {
     test('Returns new win tooltip if !selected and type is "new-win"', () => {
       expect(getFileTooltip(mockRenderVars, fileNotSelected, 'new-win')).to.equal(
