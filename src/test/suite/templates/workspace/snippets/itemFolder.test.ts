@@ -162,29 +162,48 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
       const mockRootFolders = getMockRootFolders({ closedFolders: [FOLDER_PATH], showTree: true })
       const mockState = getMockState({ ...mockRootFolders })
 
-      itemFolder({
+      const result = itemFolder({
         depth: DEPTH,
         folder,
+        isClosable: true,
         isClosed: true,
         renderVars: mockRenderVars,
         state: mockState,
       })
+
+      expect(result).contains(`list__branch-list-item-folder--closable`)
 
       sinon.assert.calledOnce(iconClosedSpy)
       sinon.assert.notCalled(iconOpenSpy)
     })
 
     test('Open icon shown if not closed', () => {
-      itemFolder({
+      const result = itemFolder({
         depth: DEPTH,
         folder,
+        isClosable: true,
         isClosed: false,
         renderVars: mockRenderVars,
         state: mockState,
       })
 
+      expect(result).contains(`list__branch-list-item-folder--closable`)
+
       sinon.assert.notCalled(iconClosedSpy)
       sinon.assert.calledOnce(iconOpenSpy)
+    })
+
+    test('Closable class not rendered if not closable', () => {
+      const result = itemFolder({
+        depth: DEPTH,
+        folder,
+        isClosable: false,
+        isClosed: false,
+        renderVars: mockRenderVars,
+        state: mockState,
+      })
+
+      expect(result).not.contains(`list__branch-list-item-folder--closable`)
     })
   })
 

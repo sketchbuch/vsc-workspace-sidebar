@@ -48,7 +48,7 @@ export const externalWorkspace = (state: WorkspaceState, renderVars: RenderVars)
           </ul>
 
           <div class="list__extws-controls list__styled-pusher-controls">
-            <vscode-button class="list__extws-update-roots" id="updatesRoots">
+            <vscode-button class="list__extws-update-roots" id="addToFolderRoots">
               ${t('workspace.list.extWs.saveButton')}
             </vscode-button>
           </div>

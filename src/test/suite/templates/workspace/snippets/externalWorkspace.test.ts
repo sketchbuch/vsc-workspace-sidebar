@@ -7,6 +7,11 @@ import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
 import { getMockState } from '../../../../mocks/mockState'
 
 suite('Templates > Workspace > Snippets: externalWorkspace()', () => {
+  const fileLabel = 'Video1'
+  const fileName = `${fileLabel}.${FS_WS_FILETYPE}`
+  const folder = 'Videos'
+  const selected = path.join(OS_HOMEFOLDER, folder, fileName)
+
   test('Renders empty string of not external ws', () => {
     const result = externalWorkspace(getMockState(), getMockRenderVars({ isExternalWs: false }))
 
@@ -15,10 +20,6 @@ suite('Templates > Workspace > Snippets: externalWorkspace()', () => {
   })
 
   test('Renders content if external ws', () => {
-    const fileLabel = 'Video1'
-    const fileName = `${fileLabel}.${FS_WS_FILETYPE}`
-    const folder = 'Videos'
-    const selected = path.join(OS_HOMEFOLDER, folder, fileName)
     const result = externalWorkspace(
       getMockState({ selected }),
       getMockRenderVars({ isExternalWs: true })
@@ -27,11 +28,23 @@ suite('Templates > Workspace > Snippets: externalWorkspace()', () => {
     expect(result).to.be.a('string')
     expect(result).not.to.equal('')
     expect(result).contains('class="list__extws-update-roots"')
-    expect(result).contains('Add to Root Folders')
     expect(result).contains('class="list__folder-vscodedivider"')
     expect(result).contains('class="list__styled-item')
     expect(result).contains(`<span class="list__title">${folder}</span>`)
     expect(result).contains('class="list__branch-list-item')
     expect(result).contains(`<span class="list__title">${fileLabel}</span>`)
+  })
+
+  test('Renders the add to root folders button', () => {
+    const result = externalWorkspace(
+      getMockState({ selected }),
+      getMockRenderVars({ isExternalWs: true })
+    )
+
+    expect(result).to.be.a('string')
+    expect(result).not.to.equal('')
+
+    expect(result).contains('<vscode-button class="list__folder-save" id="saveFolderAsWorkspace">')
+    expect(result).contains('Add to Root Folders')
   })
 })
