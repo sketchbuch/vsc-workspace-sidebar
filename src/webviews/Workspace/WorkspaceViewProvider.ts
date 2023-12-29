@@ -46,6 +46,7 @@ export class WorkspaceViewProvider
   public static readonly viewType = EXT_WEBVIEW_WS
   private _view?: vscode.WebviewView
   private _cssGenerator: CssGenerator
+  private readonly _version: string = '2.0.0-beta-4'
 
   constructor(
     private readonly _ctx: vscode.ExtensionContext,
@@ -55,7 +56,7 @@ export class WorkspaceViewProvider
     this._fileThemeProcessor.subscribe(this)
   }
 
-  private async dumpCache() {
+  private async deleteCache() {
     await vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
     await this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
 
@@ -64,14 +65,22 @@ export class WorkspaceViewProvider
     })
   }
 
-  private getCacheFiles() {
+  private getCache() {
     const cachedData = this._ctx.globalState.get<WorkspaceRootFolderCache>(EXT_WSSTATE_CACHE)
 
-    if (cachedData && cachedData.rootFolders) {
-      return cachedData.rootFolders
+    if (cachedData) {
+      const { rootFolders, version } = cachedData
+
+      if (rootFolders && version === this._version) {
+        return rootFolders
+      }
     }
 
     return null
+  }
+
+  private async setCache(data: Partial<WorkspaceRootFolderCache>) {
+    return this._ctx.globalState.update(EXT_WSSTATE_CACHE, { ...data, version: this._version })
   }
 
   private getViewTitle({ fileCount, search, view, visibleFileCount }: WorkspaceState) {
@@ -275,7 +284,7 @@ export class WorkspaceViewProvider
             []
           )
 
-          await this._ctx.globalState.update(EXT_WSSTATE_CACHE, {
+          await this.setCache({
             rootFolders: reducedRootFolders,
           })
         }
@@ -302,7 +311,7 @@ export class WorkspaceViewProvider
     if (isRerender) {
       this.render()
     } else {
-      this.dumpCache()
+      this.deleteCache()
     }
   }
 
@@ -317,7 +326,8 @@ export class WorkspaceViewProvider
     this.setupWebview(webviewView)
     this.updateSearch()
 
-    const cachedFiles = this.getCacheFiles()
+    const cachedFiles = this.getCache()
+    console.log('###', cachedFiles)
 
     if (cachedFiles) {
       store.dispatch(list(cachedFiles))
