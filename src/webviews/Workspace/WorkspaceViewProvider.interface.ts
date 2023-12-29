@@ -13,8 +13,14 @@ export interface File {
 
 export type Files = File[]
 
+export interface WorkspaceSetCacheData {
+  folderPath: string
+  files: WorkspaceFiles
+}
+
 export interface WorkspaceRootFolderCache {
   rootFolders: WorkspaceCacheRootFolder[]
+  version: string
 }
 
 export interface WorkspaceCacheRootFolder {
