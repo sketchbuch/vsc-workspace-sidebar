@@ -85,7 +85,6 @@ export class WorkspaceViewProvider
         const cacheIndex = caches.findIndex((cache) => cache.cacheId === cacheId)
 
         if (cacheIndex > -1) {
-          console.log('### removing cached data', cacheId)
           newCacheData = {
             caches: [...caches.slice(0, cacheIndex), ...caches.slice(cacheIndex + 1)],
           }
@@ -104,8 +103,6 @@ export class WorkspaceViewProvider
   private getCache() {
     const cachedData = this._ctx.globalState.get<WorkspaceRootFolderCache>(EXT_WSSTATE_CACHE)
 
-    console.log('### getCache', cachedData)
-
     if (cachedData) {
       const { caches } = cachedData
 
@@ -114,9 +111,6 @@ export class WorkspaceViewProvider
 
         for (let cacheIndex = 0; cacheIndex < caches.length; cacheIndex++) {
           const cache = caches[cacheIndex]
-
-          console.log('### cache.version', cache.version)
-          console.log('### this._version', this._version)
 
           if (cache.cacheId === cacheId && cache.version === this._version) {
             return cache.rootFolders
@@ -139,16 +133,12 @@ export class WorkspaceViewProvider
         const cacheIndex = caches.findIndex((cache) => cache.cacheId === cacheId)
 
         if (cacheIndex > -1) {
-          console.log('### setCache 1 - update cache')
           // Update existing data already in cache
-
           return this._ctx.globalState.update(EXT_WSSTATE_CACHE, {
             caches: [...caches.slice(0, cacheIndex), { ...data }, ...caches.slice(cacheIndex + 1)],
           })
         } else {
-          console.log('### setCache 2 - append cache')
           // Append data to cache
-
           return this._ctx.globalState.update(EXT_WSSTATE_CACHE, {
             caches: [...caches, { ...data }],
           })
@@ -156,9 +146,7 @@ export class WorkspaceViewProvider
       }
     }
 
-    console.log('### setCache 3 - new cache')
     // Create completely new cache
-
     return this._ctx.globalState.update(EXT_WSSTATE_CACHE, { caches: [{ ...data }] })
   }
 
@@ -202,16 +190,6 @@ export class WorkspaceViewProvider
         title: this._view.title,
         webview: this._view.webview,
       }
-      console.log('### appRoot', vscode.env.appRoot)
-      console.log('### remoteName', vscode.env.remoteName)
-      console.log(
-        '### cachedData',
-        this._ctx.globalState.get<WorkspaceRootFolderCache>(EXT_WSSTATE_CACHE)
-      )
-      console.log('### ===========')
-      vscode.window.showErrorMessage(
-        `appRoot: "${vscode.env.appRoot}" - remoteName: "${vscode.env.remoteName}"`
-      )
 
       this._view.webview.html = getHtml<WorkspaceState>(
         {
@@ -373,8 +351,6 @@ export class WorkspaceViewProvider
             []
           )
 
-          console.log('### reducedRootFolders', reducedRootFolders)
-
           const cacheId = this.getCacheId()
 
           await this.setCache({
@@ -384,10 +360,6 @@ export class WorkspaceViewProvider
             rootFolders: reducedRootFolders,
             version: this._version,
           })
-          console.log(
-            '### cachedData',
-            this._ctx.globalState.get<WorkspaceRootFolderCache>(EXT_WSSTATE_CACHE)
-          )
         }
         break
 
@@ -430,10 +402,8 @@ export class WorkspaceViewProvider
     const cachedFiles = this.getCache()
 
     if (cachedFiles) {
-      console.log('### using cache')
       store.dispatch(list(cachedFiles))
     } else {
-      console.log('### refreshing cache')
       store.dispatch(fetch()).then(() => {
         this.updateCache(store.getState().ws)
       })
