@@ -64,14 +64,14 @@ export class WorkspaceViewProvider
       .digest('hex')
   }
 
-  private async deleteCacheAll() {
+  /*   private async deleteCacheAll() {
     await vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
     await this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
 
     store.dispatch(fetch()).then(() => {
       this.updateCache(store.getState().ws)
     })
-  }
+  } */
 
   private async deleteCache() {
     let newCacheData: WorkspaceRootFolderCache | undefined
@@ -171,6 +171,7 @@ export class WorkspaceViewProvider
   private render() {
     if (this._view !== undefined) {
       const state = store.getState().ws
+      console.log('### state', state.view, state)
 
       const themeData = state.view === 'list' ? this._fileThemeProcessor.getThemeData() : null
       let cssData: CssData | null = null
