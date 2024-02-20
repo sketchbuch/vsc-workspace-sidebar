@@ -18,9 +18,28 @@ export interface WorkspaceSetCacheData {
   files: WorkspaceFiles
 }
 
-export interface WorkspaceRootFolderCache {
+export interface WorkspaceRootFolderMachineCache {
+  /**
+   * VSCode Env app root.
+   */
+  appRoot: string
+  /**
+   * VSCode Env remote name. Now that rootFolders config is machine scoped, we need different caches.
+   */
+  /**
+   * The hash for the version, remoteName, and appRoot. Used as a key to identify caches for a particular machine.
+   */
+  cacheId: string
+  remoteName: string
   rootFolders: WorkspaceCacheRootFolder[]
+  /**
+   * The version of this Workspace Sidebar that this cache was made by, to help invalidate caches.
+   */
   version: string
+}
+
+export interface WorkspaceRootFolderCache {
+  caches: WorkspaceRootFolderMachineCache[]
 }
 
 export interface WorkspaceCacheRootFolder {

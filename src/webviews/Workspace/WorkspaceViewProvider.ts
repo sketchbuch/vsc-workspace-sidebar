@@ -30,6 +30,7 @@ import {
   Payload,
   WorkspaceCacheRootFolders,
   WorkspaceRootFolderCache,
+  WorkspaceRootFolderMachineCache,
   WorkspaceState,
 } from './WorkspaceViewProvider.interface'
 import { getNewRootFolderConfig } from './helpers/getNewRootFolderConfig'
@@ -46,7 +47,7 @@ export class WorkspaceViewProvider
   public static readonly viewType = EXT_WEBVIEW_WS
   private _view?: vscode.WebviewView
   private _cssGenerator: CssGenerator
-  private readonly _version: string = '2.0.0-beta-4'
+  private readonly _version: string = '2.0.0-beta-8'
 
   constructor(
     private readonly _ctx: vscode.ExtensionContext,
@@ -56,9 +57,43 @@ export class WorkspaceViewProvider
     this._fileThemeProcessor.subscribe(this)
   }
 
-  private async deleteCache() {
+  private getCacheId() {
+    return crypto
+      .createHash('sha256')
+      .update(`${vscode.env.appRoot}-${vscode.env.remoteName}`)
+      .digest('hex')
+  }
+
+  /*   private async deleteCacheAll() {
     await vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
     await this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
+
+    store.dispatch(fetch()).then(() => {
+      this.updateCache(store.getState().ws)
+    })
+  } */
+
+  private async deleteCache() {
+    let newCacheData: WorkspaceRootFolderCache | undefined
+    const cachedData = this._ctx.globalState.get<WorkspaceRootFolderCache>(EXT_WSSTATE_CACHE)
+
+    if (cachedData) {
+      const { caches } = cachedData
+
+      if (caches && caches.length > 0) {
+        const cacheId = this.getCacheId()
+        const cacheIndex = caches.findIndex((cache) => cache.cacheId === cacheId)
+
+        if (cacheIndex > -1) {
+          newCacheData = {
+            caches: [...caches.slice(0, cacheIndex), ...caches.slice(cacheIndex + 1)],
+          }
+        }
+      }
+    }
+
+    await vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
+    await this._ctx.globalState.update(EXT_WSSTATE_CACHE, newCacheData)
 
     store.dispatch(fetch()).then(() => {
       this.updateCache(store.getState().ws)
@@ -69,18 +104,50 @@ export class WorkspaceViewProvider
     const cachedData = this._ctx.globalState.get<WorkspaceRootFolderCache>(EXT_WSSTATE_CACHE)
 
     if (cachedData) {
-      const { rootFolders, version } = cachedData
+      const { caches } = cachedData
 
-      if (rootFolders && version === this._version) {
-        return rootFolders
+      if (caches) {
+        const cacheId = this.getCacheId()
+
+        for (let cacheIndex = 0; cacheIndex < caches.length; cacheIndex++) {
+          const cache = caches[cacheIndex]
+
+          if (cache.cacheId === cacheId && cache.version === this._version) {
+            return cache.rootFolders
+          }
+        }
       }
     }
 
     return null
   }
 
-  private async setCache(data: Partial<WorkspaceRootFolderCache>) {
-    return this._ctx.globalState.update(EXT_WSSTATE_CACHE, { ...data, version: this._version })
+  private async setCache(data: WorkspaceRootFolderMachineCache) {
+    const cachedData = this._ctx.globalState.get<WorkspaceRootFolderCache>(EXT_WSSTATE_CACHE)
+
+    if (cachedData) {
+      const { caches } = cachedData
+
+      if (caches && caches.length > 0) {
+        const { cacheId } = data
+        const cacheIndex = caches.findIndex((cache) => cache.cacheId === cacheId)
+
+        if (cacheIndex > -1) {
+          // Update existing data already in cache
+          return this._ctx.globalState.update(EXT_WSSTATE_CACHE, {
+            caches: [...caches.slice(0, cacheIndex), { ...data }, ...caches.slice(cacheIndex + 1)],
+          })
+        } else {
+          // Append data to cache
+          return this._ctx.globalState.update(EXT_WSSTATE_CACHE, {
+            caches: [...caches, { ...data }],
+          })
+        }
+      }
+    }
+
+    // Create completely new cache
+    return this._ctx.globalState.update(EXT_WSSTATE_CACHE, { caches: [{ ...data }] })
   }
 
   private getViewTitle({ fileCount, search, view, visibleFileCount }: WorkspaceState) {
@@ -132,7 +199,7 @@ export class WorkspaceViewProvider
           template: defaultTemplate,
           themeData,
         },
-        crypto.randomBytes(16).toString('hex')
+        crypto.createHash('sha256').update(crypto.randomBytes(16)).digest('hex')
       )
 
       // Suppress error when running in extension development host
@@ -284,8 +351,14 @@ export class WorkspaceViewProvider
             []
           )
 
+          const cacheId = this.getCacheId()
+
           await this.setCache({
+            appRoot: vscode.env.appRoot,
+            cacheId,
+            remoteName: vscode.env.remoteName ?? 'undefined',
             rootFolders: reducedRootFolders,
+            version: this._version,
           })
         }
         break
@@ -327,7 +400,6 @@ export class WorkspaceViewProvider
     this.updateSearch()
 
     const cachedFiles = this.getCache()
-    console.log('###', cachedFiles)
 
     if (cachedFiles) {
       store.dispatch(list(cachedFiles))
