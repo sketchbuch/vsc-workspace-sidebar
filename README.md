@@ -129,6 +129,7 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Todo
 
-- Why was new folder not triggering a reload?
-- Add option to exclude all hidden folders
-- Remove watcher
+- Error message if folder is in a hidden folder and hidden folders are excluded or a sub folder is excluded
+- Update translations
+- Remove notDirectory translation
+- Create common template for rootfolder error and invalid view

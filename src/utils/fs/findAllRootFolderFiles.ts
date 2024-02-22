@@ -22,9 +22,10 @@ export const findAllRootFolderFiles = async (): Promise<FindAllRootFolderFiles> 
     const excludeHiddenFoldersConfig = getExcludeHiddenFoldersConfig()
     const homeDir = os.homedir()
 
+    const fileCount: string[] = []
+    const nonExistentCount: string[] = []
+    const noWorkspaceCount: string[] = []
     const rootFolders: FindRootFolderFiles[] = []
-    const invalidFolders: string[] = []
-    const noWorkspaces: string[] = []
 
     for (let index = 0; index < folders.length; index++) {
       const folder = folders[index].trim()
@@ -39,19 +40,23 @@ export const findAllRootFolderFiles = async (): Promise<FindAllRootFolderFiles> 
         })
 
         if (rootFolder.result === 'no-workspaces') {
-          noWorkspaces.push(folder)
-        } else if (rootFolder.result === 'invalid-folder') {
-          invalidFolders.push(folder)
+          noWorkspaceCount.push(folder)
+        } else if (rootFolder.result === 'is-file') {
+          fileCount.push(folder)
+        } else if (rootFolder.result === 'nonexistent') {
+          nonExistentCount.push(folder)
         }
 
         rootFolders.push(rootFolder)
       }
     }
 
-    if (invalidFolders.length === folders.length) {
-      return Promise.resolve({ rootFolders: [], result: 'invalid-folder' })
-    } else if (noWorkspaces.length === folders.length) {
+    if (fileCount.length === folders.length) {
+      return Promise.resolve({ rootFolders: [], result: 'is-file' })
+    } else if (noWorkspaceCount.length === folders.length) {
       return Promise.resolve({ rootFolders: [], result: 'no-workspaces' })
+    } else if (nonExistentCount.length === folders.length) {
+      return Promise.resolve({ rootFolders: [], result: 'nonexistent' })
     } // Else, Some root folders are empty or invalid - List view will handle these
 
     return Promise.resolve({ rootFolders, result: 'ok' })

@@ -24,12 +24,12 @@ export interface WorkspaceRootFolderMachineCache {
    */
   appRoot: string
   /**
-   * VSCode Env remote name. Now that rootFolders config is machine scoped, we need different caches.
-   */
-  /**
-   * The hash for the version, remoteName, and appRoot. Used as a key to identify caches for a particular machine.
+   * The hash for the remoteName, and appRoot. Used as a key to identify caches for a particular machine.
    */
   cacheId: string
+  /**
+   * VSCode Env remote name. Now that rootFolders config is machine scoped, we need different caches.
+   */
   remoteName: string
   rootFolders: WorkspaceCacheRootFolder[]
   /**
@@ -91,7 +91,7 @@ export type PayloadToggleFolderState = {
 }
 export type PayloadToggleFolderStateBulk = FolderState
 
-export type FindFileResult = 'invalid-folder' | 'no-root-folders' | 'no-workspaces' | 'ok'
+export type FindFileResult = 'is-file' | 'no-root-folders' | 'no-workspaces' | 'nonexistent' | 'ok'
 
 export interface SearchState {
   caseInsensitive: boolean

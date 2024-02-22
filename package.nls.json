@@ -49,6 +49,12 @@
       "default": {
         "title": "Something went wrong whilst collecting workspaces"
       },
+      "isFile": {
+        "title": "The folder is a file, not a directory"
+      },
+      "nonexistent": {
+        "title": "The folder does not exist."
+      },
       "noRootFolders": {
         "title": "No root folders specified. Please edit the config option 'workspaceSidebar.rootFolders'"
       },
@@ -77,6 +83,9 @@
         "open": "Current open folder:",
         "saveButton": "Save as new Workspace"
       },
+      "isFile": {
+        "title": "The folder is a file, not a directory"
+      },
       "itemButtons": {
         "newWindow": {
           "openCurWin": "Open '{{label}}' in this window",
@@ -88,6 +97,9 @@
           "ariaLabel": "Open folder containing '{{label}}' in your file manager",
           "tooltip": "Open folder containing '{{label}}' in your file manager"
         }
+      },
+      "nonexistent": {
+        "title": "The folder does not exist."
       },
       "notDirectory": {
         "title": "The folder is not a directory"

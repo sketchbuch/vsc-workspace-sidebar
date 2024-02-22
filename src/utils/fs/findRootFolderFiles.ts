@@ -32,7 +32,7 @@ export const findRootFolderFiles = async ({
 }: FindRootFolderFilesConfig): Promise<FindRootFolderFiles> => {
   const folderPath = folder.replace(`~`, homeDir)
 
-  const { isFolder } = checkFile(folderPath)
+  const { isFile, isFolder } = checkFile(folderPath)
 
   if (isFolder) {
     const files = await collectFilesFromFolder({
@@ -49,11 +49,17 @@ export const findRootFolderFiles = async ({
       folderPath,
       result: files.length > 0 ? 'ok' : 'no-workspaces',
     })
+  } else if (isFile) {
+    return Promise.resolve({
+      files: [],
+      folderPath,
+      result: 'is-file',
+    })
   }
 
   return Promise.resolve({
     files: [],
     folderPath,
-    result: 'invalid-folder',
+    result: 'nonexistent',
   })
 }

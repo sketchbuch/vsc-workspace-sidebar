@@ -1,5 +1,8 @@
 import { t } from 'vscode-ext-localisation'
-import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import {
+  FindFileResult,
+  WorkspaceState,
+} from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree'
 import { RenderVars } from '../../../webviews/webviews.interface'
 import { getListClasses } from '../../helpers/getListClasses'
@@ -7,6 +10,8 @@ import { itemFile } from './itemFile'
 import { itemFolder } from './itemFolder'
 import { rootFolderMessage } from './rootFolderMessage'
 import { tree } from './tree'
+
+const rootPathErrors: FindFileResult[] = ['is-file', 'no-workspaces', 'nonexistent']
 
 export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
   const { fileCount, rootFolders, search, visibleFileCount } = state
@@ -36,7 +41,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
 
             const isFileTree = showTree && fileTree !== null
             const classes = getListClasses(isFileTree)
-            let isRootPathError = result === 'invalid-folder' || result === 'no-workspaces'
+            const isRootPathError = rootPathErrors.includes(result)
             const isClosed = closedFolders.includes(folderName)
             const rootFolderFile: FileTree = {
               files: [],
