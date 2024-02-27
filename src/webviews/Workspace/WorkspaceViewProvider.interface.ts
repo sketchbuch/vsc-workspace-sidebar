@@ -1,4 +1,5 @@
 import { PayloadAction, SerializedError } from '@reduxjs/toolkit'
+import { FindRootFolderFiles } from '../../utils/fs/findRootFolderFiles'
 import { FileTree } from './helpers/getFileTree'
 
 export interface File {
@@ -140,7 +141,6 @@ export type WorkspaceState = {
    * The total number of workspace files for all root folders.
    */
   fileCount: number
-  isFolderInvalid: boolean
   /**
    * The result of the file collection for all root folders.
    */
@@ -156,6 +156,10 @@ export type WorkspaceState = {
    * The total number of visible workspace files for all root folders.
    */
   visibleFileCount: number
+  /**
+   * The results as returned from findAllRootFolderFiles()
+   */
+  workspaceData: FindRootFolderFiles[]
   /**
    * The type of workspace that is currently open.
    */

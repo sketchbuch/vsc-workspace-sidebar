@@ -137,7 +137,8 @@
       }
     },
     "loading": {
-      "description": "Wenn dies lange dauert, versuchen Sie, ",
+      "descriptionWithHidden": "Wenn dies lange dauert, versuchen Sie, {{settingsLinkRootFolder}} oder {{settingsLinkHidden}} auszuschließen",
+      "description": "Wenn dies lange dauert, versuchen Sie, {{settingsLinkRootFolder}} auszuschließen.",
       "title": "Arbeitsbereiche wird gesucht..."
     }
   }

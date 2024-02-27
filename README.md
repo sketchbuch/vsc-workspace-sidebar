@@ -131,3 +131,4 @@ This extension is localised, if you want it in your language please send me a tr
 
 - Change depth for each root folder
 -- Update depth info for invalid messages
+- Remove depth from rendervars

@@ -24,12 +24,12 @@ export const initialState: WorkspaceState = {
   errorObj: null,
   fileCount: 0,
   result: 'ok',
-  isFolderInvalid: false,
   rootFolders: [],
   search: { ...initialSearchState },
   selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',
   view: 'loading',
   visibleFileCount: 0,
+  workspaceData: [],
   wsType: getWsType(vscode.workspace.workspaceFile, vscode.workspace.workspaceFolders),
 }
 

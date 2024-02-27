@@ -54,13 +54,13 @@ export const findAllRootFolderFiles = async (): Promise<FindAllRootFolderFiles> 
     }
 
     if (fileCount.length === configFolders.length) {
-      return Promise.resolve({ rootFolders: [], result: 'is-file' })
+      return Promise.resolve({ rootFolders, result: 'is-file' })
     } else if (noWorkspaceCount.length === configFolders.length) {
-      return Promise.resolve({ rootFolders: [], result: 'no-workspaces' })
+      return Promise.resolve({ rootFolders, result: 'no-workspaces' })
     } else if (isHiddenExcludedCount.length === configFolders.length) {
-      return Promise.resolve({ rootFolders: [], result: 'is-hidden-excluded' })
+      return Promise.resolve({ rootFolders, result: 'is-hidden-excluded' })
     } else if (nonExistentCount.length === configFolders.length) {
-      return Promise.resolve({ rootFolders: [], result: 'nonexistent' })
+      return Promise.resolve({ rootFolders, result: 'nonexistent' })
     } // Else, Some root folders are empty or invalid - List view will handle these
 
     return Promise.resolve({ rootFolders, result: 'ok' })

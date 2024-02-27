@@ -5,8 +5,6 @@ import { viewLink } from '../../common/snippets/viewLink'
 import { viewMsg } from '../../common/snippets/viewMsg'
 
 export const invalidView = (state: WorkspaceState, renderVars: RenderVars): string => {
-  const isDepthZero = renderVars.depth === 0
-
   switch (state.result) {
     case 'is-hidden-excluded':
       return `
@@ -64,6 +62,17 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
       `
 
     case 'no-workspaces':
+      let isDepthZero = true
+
+      for (let index = 0; index < state.workspaceData.length; index++) {
+        const { depth } = state.workspaceData[index]
+
+        if (depth > 0) {
+          isDepthZero = false
+          break
+        }
+      }
+
       return `
         <section class="view invalid">
           ${viewMsg({ message: t('workspace.inValid.noWorkspaces.title'), type: 'title' })}
@@ -75,7 +84,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
             type: 'description',
           })}
           ${
-            !isDepthZero
+            isDepthZero
               ? viewMsg({
                   message: t('workspace.inValid.noWorkspaces.descriptionDepth'),
                   type: 'description',

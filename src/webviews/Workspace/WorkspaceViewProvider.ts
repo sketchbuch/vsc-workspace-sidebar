@@ -47,7 +47,7 @@ export class WorkspaceViewProvider
   public static readonly viewType = EXT_WEBVIEW_WS
   private _view?: vscode.WebviewView
   private _cssGenerator: CssGenerator
-  private readonly _version: string = '2.0.0-beta-9'
+  private readonly _version: string = '2.0.0-beta-11'
 
   constructor(
     private readonly _ctx: vscode.ExtensionContext,
@@ -193,7 +193,7 @@ export class WorkspaceViewProvider
         crypto.createHash('sha256').update(crypto.randomBytes(16)).digest('hex')
       )
 
-      // Suppress error when running in extension development host
+      // Suppress error when running tests
     } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Test) {
       vscode.window.showErrorMessage(t('errors.viewNotFound'))
     }

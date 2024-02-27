@@ -37,7 +37,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
       <div class="list__list-wrapper">
         ${rootFolders
           .map((rootFolder) => {
-            const { closedFolders, fileTree, folderName, folderPath, result, visibleFiles } =
+            const { closedFolders, depth, fileTree, folderName, folderPath, result, visibleFiles } =
               rootFolder
 
             if (search.term && visibleFiles.length < 1) {
@@ -70,7 +70,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
                         renderVars,
                         state,
                       })}
-                      ${rootFolderMessage(result, renderVars)}
+                      ${rootFolderMessage(result, depth)}
                     `
                     : ''
                 }

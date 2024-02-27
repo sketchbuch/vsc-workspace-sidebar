@@ -66,7 +66,7 @@
         "title": "No root folders specified."
       },
       "noWorkspaces": {
-        "descriptionDepth": "The current search depth is 0, this means that only the root folders will be searched in for workspace files.",
+        "descriptionDepth": "The current search depth is 0 for all root folders, this means that no subfolders are searched in for workspace files.",
         "descriptionSettings": "Try increasing the {{settingsLinkDepth}} or change the {{settingsLinkRootFolder}}.",
         "title": "Folders contain no workspaces"
       }
@@ -116,7 +116,7 @@
         "title": "The folder does not exist."
       },
       "noWorkspaces": {
-        "descriptionDepth": "The current search depth is 0, this means that no subfolders are searched.",
+        "descriptionDepth": "The current search depth is 0, this means that no subfolders are searched in for workspace files.",
         "descriptionSettings": "Try increasing the {{settingsLinkDepth}} or change the {{settingsLinkRootFolder}} path.",
         "title": "No workspace files found."
       },
@@ -137,8 +137,8 @@
       }
     },
     "loading": {
-      "hintExclude": "If this is taking a long time, try and exclude",
-      "hintHiddenFolders": " or ",
+      "descriptionWithHidden": "If this is taking a long time, try and exclude {{settingsLinkRootFolder}} or {{settingsLinkHidden}}.",
+      "description": "If this is taking a long time, try and exclude {{settingsLinkRootFolder}}.",
       "title": "Collecting workspaces..."
     }
   }

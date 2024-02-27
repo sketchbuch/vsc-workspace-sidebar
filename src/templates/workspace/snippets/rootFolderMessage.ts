@@ -1,12 +1,9 @@
 import { t } from 'vscode-ext-localisation'
 import { FindFileResult } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
-import { RenderVars } from '../../../webviews/webviews.interface'
 import { viewLink } from '../../common/snippets/viewLink'
 import { viewMsg } from '../../common/snippets/viewMsg'
 
-export const rootFolderMessage = (result: FindFileResult, renderVars: RenderVars): string => {
-  const isDepthZero = renderVars.depth === 0
-
+export const rootFolderMessage = (result: FindFileResult, rootFolderDepth: number): string => {
   switch (result) {
     case 'is-hidden-excluded':
       return `
@@ -52,6 +49,8 @@ export const rootFolderMessage = (result: FindFileResult, renderVars: RenderVars
 
     case 'no-workspaces':
     default:
+      const isDepthZero = rootFolderDepth === 0
+
       return `
         <div class="rootfolder__message">
           ${viewMsg({ message: t('workspace.list.noWorkspaces.title'), type: 'title' })}

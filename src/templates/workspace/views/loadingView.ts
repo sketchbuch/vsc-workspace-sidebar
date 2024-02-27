@@ -7,16 +7,22 @@ import { viewMsg } from '../../common/snippets/viewMsg'
 
 export const loadingView = (state: WorkspaceState, renderVars: RenderVars): string => {
   const excludeHiddenFoldersConfig = getExcludeHiddenFoldersConfig()
-  const message = [
-    t('workspace.loading.hintExclude'),
-    `${viewLink(t('workspace.links.excludeFolders'), 'EXCLUDE_FOLDERS')}.`,
+  let message = [
+    t('workspace.loading.description', {
+      settingsLinkRootFolder: viewLink(t('workspace.links.excludeFolders'), 'EXCLUDE_FOLDERS'),
+    }),
   ]
 
-  if (excludeHiddenFoldersConfig) {
-    message.push(t('workspace.loading.hintHiddenFolders'))
-    message.push(
-      `${viewLink(t('workspace.links.excludeHiddenFolders'), 'EXCLUDE_HIDDEN_FOLDERS')}.`
-    )
+  if (!excludeHiddenFoldersConfig) {
+    message = [
+      t('workspace.loading.descriptionWithHidden', {
+        settingsLinkRootFolder: viewLink(t('workspace.links.excludeFolders'), 'EXCLUDE_FOLDERS'),
+        settingsLinkHidden: viewLink(
+          t('workspace.links.excludeHiddenFolders'),
+          'EXCLUDE_HIDDEN_FOLDERS'
+        ),
+      }),
+    ]
   }
 
   return `
