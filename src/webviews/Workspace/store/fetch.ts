@@ -42,7 +42,7 @@ export const fetchFulfilled = (
     state.isFolderInvalid = false
     state.view = 'list'
 
-    state.rootFolders = action.payload.rootFolders.map(({ files, folderPath, result }) => {
+    state.rootFolders = action.payload.rootFolders.map(({ depth, files, folderPath, result }) => {
       const folderName = getLastPathSegment(folderPath) || folderPath
       const convertedFiles = convertWsFiles(folderPath, files, state.selected)
       const visibleFiles = getVisibleFiles(convertedFiles, state.search)
@@ -57,6 +57,7 @@ export const fetchFulfilled = (
         allFolders,
         closedFolders: [],
         convertedFiles,
+        depth,
         files,
         fileTree,
         folderName: folderName,

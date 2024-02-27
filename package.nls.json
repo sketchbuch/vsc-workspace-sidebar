@@ -47,29 +47,37 @@
     },
     "inValid": {
       "default": {
-        "title": "Something went wrong whilst collecting workspaces"
+        "title": "Something went wrong whilst collecting workspaces."
+      },
+      "hiddenExcluded": {
+        "description": "Settings currently exclude {{settingsLinkHidden}}.",
+        "title": "All of the root folders contain hidden folders."
       },
       "isFile": {
-        "title": "The folder is a file, not a directory"
+        "description": "Check that the {{settingsLink}} are actually folders",
+        "title": "All of the root folders are files."
       },
       "nonexistent": {
-        "title": "The folder does not exist."
+        "description": "Check the paths to the {{settingsLink}}.",
+        "title": "None of the root folders exist."
       },
       "noRootFolders": {
-        "title": "No root folders specified. Please edit the config option 'workspaceSidebar.rootFolders'"
-      },
-      "notDirectory": {
-        "title": "None of the root folders are directories"
+        "description": "Specify one or more {{settingsLink}} in which to look for workspaces.",
+        "title": "No root folders specified."
       },
       "noWorkspaces": {
-        "hintDepth": "The current search depth is 0, this means that only the root folders will be searched in for workspace files.",
-        "hintSettings": "Try increasing the search depth or change the folders.",
+        "descriptionDepth": "The current search depth is 0, this means that only the root folders will be searched in for workspace files.",
+        "descriptionSettings": "Try increasing the {{settingsLinkDepth}} or change the {{settingsLinkRootFolder}}.",
         "title": "Folders contain no workspaces"
       }
     },
     "links": {
       "checkSettings": "Check extension settings",
-      "excludeFolders": "exclude folders"
+      "depth": "depth",
+      "excludeFolders": "specific folders",
+      "excludeHiddenFolders": "hidden folders",
+      "rootFolder": "root folder",
+      "rootFolders": "root folders"
     },
     "list": {
       "extWs": {
@@ -83,8 +91,13 @@
         "open": "Current open folder:",
         "saveButton": "Save as new Workspace"
       },
+      "hiddenExcluded": {
+        "description": "Settings currently exclude {{settingsLinkHidden}}.",
+        "title": "The folder path contains hidden folders."
+      },
       "isFile": {
-        "title": "The folder is a file, not a directory"
+        "description": "Check that the {{settingsLink}} is actually a folder.",
+        "title": "The folder is a file not a directory."
       },
       "itemButtons": {
         "newWindow": {
@@ -99,15 +112,13 @@
         }
       },
       "nonexistent": {
+        "description": "Check the path to the {{settingsLink}}.",
         "title": "The folder does not exist."
       },
-      "notDirectory": {
-        "title": "The folder is not a directory"
-      },
       "noWorkspaces": {
-        "hintDepth": "The current search depth is 0, this means that no subfolders are searched.",
-        "hintSettings": "Try increasing the search depth or change the folder path.",
-        "title": "No workspace files found"
+        "descriptionDepth": "The current search depth is 0, this means that no subfolders are searched.",
+        "descriptionSettings": "Try increasing the {{settingsLinkDepth}} or change the {{settingsLinkRootFolder}} path.",
+        "title": "No workspace files found."
       },
       "search": {
         "ariaLabel": "Search Workspaces",
@@ -126,7 +137,8 @@
       }
     },
     "loading": {
-      "description": "If this is taking a long time, try and ",
+      "hintExclude": "If this is taking a long time, try and exclude",
+      "hintHiddenFolders": " or ",
       "title": "Collecting workspaces..."
     }
   }

@@ -11,7 +11,12 @@ import { itemFolder } from './itemFolder'
 import { rootFolderMessage } from './rootFolderMessage'
 import { tree } from './tree'
 
-const rootPathErrors: FindFileResult[] = ['is-file', 'no-workspaces', 'nonexistent']
+const rootPathErrors: FindFileResult[] = [
+  'is-file',
+  'is-hidden-excluded',
+  'no-workspaces',
+  'nonexistent',
+]
 
 export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
   const { fileCount, rootFolders, search, visibleFileCount } = state
@@ -40,8 +45,8 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
             }
 
             const isFileTree = showTree && fileTree !== null
-            const classes = getListClasses(isFileTree)
             const isRootPathError = rootPathErrors.includes(result)
+            const classes = getListClasses(isFileTree)
             const isClosed = closedFolders.includes(folderName)
             const rootFolderFile: FileTree = {
               files: [],

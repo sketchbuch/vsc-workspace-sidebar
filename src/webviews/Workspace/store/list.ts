@@ -17,7 +17,7 @@ export const list = (
   let fileCount = 0
   let visibleFileCount = 0
 
-  state.rootFolders = action.payload.map(({ files, folderPath }) => {
+  state.rootFolders = action.payload.map(({ depth, files, folderPath }) => {
     const folderName = getLastPathSegment(folderPath) || folderPath
     const convertedFiles = convertWsFiles(folderPath, files, state.selected)
     const visibleFiles = getVisibleFiles(convertedFiles, state.search)
@@ -32,6 +32,7 @@ export const list = (
       allFolders,
       closedFolders: [],
       convertedFiles,
+      depth,
       files,
       fileTree,
       folderName: folderName,

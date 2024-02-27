@@ -34,7 +34,7 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
   // TODO - check rendering
   return `
       <section class="view list list--empty">
-        ${viewMsg({ message: t('workspace.list.empty.title'), type: 'title' })}
+        ${viewMsg({ message: t('workspace.list.noWorkspaces.title'), type: 'title' })}
         ${viewMsg({
           message: viewLink(t('workspace.links.checkSettings'), 'SETTINGS'),
           type: 'description',

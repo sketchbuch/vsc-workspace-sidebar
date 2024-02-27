@@ -13,6 +13,26 @@ export interface File {
 
 export type Files = File[]
 
+/**
+ * Root folder object from settings.json
+ */
+export interface ConfigRootFolderSettings {
+  depth?: number
+  path: string
+}
+
+/**
+ * Root folder object returned by getFoldersConfig()
+ */
+export interface ConfigRootFolder {
+  /**
+   * The depth for this folder, if absent in config or NAN, the default depth (workspaceSidebar.depth) will be used instead.
+   * Also the config depth will be constrained in value to min/max values of workspaceSidebar.depth.
+   */
+  depth: number
+  path: string
+}
+
 export interface WorkspaceSetCacheData {
   folderPath: string
   files: WorkspaceFiles
@@ -43,6 +63,7 @@ export interface WorkspaceRootFolderCache {
 }
 
 export interface WorkspaceCacheRootFolder {
+  depth: number
   folderPath: string
   files: WorkspaceFiles
 }
@@ -51,7 +72,12 @@ export type WorkspaceCacheRootFolders = WorkspaceCacheRootFolder[]
 
 export type WorkspaceErrors = '' | 'DEFAULT' | 'FETCH'
 
-export type ViewLinkType = 'EXCLUDE_FOLDERS' | 'ROOT_FOLDERS' | 'SETTINGS'
+export type ViewLinkType =
+  | 'DEPTH'
+  | 'EXCLUDE_FOLDERS'
+  | 'EXCLUDE_HIDDEN_FOLDERS'
+  | 'ROOT_FOLDERS'
+  | 'SETTINGS'
 
 /**
  * Messages sent by the FE
@@ -91,7 +117,13 @@ export type PayloadToggleFolderState = {
 }
 export type PayloadToggleFolderStateBulk = FolderState
 
-export type FindFileResult = 'is-file' | 'no-root-folders' | 'no-workspaces' | 'nonexistent' | 'ok'
+export type FindFileResult =
+  | 'is-file'
+  | 'is-hidden-excluded'
+  | 'no-root-folders'
+  | 'no-workspaces'
+  | 'nonexistent'
+  | 'ok'
 
 export interface SearchState {
   caseInsensitive: boolean
@@ -143,6 +175,7 @@ export type WorkspaceStateRootFolder = {
    * The files, converted to a form useable by this extension.
    */
   convertedFiles: Files
+  depth: number
   /**
    * An array of absolute file paths to all workspace files.
    */

@@ -129,7 +129,5 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Todo
 
-- Error message if folder is in a hidden folder and hidden folders are excluded or a sub folder is excluded
-- Update translations
-- Remove notDirectory translation
-- Create common template for rootfolder error and invalid view
+- Change depth for each root folder
+-- Update depth info for invalid messages

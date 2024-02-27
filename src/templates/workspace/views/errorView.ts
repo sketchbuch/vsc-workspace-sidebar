@@ -22,7 +22,7 @@ export const errorView = (state: WorkspaceState, renderVars: RenderVars): string
       ${
         showStackTrace
           ? viewMsg({
-              message: errorObj.stack || '',
+              message: errorObj?.stack ?? '',
               isSmall: true,
               type: 'description',
             })

@@ -5,29 +5,54 @@ import {
   CONFIG_FOLDER,
   CONFIG_FOLDERS,
 } from '../constants/config'
+import { getIntWithinBounds } from '../utils/numbers/getIntWithinBounds'
+import {
+  ConfigRootFolder,
+  ConfigRootFolderSettings,
+} from '../webviews/Workspace/WorkspaceViewProvider.interface'
+import { getDepthConfig } from './general'
 
-export const getFoldersConfig = (): string[] => {
+export const getFoldersConfig = (): ConfigRootFolder[] => {
+  const depth = getDepthConfig()
   const oldFolder =
     workspace.getConfiguration().get<string>('workspaceSidebar.folder') || CONFIG_FOLDER
   const rootFolders =
-    workspace.getConfiguration().get<string[]>('workspaceSidebar.rootFolders') ?? CONFIG_FOLDERS
-  let folders: string[] = []
+    workspace.getConfiguration().get<ConfigRootFolderSettings[]>('workspaceSidebar.rootFolders') ??
+    CONFIG_FOLDERS
+  let folders: ConfigRootFolder[] = []
 
   if (rootFolders.length === 0 && oldFolder) {
-    folders.push(oldFolder)
+    folders.push({
+      path: oldFolder,
+      depth,
+    })
   } else if (rootFolders.length > 0) {
-    folders = [...new Set(rootFolders)] // Remove duplicates
+    const foldersUnique = new Set<ConfigRootFolder>([])
+
+    rootFolders.forEach((ele) => {
+      const eleDepth = ele.depth
+      const hasDepth = eleDepth || eleDepth === 0
+      const intEleDepth = hasDepth ? parseInt(eleDepth.toString()) : depth
+
+      foldersUnique.add({
+        depth: Number.isNaN(intEleDepth) ? depth : getIntWithinBounds(intEleDepth),
+        path: ele.path.trim(),
+      })
+    })
+
+    folders = [...foldersUnique] // Remove duplicates
   }
 
   folders = folders.map((folder) => {
-    let newFolder = folder
+    let newFolder: ConfigRootFolder = { ...folder }
+    const { path } = newFolder
 
-    if (folder.startsWith('/~')) {
-      newFolder = newFolder.slice(1)
+    if (path.startsWith('/~')) {
+      newFolder.path = path.slice(1)
     }
 
-    if (folder.endsWith('/')) {
-      newFolder = newFolder.slice(0, -1)
+    if (path.endsWith('/')) {
+      newFolder.path = path.slice(0, -1)
     }
 
     return newFolder

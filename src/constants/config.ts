@@ -1,6 +1,8 @@
 export const CONFIG_CLEAN_LABELS = true
 export const CONFIG_CONDENSE_FILETREE = true
 export const CONFIG_DEPTH = 0
+export const CONFIG_DEPTH_MIN = 0
+export const CONFIG_DEPTH_MAX = 25
 export const CONFIG_EXCLUDED_FOLDERS = []
 export const CONFIG_EXPLORER_COMPACT_FOLDERS = true
 export const CONFIG_FOLDER = ''
