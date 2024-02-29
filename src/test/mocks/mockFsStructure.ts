@@ -1,4 +1,7 @@
 export const mockFsStructure = {
+  '.hiddenfolder': {
+    'hiddenfolder.code-workspace': '',
+  },
   'check-file': {
     'test-file.txt': '',
   },
@@ -31,5 +34,15 @@ export const mockFsStructure = {
     'test-file3': '',
     'test-subfolder1': {},
     'test-subfolder2': {},
+  },
+  hideme: {
+    '.hiddenfolder': {
+      'hiddenfolder.code-workspace': '',
+    },
+  },
+  'more-workspaces': {
+    'more-sub': {
+      'WS 7.code-workspace': '',
+    },
   },
 }

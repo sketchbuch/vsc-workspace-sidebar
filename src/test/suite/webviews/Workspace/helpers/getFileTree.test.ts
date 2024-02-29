@@ -4,6 +4,7 @@ import * as sinon from 'sinon'
 import * as coreConfigs from '../../../../../config/core'
 import * as foldersConfigs from '../../../../../config/folders'
 import * as treeConfigs from '../../../../../config/treeview'
+import { CONFIG_DEPTH } from '../../../../../constants/config'
 import * as compact from '../../../../../webviews/Workspace/helpers/compactTree'
 import * as condense from '../../../../../webviews/Workspace/helpers/condenseTree'
 import { getFileTree } from '../../../../../webviews/Workspace/helpers/getFileTree'
@@ -31,7 +32,7 @@ suite('Webviews > Workspace > Helpers > getFileTree():', () => {
     condenseSpy = sinon.spy(condense, 'condenseTree')
     folderConfigStub = sinon
       .stub(foldersConfigs, 'getFoldersConfig')
-      .callsFake(() => [ROOT_FOLDER_USERPATH])
+      .callsFake(() => [{ path: ROOT_FOLDER_USERPATH, depth: CONFIG_DEPTH }])
     osHomeStub = sinon.stub(os, 'homedir').callsFake(() => OS_HOMEFOLDER)
   })
 

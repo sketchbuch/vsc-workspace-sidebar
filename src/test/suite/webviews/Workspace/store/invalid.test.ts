@@ -5,12 +5,12 @@ import { getMockState } from '../../../../mocks/mockState'
 suite('Webviews > Workspace > Store > invalid()', () => {
   test('Updates state as expected', () => {
     const state = getMockState({
-      isFolderInvalid: false,
       view: 'error',
+      workspaceData: [],
     })
     const expectedState = getMockState({
-      isFolderInvalid: true,
       view: 'invalid',
+      workspaceData: [],
     })
 
     expect(state).not.to.eql(expectedState)

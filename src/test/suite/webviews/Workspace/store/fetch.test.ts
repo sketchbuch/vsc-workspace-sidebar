@@ -4,6 +4,7 @@ import * as sinon from 'sinon'
 import * as coreConfigs from '../../../../../config/core'
 import * as foldersConfigs from '../../../../../config/folders'
 import * as treeConfigs from '../../../../../config/treeview'
+import { CONFIG_DEPTH } from '../../../../../constants/config'
 import { FindAllRootFolderFiles } from '../../../../../utils/fs/findAllRootFolderFiles'
 import {
   ActionMetaFulfilled,
@@ -35,7 +36,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
     osStub = sinon.stub(os, 'homedir').callsFake(() => OS_HOMEFOLDER)
     rootFoldersConfigStub = sinon
       .stub(foldersConfigs, 'getFoldersConfig')
-      .callsFake(() => [ROOT_FOLDER_PATH])
+      .callsFake(() => [{ path: ROOT_FOLDER_PATH, depth: CONFIG_DEPTH }])
     treeConfigStub = sinon.stub(treeConfigs, 'getShowTreeConfig').callsFake(() => false)
   })
 
@@ -49,13 +50,11 @@ suite('Webviews > Workspace > Store > fetch()', () => {
 
   test('Pending updates state as expected', () => {
     const state = getMockState({
-      result: 'invalid-folder',
-      isFolderInvalid: true,
+      result: 'is-file',
       view: 'invalid',
     })
     const expectedState = getMockState({
       result: 'ok',
-      isFolderInvalid: false,
       view: 'loading',
     })
 
@@ -100,12 +99,10 @@ suite('Webviews > Workspace > Store > fetch()', () => {
 
     const intialState: Partial<WorkspaceState> = {
       result: 'ok',
-      isFolderInvalid: false,
       view: 'loading',
     }
     const defaultExpectedState: Partial<WorkspaceState> = {
       fileCount: 0,
-      isFolderInvalid: true,
       rootFolders: [],
       view: 'invalid',
       visibleFileCount: 0,
@@ -115,7 +112,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       condenseConfigStub.callsFake(() => false)
       treeConfigStub.callsFake(() => true)
 
-      const result = 'invalid-folder'
+      const result = 'is-file'
       const state = getMockState(intialState)
       const expectedState = getMockState({
         ...defaultExpectedState,
@@ -172,13 +169,11 @@ suite('Webviews > Workspace > Store > fetch()', () => {
     }
 
     const intialState: Partial<WorkspaceState> = {
-      isFolderInvalid: true,
       rootFolders: [],
       view: 'invalid',
     }
     const defaultExpectedState: Partial<WorkspaceState> = {
       result: 'ok',
-      isFolderInvalid: false,
       view: 'list',
     }
 

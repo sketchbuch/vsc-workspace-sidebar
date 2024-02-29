@@ -39,7 +39,8 @@ export const findRootFolderFiles = async ({
   const { isFile, isFolder } = checkFile(folderPath)
 
   if (isFolder) {
-    const isHiddenExcluded = excludeHiddenFolders && folderPath.includes(`${path.sep}.`)
+    const isHiddenExcluded =
+      excludeHiddenFolders && (folderPath.includes(`${path.sep}.`) || folderPath.startsWith(`.`))
 
     if (isHiddenExcluded) {
       return Promise.resolve({

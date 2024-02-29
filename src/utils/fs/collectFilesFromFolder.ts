@@ -42,7 +42,7 @@ export const collectFilesFromFolder = async ({
 
       const folders = getFilenamesOfType('folders', filenames, folder, fileType)
       let files = getFilenamesOfType('files', filenames, folder, fileType).filter(
-        (file) => !isHiddenFile(file)
+        (file) => (excludeHiddenFolders && !isHiddenFile(file)) || !excludeHiddenFolders
       )
 
       if (folders.length > 0) {

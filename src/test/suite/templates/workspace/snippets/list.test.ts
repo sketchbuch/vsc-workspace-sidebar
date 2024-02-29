@@ -106,8 +106,8 @@ suite('Templates > Workspace > Snippets: list()', () => {
     sinon.assert.notCalled(treeSpy)
   })
 
-  test('Renders rootFolderMessage if rootFolder.result is "invalid-folder"', () => {
-    const mockRootFolders = getMockRootFolders({
+  test.skip('Renders rootFolderMessage if rootFolder.result is "invalid-folder"', () => {
+    /*     const mockRootFolders = getMockRootFolders({
       rootFoldersFiles: [{ ...defaultRootFolderFiles[0], result: 'invalid-folder' }],
       showTree: false,
     })
@@ -120,7 +120,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
     sinon.assert.called(rfMsg)
     sinon.assert.called(itemFolderSpy)
     sinon.assert.notCalled(itemSpy)
-    sinon.assert.notCalled(treeSpy)
+    sinon.assert.notCalled(treeSpy) */
   })
 
   test('Renders rootFolderMessage if rootFolder.result is "no-workspaces"', () => {

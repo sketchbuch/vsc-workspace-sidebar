@@ -129,6 +129,8 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Todo
 
-- Change depth for each root folder
--- Update depth info for invalid messages
-- Remove depth from rendervars
+- Fix tests
+- Investigate why compacting not working for first level ws
+- Add exclude hidden to folder config
+- Test exclude hidden for invalid and folder error
+- Remove hidden check from root folder path, should only apply to sub.

@@ -3,6 +3,7 @@ import * as sinon from 'sinon'
 import * as coreConfigs from '../../../../../config/core'
 import * as foldersConfigs from '../../../../../config/folders'
 import * as treeConfigs from '../../../../../config/treeview'
+import { CONFIG_DEPTH } from '../../../../../constants/config'
 import { setSearch } from '../../../../../webviews/Workspace/store/setSearch'
 import { ROOT_FOLDER_PATH, SEARCH_TERM } from '../../../../mocks/mockFileData'
 import { getMockRootFolders, getMockSearchState, getMockState } from '../../../../mocks/mockState'
@@ -20,7 +21,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
     condenseConfigStub = sinon.stub(treeConfigs, 'getCondenseFileTreeConfig').callsFake(() => true)
     folderConfigStub = sinon
       .stub(foldersConfigs, 'getFoldersConfig')
-      .callsFake(() => [ROOT_FOLDER_PATH])
+      .callsFake(() => [{ path: ROOT_FOLDER_PATH, depth: CONFIG_DEPTH }])
     treeConfigStub = sinon.stub(treeConfigs, 'getShowTreeConfig').callsFake(() => false)
   })
 

@@ -1,39 +1,27 @@
 import { expect } from 'chai'
+import mockFs from 'mock-fs'
 import os from 'os'
+import * as path from 'path'
 import * as sinon from 'sinon'
 import * as folders from '../../../../config/folders'
 import { CONFIG_EXCLUDE_HIDDEN_FODLERS } from '../../../../constants/config'
-import * as collect from '../../../../utils/fs/collectFilesFromFolder'
 import { findAllRootFolderFiles } from '../../../../utils/fs/findAllRootFolderFiles'
-import * as finder from '../../../../utils/fs/findRootFolderFiles'
-import { FindRootFolderFilesConfig } from '../../../../utils/fs/findRootFolderFiles'
-import { OS_HOMEFOLDER, ROOT_FOLDER_PATH } from '../../../mocks/mockFileData'
+import { OS_HOMEFOLDER } from '../../../mocks/mockFileData'
+import { mockFsStructure } from '../../../mocks/mockFsStructure'
 
 suite('Utils > Fs > findAllRootFolderFiles()', async () => {
-  let collectFilesStub: sinon.SinonStub
+  const DEPTH = 2
+
   let excludedFoldersConfigStub: sinon.SinonStub
-  let findRootFolderFilesStub: sinon.SinonStub
   let foldersConfigStub: sinon.SinonStub
   let hiddenFoldersConfigStub: sinon.SinonStub
   let osStub: sinon.SinonStub
 
   setup(() => {
-    collectFilesStub = sinon
-      .stub(collect, 'collectFilesFromFolder')
-      .callsFake(async () => Promise.resolve([]))
-    excludedFoldersConfigStub = sinon.stub(folders, 'getExcludedFoldersConfig').callsFake(() => [])
-    findRootFolderFilesStub = sinon
-      .stub(finder, 'findRootFolderFiles')
-      .callsFake(async (config: FindRootFolderFilesConfig) => {
-        const response: finder.FindRootFolderFiles = {
-          files: [],
-          folderPath: '',
-          result: 'invalid-folder',
-        }
+    mockFs(mockFsStructure)
 
-        return Promise.resolve(response)
-      })
-    foldersConfigStub = sinon.stub(folders, 'getFoldersConfig').callsFake(() => [ROOT_FOLDER_PATH])
+    excludedFoldersConfigStub = sinon.stub(folders, 'getExcludedFoldersConfig').callsFake(() => [])
+    foldersConfigStub = sinon.stub(folders, 'getFoldersConfig').callsFake(() => [])
     hiddenFoldersConfigStub = sinon
       .stub(folders, 'getExcludeHiddenFoldersConfig')
       .callsFake(() => CONFIG_EXCLUDE_HIDDEN_FODLERS)
@@ -41,58 +29,126 @@ suite('Utils > Fs > findAllRootFolderFiles()', async () => {
   })
 
   teardown(() => {
-    collectFilesStub.restore()
+    mockFs.restore()
+
     excludedFoldersConfigStub.restore()
-    findRootFolderFilesStub.restore()
     foldersConfigStub.restore()
     hiddenFoldersConfigStub.restore()
     osStub.restore()
   })
 
-  test('No root folders returns expected result', async () => {
+  test('Result is "no-root-folders" if there are no root folders', async () => {
     foldersConfigStub.callsFake(() => [])
 
     const result = await findAllRootFolderFiles()
     expect(result).to.eql({ rootFolders: [], result: 'no-root-folders' })
   })
 
-  test('Invalid folders returns expected result', async () => {
-    const result = await findAllRootFolderFiles()
-    expect(result).to.eql({ rootFolders: [], result: 'invalid-folder' })
-  })
-
-  test('No workspaces returns expected result', async () => {
-    findRootFolderFilesStub.callsFake(async (folder: string) => {
-      const response: finder.FindRootFolderFiles = {
-        files: [],
-        folderPath: '',
-        result: 'no-workspaces',
-      }
-
-      return Promise.resolve(response)
-    })
-
-    const result = await findAllRootFolderFiles()
-    expect(result).to.eql({ rootFolders: [], result: 'no-workspaces' })
-  })
-
-  test('Valid folders returns expected result', async () => {
-    findRootFolderFilesStub.callsFake(async (folder: string) => {
-      const response: finder.FindRootFolderFiles = {
-        files: [],
-        folderPath: '',
-        result: 'ok',
-      }
-
-      return Promise.resolve(response)
-    })
+  test('Result is "nonexistent" if all root folders are neither files nor folders', async () => {
+    const paths = [
+      { path: path.join('madeup', 'folder'), depth: DEPTH },
+      { path: path.join('another', 'madeup', 'folder'), depth: DEPTH },
+    ]
+    foldersConfigStub.callsFake(() => paths)
 
     const result = await findAllRootFolderFiles()
     expect(result).to.eql({
       rootFolders: [
         {
+          depth: DEPTH,
           files: [],
-          folderPath: '',
+          folderPath: paths[0].path,
+          result: 'nonexistent',
+        },
+        {
+          depth: DEPTH,
+          files: [],
+          folderPath: paths[1].path,
+          result: 'nonexistent',
+        },
+      ],
+      result: 'nonexistent',
+    })
+  })
+
+  test('Result is "is-file" if all root folders are files', async () => {
+    const paths = [
+      { path: path.join('collect-files-from-folder', 'file-1.txt'), depth: DEPTH },
+      { path: path.join('check-file', 'test-file.txt'), depth: DEPTH },
+    ]
+    foldersConfigStub.callsFake(() => paths)
+
+    const result = await findAllRootFolderFiles()
+    expect(result).to.eql({
+      rootFolders: [
+        {
+          depth: DEPTH,
+          files: [],
+          folderPath: paths[0].path,
+          result: 'is-file',
+        },
+        {
+          depth: DEPTH,
+          files: [],
+          folderPath: paths[1].path,
+          result: 'is-file',
+        },
+      ],
+      result: 'is-file',
+    })
+  })
+
+  test('Result is "no-workspaces" if all root folders contain no workspaces', async () => {
+    const paths = [
+      { path: path.join('get-filenames-of-type'), depth: DEPTH },
+      { path: path.join('check-file'), depth: DEPTH },
+    ]
+    foldersConfigStub.callsFake(() => paths)
+
+    const result = await findAllRootFolderFiles()
+    expect(result).to.eql({
+      rootFolders: [
+        {
+          depth: DEPTH,
+          files: [],
+          folderPath: paths[0].path,
+          result: 'no-workspaces',
+        },
+        {
+          depth: DEPTH,
+          files: [],
+          folderPath: paths[1].path,
+          result: 'no-workspaces',
+        },
+      ],
+      result: 'no-workspaces',
+    })
+  })
+
+  test('Result is "ok" if all root folders contain workspaces', async () => {
+    const paths = [
+      { path: path.join('find-workspace-files'), depth: DEPTH },
+      { path: path.join('more-workspaces'), depth: DEPTH },
+    ]
+    foldersConfigStub.callsFake(() => paths)
+
+    const result = await findAllRootFolderFiles()
+    expect(result).to.eql({
+      rootFolders: [
+        {
+          depth: DEPTH,
+          files: [
+            path.join(paths[0].path, 'WS 0.code-workspace'),
+            path.join(paths[0].path, 'test-subfolder1', 'WS 1.code-workspace'),
+            path.join(paths[0].path, 'test-subfolder2', 'WS 2.code-workspace'),
+          ],
+          folderPath: paths[0].path,
+          result: 'ok',
+        },
+        {
+          depth: DEPTH,
+          files: [path.join(paths[1].path, 'more-sub', 'WS 7.code-workspace')],
+          folderPath: paths[1].path,
           result: 'ok',
         },
       ],
