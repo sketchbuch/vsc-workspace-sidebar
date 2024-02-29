@@ -46,7 +46,7 @@ suite('Config > Helpers > getNewRootFolderConfig():', function () {
     ])
 
     expect(result).to.eql([
-      isWin ? filePath.charAt(0).toLowerCase() + filePath.slice(1) : filePath,
+      { path: isWin ? filePath.charAt(0).toLowerCase() + filePath.slice(1) : filePath },
       ...defaultPaths,
     ])
   })

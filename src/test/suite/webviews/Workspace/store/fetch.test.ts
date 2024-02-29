@@ -178,7 +178,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
     }
 
     suite('List:', () => {
-      test('Sort "asc" updates state as expected', () => {
+      test('Updates state as expected', () => {
         const mockRootFolders = getMockRootFolders({
           showTree: false,
         })
@@ -186,24 +186,6 @@ suite('Webviews > Workspace > Store > fetch()', () => {
         const expectedState = getMockState({
           ...defaultExpectedState,
           ...mockRootFolders,
-        })
-
-        expect(state).not.to.eql(expectedState)
-        fetchFulfilled(state, getAction(mockRootFolders.rootFolders))
-        expect(state).to.eql(expectedState)
-      })
-
-      test('Sort "asc" searched updates state as expected', () => {
-        const mockRootFolders = getMockRootFolders({
-          searchTerm: SEARCH_TERM,
-          showTree: false,
-        })
-        const search = getMockSearchState({ term: SEARCH_TERM })
-        const state = getMockState({ ...intialState, search })
-        const expectedState = getMockState({
-          ...defaultExpectedState,
-          ...mockRootFolders,
-          search,
         })
 
         expect(state).not.to.eql(expectedState)
