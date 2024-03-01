@@ -1,9 +1,9 @@
 import { t } from 'vscode-ext-localisation'
 import {
+  FileTree,
   FindFileResult,
   WorkspaceState,
 } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
-import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree'
 import { RenderVars } from '../../../webviews/webviews.interface'
 import { getListClasses } from '../../helpers/getListClasses'
 import { itemFile } from './itemFile'

@@ -5,7 +5,7 @@ import * as item from '../../../../../templates/workspace/snippets/itemFile'
 import * as folder from '../../../../../templates/workspace/snippets/itemFolder'
 import * as trees from '../../../../../templates/workspace/snippets/tree'
 import { tree } from '../../../../../templates/workspace/snippets/tree'
-import { FileTree } from '../../../../../webviews/Workspace/helpers/getFileTree'
+import { FileTree } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import {
   FOLDER1,
   FOLDER3,

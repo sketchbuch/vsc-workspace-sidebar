@@ -3,7 +3,7 @@ import { CONFIG_DEPTH } from '../../../../../constants/config'
 import { rootFolderMessage } from '../../../../../templates/workspace/snippets/rootFolderMessage'
 import { FindFileResult } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 
-suite.only('Templates > Workspace > Snippets: rootFolderMessage()', () => {
+suite('Templates > Workspace > Snippets: rootFolderMessage()', () => {
   const results: FindFileResult[] = [
     'is-file',
     'is-hidden-excluded',

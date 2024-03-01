@@ -1,6 +1,4 @@
 import { PayloadAction, SerializedError } from '@reduxjs/toolkit'
-import { FindRootFolderFiles } from '../../utils/fs/findRootFolderFiles'
-import { FileTree } from './helpers/getFileTree'
 
 export interface File {
   cleanedLabel: string
@@ -242,3 +240,53 @@ export type ActionMetaRejected = {
 } & ActionMetaCommon
 
 type ActionType = string
+
+/**
+ * Find Root Folder Files
+ */
+
+export interface FindRootFolderFiles {
+  /**
+   * The depth for this root folder.
+   */
+  depth: number
+  files: WorkspaceFiles
+  /**
+   * The folder with ~ replaced with the users homedir
+   */
+  folderPath: string
+  result: FindFileResult
+}
+
+export type FindRootFolderFilesConfig = {
+  excludedFolders: string[]
+  excludeHiddenFolders: boolean
+  folder: string
+  homeDir: string
+  maxDepth: number
+}
+
+/**
+ * File Tree
+ */
+
+export type FileTrees = FileTree[]
+
+export interface FileTree {
+  files: Files
+  /**
+   * Absolute path to the folder
+   */
+  folderPath: string
+  /**
+   * Used to help ID closed folders
+   */
+  folderPathSegment: string
+  isRoot: boolean
+  label: string
+  sub: FileTrees
+}
+
+export type FolderList = {
+  [key: string]: FileTree
+}

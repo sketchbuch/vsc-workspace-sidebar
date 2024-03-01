@@ -1,7 +1,7 @@
-import { FileTree, FileTrees } from './getFileTree'
+import { FileTree, FileTrees } from '../WorkspaceViewProvider.interface'
 
 /**
- * This will restructure the tree. If a non-root folder has no subfolders,
+ * This will restructure the tree. If a folder has no subfolders,
  * but has 1 file, this file will be added to the parent folder's files
  * and the subfolder is removed from the tree.
  *
@@ -11,7 +11,7 @@ import { FileTree, FileTrees } from './getFileTree'
 export const condenseTree = (tree: FileTree): FileTree => {
   if (tree.sub.length > 0) {
     tree.sub = tree.sub.reduce((newSubs: FileTrees, curSub: FileTree) => {
-      if (curSub.sub.length < 1 && !tree.isRoot) {
+      if (curSub.sub.length < 1) {
         if (curSub.files.length === 1) {
           tree.files = [...tree.files, ...curSub.files]
 

@@ -1,4 +1,4 @@
-import { FileTree } from '../helpers/getFileTree'
+import { FileTree } from '../WorkspaceViewProvider.interface'
 
 export const getAllFoldersFromTree = (tree: FileTree): string[] => {
   let folders: string[] = []

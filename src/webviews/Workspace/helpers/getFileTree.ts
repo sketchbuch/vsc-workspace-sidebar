@@ -3,30 +3,9 @@ import * as pathLib from 'path'
 import { getExplorerCompactFoldersConfig } from '../../../config/core'
 import { getCondenseFileTreeConfig } from '../../../config/treeview'
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
-import { Files } from '../WorkspaceViewProvider.interface'
+import { FileTree, Files, FolderList } from '../WorkspaceViewProvider.interface'
 import { compactTree } from './compactTree'
 import { condenseTree } from './condenseTree'
-
-export type FileTrees = FileTree[]
-
-export interface FileTree {
-  files: Files
-  /**
-   * Absolute path to the folder
-   */
-  folderPath: string
-  /**
-   * Used to help ID closed folders
-   */
-  folderPathSegment: string
-  isRoot: boolean
-  label: string
-  sub: FileTrees
-}
-
-type FolderList = {
-  [key: string]: FileTree
-}
 
 export const getFileTree = (configFolder: string, files: Files): FileTree => {
   const homeDir = os.homedir()
