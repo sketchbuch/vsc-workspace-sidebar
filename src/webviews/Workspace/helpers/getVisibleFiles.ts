@@ -30,9 +30,11 @@ export const getVisibleFiles = (wsFiles: Files, search: SearchState) => {
   }
 
   if (showPaths === ConfigShowPaths.AS_NEEEDED) {
-    const checks = visibleFiles.map(({ label, path }) =>
-      showTree ? `${label}-${path.split(pathLib.sep)[0]}` : label
-    )
+    const checks = visibleFiles.map(({ label, path }) => {
+      const pathParts = path.split(pathLib.sep)
+
+      return showTree && pathParts.length > 1 ? `${label}-${pathParts[0]}` : label
+    })
     const dups = findDuplicates(checks)
 
     visibleFiles = visibleFiles.map((file: File, index: number) => {

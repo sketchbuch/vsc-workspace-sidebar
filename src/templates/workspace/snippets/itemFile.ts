@@ -2,6 +2,7 @@ import { getFileiconThemeConfig } from '../../../config/core'
 import { getLangIcon } from '../../../theme/getLangIcon'
 import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { RenderVars } from '../../../webviews/webviews.interface'
+import { getDescription } from '../../helpers/getDescription'
 import { getFileTooltip } from '../../helpers/getFileTooltip'
 import { getLabel } from '../../helpers/getLabel'
 import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceButtons'
@@ -25,6 +26,7 @@ export const itemFile = ({ depth, file, renderVars, state }: ItemFileProps): str
   const isTree = depth !== undefined
   const isRootLvlFile = isTree && depth === 0
   const showDescription = isTree ? showPath && condenseFileTree : showPath
+  const description = getDescription(path, isTree && showPath && condenseFileTree)
 
   const tooltip = getFileTooltip(renderVars, file, 'cur-win')
   const visibleLabel = cleanLabels ? cleanedLabel : label
@@ -77,7 +79,7 @@ export const itemFile = ({ depth, file, renderVars, state }: ItemFileProps): str
         }
         <span class="list__text">
           <span class="list__title">${getLabel(visibleLabel, search)}</span>
-          ${showDescription ? `<span class="list__description">${path}</span>` : ''}
+          ${showDescription ? `<span class="list__description">${description}</span>` : ''}
         </span>
         ${itemButtons(workspaceButtons)}
       </span>

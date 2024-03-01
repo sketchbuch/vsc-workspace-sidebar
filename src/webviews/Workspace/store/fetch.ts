@@ -49,6 +49,7 @@ export const fetchFulfilled = (
       const convertedFiles = convertWsFiles(folderPath, files, state.selected)
       const visibleFiles = getVisibleFiles(convertedFiles, state.search)
       const fileTree = showTree ? getFileTree(folderPath, visibleFiles) : null
+
       const allFolders =
         showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : [folderName]
 
