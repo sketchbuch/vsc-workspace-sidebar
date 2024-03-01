@@ -1,23 +1,22 @@
 import { expect } from 'chai'
-import * as sinon from 'sinon'
-import * as links from '../../../../../templates/common/snippets/viewLink'
 import { invalidView } from '../../../../../templates/workspace/views/invalidView'
+import { FindFileResult } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
-import { getMockState } from '../../../../mocks/mockState'
+import { getMockRootFolders, getMockState } from '../../../../mocks/mockState'
 
 suite('Templates > Workspace > View: invalidView()', () => {
-  let vlSpy: sinon.SinonSpy
-
-  setup(() => {
-    vlSpy = sinon.spy(links, 'viewLink')
-  })
-
-  teardown(() => {
-    vlSpy.restore()
-  })
+  const results: FindFileResult[] = [
+    'is-file',
+    'is-hidden-excluded',
+    'no-root-folders',
+    'no-workspaces',
+    'nonexistent',
+    'ok',
+  ]
+  const mockRenderVars = getMockRenderVars()
 
   test('Renders the base view', () => {
-    const result = invalidView(getMockState(), getMockRenderVars())
+    const result = invalidView(getMockState(), mockRenderVars)
 
     expect(result).to.be.a('string')
     expect(result).contains('class="view invalid"')
@@ -25,72 +24,35 @@ suite('Templates > Workspace > View: invalidView()', () => {
     expect(result).contains('<span class="view__message-icon codicon codicon-error"></span>')
   })
 
-  test('Renders a settings link', () => {
-    invalidView(getMockState(), getMockRenderVars())
+  results.forEach((res) => {
+    test(`"${res}" renders as expected`, () => {
+      const result = invalidView(getMockState({ result: res }), mockRenderVars)
 
-    sinon.assert.callCount(vlSpy, 1)
-    sinon.assert.calledWith(vlSpy, 'Check extension settings', 'SETTINGS')
+      expect(result).contains(`data-type="${res}"`)
+      expect(result).contains('view__message-title')
+      expect(result).contains('view__message-description')
+    })
   })
 
-  test.skip('Renders an no-root-folders error', () => {
-    /*     const result = invalidView(
-      getMockState({ result: 'no-root-folders' }),
-      getMockRenderVars({ depth: 1 })
-    )
+  test('"no-workspaces" description count is 2 if depth is 0', () => {
+    const mockRootFolders = getMockRootFolders()
+    const regex = /view__message-description/g
+    const state = getMockState({ ...mockRootFolders, result: 'no-workspaces' })
 
-    expect(result).contains(
-      "No root folders specified. Please edit the config option 'workspaceSidebar.rootFolders'"
-    )
-    sinon.assert.callCount(vlSpy, 1)
-    sinon.assert.calledWith(vlSpy, 'Check extension settings', 'ROOT_FOLDERS') */
+    state.workspaceData[0].depth = 0
+
+    const count = (invalidView(state, mockRenderVars).match(regex) || []).length
+    expect(count).to.equal(2)
   })
 
-  test.skip('Renders an invalid-folder error', () => {
-    /*     const result = invalidView(
-      getMockState({ result: 'invalid-folder' }),
-      getMockRenderVars({ depth: 1 })
-    )
+  test('"no-workspaces" description count is 1 if depth is >= 1', () => {
+    const mockRootFolders = getMockRootFolders()
+    const regex = /view__message-description/g
+    const state = getMockState({ ...mockRootFolders, result: 'no-workspaces' })
 
-    expect(result).contains('None of the root folders are directories')
-    sinon.assert.callCount(vlSpy, 1)
-    sinon.assert.calledWith(vlSpy, 'Check extension settings', 'SETTINGS') */
-  })
+    state.workspaceData[0].depth = 1
 
-  test.skip('Renders a no-workspaces error', () => {
-    /*     const result = invalidView(
-      getMockState({ result: 'no-workspaces' }),
-      getMockRenderVars({ depth: 1 })
-    )
-
-    expect(result).contains('Folders contain no workspaces')
-    expect(result).contains('Try increasing the search depth or change the folders.')
-    expect(result).not.contains(
-      'The current search depth is 0, this means that only the root folders will be searched in for workspace files.'
-    )
-    sinon.assert.callCount(vlSpy, 1)
-    sinon.assert.calledWith(vlSpy, 'Check extension settings', 'SETTINGS') */
-  })
-
-  test.skip('Renders a no-workspaces error (zero depth)', () => {
-    /*     const result = invalidView(
-      getMockState({ result: 'no-workspaces' }),
-      getMockRenderVars({ depth: 0 })
-    )
-
-    expect(result).contains('Folders contain no workspaces')
-    expect(result).contains('Try increasing the search depth or change the folders.')
-    expect(result).contains(
-      'The current search depth is 0, this means that only the root folders will be searched in for workspace files.'
-    )
-    sinon.assert.callCount(vlSpy, 1)
-    sinon.assert.calledWith(vlSpy, 'Check extension settings', 'SETTINGS') */
-  })
-
-  test.skip('Renders an generic error in other cases', () => {
-    /*     const result = invalidView(getMockState({ result: 'ok' }), getMockRenderVars({ depth: 1 }))
-
-    expect(result).contains('Something went wrong whilst collecting workspaces')
-    sinon.assert.callCount(vlSpy, 1)
-    sinon.assert.calledWith(vlSpy, 'Check extension settings', 'SETTINGS') */
+    const count = (invalidView(state, mockRenderVars).match(regex) || []).length
+    expect(count).to.equal(1)
   })
 })

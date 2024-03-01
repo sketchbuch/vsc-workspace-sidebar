@@ -39,10 +39,10 @@
   "workspace": {
     "error": {
       "default": {
-        "title": "An unknown error occured"
+        "title": "An unknown error occured."
       },
       "fetch": {
-        "title": "An error occured whilst collecting workspace files"
+        "title": "An error occured whilst collecting workspace files."
       }
     },
     "inValid": {
@@ -80,6 +80,9 @@
       "rootFolders": "root folders"
     },
     "list": {
+      "default": {
+        "title": "Something went wrong whilst collecting workspaces."
+      },
       "extWs": {
         "saveButton": "Add to Root Folders"
       },

@@ -47,7 +47,7 @@
     },
     "inValid": {
       "default": {
-        "title": "Beim Suchen nach Arbeitsbereichen ist ein Fehler aufgetreten"
+        "title": "Beim Suchen nach Arbeitsbereichen ist ein Fehler aufgetreten."
       },
       "hiddenExcluded": {
         "description": "Die Einstellungen schließen derzeit {{settingsLinkHidden}} aus.",
@@ -80,6 +80,9 @@
       "rootFolders": "Stammordner"
     },
     "list": {
+      "default": {
+        "title": "Beim Suchen nach Arbeitsbereichen ist ein Fehler aufgetreten."
+      },
       "extWs": {
         "saveButton": "Zu Stammordnern hinzufügen"
       },

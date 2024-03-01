@@ -31,7 +31,6 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
       `
   }
 
-  // TODO - check rendering
   return `
       <section class="view list list--empty">
         ${viewMsg({ message: t('workspace.list.noWorkspaces.title'), type: 'title' })}

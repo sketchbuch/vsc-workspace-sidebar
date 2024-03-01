@@ -7,7 +7,7 @@ export const rootFolderMessage = (result: FindFileResult, rootFolderDepth: numbe
   switch (result) {
     case 'is-hidden-excluded':
       return `
-        <div class="rootfolder__message">
+        <div class="rootfolder__message" data-type="${result}">
           ${viewMsg({ message: t('workspace.list.hiddenExcluded.title'), type: 'title' })}
           ${viewMsg({
             message: t('workspace.list.hiddenExcluded.description', {
@@ -23,7 +23,7 @@ export const rootFolderMessage = (result: FindFileResult, rootFolderDepth: numbe
 
     case 'nonexistent':
       return `
-        <div class="rootfolder__message">
+        <div class="rootfolder__message" data-type="${result}">
           ${viewMsg({ message: t('workspace.list.nonexistent.title'), type: 'title' })}
           ${viewMsg({
             message: t('workspace.list.nonexistent.description', {
@@ -36,7 +36,7 @@ export const rootFolderMessage = (result: FindFileResult, rootFolderDepth: numbe
 
     case 'is-file':
       return `
-          <div class="rootfolder__message">
+          <div class="rootfolder__message" data-type="${result}">
             ${viewMsg({ message: t('workspace.list.isFile.title'), type: 'title' })}
             ${viewMsg({
               message: t('workspace.list.isFile.description', {
@@ -48,11 +48,10 @@ export const rootFolderMessage = (result: FindFileResult, rootFolderDepth: numbe
         `
 
     case 'no-workspaces':
-    default:
       const isDepthZero = rootFolderDepth === 0
 
       return `
-        <div class="rootfolder__message">
+        <div class="rootfolder__message" data-type="${result}">
           ${viewMsg({ message: t('workspace.list.noWorkspaces.title'), type: 'title' })}
           ${viewMsg({
             message: t('workspace.list.noWorkspaces.descriptionSettings', {
@@ -71,5 +70,12 @@ export const rootFolderMessage = (result: FindFileResult, rootFolderDepth: numbe
           }
         </div>
       `
+
+    default:
+      return `
+        <div class="rootfolder__message rootfolder__message--default" data-type="${result}">
+          ${viewMsg({ message: t('workspace.list.default.title'), type: 'title' })}
+        </div>
+        `
   }
 }

@@ -11,7 +11,7 @@ import { itemFolder } from './itemFolder'
 import { rootFolderMessage } from './rootFolderMessage'
 import { tree } from './tree'
 
-const rootPathErrors: FindFileResult[] = [
+export const rootPathErrors: FindFileResult[] = [
   'is-file',
   'is-hidden-excluded',
   'no-workspaces',

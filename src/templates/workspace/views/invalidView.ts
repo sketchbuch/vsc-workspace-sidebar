@@ -8,7 +8,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
   switch (state.result) {
     case 'is-hidden-excluded':
       return `
-        <section class="view invalid">
+        <section class="view invalid" data-type="${state.result}">
           ${viewMsg({ message: t('workspace.inValid.hiddenExcluded.title'), type: 'title' })}
           ${viewMsg({
             message: t('workspace.inValid.hiddenExcluded.description', {
@@ -24,7 +24,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
 
     case 'nonexistent':
       return `
-        <section class="view invalid">
+        <section class="view invalid" data-type="${state.result}">
           ${viewMsg({ message: t('workspace.inValid.nonexistent.title'), type: 'title' })}
           ${viewMsg({
             message: t('workspace.inValid.nonexistent.description', {
@@ -37,7 +37,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
 
     case 'is-file':
       return `
-        <section class="view invalid">
+        <section class="view invalid" data-type="${state.result}">
           ${viewMsg({ message: t('workspace.inValid.isFile.title'), type: 'title' })}
           ${viewMsg({
             message: t('workspace.inValid.isFile.description', {
@@ -50,7 +50,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
 
     case 'no-root-folders':
       return `
-        <section class="view invalid">
+        <section class="view invalid" data-type="${state.result}">
           ${viewMsg({ message: t('workspace.inValid.noRootFolders.title'), type: 'title' })}
           ${viewMsg({
             message: t('workspace.inValid.noRootFolders.description', {
@@ -74,7 +74,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
       }
 
       return `
-        <section class="view invalid">
+        <section class="view invalid" data-type="${state.result}">
           ${viewMsg({ message: t('workspace.inValid.noWorkspaces.title'), type: 'title' })}
           ${viewMsg({
             message: t('workspace.inValid.noWorkspaces.descriptionSettings', {
@@ -96,7 +96,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
 
     default:
       return `
-        <section class="view invalid">
+        <section class="view invalid" data-type="${state.result}">
           ${viewMsg({ message: t('workspace.inValid.default.title'), type: 'title' })}
           ${viewMsg({
             message: viewLink(t('workspace.links.checkSettings'), 'SETTINGS'),
