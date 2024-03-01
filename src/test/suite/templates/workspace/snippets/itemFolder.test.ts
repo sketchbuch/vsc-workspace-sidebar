@@ -6,7 +6,7 @@ import * as buttons from '../../../../../templates/workspace/snippets/itemButton
 import { itemFolder } from '../../../../../templates/workspace/snippets/itemFolder'
 import * as icons from '../../../../../templates/workspace/snippets/itemIcons'
 import * as indent from '../../../../../templates/workspace/snippets/itemIndent'
-import { FileTree } from '../../../../../webviews/Workspace/helpers/getFileTree'
+import { FileTree } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { OS_HOMEFOLDER, ROOT_FOLDER } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
 import { getMockRootFolders, getMockState } from '../../../../mocks/mockState'

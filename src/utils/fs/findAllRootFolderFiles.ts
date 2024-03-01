@@ -4,8 +4,11 @@ import {
   getExcludedFoldersConfig,
   getFoldersConfig,
 } from '../../config/folders'
-import { FindFileResult } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
-import { FindRootFolderFiles, findRootFolderFiles } from './findRootFolderFiles'
+import {
+  FindFileResult,
+  FindRootFolderFiles,
+} from '../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { findRootFolderFiles } from './findRootFolderFiles'
 
 export interface FindAllRootFolderFiles {
   rootFolders: FindRootFolderFiles[]

@@ -1,5 +1,4 @@
-import { FileTree } from '../../webviews/Workspace/helpers/getFileTree'
-import { File } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
+import { File, FileTree } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 
 type TreeChild = FileTree | File
 export type TreeChildren = TreeChild[]

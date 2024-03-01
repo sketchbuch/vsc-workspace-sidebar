@@ -1,10 +1,8 @@
 import { expect } from 'chai'
 import mockFs from 'mock-fs'
 import * as path from 'path'
-import {
-  FindRootFolderFilesConfig,
-  findRootFolderFiles,
-} from '../../../../utils/fs/findRootFolderFiles'
+import { findRootFolderFiles } from '../../../../utils/fs/findRootFolderFiles'
+import { FindRootFolderFilesConfig } from '../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { OS_HOMEFOLDER } from '../../../mocks/mockFileData'
 import { mockFsStructure } from '../../../mocks/mockFsStructure'
 

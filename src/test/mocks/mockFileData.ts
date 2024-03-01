@@ -1,7 +1,6 @@
 import * as path from 'path'
 import { FS_WS_FILETYPE as EXT } from '../../constants/fs'
-import { File, Files } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
-import { FileTree } from '../../webviews/Workspace/helpers/getFileTree'
+import { File, FileTree, Files } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 
 export type GetFileTreeType =
   | 'compacted-condensed-searched'

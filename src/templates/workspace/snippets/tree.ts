@@ -1,6 +1,8 @@
 import { RenderVars } from '../../../webviews/webviews.interface'
-import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree'
-import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import {
+  FileTree,
+  WorkspaceState,
+} from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { isFile } from '../../helpers/isFile'
 import { sortTreeChildren, TreeChildren } from '../../helpers/sortTreeChildren'
 import { itemFile } from './itemFile'

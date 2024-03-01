@@ -1,32 +1,11 @@
 import * as path from 'path'
 import { FS_WS_FILETYPE } from '../../constants/fs'
 import {
-  FindFileResult,
-  WorkspaceFiles,
+  FindRootFolderFiles,
+  FindRootFolderFilesConfig,
 } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { checkFile } from './checkFile'
 import { collectFilesFromFolder } from './collectFilesFromFolder'
-
-export interface FindRootFolderFiles {
-  /**
-   * The depth for this root folder.
-   */
-  depth: number
-  files: WorkspaceFiles
-  /**
-   * The folder with ~ replaced with the users homedir
-   */
-  folderPath: string
-  result: FindFileResult
-}
-
-export type FindRootFolderFilesConfig = {
-  excludedFolders: string[]
-  excludeHiddenFolders: boolean
-  folder: string
-  homeDir: string
-  maxDepth: number
-}
 
 export const findRootFolderFiles = async ({
   excludedFolders,

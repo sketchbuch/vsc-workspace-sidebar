@@ -5,11 +5,11 @@ import {
   FindAllRootFolderFiles,
   findAllRootFolderFiles,
 } from '../../../utils/fs/findAllRootFolderFiles'
-import { FindRootFolderFiles } from '../../../utils/fs/findRootFolderFiles'
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
 import {
   ActionMetaFulfilled,
   ActionMetaRejected,
+  FindRootFolderFiles,
   WorkspaceState,
   WorkspaceThunkAction,
   WorkspaceThunkErrorAction,

@@ -1,9 +1,12 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import * as os from 'os'
 import { getShowTreeConfig } from '../../../config/treeview'
-import { FindRootFolderFiles } from '../../../utils/fs/findRootFolderFiles'
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
-import { WorkspaceCacheRootFolders, WorkspaceState } from '../WorkspaceViewProvider.interface'
+import {
+  FindRootFolderFiles,
+  WorkspaceCacheRootFolders,
+  WorkspaceState,
+} from '../WorkspaceViewProvider.interface'
 import { convertWsFiles } from '../helpers/convertWsFiles'
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree'
 import { getFileTree } from '../helpers/getFileTree'

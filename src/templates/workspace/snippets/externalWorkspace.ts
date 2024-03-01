@@ -1,7 +1,10 @@
 import { t } from 'vscode-ext-localisation'
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
-import { File, WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
-import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree'
+import {
+  File,
+  FileTree,
+  WorkspaceState,
+} from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { getLabel } from '../../../webviews/Workspace/helpers/getLabel'
 import { RenderVars } from '../../../webviews/webviews.interface'
 import { getListClasses } from '../../helpers/getListClasses'

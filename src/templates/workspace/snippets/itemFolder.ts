@@ -1,7 +1,9 @@
 import * as os from 'os'
 import path from 'path'
-import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
-import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree'
+import {
+  FileTree,
+  WorkspaceState,
+} from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { RenderVars } from '../../../webviews/webviews.interface'
 import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceButtons'
 import { itemButtons } from './itemButtons'
