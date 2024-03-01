@@ -14,6 +14,7 @@ import { getDepthConfig } from './general'
 
 export const getFoldersConfig = (): ConfigRootFolder[] => {
   const depth = getDepthConfig()
+  const excludeHiddenFolders = getExcludeHiddenFoldersConfig()
   const oldFolder =
     workspace.getConfiguration().get<string>('workspaceSidebar.folder') || CONFIG_FOLDER
   const rootFolders =
@@ -23,24 +24,33 @@ export const getFoldersConfig = (): ConfigRootFolder[] => {
 
   if (rootFolders.length === 0 && oldFolder) {
     folders.push({
-      path: oldFolder,
       depth,
+      excludeHiddenFolders,
+      path: oldFolder,
     })
   } else if (rootFolders.length > 0) {
-    const foldersUnique = new Set<ConfigRootFolder>([])
+    const uniqueFolderPaths = new Set<string>()
+    rootFolders.forEach((ele) => uniqueFolderPaths.add(ele.path))
 
-    rootFolders.forEach((ele) => {
-      const eleDepth = ele.depth
-      const hasDepth = eleDepth || eleDepth === 0
-      const intEleDepth = hasDepth ? parseInt(eleDepth.toString()) : depth
+    for (const path of uniqueFolderPaths) {
+      const pathConfig = rootFolders.find((rootFolder) => rootFolder.path === path)
 
-      foldersUnique.add({
-        depth: Number.isNaN(intEleDepth) ? depth : getIntWithinBounds(intEleDepth),
-        path: ele.path.trim(),
-      })
-    })
+      if (pathConfig) {
+        const eleDepth = pathConfig.depth
+        const eleExcludeHidden = pathConfig.excludeHiddenFolders
+        const hasDepth = eleDepth || eleDepth === 0
+        const intEleDepth = hasDepth ? parseInt(eleDepth.toString()) : depth
 
-    folders = [...foldersUnique] // Remove duplicates
+        folders.push({
+          excludeHiddenFolders:
+            eleExcludeHidden === Boolean(eleExcludeHidden)
+              ? eleExcludeHidden
+              : excludeHiddenFolders,
+          depth: Number.isNaN(intEleDepth) ? depth : getIntWithinBounds(intEleDepth),
+          path: pathConfig.path.trim(),
+        })
+      }
+    }
   }
 
   folders = folders.map((folder) => {

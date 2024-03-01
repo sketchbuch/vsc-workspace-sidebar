@@ -31,10 +31,15 @@ export const getShowFileiconConfig = (): boolean => {
   )
 }
 
-// TODO - Remove duplicate keys and array items
 export const getShowFileiconsConfigConfig = (): FileIconKeysCustom => {
-  return (
+  const fiConfig: FileIconKeysCustom =
     workspace.getConfiguration().get<FileIconKeysCustom>('workspaceSidebar.showFileIconsConfig') ??
     CONFIG_SHOW_FILE_ICONS_CONFIG
-  )
+  const newConfig: FileIconKeysCustom = {}
+
+  Object.keys(fiConfig).forEach((key) => {
+    newConfig[key] = [...new Set(fiConfig[key])]
+  })
+
+  return newConfig
 }

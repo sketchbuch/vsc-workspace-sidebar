@@ -6,22 +6,6 @@ import { viewMsg } from '../../common/snippets/viewMsg'
 
 export const invalidView = (state: WorkspaceState, renderVars: RenderVars): string => {
   switch (state.result) {
-    case 'is-hidden-excluded':
-      return `
-        <section class="view invalid" data-type="${state.result}">
-          ${viewMsg({ message: t('workspace.inValid.hiddenExcluded.title'), type: 'title' })}
-          ${viewMsg({
-            message: t('workspace.inValid.hiddenExcluded.description', {
-              settingsLinkHidden: viewLink(
-                t('workspace.links.excludeHiddenFolders'),
-                'EXCLUDE_HIDDEN_FOLDERS'
-              ),
-            }),
-            type: 'description',
-          })}
-        </section>
-      `
-
     case 'nonexistent':
       return `
         <section class="view invalid" data-type="${state.result}">
@@ -79,7 +63,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
           ${viewMsg({
             message: t('workspace.inValid.noWorkspaces.descriptionSettings', {
               settingsLinkDepth: viewLink(t('workspace.links.depth'), 'DEPTH'),
-              settingsLinkRootFolder: viewLink(t('workspace.links.rootFolders'), 'ROOT_FOLDERS'),
+              settingsLinkRootFolder: viewLink(t('workspace.links.rootFolder'), 'ROOT_FOLDERS'),
             }),
             type: 'description',
           })}
@@ -96,7 +80,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
 
     default:
       return `
-        <section class="view invalid" data-type="${state.result}">
+        <section class="view invalid invalid--default" data-type="${state.result}">
           ${viewMsg({ message: t('workspace.inValid.default.title'), type: 'title' })}
           ${viewMsg({
             message: viewLink(t('workspace.links.checkSettings'), 'SETTINGS'),

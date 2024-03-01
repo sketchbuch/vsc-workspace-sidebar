@@ -49,10 +49,6 @@
       "default": {
         "title": "Beim Suchen nach Arbeitsbereichen ist ein Fehler aufgetreten."
       },
-      "hiddenExcluded": {
-        "description": "Die Einstellungen schließen derzeit {{settingsLinkHidden}} aus.",
-        "title": "Alle Stammordner enthalten versteckte Ordner."
-      },
       "isFile": {
         "description": "Überprüfen Sie, ob den {{settingsLink}} tatsächlich ein Ordner ist",
         "title": "Keiner der Stammordner ist ein Verzeichnis."
@@ -67,7 +63,7 @@
       },
       "noWorkspaces": {
         "descriptionDepth": "Die aktuelle Suchtiefe ist 0, dass nur die Stammordner nach Arbeitsbereichsdateien durchsucht werden",
-        "descriptionSettings": "Versuchen Sie, die {{settingsLinkDepth}} zu erhöhen oder die {{settingsLinkRootFolder}} zu ändern.",
+        "descriptionSettings": "Versuchen Sie, die {{settingsLinkDepth}} zu erhöhen oder die {{settingsLinkRootFolder}} Einstellungen ändern.",
         "title": "Keine Arbeitsbereiche gefunden"
       }
     },
@@ -94,10 +90,6 @@
         "open": "Derzeit offener Ordner:",
         "saveButton": "Als neuen Arbeitsbereich speichern"
       },
-      "hiddenExcluded": {
-        "description": "Die Einstellungen schließen derzeit {{settingsLinkHidden}} aus.",
-        "title": "Der Ordnerpfad enthält versteckte Ordner."
-      },
       "isFile": {
         "description": "Überprüfen Sie, ob den {{settingsLink}} tatsächlich ein Ordner ist",
         "title": "Der Stammordner ist eine Datei, kein Verzeichnis."
@@ -120,7 +112,7 @@
       },
       "noWorkspaces": {
         "hintDepth": "Die aktuelle Suchtiefe ist 0, das bedeutet, dass keine Unterordner durchsucht werden.",
-        "hintSettings": "Versuchen Sie, die Suchtiefe zu erhöhen oder den Ordnerpfad zu ändern.",
+        "hintSettings": "Versuchen Sie, die Suchtiefe zu erhöhen oder den Ordner-Einstellungen ändern.",
         "title": "Keine Arbeitsbereiche gefunden"
       },
       "search": {

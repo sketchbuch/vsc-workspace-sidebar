@@ -3,8 +3,9 @@ import * as path from 'path'
 import * as sinon from 'sinon'
 import * as vscode from 'vscode'
 import * as foldersConfigs from '../../../../../config/folders'
-import { CONFIG_DEPTH } from '../../../../../constants/config'
+import { CONFIG_DEPTH, CONFIG_EXCLUDE_HIDDEN_FODLERS } from '../../../../../constants/config'
 import { isWindows } from '../../../../../utils/os/isWindows'
+import { ConfigRootFolder } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { getNewRootFolderConfig } from '../../../../../webviews/Workspace/helpers/getNewRootFolderConfig'
 import { OS_HOMEFOLDER, OS_HOMEFOLDER_WIN } from '../../../../mocks/mockFileData'
 
@@ -19,10 +20,22 @@ suite('Config > Helpers > getNewRootFolderConfig():', function () {
     return `${path.sep}${path.join(OS_HOMEFOLDER, folder)}`
   }
 
-  const defaultPaths = [
-    { path: getPath('Dev'), depth: CONFIG_DEPTH },
-    { path: getPath('Public'), depth: CONFIG_DEPTH },
-    { path: getPath('Temp'), depth: CONFIG_DEPTH },
+  const defaultPaths: ConfigRootFolder[] = [
+    {
+      path: getPath('Dev'),
+      depth: CONFIG_DEPTH,
+      excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
+    },
+    {
+      path: getPath('Public'),
+      depth: CONFIG_DEPTH,
+      excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
+    },
+    {
+      path: getPath('Temp'),
+      depth: CONFIG_DEPTH,
+      excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
+    },
   ]
 
   let foldersConfigStub: sinon.SinonStub

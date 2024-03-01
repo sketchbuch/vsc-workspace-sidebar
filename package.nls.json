@@ -49,12 +49,8 @@
       "default": {
         "title": "Something went wrong whilst collecting workspaces."
       },
-      "hiddenExcluded": {
-        "description": "Settings currently exclude {{settingsLinkHidden}}.",
-        "title": "All of the root folders contain hidden folders."
-      },
       "isFile": {
-        "description": "Check that the {{settingsLink}} are actually folders",
+        "description": "Check that the {{settingsLink}} are actually folders ",
         "title": "All of the root folders are files."
       },
       "nonexistent": {
@@ -67,7 +63,7 @@
       },
       "noWorkspaces": {
         "descriptionDepth": "The current search depth is 0 for all root folders, this means that no subfolders are searched in for workspace files.",
-        "descriptionSettings": "Try increasing the {{settingsLinkDepth}} or change the {{settingsLinkRootFolder}}.",
+        "descriptionSettings": "Try increasing the {{settingsLinkDepth}} or change the {{settingsLinkRootFolder}} settings.",
         "title": "Folders contain no workspaces"
       }
     },
@@ -94,10 +90,6 @@
         "open": "Current open folder:",
         "saveButton": "Save as new Workspace"
       },
-      "hiddenExcluded": {
-        "description": "Settings currently exclude {{settingsLinkHidden}}.",
-        "title": "The folder path contains hidden folders."
-      },
       "isFile": {
         "description": "Check that the {{settingsLink}} is actually a folder.",
         "title": "The folder is a file not a directory."
@@ -120,7 +112,7 @@
       },
       "noWorkspaces": {
         "descriptionDepth": "The current search depth is 0, this means that no subfolders are searched in for workspace files.",
-        "descriptionSettings": "Try increasing the {{settingsLinkDepth}} or change the {{settingsLinkRootFolder}} path.",
+        "descriptionSettings": "Try increasing the {{settingsLinkDepth}} or change the {{settingsLinkRootFolder}} settings.",
         "title": "No workspace files found."
       },
       "search": {

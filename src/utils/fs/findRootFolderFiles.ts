@@ -1,4 +1,3 @@
-import * as path from 'path'
 import { FS_WS_FILETYPE } from '../../constants/fs'
 import {
   FindRootFolderFiles,
@@ -18,18 +17,6 @@ export const findRootFolderFiles = async ({
   const { isFile, isFolder } = checkFile(folderPath)
 
   if (isFolder) {
-    const isHiddenExcluded =
-      excludeHiddenFolders && (folderPath.includes(`${path.sep}.`) || folderPath.startsWith(`.`))
-
-    if (isHiddenExcluded) {
-      return Promise.resolve({
-        depth: maxDepth,
-        files: [],
-        folderPath,
-        result: 'is-hidden-excluded',
-      })
-    }
-
     const files = await collectFilesFromFolder({
       curDepth: 0,
       excludedFolders,

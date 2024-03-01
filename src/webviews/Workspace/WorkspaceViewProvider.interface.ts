@@ -17,6 +17,7 @@ export type Files = File[]
  */
 export interface ConfigRootFolderSettings {
   depth?: number
+  excludeHiddenFolders?: boolean
   path: string
 }
 
@@ -25,10 +26,14 @@ export interface ConfigRootFolderSettings {
  */
 export interface ConfigRootFolder {
   /**
-   * The depth for this folder, if absent in config or NAN, the default depth (workspaceSidebar.depth) will be used instead.
+   * The depth for this folder, if absent in config or NAN, the default depth (workspaceSidebar.depth) will set here instead.
    * Also the config depth will be constrained in value to min/max values of workspaceSidebar.depth.
    */
   depth: number
+  /**
+   * Should hidden folders be searched? If absent, the default excludeHiddenFolders (workspaceSidebar.excludeHiddenFolders) will set here instead.
+   */
+  excludeHiddenFolders: boolean
   path: string
 }
 

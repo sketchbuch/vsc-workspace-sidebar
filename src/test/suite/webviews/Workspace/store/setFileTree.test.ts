@@ -4,7 +4,7 @@ import * as sinon from 'sinon'
 import * as coreConfigs from '../../../../../config/core'
 import * as foldersConfigs from '../../../../../config/folders'
 import * as treeConfigs from '../../../../../config/treeview'
-import { CONFIG_DEPTH } from '../../../../../constants/config'
+import { CONFIG_DEPTH, CONFIG_EXCLUDE_HIDDEN_FODLERS } from '../../../../../constants/config'
 import { setFileTree } from '../../../../../webviews/Workspace/store/setFileTree'
 import { OS_HOMEFOLDER, ROOT_FOLDER_PATH } from '../../../../mocks/mockFileData'
 import { getMockRootFolders, getMockState } from '../../../../mocks/mockState'
@@ -20,9 +20,13 @@ suite('Webviews > Workspace > Store > setFileTree()', () => {
       .stub(coreConfigs, 'getExplorerCompactFoldersConfig')
       .callsFake(() => true)
     condenseConfigStub = sinon.stub(treeConfigs, 'getCondenseFileTreeConfig').callsFake(() => true)
-    folderConfigStub = sinon
-      .stub(foldersConfigs, 'getFoldersConfig')
-      .callsFake(() => [{ path: ROOT_FOLDER_PATH, depth: CONFIG_DEPTH }])
+    folderConfigStub = sinon.stub(foldersConfigs, 'getFoldersConfig').callsFake(() => [
+      {
+        path: ROOT_FOLDER_PATH,
+        depth: CONFIG_DEPTH,
+        excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
+      },
+    ])
     osStub = sinon.stub(os, 'homedir').callsFake(() => OS_HOMEFOLDER)
   })
 
