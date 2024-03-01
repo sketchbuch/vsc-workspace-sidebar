@@ -4,12 +4,8 @@ import { rootFolderMessage } from '../../../../../templates/workspace/snippets/r
 import { FindFileResult } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 
 suite('Templates > Workspace > Snippets: rootFolderMessage()', () => {
-  const results: FindFileResult[] = [
-    'is-file',
-    'is-hidden-excluded',
-    'no-workspaces',
-    'nonexistent',
-  ]
+  const results: FindFileResult[] = ['is-file', 'no-workspaces', 'nonexistent']
+  const defaultResults: FindFileResult[] = ['ok', 'is-hidden-excluded']
 
   results.forEach((res) => {
     test(`"${res}" renders expected message`, () => {
@@ -21,11 +17,13 @@ suite('Templates > Workspace > Snippets: rootFolderMessage()', () => {
     })
   })
 
-  test(`Other results render default message`, () => {
-    const result = rootFolderMessage('ok', CONFIG_DEPTH)
+  defaultResults.forEach((res) => {
+    test(`"${res}" renders default expected message`, () => {
+      const result = rootFolderMessage(res, CONFIG_DEPTH)
 
-    expect(result).to.be.a('string')
-    expect(result).contains('"rootfolder__message rootfolder__message--default"')
-    expect(result).contains(`data-type="ok"`)
+      expect(result).to.be.a('string')
+      expect(result).contains('"rootfolder__message rootfolder__message--default"')
+      expect(result).contains(`data-type="${res}"`)
+    })
   })
 })

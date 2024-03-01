@@ -1,9 +1,5 @@
 import * as os from 'os'
-import {
-  getExcludeHiddenFoldersConfig,
-  getExcludedFoldersConfig,
-  getFoldersConfig,
-} from '../../config/folders'
+import { getExcludedFoldersConfig, getFoldersConfig } from '../../config/folders'
 import {
   FindFileResult,
   FindRootFolderFiles,
@@ -20,7 +16,6 @@ export const findAllRootFolderFiles = async (): Promise<FindAllRootFolderFiles> 
 
   if (configFolders.length > 0) {
     const excludedFoldersConfig = getExcludedFoldersConfig()
-    const excludeHiddenFoldersConfig = getExcludeHiddenFoldersConfig()
     const homeDir = os.homedir()
 
     const fileCount: string[] = []
@@ -31,12 +26,12 @@ export const findAllRootFolderFiles = async (): Promise<FindAllRootFolderFiles> 
 
     for (let index = 0; index < configFolders.length; index++) {
       const configFolder = configFolders[index]
-      const { path, depth } = configFolder
+      const { excludeHiddenFolders, depth, path } = configFolder
 
       if (path) {
         const rootFolder = await findRootFolderFiles({
           excludedFolders: excludedFoldersConfig,
-          excludeHiddenFolders: excludeHiddenFoldersConfig,
+          excludeHiddenFolders,
           folder: path,
           homeDir,
           maxDepth: depth,

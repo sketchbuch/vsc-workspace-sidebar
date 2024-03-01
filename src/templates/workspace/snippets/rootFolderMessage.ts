@@ -5,22 +5,6 @@ import { viewMsg } from '../../common/snippets/viewMsg'
 
 export const rootFolderMessage = (result: FindFileResult, rootFolderDepth: number): string => {
   switch (result) {
-    case 'is-hidden-excluded':
-      return `
-        <div class="rootfolder__message" data-type="${result}">
-          ${viewMsg({ message: t('workspace.list.hiddenExcluded.title'), type: 'title' })}
-          ${viewMsg({
-            message: t('workspace.list.hiddenExcluded.description', {
-              settingsLinkHidden: viewLink(
-                t('workspace.links.excludeHiddenFolders'),
-                'EXCLUDE_HIDDEN_FOLDERS'
-              ),
-            }),
-            type: 'description',
-          })}
-        </div>
-      `
-
     case 'nonexistent':
       return `
         <div class="rootfolder__message" data-type="${result}">
