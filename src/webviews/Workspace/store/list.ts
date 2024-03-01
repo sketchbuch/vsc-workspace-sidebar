@@ -1,6 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import * as os from 'os'
 import { getShowTreeConfig } from '../../../config/treeview'
+import { FindRootFolderFiles } from '../../../utils/fs/findRootFolderFiles'
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
 import { WorkspaceCacheRootFolders, WorkspaceState } from '../WorkspaceViewProvider.interface'
 import { convertWsFiles } from '../helpers/convertWsFiles'
@@ -14,10 +15,12 @@ export const list = (
 ): void => {
   const homeDir = os.homedir()
   const showTree = getShowTreeConfig()
+
+  const workspaceData: FindRootFolderFiles[] = []
   let fileCount = 0
   let visibleFileCount = 0
 
-  state.rootFolders = action.payload.map(({ files, folderPath }) => {
+  state.rootFolders = action.payload.map(({ depth, files, folderPath }) => {
     const folderName = getLastPathSegment(folderPath) || folderPath
     const convertedFiles = convertWsFiles(folderPath, files, state.selected)
     const visibleFiles = getVisibleFiles(convertedFiles, state.search)
@@ -27,24 +30,33 @@ export const list = (
 
     fileCount += files.length
     visibleFileCount += visibleFiles.length
+    const result = files.length < 1 ? 'no-workspaces' : 'ok'
+
+    workspaceData.push({
+      depth,
+      files,
+      folderPath,
+      result,
+    })
 
     return {
       allFolders,
       closedFolders: [],
       convertedFiles,
+      depth,
       files,
       fileTree,
       folderName: folderName,
       folderPath,
       folderPathShort: folderPath.replace(homeDir, `~`),
-      result: files.length < 1 ? 'no-workspaces' : 'ok',
+      result,
       visibleFiles,
     }
   })
 
   state.result = 'ok'
-  state.isFolderInvalid = false
   state.view = 'list'
   state.fileCount = fileCount
   state.visibleFileCount = visibleFileCount
+  state.workspaceData = workspaceData
 }

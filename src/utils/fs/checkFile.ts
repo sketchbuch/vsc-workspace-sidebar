@@ -7,9 +7,11 @@ export interface CheckFile {
 
 export const checkFile = (file: string): CheckFile => {
   try {
-    const isFolder = fs.lstatSync(file).isDirectory()
+    const fileStats = fs.statSync(file)
+    const isFolder = fileStats.isDirectory()
+    const isFile = fileStats.isFile()
 
-    return { isFile: !isFolder, isFolder }
+    return { isFile, isFolder }
   } catch (error) {
     return { isFile: false, isFolder: false }
   }

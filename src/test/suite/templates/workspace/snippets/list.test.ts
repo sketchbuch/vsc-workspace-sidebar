@@ -3,7 +3,7 @@ import os from 'os'
 import * as sinon from 'sinon'
 import * as item from '../../../../../templates/workspace/snippets/itemFile'
 import * as itemFolder from '../../../../../templates/workspace/snippets/itemFolder'
-import { list } from '../../../../../templates/workspace/snippets/list'
+import { list, rootPathErrors } from '../../../../../templates/workspace/snippets/list'
 import * as rfm from '../../../../../templates/workspace/snippets/rootFolderMessage'
 import * as tree from '../../../../../templates/workspace/snippets/tree'
 import { OS_HOMEFOLDER, SEARCH_TERM } from '../../../../mocks/mockFileData'
@@ -106,37 +106,22 @@ suite('Templates > Workspace > Snippets: list()', () => {
     sinon.assert.notCalled(treeSpy)
   })
 
-  test('Renders rootFolderMessage if rootFolder.result is "invalid-folder"', () => {
-    const mockRootFolders = getMockRootFolders({
-      rootFoldersFiles: [{ ...defaultRootFolderFiles[0], result: 'invalid-folder' }],
-      showTree: false,
+  rootPathErrors.forEach((res) => {
+    test(`Renders rootFolderMessage if rootFolder.result is "${res}"`, () => {
+      const mockRootFolders = getMockRootFolders({
+        rootFoldersFiles: [{ ...defaultRootFolderFiles[0], result: res }],
+        showTree: false,
+      })
+      const mockState = getMockState({ ...mockRootFolders })
+      const mockRenderVars = getMockRenderVars({ showTree: true })
+
+      const result = list(mockState, mockRenderVars)
+
+      expect(result).to.be.a('string')
+      sinon.assert.called(rfMsg)
+      sinon.assert.called(itemFolderSpy)
+      sinon.assert.notCalled(itemSpy)
+      sinon.assert.notCalled(treeSpy)
     })
-    const mockState = getMockState({ ...mockRootFolders })
-    const mockRenderVars = getMockRenderVars({ showTree: true })
-
-    const result = list(mockState, mockRenderVars)
-
-    expect(result).to.be.a('string')
-    sinon.assert.called(rfMsg)
-    sinon.assert.called(itemFolderSpy)
-    sinon.assert.notCalled(itemSpy)
-    sinon.assert.notCalled(treeSpy)
-  })
-
-  test('Renders rootFolderMessage if rootFolder.result is "no-workspaces"', () => {
-    const mockRootFolders = getMockRootFolders({
-      rootFoldersFiles: [{ ...defaultRootFolderFiles[0], result: 'no-workspaces' }],
-      showTree: false,
-    })
-    const mockState = getMockState({ ...mockRootFolders })
-    const mockRenderVars = getMockRenderVars({ showTree: true })
-
-    const result = list(mockState, mockRenderVars)
-
-    expect(result).to.be.a('string')
-    sinon.assert.called(rfMsg)
-    sinon.assert.called(itemFolderSpy)
-    sinon.assert.notCalled(itemSpy)
-    sinon.assert.notCalled(treeSpy)
   })
 })

@@ -2,7 +2,6 @@ import { getFileiconThemeConfig } from '../../config/core'
 import {
   getActionsConfig,
   getCleanLabelsConfig,
-  getDepthConfig,
   getShowFileiconConfig,
   getShowFileiconsConfigConfig,
 } from '../../config/general'
@@ -64,7 +63,6 @@ export const getRenderVars = (
     cleanLabels,
     clickAction: getActionsConfig(),
     condenseFileTree: getCondenseFileTreeConfig(),
-    depth: getDepthConfig(),
     fileIconKeys,
     fileIconsActive,
     isExternalWs: isExternalWs(state),

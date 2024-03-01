@@ -5,6 +5,7 @@ import {
   FindAllRootFolderFiles,
   findAllRootFolderFiles,
 } from '../../../utils/fs/findAllRootFolderFiles'
+import { FindRootFolderFiles } from '../../../utils/fs/findRootFolderFiles'
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
 import {
   ActionMetaFulfilled,
@@ -27,22 +28,23 @@ export const fetchFulfilled = (
   if (action.payload.result !== 'ok') {
     state.fileCount = 0
     state.result = action.payload.result
-    state.isFolderInvalid = true
     state.rootFolders = []
     state.view = 'invalid'
     state.visibleFileCount = 0
+    state.workspaceData = action.payload.rootFolders
   } else {
     const homeDir = os.homedir()
     const showTree = getShowTreeConfig()
 
+    const workspaceData: FindRootFolderFiles[] = []
     let fileCount = 0
     let visibleFileCount = 0
 
     state.result = 'ok'
-    state.isFolderInvalid = false
     state.view = 'list'
+    state.workspaceData = []
 
-    state.rootFolders = action.payload.rootFolders.map(({ files, folderPath, result }) => {
+    state.rootFolders = action.payload.rootFolders.map(({ depth, files, folderPath, result }) => {
       const folderName = getLastPathSegment(folderPath) || folderPath
       const convertedFiles = convertWsFiles(folderPath, files, state.selected)
       const visibleFiles = getVisibleFiles(convertedFiles, state.search)
@@ -53,10 +55,18 @@ export const fetchFulfilled = (
       fileCount += files.length
       visibleFileCount += visibleFiles.length
 
+      workspaceData.push({
+        depth,
+        files,
+        folderPath,
+        result,
+      })
+
       return {
         allFolders,
         closedFolders: [],
         convertedFiles,
+        depth,
         files,
         fileTree,
         folderName: folderName,
@@ -69,13 +79,14 @@ export const fetchFulfilled = (
 
     state.fileCount = fileCount
     state.visibleFileCount = visibleFileCount
+    state.workspaceData = workspaceData
   }
 }
 
 export const fetchPending = (state: WorkspaceState) => {
   state.view = 'loading'
   state.result = 'ok'
-  state.isFolderInvalid = false
+  state.workspaceData = []
 }
 
 export const fetchRejected = (

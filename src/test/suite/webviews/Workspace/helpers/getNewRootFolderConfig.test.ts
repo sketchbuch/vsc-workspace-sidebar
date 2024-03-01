@@ -3,6 +3,7 @@ import * as path from 'path'
 import * as sinon from 'sinon'
 import * as vscode from 'vscode'
 import * as foldersConfigs from '../../../../../config/folders'
+import { CONFIG_DEPTH } from '../../../../../constants/config'
 import { isWindows } from '../../../../../utils/os/isWindows'
 import { getNewRootFolderConfig } from '../../../../../webviews/Workspace/helpers/getNewRootFolderConfig'
 import { OS_HOMEFOLDER, OS_HOMEFOLDER_WIN } from '../../../../mocks/mockFileData'
@@ -18,7 +19,11 @@ suite('Config > Helpers > getNewRootFolderConfig():', function () {
     return `${path.sep}${path.join(OS_HOMEFOLDER, folder)}`
   }
 
-  const defaultPaths = [getPath('Dev'), getPath('Public'), getPath('Temp')]
+  const defaultPaths = [
+    { path: getPath('Dev'), depth: CONFIG_DEPTH },
+    { path: getPath('Public'), depth: CONFIG_DEPTH },
+    { path: getPath('Temp'), depth: CONFIG_DEPTH },
+  ]
 
   let foldersConfigStub: sinon.SinonStub
 
@@ -41,7 +46,7 @@ suite('Config > Helpers > getNewRootFolderConfig():', function () {
     ])
 
     expect(result).to.eql([
-      isWin ? filePath.charAt(0).toLowerCase() + filePath.slice(1) : filePath,
+      { path: isWin ? filePath.charAt(0).toLowerCase() + filePath.slice(1) : filePath },
       ...defaultPaths,
     ])
   })

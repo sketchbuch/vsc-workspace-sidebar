@@ -47,25 +47,42 @@
     },
     "inValid": {
       "default": {
-        "title": "Beim Suchen nach Arbeitsbereichen ist ein Fehler aufgetreten"
+        "title": "Beim Suchen nach Arbeitsbereichen ist ein Fehler aufgetreten."
+      },
+      "hiddenExcluded": {
+        "description": "Die Einstellungen schließen derzeit {{settingsLinkHidden}} aus.",
+        "title": "Alle Stammordner enthalten versteckte Ordner."
+      },
+      "isFile": {
+        "description": "Überprüfen Sie, ob den {{settingsLink}} tatsächlich ein Ordner ist",
+        "title": "Keiner der Stammordner ist ein Verzeichnis."
+      },
+      "nonexistent": {
+        "description": "Überprüfen Sie die Pfade zu {{settingsLink}}.",
+        "title": "Keiner der Stammordner existiert."
       },
       "noRootFolders": {
-        "title": "Keine Stammordner angegeben. Bitte bearbeiten Sie die Konfigurationsoption 'workspaceSidebar.rootFolders'."
-      },
-      "notDirectory": {
-        "title": "Keiner der Stammordner ist ein Verzeichnis"
+        "description": "Geben Sie einen oder mehrere {{settingsLink}} an, in denen nach Arbeitsbereichen gesucht werden soll.",
+        "title": "Keine Stammordner angegeben."
       },
       "noWorkspaces": {
-        "hintDepth": "Die aktuelle Suchtiefe ist 0, dass nur die Stammordner nach Arbeitsbereichsdateien durchsucht werden",
-        "hintSettings": "Versuchen Sie, die Suchtiefe zu erhöhen oder die Ordner zu ändern.",
+        "descriptionDepth": "Die aktuelle Suchtiefe ist 0, dass nur die Stammordner nach Arbeitsbereichsdateien durchsucht werden",
+        "descriptionSettings": "Versuchen Sie, die {{settingsLinkDepth}} zu erhöhen oder die {{settingsLinkRootFolder}} zu ändern.",
         "title": "Keine Arbeitsbereiche gefunden"
       }
     },
     "links": {
       "checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",
-      "excludeFolders": "Ordner auszuschließen"
+      "depth": "Tiefe",
+      "excludeFolders": "Ordner auszuschließen",
+      "excludeHiddenFolders": "versteckter Ordner",
+      "rootFolder": "Stammordner",
+      "rootFolders": "Stammordner"
     },
     "list": {
+      "default": {
+        "title": "Beim Suchen nach Arbeitsbereichen ist ein Fehler aufgetreten."
+      },
       "extWs": {
         "saveButton": "Zu Stammordnern hinzufügen"
       },
@@ -76,6 +93,14 @@
         "open-plural": "Derzeit geöffnete Ordner:",
         "open": "Derzeit offener Ordner:",
         "saveButton": "Als neuen Arbeitsbereich speichern"
+      },
+      "hiddenExcluded": {
+        "description": "Die Einstellungen schließen derzeit {{settingsLinkHidden}} aus.",
+        "title": "Der Ordnerpfad enthält versteckte Ordner."
+      },
+      "isFile": {
+        "description": "Überprüfen Sie, ob den {{settingsLink}} tatsächlich ein Ordner ist",
+        "title": "Der Stammordner ist eine Datei, kein Verzeichnis."
       },
       "itemButtons": {
         "newWindow": {
@@ -89,8 +114,9 @@
           "tooltip": "Öffnen Sie den Ordner '{{label}}' in Ihrem Dateimanager"
         }
       },
-      "notDirectory": {
-        "title": "Der Ordner ist kein Verzeichnis"
+      "nonexistent": {
+        "description": "Überprüfen Sie der Pfad zu {{settingsLink}}.",
+        "title": "Der Stammordner existiert nicht."
       },
       "noWorkspaces": {
         "hintDepth": "Die aktuelle Suchtiefe ist 0, das bedeutet, dass keine Unterordner durchsucht werden.",
@@ -114,7 +140,8 @@
       }
     },
     "loading": {
-      "description": "Wenn dies lange dauert, versuchen Sie, ",
+      "descriptionWithHidden": "Wenn dies lange dauert, versuchen Sie, {{settingsLinkRootFolder}} oder {{settingsLinkHidden}} auszuschließen",
+      "description": "Wenn dies lange dauert, versuchen Sie, {{settingsLinkRootFolder}} auszuschließen.",
       "title": "Arbeitsbereiche wird gesucht..."
     }
   }

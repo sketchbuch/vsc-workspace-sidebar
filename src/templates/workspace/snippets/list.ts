@@ -1,5 +1,8 @@
 import { t } from 'vscode-ext-localisation'
-import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
+import {
+  FindFileResult,
+  WorkspaceState,
+} from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { FileTree } from '../../../webviews/Workspace/helpers/getFileTree'
 import { RenderVars } from '../../../webviews/webviews.interface'
 import { getListClasses } from '../../helpers/getListClasses'
@@ -7,6 +10,13 @@ import { itemFile } from './itemFile'
 import { itemFolder } from './itemFolder'
 import { rootFolderMessage } from './rootFolderMessage'
 import { tree } from './tree'
+
+export const rootPathErrors: FindFileResult[] = [
+  'is-file',
+  'is-hidden-excluded',
+  'no-workspaces',
+  'nonexistent',
+]
 
 export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
   const { fileCount, rootFolders, search, visibleFileCount } = state
@@ -27,7 +37,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
       <div class="list__list-wrapper">
         ${rootFolders
           .map((rootFolder) => {
-            const { closedFolders, fileTree, folderName, folderPath, result, visibleFiles } =
+            const { closedFolders, depth, fileTree, folderName, folderPath, result, visibleFiles } =
               rootFolder
 
             if (search.term && visibleFiles.length < 1) {
@@ -35,8 +45,8 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
             }
 
             const isFileTree = showTree && fileTree !== null
+            const isRootPathError = rootPathErrors.includes(result)
             const classes = getListClasses(isFileTree)
-            let isRootPathError = result === 'invalid-folder' || result === 'no-workspaces'
             const isClosed = closedFolders.includes(folderName)
             const rootFolderFile: FileTree = {
               files: [],
@@ -60,7 +70,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
                         renderVars,
                         state,
                       })}
-                      ${rootFolderMessage(result, renderVars)}
+                      ${rootFolderMessage(result, depth)}
                     `
                     : ''
                 }

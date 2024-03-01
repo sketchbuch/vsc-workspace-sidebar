@@ -9,7 +9,7 @@ interface NotificationProps {
 export const hoverNotification = ({ message, title }: NotificationProps): string => {
   return `
       <div class="hover-notification hover-notification--loading">
-        <span class="hover-notification__icon view__message-icon ">
+        <span class="hover-notification__icon view__message-icon">
           <span class="codicon codicon-loading codicon-modifier-spin"></span>
         </span>
         <div class="hover-notification__text">

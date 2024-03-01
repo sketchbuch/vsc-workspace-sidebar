@@ -1,3 +1,4 @@
+import * as path from 'path'
 import { FS_WS_FILETYPE } from '../../constants/fs'
 import {
   FindFileResult,
@@ -7,6 +8,10 @@ import { checkFile } from './checkFile'
 import { collectFilesFromFolder } from './collectFilesFromFolder'
 
 export interface FindRootFolderFiles {
+  /**
+   * The depth for this root folder.
+   */
+  depth: number
   files: WorkspaceFiles
   /**
    * The folder with ~ replaced with the users homedir
@@ -31,10 +36,21 @@ export const findRootFolderFiles = async ({
   maxDepth,
 }: FindRootFolderFilesConfig): Promise<FindRootFolderFiles> => {
   const folderPath = folder.replace(`~`, homeDir)
-
-  const { isFolder } = checkFile(folderPath)
+  const { isFile, isFolder } = checkFile(folderPath)
 
   if (isFolder) {
+    const isHiddenExcluded =
+      excludeHiddenFolders && (folderPath.includes(`${path.sep}.`) || folderPath.startsWith(`.`))
+
+    if (isHiddenExcluded) {
+      return Promise.resolve({
+        depth: maxDepth,
+        files: [],
+        folderPath,
+        result: 'is-hidden-excluded',
+      })
+    }
+
     const files = await collectFilesFromFolder({
       curDepth: 0,
       excludedFolders,
@@ -45,15 +61,24 @@ export const findRootFolderFiles = async ({
     })
 
     return Promise.resolve({
+      depth: maxDepth,
       files: files,
       folderPath,
       result: files.length > 0 ? 'ok' : 'no-workspaces',
     })
+  } else if (isFile) {
+    return Promise.resolve({
+      depth: maxDepth,
+      files: [],
+      folderPath,
+      result: 'is-file',
+    })
   }
 
   return Promise.resolve({
+    depth: maxDepth,
     files: [],
     folderPath,
-    result: 'invalid-folder',
+    result: 'nonexistent',
   })
 }

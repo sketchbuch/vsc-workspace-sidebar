@@ -2,6 +2,7 @@ import { t } from 'vscode-ext-localisation'
 import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { RenderVars } from '../../../webviews/webviews.interface'
 import { viewLink } from '../../common/snippets/viewLink'
+import { viewMsg } from '../../common/snippets/viewMsg'
 
 export const errorView = (state: WorkspaceState, renderVars: RenderVars): string => {
   const { error, errorObj } = state
@@ -10,26 +11,23 @@ export const errorView = (state: WorkspaceState, renderVars: RenderVars): string
 
   return `
     <section class="view error">
-      <p class="view__message">
-        <span class="view__message-title">
-          <span class="view__message-icon codicon codicon-error"></span>
-          ${isFetch ? t('workspace.error.fetch.title') : t('workspace.error.default.title')}
-        </span>
-      </p>
-      <p class="view__message">
-        <span class="view__message-description">
-          ${viewLink(t('workspace.links.checkSettings'), 'SETTINGS')}
-        </span>
-      </p>
+      ${viewMsg({
+        message: isFetch ? t('workspace.error.fetch.title') : t('workspace.error.default.title'),
+        type: 'title',
+      })}
+      ${viewMsg({
+        message: viewLink(t('workspace.links.checkSettings'), 'SETTINGS'),
+        type: 'description',
+      })}
       ${
         showStackTrace
-          ? `
-          <p class="view__message">
-            <span class="view__message-description view__message-description--tinytext{">
-              ${errorObj.stack || ''}
-            </span>
-          </p>`
+          ? viewMsg({
+              message: errorObj?.stack ?? '',
+              isSmall: true,
+              type: 'description',
+            })
           : ''
       }
-    </section>`
+    </section>
+  `
 }

@@ -1,4 +1,5 @@
 import { PayloadAction, SerializedError } from '@reduxjs/toolkit'
+import { FindRootFolderFiles } from '../../utils/fs/findRootFolderFiles'
 import { FileTree } from './helpers/getFileTree'
 
 export interface File {
@@ -13,6 +14,26 @@ export interface File {
 
 export type Files = File[]
 
+/**
+ * Root folder object from settings.json
+ */
+export interface ConfigRootFolderSettings {
+  depth?: number
+  path: string
+}
+
+/**
+ * Root folder object returned by getFoldersConfig()
+ */
+export interface ConfigRootFolder {
+  /**
+   * The depth for this folder, if absent in config or NAN, the default depth (workspaceSidebar.depth) will be used instead.
+   * Also the config depth will be constrained in value to min/max values of workspaceSidebar.depth.
+   */
+  depth: number
+  path: string
+}
+
 export interface WorkspaceSetCacheData {
   folderPath: string
   files: WorkspaceFiles
@@ -24,12 +45,12 @@ export interface WorkspaceRootFolderMachineCache {
    */
   appRoot: string
   /**
-   * VSCode Env remote name. Now that rootFolders config is machine scoped, we need different caches.
-   */
-  /**
-   * The hash for the version, remoteName, and appRoot. Used as a key to identify caches for a particular machine.
+   * The hash for the remoteName, and appRoot. Used as a key to identify caches for a particular machine.
    */
   cacheId: string
+  /**
+   * VSCode Env remote name. Now that rootFolders config is machine scoped, we need different caches.
+   */
   remoteName: string
   rootFolders: WorkspaceCacheRootFolder[]
   /**
@@ -43,6 +64,7 @@ export interface WorkspaceRootFolderCache {
 }
 
 export interface WorkspaceCacheRootFolder {
+  depth: number
   folderPath: string
   files: WorkspaceFiles
 }
@@ -51,7 +73,12 @@ export type WorkspaceCacheRootFolders = WorkspaceCacheRootFolder[]
 
 export type WorkspaceErrors = '' | 'DEFAULT' | 'FETCH'
 
-export type ViewLinkType = 'EXCLUDE_FOLDERS' | 'ROOT_FOLDERS' | 'SETTINGS'
+export type ViewLinkType =
+  | 'DEPTH'
+  | 'EXCLUDE_FOLDERS'
+  | 'EXCLUDE_HIDDEN_FOLDERS'
+  | 'ROOT_FOLDERS'
+  | 'SETTINGS'
 
 /**
  * Messages sent by the FE
@@ -91,7 +118,13 @@ export type PayloadToggleFolderState = {
 }
 export type PayloadToggleFolderStateBulk = FolderState
 
-export type FindFileResult = 'invalid-folder' | 'no-root-folders' | 'no-workspaces' | 'ok'
+export type FindFileResult =
+  | 'is-file'
+  | 'is-hidden-excluded'
+  | 'no-root-folders'
+  | 'no-workspaces'
+  | 'nonexistent'
+  | 'ok'
 
 export interface SearchState {
   caseInsensitive: boolean
@@ -108,7 +141,6 @@ export type WorkspaceState = {
    * The total number of workspace files for all root folders.
    */
   fileCount: number
-  isFolderInvalid: boolean
   /**
    * The result of the file collection for all root folders.
    */
@@ -124,6 +156,10 @@ export type WorkspaceState = {
    * The total number of visible workspace files for all root folders.
    */
   visibleFileCount: number
+  /**
+   * The results as returned from findAllRootFolderFiles()
+   */
+  workspaceData: FindRootFolderFiles[]
   /**
    * The type of workspace that is currently open.
    */
@@ -143,6 +179,7 @@ export type WorkspaceStateRootFolder = {
    * The files, converted to a form useable by this extension.
    */
   convertedFiles: Files
+  depth: number
   /**
    * An array of absolute file paths to all workspace files.
    */

@@ -1,3 +1,4 @@
+import { CONFIG_DEPTH } from '../../constants/config'
 import { FindRootFolderFiles } from '../../utils/fs/findRootFolderFiles'
 import { getLastPathSegment } from '../../utils/fs/getLastPathSegment'
 import { initialSearchState, initialState } from '../../webviews/Workspace/store/workspaceSlice'
@@ -28,7 +29,7 @@ type GetMockRootFoldersConfig = {
 }
 
 export const defaultRootFolderFiles: FindRootFolderFiles[] = [
-  { files: getMockFileList(), folderPath: ROOT_FOLDER_PATH, result: 'ok' },
+  { depth: CONFIG_DEPTH, files: getMockFileList(), folderPath: ROOT_FOLDER_PATH, result: 'ok' },
 ]
 
 const defaultGetMockRootFoldersConfig: GetMockRootFoldersConfig = {
@@ -46,12 +47,30 @@ export const getMockSearchState = (state: Partial<SearchState> = {}): SearchStat
   }
 }
 
-export const getMockState = (state: Partial<WorkspaceState> = {}): WorkspaceState => {
-  return {
+export const getMockState = (
+  state: Partial<WorkspaceState> = {},
+  depth = CONFIG_DEPTH
+): WorkspaceState => {
+  const workspaceData: FindRootFolderFiles[] = []
+  const newState: WorkspaceState = {
     ...initialState,
     selected: '',
     wsType: 'ws',
     ...state,
+  }
+
+  newState.rootFolders.forEach(({ files, folderPath, result }) => {
+    workspaceData.push({
+      depth,
+      files,
+      folderPath,
+      result,
+    })
+  })
+
+  return {
+    ...newState,
+    workspaceData,
   }
 }
 
@@ -78,6 +97,7 @@ export const getMockRootFolders = (
       allFolders,
       closedFolders,
       convertedFiles,
+      depth: CONFIG_DEPTH,
       files,
       fileTree,
       folderName: getLastPathSegment(folderPath) || folderPath,

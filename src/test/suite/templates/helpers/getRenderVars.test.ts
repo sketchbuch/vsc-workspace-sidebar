@@ -77,7 +77,6 @@ suite('Templates > Helpers > getRenderVars():', () => {
 
     expect(result.clickAction).to.eql(ConfigActions.CURRENT_WINDOW)
     expect(result.condenseFileTree).to.eql(CONFIG_CONDENSE_FILETREE)
-    expect(result.depth).to.eql(CONFIG_DEPTH)
     expect(result.searchMinimum).to.eql(CONFIG_SEARCH_MINIMUM)
     expect(result.showTree).to.eql(CONFIG_SHOW_HIERARCHY)
   })

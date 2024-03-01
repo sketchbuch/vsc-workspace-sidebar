@@ -11,8 +11,8 @@ export const error = (
   state.errorObj = errorObj
   state.fileCount = 0
   state.result = 'ok'
-  state.isFolderInvalid = false
   state.rootFolders = []
   state.view = 'error'
   state.visibleFileCount = 0
+  state.workspaceData = []
 }

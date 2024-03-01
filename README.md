@@ -129,6 +129,7 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Todo
 
-- Why was new folder not triggering a reload?
-- Add option to exclude all hidden folders
-- Remove watcher
+- Investigate why compacting not working for first level ws
+- Add exclude hidden to folder config
+- Remove hidden check from root folder path, should only apply to sub.
+- Check tests on Windows

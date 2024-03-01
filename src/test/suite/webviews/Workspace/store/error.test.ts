@@ -6,16 +6,16 @@ suite('Webviews > Workspace > Store > error()', () => {
   test('Updates state as expected', () => {
     const state = getMockState({
       error: '',
-      result: 'invalid-folder',
-      isFolderInvalid: true,
+      result: 'is-file',
       view: 'invalid',
+      workspaceData: [],
     })
     const expectedState = getMockState({
       error: 'DEFAULT',
       errorObj: { message: 'some error' },
       result: 'ok',
-      isFolderInvalid: false,
       view: 'error',
+      workspaceData: [],
     })
 
     expect(state).not.to.eql(expectedState)

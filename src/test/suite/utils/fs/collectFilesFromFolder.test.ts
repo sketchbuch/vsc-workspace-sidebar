@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 import mockFs from 'mock-fs'
+import * as path from 'path'
 import { collectFilesFromFolder } from '../../../../utils/fs/collectFilesFromFolder'
 import { mockFsStructure } from '../../../mocks/mockFsStructure'
 
@@ -66,7 +67,7 @@ suite('Utils > Fs > collectFilesFromFolder()', () => {
       excludedFolders: [],
       excludeHiddenFolders: true,
       fileType: FILE_TYPE,
-      folder: `/temp/.${FOLDER}`,
+      folder: path.join('temp', `.${FOLDER}`),
       maxDepth: MAX_DEPTH,
     })
 

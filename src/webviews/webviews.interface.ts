@@ -26,7 +26,6 @@ export interface RenderVars {
   cleanLabels: boolean
   clickAction: ConfigActions
   condenseFileTree: boolean
-  depth: number
   fileIconKeys: FileIconKeys
   fileIconsActive: boolean
   imgDarkFolderUri: vscode.Uri

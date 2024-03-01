@@ -47,7 +47,7 @@ export class WorkspaceViewProvider
   public static readonly viewType = EXT_WEBVIEW_WS
   private _view?: vscode.WebviewView
   private _cssGenerator: CssGenerator
-  private readonly _version: string = '2.0.0-beta-8'
+  private readonly _version: string = '2.0.0-beta-11'
 
   constructor(
     private readonly _ctx: vscode.ExtensionContext,
@@ -63,15 +63,6 @@ export class WorkspaceViewProvider
       .update(`${vscode.env.appRoot}-${vscode.env.remoteName}`)
       .digest('hex')
   }
-
-  /*   private async deleteCacheAll() {
-    await vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
-    await this._ctx.globalState.update(EXT_WSSTATE_CACHE, undefined)
-
-    store.dispatch(fetch()).then(() => {
-      this.updateCache(store.getState().ws)
-    })
-  } */
 
   private async deleteCache() {
     let newCacheData: WorkspaceRootFolderCache | undefined
@@ -202,7 +193,7 @@ export class WorkspaceViewProvider
         crypto.createHash('sha256').update(crypto.randomBytes(16)).digest('hex')
       )
 
-      // Suppress error when running in extension development host
+      // Suppress error when running tests
     } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Test) {
       vscode.window.showErrorMessage(t('errors.viewNotFound'))
     }
@@ -290,9 +281,12 @@ export class WorkspaceViewProvider
         case Actions.VIEW_LINK:
           if (payload === 'ROOT_FOLDERS') {
             await executeCommand(CMD_VSC_OPEN_SETTINGS, 'workspaceSidebar.rootFolders')
-          }
-          if (payload === 'EXCLUDE_FOLDERS') {
+          } else if (payload === 'DEPTH') {
+            await executeCommand(CMD_VSC_OPEN_SETTINGS, 'workspaceSidebar.depth')
+          } else if (payload === 'EXCLUDE_FOLDERS') {
             await executeCommand(CMD_VSC_OPEN_SETTINGS, 'workspaceSidebar.folders.excluded')
+          } else if (payload === 'EXCLUDE_HIDDEN_FOLDERS') {
+            await executeCommand(CMD_VSC_OPEN_SETTINGS, 'workspaceSidebar.excludeHiddenFolders')
           } else {
             await executeCommand(CMD_VSC_OPEN_SETTINGS, 'workspaceSidebar')
           }
@@ -343,6 +337,7 @@ export class WorkspaceViewProvider
               return [
                 ...allRoots,
                 {
+                  depth: curRoot.depth,
                   folderPath: curRoot.folderPath,
                   files: curRoot.files,
                 },

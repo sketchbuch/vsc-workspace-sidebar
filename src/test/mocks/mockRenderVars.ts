@@ -3,7 +3,6 @@ import { Uri } from 'vscode'
 import {
   CONFIG_CLEAN_LABELS,
   CONFIG_CONDENSE_FILETREE,
-  CONFIG_DEPTH,
   CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_HIERARCHY,
   ConfigActions,
@@ -20,7 +19,6 @@ export const getMockRenderVars = (renderVars: Partial<RenderVars> = {}): RenderV
     cleanLabels: CONFIG_CLEAN_LABELS,
     clickAction: ConfigActions.CURRENT_WINDOW,
     condenseFileTree: CONFIG_CONDENSE_FILETREE,
-    depth: CONFIG_DEPTH,
     fileIconKeys: {},
     fileIconsActive: false,
     imgDarkFolderUri: { ...baseUri, path: path.join('/resources', 'images', 'dark') } as Uri,

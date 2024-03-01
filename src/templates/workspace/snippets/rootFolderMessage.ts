@@ -1,49 +1,81 @@
 import { t } from 'vscode-ext-localisation'
 import { FindFileResult } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
-import { RenderVars } from '../../../webviews/webviews.interface'
+import { viewLink } from '../../common/snippets/viewLink'
+import { viewMsg } from '../../common/snippets/viewMsg'
 
-export const rootFolderMessage = (result: FindFileResult, renderVars: RenderVars): string => {
-  const isDepthZero = renderVars.depth === 0
-
+export const rootFolderMessage = (result: FindFileResult, rootFolderDepth: number): string => {
   switch (result) {
-    case 'invalid-folder':
+    case 'is-hidden-excluded':
       return `
-        <div class="rootfolder__message">
-          <p class="view__message">
-            <span class="view__message-title">
-              <span class="view__message-icon codicon codicon-error"></span>
-              ${t('workspace.list.notDirectory.title')}
-            </span>
-          </p>
+        <div class="rootfolder__message" data-type="${result}">
+          ${viewMsg({ message: t('workspace.list.hiddenExcluded.title'), type: 'title' })}
+          ${viewMsg({
+            message: t('workspace.list.hiddenExcluded.description', {
+              settingsLinkHidden: viewLink(
+                t('workspace.links.excludeHiddenFolders'),
+                'EXCLUDE_HIDDEN_FOLDERS'
+              ),
+            }),
+            type: 'description',
+          })}
         </div>
       `
+
+    case 'nonexistent':
+      return `
+        <div class="rootfolder__message" data-type="${result}">
+          ${viewMsg({ message: t('workspace.list.nonexistent.title'), type: 'title' })}
+          ${viewMsg({
+            message: t('workspace.list.nonexistent.description', {
+              settingsLink: viewLink(t('workspace.links.rootFolder'), 'ROOT_FOLDERS'),
+            }),
+            type: 'description',
+          })}
+        </div>
+      `
+
+    case 'is-file':
+      return `
+          <div class="rootfolder__message" data-type="${result}">
+            ${viewMsg({ message: t('workspace.list.isFile.title'), type: 'title' })}
+            ${viewMsg({
+              message: t('workspace.list.isFile.description', {
+                settingsLink: viewLink(t('workspace.links.rootFolder'), 'ROOT_FOLDERS'),
+              }),
+              type: 'description',
+            })}
+          </div>
+        `
 
     case 'no-workspaces':
-    default:
+      const isDepthZero = rootFolderDepth === 0
+
       return `
-        <div class="rootfolder__message">
-          <p class="view__message">
-            <span class="view__message-title">
-              <span class="view__message-icon codicon codicon-error"></span>
-              ${t('workspace.list.noWorkspaces.title')}
-            </span>
-          </p>
+        <div class="rootfolder__message" data-type="${result}">
+          ${viewMsg({ message: t('workspace.list.noWorkspaces.title'), type: 'title' })}
+          ${viewMsg({
+            message: t('workspace.list.noWorkspaces.descriptionSettings', {
+              settingsLinkDepth: viewLink(t('workspace.links.depth'), 'DEPTH'),
+              settingsLinkRootFolder: viewLink(t('workspace.links.rootFolder'), 'ROOT_FOLDERS'),
+            }),
+            type: 'description',
+          })}
           ${
             isDepthZero
-              ? `
-                <p class="view__message">
-                  <span class="view__message-description">
-                    ${t('workspace.list.noWorkspaces.hintDepth')}
-                  </span>
-                </p>`
+              ? viewMsg({
+                  message: t('workspace.list.noWorkspaces.descriptionDepth'),
+                  type: 'description',
+                })
               : ''
           }
-          <p class="view__message">
-            <span class="view__message-description">
-              ${t('workspace.list.noWorkspaces.hintSettings')}
-            </span>
-          </p>
         </div>
       `
+
+    default:
+      return `
+        <div class="rootfolder__message rootfolder__message--default" data-type="${result}">
+          ${viewMsg({ message: t('workspace.list.default.title'), type: 'title' })}
+        </div>
+        `
   }
 }
