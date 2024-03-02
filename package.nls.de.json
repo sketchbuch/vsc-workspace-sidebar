@@ -22,7 +22,6 @@
   "config.showPaths.description": "Zeigen Sie Pfade zu den Arbeitsbereichsdateien an. Entweder: 'Immer', 'Nie', oder 'Nach Bedarf' (zeigt nur Pfade für Arbeitsbereiche mit derselben Bezeichnung an).",
   "config.showPaths.never": "Pfade nie anzeigen",
   "config.title.folders": "Ordner",
-  "config.title.listview": "Liste Ansicht",
   "config.title.search": "Suche",
   "config.title.treeview": "Ordnerhierarchie Ansicht",
   "ext.cmd.wsList.collapse-all": "Ordner zuklappen",

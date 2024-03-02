@@ -19,7 +19,9 @@ A search box is provided to allow you to search for a specific Workspace.
 
 File theme icons can also be displayed. For more information see the [File Icon Themes](./docs//File%20Icon%20Themes.md) documentation.
 
-## Settings
+## Configuration
+
+This is a summary of the available configuration options. [View detailed configuration documentaion.](./docs/Configuration.md)
 
 ### General
 
@@ -37,7 +39,7 @@ File theme icons can also be displayed. For more information see the [File Icon 
 | Setting                | Description                                                                                                                                                                        | Default Value                                                          | Type                               |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------- |
 | Exclude Hidden Folders | Should hidden folders be excluded when looking for workspaces? This can speed up searching. If you turn this option off you will need to add a lot of folders to Excluded Folders. | True                                                                   | Boolean                            |
-| Excluded Folders       | Folders to exclude when searching for workspace files                                                                                                                              | [ "node_modules", "build", "dist", "out", "public", ".cache", ".git" ] | Array of folder names              |
+| Excluded       | Folders to exclude when searching for workspace files                                                                                                                              | [ "node_modules", "build", "dist", "out", "public", ".cache", ".git" ] | Array of folder names              |
 | Root Folders           | The folders to look for workspace files in. **~/** will also be replaced with your home folder in all folders within the array.                                                    | []                                                                     | Array of absolute paths to folders |
 
 ### Search
@@ -52,9 +54,9 @@ File theme icons can also be displayed. For more information see the [File Icon 
 
 | Setting               | Description                                                                                                                                                                            | Default Value | Type    |
 | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ------- |
-| Condense File Tree    | Reduce visual noise by removing sufolders with only one workspace in. These workspace files will then be shown in their parent folder. Tree View only. See below for more information. | True          | Boolean |
+| Condense File Tree    | Reduce visual noise by removing sufolders with only one workspace in. These workspace files will then be shown in their parent folder. Tree View only. | True          | Boolean |
 | Show Folder Hierarchy | Display a file tree of workspaces with collapsable folders instead of the default list.                                                                                                | False         | Boolean |
-| Show Root Folder      | Show the root folder when rendering a file tree.                                                                                                                                       | False         | Boolean |
+
 
 ## Compact / Condense Folders
 
@@ -115,10 +117,13 @@ This extension is localised, if you want it in your language please send me a tr
 - Run tests or run a development version via the debugger launch panel.
   - Tests can't be run via the node script in package.json
   - Output of tests is found in the termial Debug Console tab
-- Lint and typechecking commands exist
+  - Run tests on Linux, Mac, and Windows.
+  - Lint and typechecking commands exist
   - Typecheck will be run by the launch scripts before
     running tests
-- You can package a test version of the extension as a vsix file using the command: vsce package
+- You can package a test version of the extension as a vsix file using the command: vsce package.
+  - Test the VSIX on Linux, Mac, and Windows.
+- [Sample colours and CSS variable names](./docs/Colours.md)
 
 ## Latest Version
 
@@ -130,3 +135,4 @@ This extension is localised, if you want it in your language please send me a tr
 ## Todo
 
 - Check if SSH machines add to the wrong config (open unsaved ws)
+- Folder Path examples - add windows example

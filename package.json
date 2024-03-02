@@ -98,6 +98,22 @@
             "markdownDescription": "%config.showFileIconsConfig.markdownDescription%",
             "scope": "application",
             "type": "object"
+          },
+          "workspaceSidebar.showPaths": {
+            "default": "As needed",
+            "description": "%config.showPaths.description%",
+            "enum": [
+              "Always",
+              "As needed",
+              "Never"
+            ],
+            "enumDescriptions": [
+              "%config.showPaths.always%",
+              "%config.showPaths.asneeded%",
+              "%config.showPaths.never%"
+            ],
+            "scope": "application",
+            "type": "string"
           }
         }
       },
@@ -140,27 +156,6 @@
             "markdownDescription": "%config.folders.excluded.markdownDescription%",
             "scope": "application",
             "type": "array"
-          }
-        }
-      },
-      {
-        "title": "%config.title.listview%",
-        "properties": {
-          "workspaceSidebar.showPaths": {
-            "default": "As needed",
-            "description": "%config.showPaths.description%",
-            "enum": [
-              "Always",
-              "As needed",
-              "Never"
-            ],
-            "enumDescriptions": [
-              "%config.showPaths.always%",
-              "%config.showPaths.asneeded%",
-              "%config.showPaths.never%"
-            ],
-            "scope": "application",
-            "type": "string"
           }
         }
       },
