@@ -12,23 +12,28 @@ import {
 } from '../webviews/Workspace/WorkspaceViewProvider.interface'
 import { getDepthConfig } from './general'
 
-export const getFoldersConfig = (): ConfigRootFolder[] => {
-  const depth = getDepthConfig()
-  const excludeHiddenFolders = getExcludeHiddenFoldersConfig()
+export const getRawFoldersConfig = (): ConfigRootFolderSettings[] => {
   const oldFolder =
     workspace.getConfiguration().get<string>('workspaceSidebar.folder') || CONFIG_FOLDER
   const rootFolders =
     workspace.getConfiguration().get<ConfigRootFolderSettings[]>('workspaceSidebar.rootFolders') ??
     CONFIG_FOLDERS
-  let folders: ConfigRootFolder[] = []
 
   if (rootFolders.length === 0 && oldFolder) {
-    folders.push({
-      depth,
-      excludeHiddenFolders,
-      path: oldFolder,
-    })
-  } else if (rootFolders.length > 0) {
+    return [{ path: oldFolder }]
+  }
+
+  return rootFolders
+}
+
+export const getFoldersConfig = (): ConfigRootFolder[] => {
+  const depth = getDepthConfig()
+  const excludeHiddenFolders = getExcludeHiddenFoldersConfig()
+  const rootFolders = getRawFoldersConfig()
+
+  let folders: ConfigRootFolder[] = []
+
+  if (rootFolders.length > 0) {
     const uniqueFolderPaths = new Set<string>()
     rootFolders.forEach((ele) => uniqueFolderPaths.add(ele.path))
 
