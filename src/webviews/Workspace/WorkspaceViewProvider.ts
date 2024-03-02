@@ -245,19 +245,26 @@ export class WorkspaceViewProvider
           break
 
         case Actions.ADD_TO_ROOTS:
+          if (vscode.workspace.workspaceFile) {
+            const newRootFolderConfig = getNewRootFolderConfig(vscode.workspace.workspaceFile)
+
+            await vscode.workspace
+              .getConfiguration()
+              .update('workspaceSidebar.rootFolders', newRootFolderConfig, true)
+          } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
+            vscode.window.showErrorMessage('vscode.workspace.workspaceFile is undefined')
+          }
+
+          break
+
         case Actions.SAVE_WS:
-          const wsFolders = vscode.workspace.workspaceFolders
-            ? [...vscode.workspace.workspaceFolders]
-            : []
-          const newRootFolderConfig = getNewRootFolderConfig(wsFolders)
-
-          await vscode.workspace
-            .getConfiguration()
-            .update('workspaceSidebar.rootFolders', newRootFolderConfig, true)
-
-          if (action === Actions.SAVE_WS) {
+          if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0) {
             await executeCommand(CMD_VSC_SAVE_WS_AS)
             this.render()
+          } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
+            vscode.window.showErrorMessage(
+              'vscode.workspace.workspaceFolders are undefined or zero length'
+            )
           }
 
           break

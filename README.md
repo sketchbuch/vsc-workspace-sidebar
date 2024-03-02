@@ -129,4 +129,4 @@ This extension is localised, if you want it in your language please send me a tr
 
 ## Todo
 
-- Check tests on Windows
+- Check if SSH machines add to the wrong config (open unsaved ws)

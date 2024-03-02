@@ -59,4 +59,10 @@ suite('Templates > Helpers > getFileTooltip():', () => {
       `${fileNotSelected.label} (${fileNotSelected.path})`
     )
   })
+
+  test('Returns a tooltip without path if showPath is "true" but path is empty', () => {
+    expect(
+      getFileTooltip(mockRenderVars, { ...fileNotSelected, showPath: true, path: '' })
+    ).to.equal(`${fileNotSelected.label}`)
+  })
 })
