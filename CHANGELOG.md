@@ -1,4 +1,14 @@
+![Workspace Sidebar Preview](docs/images/logo/logo.png)
+
 # Change Log
+
+[Back to Readme](README.md)
+
+## [2.0.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.7.1...v2.0.0) (2024-03-??)
+- Mutiple root folders
+- Better invalid folder handling
+- Removed sorting of workspaces in list view
+- Updated documentation
 
 ## [1.7.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.7.0...v1.7.1) (2023-10-12)
 

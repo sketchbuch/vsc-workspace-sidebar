@@ -1,10 +1,14 @@
+![Workspace Sidebar Preview](../docs/images/logo/logo.png)
+
 # File Icon Themes
+
+[Back to Readme](../README.md)
 
 > **EXPERIMENTAL FEATURE**
 
 It is now possible to display file icon theme icons in both the list view and tree view. The idea is to display a matching language icon next to workspaces, i.e. flutter workspaces show the flutter icon next to the workspace label.
 
-There is no in-built API way to show file icons in VSCode Webviews, only in VSCode Treeviews. To make this possible, a custom NPM package was created which you can also use in your own webview extensions.
+There is no in-built API way to show file icons in VSCode Webviews, only in VSCode Treeviews. To make this possible, a custom NPM package was created ([vscode-file-theme-processor](https://www.npmjs.com/package/vscode-file-theme-processor)) which you can also use in your own webview extensions.
 
 To match icons, substrings will be matched against the absolute file path to each workspace.
 
@@ -51,7 +55,9 @@ Unless you are changing file icon themes every hour or constantly creating diffe
 
 I don't use the file icons (a user requested this feature) or tree view much, so if you have any issues with the file icon themes I'm unlikely to run across it myself, so please [report any issues](https://github.com/sketchbuch/vsc-workspace-sidebar/issues) that you find.
 
-Also I don't change themes (colour or file icon) in VSCode, so if you find issues with themes please let me know as well, but I think most issues can be fixed via the above config. Also, keep in mind that not all themes have the same icons, so if you see a generic file icon from the theme you are using instead of a specific langauge/extension icon even though you have configuration for that langauge/extension it means there is no matching icon in that theme.
+Also I don't change themes (colour or file icon) in VSCode, so if you find issues with themes please let me know as well, but I think most issues can be fixed via the above config.
+
+Keep in mind that not all themes have the same icons, so if you see the generic file icon from the theme you are using instead of a specific langauge/extension icon even though you have configuration for that langauge/extension it means there is no matching icon in that theme.
 
 ### Examples
 

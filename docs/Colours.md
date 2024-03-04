@@ -1,4 +1,8 @@
+![Workspace Sidebar Preview](../docs/images/logo/logo.png)
+
 # Colours
+
+[Back to Readme](../README.md)
 
 Sample colour vars that can be used in webviews.
 

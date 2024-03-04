@@ -7,6 +7,7 @@
 *.code-workspace
 **/.eslintrc.json
 **/.vsix
+**/.zip
 **/*.map
 **/*.ts
 **/tsconfig.json
@@ -18,5 +19,6 @@ vsc-extension-quickstart.md
 .vscode/**
 docs/
 out/test/**
+scripts/
 src/**
 test/**

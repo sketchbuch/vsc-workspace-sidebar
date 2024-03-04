@@ -89,15 +89,31 @@
           },
           "workspaceSidebar.showFileIcons": {
             "default": true,
-            "markdownDescription": "%config.showFileIcons.description%",
+            "markdownDescription": "%config.showFileIcons.markdownDescription%",
             "scope": "application",
             "type": "boolean"
           },
           "workspaceSidebar.showFileIconsConfig": {
             "default": {},
-            "markdownDescription": "%config.showFileIconsConfig.description%",
+            "markdownDescription": "%config.showFileIconsConfig.markdownDescription%",
             "scope": "application",
             "type": "object"
+          },
+          "workspaceSidebar.showPaths": {
+            "default": "As needed",
+            "description": "%config.showPaths.description%",
+            "enum": [
+              "Always",
+              "As needed",
+              "Never"
+            ],
+            "enumDescriptions": [
+              "%config.showPaths.always%",
+              "%config.showPaths.asneeded%",
+              "%config.showPaths.never%"
+            ],
+            "scope": "application",
+            "type": "string"
           }
         }
       },
@@ -119,7 +135,7 @@
           },
           "workspaceSidebar.rootFolders": {
             "default": [],
-            "description": "%config.rootFolders.description%",
+            "markdownDescription": "%config.rootFolders.markdownDescription%",
             "scope": "machine",
             "type": "array",
             "properties": {
@@ -137,30 +153,9 @@
               ".cache",
               ".git"
             ],
-            "description": "%config.folders.excluded.description%",
+            "markdownDescription": "%config.folders.excluded.markdownDescription%",
             "scope": "application",
             "type": "array"
-          }
-        }
-      },
-      {
-        "title": "%config.title.listview%",
-        "properties": {
-          "workspaceSidebar.showPaths": {
-            "default": "As needed",
-            "description": "%config.showPaths.description%",
-            "enum": [
-              "Always",
-              "As needed",
-              "Never"
-            ],
-            "enumDescriptions": [
-              "%config.showPaths.always%",
-              "%config.showPaths.asneeded%",
-              "%config.showPaths.never%"
-            ],
-            "scope": "application",
-            "type": "string"
           }
         }
       },
@@ -200,7 +195,7 @@
           },
           "workspaceSidebar.condenseFileTree": {
             "default": true,
-            "markdownDescription": "%config.condenseFileTree.description%",
+            "markdownDescription": "%config.condenseFileTree.markdownDescription%",
             "scope": "application",
             "type": "boolean"
           }
@@ -263,7 +258,7 @@
       "pre-commit": "lint-staged"
     }
   },
-  "icon": "logo.png",
+  "icon": "./docs/images/icon/icon.png",
   "keywords": [
     "workspaces"
   ],
