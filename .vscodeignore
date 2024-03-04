@@ -12,12 +12,14 @@
 **/*.ts
 **/tsconfig.json
 commitlint.config.js
+docs/*.svg
 vsc-extension-quickstart.md
 
 # Folders
 .vscode-test/**
 .vscode/**
-docs/
+docs/icon/
+docs/social/
 out/test/**
 scripts/
 src/**
