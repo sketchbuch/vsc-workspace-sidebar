@@ -1,3 +1,5 @@
+![Workspace Sidebar Preview](../docs/images/logo/logo.png)
+
 # Colours
 
 [Back to Readme](../README.md)

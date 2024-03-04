@@ -1,23 +1,68 @@
+![Workspace Sidebar Preview](docs/images/logo/logo.png)
+
 # Workspace Sidebar
 
-Adds a sidebar to VSCode that lists Workspaces and lets you open them in the current window or a new window.
+An Extension for VSCode that makes switching Workspaces easier.
 
-![Workspace Sidebar Preview](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/preview.gif)
+You can specify one or more folders to look in for Workspace files and these will be shown in a sidebar, either as a list or as a tree, along with file theme icons to better indentify workspaces.
 
-Two display modes are available, a list view and a file tree view.
+You can then easily change Workspaces or open another Workspace in a new window.
 
-The currently active workspace is highlighted, or in tree mode, any folder if closed that contains the active workspace.
+![Workspace Sidebar Preview](docs/images/preview.gif)
+
+## What's new in v2.0.0?
+
+Firstly, multiple root folders are now supported. Previously only one root folder was possible. You can also override default values for depth and the exclusion of hidden folders. This took quite a rewrite as the entire extension was only built for one root folder.
+
+```json
+{
+   "workspaceSidebar.rootFolders": [
+      { "path": "/home/user/Apps", "excludeHiddenFolders": false},
+      { "path": "~/Projects", "depth": 5}
+      { "path": "/data/Dev"},
+   ]
+}
+```
+
+The root folder setting are now machine scoped to allow different machines (including remote) to have different root folders. This has the side-effect that they are no longer synced like other settings, so each machine will need to provide their own root folders config.
+
+Secondly, symlinks are now usable. Previously they showed an error message about not being a folder. How path issues and handled in cases where folders are files, or not existing at all have also been improved.
+
+Lastly, the documentation has been updated, not just the markdown but also the settings show more information particularly when they are arrays or objects.
+
+[See the Changelog](CHANGELOG.md) for more detailed information.
+
+## Features
+
+The extension works by searching the root folders for `.code-workspace` files, and then displaying them as either a list or a tree.
+
+### View Mode
+
+**List View**
+
+The Workspaces are just displayed for each root folder.
+
+![List View](./docs/images/features/list_view.png)
+
+**Tree View**
+
+A representation of the file tree is displayed, these can be collapsed/expanded in a similar way to the File Explorer in VSCode. The file tree can also be cleaned up to reduce visual noise, or displayed as is. In additon folders with only one child can be combined in a similar way to the File Explorer to reduce the number of folders displayed.
+
+![Tree View](./docs/images/features/tree_view.png)
+
+### Search
 
 A search box is provided to allow you to search for a specific Workspace.
 
-## Example Screen Shots
+![Searching workspaces](./docs/images/features/search.png)
 
-![List View](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/listview.png 'List View')
-![Tree View](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/treeview.png 'Tree View')
-![Searching](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/search.png 'Searching')
-![Seti Theme in Tree View](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/treeview%20seti.png 'Seti Theme in Tree View')
+### File Theme Icons
 
-File theme icons can also be displayed. For more information see the [File Icon Themes](./docs//File%20Icon%20Themes.md) documentation.
+File icons are displayed based on a simple substring match against the file path. No need to configure each file icon separately.
+
+![Searching workspaces](./docs/images/features/file_icons.png)
+
+[More information about the file theme config](docs/File%20Icon%20Themes.md)
 
 ## Configuration
 
@@ -29,7 +74,7 @@ This is a summary of the available configuration options. [View detailed configu
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ------------- |
 | Actions                | The default action when clicking on a workspace. By default, clicking opens the workspace in the current window and the icon click in a new window. You can use this setting to reverse this behaviour. | Current Window | Dropdown List |
 | Clean Labels           | Should workspace labels be converted to Title Case? If not their filename will be used as-is.                                                                                                           | True           | Boolean       |
-| Depth                  | The depth of subfolders to include in the search.                                                                                                                                                       | 0              | Number 0-25   |
+| Depth                  | The depth of subfolders to search when looking for Workspace files. This can be overriden per root folder.                                                                                                                                                     | 0              | Number 0-25   |
 | Show File Icons        | Show icons from the active file icon theme.                                                                                                                                                             | true           | Boolean       |
 | Show File Icons Config | Config for file icon matching. See [File Icon Themes](./docs//File%20Icon%20Themes.md) documentation for more information.                                                                              | {}             | Object        |
 | Show Paths             | Show the paths to the workspaces in the sidebar. Available options are: 'Always', 'Never', 'As needed'. This will only display paths if there are duplicate labels in the same folder.                  | As Needed      | Dropdown List |
@@ -38,9 +83,9 @@ This is a summary of the available configuration options. [View detailed configu
 
 | Setting                | Description                                                                                                                                                                        | Default Value                                                          | Type                               |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------- |
-| Exclude Hidden Folders | Should hidden folders be excluded when looking for workspaces? This can speed up searching. If you turn this option off you will need to add a lot of folders to Excluded Folders. | True                                                                   | Boolean                            |
-| Excluded       | Folders to exclude when searching for workspace files                                                                                                                              | [ "node_modules", "build", "dist", "out", "public", ".cache", ".git" ] | Array of folder names              |
-| Root Folders           | The folders to look for workspace files in. **~/** will also be replaced with your home folder in all folders within the array.                                                    | []                                                                     | Array of absolute paths to folders |
+| Exclude Hidden Folders | Should hidden folders be excluded when looking for workspaces? This can speed up searching, however, if you turn this option off you may need to excluded many folders. This can be overriden per root folder.   | True                                                                   | Boolean                            |
+| Excluded       | Folders to exclude when searching for workspace files                                                                                                                              | [ "node_modules", "build", "dist", "out", "public", ".cache", ".git" ] | Array              |
+| Root Folders           | The folders to look for workspace files in. **~/** will also be replaced with your home folder in all folders within the array.                                                    | []                                                                     | Array |
 
 ### Search
 
@@ -57,60 +102,13 @@ This is a summary of the available configuration options. [View detailed configu
 | Condense File Tree    | Reduce visual noise by removing sufolders with only one workspace in. These workspace files will then be shown in their parent folder. Tree View only. | True          | Boolean |
 | Show Folder Hierarchy | Display a file tree of workspaces with collapsable folders instead of the default list.                                                                                                | False         | Boolean |
 
-
-## Compact / Condense Folders
-
-Tree view also respects the explorer setting "Compact Folders".
-This will combine empty folders in the tree into one folder:
-
-```
-> Some
-   > Deep
-      > Folder
-         - workspace.code-workspace
-```
-
-Will be displayed as:
-
-```
-> Some / Deep / Folder
-   - workspace.code-workspace
-```
-
-This is an explorer setting and not part of this extension's settings.
-
-Condense file Tree will render workspaces in their parent folder if there is only one workspace in a folder:
-
-```
-> React
-   > To-Do List
-      - todo_list.code-workspace
-   > Naughts and Crosses
-      - naughts_and_crosses.code-workspace
-   > Suspense Test
-      - suspense_test.code-workspace
-```
-
-Will be displayed as:
-
-```
-> React
-   - todo_list.code-workspace
-   - naughts_and_crosses.code-workspace
-   - suspense_test.code-workspace
-```
-
-## Workspace Cache
-
-The collected workspaces are cached. You can clear the cache and recollect workspaces by clicking on the refresh icon.
-
-A change in the config values: Depth, Excluded Folders, Exclude Hidden Folders, and Root Folders will automatically dump the cache and cause workspaces to be recollected.
-
 ## Translations
 
 This extension is localised, if you want it in your language please send me a translated "package.nls.json" file which you can find in the root of this extension.
 
 ## Development
+
+If you are intersted in contributing:
 
 - Fork or clone the repo.
 - Install dependencies
@@ -121,18 +119,13 @@ This extension is localised, if you want it in your language please send me a tr
   - Lint and typechecking commands exist
   - Typecheck will be run by the launch scripts before
     running tests
-- You can package a test version of the extension as a vsix file using the command: vsce package.
+- You can package a test version of the extension as a vsix file using the command: `vsce package`.
   - Test the VSIX on Linux, Mac, and Windows.
 - [Sample colours and CSS variable names](./docs/Colours.md)
-
-## Latest Version
-
-### [1.7.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.7.0...v1.7.1) (2023-10-12)
-
-- Closes [#89](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/89)
-- Fixed rendering of file icons on windows
 
 ## Todo
 
 - Check if SSH machines add to the wrong config (open unsaved ws)
 - Folder Path examples - add windows example
+- Add buymeacoffee etc like bookmarks readme
+- Closed subfolders show all open workspaces

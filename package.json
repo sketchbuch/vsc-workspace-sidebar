@@ -258,7 +258,7 @@
       "pre-commit": "lint-staged"
     }
   },
-  "icon": "logo.png",
+  "icon": "./docs/images/icon/icon.png",
   "keywords": [
     "workspaces"
   ],
