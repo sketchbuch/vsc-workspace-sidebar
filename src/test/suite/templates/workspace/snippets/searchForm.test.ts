@@ -18,7 +18,6 @@ suite('Templates > Workspace > Snippets: searchForm()', () => {
     const result = searchForm(mockState, true)
 
     expect(result).to.be.a('string')
-    expect(result).not.to.equal('')
     expect(result).contains('class="list__search"')
     expect(result).contains('role="search"')
 

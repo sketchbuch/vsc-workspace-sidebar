@@ -19,11 +19,9 @@ export const rootPathErrors: FindFileResult[] = [
 ]
 
 export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
-  const { fileCount, rootFolders, search, visibleFileCount } = state
+  const { rootFolders, search, visibleFileCount } = state
 
-  if (fileCount < 1) {
-    return ''
-  } else if (search.term && visibleFileCount < 1) {
+  if (search.term && visibleFileCount < 1) {
     return `
       <div class="list__searchedout">
         <p>${t('workspace.list.search.noMatch')}</p>
