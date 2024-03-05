@@ -4,10 +4,16 @@
 
 [Back to Readme](README.md)
 
-## [2.0.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.7.1...v2.0.0) (2024-03-??)
-- Mutiple root folders
-- Better invalid folder handling
+## [2.0.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.7.1...v2.0.0) (2024-03-05)
+- Closes [#61](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/61): Mutiple root folders
+- Closes [#102](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/102) [#124](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/124): Better invalid folder handling
+- Closes [#106](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/106): Option to add an open workspace outside of root folders to your config
+- Closes [#116](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/116): Removed circular deps.
+- Closes [#95](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/95): Support for remote machines and root folders. The root flders are now machine scoped
+- Closes [#99](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/99): Cache is now linked to version
+- Fixes [#112](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/122): Green X on some icons
 - Removed sorting of workspaces in list view
+- Symlinks now work
 - Updated documentation
 
 ## [1.7.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.7.0...v1.7.1) (2023-10-12)
