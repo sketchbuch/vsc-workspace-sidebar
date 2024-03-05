@@ -1,5 +1,4 @@
 import * as os from 'os'
-import path from 'path'
 import {
   FileTree,
   WorkspaceState,
@@ -32,7 +31,7 @@ export const itemFolder = ({
   const homeDir = os.homedir()
   const { folderPath, folderPathSegment, isRoot, label } = folder
   const folderPathShort = folderPath.replace(homeDir, `~`)
-  const indicateSelected = isClosed && state.selected.includes(`${folderPathSegment}${path.sep}`)
+  const indicateSelected = isClosed && state.selected.startsWith(folderPath)
 
   let folderClasses = `list__branch-list-item list__branch-list-item-folder list__styled-item`
 

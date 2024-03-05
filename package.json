@@ -260,6 +260,10 @@
   },
   "icon": "docs/images/icon/icon.png",
   "keywords": [
+    "manager",
+    "sidebar",
+    "switcher",
+    "workspace",
     "workspaces"
   ],
   "license": "SEE LICENSE IN LICENSE.txt",
@@ -270,7 +274,7 @@
       "git add"
     ]
   },
-  "main": "./dist/extension.js",
+  "main": "dist/extension.js",
   "publisher": "sketchbuch",
   "repository": {
     "type": "git",
@@ -289,11 +293,11 @@
     "lint:prettier": "prettier --write --config ./.prettierrc.js './{src, resources/js}/**/*.{js,ts}'",
     "lint:ts": "eslint ./src --ext ts --fix",
     "lint": "yarn lint:js && yarn lint:ts && yarn lint:prettier && yarn lint:css",
+    "mocha:compile": "tsc -w -p ./",
+    "mocha:test": "mocha -w -ui tdd --",
     "pretest": "yarn clean:dist && yarn build:dev && yarn lint",
     "test": "yarn clean:test && yarn typecheck",
-    "test:mocha": "mocha -w -ui tdd --",
     "typecheck": "tsc -p ./",
-    "typecheck:mocha": "tsc -w -p ./",
     "vscode:prepublish": "yarn clean:dist && yarn build:release"
   },
   "dependencies": {

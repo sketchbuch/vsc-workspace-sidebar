@@ -112,15 +112,16 @@ If you are intersted in contributing:
 
 - Fork or clone the repo.
 - Install dependencies
-- Run tests or run a development version via the debugger launch panel.
-  - Tests can't be run via the node script in package.json
+- Run tests in a development version of VSCode via the debugger launch panel.
+  - Tests can't be run via the node script in package.json as a full instance of VSCode is needed.
   - Output of tests is found in the termial Debug Console tab
   - Run tests on Linux, Mac, and Windows.
-  - Lint and typechecking commands exist
   - Typecheck will be run by the launch scripts before
-    running tests
+    running tests.
+  - If just testing functions that do not use VSCode, you can run `mocha:compile` and then `mocha:test` to test - but if you use any part of the VSCode API (inc. ENUMs) then you will need to run the tests via the debugger.
 - You can package a test version of the extension as a vsix file using the command: `vsce package`.
   - Test the VSIX on Linux, Mac, and Windows.
+- Lint and typechecking commands exist
 - [Sample colours and CSS variable names](./docs/Colours.md)
 
 ## Todo

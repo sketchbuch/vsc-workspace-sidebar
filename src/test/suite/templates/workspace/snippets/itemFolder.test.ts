@@ -233,7 +233,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
         renderVars: mockRenderVars,
         state: {
           ...mockState,
-          selected: `${FOLDER_PATH}${path.sep}`,
+          selected: path.join(folder.folderPath, 'Impala.code-workspace'),
         },
       })
 
