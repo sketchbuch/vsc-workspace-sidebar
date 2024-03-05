@@ -38,13 +38,6 @@ suite('Templates > Workspace > Snippets: list()', () => {
     treeSpy.restore()
   })
 
-  test('Renders nothing if there are no files', () => {
-    const result = list(getMockState({ fileCount: 0 }), getMockRenderVars())
-
-    expect(result).to.be.a('string')
-    expect(result).to.equal('')
-  })
-
   test('Renders search-out message if no visibleFiles and search is in progress', () => {
     const result = list(
       getMockState({

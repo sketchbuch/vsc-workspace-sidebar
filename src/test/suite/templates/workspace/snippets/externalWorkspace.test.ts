@@ -26,7 +26,6 @@ suite('Templates > Workspace > Snippets: externalWorkspace()', () => {
     )
 
     expect(result).to.be.a('string')
-    expect(result).not.to.equal('')
     expect(result).contains('class="list__folder-vscodedivider"')
     expect(result).contains('class="list__styled-item')
     expect(result).contains(`<span class="list__title">${folder}</span>`)
@@ -41,7 +40,6 @@ suite('Templates > Workspace > Snippets: externalWorkspace()', () => {
     )
 
     expect(result).to.be.a('string')
-    expect(result).not.to.equal('')
 
     expect(result).contains(
       '<vscode-button class="list__extws-update-roots" id="addToFolderRoots">'

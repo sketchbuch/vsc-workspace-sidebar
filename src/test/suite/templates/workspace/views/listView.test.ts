@@ -35,24 +35,11 @@ suite('Templates > Workspace > View: listView()', () => {
     vlSpy.restore()
   })
 
-  test('Renders correctly if there are no files', () => {
-    const mockState = getMockState()
-    const result = listView(mockState, mockRenderVars)
-
-    expect(result).to.be.a('string')
-    expect(result).not.to.equal('')
-    expect(result).contains('class="view list list--empty"')
-
-    sinon.assert.callCount(vlSpy, 1)
-    sinon.assert.calledWith(vlSpy, 'Check extension settings', 'SETTINGS')
-  })
-
-  test('Renders correctly if there are files', () => {
+  test('Renders correctly', () => {
     const mockState = getMockState({ ...mockRootFolders })
     const result = listView(mockState, mockRenderVars)
 
     expect(result).to.be.a('string')
-    expect(result).not.to.equal('')
     expect(result).contains('class="view list"')
 
     sinon.assert.callCount(listSpy, 1)

@@ -119,6 +119,16 @@ If you are intersted in contributing:
   - Lint and typechecking commands exist
   - Typecheck will be run by the launch scripts before
     running tests
+  - If using file paths, don't hard code the folder separators, use path.join() instead.
+    ```javascript
+    // This will fail in a test on windows:
+    const myPath = '/home/user/dev'
+    expect(getPathToDev()).to.equal(myPath)
+
+    // Do this instead:
+    const myPath = path.join('home', 'user', 'dev')
+    expect(getPathToDev()).to.equal(myPath)
+    ```
 - You can package a test version of the extension as a vsix file using the command: `vsce package`.
   - Test the VSIX on Linux, Mac, and Windows.
 - [Sample colours and CSS variable names](./docs/Colours.md)
@@ -128,4 +138,3 @@ If you are intersted in contributing:
 - Check if SSH machines add to the wrong config (open unsaved ws)
 - Folder Path examples - add windows example
 - Add buymeacoffee etc like bookmarks readme
-- Closed subfolders show all open workspaces

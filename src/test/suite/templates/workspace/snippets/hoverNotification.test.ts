@@ -9,7 +9,6 @@ suite('Templates > Workspace > Snippets: hoverNotification()', () => {
     const result = hoverNotification({ message, title })
 
     expect(result).to.be.a('string')
-    expect(result).not.to.equal('')
     expect(result).contains(`<p class="hover-notification__title">`)
     expect(result).contains(title)
     expect(result).contains(`<p class="hover-notification__message">`)
