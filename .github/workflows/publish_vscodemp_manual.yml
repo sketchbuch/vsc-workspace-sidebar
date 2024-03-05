@@ -23,6 +23,9 @@ jobs:
       - name: Install Vsce
         run: npm i -g vsce
 
-      - name: Publish to VScode Marketplace
-        if: github.event_name == 'workflow_dispatch'
-        run: vsce publish -p ${{ secrets.VSCE_TOKEN_OLD }}
+      - name: Login publisher to VSCE
+        run: vsce login ${{ vars.VSCODE_MP_USER }} -p ${{ secrets.VSCE_TOKEN }}
+
+      # - name: Publish to VScode Marketplace
+      #   if: github.event_name == 'workflow_dispatch'
+      #   run: vsce publish -p ${{ secrets.VSCE_TOKEN_OLD }}
