@@ -13,15 +13,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # https://github.com/actions/setup-node/issues/32#issuecomment-525791142
-      - name: Get Node Version
-        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
-        id: nvm
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+          node-version: '${{ vars.NODE_VERSION }}'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install Dependencies
@@ -41,15 +36,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # https://github.com/actions/setup-node/issues/32#issuecomment-525791142
-      - name: Get Node Version
-        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
-        id: nvm
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+          node-version: '${{ vars.NODE_VERSION }}'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install Dependencies
