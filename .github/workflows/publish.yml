@@ -6,7 +6,7 @@ on:
     types: [created]
   workflow_dispatch:
 jobs:
-  build:
+  vscemp:
     name: VScode Marketplace
     runs-on: ubuntu-latest
     steps:
@@ -31,29 +31,33 @@ jobs:
         run: npm i -g vsce
 
       - name: Publish to VScode Marketplace
-        if: github.event_name == 'workflow_dispatch'
-        run: echo "${{ secrets.VSCE_PAT }}"
+        if: github.event_name != 'workflow_dispatch'
+        run: vsce publish -p ${{ secrets.VSCE_TOKEN }}
 
-      # - name: Install PNPM
-      #   uses: pnpm/action-setup@v2
-      #   with:
-      #     version: 7.29.0
+  openvsix:
+    name: OpenVSIX Marketplace
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # - name: Setup Node
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: '16.15.1'
-      #     registry-url: 'https://registry.npmjs.org'
+      # https://github.com/actions/setup-node/issues/32#issuecomment-525791142
+      - name: Get Node Version
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
 
-      # - name: Install dependencies
-      #   run: pnpm install --frozen-lockfile
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+          registry-url: 'https://registry.npmjs.org'
 
-      # - name: Pre-package Test
-      #   if: github.event_name == 'workflow_dispatch'
-      #   run: pnpm prepublishOnly
+      - name: Install Dependencies
+        run: yarn
 
-      # - name: Publish package to NPM
-      #   if: github.event_name != 'workflow_dispatch'
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      #   run: npm publish
+      - name: Install Ovsx
+        run: npm i -g ovsx
+
+      - name: Publish to OpenVSIX Marketplace
+        if: github.event_name != 'workflow_dispatch'
+        run: ovsx publish -p ${{ secrets.OPENVSX_TOKEN }}
