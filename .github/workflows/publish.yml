@@ -30,7 +30,7 @@ jobs:
       - name: Install Vsce
         run: npm i -g vsce
 
-      - name: Publish
+      - name: Publish to VScode Marketplace
         if: github.event_name == 'workflow_dispatch'
         run: echo ${{ secrets.VSCE_PAT }}
 
