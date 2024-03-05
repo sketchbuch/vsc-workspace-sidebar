@@ -1,4 +1,4 @@
-# Publish this VSCode Extension to the VSCode Marketplace and OpenVSIX Marketplace
+# Publish this VSCode Extension to the VSCode Marketplace and OpenVSX Marketplace
 
 name: Publish to Marketplaces
 on:
