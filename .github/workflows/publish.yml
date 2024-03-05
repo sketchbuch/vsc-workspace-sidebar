@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # https://github.com/actions/setup-node/issues/32#issuecomment-525791142
       - name: Get Node Version
@@ -19,7 +19,7 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
           registry-url: 'https://registry.npmjs.org'
@@ -32,7 +32,7 @@ jobs:
 
       - name: Publish to VScode Marketplace
         if: github.event_name == 'workflow_dispatch'
-        run: echo ${{ secrets.VSCE_PAT }}
+        run: echo "${{ secrets.VSCE_PAT }}"
 
       # - name: Install PNPM
       #   uses: pnpm/action-setup@v2
