@@ -24,5 +24,5 @@ jobs:
         run: npm i -g vsce
 
       - name: Publish to VScode Marketplace
-        if: github.event_name != 'workflow_dispatch'
+        if: github.event_name == 'workflow_dispatch'
         run: vsce publish -p ${{ secrets.VSCE_TOKEN_OLD }}
