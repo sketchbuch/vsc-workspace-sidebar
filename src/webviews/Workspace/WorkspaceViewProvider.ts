@@ -47,7 +47,7 @@ export class WorkspaceViewProvider
   public static readonly viewType = EXT_WEBVIEW_WS
   private _view?: vscode.WebviewView
   private _cssGenerator: CssGenerator
-  private readonly _version: string = '2.0.0-beta-11'
+  private readonly _version: string = '2.0.0'
 
   constructor(
     private readonly _ctx: vscode.ExtensionContext,

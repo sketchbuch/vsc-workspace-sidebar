@@ -137,6 +137,4 @@ If you are intersted in contributing:
 
 ## Todo
 
-- Check if SSH machines add to the wrong config (open unsaved ws)
-- Folder Path examples - add windows example
 - Add buymeacoffee etc like bookmarks readme

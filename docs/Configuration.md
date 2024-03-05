@@ -30,11 +30,21 @@ Condense will render workspaces in their parent folder if there is only one work
 v2.0.0 allows multiple root folders. These are specified in an array of objects like this:
 
 ```json
+// Linux / Mac
 {
   "workspaceSidebar.rootFolders": [
     { "path": "/home/user/apps", "excludeHiddenFolders": false}
-    { "path": "/home/user/projects", "depth": 2}
+    { "path": "~/projects", "depth": 2} // "~" will be replaced with "/home/user"
     { "path": "/home/user/dev"}
+  ]
+}
+
+// Windows
+{
+  "workspaceSidebar.rootFolders": [
+    { "path": "C:\\Users\\User\\Apps", "excludeHiddenFolders": false}
+    { "path": "C:\\Users\\User\\Projects", "depth": 2}
+    { "path": "Z:\\VM Dev\\vsc"}
   ]
 }
 ```

@@ -12,7 +12,7 @@
 **/*.ts
 **/tsconfig.json
 commitlint.config.js
-docs/*.svg
+docs/**/*.svg
 vsc-extension-quickstart.md
 
 # Folders
