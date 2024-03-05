@@ -1,6 +1,7 @@
 # Files
 .cache
 .gitignore
+.nvmrc
 .prettierrc.js
 .stylelintignore
 .stylelintrc
@@ -16,6 +17,7 @@ docs/**/*.svg
 vsc-extension-quickstart.md
 
 # Folders
+.github/**
 .vscode-test/**
 .vscode/**
 docs/icon/
