@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    name: Create VSIX
+    name: VScode Marketplace
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,8 +24,15 @@ jobs:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: yarn
+
+      - name: Install Vsce
+        run: npm i -g vsce
+
+      - name: Publish
+        if: github.event_name == 'workflow_dispatch'
+        run: echo ${{ secrets.VSCE_PAT }}
 
       # - name: Install PNPM
       #   uses: pnpm/action-setup@v2
