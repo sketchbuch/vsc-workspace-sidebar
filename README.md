@@ -134,3 +134,7 @@ If you are intersted in contributing:
   - Test the VSIX on Linux, Mac, and Windows.
 - Lint and typechecking commands exist
 - [Sample colours and CSS variable names](./docs/Colours.md)
+
+## Support
+
+If you use this plugin and want to help support development, please [PayPal Me](https://www.paypal.com/paypalme/stephenbungert).
