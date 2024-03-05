@@ -2,13 +2,13 @@
 
 # Workspace Sidebar
 
-An Extension for VSCode that makes switching Workspaces easier.
+An extension for VSCode that makes switching Workspaces easier.
 
 You can specify one or more folders to look in for Workspace files and these will be shown in a sidebar, either as a list or as a tree, along with file theme icons to better indentify workspaces.
 
 You can then easily change Workspaces or open another Workspace in a new window.
 
-![Workspace Sidebar Preview](docs/images/preview.gif)
+![Workspace Sidebar Preview](docs/images/preview/preview.gif)
 
 ## What's new in v2.0.0?
 
@@ -134,7 +134,3 @@ If you are intersted in contributing:
   - Test the VSIX on Linux, Mac, and Windows.
 - Lint and typechecking commands exist
 - [Sample colours and CSS variable names](./docs/Colours.md)
-
-## Todo
-
-- Add buymeacoffee etc like bookmarks readme
