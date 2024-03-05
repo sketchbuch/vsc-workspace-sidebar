@@ -13,6 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      # https://github.com/actions/setup-node/issues/32#issuecomment-525791142
       - name: Get Node Version
         run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
         id: nvm
@@ -22,6 +23,9 @@ jobs:
         with:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
           registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: yarn
 
       # - name: Install PNPM
       #   uses: pnpm/action-setup@v2
