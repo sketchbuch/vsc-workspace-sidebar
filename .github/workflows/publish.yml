@@ -30,7 +30,7 @@ jobs:
         run: vsce publish -p ${{ secrets.VSCE_TOKEN }}
 
   openvsix:
-    name: OpenVSIX Marketplace
+    name: OpenVSX Marketplace
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -48,6 +48,6 @@ jobs:
       - name: Install Ovsx
         run: npm i -g ovsx
 
-      - name: Publish to OpenVSIX Marketplace
+      - name: Publish to OpenVSX Marketplace
         if: github.event_name != 'workflow_dispatch'
         run: ovsx publish -p ${{ secrets.OPENVSX_TOKEN }}
