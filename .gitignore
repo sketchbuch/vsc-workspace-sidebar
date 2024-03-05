@@ -2,10 +2,10 @@
 .cache/
 .parcel-cache/
 .vscode-test/
+/test
 dist/
 node_modules/
 out/
-/test
 
 # Files
 *.code-workspace
