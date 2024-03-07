@@ -30,7 +30,6 @@ export const searchConfigOptions: ConfigOptions = [
 ]
 
 export const treeConfigOptions: ConfigOptions = [
-  { config: `${EXPLORER_CONFIG}.compactFolders`, type: 'tree' },
   { config: `${WS_CONFIG}.condenseFileTree`, type: 'tree' },
 ]
 
