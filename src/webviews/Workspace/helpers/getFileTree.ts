@@ -42,7 +42,7 @@ export const getFileTree = (configFolder: string, files: Files): FileTree => {
 
         if (part) {
           folderPathSegment = folderPathSegment ? `${folderPathSegment}${pathLib.sep}${part}` : part
-          const cropPos = file.file.indexOf(part) + part.length
+          const cropPos = pathLib.dirname(file.file).lastIndexOf(part) + part.length
 
           // Either the existing folder, or a new one
           const folder: FileTree = folderList[folderPathSegment] ?? {

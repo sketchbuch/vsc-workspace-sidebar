@@ -138,3 +138,9 @@ If you are intersted in contributing:
 ## Support
 
 If you use this plugin and want to help support development, please [PayPal Me](https://www.paypal.com/paypalme/stephenbungert).
+
+## Todo
+
+- If folder is compacted, why condense it?
+- 1st level folders compacted have double folder names (e.g. deadfire)
+- Mockdata why todo
