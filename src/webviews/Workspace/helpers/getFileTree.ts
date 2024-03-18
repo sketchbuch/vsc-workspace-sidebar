@@ -23,7 +23,6 @@ export const getFileTree = (configFolder: string, files: Files): FileTree => {
   }
 
   const folderList: FolderList = {}
-
   const rootFiles = tree.files
   const rootBranch = tree.sub
   let branch: FileTree[] = rootBranch
@@ -42,7 +41,10 @@ export const getFileTree = (configFolder: string, files: Files): FileTree => {
 
         if (part) {
           folderPathSegment = folderPathSegment ? `${folderPathSegment}${pathLib.sep}${part}` : part
-          const cropPos = pathLib.dirname(file.file).lastIndexOf(part) + part.length
+          const cropPos =
+            pathLib.dirname(file.file).lastIndexOf(`${pathLib.sep}${part}`) +
+            part.length +
+            pathLib.sep.length
 
           // Either the existing folder, or a new one
           const folder: FileTree = folderList[folderPathSegment] ?? {

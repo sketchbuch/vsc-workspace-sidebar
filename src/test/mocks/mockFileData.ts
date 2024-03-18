@@ -77,7 +77,7 @@ export const getMockFolderList = (type: GetFileTreeType): string[] => {
       return [ROOT_FOLDER, FOLDER2, FOLDER3, FOLDER4]
 
     case 'compacted':
-      return [ROOT_FOLDER, FOLDER2, file3.path, file4.path]
+      return [ROOT_FOLDER, FOLDER2, file2.path, file3.path, file4.path]
 
     case 'condensed':
       return [ROOT_FOLDER, FOLDER1, FOLDER2, FOLDER3, FOLDER4]
@@ -139,8 +139,7 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
         sub: [
           {
             files: [],
-            // TODO - Why????
-            folderPath: path.join(ROOT_FOLDER_PATH, file1.path),
+            folderPath: path.join(ROOT_FOLDER_PATH, FOLDER1),
             folderPathSegment: FOLDER1,
             isRoot: false,
             label: FOLDER1,
@@ -349,7 +348,7 @@ export const getMockFileTree = (type: GetFileTreeType): FileTree => {
         sub: [
           {
             files: [],
-            folderPath: path.join(ROOT_FOLDER_PATH, FOLDER1, SUBFOLDER1),
+            folderPath: path.join(ROOT_FOLDER_PATH, FOLDER1),
             folderPathSegment: FOLDER1,
             isRoot: false,
             label: FOLDER1,
