@@ -67,7 +67,7 @@ suite('Webviews > Workspace > Store > list()', () => {
   }
 
   suite('List:', () => {
-    test('Sort "asc" updates state as expected', () => {
+    test('Updates state as expected', () => {
       const mockRootFolders = getMockRootFolders({
         showTree: false,
       })
@@ -82,7 +82,7 @@ suite('Webviews > Workspace > Store > list()', () => {
       expect(state).to.eql(expectedState)
     })
 
-    test('Sort "asc" searched updates state as expected', () => {
+    test('Searched updates state as expected', () => {
       const mockRootFolders = getMockRootFolders({
         searchTerm: SEARCH_TERM,
         showTree: false,

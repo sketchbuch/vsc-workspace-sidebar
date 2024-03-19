@@ -17,11 +17,7 @@ export const registerWebviews = (
     (event: vscode.ConfigurationChangeEvent) => {
       const { affectsConfiguration } = event
 
-      if (affectsConfiguration(`${EXPLORER_CONFIG}.compactFolders`)) {
-        if (getShowTreeConfig()) {
-          workspaceViewProvider.updateFileTree()
-        }
-      } else if (affectsConfiguration(WS_CONFIG)) {
+      if (affectsConfiguration(WS_CONFIG)) {
         for (const { config, type } of configOptions) {
           if (affectsConfiguration(config)) {
             switch (type) {
@@ -46,6 +42,10 @@ export const registerWebviews = (
 
             break
           }
+        }
+      } else if (affectsConfiguration(`${EXPLORER_CONFIG}.compactFolders`)) {
+        if (getShowTreeConfig()) {
+          workspaceViewProvider.updateFileTree()
         }
       }
     }

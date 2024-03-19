@@ -57,9 +57,18 @@ export const itemFolder = ({
   ]
 
   const folderButtons = getWorkspaceButtons({ buttons, renderVars })
+  const isCompacted = folder.compactedFolders.length > 0
 
   return `
-    <li aria-label="${folderPathShort}" class="${folderClasses}" data-depth="${depth}" data-folder="${folderPathSegment}" data-folderpath="${folderPath}" title="${folderPathShort}">
+    <li 
+      aria-label="${folderPathShort}"
+      class="${folderClasses}"
+      data-depth="${depth}"
+      data-folder="${folderPathSegment}"
+      data-folderpath="${folderPath}"
+      data-iscompacted="${isCompacted}"
+      title="${folderPathShort}"
+    >
       ${!isFolderError && indicateSelected ? itemIconSelected(renderVars) : ''}
       ${itemIndent({ depth })}
       <span class="list__element">

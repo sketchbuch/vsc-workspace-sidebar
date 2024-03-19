@@ -15,6 +15,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
   const DEPTH = 0
   const FOLDER_PATH = 'supernatural/winchester'
   const folder: FileTree = {
+    compactedFolders: [],
     files: [],
     folderPath: `${OS_HOMEFOLDER}/${FOLDER_PATH}`,
     folderPathSegment: FOLDER_PATH,
@@ -241,6 +242,37 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
       expect(result).contains(`list__styled-item--selected`)
 
       sinon.assert.calledOnce(selectedIconSpy)
+    })
+  })
+
+  suite('iscompacted:', () => {
+    test('Uncompacted folder has false data attribute', () => {
+      const result = itemFolder({
+        depth: DEPTH,
+        folder: { ...folder, compactedFolders: [] },
+        isClosed: false,
+        renderVars: mockRenderVars,
+        state: mockState,
+      })
+
+      expect(result).to.be.a('string')
+      expect(result).contains(`data-iscompacted="false"`)
+    })
+
+    test('Compacted folder has true data attribute', () => {
+      const result = itemFolder({
+        depth: DEPTH,
+        folder: {
+          ...folder,
+          compactedFolders: [{ folderPath: '', folderPathSegment: '', label: '' }],
+        },
+        isClosed: false,
+        renderVars: mockRenderVars,
+        state: mockState,
+      })
+
+      expect(result).to.be.a('string')
+      expect(result).contains(`data-iscompacted="true"`)
     })
   })
 })

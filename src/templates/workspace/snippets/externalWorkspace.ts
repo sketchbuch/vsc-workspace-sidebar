@@ -28,6 +28,7 @@ export const externalWorkspace = (state: WorkspaceState, renderVars: RenderVars)
     }
     const classes = getListClasses(showTree)
     const fileTree: FileTree = {
+      compactedFolders: [],
       files: [],
       folderPath: path,
       folderPathSegment: folderName,

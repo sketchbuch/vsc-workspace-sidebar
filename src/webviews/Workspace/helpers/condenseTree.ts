@@ -11,12 +11,10 @@ import { FileTree, FileTrees } from '../WorkspaceViewProvider.interface'
 export const condenseTree = (tree: FileTree): FileTree => {
   if (tree.sub.length > 0) {
     tree.sub = tree.sub.reduce((newSubs: FileTrees, curSub: FileTree) => {
-      if (curSub.sub.length < 1) {
-        if (curSub.files.length === 1) {
-          tree.files = [...tree.files, ...curSub.files]
+      if (curSub.sub.length < 1 && curSub.files.length === 1) {
+        tree.files = [...tree.files, ...curSub.files]
 
-          return newSubs
-        }
+        return newSubs
       }
 
       newSubs.push(condenseTree(curSub))

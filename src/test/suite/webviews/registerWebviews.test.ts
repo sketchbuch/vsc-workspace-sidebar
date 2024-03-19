@@ -145,7 +145,7 @@ suite('Webviews > registerWebviews()', () => {
         registerWebviews(mockContext, ws, configOpts)
         callChangeConfigCallaback(affectsConfigSpy)
 
-        sinon.assert.callCount(affectsConfigSpy, 2) // Check for WS_CONFIG and opt
+        sinon.assert.callCount(affectsConfigSpy, 2) // Check for WS_CONFIG and CONFIG_OPTION
         sinon.assert.callCount(updateVisibleSpy, 1)
       })
     }

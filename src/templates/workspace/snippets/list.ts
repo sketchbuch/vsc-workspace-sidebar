@@ -47,6 +47,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
             const classes = getListClasses(isFileTree)
             const isClosed = closedFolders.includes(folderName)
             const rootFolderFile: FileTree = {
+              compactedFolders: [],
               files: [],
               folderPath,
               folderPathSegment: folderName,

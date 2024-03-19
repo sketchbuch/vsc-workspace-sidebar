@@ -66,7 +66,13 @@ export const itemFile = ({ depth, file, renderVars, state }: ItemFileProps): str
   const dataDepth = depth ?? 0
 
   return `
-    <li aria-label="${tooltip}" class="${classes}" data-depth="${dataDepth}" data-file="${dataFile}" title="${tooltip}">
+    <li 
+      aria-label="${tooltip}"
+      class="${classes}"
+      data-depth="${dataDepth}"
+      data-file="${dataFile}"
+      title="${tooltip}"
+    >
       ${isSelected ? itemIconSelected(renderVars) : ''}
       ${itemIndent(indentProps)}
       <span class="list__element">
