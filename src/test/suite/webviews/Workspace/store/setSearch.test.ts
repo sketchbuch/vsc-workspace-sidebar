@@ -41,7 +41,7 @@ suite('Webviews > Workspace > Store > setSearch()', () => {
       treeConfigStub.callsFake(() => false)
     })
 
-    test('Sort "asc" updates state as expected', () => {
+    test('Searching updates state as expected', () => {
       const mockRootFolders = getMockRootFolders({
         fileTreeType: 'normal',
       })

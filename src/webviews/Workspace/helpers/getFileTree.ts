@@ -14,6 +14,7 @@ export const getFileTree = (configFolder: string, files: Files): FileTree => {
   const rootFolder = getLastPathSegment(configFolder)
 
   let tree: FileTree = {
+    compactedFolders: [],
     files: [],
     folderPath: configFolder.replace(`~`, homeDir),
     folderPathSegment: rootFolder,
@@ -41,13 +42,22 @@ export const getFileTree = (configFolder: string, files: Files): FileTree => {
 
         if (part) {
           folderPathSegment = folderPathSegment ? `${folderPathSegment}${pathLib.sep}${part}` : part
-          const cropPos =
-            pathLib.dirname(file.file).lastIndexOf(`${pathLib.sep}${part}`) +
-            part.length +
-            pathLib.sep.length
+
+          const dirName = pathLib.dirname(file.file)
+          let searchStr = `${pathLib.sep}${part}${pathLib.sep}`
+          let lastIndex = dirName.lastIndexOf(searchStr)
+          let cropPos = lastIndex + searchStr.length - 1
+
+          // Folder, not found, check without last sep
+          if (lastIndex < 0) {
+            searchStr = `${pathLib.sep}${part}`
+            lastIndex = dirName.lastIndexOf(searchStr)
+            cropPos = lastIndex + searchStr.length
+          }
 
           // Either the existing folder, or a new one
           const folder: FileTree = folderList[folderPathSegment] ?? {
+            compactedFolders: [],
             files: [],
             folderPath: file.file.substring(0, cropPos),
             folderPathSegment,

@@ -5,6 +5,7 @@ import { isCompacted } from '../../../../../webviews/Workspace/helpers/isCompact
 suite('Webviews > Workspace > Helpers > isCompacted():', () => {
   test('Returns false if file label does not contain path.sep', () => {
     const result = isCompacted({
+      compactedFolders: [],
       files: [],
       folderPath: '',
       folderPathSegment: 'test',
@@ -17,6 +18,7 @@ suite('Webviews > Workspace > Helpers > isCompacted():', () => {
 
   test('Returns true if file label contains path.sep', () => {
     const result = isCompacted({
+      compactedFolders: [],
       files: [],
       folderPath: '',
       folderPathSegment: 'test',

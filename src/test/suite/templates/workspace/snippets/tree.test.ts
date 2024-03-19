@@ -31,6 +31,7 @@ suite('Templates > Workspace > Snippets: tree()', () => {
   let treeSpy: sinon.SinonSpy
 
   const closedSubTree: FileTree = {
+    compactedFolders: [],
     files: [],
     folderPath: '',
     folderPathSegment: FOLDER1,
@@ -40,6 +41,7 @@ suite('Templates > Workspace > Snippets: tree()', () => {
   }
 
   const emptyRootTree: FileTree = {
+    compactedFolders: [],
     files: [],
     folderPath: '',
     folderPathSegment: ROOT_FOLDER,
@@ -49,6 +51,7 @@ suite('Templates > Workspace > Snippets: tree()', () => {
   }
 
   const emptySubTree: FileTree = {
+    compactedFolders: [],
     files: [],
     folderPath: '',
     folderPathSegment: ROOT_FOLDER,

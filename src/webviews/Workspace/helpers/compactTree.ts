@@ -1,6 +1,7 @@
 import * as path from 'path'
 import { CONFIG_DEPTH_MAX } from '../../../constants/config'
-import { FileTree, FileTrees } from '../WorkspaceViewProvider.interface'
+import { CompactedFolder, FileTree, FileTrees } from '../WorkspaceViewProvider.interface'
+import { getCompactedFolder } from './getCompactedFolder'
 import { isCompactable } from './isCompactable'
 
 /**
@@ -9,14 +10,14 @@ import { isCompactable } from './isCompactable'
  *
  * i.e.:
  *
- * -Test
+ * - Test
  *  - Subfolder
- *    - File 1
+ *    # File 1
  *
- * Wuld be displayed as
+ * Would be displayed as
  *
- * -Test / Subfolder
- *  - File 1
+ * - Test / Subfolder
+ *   # File 1
  */
 export const compactTree = (tree: FileTree): FileTree => {
   if (tree.sub.length > 0) {
@@ -25,14 +26,24 @@ export const compactTree = (tree: FileTree): FileTree => {
         let depth = 0
         let nextFolder = curSub.sub[0]
         const labels: string[] = [curSub.label]
+        const compactedFolders: CompactedFolder[] = [getCompactedFolder(curSub)]
+
+        compactedFolders.push(getCompactedFolder(nextFolder))
 
         while (isCompactable(nextFolder) && depth < CONFIG_DEPTH_MAX) {
           depth += 1
           labels.push(nextFolder.label)
           nextFolder = nextFolder.sub[0]
+          compactedFolders.push(getCompactedFolder(nextFolder))
         }
 
-        newSubs.push(compactTree({ ...nextFolder, label: path.join(...labels, nextFolder.label) }))
+        newSubs.push(
+          compactTree({
+            ...nextFolder,
+            compactedFolders,
+            label: path.join(...labels, nextFolder.label),
+          })
+        )
       } else {
         newSubs.push(compactTree(curSub))
       }

@@ -6,6 +6,7 @@ import { file1 } from '../../../../mocks/mockFileData'
 suite('Webviews > Workspace > Helpers > isCompactable():', () => {
   test('Returns true if there are no files and one sub', () => {
     const result = isCompactable({
+      compactedFolders: [],
       files: [],
       folderPath: '',
       folderPathSegment: 'test',
@@ -13,6 +14,7 @@ suite('Webviews > Workspace > Helpers > isCompactable():', () => {
       label: 'test',
       sub: [
         {
+          compactedFolders: [],
           files: [],
           folderPath: '',
           folderPathSegment: 'sub',
@@ -27,6 +29,7 @@ suite('Webviews > Workspace > Helpers > isCompactable():', () => {
 
   test('Returns false if there are 0 subs', () => {
     const result = isCompactable({
+      compactedFolders: [],
       files: [],
       folderPath: '',
       folderPathSegment: 'test',
@@ -39,6 +42,7 @@ suite('Webviews > Workspace > Helpers > isCompactable():', () => {
 
   test('Returns false if there are 2 or more subs', () => {
     const result = isCompactable({
+      compactedFolders: [],
       files: [],
       folderPath: '',
       folderPathSegment: 'test',
@@ -46,6 +50,7 @@ suite('Webviews > Workspace > Helpers > isCompactable():', () => {
       label: `test${path.sep}test`,
       sub: [
         {
+          compactedFolders: [],
           files: [],
           folderPath: '',
           folderPathSegment: 'sub1',
@@ -54,6 +59,7 @@ suite('Webviews > Workspace > Helpers > isCompactable():', () => {
           sub: [],
         },
         {
+          compactedFolders: [],
           files: [],
           folderPath: '',
           folderPathSegment: 'sub2',
@@ -68,6 +74,7 @@ suite('Webviews > Workspace > Helpers > isCompactable():', () => {
 
   test('Returns false if there are files', () => {
     const result = isCompactable({
+      compactedFolders: [],
       files: [file1],
       folderPath: '',
       folderPathSegment: 'test',
@@ -75,6 +82,7 @@ suite('Webviews > Workspace > Helpers > isCompactable():', () => {
       label: `test${path.sep}test`,
       sub: [
         {
+          compactedFolders: [],
           files: [],
           folderPath: '',
           folderPathSegment: 'sub',

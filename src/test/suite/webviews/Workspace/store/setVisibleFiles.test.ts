@@ -45,7 +45,7 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
   })
 
   suite('List:', () => {
-    test('Asc updates state as expected', () => {
+    test('Updates state as expected', () => {
       treeConfigStub.callsFake(() => false)
 
       const mockRootFolders = getMockRootFolders({

@@ -15,6 +15,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
   const DEPTH = 0
   const FOLDER_PATH = 'supernatural/winchester'
   const folder: FileTree = {
+    compactedFolders: [],
     files: [],
     folderPath: `${OS_HOMEFOLDER}/${FOLDER_PATH}`,
     folderPathSegment: FOLDER_PATH,
