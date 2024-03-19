@@ -244,4 +244,35 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
       sinon.assert.calledOnce(selectedIconSpy)
     })
   })
+
+  suite('iscompacted:', () => {
+    test('Uncompacted folder has false data attribute', () => {
+      const result = itemFolder({
+        depth: DEPTH,
+        folder: { ...folder, compactedFolders: [] },
+        isClosed: false,
+        renderVars: mockRenderVars,
+        state: mockState,
+      })
+
+      expect(result).to.be.a('string')
+      expect(result).contains(`data-iscompacted="false"`)
+    })
+
+    test('Compacted folder has true data attribute', () => {
+      const result = itemFolder({
+        depth: DEPTH,
+        folder: {
+          ...folder,
+          compactedFolders: [{ folderPath: '', folderPathSegment: '', label: '' }],
+        },
+        isClosed: false,
+        renderVars: mockRenderVars,
+        state: mockState,
+      })
+
+      expect(result).to.be.a('string')
+      expect(result).contains(`data-iscompacted="true"`)
+    })
+  })
 })
