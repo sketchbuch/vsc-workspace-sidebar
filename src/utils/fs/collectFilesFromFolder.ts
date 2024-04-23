@@ -21,10 +21,11 @@ export const collectFilesFromFolder = async ({
   folder,
   maxDepth,
 }: CollectFilesFromFolderConfig): Promise<WorkspaceFiles> => {
+  const isRoot = curDepth === 0
   const lastFolder = getLastPathSegment(folder)
-  let isFolderValid = !excludedFolders.includes(lastFolder)
+  let isFolderValid = isRoot ? true : !excludedFolders.includes(lastFolder)
 
-  if (isFolderValid && excludeHiddenFolders) {
+  if (!isRoot && isFolderValid && excludeHiddenFolders) {
     isFolderValid = !isHiddenFile(lastFolder)
   }
 
@@ -42,7 +43,7 @@ export const collectFilesFromFolder = async ({
 
       const folders = getFilenamesOfType('folders', filenames, folder, fileType)
       let files = getFilenamesOfType('files', filenames, folder, fileType).filter(
-        (file) => (excludeHiddenFolders && !isHiddenFile(file)) || !excludeHiddenFolders
+        (file) => isRoot || (excludeHiddenFolders && !isHiddenFile(file)) || !excludeHiddenFolders
       )
 
       if (folders.length > 0) {

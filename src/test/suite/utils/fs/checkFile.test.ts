@@ -21,7 +21,7 @@ suite('Utils > Fs > checkFile()', () => {
   })
 
   test('Returned object is as expected if the file does exist and is a file', () => {
-    expect(checkFile(path.join('check-file', 'test-file.txt'))).to.eql({
+    expect(checkFile(path.join('check-file', 'test-file.code-workspace'))).to.eql({
       isFile: true,
       isFolder: false,
     })

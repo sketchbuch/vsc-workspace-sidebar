@@ -1,12 +1,12 @@
 import { expect } from 'chai'
 import mockFs from 'mock-fs'
 import * as path from 'path'
+import { FS_WS_FILETYPE } from '../../../../constants/fs'
 import { collectFilesFromFolder } from '../../../../utils/fs/collectFilesFromFolder'
 import { mockFsStructure } from '../../../mocks/mockFsStructure'
 
 suite('Utils > Fs > collectFilesFromFolder()', () => {
   const FOLDER = 'collect-files-from-folder'
-  const FILE_TYPE = 'txt'
   const MAX_DEPTH = 1
 
   suiteSetup(() => {
@@ -22,13 +22,13 @@ suite('Utils > Fs > collectFilesFromFolder()', () => {
       curDepth: 0,
       excludedFolders: [],
       excludeHiddenFolders: true,
-      fileType: FILE_TYPE,
+      fileType: FS_WS_FILETYPE,
       folder: FOLDER,
       maxDepth: 0,
     })
 
     expect(wsFiles).to.have.length(1)
-    expect(wsFiles[0]).contains('file-1.txt')
+    expect(wsFiles[0]).contains(`file-1.${FS_WS_FILETYPE}`)
   })
 
   test('Should return an array with four files if max depth allows searching subfolders', async () => {
@@ -36,41 +36,71 @@ suite('Utils > Fs > collectFilesFromFolder()', () => {
       curDepth: 0,
       excludedFolders: [],
       excludeHiddenFolders: true,
-      fileType: FILE_TYPE,
+      fileType: FS_WS_FILETYPE,
       folder: FOLDER,
       maxDepth: MAX_DEPTH,
     })
 
     expect(wsFiles).to.have.length(4)
-    expect(wsFiles[0]).contains('file-1.txt')
-    expect(wsFiles[1]).contains('file-2.txt')
-    expect(wsFiles[2]).contains('file-3.txt')
-    expect(wsFiles[3]).contains('file-7.txt')
+    expect(wsFiles[0]).contains(`file-1.${FS_WS_FILETYPE}`)
+    expect(wsFiles[1]).contains(`file-2.${FS_WS_FILETYPE}`)
+    expect(wsFiles[2]).contains(`file-3.${FS_WS_FILETYPE}`)
+    expect(wsFiles[3]).contains(`file-7.${FS_WS_FILETYPE}`)
   })
 
   test('Should return an empty array if the folder is in the excluded folders config', async () => {
     const wsFiles = await collectFilesFromFolder({
       curDepth: 0,
-      excludedFolders: [FOLDER],
+      excludedFolders: ['hidden-last-folder'],
       excludeHiddenFolders: true,
-      fileType: FILE_TYPE,
-      folder: FOLDER,
+      fileType: FS_WS_FILETYPE,
+      folder: path.join(FOLDER, 'hidden-last-folder'),
       maxDepth: MAX_DEPTH,
     })
 
     expect(wsFiles).to.have.length(0)
   })
 
-  test('Should return an empty array if the folder is hidden and hidden folders are excluded', async () => {
-    const wsFiles = await collectFilesFromFolder({
-      curDepth: 0,
-      excludedFolders: [],
-      excludeHiddenFolders: true,
-      fileType: FILE_TYPE,
-      folder: path.join('temp', `.${FOLDER}`),
-      maxDepth: MAX_DEPTH,
+  suite('Hidden Files and Folders', () => {
+    test('Hidden folders are ignored in the last part of root folder paths', async () => {
+      const wsFiles = await collectFilesFromFolder({
+        curDepth: 0,
+        excludedFolders: [],
+        excludeHiddenFolders: true,
+        fileType: FS_WS_FILETYPE,
+        folder: path.join(FOLDER, 'hidden-last-folder', '.hiddenfolder'),
+        maxDepth: 2,
+      })
+
+      expect(wsFiles).to.have.length(1)
+      expect(wsFiles[0]).contains('hiddenfolder.code-workspace')
     })
 
-    expect(wsFiles).to.have.length(0)
+    test('Hidden folders are ignored in the middle of root folder paths', async () => {
+      const wsFiles = await collectFilesFromFolder({
+        curDepth: 0,
+        excludedFolders: [],
+        excludeHiddenFolders: true,
+        fileType: FS_WS_FILETYPE,
+        folder: path.join(FOLDER, 'hidden-sub-folder', '.hiddenfolder', 'sub-folder'),
+        maxDepth: 3,
+      })
+
+      expect(wsFiles).to.have.length(1)
+      expect(wsFiles[0]).contains('hiddensubfolder.code-workspace')
+    })
+
+    test('Hidden subfolders are ignored', async () => {
+      const wsFiles = await collectFilesFromFolder({
+        curDepth: 0,
+        excludedFolders: [],
+        excludeHiddenFolders: true,
+        fileType: FS_WS_FILETYPE,
+        folder: path.join(FOLDER, 'hidden-last-folder'),
+        maxDepth: MAX_DEPTH,
+      })
+
+      expect(wsFiles).to.have.length(0)
+    })
   })
 })

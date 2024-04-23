@@ -73,8 +73,8 @@ suite('Utils > Fs > findAllRootFolderFiles()', async () => {
 
   test('Result is "is-file" if all root folders are files', async () => {
     const paths = [
-      { path: path.join('collect-files-from-folder', 'file-1.txt'), depth: DEPTH },
-      { path: path.join('check-file', 'test-file.txt'), depth: DEPTH },
+      { path: path.join('collect-files-from-folder', 'file-1.code-workspace'), depth: DEPTH },
+      { path: path.join('check-file', 'test-file.code-workspace'), depth: DEPTH },
     ]
     foldersConfigStub.callsFake(() => paths)
 
@@ -100,8 +100,8 @@ suite('Utils > Fs > findAllRootFolderFiles()', async () => {
 
   test('Result is "no-workspaces" if all root folders contain no workspaces', async () => {
     const paths = [
-      { path: path.join('get-filenames-of-type'), depth: DEPTH },
-      { path: path.join('check-file'), depth: DEPTH },
+      { path: path.join('find-workspace-files', 'no-workspaces'), depth: DEPTH },
+      { path: path.join('find-workspace-files', 'no-workspaces2'), depth: DEPTH },
     ]
     foldersConfigStub.callsFake(() => paths)
 
@@ -128,7 +128,7 @@ suite('Utils > Fs > findAllRootFolderFiles()', async () => {
   test('Result is "ok" if all root folders contain workspaces', async () => {
     const paths = [
       { path: path.join('find-workspace-files'), depth: DEPTH },
-      { path: path.join('more-workspaces'), depth: DEPTH },
+      { path: path.join('find-workspace-files-more-workspaces'), depth: DEPTH },
     ]
     foldersConfigStub.callsFake(() => paths)
 
