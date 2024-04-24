@@ -35,7 +35,7 @@ export const itemFolder = ({
 
   let folderClasses = `list__branch-list-item list__branch-list-item-folder list__styled-item`
 
-  if (isClosable) {
+  if (isClosable && !state.search.term) {
     folderClasses += ' list__branch-list-item-folder--closable'
   }
 
