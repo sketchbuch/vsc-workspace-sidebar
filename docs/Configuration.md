@@ -11,9 +11,9 @@ More information about certain configuration options that don't fit into the tab
 Tree view respects the explorer setting "Compact Folders".
 This will combine empty folders in the tree into one folder:
 
-| Without Compact                | With Compact  |
-| ---------------------- | ---------------------------- |
-| ![List View](../docs/images/configuration/normal.png)| ![List View](../docs/images/configuration/compacted.png)  |
+| Without Compact                                       | With Compact                                             |
+| ----------------------------------------------------- | -------------------------------------------------------- |
+| ![List View](../docs/images/configuration/normal.png) | ![List View](../docs/images/configuration/compacted.png) |
 
 This is an explorer setting and not part of this extension's settings.
 
@@ -21,16 +21,17 @@ This is an explorer setting and not part of this extension's settings.
 
 Condense will render workspaces in their parent folder if there is only one workspace in a folder:
 
-| Without Condense                | With Condense  |
-| ---------------------- | ---------------------------- |
-| ![List View](../docs/images/configuration/uncondensed.png)| ![List View](../docs/images/configuration/condensed.png)  |
+| Without Condense                                           | With Condense                                            |
+| ---------------------------------------------------------- | -------------------------------------------------------- |
+| ![List View](../docs/images/configuration/uncondensed.png) | ![List View](../docs/images/configuration/condensed.png) |
 
 # Root Folders
 
 v2.0.0 allows multiple root folders. These are specified in an array of objects like this:
 
+**Linux / Mac**
+
 ```json
-// Linux / Mac
 {
   "workspaceSidebar.rootFolders": [
     { "path": "/home/user/apps", "excludeHiddenFolders": false}
@@ -38,8 +39,11 @@ v2.0.0 allows multiple root folders. These are specified in an array of objects 
     { "path": "/home/user/dev"}
   ]
 }
+```
 
-// Windows
+**Windows**
+
+```json
 {
   "workspaceSidebar.rootFolders": [
     { "path": "C:\\Users\\User\\Apps", "excludeHiddenFolders": false}
@@ -51,18 +55,19 @@ v2.0.0 allows multiple root folders. These are specified in an array of objects 
 
 ### Root Folder
 
-- **path** *string* (required)
+- **path** _string_ (required)
+
   - The absolute path to a folder
   - There is no variable substitution, but "~/" can be used on Mac/Linux instead of "/home/user/"
 
-- **depth** *int*
+- **depth** _int_
 
   - The depth of subfolders to search. This overrides `workspaceSidebar.depth`
   - The integers can range from 0-25
 
-- **excludeHiddenFolders** *bool*
+- **excludeHiddenFolders** _bool_
 
-  - Should hidden folders be skipped when searching for Wokpsaces? This overrides `workspaceSidebar.excludeHiddenFolders`
+  - Should hidden folders be skipped when searching for Workspaces? This overrides `workspaceSidebar.excludeHiddenFolders`
   - Searching hidden folders can slow down the search
 
 ### Paths
@@ -71,15 +76,15 @@ In addition to normal folders, some other kinds of folders work too:
 
 - **Windows**:
   - Junctions/SymLinks can be used
-  - *Shortcuts don't work*
-  - *Hard Links not tested*
+  - _Shortcuts don't work_
+  - _Hard Links not tested_
 - **Mac**:
   - SymLinks can be used
-  - *Aliases don't work*
-  - *Hard Links not tested*
+  - _Aliases don't work_
+  - _Hard Links not tested_
 - **Linux**
   - SymLinks can be used
-  - *Hard Links not tested*
+  - _Hard Links not tested_
 
 ## Show File Icons Config
 
@@ -105,14 +110,14 @@ Some examples might look like:
 
 And these would match as follows:
 
-```json
-  // Matches "react" icon - "redux" mathes
+```javascript
+  // Displays react icon as "redux" matches
   /home/users/Dev/react/redux/counter/counter.code-workspace
 
-  // Matches "ts" icon - "vsc" matches
+  // Displays ts icon as "vsc" matches
   /home/users/Dev/vsc/extension.code-workspace
 
-  // Matches "ts" - "electron" matches as deeper folders are checked first.
+  // Displays ts icon as "electron" matches due to deeper folders being checked first.
   /home/users/Dev/react/redux/electron/nextjs-app/na.code-workspace
 ```
 

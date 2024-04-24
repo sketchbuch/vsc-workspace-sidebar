@@ -58,7 +58,7 @@ A search box is provided to allow you to search for a specific Workspace.
 
 ### File Theme Icons
 
-File icons are displayed based on a simple substring match against the file path. No need to configure each file icon separately.
+File icons are displayed based on a simple substring match against the file path. There is no need to configure file icons for each workspace separately.
 
 ![Searching workspaces](./docs/images/features/file_icons.png)
 
@@ -73,34 +73,34 @@ This is a summary of the available configuration options. [View detailed configu
 | Setting                | Description                                                                                                                                                                                             | Default Value  | Type          |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ------------- |
 | Actions                | The default action when clicking on a workspace. By default, clicking opens the workspace in the current window and the icon click in a new window. You can use this setting to reverse this behaviour. | Current Window | Dropdown List |
-| Clean Labels           | Should workspace labels be converted to Title Case? If not their filename will be used as-is.                                                                                                           | True           | Boolean       |
-| Depth                  | The depth of subfolders to search when looking for Workspace files. This can be overriden per root folder.                                                                                                                                                     | 0              | Number 0-25   |
+| Clean Labels           | Should workspace labels be converted to Title Case? If not their filename will be used as-is.                                                                                                           | true           | Boolean       |
+| Depth                  | The depth of subfolders to search when looking for Workspace files. This can be overriden per root folder.                                                                                              | 0              | Number 0-25   |
 | Show File Icons        | Show icons from the active file icon theme.                                                                                                                                                             | true           | Boolean       |
-| Show File Icons Config | Config for file icon matching. See [File Icon Themes](./docs//File%20Icon%20Themes.md) documentation for more information.                                                                              | {}             | Object        |
+| Show File Icons Config | Config for file icon matching. [More information](./docs/Configuration.md#show-file-icons-config).                                                                                                      | {}             | Object        |
 | Show Paths             | Show the paths to the workspaces in the sidebar. Available options are: 'Always', 'Never', 'As needed'. This will only display paths if there are duplicate labels in the same folder.                  | As Needed      | Dropdown List |
 
 ### Folders
 
-| Setting                | Description                                                                                                                                                                        | Default Value                                                          | Type                               |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------- |
-| Exclude Hidden Folders | Should hidden folders be excluded when looking for workspaces? This can speed up searching, however, if you turn this option off you may need to excluded many folders. This can be overriden per root folder.   | True                                                                   | Boolean                            |
-| Excluded       | Folders to exclude when searching for workspace files                                                                                                                              | [ "node_modules", "build", "dist", "out", "public", ".cache", ".git" ] | Array              |
-| Root Folders           | The folders to look for workspace files in. **~/** will also be replaced with your home folder in all folders within the array.                                                    | []                                                                     | Array |
+| Setting                | Description                                                                                                                                                                                                        | Default Value                                                          | Type    |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------- | ------- |
+| Exclude Hidden Folders | Should hidden subfolders be excluded when looking for workspaces? This can speed up searching, however, if you turn this option off you may need to excluded many folders. This can be overridden per root folder. | true                                                                   | Boolean |
+| Excluded               | Subfolders to exclude when searching for workspace files                                                                                                                                                           | [ "node_modules", "build", "dist", "out", "public", ".cache", ".git" ] | Array   |
+| Root Folders           | The folders to look for workspace files in. **~/** will also be replaced with your home folder in all folders within the array. [More information](./docs/Configuration.md#root-folders).                          | []                                                                     | Array   |
 
 ### Search
 
 | Setting          | Description                                                                                                                                | Default Value | Type         |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------- | ------------ |
-| Case Insensitive | Should searching be case insensitive?                                                                                                      | False         | Boolean      |
-| Match Start      | Should searching start from the beginning of the workspace label? False means matches will be looked for anywhere within workspace labels. | False         | Boolean      |
+| Case Insensitive | Should searching be case insensitive?                                                                                                      | false         | Boolean      |
+| Match Start      | Should searching start from the beginning of the workspace label? False means matches will be looked for anywhere within workspace labels. | false         | Boolean      |
 | Search minimum   | The minimum number of workspaces required before the search box is displayed. 0 Will always display the search box.                        | 15            | Number 0-100 |
 
 ### Tree View
 
-| Setting               | Description                                                                                                                                                                            | Default Value | Type    |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ------- |
-| Condense File Tree    | Reduce visual noise by removing sufolders with only one workspace in. These workspace files will then be shown in their parent folder. Tree View only. | True          | Boolean |
-| Show Folder Hierarchy | Display a file tree of workspaces with collapsable folders instead of the default list.                                                                                                | False         | Boolean |
+| Setting               | Description                                                                                                                                                                                                          | Default Value | Type    |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ------- |
+| Condense Tree         | Reduce visual noise by removing sufolders with only one workspace in. These workspace files will then be shown in their parent folder. Tree View only. [More information](./docs/Configuration.md#condense-folders). | true          | Boolean |
+| Show Folder Hierarchy | Display a file tree of workspaces with collapsable folders instead of the default list.                                                                                                                              | false         | Boolean |
 
 ## Translations
 
@@ -118,18 +118,20 @@ If you are intersted in contributing:
   - Run tests on Linux, Mac, and Windows.
   - Typecheck will be run by the launch scripts before
     running tests
-  - If using file paths, don't hard code the folder separators, use path.join() instead.
-    ```javascript
-    // This will fail in a test on windows:
-    const myPath = '/home/user/dev'
-    expect(getPathToDev()).to.equal(myPath)
+- If using file paths, don't hard code the folder separators, use path.join() instead.
 
-    // Do this instead:
-    const myPath = path.join('home', 'user', 'dev')
-    expect(getPathToDev()).to.equal(myPath)
-    ```
-    running tests.
-  - If just testing functions that do not use VSCode, you can run `mocha:compile` and then `mocha:test` to test - but if you use any part of the VSCode API (inc. ENUMs) then you will need to run the tests via the debugger.
+  ```javascript
+  // This will fail in a test on windows:
+  const myPath = '/home/user/dev'
+  expect(getPathToDev()).to.equal(myPath)
+
+  // Do this instead:
+  const myPath = path.join('home', 'user', 'dev')
+  expect(getPathToDev()).to.equal(myPath)
+  ```
+
+- If just testing functions that do not use VSCode, you can run `mocha:compile` and then `mocha:test` to test - but if you use any part of the VSCode API (inc. ENUMs) then you will need to run the tests via the debugger.
+
 - You can package a test version of the extension as a vsix file using the command: `vsce package`.
   - Test the VSIX on Linux, Mac, and Windows.
 - Lint and typechecking commands exist
