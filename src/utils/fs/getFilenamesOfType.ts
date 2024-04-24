@@ -14,6 +14,7 @@ export const getFilenamesOfType = (
 
     if (isFile && requiredType === 'files') {
       var fileExtension = curFile.substring(curFile.lastIndexOf('.') + 1)
+
       if (fileExtension === fileType) {
         return [...allFiles, curPath]
       }

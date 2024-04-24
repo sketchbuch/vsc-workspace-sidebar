@@ -43,7 +43,7 @@ suite('Utils > Fs > findRootFolderFiles()', () => {
   })
 
   test('If the folder is a file, "is-file" is returned', () => {
-    const testPath = path.join('check-file', 'test-file.txt')
+    const testPath = path.join('check-file', 'test-file.code-workspace')
     const config = getConfig({ folder: testPath })
 
     return findRootFolderFiles(config).then((wsFiles) => {
