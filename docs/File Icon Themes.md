@@ -58,10 +58,3 @@ I don't use the file icons (a user requested this feature) or tree view much, so
 Also I don't change themes (colour or file icon) in VSCode, so if you find issues with themes please let me know as well, but I think most issues can be fixed via the above config.
 
 Keep in mind that not all themes have the same icons, so if you see the generic file icon from the theme you are using instead of a specific langauge/extension icon even though you have configuration for that langauge/extension it means there is no matching icon in that theme.
-
-### Examples
-
-![Emoji in Tree View](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/treeview%20emoji.png 'Emoji in Tree View')
-![Material in Tree View](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/treeview%20material.png 'Material in Tree View')
-![Seti Theme in Tree View](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/treeview%20seti.png 'Seti Theme in Tree View')
-![Seti Theme in List View](https://raw.githubusercontent.com/sketchbuch/vsc-workspace-sidebar/master/docs/images/listview%20seti.png 'Seti Theme in List View')
