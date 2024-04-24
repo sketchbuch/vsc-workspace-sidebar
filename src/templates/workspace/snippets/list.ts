@@ -45,7 +45,8 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
             const isFileTree = showTree && fileTree !== null
             const isRootPathError = rootPathErrors.includes(result)
             const classes = getListClasses(isFileTree)
-            const isClosed = closedFolders.includes(folderName)
+            const isClosed = !search.term && closedFolders.includes(folderName)
+
             const rootFolderFile: FileTree = {
               compactedFolders: [],
               files: [],
@@ -78,7 +79,13 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
                     ? `<ul class="${classes}">
                           ${
                             isFileTree
-                              ? tree(fileTree, 0, rootFolder.closedFolders, state, renderVars)
+                              ? tree({
+                                  branch: fileTree,
+                                  closedFolders: rootFolder.closedFolders,
+                                  depth: 0,
+                                  renderVars,
+                                  state,
+                                })
                               : ''
                           }
                           ${

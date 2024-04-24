@@ -8,15 +8,17 @@ import { sortTreeChildren, TreeChildren } from '../../helpers/sortTreeChildren'
 import { itemFile } from './itemFile'
 import { itemFolder } from './itemFolder'
 
-export const tree = (
-  branch: FileTree,
-  depth: number,
-  closedFolders: string[],
-  state: WorkspaceState,
+export type TreeProps = {
+  branch: FileTree
+  closedFolders: string[]
+  depth: number
   renderVars: RenderVars
-): string => {
+  state: WorkspaceState
+}
+
+export const tree = ({ branch, closedFolders, depth, renderVars, state }: TreeProps): string => {
   const { files, folderPathSegment, isRoot, sub } = branch
-  const isClosed = closedFolders.includes(folderPathSegment)
+  const isClosed = !state.search.term && closedFolders.includes(folderPathSegment)
 
   let children: TreeChildren = []
   let fileDepth = depth
@@ -37,7 +39,7 @@ export const tree = (
         if (isFile(child)) {
           return itemFile({ depth: fileDepth, file: child, renderVars, state })
         } else {
-          return tree(child, treeDepth, closedFolders, state, renderVars)
+          return tree({ branch: child, depth: treeDepth, closedFolders, state, renderVars })
         }
       })
       .join('')}

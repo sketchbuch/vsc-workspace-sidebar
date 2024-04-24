@@ -79,7 +79,7 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     const state = getMockState({ ...mockRootFolders })
     const renderVars = getMockRenderVars()
 
-    const result = tree(emptySubTree, 0, [], state, renderVars)
+    const result = tree({ branch: emptySubTree, depth: 0, closedFolders: [], state, renderVars })
 
     expect(result).to.be.a('string')
     expect(result).to.be.empty
@@ -95,7 +95,13 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     const state = getMockState({ ...mockRootFolders })
     const renderVars = getMockRenderVars()
 
-    const result = tree(closedSubTree, 0, [FOLDER1], state, renderVars)
+    const result = tree({
+      branch: closedSubTree,
+      depth: 0,
+      closedFolders: [FOLDER1],
+      state,
+      renderVars,
+    })
 
     expect(result).to.be.a('string')
 
@@ -110,7 +116,7 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     const state = getMockState({ ...mockRootFolders })
     const renderVars = getMockRenderVars()
 
-    const result = tree(emptyRootTree, 0, [], state, renderVars)
+    const result = tree({ branch: emptyRootTree, depth: 0, closedFolders: [], state, renderVars })
 
     expect(result).to.be.a('string')
 
@@ -125,7 +131,7 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     const state = getMockState({ ...mockRootFolders })
     const renderVars = getMockRenderVars()
 
-    tree(closedSubTree, 0, [FOLDER1], state, renderVars)
+    tree({ branch: closedSubTree, depth: 0, closedFolders: [FOLDER1], state, renderVars })
 
     sinon.assert.notCalled(sortSpy)
   })
@@ -135,7 +141,13 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     const state = getMockState({ ...mockRootFolders })
     const renderVars = getMockRenderVars()
 
-    tree(mockRootFolders.rootFolders[0]?.fileTree!, 0, [], state, renderVars)
+    tree({
+      branch: mockRootFolders.rootFolders[0]?.fileTree!,
+      depth: 0,
+      closedFolders: [],
+      state,
+      renderVars,
+    })
 
     sinon.assert.callCount(itemSpy, getMockFileList().length)
     // Order like this due to child sorting
