@@ -68,7 +68,7 @@ v2.0.0 allows multiple root folders. These are specified in an array of objects 
 - **excludeHiddenFolders** _bool_
 
   - Should hidden folders be skipped when searching for Workspaces? This overrides `workspaceSidebar.excludeHiddenFolders`
-  - Searching hidden folders can slow down the search
+  - Searching hidden folders can slow down the search.
 
 ### Paths
 
