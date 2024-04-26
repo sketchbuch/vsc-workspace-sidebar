@@ -63,13 +63,14 @@
       "noWorkspaces": {
         "descriptionDepth": "Die aktuelle Suchtiefe ist 0, dass nur die Stammordner nach Arbeitsbereichsdateien durchsucht werden",
         "descriptionSettings": "Versuchen Sie, die {{settingsLinkDepth}} zu erhöhen oder die {{settingsLinkRootFolder}} Einstellungen ändern.",
+        "hasRootFolderIssues": "One or more rootFolders are overriding the depth and/or excludeHiddenFolders settings.",
         "title": "Keine Arbeitsbereiche gefunden"
       }
     },
     "links": {
       "checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",
       "depth": "Tiefe",
-      "excludeFolders": "Ordner auszuschließen",
+      "excludeFolders": "bestimmte Ordner",
       "excludeHiddenFolders": "versteckter Ordner",
       "rootFolder": "Stammordner",
       "rootFolders": "Stammordner"
@@ -131,8 +132,9 @@
       }
     },
     "loading": {
-      "descriptionWithHidden": "Wenn dies lange dauert, versuchen Sie, {{settingsLinkRootFolder}} oder {{settingsLinkHidden}} auszuschließen",
-      "description": "Wenn dies lange dauert, versuchen Sie, {{settingsLinkRootFolder}} auszuschließen.",
+      "descriptionWithHidden": "Wenn dies lange dauert, versuchen Sie, {{settingsLinkRootFolder}} oder {{settingsLinkHidden}} auszuschließen. Auch eine Verringerung der {{settingsLinkDepth}} kann hilfreich sein.",
+      "description": "Wenn dies lange dauert, versuchen Sie, {{settingsLinkRootFolder}} auszuschließen. Auch eine Verringerung der {{settingsLinkDepth}} kann hilfreich sein.",
+      "hasRootFolderIssues": "Mindestens ein {{settingsLinkRootFolders}} überschreibt die Einstellungen für depth/excludeHiddenFolders.",
       "title": "Arbeitsbereiche wird gesucht..."
     }
   }

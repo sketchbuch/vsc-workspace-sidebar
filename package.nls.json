@@ -131,8 +131,9 @@
       }
     },
     "loading": {
-      "descriptionWithHidden": "If this is taking a long time, try and exclude {{settingsLinkRootFolder}} or {{settingsLinkHidden}}.",
-      "description": "If this is taking a long time, try and exclude {{settingsLinkRootFolder}}.",
+      "descriptionWithHidden": "If this is taking a long time, try and exclude {{settingsLinkRootFolder}} or {{settingsLinkHidden}}. Reducing the {{settingsLinkDepth}} may also help.",
+      "description": "If this is taking a long time, try and exclude {{settingsLinkRootFolder}}. Reducing the {{settingsLinkDepth}} may also help.",
+      "hasRootFolderIssues": "One or more {{settingsLinkRootFolders}} are overriding depth/excludeHiddenFolders settings.",
       "title": "Collecting workspaces..."
     }
   }

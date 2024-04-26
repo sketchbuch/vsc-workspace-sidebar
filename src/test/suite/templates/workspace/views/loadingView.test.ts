@@ -7,19 +7,22 @@ import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
 import { getMockState } from '../../../../mocks/mockState'
 
 suite('Templates > Workspace > View: loadingView()', () => {
-  let vlSpy: sinon.SinonSpy
   let excludedHiddenConfigStub: sinon.SinonStub
+  let foldersConfigStub: sinon.SinonStub
+  let vlSpy: sinon.SinonSpy
 
   setup(() => {
     excludedHiddenConfigStub = sinon
       .stub(folders, 'getExcludeHiddenFoldersConfig')
       .callsFake(() => true)
+    foldersConfigStub = sinon.stub(folders, 'getRawFoldersConfig').callsFake(() => [{ path: '' }])
     vlSpy = sinon.spy(links, 'viewLink')
   })
 
   teardown(() => {
-    vlSpy.restore()
     excludedHiddenConfigStub.restore()
+    foldersConfigStub.restore()
+    vlSpy.restore()
   })
 
   test('Renders common content', () => {
@@ -41,7 +44,7 @@ suite('Templates > Workspace > View: loadingView()', () => {
     expect(result).to.be.a('string')
     expect(result).contains('If this is taking a long time, try and exclude')
 
-    sinon.assert.callCount(vlSpy, 1)
+    sinon.assert.callCount(vlSpy, 2)
   })
 
   test('Renders as expected if including hidden folders.', () => {
@@ -51,6 +54,28 @@ suite('Templates > Workspace > View: loadingView()', () => {
     expect(result).to.be.a('string')
     expect(result).contains('If this is taking a long time, try and exclude')
     expect(result).contains(' or ')
+
+    sinon.assert.callCount(vlSpy, 5)
+  })
+
+  test('Renders root folders msg if root folders contain depth', () => {
+    foldersConfigStub.callsFake(() => [{ path: '', depth: 1 }])
+
+    const result = loadingView(getMockState(), getMockRenderVars())
+
+    expect(result).to.be.a('string')
+    expect(result).contains('are overriding depth/excludeHiddenFolders settings')
+
+    sinon.assert.callCount(vlSpy, 3)
+  })
+
+  test('Renders root folders msg if root folders contain excludeHiddenFolders', () => {
+    foldersConfigStub.callsFake(() => [{ path: '', excludeHiddenFolders: true }])
+
+    const result = loadingView(getMockState(), getMockRenderVars())
+
+    expect(result).to.be.a('string')
+    expect(result).contains('are overriding depth/excludeHiddenFolders settings')
 
     sinon.assert.callCount(vlSpy, 3)
   })
