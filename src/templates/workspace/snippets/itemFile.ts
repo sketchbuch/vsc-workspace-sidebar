@@ -28,8 +28,15 @@ export const itemFile = ({ depth, file, renderVars, state }: ItemFileProps): str
   const showDescription = isTree ? showPath && condenseFileTree : showPath
   const description = getDescription(path, isTree && showPath && condenseFileTree)
 
-  const tooltip = getFileTooltip(renderVars, file, 'cur-win')
   const visibleLabel = cleanLabels ? cleanedLabel : label
+  const tooltip = getFileTooltip({
+    isSelected,
+    path,
+    renderVars,
+    showPath,
+    type: 'cur-win',
+    visibleLabel,
+  })
   const buttons: ConfigButtons = [
     {
       codicon: 'browser',

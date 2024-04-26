@@ -54,6 +54,10 @@
   opacity: 0.66;
 }
 
+.list__branch-list-item-folder--root .list__title {
+  opacity: 0.85;
+}
+
 .list__branch-list-item-folder.list__styled-item--selected .list__title {
   opacity: 1;
 }
