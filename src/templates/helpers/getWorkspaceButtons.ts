@@ -40,7 +40,14 @@ type GetWorkspaceButtons = (config: Config) => WorkspaceButtons
 export const getWorkspaceButtons: GetWorkspaceButtons = ({ buttons, renderVars }) => {
   const workspaceButtons = buttons.map((btn): WorkspaceButton => {
     if (btn.key === 'new-window') {
-      const tooltip = getFileTooltip(renderVars, btn.file, 'new-win')
+      const tooltip = getFileTooltip({
+        isSelected: btn.file.isSelected,
+        path: btn.file.path,
+        renderVars,
+        showPath: btn.file.showPath,
+        type: 'new-win',
+        visibleLabel: btn.file.label,
+      })
 
       return {
         ariaLabel: tooltip,

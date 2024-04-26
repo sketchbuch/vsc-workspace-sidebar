@@ -8,6 +8,7 @@ import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceBu
 import { itemButtons } from './itemButtons'
 import { itemIconClosed, itemIconOpen, itemIconSelected } from './itemIcons'
 import { itemIndent } from './itemIndent'
+import { cleanLabel } from '../../../utils/string/cleanLabel'
 
 export type ItemFolderProps = {
   depth: number
@@ -32,6 +33,7 @@ export const itemFolder = ({
   const { folderPath, folderPathSegment, isRoot, label } = folder
   const folderPathShort = folderPath.replace(homeDir, `~`)
   const indicateSelected = isClosed && state.selected.startsWith(folderPath)
+  const visibleLabel = isRoot && renderVars.cleanLabels ? cleanLabel(label) : label
 
   let folderClasses = `list__branch-list-item list__branch-list-item-folder list__styled-item`
 
@@ -52,7 +54,7 @@ export const itemFolder = ({
       codicon: 'browser',
       file: folderPath,
       key: 'open-filemanager',
-      label,
+      label: visibleLabel,
     },
   ]
 
@@ -65,7 +67,7 @@ export const itemFolder = ({
       class="${folderClasses}"
       data-depth="${depth}"
       data-folder="${folderPathSegment}"
-      data-folderpath="${folderPath}"
+      data-folderpath="${folderPath}" 
       data-iscompacted="${isCompacted}"
       title="${folderPathShort}"
     >
@@ -74,7 +76,7 @@ export const itemFolder = ({
       <span class="list__element">
         ${isClosed ? itemIconClosed() : itemIconOpen()}
         <span class="list__text">
-          <span class="list__title">${label}</span>
+          <span class="list__title">${visibleLabel}</span>
         </span>
         ${isFolderError ? '' : itemButtons(folderButtons)}
       </span>

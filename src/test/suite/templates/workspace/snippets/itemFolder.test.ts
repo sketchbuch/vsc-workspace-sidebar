@@ -19,7 +19,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
     files: [],
     folderPath: `${OS_HOMEFOLDER}/${FOLDER_PATH}`,
     folderPathSegment: FOLDER_PATH,
-    isRoot: true,
+    isRoot: false,
     label: ROOT_FOLDER,
     sub: [],
   }
@@ -52,7 +52,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
     selectedIconSpy.restore()
   })
 
-  test('Renders correctly', () => {
+  test('Renders non-root folder correctly', () => {
     const result = itemFolder({
       depth: DEPTH,
       folder,
@@ -85,7 +85,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
     sinon.assert.calledOnce(indentSpy)
   })
 
-  test('Renders correctly if isFolderError is "true"', () => {
+  test('Renders non-root folder correctly if isFolderError is "true"', () => {
     const result = itemFolder({
       depth: DEPTH,
       folder,
@@ -110,6 +110,73 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
     sinon.assert.notCalled(selectedIconSpy)
     sinon.assert.notCalled(iconClosedSpy)
     sinon.assert.calledOnce(iconOpenSpy)
+    sinon.assert.calledOnce(indentSpy)
+  })
+
+  test('Renders root folder correctly when labels should be cleaned', () => {
+    const cleanedLabel = 'Dev'
+    const result = itemFolder({
+      depth: DEPTH,
+      folder: { ...folder, isRoot: true },
+      isClosed: false,
+      renderVars: { ...mockRenderVars, cleanLabels: true },
+      state: mockState,
+    })
+
+    expect(result).to.be.a('string')
+    expect(result).contains(`data-folder="${folder.folderPathSegment}"`)
+    expect(result).contains(`title="~/${FOLDER_PATH}"`)
+    expect(result).contains(`data-depth="${DEPTH}"`)
+    expect(result).contains(`<span class="list__title">${cleanedLabel}</span>`)
+    expect(result).contains('list__branch-list-item')
+    expect(result).contains('list__branch-list-item-folder')
+    expect(result).contains('list__styled-item')
+    expect(result).contains('list__branch-list-item-folder--closable')
+
+    sinon.assert.callCount(btnSpy, 1)
+    sinon.assert.calledWith(btnSpy, [
+      {
+        ariaLabel: `Open folder containing '${cleanedLabel}' in your file manager`,
+        codicon: 'browser',
+        file: folder.folderPath,
+        renderVars: mockRenderVars,
+        tooltip: `Open folder containing '${cleanedLabel}' in your file manager`,
+        type: 'open-filemanager',
+      },
+    ])
+    sinon.assert.calledOnce(indentSpy)
+  })
+
+  test('Renders root folder correctly when labels should not be cleaned', () => {
+    const result = itemFolder({
+      depth: DEPTH,
+      folder: { ...folder, isRoot: true },
+      isClosed: false,
+      renderVars: { ...mockRenderVars, cleanLabels: false },
+      state: mockState,
+    })
+
+    expect(result).to.be.a('string')
+    expect(result).contains(`data-folder="${folder.folderPathSegment}"`)
+    expect(result).contains(`title="~/${FOLDER_PATH}"`)
+    expect(result).contains(`data-depth="${DEPTH}"`)
+    expect(result).contains(`<span class="list__title">${folder.label}</span>`)
+    expect(result).contains('list__branch-list-item')
+    expect(result).contains('list__branch-list-item-folder')
+    expect(result).contains('list__styled-item')
+    expect(result).contains('list__branch-list-item-folder--closable')
+
+    sinon.assert.callCount(btnSpy, 1)
+    sinon.assert.calledWith(btnSpy, [
+      {
+        ariaLabel: `Open folder containing '${folder.label}' in your file manager`,
+        codicon: 'browser',
+        file: folder.folderPath,
+        renderVars: { ...mockRenderVars, cleanLabels: false },
+        tooltip: `Open folder containing '${folder.label}' in your file manager`,
+        type: 'open-filemanager',
+      },
+    ])
     sinon.assert.calledOnce(indentSpy)
   })
 

@@ -58,7 +58,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
             }
 
             return `
-              <section class="list__list-section">
+              <section class="list__list-section" data-isclosed="${isClosed}">
                 ${
                   isRootPathError
                     ? `

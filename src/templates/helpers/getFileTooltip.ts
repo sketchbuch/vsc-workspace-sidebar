@@ -1,17 +1,27 @@
 import { t } from 'vscode-ext-localisation'
 import { ConfigActions } from '../../constants/config'
-import { File } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { RenderVars } from '../../webviews/webviews.interface'
 import { getDescription } from './getDescription'
 
-type TooltipType = 'cur-win' | 'new-win'
+type GetFileTooltipProps = {
+  renderVars: RenderVars
+  type?: 'cur-win' | 'new-win'
+  visibleLabel: string
+  isSelected: boolean
+  path: string
+  showPath: boolean
+}
 
-export const getFileTooltip = (renderVars: RenderVars, file: File, type?: TooltipType): string => {
-  const { condenseFileTree, cleanLabels, clickAction, isExternalWs, showTree } = renderVars
+export const getFileTooltip = ({
+  isSelected,
+  path,
+  renderVars,
+  showPath,
+  type,
+  visibleLabel,
+}: GetFileTooltipProps): string => {
+  const { condenseFileTree, clickAction, isExternalWs, showTree } = renderVars
   const isDefault = clickAction === ConfigActions.CURRENT_WINDOW
-
-  const { cleanedLabel, isSelected, label, path, showPath } = file
-  const visibleLabel = cleanLabels ? cleanedLabel : label
 
   let tooltip = visibleLabel
 

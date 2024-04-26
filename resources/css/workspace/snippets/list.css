@@ -195,6 +195,14 @@
   position: relative;
 }
 
+.list__list-section[data-isclosed='false'] {
+  margin-bottom: 5px;
+}
+
+.list__list-section:last-child {
+  margin-bottom: 0;
+}
+
 .rootfolder__message {
   list-style: none;
   margin: 0;
