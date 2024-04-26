@@ -18,7 +18,10 @@ Matches are made in the followig order:
 2. Folders to the workspaces files are split and checked for a matching icon. Priority is given to deeper folders first.
 3. If no match is found, an icon for workspaces will be used if the theme contains one
 4. If no workspace icon is found, a generic file icon will be used if the theme contains one
-5. If all the above fail to find a match, the default icon that has always beeen displayed will be used instead.
+
+If you disable displaying file icons with `workspaceSidebar.showFileIcons`, the old circular icon will be displayed instead.
+
+Selecting "None" in the file theme picker or settings dropdown will show no icons, just like with the file explorer.
 
 ## Configuration
 

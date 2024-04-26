@@ -2,7 +2,7 @@
 
 # Workspace Sidebar
 
-An extension for VSCode that makes switching Workspaces easier.
+An extension for VSCode to switch Workspaces with ease.
 
 You can specify one or more folders to look in for Workspace files and these will be shown in a sidebar, either as a list or as a tree, along with file theme icons to better indentify workspaces.
 
@@ -40,7 +40,7 @@ The extension works by searching the root folders for `.code-workspace` files, a
 
 **List View**
 
-The Workspaces are just displayed for each root folder.
+The Workspaces are displayed for each root folder in a list.
 
 ![List View](./docs/images/features/list_view.png)
 
@@ -85,7 +85,7 @@ This is a summary of the available configuration options. [View detailed configu
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------- | ------- |
 | Exclude Hidden Folders | Should hidden subfolders be excluded when looking for workspaces? This can speed up searching, however, if you turn this option off you may need to excluded many folders. This can be overridden per root folder. | true                                                                   | Boolean |
 | Excluded               | Subfolders to exclude when searching for workspace files                                                                                                                                                           | [ "node_modules", "build", "dist", "out", "public", ".cache", ".git" ] | Array   |
-| Root Folders           | The folders to look for workspace files in. **~/** will also be replaced with your home folder in all folders within the array. [More information](./docs/Configuration.md#root-folders).                          | []                                                                     | Array   |
+| Root Folders           | The folders to look for workspace files in. [More information](./docs/Configuration.md#root-folders).                                                                                                              | []                                                                     | Array   |
 
 ### Search
 
