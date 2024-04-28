@@ -4,6 +4,15 @@
 
 [Back to Readme](README.md)
 
+## [2.0.4](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v2.0.0...v2.0.4) (2024-04-28)
+- Closes [#145](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/145): Adds additional information on the loading screen
+- Closes [#146](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/146): Updated documentation
+- Closes [#147](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/147): Impoved the config watch to be more efficient
+- Closes [#153](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/153): Closed folders are now opened when searching
+- Fixes [#148](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/148): The wrong tooltip was used on some folders. This has been corrected
+- Fixes [#157](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/157): excludeHiddenFolders is no longer applied to the last folder in a rootFolder path.
+- Added space between root folders and made the root folder name more obvious via CSS changes. Also the root folders will now have their name cleaned if `workspaceSidebar.cleanLabels` is true
+
 ## [2.0.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v1.7.1...v2.0.0) (2024-03-05)
 - Closes [#61](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/61): Mutiple root folders
 - Closes [#102](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/102) [#124](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/124): Better invalid folder handling

@@ -10,25 +10,15 @@ You can then easily change Workspaces or open another Workspace in a new window.
 
 ![Workspace Sidebar Preview](docs/images/preview/preview.gif)
 
-## What's new in v2.0.0?
+## What's new in v2.0.4?
 
-Firstly, multiple root folders are now supported. Previously only one root folder was possible. You can also override default values for depth and the exclusion of hidden folders. This took quite a rewrite as the entire extension was only built for one root folder.
-
-```json
-{
-   "workspaceSidebar.rootFolders": [
-      { "path": "/home/user/Apps", "excludeHiddenFolders": false},
-      { "path": "~/Projects", "depth": 5}
-      { "path": "/data/Dev"},
-   ]
-}
-```
-
-The root folder setting are now machine scoped to allow different machines (including remote) to have different root folders. This has the side-effect that they are no longer synced like other settings, so each machine will need to provide their own root folders config.
-
-Secondly, symlinks are now usable. Previously they showed an error message about not being a folder. How path issues and handled in cases where folders are files, or not existing at all have also been improved.
-
-Lastly, the documentation has been updated, not just the markdown but also the settings show more information particularly when they are arrays or objects.
+- Added space between root folders and made the root folder name more obvious via CSS changes. Also the root folders will now have their name cleaned if `workspaceSidebar.cleanLabels` is true
+- Adds additional information on the loading screen
+- Closed folders are now opened when searching
+- excludeHiddenFolders is no longer applied to the last folder in a rootFolder path.
+- Impoved the config watch to be more efficient
+- The wrong tooltip was used on some folders. This has been corrected
+- Updated documentation
 
 [See the Changelog](CHANGELOG.md) for more detailed information.
 
