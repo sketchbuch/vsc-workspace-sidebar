@@ -11,14 +11,14 @@
 if [ -z $1 ]
 then
   echo "Unable to continue, no version provided."
-  echo "Please provide a major.minor.patch version number when running."
+  echo "Please provide a version number when running."
   exit 1
 fi
 
-FILE_PATH=./src/webviews/Workspace/WorkspaceViewProvider.ts
-FILE_PATH_PKGJSON=./package.json
+FILE_PATH_1=./src/webviews/Workspace/WorkspaceViewProvider.ts
+FILE_PATH_2=./package.json
 
 echo "Changing version to: '$1'"
 
-sed -i "s%  private readonly _version: string.*%  private readonly _version: string = '$1'%" "$FILE_PATH"
-sed -i "s%  \"version\":.*%  \"version\": \"$1\"\,%" "$FILE_PATH_PKGJSON"
+sed -i "s%  private readonly _version: string.*%  private readonly _version: string = '$1'%" "$FILE_PATH_1"
+sed -i "s%  \"version\":.*%  \"version\": \"$1\"\,%" "$FILE_PATH_2"
