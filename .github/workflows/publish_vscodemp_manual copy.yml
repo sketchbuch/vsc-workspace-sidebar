@@ -1,11 +1,11 @@
-# Publish this VSCode Extension to the VSCode Marketplace
+# Publish this VSCode Extension to the OpenVSX Marketplace
 
-name: Publish to VSCode Marketplace (Manual)
+name: Publish to Open VSX Marketplace (Manual)
 on:
   workflow_dispatch:
 jobs:
-  vscode:
-    name: VSCode Marketplace
+  openvsx:
+    name: OpenVSX Marketplace
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,8 +20,8 @@ jobs:
       - name: Install Dependencies
         run: yarn
 
-      - name: Install Vsce
-        run: npm i -g vsce
+      - name: Install Ovsx
+        run: npm i -g ovsx
 
-      - name: Publish to VSCode Marketplace
-        run: vsce publish -p ${{ secrets.VSCE_TOKEN }}
+      - name: Publish to OpenVSX Marketplace
+        run: ovsx publish --yarn -p ${{ secrets.OPENVSX_TOKEN }}
