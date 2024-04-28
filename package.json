@@ -283,6 +283,8 @@
   "scripts": {
     "build:dev": "parcel build ./src/extension.ts --target=dev",
     "build:release": "parcel build ./src/extension.ts --target=release",
+    "changever": "sh ./scripts/change_version.sh",
+    "circdeps": "node ./scripts/find_circular.js",
     "clean:cache": "rimraf ./.parcel-cache/*",
     "clean:dist": "rimraf ./dist/*",
     "clean:test": "rimraf ./test/*",
