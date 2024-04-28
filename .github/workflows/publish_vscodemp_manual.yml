@@ -8,8 +8,8 @@ jobs:
     name: VScode Marketplace
     runs-on: ubuntu-latest
     steps:
-      - name: Publish to VScode Marketplace
-        uses: HaaLeo/publish-vscode-extension@v1
+      - name: Publish to VSCode Marketplace
+        uses: HaaLeo/publish-vscode-extension@v1.6.2
         with:
           dryRun: true
           pat: ${{ secrets.VSCE_TOKEN }}
