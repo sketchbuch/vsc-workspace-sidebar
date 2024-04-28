@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 jobs:
   vscemp:
-    name: VScode Marketplace
+    name: VSCode Marketplace
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,7 +25,7 @@ jobs:
       - name: Install Vsce
         run: npm i -g vsce
 
-      - name: Publish to VScode Marketplace
+      - name: Publish to VSCode Marketplace
         if: github.event_name != 'workflow_dispatch'
         run: vsce publish -p ${{ secrets.VSCE_TOKEN }}
 

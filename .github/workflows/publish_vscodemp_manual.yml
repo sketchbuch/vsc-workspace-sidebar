@@ -1,4 +1,4 @@
-# Publish this VSCode Extension to the VSCode Marketplace and OpenVSIX Marketplace
+# Publish this VSCode Extension to the VSCode Marketplace
 
 name: Publish to VSCode Marketplace (Manual)
 on:
@@ -8,21 +8,10 @@ jobs:
     name: VScode Marketplace
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Publish to VSCode Marketplace
+        uses: HaaLeo/publish-vscode-extension@v1.6.2
         with:
-          node-version: '${{ vars.NODE_VERSION }}'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Install Dependencies
-        run: yarn
-
-      - name: Install Vsce
-        run: npm i -g vsce
-
-      - name: Publish to VScode Marketplace
-        if: github.event_name == 'workflow_dispatch'
-        run: vsce publish -p ${{ secrets.VSCE_TOKEN_OLD }}
+          dryRun: true
+          pat: ${{ secrets.VSCE_TOKEN }}
+          registryUrl: https://marketplace.visualstudio.com
+          yarn: true
