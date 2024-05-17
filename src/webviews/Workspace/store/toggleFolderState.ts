@@ -5,6 +5,7 @@ export const toggleFolderState = (
   state: WorkspaceState,
   action: PayloadAction<PayloadToggleFolderState>
 ): void => {
+  console.log('### toggleFolderState')
   if (action.payload) {
     const { folder, folderPath } = action.payload
 

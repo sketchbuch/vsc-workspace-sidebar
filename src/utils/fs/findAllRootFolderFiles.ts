@@ -12,6 +12,7 @@ export interface FindAllRootFolderFiles {
 }
 
 export const findAllRootFolderFiles = async (): Promise<FindAllRootFolderFiles> => {
+  console.log('### findAllRootFolderFiles')
   const configFolders = getFoldersConfig()
 
   if (configFolders.length > 0) {

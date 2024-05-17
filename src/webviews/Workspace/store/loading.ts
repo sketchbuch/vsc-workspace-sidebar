@@ -1,6 +1,7 @@
 import { WorkspaceState } from '../WorkspaceViewProvider.interface'
 
 export const loading = (state: WorkspaceState): void => {
+  console.log('### loading')
   state.error = ''
   state.errorObj = null
   state.fileCount = 0

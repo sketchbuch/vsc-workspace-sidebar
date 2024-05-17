@@ -16,6 +16,7 @@ export const list = (
   state: WorkspaceState,
   action: PayloadAction<WorkspaceCacheRootFolders>
 ): void => {
+  console.log('### list')
   const homeDir = os.homedir()
   const showTree = getShowTreeConfig()
 

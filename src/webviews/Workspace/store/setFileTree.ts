@@ -3,6 +3,7 @@ import { getFileTree } from '../helpers/getFileTree'
 import { WorkspaceState } from '../WorkspaceViewProvider.interface'
 
 export const setFileTree = (state: WorkspaceState): void => {
+  console.log('### setFileTree')
   state.rootFolders = state.rootFolders.map((rootFolder) => {
     const newFolder = { ...rootFolder }
 

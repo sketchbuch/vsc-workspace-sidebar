@@ -25,6 +25,7 @@ export const fetchFulfilled = (
   state: WorkspaceState,
   action: WorkspaceThunkAction<FindAllRootFolderFiles, ActionMetaFulfilled>
 ) => {
+  console.log('### fetchFulfilled')
   if (action.payload.result !== 'ok') {
     state.fileCount = 0
     state.result = action.payload.result
@@ -84,6 +85,8 @@ export const fetchFulfilled = (
 }
 
 export const fetchPending = (state: WorkspaceState) => {
+  console.log('### fetchPending')
+
   state.view = 'loading'
   state.result = 'ok'
   state.workspaceData = []
@@ -93,6 +96,7 @@ export const fetchRejected = (
   state: WorkspaceState,
   action: WorkspaceThunkErrorAction<unknown, ActionMetaRejected>
 ) => {
+  console.log('### fetchRejected')
   state.error = 'FETCH'
   state.errorObj = action.error ?? null
   state.view = 'error'

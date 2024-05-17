@@ -241,6 +241,11 @@ export type WorkspaceStateRootFolder = {
   result: FindFileResult
 
   /**
+   * The current state for this root folder.
+   */
+  state?: 'loading' | 'ready'
+
+  /**
    * The converted files that are currently visible
    */
   visibleFiles: Files

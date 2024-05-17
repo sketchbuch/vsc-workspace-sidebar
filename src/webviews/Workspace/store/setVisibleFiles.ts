@@ -5,6 +5,7 @@ import { getVisibleFiles } from '../helpers/getVisibleFiles'
 import { WorkspaceState } from '../WorkspaceViewProvider.interface'
 
 export const setVisibleFiles = (state: WorkspaceState): void => {
+  console.log('### setVisibleFiles')
   const showTree = getShowTreeConfig()
   let visibleFileCount = 0
 

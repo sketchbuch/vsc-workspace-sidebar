@@ -163,6 +163,10 @@ export class WorkspaceViewProvider
     if (this._view !== undefined) {
       const state = store.getState().ws
 
+      console.log('### view', state.view)
+      console.log('### rootFolders', state.rootFolders)
+      console.log('### ========================')
+
       const themeData = state.view === 'list' ? this._fileThemeProcessor.getThemeData() : null
       let cssData: CssData | null = null
 
@@ -401,7 +405,7 @@ export class WorkspaceViewProvider
     this.setupWebview(webviewView)
     this.updateSearch()
 
-    const cachedFiles = this.getCache()
+    const cachedFiles = null // this.getCache()
 
     if (cachedFiles) {
       store.dispatch(list(cachedFiles))
@@ -419,6 +423,15 @@ export class WorkspaceViewProvider
   public updateFileTree() {
     store.dispatch(setFileTree())
   }
+
+  /* public updateRootFolders() {
+    store.dispatch(
+      setRootFolders({
+        caseInsensitive: getSearchCaseInsensitiveConfig(),
+        matchStart: getSearchMatchStartConfig(),
+      })
+    )
+  } */
 
   public updateSearch() {
     store.dispatch(
