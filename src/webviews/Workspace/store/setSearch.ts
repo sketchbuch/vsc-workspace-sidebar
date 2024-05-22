@@ -6,7 +6,6 @@ import { getFileTree } from '../helpers/getFileTree'
 import { getVisibleFiles } from '../helpers/getVisibleFiles'
 
 export const setSearch = (state: WorkspaceState, action: PayloadAction<PayloadSearch>): void => {
-  console.log('### setSearch')
   const showTree = getShowTreeConfig()
   let visibleFileCount = 0
 

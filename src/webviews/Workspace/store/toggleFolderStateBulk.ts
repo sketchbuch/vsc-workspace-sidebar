@@ -7,7 +7,6 @@ export const toggleFolderStateBulk = (
   state: WorkspaceState,
   action: PayloadAction<PayloadToggleFolderStateBulk>
 ): void => {
-  console.log('### toggleFolderStateBulk')
   if (state.visibleFileCount < 1) {
     return
   }

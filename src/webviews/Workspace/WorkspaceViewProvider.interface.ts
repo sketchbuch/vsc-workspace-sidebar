@@ -124,6 +124,7 @@ export type PayloadToggleFolderStateBulk = FolderState
 export type FindFileResult =
   | 'is-file'
   | 'is-hidden-excluded'
+  | 'loading'
   | 'no-root-folders'
   | 'no-workspaces'
   | 'nonexistent'

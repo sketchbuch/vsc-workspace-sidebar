@@ -35,6 +35,7 @@ export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceStat
 
   if (view === 'loading') {
     content = loadingView(state, renderVars)
+    content = listView(state, renderVars)
   } else if (view === 'list') {
     titleAttr = t('workspace.list.title', { title })
     content = listView(state, renderVars)

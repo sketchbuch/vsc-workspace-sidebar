@@ -1,6 +1,7 @@
 import * as os from 'os'
 import { getExcludedFoldersConfig, getFoldersConfig } from '../../config/folders'
 import {
+  ConfigRootFolder,
   FindFileResult,
   FindRootFolderFiles,
 } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
@@ -11,7 +12,9 @@ export interface FindAllRootFolderFiles {
   result: FindFileResult
 }
 
-export const findAllRootFolderFiles = async (): Promise<FindAllRootFolderFiles> => {
+export const findAllRootFolderFiles = async (
+  folder: ConfigRootFolder
+): Promise<FindAllRootFolderFiles> => {
   console.log('### findAllRootFolderFiles')
   const configFolders = getFoldersConfig()
 

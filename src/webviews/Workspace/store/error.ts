@@ -5,7 +5,6 @@ export const error = (
   state: WorkspaceState,
   action: PayloadAction<WorkspaceStateErrorObj>
 ): void => {
-  console.log('### error')
   const errorObj: WorkspaceStateErrorObj = action.payload ?? null
 
   state.error = 'DEFAULT'

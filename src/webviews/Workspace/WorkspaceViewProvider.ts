@@ -8,6 +8,7 @@ import {
   FileThemeProcessorObserver,
   FileThemeProcessorState,
 } from 'vscode-file-theme-processor'
+import { getFoldersConfig } from '../../config/folders'
 import { getActionsConfig } from '../../config/general'
 import { getSearchCaseInsensitiveConfig, getSearchMatchStartConfig } from '../../config/search'
 import {
@@ -86,8 +87,12 @@ export class WorkspaceViewProvider
     await vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
     await this._ctx.globalState.update(EXT_WSSTATE_CACHE, newCacheData)
 
-    store.dispatch(fetch()).then(() => {
-      this.updateCache(store.getState().ws)
+    const configFolders = getFoldersConfig()
+
+    configFolders.forEach((folder) => {
+      store.dispatch(fetch(folder)).then(() => {
+        this.updateCache(store.getState().ws)
+      })
     })
   }
 
@@ -410,8 +415,12 @@ export class WorkspaceViewProvider
     if (cachedFiles) {
       store.dispatch(list(cachedFiles))
     } else {
-      store.dispatch(fetch()).then(() => {
-        this.updateCache(store.getState().ws)
+      const configFolders = getFoldersConfig()
+
+      configFolders.forEach((folder) => {
+        store.dispatch(fetch(folder)).then(() => {
+          this.updateCache(store.getState().ws)
+        })
       })
     }
   }
