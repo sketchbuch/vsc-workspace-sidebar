@@ -1,14 +1,11 @@
 import { t } from 'vscode-ext-localisation'
 import {
-  FileTree,
   FindFileResult,
   WorkspaceState,
 } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { RenderVars } from '../../../webviews/webviews.interface'
 import { getListClasses } from '../../helpers/getListClasses'
-import { listElement } from './listElement'
-import { listError } from './listError'
-import { tree } from './tree'
+import { listContent } from './listContent'
 
 export const rootPathErrors: FindFileResult[] = [
   'is-file',
@@ -42,53 +39,32 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
           }
 
           const isFileTree = showTree && fileTree !== null
-          const isRootPathError = rootPathErrors.includes(result)
-          const classes = getListClasses(isFileTree)
           const isClosed = !search.term && closedFolders.includes(folderName)
-
-          const rootFolderFile: FileTree = {
-            compactedFolders: [],
-            files: [],
-            folderPath,
-            folderPathSegment: folderName,
-            isRoot: true,
-            label: folderName,
-            sub: [],
-          }
 
           return `
             <section class="list__list-section" data-isclosed="${isClosed}">
-              ${
-                isRootPathError
-                  ? listError({ depth, folder: rootFolderFile, renderVars, result, state })
-                  : ''
-              }
-              ${
-                !isRootPathError
-                  ? `<ul class="${classes}">
-                        ${
-                          isFileTree
-                            ? tree({
-                                branch: fileTree,
-                                closedFolders: rootFolder.closedFolders,
-                                depth: 0,
-                                renderVars,
-                                state,
-                              })
-                            : ''
-                        }
-                        ${listElement({
-                          folder: rootFolderFile,
-                          isClosed,
-                          renderVars,
-                          result,
-                          state,
-                          visibleFiles,
-                        })}
-                      </ul>
-                    `
-                  : ''
-              }
+              <ul class="${getListClasses(isFileTree)}">
+                ${listContent({
+                  branch: isFileTree ? fileTree : null,
+                  closedFolders: rootFolder.closedFolders,
+                  depth,
+                  folder: {
+                    compactedFolders: [],
+                    files: [],
+                    folderPath,
+                    folderPathSegment: folderName,
+                    isRoot: true,
+                    label: folderName,
+                    sub: [],
+                  },
+                  isClosed,
+                  isRootPathError: rootPathErrors.includes(result),
+                  renderVars,
+                  result,
+                  state,
+                  visibleFiles,
+                })}
+              </ul>
             </section>
           `
         })

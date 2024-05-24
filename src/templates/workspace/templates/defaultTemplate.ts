@@ -13,7 +13,6 @@ import { getRenderVars } from '../../helpers/getRenderVars'
 import { errorView } from '../views/errorView'
 import { invalidView } from '../views/invalidView'
 import { listView } from '../views/listView'
-import { loadingView } from '../views/loadingView'
 
 export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceState): string => {
   const {
@@ -33,10 +32,7 @@ export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceStat
   let titleAttr = t('views.title')
   let content = ''
 
-  if (view === 'loading') {
-    content = loadingView(state, renderVars)
-    content = listView(state, renderVars)
-  } else if (view === 'list') {
+  if (view === 'list' || view === 'loading') {
     titleAttr = t('workspace.list.title', { title })
     content = listView(state, renderVars)
   } else if (view === 'invalid') {

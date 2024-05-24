@@ -8,50 +8,73 @@ import {
 import { RenderVars } from '../../../webviews/webviews.interface'
 import { viewMsg } from '../../common/snippets/viewMsg'
 import { itemFile } from './itemFile'
-import { itemFolder } from './itemFolder'
+import { ItemFolderProps, itemFolder } from './itemFolder'
+import { rootFolderMessage } from './rootFolderMessage'
+import { tree } from './tree'
 
-export type ListElementProps = {
+export type ListContentProps = {
+  branch: FileTree | null
+  closedFolders: string[]
+  depth: number
   folder: FileTree
   isClosed: boolean
+  isRootPathError: boolean
   renderVars: RenderVars
   result: FindFileResult
   state: WorkspaceState
   visibleFiles: Files
 }
 
-export const listElement = ({
+export const listContent = ({
+  branch,
+  closedFolders,
+  depth,
   folder,
   isClosed,
+  isRootPathError,
   renderVars,
   result,
   state,
   visibleFiles,
-}: ListElementProps): string => {
-  if (result === 'loading') {
+}: ListContentProps): string => {
+  const folderProps: ItemFolderProps = {
+    depth: 0,
+    folder,
+    isClosed,
+    renderVars,
+    state,
+  }
+
+  if (isRootPathError) {
     return `
       ${itemFolder({
-        depth: 0,
-        folder,
-        isClosed,
-        renderVars,
-        state,
+        ...folderProps,
+        isClosed: false,
+        isFolderError: true,
       })}
+      ${rootFolderMessage(result, depth)}
+    `
+  } else if (result === 'loading') {
+    return `
+      ${itemFolder(folderProps)}
       ${viewMsg({
         message: t('workspace.loading.title'),
         iconType: 'loading',
         type: 'title',
       })}
     `
+  } else if (branch) {
+    return tree({
+      branch,
+      closedFolders,
+      depth: 0,
+      renderVars,
+      state,
+    })
   }
 
   return `
-    ${itemFolder({
-      depth: 0,
-      folder,
-      isClosed,
-      renderVars,
-      state,
-    })}
+    ${itemFolder(folderProps)}
     ${!isClosed ? visibleFiles.map((file) => itemFile({ file, state, renderVars })).join('') : ''}
   `
 }
