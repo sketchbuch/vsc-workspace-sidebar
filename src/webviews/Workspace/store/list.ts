@@ -20,7 +20,7 @@ export const list = (
   const homeDir = os.homedir()
   const showTree = getShowTreeConfig()
 
-  const workspaceData: FindRootFolderFiles[] = []
+  const workspaceData = new Map<string, FindRootFolderFiles>()
   let fileCount = 0
   let visibleFileCount = 0
 
@@ -36,7 +36,7 @@ export const list = (
     visibleFileCount += visibleFiles.length
     const result = files.length < 1 ? 'no-workspaces' : 'ok'
 
-    workspaceData.push({
+    workspaceData.set(folderPath, {
       depth,
       files,
       folderPath,

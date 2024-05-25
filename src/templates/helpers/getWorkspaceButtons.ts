@@ -18,7 +18,7 @@ export type WorkspaceButtons = WorkspaceButton[]
 export interface GenericButton {
   codicon?: string
   file: string
-  key: 'open-filemanager'
+  key: 'open-filemanager' | 'refresh-rootfolder'
   label: string
 }
 

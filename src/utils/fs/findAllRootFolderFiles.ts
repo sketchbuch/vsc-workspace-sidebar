@@ -1,72 +1,31 @@
 import * as os from 'os'
-import { getExcludedFoldersConfig, getFoldersConfig } from '../../config/folders'
+import { getExcludedFoldersConfig } from '../../config/folders'
 import {
   ConfigRootFolder,
-  FindFileResult,
   FindRootFolderFiles,
 } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { findRootFolderFiles } from './findRootFolderFiles'
 
 export interface FindAllRootFolderFiles {
-  rootFolders: FindRootFolderFiles[]
-  result: FindFileResult
+  rootFolder: FindRootFolderFiles
 }
 
 export const findAllRootFolderFiles = async (
-  folder: ConfigRootFolder
+  configFolder: ConfigRootFolder
 ): Promise<FindAllRootFolderFiles> => {
-  console.log('### findAllRootFolderFiles')
-  const configFolders = getFoldersConfig()
+  console.log('### findAllRootFolderFiles', configFolder)
+  const excludedFoldersConfig = getExcludedFoldersConfig()
+  const homeDir = os.homedir()
 
-  if (configFolders.length > 0) {
-    const excludedFoldersConfig = getExcludedFoldersConfig()
-    const homeDir = os.homedir()
+  const { excludeHiddenFolders, depth, path } = configFolder
 
-    const fileCount: string[] = []
-    const isHiddenExcludedCount: string[] = []
-    const nonExistentCount: string[] = []
-    const noWorkspaceCount: string[] = []
-    const rootFolders: FindRootFolderFiles[] = []
+  const rootFolder = await findRootFolderFiles({
+    excludedFolders: excludedFoldersConfig,
+    excludeHiddenFolders,
+    folder: path,
+    homeDir,
+    maxDepth: depth,
+  })
 
-    for (let index = 0; index < configFolders.length; index++) {
-      const configFolder = configFolders[index]
-      const { excludeHiddenFolders, depth, path } = configFolder
-
-      if (path) {
-        const rootFolder = await findRootFolderFiles({
-          excludedFolders: excludedFoldersConfig,
-          excludeHiddenFolders,
-          folder: path,
-          homeDir,
-          maxDepth: depth,
-        })
-
-        if (rootFolder.result === 'is-hidden-excluded') {
-          isHiddenExcludedCount.push(path)
-        } else if (rootFolder.result === 'no-workspaces') {
-          noWorkspaceCount.push(path)
-        } else if (rootFolder.result === 'is-file') {
-          fileCount.push(path)
-        } else if (rootFolder.result === 'nonexistent') {
-          nonExistentCount.push(path)
-        }
-
-        rootFolders.push(rootFolder)
-      }
-    }
-
-    if (fileCount.length === configFolders.length) {
-      return Promise.resolve({ rootFolders, result: 'is-file' })
-    } else if (noWorkspaceCount.length === configFolders.length) {
-      return Promise.resolve({ rootFolders, result: 'no-workspaces' })
-    } else if (isHiddenExcludedCount.length === configFolders.length) {
-      return Promise.resolve({ rootFolders, result: 'is-hidden-excluded' })
-    } else if (nonExistentCount.length === configFolders.length) {
-      return Promise.resolve({ rootFolders, result: 'nonexistent' })
-    } // Else, Some root folders are empty or invalid - List view will handle these
-
-    return Promise.resolve({ rootFolders, result: 'ok' })
-  }
-
-  return Promise.resolve({ rootFolders: [], result: 'no-root-folders' })
+  return Promise.resolve({ rootFolder })
 }

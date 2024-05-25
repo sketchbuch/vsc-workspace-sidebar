@@ -14,5 +14,5 @@ export const error = (
   state.rootFolders = []
   state.view = 'error'
   state.visibleFileCount = 0
-  state.workspaceData = []
+  state.workspaceData = new Map()
 }

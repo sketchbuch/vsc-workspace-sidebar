@@ -48,14 +48,11 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
     case 'no-workspaces':
       let isDepthZero = true
 
-      for (let index = 0; index < state.workspaceData.length; index++) {
-        const { depth } = state.workspaceData[index]
-
-        if (depth > 0) {
+      state.workspaceData.forEach(({ depth }) => {
+        if (isDepthZero && depth > 0) {
           isDepthZero = false
-          break
         }
-      }
+      })
 
       return `
         <section class="view invalid" data-type="${state.result}">

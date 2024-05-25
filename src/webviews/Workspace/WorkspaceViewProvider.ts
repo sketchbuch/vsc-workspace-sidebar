@@ -167,11 +167,6 @@ export class WorkspaceViewProvider
   private render() {
     if (this._view !== undefined) {
       const state = store.getState().ws
-
-      console.log('### view', state.view)
-      console.log('### rootFolders', state.rootFolders)
-      console.log('### ========================')
-
       const themeData = state.view === 'list' ? this._fileThemeProcessor.getThemeData() : null
       let cssData: CssData | null = null
 
@@ -250,6 +245,23 @@ export class WorkspaceViewProvider
         case Actions.ICON_CLICK_FILEMANAGER:
           if (payload) {
             await executeCommand('revealFileInOS', vscode.Uri.file(payload))
+          }
+          break
+
+        case Actions.ICON_CLICK_REFRESH:
+          if (payload) {
+            const configFolders = getFoldersConfig()
+            const folder = configFolders.find((folder) => folder.path === payload)
+
+            if (folder) {
+              store.dispatch(fetch(folder)).then(() => {
+                this.updateCache(store.getState().ws)
+              })
+            } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
+              vscode.window.showErrorMessage(
+                `Unable to refresh rootfolder workspace. No match found for "${payload}"`
+              )
+            }
           }
           break
 
@@ -432,15 +444,6 @@ export class WorkspaceViewProvider
   public updateFileTree() {
     store.dispatch(setFileTree())
   }
-
-  /* public updateRootFolders() {
-    store.dispatch(
-      setRootFolders({
-        caseInsensitive: getSearchCaseInsensitiveConfig(),
-        matchStart: getSearchMatchStartConfig(),
-      })
-    )
-  } */
 
   public updateSearch() {
     store.dispatch(

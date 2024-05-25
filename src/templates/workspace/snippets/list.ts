@@ -31,8 +31,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
     <div class="list__list-wrapper">
       ${rootFolders
         .map((rootFolder) => {
-          const { closedFolders, depth, fileTree, folderName, folderPath, result, visibleFiles } =
-            rootFolder
+          const { closedFolders, fileTree, folderName, result, visibleFiles } = rootFolder
 
           if (search.term && visibleFiles.length < 1) {
             return ''
@@ -45,24 +44,11 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
             <section class="list__list-section" data-isclosed="${isClosed}">
               <ul class="${getListClasses(isFileTree)}">
                 ${listContent({
-                  branch: isFileTree ? fileTree : null,
-                  closedFolders: rootFolder.closedFolders,
-                  depth,
-                  folder: {
-                    compactedFolders: [],
-                    files: [],
-                    folderPath,
-                    folderPathSegment: folderName,
-                    isRoot: true,
-                    label: folderName,
-                    sub: [],
-                  },
                   isClosed,
                   isRootPathError: rootPathErrors.includes(result),
                   renderVars,
-                  result,
+                  rootFolder,
                   state,
-                  visibleFiles,
                 })}
               </ul>
             </section>

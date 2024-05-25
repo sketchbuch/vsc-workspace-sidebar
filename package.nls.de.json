@@ -104,6 +104,10 @@
         "openFilemanager": {
           "ariaLabel": "Öffnen Sie den Ordner '{{label}}' in Ihrem Dateimanager",
           "tooltip": "Öffnen Sie den Ordner '{{label}}' in Ihrem Dateimanager"
+        },
+        "refreshRootfolder": {
+          "ariaLabel": "Arbeitsbereiche für '{{label}}' neu einsammeln",
+          "tooltip": "Arbeitsbereiche für '{{label}}' neu einsammeln"
         }
       },
       "nonexistent": {

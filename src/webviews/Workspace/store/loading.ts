@@ -10,5 +10,5 @@ export const loading = (state: WorkspaceState): void => {
   state.selected = ''
   state.view = 'loading'
   state.visibleFileCount = 0
-  state.workspaceData = []
+  state.workspaceData = new Map()
 }

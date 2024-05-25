@@ -62,16 +62,16 @@ export const initialState: WorkspaceState = {
   selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',
   view: 'loading',
   visibleFileCount: 0,
-  workspaceData: [],
+  workspaceData: new Map(),
   wsType: getWsType(vscode.workspace.workspaceFile, vscode.workspace.workspaceFolders),
 }
 
 export const workspaceSlice = createSlice({
   initialState: { ...initialState },
   extraReducers: (builder) => {
+    builder.addCase(fetch.fulfilled, fetchFulfilled)
     builder.addCase(fetch.pending, fetchPending)
     builder.addCase(fetch.rejected, fetchRejected)
-    builder.addCase(fetch.fulfilled, fetchFulfilled)
   },
   name: 'ws',
   reducers: {

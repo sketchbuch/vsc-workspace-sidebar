@@ -1,45 +1,42 @@
-import { t } from 'vscode-ext-localisation'
 import {
-  FileTree,
-  Files,
-  FindFileResult,
   WorkspaceState,
+  WorkspaceStateRootFolder,
 } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { RenderVars } from '../../../webviews/webviews.interface'
-import { viewMsg } from '../../common/snippets/viewMsg'
 import { itemFile } from './itemFile'
 import { ItemFolderProps, itemFolder } from './itemFolder'
 import { rootFolderMessage } from './rootFolderMessage'
 import { tree } from './tree'
 
 export type ListContentProps = {
-  branch: FileTree | null
-  closedFolders: string[]
-  depth: number
-  folder: FileTree
   isClosed: boolean
   isRootPathError: boolean
   renderVars: RenderVars
-  result: FindFileResult
+  rootFolder: WorkspaceStateRootFolder
   state: WorkspaceState
-  visibleFiles: Files
 }
 
 export const listContent = ({
-  branch,
-  closedFolders,
-  depth,
-  folder,
   isClosed,
   isRootPathError,
   renderVars,
-  result,
+  rootFolder,
   state,
-  visibleFiles,
 }: ListContentProps): string => {
+  const { closedFolders, depth, fileTree, folderName, folderPath, result, visibleFiles } =
+    rootFolder
+
   const folderProps: ItemFolderProps = {
     depth: 0,
-    folder,
+    folder: {
+      compactedFolders: [],
+      files: [],
+      folderPath,
+      folderPathSegment: folderName,
+      isRoot: true,
+      label: folderName,
+      sub: [],
+    },
     isClosed,
     renderVars,
     state,
@@ -57,15 +54,11 @@ export const listContent = ({
   } else if (result === 'loading') {
     return `
       ${itemFolder(folderProps)}
-      ${viewMsg({
-        message: t('workspace.loading.title'),
-        iconType: 'loading',
-        type: 'title',
-      })}
+      ${rootFolderMessage(result, depth)}
     `
-  } else if (branch) {
+  } else if (fileTree) {
     return tree({
-      branch,
+      branch: fileTree,
       closedFolders,
       depth: 0,
       renderVars,

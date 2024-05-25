@@ -1,4 +1,4 @@
-import { PayloadAction, SerializedError } from '@reduxjs/toolkit'
+import { SerializedError } from '@reduxjs/toolkit'
 
 export interface File {
   cleanedLabel: string
@@ -92,6 +92,7 @@ export enum PostMsgActionsBackend {
   FOLDER_CLICK = 'FOLDER_CLICK',
   ICON_CLICK = 'ICON_CLICK',
   ICON_CLICK_FILEMANAGER = 'ICON_CLICK_FILEMANAGER',
+  ICON_CLICK_REFRESH = 'ICON_CLICK_REFRESH',
   MAIN_CLICK = 'MAIN_CLICK',
   SAVE_WS = 'SAVE_WS',
   SEARCH = 'SEARCH',
@@ -187,7 +188,7 @@ export type WorkspaceState = {
   /**
    * The results as returned from findAllRootFolderFiles()
    */
-  workspaceData: FindRootFolderFiles[]
+  workspaceData: Map<string, FindRootFolderFiles>
 
   /**
    * The type of workspace that is currently open.
@@ -237,6 +238,11 @@ export type WorkspaceStateRootFolder = {
   folderPath: string
 
   /**
+   * The absolute folder path with the users homedir replaced with ~.
+   */
+  folderPathShort: string
+
+  /**
    * The result of the file collection for this root folder.
    */
   result: FindFileResult
@@ -257,37 +263,6 @@ export type WorkspaceView = 'error' | 'invalid' | 'list' | 'loading'
 export type WorkspaceType = 'none' | 'ws' | 'folder'
 
 export type WorkspaceFiles = string[]
-
-export type WorkspaceThunkAction<Payload, Meta> = PayloadAction<Payload, ActionType, Meta>
-
-export type WorkspaceThunkErrorAction<Payload, Meta> = PayloadAction<
-  Payload,
-  ActionType,
-  Meta,
-  SerializedError
->
-
-type ActionMetaCommon = {
-  aborted?: boolean
-  arg?: void
-  condition?: boolean
-  rejectedWithValue?: boolean
-  requestId: string
-}
-
-export type ActionMetaFulfilled = {
-  requestStatus: 'fulfilled'
-} & ActionMetaCommon
-
-export type ActionMetaPending = {
-  requestStatus: 'pending'
-} & ActionMetaCommon
-
-export type ActionMetaRejected = {
-  requestStatus: 'rejected'
-} & ActionMetaCommon
-
-type ActionType = string
 
 /**
  * Find Root Folder Files
