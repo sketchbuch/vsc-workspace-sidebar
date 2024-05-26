@@ -188,7 +188,7 @@ export type WorkspaceState = {
   /**
    * The results as returned from findAllRootFolderFiles()
    */
-  workspaceData: Map<string, FindRootFolderFiles>
+  workspaceData: FindRootFolderFiles[]
 
   /**
    * The type of workspace that is currently open.

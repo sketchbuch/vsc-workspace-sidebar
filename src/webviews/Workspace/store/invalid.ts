@@ -5,5 +5,5 @@ export const invalid = (state: WorkspaceState): void => {
   state.rootFolders = []
   state.view = 'invalid'
   state.visibleFileCount = 0
-  state.workspaceData = new Map()
+  state.workspaceData = []
 }

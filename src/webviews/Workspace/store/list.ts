@@ -2,11 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import * as os from 'os'
 import { getShowTreeConfig } from '../../../config/treeview'
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
-import {
-  FindRootFolderFiles,
-  WorkspaceCacheRootFolders,
-  WorkspaceState,
-} from '../WorkspaceViewProvider.interface'
+import { WorkspaceCacheRootFolders, WorkspaceState } from '../WorkspaceViewProvider.interface'
 import { convertWsFiles } from '../helpers/convertWsFiles'
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree'
 import { getFileTree } from '../helpers/getFileTree'
@@ -20,7 +16,7 @@ export const list = (
   const homeDir = os.homedir()
   const showTree = getShowTreeConfig()
 
-  const workspaceData = new Map<string, FindRootFolderFiles>()
+  const workspaceData: WorkspaceState['workspaceData'] = []
   let fileCount = 0
   let visibleFileCount = 0
 
@@ -36,7 +32,7 @@ export const list = (
     visibleFileCount += visibleFiles.length
     const result = files.length < 1 ? 'no-workspaces' : 'ok'
 
-    workspaceData.set(folderPath, {
+    workspaceData.push({
       depth,
       files,
       folderPath,

@@ -62,7 +62,7 @@ export const initialState: WorkspaceState = {
   selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',
   view: 'loading',
   visibleFileCount: 0,
-  workspaceData: new Map(),
+  workspaceData: [],
   wsType: getWsType(vscode.workspace.workspaceFile, vscode.workspace.workspaceFolders),
 }
 

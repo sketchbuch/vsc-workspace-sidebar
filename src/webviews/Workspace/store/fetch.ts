@@ -20,12 +20,9 @@ export const fetchFulfilled = (
   action: FetchFulfilledAction<ConfigRootFolder, FindAllRootFolderFiles>
 ) => {
   if (action.payload.rootFolder.result !== 'ok') {
-    state.fileCount = 0
     state.result = action.payload.rootFolder.result
     state.rootFolders = []
     state.view = 'invalid'
-    state.visibleFileCount = 0
-    state.workspaceData.set(action.payload.rootFolder.folderPath, action.payload.rootFolder)
   } else {
     const homeDir = os.homedir()
     const showTree = getShowTreeConfig()
@@ -69,7 +66,18 @@ export const fetchFulfilled = (
 
     state.result = 'ok'
     state.view = 'list'
-    state.workspaceData.set(action.payload.rootFolder.folderPath, action.payload.rootFolder)
+  }
+
+  if (state.workspaceData.includes(action.payload.rootFolder)) {
+    state.workspaceData = state.workspaceData.map((element) => {
+      if (element.folderPath === action.payload.rootFolder.folderPath) {
+        return action.payload.rootFolder
+      }
+
+      return element
+    })
+  } else {
+    state.workspaceData.push(action.payload.rootFolder)
   }
 }
 
@@ -93,7 +101,9 @@ export const fetchPending = (
 
   state.view = 'list'
   state.result = 'ok'
-  state.workspaceData.delete(action.meta.arg.path)
+  state.workspaceData = state.workspaceData.filter(
+    (element) => element.folderPath !== action.meta.arg.path
+  )
 }
 
 export const fetchRejected = (
@@ -103,5 +113,7 @@ export const fetchRejected = (
   state.error = 'FETCH'
   state.errorObj = action.error ?? null
   state.view = 'error'
-  state.workspaceData.delete(action.meta.arg.path)
+  state.workspaceData = state.workspaceData.filter(
+    (element) => element.folderPath !== action.meta.arg.path
+  )
 }

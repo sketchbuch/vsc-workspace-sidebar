@@ -51,7 +51,7 @@ export const getMockState = (
   state: Partial<WorkspaceState> = {},
   depth = CONFIG_DEPTH
 ): WorkspaceState => {
-  const workspaceData = new Map<string, FindRootFolderFiles>()
+  const workspaceData: WorkspaceState['workspaceData'] = []
   const newState: WorkspaceState = {
     ...initialState,
     selected: '',
@@ -60,7 +60,7 @@ export const getMockState = (
   }
 
   newState.rootFolders.forEach(({ files, folderPath, result }) => {
-    workspaceData.set(folderPath, {
+    workspaceData.push({
       depth,
       files,
       folderPath,
