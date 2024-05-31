@@ -27,7 +27,9 @@ export const initialSearchState: SearchState = {
   term: '',
 }
 
-const getItitialRootFolders = (configFolders: ConfigRootFolder[]): WorkspaceStateRootFolder[] => {
+export const getItitialRootFolders = (
+  configFolders: ConfigRootFolder[]
+): WorkspaceStateRootFolder[] => {
   if (configFolders.length > 0) {
     return configFolders.map<WorkspaceStateRootFolder>(({ depth, path }) => {
       const homeDir = os.homedir()
@@ -62,7 +64,6 @@ export const initialState: WorkspaceState = {
   selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',
   view: 'loading',
   visibleFileCount: 0,
-  workspaceData: [],
   wsType: getWsType(vscode.workspace.workspaceFile, vscode.workspace.workspaceFolders),
 }
 

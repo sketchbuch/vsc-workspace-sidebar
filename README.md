@@ -133,5 +133,3 @@ If you use this plugin and want to help support development, please [PayPal Me](
 
 ## Todo
 
-- If folder is compacted, why condense it?
-- Remove folderPathShort

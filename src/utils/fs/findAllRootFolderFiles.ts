@@ -13,7 +13,6 @@ export interface FindAllRootFolderFiles {
 export const findAllRootFolderFiles = async (
   configFolder: ConfigRootFolder
 ): Promise<FindAllRootFolderFiles> => {
-  console.log('### findAllRootFolderFiles', configFolder)
   const excludedFoldersConfig = getExcludedFoldersConfig()
   const homeDir = os.homedir()
 

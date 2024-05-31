@@ -48,7 +48,7 @@ export const invalidView = (state: WorkspaceState, renderVars: RenderVars): stri
     case 'no-workspaces':
       let isDepthZero = true
 
-      state.workspaceData.forEach(({ depth }) => {
+      state.rootFolders.forEach(({ depth }) => {
         if (isDepthZero && depth > 0) {
           isDepthZero = false
         }

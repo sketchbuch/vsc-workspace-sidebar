@@ -126,6 +126,7 @@ export type FindFileResult =
   | 'is-file'
   | 'is-hidden-excluded'
   | 'loading'
+  | 'map-error'
   | 'no-root-folders'
   | 'no-workspaces'
   | 'nonexistent'
@@ -184,11 +185,6 @@ export type WorkspaceState = {
    * The total number of visible workspace files for all root folders.
    */
   visibleFileCount: number
-
-  /**
-   * The results as returned from findAllRootFolderFiles()
-   */
-  workspaceData: FindRootFolderFiles[]
 
   /**
    * The type of workspace that is currently open.

@@ -12,11 +12,9 @@ export const list = (
   state: WorkspaceState,
   action: PayloadAction<WorkspaceCacheRootFolders>
 ): void => {
-  console.log('### list')
   const homeDir = os.homedir()
   const showTree = getShowTreeConfig()
 
-  const workspaceData: WorkspaceState['workspaceData'] = []
   let fileCount = 0
   let visibleFileCount = 0
 
@@ -31,13 +29,6 @@ export const list = (
     fileCount += files.length
     visibleFileCount += visibleFiles.length
     const result = files.length < 1 ? 'no-workspaces' : 'ok'
-
-    workspaceData.push({
-      depth,
-      files,
-      folderPath,
-      result,
-    })
 
     return {
       allFolders,
@@ -58,5 +49,4 @@ export const list = (
   state.view = 'list'
   state.fileCount = fileCount
   state.visibleFileCount = visibleFileCount
-  state.workspaceData = workspaceData
 }

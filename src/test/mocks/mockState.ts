@@ -47,30 +47,12 @@ export const getMockSearchState = (state: Partial<SearchState> = {}): SearchStat
   }
 }
 
-export const getMockState = (
-  state: Partial<WorkspaceState> = {},
-  depth = CONFIG_DEPTH
-): WorkspaceState => {
-  const workspaceData: WorkspaceState['workspaceData'] = []
-  const newState: WorkspaceState = {
+export const getMockState = (state: Partial<WorkspaceState> = {}): WorkspaceState => {
+  return {
     ...initialState,
     selected: '',
     wsType: 'ws',
     ...state,
-  }
-
-  newState.rootFolders.forEach(({ files, folderPath, result }) => {
-    workspaceData.push({
-      depth,
-      files,
-      folderPath,
-      result,
-    })
-  })
-
-  return {
-    ...newState,
-    workspaceData,
   }
 }
 
