@@ -13,7 +13,7 @@ import { OS_HOMEFOLDER, ROOT_FOLDER } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
 import { getMockRootFolders, getMockState } from '../../../../mocks/mockState'
 
-suite.only('Templates > Workspace > Snippets: itemFolder()', () => {
+suite('Templates > Workspace > Snippets: itemFolder()', () => {
   const DEPTH = 0
   const FOLDER_PATH = 'supernatural/winchester'
   const folder: FileTree = {
