@@ -133,3 +133,4 @@ If you use this plugin and want to help support development, please [PayPal Me](
 
 ## Todo
 
+- Add loading title
