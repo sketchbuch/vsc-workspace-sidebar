@@ -7,16 +7,21 @@ import * as treeConfigs from '../../../../../config/treeview'
 import { CONFIG_DEPTH, CONFIG_EXCLUDE_HIDDEN_FODLERS } from '../../../../../constants/config'
 import { FindAllRootFolderFiles } from '../../../../../utils/fs/findAllRootFolderFiles'
 import {
-  ActionMetaFulfilled,
+  ConfigRootFolder,
   WorkspaceState,
   WorkspaceStateRootFolder,
-  WorkspaceThunkAction,
 } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { fetchFulfilled } from '../../../../../webviews/Workspace/store/fetch'
+import { FetchFulfilledAction } from '../../../../../webviews/Workspace/store/store.interface'
 import { OS_HOMEFOLDER, ROOT_FOLDER_PATH, SEARCH_TERM } from '../../../../mocks/mockFileData'
 import { getMockRootFolders, getMockSearchState, getMockState } from '../../../../mocks/mockState'
 
 suite('Webviews > Workspace > Store > list()', () => {
+  const rootFolder: ConfigRootFolder = {
+    path: ROOT_FOLDER_PATH,
+    depth: CONFIG_DEPTH,
+    excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
+  }
   let compactFoldersConfigStub: sinon.SinonStub
   let condenseConfigStub: sinon.SinonStub
   let osStub: sinon.SinonStub
@@ -49,10 +54,10 @@ suite('Webviews > Workspace > Store > list()', () => {
 
   const getAction = (
     rootFolders: WorkspaceStateRootFolder[]
-  ): WorkspaceThunkAction<FindAllRootFolderFiles, ActionMetaFulfilled> => {
+  ): FetchFulfilledAction<ConfigRootFolder, FindAllRootFolderFiles> => {
     return {
-      meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-      payload: { result: 'ok', rootFolders },
+      meta: { arg: rootFolder, requestId: '' },
+      payload: { rootFolder: { depth: 0, result: 'ok', folderPath: '', files: [] } },
       type: 'ws/list',
     }
   }

@@ -9,7 +9,6 @@ import { getIntWithinBounds } from '../utils/numbers/getIntWithinBounds'
 import {
   ConfigRootFolder,
   ConfigRootFolderSettings,
-  IndexedConfigRootFolderSettings,
 } from '../webviews/Workspace/WorkspaceViewProvider.interface'
 import { getDepthConfig } from './general'
 
@@ -30,9 +29,7 @@ export const getRawFoldersConfig = (): ConfigRootFolderSettings[] => {
 export const getFoldersConfig = (): ConfigRootFolder[] => {
   const depth = getDepthConfig()
   const excludeHiddenFolders = getExcludeHiddenFoldersConfig()
-  const rootFolders = getRawFoldersConfig().map<IndexedConfigRootFolderSettings>((rf, index) => {
-    return { ...rf, index }
-  })
+  const rootFolders = getRawFoldersConfig()
 
   let folders: ConfigRootFolder[] = []
 
@@ -44,7 +41,6 @@ export const getFoldersConfig = (): ConfigRootFolder[] => {
       const pathConfig = rootFolders.find((rootFolder) => rootFolder.path === path)
 
       if (pathConfig) {
-        const eleIndex = pathConfig.index
         const eleDepth = pathConfig.depth
         const eleExcludeHidden = pathConfig.excludeHiddenFolders
         const hasDepth = eleDepth || eleDepth === 0
@@ -56,7 +52,6 @@ export const getFoldersConfig = (): ConfigRootFolder[] => {
               ? eleExcludeHidden
               : excludeHiddenFolders,
           depth: Number.isNaN(intEleDepth) ? depth : getIntWithinBounds(intEleDepth),
-          index: eleIndex,
           path: pathConfig.path.trim(),
         })
       }

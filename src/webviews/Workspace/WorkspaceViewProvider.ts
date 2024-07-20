@@ -422,7 +422,7 @@ export class WorkspaceViewProvider
     this.setupWebview(webviewView)
     this.updateSearch()
 
-    const cachedFiles = null // this.getCache()
+    const cachedFiles = this.getCache()
 
     if (cachedFiles) {
       store.dispatch(list(cachedFiles))

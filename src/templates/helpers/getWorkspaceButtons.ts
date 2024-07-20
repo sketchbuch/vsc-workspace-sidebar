@@ -28,7 +28,8 @@ export interface FileButton {
   key: 'new-window'
 }
 
-export type ConfigButtons = (GenericButton | FileButton)[]
+export type ConfigButton = GenericButton | FileButton
+export type ConfigButtons = ConfigButton[]
 
 interface Config {
   buttons: ConfigButtons

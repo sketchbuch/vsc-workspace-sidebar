@@ -8,14 +8,12 @@ suite('Webviews > Workspace > Store > error()', () => {
       error: '',
       result: 'is-file',
       view: 'invalid',
-      workspaceData: [],
     })
     const expectedState = getMockState({
       error: 'DEFAULT',
       errorObj: { message: 'some error' },
       result: 'ok',
       view: 'error',
-      workspaceData: [],
     })
 
     expect(state).not.to.eql(expectedState)
