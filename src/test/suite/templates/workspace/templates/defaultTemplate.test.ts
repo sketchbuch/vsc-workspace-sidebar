@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import * as sinon from 'sinon'
 import { defaultTemplate } from '../../../../../templates/workspace/templates/defaultTemplate'
-import * as content from '../../../../../templates/workspace/views/loadingView'
+import * as content from '../../../../../templates/workspace/views/listView'
 import { getMockState } from '../../../../mocks/mockState'
 import { getMockTemplateVars } from '../../../../mocks/mockTemplateVars'
 import { getMockThemeData } from '../../../../mocks/mockThemeData'
@@ -71,7 +71,7 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
     })
 
     test('Renders content', () => {
-      let contentStub = sinon.stub(content, 'loadingView').callsFake(() => 'THE_CONTENT')
+      let contentStub = sinon.stub(content, 'listView').callsFake(() => 'THE_CONTENT')
 
       const result = defaultTemplate(templateVars, state)
       expect(result).contains(`<script nonce="${templateVars.nonce}" id="ws-webview-js"`)

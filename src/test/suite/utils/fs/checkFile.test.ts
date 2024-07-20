@@ -4,7 +4,7 @@ import * as path from 'path'
 import { checkFile } from '../../../../utils/fs/checkFile'
 import { mockFsStructure } from '../../../mocks/mockFsStructure'
 
-suite('Utils > Fs > checkFile()', () => {
+suite.only('Utils > Fs > checkFile()', () => {
   suiteSetup(() => {
     mockFs(mockFsStructure)
   })
@@ -20,7 +20,7 @@ suite('Utils > Fs > checkFile()', () => {
     })
   })
 
-  test('Returned object is as expected if the file does exist and is a file', () => {
+  test.only('Returned object is as expected if the file does exist and is a file', () => {
     expect(checkFile(path.join('check-file', 'test-file.code-workspace'))).to.eql({
       isFile: true,
       isFolder: false,

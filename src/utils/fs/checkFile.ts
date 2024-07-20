@@ -11,8 +11,12 @@ export const checkFile = (file: string): CheckFile => {
     const isFolder = fileStats.isDirectory()
     const isFile = fileStats.isFile()
 
+    console.log('### success', isFolder, isFile)
+
     return { isFile, isFolder }
   } catch (error) {
+    console.log('### error', fs.statSync(file))
+
     return { isFile: false, isFolder: false }
   }
 }
