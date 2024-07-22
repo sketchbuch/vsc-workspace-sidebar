@@ -21,7 +21,7 @@ suite.skip('Utils > Fs > getFilenamesOfType()', () => {
     expect(getFilenamesOfType('folders', [], '/test', FS_WS_FILETYPE)).to.eql([])
   })
 
-  test.only('An array of folders is returned if there are folders in filenames', () => {
+  test('An array of folders is returned if there are folders in filenames', () => {
     expect(
       getFilenamesOfType(
         'folders',
