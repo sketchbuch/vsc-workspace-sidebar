@@ -48,7 +48,7 @@ export const fetchFulfilled = (
   const newRootFolders = getNewRootFolders(state.rootFolders)
   const { depth, files, folderPath, result } = rootFolder
 
-  state.rootFolders = newRootFolders.map((folder) => {
+  state.rootFolders = newRootFolders.map((folder, index) => {
     if (folder.folderPath === folderPath) {
       const folderName = getLastPathSegment(folderPath) || folderPath
       const convertedFiles = convertWsFiles(folderPath, files, state.selected)

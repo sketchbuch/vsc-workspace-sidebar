@@ -49,7 +49,7 @@ export const listContent = ({
         isClosed: false,
         isFolderError: true,
       })}
-      ${rootFolderMessage(result, depth)}
+      ${rootFolderMessage(result, depth, folderPath)}
     `
   } else if (result === 'loading') {
     return `

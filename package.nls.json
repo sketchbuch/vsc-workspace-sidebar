@@ -109,6 +109,10 @@
           "tooltip": "Recollect workspaces for '{{label}}'"
         }
       },
+      "mapError": {
+        "description": "Unable to map the folder path '{{folderPath}}' to a config root folder.",
+        "title": "Root folder mapping error"
+      },
       "nonexistent": {
         "description": "Check the path to the {{settingsLink}}.",
         "title": "The folder does not exist."

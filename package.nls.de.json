@@ -63,7 +63,6 @@
       "noWorkspaces": {
         "descriptionDepth": "Die aktuelle Suchtiefe ist 0, dass nur die Stammordner nach Arbeitsbereichsdateien durchsucht werden",
         "descriptionSettings": "Versuchen Sie, die {{settingsLinkDepth}} zu erhöhen oder die {{settingsLinkRootFolder}} Einstellungen ändern.",
-        "hasRootFolderIssues": "One or more rootFolders are overriding the depth and/or excludeHiddenFolders settings.",
         "title": "Keine Arbeitsbereiche gefunden"
       }
     },
@@ -109,6 +108,10 @@
           "ariaLabel": "Arbeitsbereiche für '{{label}}' neu einsammeln",
           "tooltip": "Arbeitsbereiche für '{{label}}' neu einsammeln"
         }
+      },
+      "mapError": {
+        "description": "Der Ordnerpfad '{{folderPath}}' kann keinem Stammordner zugeordnet werden.",
+        "title": "Fehler bei der Zuordnung des Stammordners"
       },
       "nonexistent": {
         "description": "Überprüfen Sie der Pfad zu {{settingsLink}}.",

@@ -10,6 +10,7 @@ import { listContent } from './listContent'
 export const rootPathErrors: FindFileResult[] = [
   'is-file',
   'is-hidden-excluded',
+  'map-error',
   'no-workspaces',
   'nonexistent',
 ]
