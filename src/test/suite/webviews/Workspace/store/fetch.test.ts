@@ -5,7 +5,7 @@ import * as coreConfigs from '../../../../../config/core'
 import * as foldersConfigs from '../../../../../config/folders'
 import * as treeConfigs from '../../../../../config/treeview'
 import { CONFIG_DEPTH, CONFIG_EXCLUDE_HIDDEN_FODLERS } from '../../../../../constants/config'
-import { FindAllRootFolderFiles } from '../../../../../utils/fs/findAllRootFolderFiles'
+import { FetchRootFolderFiles } from '../../../../../utils/fs/fetchRootFolderFiles'
 import {
   ConfigRootFolder,
   WorkspaceState,
@@ -104,7 +104,7 @@ suite('Webviews > Workspace > Store > fetch()', () => {
   suite('Fulfilled (Success):', () => {
     const getAction = (
       rootFolders: WorkspaceStateRootFolder[]
-    ): FetchFulfilledAction<ConfigRootFolder, FindAllRootFolderFiles> => {
+    ): FetchFulfilledAction<ConfigRootFolder, FetchRootFolderFiles> => {
       return {
         meta: { arg: rootFolder, requestId: '' },
         payload: { rootFolder: rootFolders[0] },

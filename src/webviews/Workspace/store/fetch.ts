@@ -2,10 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import * as os from 'os'
 import { getFoldersConfig } from '../../../config/folders'
 import { getShowTreeConfig } from '../../../config/treeview'
-import {
-  FindAllRootFolderFiles,
-  findAllRootFolderFiles,
-} from '../../../utils/fs/findAllRootFolderFiles'
+import { fetchRootFolderFiles, FetchRootFolderFiles } from '../../../utils/fs/fetchRootFolderFiles'
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
 import {
   ConfigRootFolder,
@@ -19,7 +16,7 @@ import { getVisibleFiles } from '../helpers/getVisibleFiles'
 import { FetchFulfilledAction, FetchPendingAction, FetchRejectedAction } from './store.interface'
 import { getItitialRootFolders } from './workspaceSlice'
 
-export const fetch = createAsyncThunk('fetch', findAllRootFolderFiles)
+export const fetch = createAsyncThunk('fetch', fetchRootFolderFiles)
 
 const getNewRootFolders = (rootFolders: WorkspaceStateRootFolder[]): WorkspaceStateRootFolder[] => {
   const configFolders = getItitialRootFolders(getFoldersConfig())
@@ -40,7 +37,7 @@ const getNewRootFolders = (rootFolders: WorkspaceStateRootFolder[]): WorkspaceSt
 
 export const fetchFulfilled = (
   state: WorkspaceState,
-  action: FetchFulfilledAction<ConfigRootFolder, FindAllRootFolderFiles>
+  action: FetchFulfilledAction<ConfigRootFolder, FetchRootFolderFiles>
 ) => {
   const {
     payload: { rootFolder },

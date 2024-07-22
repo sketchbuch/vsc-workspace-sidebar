@@ -50,6 +50,7 @@ export const getMockSearchState = (state: Partial<SearchState> = {}): SearchStat
 export const getMockState = (state: Partial<WorkspaceState> = {}): WorkspaceState => {
   return {
     ...initialState,
+    rootFolders: [],
     selected: '',
     wsType: 'ws',
     ...state,

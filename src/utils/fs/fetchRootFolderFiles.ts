@@ -6,13 +6,13 @@ import {
 } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { findRootFolderFiles } from './findRootFolderFiles'
 
-export interface FindAllRootFolderFiles {
+export interface FetchRootFolderFiles {
   rootFolder: FindRootFolderFiles
 }
 
-export const findAllRootFolderFiles = async (
+export const fetchRootFolderFiles = async (
   configFolder: ConfigRootFolder
-): Promise<FindAllRootFolderFiles> => {
+): Promise<FetchRootFolderFiles> => {
   const excludedFoldersConfig = getExcludedFoldersConfig()
   const homeDir = os.homedir()
 

@@ -5,10 +5,8 @@ export const error = (
   state: WorkspaceState,
   action: PayloadAction<WorkspaceStateErrorObj>
 ): void => {
-  const errorObj: WorkspaceStateErrorObj = action.payload ?? null
-
   state.error = 'DEFAULT'
-  state.errorObj = errorObj
+  state.errorObj = action.payload ?? null
   state.fileCount = 0
   state.result = 'ok'
   state.rootFolders = []

@@ -1,3 +1,5 @@
+// MockFS seems broken
+
 /* import { expect } from 'chai'
 import mockFs from 'mock-fs'
 import os from 'os'
