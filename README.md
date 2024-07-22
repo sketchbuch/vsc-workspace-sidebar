@@ -120,7 +120,7 @@ If you are intersted in contributing:
   expect(getPathToDev()).to.equal(myPath)
   ```
 
-- If just testing functions that do not use VSCode, you can run `mocha:compile` and then `mocha:test` to test - but if you use any part of the VSCode API (inc. ENUMs) then you will need to run the tests via the debugger.
+- If just testing functions that do not use VSCode or just using VSCode types, you can run `mocha:compile` and then `mocha:test` to test - but if you use any part of the VSCode API (**inc. ENUMs**) then you will need to run the tests via the debugger.
 
 - You can package a test version of the extension as a vsix file using the command: `vsce package`.
   - Test the VSIX on Linux, Mac, and Windows.
@@ -134,3 +134,5 @@ If you use this plugin and want to help support development, please [PayPal Me](
 ## Todo
 
 - Handle map-error
+- Tests seem to use curent rootfolder config as initialState uses it in the call to getItitialRootFolders()
+- Handle empty rootFolder or empty path
