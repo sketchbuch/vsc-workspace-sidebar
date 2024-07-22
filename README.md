@@ -134,5 +134,3 @@ If you use this plugin and want to help support development, please [PayPal Me](
 ## Todo
 
 - Handle map-error
-- Tests seem to use curent rootfolder config as initialState uses it in the call to getItitialRootFolders()
-- Handle empty rootFolder or empty path
