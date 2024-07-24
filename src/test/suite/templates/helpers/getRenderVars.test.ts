@@ -3,12 +3,10 @@ import path from 'path'
 import * as sinon from 'sinon'
 import * as coreConfigs from '../../../../config/core'
 import * as generalConfigs from '../../../../config/general'
-import * as searchConfigs from '../../../../config/search'
 import * as treeConfigs from '../../../../config/treeview'
 import {
   CONFIG_CONDENSE_FILETREE,
   CONFIG_DEPTH,
-  CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_FILE_ICONS,
   CONFIG_SHOW_FILE_ICONS_CONFIG,
   CONFIG_SHOW_HIERARCHY,
@@ -27,7 +25,6 @@ suite('Templates > Helpers > getRenderVars():', () => {
   let condenseFileTreeConfigStub: sinon.SinonStub
   let depthConfigStub: sinon.SinonStub
   let getFileIconThemeConfigStub: sinon.SinonStub
-  let searchMinConfigStub: sinon.SinonStub
   let showFileIconConfigStub: sinon.SinonStub
   let showFileiconsConfigConfigStub: sinon.SinonStub
   let showTreeConfigStub: sinon.SinonStub
@@ -43,9 +40,6 @@ suite('Templates > Helpers > getRenderVars():', () => {
     getFileIconThemeConfigStub = sinon
       .stub(coreConfigs, 'getFileiconThemeConfig')
       .callsFake(() => DEFAULT_THEME)
-    searchMinConfigStub = sinon
-      .stub(searchConfigs, 'getSearchMinConfig')
-      .callsFake(() => CONFIG_SEARCH_MINIMUM)
     showFileIconConfigStub = sinon
       .stub(generalConfigs, 'getShowFileiconConfig')
       .callsFake(() => CONFIG_SHOW_FILE_ICONS)
@@ -62,7 +56,6 @@ suite('Templates > Helpers > getRenderVars():', () => {
     condenseFileTreeConfigStub.restore()
     depthConfigStub.restore()
     getFileIconThemeConfigStub.restore()
-    searchMinConfigStub.restore()
     showFileIconConfigStub.restore()
     showFileiconsConfigConfigStub.restore()
     showTreeConfigStub.restore()
@@ -77,7 +70,6 @@ suite('Templates > Helpers > getRenderVars():', () => {
 
     expect(result.clickAction).to.eql(ConfigActions.CURRENT_WINDOW)
     expect(result.condenseFileTree).to.eql(CONFIG_CONDENSE_FILETREE)
-    expect(result.searchMinimum).to.eql(CONFIG_SEARCH_MINIMUM)
     expect(result.showTree).to.eql(CONFIG_SHOW_HIERARCHY)
   })
 

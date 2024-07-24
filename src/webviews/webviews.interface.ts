@@ -31,7 +31,6 @@ export interface RenderVars {
   imgDarkFolderUri: vscode.Uri
   imgLightFolderUri: vscode.Uri
   isExternalWs: boolean
-  searchMinimum: number
   showTree: boolean
   themeProcessorState: FileThemeProcessorState
 }

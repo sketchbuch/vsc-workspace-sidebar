@@ -83,7 +83,6 @@ This is a summary of the available configuration options. [View detailed configu
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------- | ------------ |
 | Case Insensitive | Should searching be case insensitive?                                                                                                      | false         | Boolean      |
 | Match Start      | Should searching start from the beginning of the workspace label? False means matches will be looked for anywhere within workspace labels. | false         | Boolean      |
-| Search minimum   | The minimum number of workspaces required before the search box is displayed. 0 Will always display the search box.                        | 15            | Number 0-100 |
 
 ### Tree View
 

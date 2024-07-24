@@ -162,14 +162,6 @@
       {
         "title": "%config.title.search%",
         "properties": {
-          "workspaceSidebar.searchMinimum": {
-            "default": 15,
-            "description": "%config.searchMinimum.description%",
-            "maximum": 100,
-            "minimum": 0,
-            "scope": "application",
-            "type": "number"
-          },
           "workspaceSidebar.search.caseInsensitive": {
             "default": false,
             "description": "%config.search.caseInsensitive.description%",
