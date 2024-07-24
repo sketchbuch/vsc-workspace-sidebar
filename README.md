@@ -133,4 +133,4 @@ If you use this plugin and want to help support development, please [PayPal Me](
 
 ## Todo
 
-- Handle map-error
+- Search should only be hidden when all are geting recollected.
