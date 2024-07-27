@@ -132,4 +132,5 @@ If you use this plugin and want to help support development, please [PayPal Me](
 
 ## Todo
 
-- Search should only be hidden when all are geting recollected.
+- Search should still render rootfolders
+- Search out should be per root folder
