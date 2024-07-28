@@ -132,4 +132,4 @@ If you use this plugin and want to help support development, please [PayPal Me](
 
 ## Todo
 
-- Make searched out a root folder message
+- 

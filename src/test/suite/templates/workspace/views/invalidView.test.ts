@@ -6,7 +6,7 @@ import { getMockState } from '../../../../mocks/mockState'
 
 suite('Templates > Workspace > View: invalidView()', () => {
   const results: FindFileResult[] = ['is-file', 'no-root-folders', 'no-workspaces', 'nonexistent']
-  const defaultResults: FindFileResult[] = ['ok', 'is-hidden-excluded']
+  const defaultResults: FindFileResult[] = ['ok']
   const mockRenderVars = getMockRenderVars()
 
   test('Renders the base view', () => {

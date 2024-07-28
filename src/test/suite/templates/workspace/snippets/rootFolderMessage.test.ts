@@ -5,7 +5,7 @@ import { FindFileResult } from '../../../../../webviews/Workspace/WorkspaceViewP
 
 suite('Templates > Workspace > Snippets: rootFolderMessage()', () => {
   const results: FindFileResult[] = ['is-file', 'no-workspaces', 'nonexistent', 'map-error']
-  const defaultResults: FindFileResult[] = ['ok', 'is-hidden-excluded']
+  const defaultResults: FindFileResult[] = ['ok']
 
   results.forEach((res) => {
     test(`"${res}" renders expected message`, () => {

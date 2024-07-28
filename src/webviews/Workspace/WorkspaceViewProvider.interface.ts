@@ -124,7 +124,6 @@ export type PayloadToggleFolderStateBulk = FolderState
 
 export type FindFileResult =
   | 'is-file'
-  | 'is-hidden-excluded'
   | 'loading'
   | 'map-error'
   | 'no-root-folders'
