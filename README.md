@@ -134,3 +134,4 @@ If you use this plugin and want to help support development, please [PayPal Me](
 
 - Search should still render rootfolders
 - Search out should be per root folder
+  - Remove filecount and vis count and move to ech root folder

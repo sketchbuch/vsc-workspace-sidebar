@@ -9,7 +9,7 @@ type ViewMsgDescriptionProps = {
 } & ViewMsgCommonProps
 
 type ViewMsgTitleProps = {
-  iconType?: 'error' | 'loading'
+  iconType?: 'error' | 'loading' | 'search'
   type: 'title'
 } & ViewMsgCommonProps
 
@@ -23,7 +23,7 @@ export const viewMsg = ({
 }: ViewMsgProps): string => {
   const classes = `view__message-${type}${isSmall ? ` view__message-description--tinytext` : ''}`
   const iconClasses =
-    iconType === 'loading' ? 'codicon-loading codicon-modifier-spin' : 'codicon-error'
+    iconType === 'loading' ? 'codicon-loading codicon-modifier-spin' : `codicon-${iconType}`
   const content =
     typeof message === 'string' ? message : message.length === 1 ? message[0] : message.join('\n')
 

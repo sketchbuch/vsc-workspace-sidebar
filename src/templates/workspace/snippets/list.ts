@@ -1,4 +1,3 @@
-import { t } from 'vscode-ext-localisation'
 import {
   FindFileResult,
   WorkspaceState,
@@ -16,28 +15,14 @@ export const rootPathErrors: FindFileResult[] = [
 ]
 
 export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
-  const { rootFolders, search, visibleFileCount } = state
-
-  if (search.term && visibleFileCount < 1) {
-    return `
-      <div class="list__searchedout">
-        <p>${t('workspace.list.search.noMatch')}</p>
-      </div>
-    `
-  }
-
+  const { rootFolders, search } = state
   const { showTree } = renderVars
 
   return `
     <div class="list__list-wrapper">
       ${rootFolders
         .map((rootFolder) => {
-          const { closedFolders, fileTree, folderName, result, visibleFiles } = rootFolder
-
-          if (search.term && visibleFiles.length < 1) {
-            return ''
-          }
-
+          const { closedFolders, fileTree, folderName, result } = rootFolder
           const isFileTree = showTree && fileTree !== null
           const isClosed = !search.term && closedFolders.includes(folderName)
 

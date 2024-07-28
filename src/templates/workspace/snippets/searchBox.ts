@@ -4,7 +4,6 @@ import { searchOption } from './searchOption'
 
 export const searchBox = (state: WorkspaceState): string => {
   const allLoading = state.rootFolders.every((rf) => rf.result === 'loading')
-  console.log('### allLoading', allLoading)
 
   return `
     <div class="searchBox">

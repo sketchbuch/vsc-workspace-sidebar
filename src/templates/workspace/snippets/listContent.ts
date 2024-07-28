@@ -6,6 +6,7 @@ import { RenderVars } from '../../../webviews/webviews.interface'
 import { itemFile } from './itemFile'
 import { ItemFolderProps, itemFolder } from './itemFolder'
 import { rootFolderMessage } from './rootFolderMessage'
+import { searchNoMatches } from './searchNoMatches'
 import { tree } from './tree'
 
 export type ListContentProps = {
@@ -23,8 +24,10 @@ export const listContent = ({
   rootFolder,
   state,
 }: ListContentProps): string => {
+  const { search } = state
   const { closedFolders, depth, fileTree, folderName, folderPath, result, visibleFiles } =
     rootFolder
+  const visibleFileCount = visibleFiles.length
 
   const folderProps: ItemFolderProps = {
     depth: 0,
@@ -55,6 +58,11 @@ export const listContent = ({
     return `
       ${itemFolder(folderProps)}
       ${rootFolderMessage(result, depth)}
+    `
+  } else if (search.term && visibleFileCount < 1) {
+    return `
+      ${itemFolder(folderProps)}
+      ${searchNoMatches()}
     `
   } else if (fileTree) {
     return tree({
