@@ -15,9 +15,6 @@ export const list = (
   const homeDir = os.homedir()
   const showTree = getShowTreeConfig()
 
-  let fileCount = 0
-  let visibleFileCount = 0
-
   state.rootFolders = action.payload.map(({ depth, files, folderPath }) => {
     const folderName = getLastPathSegment(folderPath) || folderPath
     const convertedFiles = convertWsFiles(folderPath, files, state.selected)
@@ -26,8 +23,6 @@ export const list = (
     const allFolders =
       showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : [folderName]
 
-    fileCount += files.length
-    visibleFileCount += visibleFiles.length
     const result = files.length < 1 ? 'no-workspaces' : 'ok'
 
     return {
@@ -47,6 +42,4 @@ export const list = (
 
   state.result = 'ok'
   state.view = 'list'
-  state.fileCount = fileCount
-  state.visibleFileCount = visibleFileCount
 }

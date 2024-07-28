@@ -51,7 +51,6 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
       const mockRootFolders = getMockRootFolders({
         showTree: false,
       })
-      mockRootFolders.visibleFileCount = 0
       mockRootFolders.rootFolders[0].visibleFiles = []
       const mockExpectedRootFolders = getMockRootFolders({
         showTree: false,
@@ -80,7 +79,6 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
         fileTreeType: 'normal',
         showTree: true,
       })
-      mockRootFolders.visibleFileCount = 0
       mockRootFolders.rootFolders[0].visibleFiles = []
       const mockExpectedRootFolders = getMockRootFolders({
         fileTreeType: 'normal',
@@ -108,7 +106,6 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
         fileTreeType: 'condensed',
         showTree: true,
       })
-      mockRootFolders.visibleFileCount = 0
       mockRootFolders.rootFolders[0].visibleFiles = []
       const mockExpectedRootFolders = getMockRootFolders({
         fileTreeType: 'condensed',
@@ -136,7 +133,6 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
         fileTreeType: 'compacted',
         showTree: true,
       })
-      mockRootFolders.visibleFileCount = 0
       mockRootFolders.rootFolders[0].visibleFiles = []
       const mockExpectedRootFolders = getMockRootFolders({
         fileTreeType: 'compacted',
@@ -164,7 +160,6 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
         fileTreeType: 'compacted-condensed',
         showTree: true,
       })
-      mockRootFolders.visibleFileCount = 0
       mockRootFolders.rootFolders[0].visibleFiles = []
       const mockExpectedRootFolders = getMockRootFolders({
         fileTreeType: 'compacted-condensed',

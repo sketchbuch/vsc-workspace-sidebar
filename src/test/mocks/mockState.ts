@@ -18,7 +18,7 @@ import {
   ROOT_FOLDER_PATH,
 } from './mockFileData'
 
-type GetMockRootFolders = Pick<WorkspaceState, 'fileCount' | 'rootFolders' | 'visibleFileCount'>
+type GetMockRootFolders = Pick<WorkspaceState, 'rootFolders'>
 
 type GetMockRootFoldersConfig = {
   closedFolders: string[]
@@ -64,17 +64,12 @@ export const getMockRootFolders = (
     ...defaultGetMockRootFoldersConfig,
     ...config,
   }
-  let fileCount = 0
-  let visibleFileCount = 0
 
   const rootFolders = rootFoldersFiles.map(({ files, folderPath, result }) => {
     const convertedFiles = getMockConvertedFiles()
     const visibleFiles = getMockVisibleFiles(searchTerm, !showTree)
     const fileTree = showTree ? getMockFileTree(fileTreeType) : null
     const allFolders: string[] = showTree ? getMockFolderList(fileTreeType) : [ROOT_FOLDER]
-
-    fileCount += files.length
-    visibleFileCount += visibleFiles.length
 
     return {
       allFolders,
@@ -92,8 +87,6 @@ export const getMockRootFolders = (
   })
 
   return {
-    fileCount,
     rootFolders,
-    visibleFileCount,
   }
 }

@@ -12,11 +12,9 @@ suite('Webviews > Workspace > Store > error()', () => {
     const expectedState = getMockState({
       error: 'DEFAULT',
       errorObj: { message: 'some error' },
-      fileCount: 0,
       result: 'ok',
       rootFolders: [],
       view: 'error',
-      visibleFileCount: 0,
     })
 
     expect(state).not.to.eql(expectedState)

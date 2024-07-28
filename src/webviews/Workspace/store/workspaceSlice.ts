@@ -57,13 +57,11 @@ export const getItitialRootFolders = (
 export const initialState: WorkspaceState = {
   error: '',
   errorObj: null,
-  fileCount: 0,
   result: 'ok',
   rootFolders: getItitialRootFolders(getFoldersConfig()),
   search: { ...initialSearchState },
   selected: !!vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile.fsPath : '',
   view: 'loading',
-  visibleFileCount: 0,
   wsType: getWsType(vscode.workspace.workspaceFile, vscode.workspace.workspaceFolders),
 }
 

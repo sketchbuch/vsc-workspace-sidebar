@@ -34,6 +34,7 @@ import {
   WorkspaceRootFolderMachineCache,
   WorkspaceState,
 } from './WorkspaceViewProvider.interface'
+import { getFolderCounts } from './helpers/getFolderCounts'
 import { getNewRootFolderConfig } from './helpers/getNewRootFolderConfig'
 import { fetch } from './store/fetch'
 import { workspaceSlice } from './store/workspaceSlice'
@@ -146,19 +147,23 @@ export class WorkspaceViewProvider
     return this._ctx.globalState.update(EXT_WSSTATE_CACHE, { caches: [{ ...data }] })
   }
 
-  private getViewTitle({ fileCount, search, view, visibleFileCount }: WorkspaceState) {
+  private getViewTitle({ search, rootFolders, view }: WorkspaceState) {
     let viewTitle = t('views.title')
 
-    if (view === 'list' && fileCount > 0) {
-      const titleKey = search.term
-        ? 'workspace.list.titleCount.searched'
-        : 'workspace.list.titleCount.default'
-      const placeholders = {
-        matches: visibleFileCount.toString(),
-        total: fileCount.toString(),
-      }
+    if (view === 'list') {
+      const { fileCount, visibleFileCount } = getFolderCounts(rootFolders, ['loading'])
 
-      viewTitle = t(titleKey, placeholders)
+      if (fileCount > 0) {
+        const titleKey = search.term
+          ? 'workspace.list.titleCount.searched'
+          : 'workspace.list.titleCount.default'
+        const placeholders = {
+          matches: visibleFileCount.toString(),
+          total: fileCount.toString(),
+        }
+
+        viewTitle = t(titleKey, placeholders)
+      }
     }
 
     return viewTitle
@@ -355,10 +360,12 @@ export class WorkspaceViewProvider
   }
 
   private async updateCache(newState: WorkspaceState) {
-    const { fileCount, rootFolders, view } = newState
+    const { rootFolders, view } = newState
 
     switch (view) {
       case 'list':
+        const { fileCount } = getFolderCounts(rootFolders)
+
         if (fileCount) {
           const reducedRootFolders = rootFolders.reduce<WorkspaceCacheRootFolders>(
             (allRoots, curRoot) => {
@@ -384,6 +391,7 @@ export class WorkspaceViewProvider
             version: this._version,
           })
         }
+
         break
 
       default:

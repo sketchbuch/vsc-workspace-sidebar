@@ -152,11 +152,6 @@ export type WorkspaceState = {
   errorObj: WorkspaceStateErrorObj
 
   /**
-   * The total number of workspace files for all root folders.
-   */
-  fileCount: number
-
-  /**
    * The result of the file collection for all root folders.
    */
   result: FindFileResult
@@ -180,11 +175,6 @@ export type WorkspaceState = {
    * The current view the state is in.
    */
   view: WorkspaceView
-
-  /**
-   * The total number of visible workspace files for all root folders.
-   */
-  visibleFileCount: number
 
   /**
    * The type of workspace that is currently open.

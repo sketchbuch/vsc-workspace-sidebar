@@ -7,9 +7,7 @@ export const error = (
 ): void => {
   state.error = 'DEFAULT'
   state.errorObj = action.payload ?? null
-  state.fileCount = 0
   state.result = 'ok'
   state.rootFolders = []
   state.view = 'error'
-  state.visibleFileCount = 0
 }

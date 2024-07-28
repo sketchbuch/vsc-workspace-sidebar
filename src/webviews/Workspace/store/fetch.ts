@@ -75,30 +75,17 @@ export const fetchFulfilled = (
     return folder
   })
 
-  state.fileCount = 0
   state.result = rootFolder.result
   state.view = 'list'
-  state.visibleFileCount = 0
-
-  state.rootFolders.forEach(({ files, visibleFiles }) => {
-    state.visibleFileCount += visibleFiles.length
-    state.fileCount += files.length
-  })
 }
 
 export const fetchPending = (
   state: WorkspaceState,
   action: FetchPendingAction<ConfigRootFolder>
 ) => {
-  state.visibleFileCount = 0
-  state.fileCount = 0
-
   state.rootFolders = state.rootFolders.map((rootFolder) => {
     if (rootFolder.folderPathShort === action.meta.arg.path) {
       rootFolder.result = 'loading'
-    } else {
-      state.visibleFileCount += rootFolder.visibleFiles.length
-      state.fileCount += rootFolder.files.length
     }
 
     return rootFolder
