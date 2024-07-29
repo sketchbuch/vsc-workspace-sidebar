@@ -1,5 +1,6 @@
 import * as vscode from 'vscode'
 import { CssData, FileThemeProcessorState, GetThemeData } from 'vscode-file-theme-processor'
+import { WorkbenchConfig } from '../config/core'
 import { ConfigActions } from '../constants/config'
 
 export interface PostMessage<Payload, Actions> {
@@ -33,6 +34,7 @@ export interface RenderVars {
   isExternalWs: boolean
   showTree: boolean
   themeProcessorState: FileThemeProcessorState
+  treeConfig: WorkbenchConfig
 }
 
 export interface TemplateVars {

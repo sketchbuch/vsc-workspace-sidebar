@@ -13,13 +13,13 @@ import { convertWsFiles } from '../helpers/convertWsFiles'
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree'
 import { getFileTree } from '../helpers/getFileTree'
 import { getVisibleFiles } from '../helpers/getVisibleFiles'
+import { getInitialRootFolders } from './initialStates'
 import { FetchFulfilledAction, FetchPendingAction, FetchRejectedAction } from './store.interface'
-import { getItitialRootFolders } from './workspaceSlice'
 
 export const fetch = createAsyncThunk('fetch', fetchRootFolderFiles)
 
 const getNewRootFolders = (rootFolders: WorkspaceStateRootFolder[]): WorkspaceStateRootFolder[] => {
-  const configFolders = getItitialRootFolders(getFoldersConfig())
+  const configFolders = getInitialRootFolders(getFoldersConfig())
   const newRootFolders: WorkspaceStateRootFolder[] = []
 
   configFolders.forEach((element) => {

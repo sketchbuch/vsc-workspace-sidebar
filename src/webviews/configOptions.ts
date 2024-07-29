@@ -1,12 +1,25 @@
-export interface ConfigOption {
+export type ConfigOption = {
   config: string
-  type: 'search' | 'refresh' | 'rerender' | 'tree' | 'visible-files'
+  type: ConfigOptionType
 }
+
+export type ConfigOptionType = 'search' | 'refresh' | 'rerender' | 'tree' | 'visible-files'
 
 export type ConfigOptions = ConfigOption[]
 
 export const WS_CONFIG = 'workspaceSidebar'
 export const EXPLORER_CONFIG = 'explorer'
+export const WORKBENCH_CONFIG = 'workbench'
+
+export const explorerConfigOptions: ConfigOptions = [
+  { config: `${EXPLORER_CONFIG}.compactFolders`, type: 'tree' },
+]
+
+export const workbenchConfigOptions: ConfigOptions = [
+  { config: `${WORKBENCH_CONFIG}.tree.expandMode`, type: 'rerender' },
+  { config: `${WORKBENCH_CONFIG}.tree.indent`, type: 'rerender' },
+  { config: `${WORKBENCH_CONFIG}.tree.renderIndentGuides`, type: 'rerender' },
+]
 
 export const refreshConfigOptions: ConfigOptions = [
   { config: `${WS_CONFIG}.depth`, type: 'refresh' },
