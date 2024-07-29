@@ -5,7 +5,6 @@ import {
   getShowFileiconConfig,
   getShowFileiconsConfigConfig,
 } from '../../config/general'
-import { getSearchMinConfig } from '../../config/search'
 import { getCondenseFileTreeConfig, getShowTreeConfig } from '../../config/treeview'
 import { WorkspaceState } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { FileIconKeys, RenderVars, TemplateVars } from '../../webviews/webviews.interface'
@@ -68,7 +67,6 @@ export const getRenderVars = (
     isExternalWs: isExternalWs(state),
     imgDarkFolderUri,
     imgLightFolderUri,
-    searchMinimum: getSearchMinConfig(),
     showTree: getShowTreeConfig(),
     themeProcessorState: themeData?.state ?? 'idle',
   }

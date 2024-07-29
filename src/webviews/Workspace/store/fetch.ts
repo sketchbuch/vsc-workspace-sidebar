@@ -1,67 +1,61 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import * as os from 'os'
+import { getFoldersConfig } from '../../../config/folders'
 import { getShowTreeConfig } from '../../../config/treeview'
-import {
-  FindAllRootFolderFiles,
-  findAllRootFolderFiles,
-} from '../../../utils/fs/findAllRootFolderFiles'
+import { fetchRootFolderFiles, FetchRootFolderFiles } from '../../../utils/fs/fetchRootFolderFiles'
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
 import {
-  ActionMetaFulfilled,
-  ActionMetaRejected,
-  FindRootFolderFiles,
+  ConfigRootFolder,
   WorkspaceState,
-  WorkspaceThunkAction,
-  WorkspaceThunkErrorAction,
+  WorkspaceStateRootFolder,
 } from '../WorkspaceViewProvider.interface'
 import { convertWsFiles } from '../helpers/convertWsFiles'
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree'
 import { getFileTree } from '../helpers/getFileTree'
 import { getVisibleFiles } from '../helpers/getVisibleFiles'
+import { FetchFulfilledAction, FetchPendingAction, FetchRejectedAction } from './store.interface'
+import { getItitialRootFolders } from './workspaceSlice'
 
-export const fetch = createAsyncThunk('fetch', findAllRootFolderFiles)
+export const fetch = createAsyncThunk('fetch', fetchRootFolderFiles)
+
+const getNewRootFolders = (rootFolders: WorkspaceStateRootFolder[]): WorkspaceStateRootFolder[] => {
+  const configFolders = getItitialRootFolders(getFoldersConfig())
+  const newRootFolders: WorkspaceStateRootFolder[] = []
+
+  configFolders.forEach((element) => {
+    const match = rootFolders.find((f) => f.folderPath === element.folderPath)
+
+    if (match) {
+      newRootFolders.push(match)
+    } else {
+      newRootFolders.push({ ...element, result: 'map-error' })
+    }
+  })
+
+  return newRootFolders
+}
 
 export const fetchFulfilled = (
   state: WorkspaceState,
-  action: WorkspaceThunkAction<FindAllRootFolderFiles, ActionMetaFulfilled>
+  action: FetchFulfilledAction<ConfigRootFolder, FetchRootFolderFiles>
 ) => {
-  console.log('### fetchFulfilled')
-  if (action.payload.result !== 'ok') {
-    state.fileCount = 0
-    state.result = action.payload.result
-    state.rootFolders = []
-    state.view = 'invalid'
-    state.visibleFileCount = 0
-    state.workspaceData = action.payload.rootFolders
-  } else {
-    const homeDir = os.homedir()
-    const showTree = getShowTreeConfig()
+  const {
+    payload: { rootFolder },
+  } = action
 
-    const workspaceData: FindRootFolderFiles[] = []
-    let fileCount = 0
-    let visibleFileCount = 0
+  const homeDir = os.homedir()
+  const showTree = getShowTreeConfig()
+  const newRootFolders = getNewRootFolders(state.rootFolders)
+  const { depth, files, folderPath, result } = rootFolder
 
-    state.result = 'ok'
-    state.view = 'list'
-    state.workspaceData = []
-
-    state.rootFolders = action.payload.rootFolders.map(({ depth, files, folderPath, result }) => {
+  state.rootFolders = newRootFolders.map((folder, index) => {
+    if (folder.folderPath === folderPath) {
       const folderName = getLastPathSegment(folderPath) || folderPath
       const convertedFiles = convertWsFiles(folderPath, files, state.selected)
       const visibleFiles = getVisibleFiles(convertedFiles, state.search)
       const fileTree = showTree ? getFileTree(folderPath, visibleFiles) : null
       const allFolders =
         showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : [folderName]
-
-      fileCount += files.length
-      visibleFileCount += visibleFiles.length
-
-      workspaceData.push({
-        depth,
-        files,
-        folderPath,
-        result,
-      })
 
       return {
         allFolders,
@@ -76,27 +70,35 @@ export const fetchFulfilled = (
         result,
         visibleFiles,
       }
-    })
+    }
 
-    state.fileCount = fileCount
-    state.visibleFileCount = visibleFileCount
-    state.workspaceData = workspaceData
-  }
+    return folder
+  })
+
+  state.result = rootFolder.result
+  state.view = 'list'
 }
 
-export const fetchPending = (state: WorkspaceState) => {
-  console.log('### fetchPending')
+export const fetchPending = (
+  state: WorkspaceState,
+  action: FetchPendingAction<ConfigRootFolder>
+) => {
+  state.rootFolders = state.rootFolders.map((rootFolder) => {
+    if (rootFolder.folderPathShort === action.meta.arg.path) {
+      rootFolder.result = 'loading'
+    }
 
-  state.view = 'loading'
+    return rootFolder
+  })
+
+  state.view = 'list'
   state.result = 'ok'
-  state.workspaceData = []
 }
 
 export const fetchRejected = (
   state: WorkspaceState,
-  action: WorkspaceThunkErrorAction<unknown, ActionMetaRejected>
+  action: FetchRejectedAction<ConfigRootFolder>
 ) => {
-  console.log('### fetchRejected')
   state.error = 'FETCH'
   state.errorObj = action.error ?? null
   state.view = 'error'

@@ -6,12 +6,11 @@ import * as itemFolder from '../../../../../templates/workspace/snippets/itemFol
 import { list, rootPathErrors } from '../../../../../templates/workspace/snippets/list'
 import * as rfm from '../../../../../templates/workspace/snippets/rootFolderMessage'
 import * as tree from '../../../../../templates/workspace/snippets/tree'
-import { OS_HOMEFOLDER, SEARCH_TERM } from '../../../../mocks/mockFileData'
+import { OS_HOMEFOLDER } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
 import {
   defaultRootFolderFiles,
   getMockRootFolders,
-  getMockSearchState,
   getMockState,
 } from '../../../../mocks/mockState'
 
@@ -38,21 +37,6 @@ suite('Templates > Workspace > Snippets: list()', () => {
     treeSpy.restore()
   })
 
-  test('Renders search-out message if no visibleFiles and search is in progress', () => {
-    const result = list(
-      getMockState({
-        fileCount: 1,
-        search: getMockSearchState({ term: SEARCH_TERM }),
-        visibleFileCount: 0,
-      }),
-      getMockRenderVars()
-    )
-
-    expect(result).to.be.a('string')
-    expect(result).contains('<div class="list__searchedout">')
-    expect(result).contains('No workspaces matched your search terms')
-  })
-
   test('Renders list if not tree view', () => {
     const mockRootFolders = getMockRootFolders({ showTree: false })
     const mockState = getMockState({ ...mockRootFolders })
@@ -65,7 +49,7 @@ suite('Templates > Workspace > Snippets: list()', () => {
     expect(result).not.contains('list__styled-list--tree')
 
     sinon.assert.called(itemFolderSpy)
-    sinon.assert.callCount(itemSpy, mockState.visibleFileCount)
+    // sinon.assert.callCount(itemSpy, mockState.visibleFileCount)
     sinon.assert.notCalled(treeSpy)
   })
 

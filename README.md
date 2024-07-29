@@ -83,7 +83,6 @@ This is a summary of the available configuration options. [View detailed configu
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------- | ------------ |
 | Case Insensitive | Should searching be case insensitive?                                                                                                      | false         | Boolean      |
 | Match Start      | Should searching start from the beginning of the workspace label? False means matches will be looked for anywhere within workspace labels. | false         | Boolean      |
-| Search minimum   | The minimum number of workspaces required before the search box is displayed. 0 Will always display the search box.                        | 15            | Number 0-100 |
 
 ### Tree View
 
@@ -120,7 +119,7 @@ If you are intersted in contributing:
   expect(getPathToDev()).to.equal(myPath)
   ```
 
-- If just testing functions that do not use VSCode, you can run `mocha:compile` and then `mocha:test` to test - but if you use any part of the VSCode API (inc. ENUMs) then you will need to run the tests via the debugger.
+- If just testing functions that do not use VSCode or just using VSCode types, you can run `mocha:compile` and then `mocha:test` to test - but if you use any part of the VSCode API (**inc. ENUMs**) then you will need to run the tests via the debugger.
 
 - You can package a test version of the extension as a vsix file using the command: `vsce package`.
   - Test the VSIX on Linux, Mac, and Windows.
@@ -133,4 +132,4 @@ If you use this plugin and want to help support development, please [PayPal Me](
 
 ## Todo
 
-- If folder is compacted, why condense it?
+- 

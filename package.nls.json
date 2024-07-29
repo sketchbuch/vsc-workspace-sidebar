@@ -13,7 +13,6 @@
   "config.rootFolders.markdownDescription": "The folders to look in for workspace files.\n\nExample: ```[\n{ \"path\": \"/home/user/dev\", \"excludeHiddenFolders\": false},\n{ \"path\": \"/home/user/projects\", \"depth\": 2}\n]```\n\nExample (Windows): ```[\n{ \"path\": \"C:\\Users\\User\\Apps\", \"excludeHiddenFolders\": false},\n{ \"path\": \"Z:\\VM Dev\\vsc\", \"depth\": 2}\n]```\n\n- **path** *string* (required): The absolute path to the folder, there is no variable replacement, but '~/' can be used instead of '/home/user' on Mac and Linux.\n\n- **depth** *int* (optional): Overrides and functions like `#workspaceSidebar.depth#`.\n\n- **excludeHiddenFolders** *boolean* (optional): Overrides and functions like `#workspaceSidebar.excludeHiddenFolders#`.\n\n[See the documentation for more information](https://github.com/sketchbuch/vsc-workspace-sidebar/blob/master/docs/Configuration.md#root-folders).",
   "config.search.caseInsensitive.description": "Case insensitive search",
   "config.search.matchStart.description": "Search from the beginning of workspace name",
-  "config.searchMinimum.description": "The minimum number of workspace files required for the search box to be displayed. 0 will always show the search box. Range: 0-100",
   "config.showFileIcons.markdownDescription": "*EXPERIMENTAL FEATURE*. Show file icons next to workspaces, matching is mostly automatic, but can be configured. [See the documentation for more information](https://github.com/sketchbuch/vsc-workspace-sidebar/blob/master/docs/File%20Icon%20Themes.md).",
   "config.showFileIconsConfig.markdownDescription": "*EXPERIMENTAL FEATURE*. Custom matching config for icons. [See the documentation for more information](https://github.com/sketchbuch/vsc-workspace-sidebar/blob/master/docs/Configuration.md#show-file-icons-config).\n\nExample: ```{ \"react\": [\"rjs\"], \"ts\": [\"vsc\", \"vscode\", \"electron\", \"todo\"], \"typescript\": [\"ts\", \"vsc\", \"vscode\"], \"yaml\": [\"ansible\"], \"yml\": [\"ansible\"] }```",
   "config.showFolderHierarchy.description": "Show file tree instead of a flat list.",
@@ -26,7 +25,7 @@
   "config.title.treeview": "Tree View",
   "ext.cmd.wsList.collapse-all": "Collapse folders",
   "ext.cmd.wsList.expand-all": "Expand folders",
-  "ext.cmd.wsList.refresh": "Re-collect Workspaces",
+  "ext.cmd.wsList.refresh": "Recollect all Workspaces",
   "ext.cmd.wsListItem.checkSettings": "Check the extension settings",
   "ext.cmd.wsListItem.open.curWindow": "Open in this window",
   "ext.cmd.wsListItem.open.newWindow": "Open in a new window",
@@ -103,7 +102,15 @@
         "openFilemanager": {
           "ariaLabel": "Open folder containing '{{label}}' in your file manager",
           "tooltip": "Open folder containing '{{label}}' in your file manager"
+        },
+        "refreshRootfolder": {
+          "ariaLabel": "Recollect workspaces for '{{label}}'",
+          "tooltip": "Recollect workspaces for '{{label}}'"
         }
+      },
+      "mapError": {
+        "description": "Unable to map the folder path '{{folderPath}}' to a config root folder.",
+        "title": "Root folder mapping error"
       },
       "nonexistent": {
         "description": "Check the path to the {{settingsLink}}.",

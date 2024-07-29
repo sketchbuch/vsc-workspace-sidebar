@@ -8,6 +8,7 @@ import {
   FileThemeProcessorObserver,
   FileThemeProcessorState,
 } from 'vscode-file-theme-processor'
+import { getFoldersConfig } from '../../config/folders'
 import { getActionsConfig } from '../../config/general'
 import { getSearchCaseInsensitiveConfig, getSearchMatchStartConfig } from '../../config/search'
 import {
@@ -33,6 +34,7 @@ import {
   WorkspaceRootFolderMachineCache,
   WorkspaceState,
 } from './WorkspaceViewProvider.interface'
+import { getFolderCounts } from './helpers/getFolderCounts'
 import { getNewRootFolderConfig } from './helpers/getNewRootFolderConfig'
 import { fetch } from './store/fetch'
 import { workspaceSlice } from './store/workspaceSlice'
@@ -86,8 +88,12 @@ export class WorkspaceViewProvider
     await vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
     await this._ctx.globalState.update(EXT_WSSTATE_CACHE, newCacheData)
 
-    store.dispatch(fetch()).then(() => {
-      this.updateCache(store.getState().ws)
+    const configFolders = getFoldersConfig()
+
+    configFolders.forEach((folder) => {
+      store.dispatch(fetch(folder)).then(() => {
+        this.updateCache(store.getState().ws)
+      })
     })
   }
 
@@ -141,19 +147,23 @@ export class WorkspaceViewProvider
     return this._ctx.globalState.update(EXT_WSSTATE_CACHE, { caches: [{ ...data }] })
   }
 
-  private getViewTitle({ fileCount, search, view, visibleFileCount }: WorkspaceState) {
+  private getViewTitle({ search, rootFolders, view }: WorkspaceState) {
     let viewTitle = t('views.title')
 
-    if (view === 'list' && fileCount > 0) {
-      const titleKey = search.term
-        ? 'workspace.list.titleCount.searched'
-        : 'workspace.list.titleCount.default'
-      const placeholders = {
-        matches: visibleFileCount.toString(),
-        total: fileCount.toString(),
-      }
+    if (view === 'list') {
+      const { fileCount, visibleFileCount } = getFolderCounts(rootFolders, ['loading'])
 
-      viewTitle = t(titleKey, placeholders)
+      if (fileCount > 0) {
+        const titleKey = search.term
+          ? 'workspace.list.titleCount.searched'
+          : 'workspace.list.titleCount.default'
+        const placeholders = {
+          matches: visibleFileCount.toString(),
+          total: fileCount.toString(),
+        }
+
+        viewTitle = t(titleKey, placeholders)
+      }
     }
 
     return viewTitle
@@ -162,11 +172,6 @@ export class WorkspaceViewProvider
   private render() {
     if (this._view !== undefined) {
       const state = store.getState().ws
-
-      console.log('### view', state.view)
-      console.log('### rootFolders', state.rootFolders)
-      console.log('### ========================')
-
       const themeData = state.view === 'list' ? this._fileThemeProcessor.getThemeData() : null
       let cssData: CssData | null = null
 
@@ -245,6 +250,23 @@ export class WorkspaceViewProvider
         case Actions.ICON_CLICK_FILEMANAGER:
           if (payload) {
             await executeCommand('revealFileInOS', vscode.Uri.file(payload))
+          }
+          break
+
+        case Actions.ICON_CLICK_REFRESH:
+          if (payload) {
+            const configFolders = getFoldersConfig()
+            const folder = configFolders.find((folder) => folder.path === payload)
+
+            if (folder) {
+              store.dispatch(fetch(folder)).then(() => {
+                this.updateCache(store.getState().ws)
+              })
+            } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
+              vscode.window.showErrorMessage(
+                `Unable to refresh rootfolder workspace. No match found for "${payload}"`
+              )
+            }
           }
           break
 
@@ -338,10 +360,12 @@ export class WorkspaceViewProvider
   }
 
   private async updateCache(newState: WorkspaceState) {
-    const { fileCount, rootFolders, view } = newState
+    const { rootFolders, view } = newState
 
     switch (view) {
       case 'list':
+        const { fileCount } = getFolderCounts(rootFolders)
+
         if (fileCount) {
           const reducedRootFolders = rootFolders.reduce<WorkspaceCacheRootFolders>(
             (allRoots, curRoot) => {
@@ -367,6 +391,7 @@ export class WorkspaceViewProvider
             version: this._version,
           })
         }
+
         break
 
       default:
@@ -405,13 +430,17 @@ export class WorkspaceViewProvider
     this.setupWebview(webviewView)
     this.updateSearch()
 
-    const cachedFiles = null // this.getCache()
+    const cachedFiles = this.getCache()
 
     if (cachedFiles) {
       store.dispatch(list(cachedFiles))
     } else {
-      store.dispatch(fetch()).then(() => {
-        this.updateCache(store.getState().ws)
+      const configFolders = getFoldersConfig()
+
+      configFolders.forEach((folder) => {
+        store.dispatch(fetch(folder)).then(() => {
+          this.updateCache(store.getState().ws)
+        })
       })
     }
   }
@@ -423,15 +452,6 @@ export class WorkspaceViewProvider
   public updateFileTree() {
     store.dispatch(setFileTree())
   }
-
-  /* public updateRootFolders() {
-    store.dispatch(
-      setRootFolders({
-        caseInsensitive: getSearchCaseInsensitiveConfig(),
-        matchStart: getSearchMatchStartConfig(),
-      })
-    )
-  } */
 
   public updateSearch() {
     store.dispatch(

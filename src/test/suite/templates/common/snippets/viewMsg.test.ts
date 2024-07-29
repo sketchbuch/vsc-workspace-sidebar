@@ -39,6 +39,11 @@ suite('Templates > Common > Snippets: viewMsg()', () => {
     expect(result).contains('"view__message-icon codicon codicon-error"')
   })
 
+  test('iconType "search" shows the correct icon', () => {
+    const result = viewMsg({ iconType: 'search', message, type: 'title' })
+    expect(result).contains('"view__message-icon codicon codicon-search"')
+  })
+
   test('iconType "loading" shows the correct icon', () => {
     const result = viewMsg({ iconType: 'loading', message, type: 'title' })
     expect(result).contains('"view__message-icon codicon codicon-loading codicon-modifier-spin"')

@@ -19,7 +19,6 @@ export const refreshConfigOptions: ConfigOptions = [
 export const rerenderConfigOptions: ConfigOptions = [
   { config: `${WS_CONFIG}.actions`, type: 'rerender' },
   { config: `${WS_CONFIG}.cleanLabels`, type: 'rerender' },
-  { config: `${WS_CONFIG}.searchMinimum`, type: 'rerender' },
   { config: `${WS_CONFIG}.showFileIcons`, type: 'rerender' },
   { config: `${WS_CONFIG}.showFileIconsConfig`, type: 'rerender' },
 ]

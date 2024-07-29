@@ -26,6 +26,8 @@ export const getRawFoldersConfig = (): ConfigRootFolderSettings[] => {
   return rootFolders
 }
 
+const leadingAndTrailingWhiteSpaceRegex = /^\s+|\s+$/g
+
 export const getFoldersConfig = (): ConfigRootFolder[] => {
   const depth = getDepthConfig()
   const excludeHiddenFolders = getExcludeHiddenFoldersConfig()
@@ -35,25 +37,33 @@ export const getFoldersConfig = (): ConfigRootFolder[] => {
 
   if (rootFolders.length > 0) {
     const uniqueFolderPaths = new Set<string>()
-    rootFolders.forEach((ele) => uniqueFolderPaths.add(ele.path))
+    rootFolders.forEach((ele) => {
+      if (ele.path) {
+        uniqueFolderPaths.add(ele.path)
+      }
+    })
 
     for (const path of uniqueFolderPaths) {
       const pathConfig = rootFolders.find((rootFolder) => rootFolder.path === path)
 
       if (pathConfig) {
-        const eleDepth = pathConfig.depth
-        const eleExcludeHidden = pathConfig.excludeHiddenFolders
-        const hasDepth = eleDepth || eleDepth === 0
-        const intEleDepth = hasDepth ? parseInt(eleDepth.toString()) : depth
+        const cleanedPath = pathConfig.path.replace(leadingAndTrailingWhiteSpaceRegex, '')
 
-        folders.push({
-          excludeHiddenFolders:
-            eleExcludeHidden === Boolean(eleExcludeHidden)
-              ? eleExcludeHidden
-              : excludeHiddenFolders,
-          depth: Number.isNaN(intEleDepth) ? depth : getIntWithinBounds(intEleDepth),
-          path: pathConfig.path.trim(),
-        })
+        if (cleanedPath) {
+          const eleDepth = pathConfig.depth
+          const eleExcludeHidden = pathConfig.excludeHiddenFolders
+          const hasDepth = eleDepth || eleDepth === 0
+          const intEleDepth = hasDepth ? parseInt(eleDepth.toString()) : depth
+
+          folders.push({
+            excludeHiddenFolders:
+              eleExcludeHidden === Boolean(eleExcludeHidden)
+                ? eleExcludeHidden
+                : excludeHiddenFolders,
+            depth: Number.isNaN(intEleDepth) ? depth : getIntWithinBounds(intEleDepth),
+            path: cleanedPath,
+          })
+        }
       }
     }
   }

@@ -18,7 +18,7 @@ export type WorkspaceButtons = WorkspaceButton[]
 export interface GenericButton {
   codicon?: string
   file: string
-  key: 'open-filemanager'
+  key: 'open-filemanager' | 'refresh-rootfolder'
   label: string
 }
 
@@ -28,7 +28,8 @@ export interface FileButton {
   key: 'new-window'
 }
 
-export type ConfigButtons = (GenericButton | FileButton)[]
+export type ConfigButton = GenericButton | FileButton
+export type ConfigButtons = ConfigButton[]
 
 interface Config {
   buttons: ConfigButtons

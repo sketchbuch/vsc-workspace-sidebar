@@ -47,7 +47,6 @@ suite('Webviews > Workspace > Store > toggleFolderStateBulk()', () => {
       fileTreeType: 'normal',
       showTree: true,
     })
-    mockRootFolders.visibleFileCount = 0
 
     const state = getMockState({ ...mockRootFolders })
     const expectedState = getMockState({ ...mockRootFolders })
@@ -117,24 +116,6 @@ suite('Webviews > Workspace > Store > toggleFolderStateBulk()', () => {
       toggleFolderStateBulk(state, { payload: 'expand', type: 'ws/toggleFolderStateBulk' })
       expect(state).to.eql(expectedState)
     })
-
-    test('Does nothing if there are no visibleFiles', () => {
-      const mockRootFolders = getMockRootFolders({
-        closedFolders: closedFoldersAllSub,
-        fileTreeType: 'normal',
-        showTree: true,
-      })
-      mockRootFolders.rootFolders[0].visibleFiles = []
-
-      const state = getMockState({ ...mockRootFolders })
-      state.visibleFileCount = 0
-      const expectedState = getMockState({ ...mockRootFolders })
-      expectedState.visibleFileCount = 0
-
-      expect(state).to.eql(expectedState)
-      toggleFolderStateBulk(state, { payload: 'expand', type: 'ws/toggleFolderStateBulk' })
-      expect(state).to.eql(expectedState)
-    })
   })
 
   suite('Collapse:', () => {
@@ -194,23 +175,6 @@ suite('Webviews > Workspace > Store > toggleFolderStateBulk()', () => {
       const expectedState = getMockState({ ...mockExpectedRootFolders })
 
       expect(state).not.to.eql(expectedState)
-      toggleFolderStateBulk(state, { payload: 'collapse', type: 'ws/toggleFolderStateBulk' })
-      expect(state).to.eql(expectedState)
-    })
-
-    test('Does nothing if there are no visibleFiles', () => {
-      const mockRootFolders = getMockRootFolders({
-        fileTreeType: 'normal',
-        showTree: true,
-      })
-      mockRootFolders.rootFolders[0].visibleFiles = []
-
-      const state = getMockState({ ...mockRootFolders })
-      state.visibleFileCount = 0
-      const expectedState = getMockState({ ...mockRootFolders })
-      expectedState.visibleFileCount = 0
-
-      expect(state).to.eql(expectedState)
       toggleFolderStateBulk(state, { payload: 'collapse', type: 'ws/toggleFolderStateBulk' })
       expect(state).to.eql(expectedState)
     })

@@ -1,3 +1,4 @@
+import { isSelected } from '../../utils/fs/isSelected'
 import { WorkspaceState } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 
 export const isExternalWs = (state: WorkspaceState): boolean => {
@@ -12,7 +13,7 @@ export const isExternalWs = (state: WorkspaceState): boolean => {
       for (let cf = 0; cf < rootFolder.convertedFiles.length; cf++) {
         const { file } = rootFolder.convertedFiles[cf]
 
-        if (file === selected) {
+        if (isSelected(file, selected)) {
           return false
         }
       }

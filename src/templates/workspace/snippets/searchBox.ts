@@ -3,6 +3,8 @@ import { WorkspaceState } from '../../../webviews/Workspace/WorkspaceViewProvide
 import { searchOption } from './searchOption'
 
 export const searchBox = (state: WorkspaceState): string => {
+  const allLoading = state.rootFolders.every((rf) => rf.result === 'loading')
+
   return `
     <div class="searchBox">
       <vscode-text-field
@@ -10,7 +12,9 @@ export const searchBox = (state: WorkspaceState): string => {
         id="searchWorkspaces"
         placeholder="${t('workspace.list.search.placeholder')}"
         type="text"
-        value="${state.search.term}">
+        value="${state.search.term}"
+        ${allLoading ? 'disabled' : ''}
+        >
         <section aria-label="${t(
           'workspace.list.search.optionsLegend'
         )}" class="searchBox__options-section" slot="end">

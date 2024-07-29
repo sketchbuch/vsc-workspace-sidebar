@@ -18,7 +18,7 @@ import {
   ROOT_FOLDER_PATH,
 } from './mockFileData'
 
-type GetMockRootFolders = Pick<WorkspaceState, 'fileCount' | 'rootFolders' | 'visibleFileCount'>
+type GetMockRootFolders = Pick<WorkspaceState, 'rootFolders'>
 
 type GetMockRootFoldersConfig = {
   closedFolders: string[]
@@ -47,30 +47,13 @@ export const getMockSearchState = (state: Partial<SearchState> = {}): SearchStat
   }
 }
 
-export const getMockState = (
-  state: Partial<WorkspaceState> = {},
-  depth = CONFIG_DEPTH
-): WorkspaceState => {
-  const workspaceData: FindRootFolderFiles[] = []
-  const newState: WorkspaceState = {
+export const getMockState = (state: Partial<WorkspaceState> = {}): WorkspaceState => {
+  return {
     ...initialState,
+    rootFolders: [],
     selected: '',
     wsType: 'ws',
     ...state,
-  }
-
-  newState.rootFolders.forEach(({ files, folderPath, result }) => {
-    workspaceData.push({
-      depth,
-      files,
-      folderPath,
-      result,
-    })
-  })
-
-  return {
-    ...newState,
-    workspaceData,
   }
 }
 
@@ -81,17 +64,12 @@ export const getMockRootFolders = (
     ...defaultGetMockRootFoldersConfig,
     ...config,
   }
-  let fileCount = 0
-  let visibleFileCount = 0
 
   const rootFolders = rootFoldersFiles.map(({ files, folderPath, result }) => {
     const convertedFiles = getMockConvertedFiles()
     const visibleFiles = getMockVisibleFiles(searchTerm, !showTree)
     const fileTree = showTree ? getMockFileTree(fileTreeType) : null
     const allFolders: string[] = showTree ? getMockFolderList(fileTreeType) : [ROOT_FOLDER]
-
-    fileCount += files.length
-    visibleFileCount += visibleFiles.length
 
     return {
       allFolders,
@@ -109,8 +87,6 @@ export const getMockRootFolders = (
   })
 
   return {
-    fileCount,
     rootFolders,
-    visibleFileCount,
   }
 }

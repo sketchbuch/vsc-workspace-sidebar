@@ -3,7 +3,6 @@ import { Uri } from 'vscode'
 import {
   CONFIG_CLEAN_LABELS,
   CONFIG_CONDENSE_FILETREE,
-  CONFIG_SEARCH_MINIMUM,
   CONFIG_SHOW_HIERARCHY,
   ConfigActions,
 } from '../../constants/config'
@@ -24,7 +23,6 @@ export const getMockRenderVars = (renderVars: Partial<RenderVars> = {}): RenderV
     imgDarkFolderUri: { ...baseUri, path: path.join('/resources', 'images', 'dark') } as Uri,
     imgLightFolderUri: { ...baseUri, path: path.join('/resources', 'images', 'light') } as Uri,
     isExternalWs: false,
-    searchMinimum: CONFIG_SEARCH_MINIMUM,
     showTree: CONFIG_SHOW_HIERARCHY,
     themeProcessorState: 'ready',
     ...renderVars,

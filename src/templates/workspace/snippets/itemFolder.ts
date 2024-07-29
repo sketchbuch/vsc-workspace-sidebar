@@ -1,4 +1,5 @@
 import * as os from 'os'
+import { cleanLabel } from '../../../utils/string/cleanLabel'
 import {
   FileTree,
   WorkspaceState,
@@ -8,7 +9,6 @@ import { ConfigButtons, getWorkspaceButtons } from '../../helpers/getWorkspaceBu
 import { itemButtons } from './itemButtons'
 import { itemIconClosed, itemIconOpen, itemIconSelected } from './itemIcons'
 import { itemIndent } from './itemIndent'
-import { cleanLabel } from '../../../utils/string/cleanLabel'
 
 export type ItemFolderProps = {
   depth: number
@@ -57,6 +57,15 @@ export const itemFolder = ({
       label: visibleLabel,
     },
   ]
+
+  if (isRoot) {
+    buttons.unshift({
+      codicon: 'refresh',
+      file: folderPathShort,
+      key: 'refresh-rootfolder',
+      label: visibleLabel,
+    })
+  }
 
   const folderButtons = getWorkspaceButtons({ buttons, renderVars })
   const isCompacted = folder.compactedFolders.length > 0

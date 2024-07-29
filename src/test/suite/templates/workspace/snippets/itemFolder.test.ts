@@ -2,10 +2,12 @@ import { expect } from 'chai'
 import os from 'os'
 import * as path from 'path'
 import * as sinon from 'sinon'
+import { WorkspaceButton } from '../../../../../templates/helpers/getWorkspaceButtons'
 import * as buttons from '../../../../../templates/workspace/snippets/itemButtons'
 import { itemFolder } from '../../../../../templates/workspace/snippets/itemFolder'
 import * as icons from '../../../../../templates/workspace/snippets/itemIcons'
 import * as indent from '../../../../../templates/workspace/snippets/itemIndent'
+import { RenderVars } from '../../../../../webviews/webviews.interface'
 import { FileTree } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { OS_HOMEFOLDER, ROOT_FOLDER } from '../../../../mocks/mockFileData'
 import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
@@ -13,11 +15,11 @@ import { getMockRootFolders, getMockState } from '../../../../mocks/mockState'
 
 suite('Templates > Workspace > Snippets: itemFolder()', () => {
   const DEPTH = 0
-  const FOLDER_PATH = 'supernatural/winchester'
+  const FOLDER_PATH = path.join('supernatural', 'winchester')
   const folder: FileTree = {
     compactedFolders: [],
     files: [],
-    folderPath: `${OS_HOMEFOLDER}/${FOLDER_PATH}`,
+    folderPath: path.join(OS_HOMEFOLDER, FOLDER_PATH),
     folderPathSegment: FOLDER_PATH,
     isRoot: false,
     label: ROOT_FOLDER,
@@ -52,6 +54,28 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
     selectedIconSpy.restore()
   })
 
+  const getFileManagerBtn = (label: string, renderVars: RenderVars): WorkspaceButton => {
+    return {
+      ariaLabel: `Open folder containing '${label}' in your file manager`,
+      codicon: 'browser',
+      file: folder.folderPath,
+      renderVars: renderVars,
+      tooltip: `Open folder containing '${label}' in your file manager`,
+      type: 'open-filemanager',
+    }
+  }
+
+  const getRefreshBtn = (label: string, renderVars: RenderVars): WorkspaceButton => {
+    return {
+      ariaLabel: `Recollect workspaces for '${label}'`,
+      codicon: 'refresh',
+      file: folder.folderPath.replace(OS_HOMEFOLDER, `~`),
+      renderVars: renderVars,
+      tooltip: `Recollect workspaces for '${label}'`,
+      type: 'refresh-rootfolder',
+    }
+  }
+
   test('Renders non-root folder correctly', () => {
     const result = itemFolder({
       depth: DEPTH,
@@ -63,7 +87,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
 
     expect(result).to.be.a('string')
     expect(result).contains(`data-folder="${folder.folderPathSegment}"`)
-    expect(result).contains(`title="~/${FOLDER_PATH}"`)
+    expect(result).contains(`title="${path.join('~', FOLDER_PATH)}"`)
     expect(result).contains(`data-depth="${DEPTH}"`)
     expect(result).contains(`<span class="list__title">${folder.label}</span>`)
     expect(result).contains('list__branch-list-item')
@@ -72,16 +96,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
     expect(result).contains('list__branch-list-item-folder--closable')
 
     sinon.assert.callCount(btnSpy, 1)
-    sinon.assert.calledWith(btnSpy, [
-      {
-        ariaLabel: `Open folder containing '${folder.label}' in your file manager`,
-        codicon: 'browser',
-        file: folder.folderPath,
-        renderVars: mockRenderVars,
-        tooltip: `Open folder containing '${folder.label}' in your file manager`,
-        type: 'open-filemanager',
-      },
-    ])
+    sinon.assert.calledWith(btnSpy, [getFileManagerBtn(folder.label, mockRenderVars)])
     sinon.assert.calledOnce(indentSpy)
   })
 
@@ -97,7 +112,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
 
     expect(result).to.be.a('string')
     expect(result).contains(`data-folder="${folder.folderPathSegment}"`)
-    expect(result).contains(`title="~/${FOLDER_PATH}"`)
+    expect(result).contains(`title="${path.join('~', FOLDER_PATH)}"`)
     expect(result).contains(`data-depth="${DEPTH}"`)
     expect(result).contains(`<span class="list__title">${folder.label}</span>`)
     expect(result).contains('list__branch-list-item')
@@ -125,7 +140,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
 
     expect(result).to.be.a('string')
     expect(result).contains(`data-folder="${folder.folderPathSegment}"`)
-    expect(result).contains(`title="~/${FOLDER_PATH}"`)
+    expect(result).contains(`title="${path.join('~', FOLDER_PATH)}"`)
     expect(result).contains(`data-depth="${DEPTH}"`)
     expect(result).contains(`<span class="list__title">${cleanedLabel}</span>`)
     expect(result).contains('list__branch-list-item')
@@ -135,30 +150,25 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
 
     sinon.assert.callCount(btnSpy, 1)
     sinon.assert.calledWith(btnSpy, [
-      {
-        ariaLabel: `Open folder containing '${cleanedLabel}' in your file manager`,
-        codicon: 'browser',
-        file: folder.folderPath,
-        renderVars: mockRenderVars,
-        tooltip: `Open folder containing '${cleanedLabel}' in your file manager`,
-        type: 'open-filemanager',
-      },
+      getRefreshBtn(cleanedLabel, mockRenderVars),
+      getFileManagerBtn(cleanedLabel, mockRenderVars),
     ])
     sinon.assert.calledOnce(indentSpy)
   })
 
   test('Renders root folder correctly when labels should not be cleaned', () => {
+    const testMockRenderVars = { ...mockRenderVars, cleanLabels: false }
     const result = itemFolder({
       depth: DEPTH,
       folder: { ...folder, isRoot: true },
       isClosed: false,
-      renderVars: { ...mockRenderVars, cleanLabels: false },
+      renderVars: testMockRenderVars,
       state: mockState,
     })
 
     expect(result).to.be.a('string')
     expect(result).contains(`data-folder="${folder.folderPathSegment}"`)
-    expect(result).contains(`title="~/${FOLDER_PATH}"`)
+    expect(result).contains(`title="${path.join('~', FOLDER_PATH)}"`)
     expect(result).contains(`data-depth="${DEPTH}"`)
     expect(result).contains(`<span class="list__title">${folder.label}</span>`)
     expect(result).contains('list__branch-list-item')
@@ -167,15 +177,10 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
     expect(result).contains('list__branch-list-item-folder--closable')
 
     sinon.assert.callCount(btnSpy, 1)
+    sinon.assert.callCount(btnSpy, 1)
     sinon.assert.calledWith(btnSpy, [
-      {
-        ariaLabel: `Open folder containing '${folder.label}' in your file manager`,
-        codicon: 'browser',
-        file: folder.folderPath,
-        renderVars: { ...mockRenderVars, cleanLabels: false },
-        tooltip: `Open folder containing '${folder.label}' in your file manager`,
-        type: 'open-filemanager',
-      },
+      getRefreshBtn(folder.label, testMockRenderVars),
+      getFileManagerBtn(folder.label, testMockRenderVars),
     ])
     sinon.assert.calledOnce(indentSpy)
   })

@@ -1,4 +1,4 @@
-import { PayloadAction, SerializedError } from '@reduxjs/toolkit'
+import { SerializedError } from '@reduxjs/toolkit'
 
 export interface File {
   cleanedLabel: string
@@ -92,6 +92,7 @@ export enum PostMsgActionsBackend {
   FOLDER_CLICK = 'FOLDER_CLICK',
   ICON_CLICK = 'ICON_CLICK',
   ICON_CLICK_FILEMANAGER = 'ICON_CLICK_FILEMANAGER',
+  ICON_CLICK_REFRESH = 'ICON_CLICK_REFRESH',
   MAIN_CLICK = 'MAIN_CLICK',
   SAVE_WS = 'SAVE_WS',
   SEARCH = 'SEARCH',
@@ -123,7 +124,8 @@ export type PayloadToggleFolderStateBulk = FolderState
 
 export type FindFileResult =
   | 'is-file'
-  | 'is-hidden-excluded'
+  | 'loading'
+  | 'map-error'
   | 'no-root-folders'
   | 'no-workspaces'
   | 'nonexistent'
@@ -149,11 +151,6 @@ export type WorkspaceState = {
   errorObj: WorkspaceStateErrorObj
 
   /**
-   * The total number of workspace files for all root folders.
-   */
-  fileCount: number
-
-  /**
    * The result of the file collection for all root folders.
    */
   result: FindFileResult
@@ -177,16 +174,6 @@ export type WorkspaceState = {
    * The current view the state is in.
    */
   view: WorkspaceView
-
-  /**
-   * The total number of visible workspace files for all root folders.
-   */
-  visibleFileCount: number
-
-  /**
-   * The results as returned from findAllRootFolderFiles()
-   */
-  workspaceData: FindRootFolderFiles[]
 
   /**
    * The type of workspace that is currently open.
@@ -236,6 +223,11 @@ export type WorkspaceStateRootFolder = {
   folderPath: string
 
   /**
+   * The absolute folder path with the users homedir replaced with ~.
+   */
+  folderPathShort: string
+
+  /**
    * The result of the file collection for this root folder.
    */
   result: FindFileResult
@@ -256,37 +248,6 @@ export type WorkspaceView = 'error' | 'invalid' | 'list' | 'loading'
 export type WorkspaceType = 'none' | 'ws' | 'folder'
 
 export type WorkspaceFiles = string[]
-
-export type WorkspaceThunkAction<Payload, Meta> = PayloadAction<Payload, ActionType, Meta>
-
-export type WorkspaceThunkErrorAction<Payload, Meta> = PayloadAction<
-  Payload,
-  ActionType,
-  Meta,
-  SerializedError
->
-
-type ActionMetaCommon = {
-  aborted?: boolean
-  arg?: void
-  condition?: boolean
-  rejectedWithValue?: boolean
-  requestId: string
-}
-
-export type ActionMetaFulfilled = {
-  requestStatus: 'fulfilled'
-} & ActionMetaCommon
-
-export type ActionMetaPending = {
-  requestStatus: 'pending'
-} & ActionMetaCommon
-
-export type ActionMetaRejected = {
-  requestStatus: 'rejected'
-} & ActionMetaCommon
-
-type ActionType = string
 
 /**
  * Find Root Folder Files

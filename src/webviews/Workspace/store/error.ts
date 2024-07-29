@@ -5,15 +5,9 @@ export const error = (
   state: WorkspaceState,
   action: PayloadAction<WorkspaceStateErrorObj>
 ): void => {
-  console.log('### error')
-  const errorObj: WorkspaceStateErrorObj = action.payload ?? null
-
   state.error = 'DEFAULT'
-  state.errorObj = errorObj
-  state.fileCount = 0
+  state.errorObj = action.payload ?? null
   state.result = 'ok'
   state.rootFolders = []
   state.view = 'error'
-  state.visibleFileCount = 0
-  state.workspaceData = []
 }

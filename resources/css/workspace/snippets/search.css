@@ -32,17 +32,6 @@
   outline-color: var(--vscode-focusBorder);
 }
 
-.list__searchedout {
-  color: var(--vscode-foreground);
-  padding: var(--ext-workspace-sidebar__padding-v) var(--ext-workspace-sidebar__padding-h);
-  padding-top: var(--ext-workspace-sidebar__search-offset);
-}
-
-.list__searchedout p {
-  margin: 0;
-  padding: var(--ext-workspace-sidebar__padding-v) 0;
-}
-
 .searchBox__options-section {
   align-items: end;
   display: flex;

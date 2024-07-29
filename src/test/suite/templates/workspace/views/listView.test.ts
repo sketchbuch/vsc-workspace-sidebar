@@ -89,21 +89,6 @@ suite('Templates > Workspace > View: listView()', () => {
       const result = listView(getMockState({ ...mockRootFolders, wsType: 'ws' }), mockRenderVars)
       expect(result).contains('data-folderopen="false"')
     })
-
-    test('Renders data-showsearch="true" if searchMinimum less than fileCount', () => {
-      const result = listView(mockState, getMockRenderVars({ searchMinimum: 2 }))
-      expect(result).contains('data-showsearch="true"')
-    })
-
-    test('Renders data-showsearch="false" if searchMinimum greater than fileCount', () => {
-      const result = listView(mockState, getMockRenderVars({ searchMinimum: 100 }))
-      expect(result).contains('data-showsearch="false"')
-    })
-
-    test('Renders data-showsearch="true" if searchMinimum is 0', () => {
-      const result = listView(mockState, getMockRenderVars({ searchMinimum: 0 }))
-      expect(result).contains('data-showsearch="true"')
-    })
   })
 
   suite('Hover Notification:', () => {
@@ -128,35 +113,6 @@ suite('Templates > Workspace > View: listView()', () => {
     test('Not shown if theme is ready', () => {
       listView(mockState, getMockRenderVars({ themeProcessorState: 'ready' }))
       sinon.assert.notCalled(notficationSpy)
-    })
-  })
-
-  suite('Search Form:', () => {
-    test('Shows if searchMinimum is 0', () => {
-      const mockRenderVars = getMockRenderVars({ searchMinimum: 0 })
-      const mockState = getMockState({ ...mockRootFolders })
-      listView(mockState, mockRenderVars)
-
-      sinon.assert.callCount(searchSpy, 1)
-      sinon.assert.calledWith(searchSpy, mockState, true)
-    })
-
-    test('Shows if fileCount is greater than searchMinimum', () => {
-      const mockRenderVars = getMockRenderVars({ searchMinimum: 2 })
-      const mockState = getMockState({ ...mockRootFolders, fileCount: 3 })
-      listView(mockState, mockRenderVars)
-
-      sinon.assert.callCount(searchSpy, 1)
-      sinon.assert.calledWith(searchSpy, mockState, true)
-    })
-
-    test('Not shown if fileCount is less than searchMinimum', () => {
-      const mockRenderVars = getMockRenderVars({ searchMinimum: 20 })
-      const mockState = getMockState({ ...mockRootFolders, fileCount: 10 })
-      listView(mockState, mockRenderVars)
-
-      sinon.assert.callCount(searchSpy, 1)
-      sinon.assert.calledWith(searchSpy, mockState, false)
     })
   })
 })

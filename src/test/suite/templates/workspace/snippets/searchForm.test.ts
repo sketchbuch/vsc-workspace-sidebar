@@ -5,17 +5,10 @@ import { searchForm } from '../../../../../templates/workspace/snippets/searchFo
 import { getMockState } from '../../../../mocks/mockState'
 
 suite('Templates > Workspace > Snippets: searchForm()', () => {
-  test('Renders nothing if !showSearch', () => {
-    const result = searchForm(getMockState(), false)
-
-    expect(result).to.be.a('string')
-    expect(result).to.equal('')
-  })
-
-  test('Renders the form if showSearch', () => {
+  test('Renders the form', () => {
     const spy = sinon.spy(templates, 'searchBox')
     const mockState = getMockState()
-    const result = searchForm(mockState, true)
+    const result = searchForm(mockState)
 
     expect(result).to.be.a('string')
     expect(result).contains('class="list__search"')

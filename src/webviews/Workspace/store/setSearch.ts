@@ -6,9 +6,7 @@ import { getFileTree } from '../helpers/getFileTree'
 import { getVisibleFiles } from '../helpers/getVisibleFiles'
 
 export const setSearch = (state: WorkspaceState, action: PayloadAction<PayloadSearch>): void => {
-  console.log('### setSearch')
   const showTree = getShowTreeConfig()
-  let visibleFileCount = 0
 
   state.search = { ...state.search, ...action.payload }
 
@@ -18,8 +16,6 @@ export const setSearch = (state: WorkspaceState, action: PayloadAction<PayloadSe
     const allFolders =
       showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : [rootFolder.folderName]
 
-    visibleFileCount += visibleFiles.length
-
     return {
       ...rootFolder,
       allFolders,
@@ -27,6 +23,4 @@ export const setSearch = (state: WorkspaceState, action: PayloadAction<PayloadSe
       visibleFiles,
     }
   })
-
-  state.visibleFileCount = visibleFileCount
 }

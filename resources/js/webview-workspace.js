@@ -5,6 +5,7 @@
   const addToFolderRootsBtn = document.querySelector('#addToFolderRoots');
   const newWindowIconBtns = document.querySelectorAll('.list__button[data-type="new-window"]');
   const filemanagerIconBtns = document.querySelectorAll('.list__button[data-type="open-filemanager"]');
+  const refreshIconBtns = document.querySelectorAll('.list__button[data-type="refresh-rootfolder"]');
   const searchOptions = document.querySelectorAll('.searchBox__options-button--toggle');
   const searchInput = document.querySelector('#searchWorkspaces');
   const viewLinks = document.querySelectorAll('.view__link');
@@ -44,6 +45,11 @@
   const handleFilemanagerIconClick = (event) => {
     event.stopPropagation();
     sendMessage('ICON_CLICK_FILEMANAGER', event.currentTarget.dataset.file);
+  };
+
+  const handleRefreshIconClick = (event) => {
+    event.stopPropagation();
+    sendMessage('ICON_CLICK_REFRESH', event.currentTarget.dataset.file);
   };
 
   const handleSaveFolderClick = () => {
@@ -101,6 +107,10 @@
 
     filemanagerIconBtns.forEach((element) => {
       element.addEventListener('click', handleFilemanagerIconClick);
+    });
+
+    refreshIconBtns.forEach((element) => {
+      element.addEventListener('click', handleRefreshIconClick);
     });
 
     if (searchInput) {
@@ -161,6 +171,10 @@
 
     filemanagerIconBtns.forEach((element) => {
       element.removeEventListener('click', handleFilemanagerIconClick);
+    });
+
+    refreshIconBtns.forEach((element) => {
+      element.removeEventListener('click', handleRefreshIconClick);
     });
 
     if (searchInput) {

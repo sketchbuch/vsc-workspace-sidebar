@@ -5,23 +5,30 @@ import * as coreConfigs from '../../../../../config/core'
 import * as foldersConfigs from '../../../../../config/folders'
 import * as treeConfigs from '../../../../../config/treeview'
 import { CONFIG_DEPTH, CONFIG_EXCLUDE_HIDDEN_FODLERS } from '../../../../../constants/config'
-import { FindAllRootFolderFiles } from '../../../../../utils/fs/findAllRootFolderFiles'
+import { FetchRootFolderFiles } from '../../../../../utils/fs/fetchRootFolderFiles'
 import {
-  ActionMetaFulfilled,
-  FindFileResult,
+  ConfigRootFolder,
   WorkspaceState,
   WorkspaceStateRootFolder,
-  WorkspaceThunkAction,
 } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import {
   fetchFulfilled,
   fetchPending,
   fetchRejected,
 } from '../../../../../webviews/Workspace/store/fetch'
+import {
+  FetchFulfilledAction,
+  FetchPendingAction,
+} from '../../../../../webviews/Workspace/store/store.interface'
 import { OS_HOMEFOLDER, ROOT_FOLDER_PATH, SEARCH_TERM } from '../../../../mocks/mockFileData'
 import { getMockRootFolders, getMockSearchState, getMockState } from '../../../../mocks/mockState'
 
 suite('Webviews > Workspace > Store > fetch()', () => {
+  const rootFolder: ConfigRootFolder = {
+    path: ROOT_FOLDER_PATH,
+    depth: CONFIG_DEPTH,
+    excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
+  }
   let compactFoldersConfigStub: sinon.SinonStub
   let condenseConfigStub: sinon.SinonStub
   let osStub: sinon.SinonStub
@@ -34,13 +41,9 @@ suite('Webviews > Workspace > Store > fetch()', () => {
       .callsFake(() => false)
     condenseConfigStub = sinon.stub(treeConfigs, 'getCondenseFileTreeConfig').callsFake(() => true)
     osStub = sinon.stub(os, 'homedir').callsFake(() => OS_HOMEFOLDER)
-    rootFoldersConfigStub = sinon.stub(foldersConfigs, 'getFoldersConfig').callsFake(() => [
-      {
-        path: ROOT_FOLDER_PATH,
-        depth: CONFIG_DEPTH,
-        excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
-      },
-    ])
+    rootFoldersConfigStub = sinon
+      .stub(foldersConfigs, 'getFoldersConfig')
+      .callsFake(() => [rootFolder])
     treeConfigStub = sinon.stub(treeConfigs, 'getShowTreeConfig').callsFake(() => false)
   })
 
@@ -52,6 +55,14 @@ suite('Webviews > Workspace > Store > fetch()', () => {
     treeConfigStub.restore()
   })
 
+  const getPendingAction = (rootFolder: ConfigRootFolder): FetchPendingAction<ConfigRootFolder> => {
+    return {
+      meta: { arg: rootFolder, requestId: '', requestStatus: 'pending' },
+      payload: undefined,
+      type: 'ws/fetchPending',
+    }
+  }
+
   test('Pending updates state as expected', () => {
     const state = getMockState({
       result: 'is-file',
@@ -59,11 +70,11 @@ suite('Webviews > Workspace > Store > fetch()', () => {
     })
     const expectedState = getMockState({
       result: 'ok',
-      view: 'loading',
+      view: 'list',
     })
 
     expect(state).not.to.eql(expectedState)
-    fetchPending(state)
+    fetchPending(state, getPendingAction(rootFolder))
     expect(state).to.eql(expectedState)
   })
 
@@ -83,91 +94,20 @@ suite('Webviews > Workspace > Store > fetch()', () => {
     expect(state).not.to.eql(expectedState)
     fetchRejected(state, {
       error: errorObj,
-      meta: { arg: undefined, requestId: '', requestStatus: 'rejected' },
+      meta: { aborted: false, arg: rootFolder, condition: false, requestId: '' },
       payload: null,
       type: 'ws/fetchRejected',
     })
     expect(state).to.eql(expectedState)
   })
 
-  suite('Fulfilled (Error):', () => {
-    const getAction = (
-      result: FindFileResult
-    ): WorkspaceThunkAction<FindAllRootFolderFiles, ActionMetaFulfilled> => {
-      return {
-        meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: { result, rootFolders: [] },
-        type: 'ws/list',
-      }
-    }
-
-    const intialState: Partial<WorkspaceState> = {
-      result: 'ok',
-      view: 'loading',
-    }
-    const defaultExpectedState: Partial<WorkspaceState> = {
-      fileCount: 0,
-      rootFolders: [],
-      view: 'invalid',
-      visibleFileCount: 0,
-    }
-
-    test('Invalid Folder updates state as expected', () => {
-      condenseConfigStub.callsFake(() => false)
-      treeConfigStub.callsFake(() => true)
-
-      const result = 'is-file'
-      const state = getMockState(intialState)
-      const expectedState = getMockState({
-        ...defaultExpectedState,
-        result: result,
-      })
-
-      expect(state).not.to.eql(expectedState)
-      fetchFulfilled(state, getAction(result))
-      expect(state).to.eql(expectedState)
-    })
-
-    test('No Root Folders updates state as expected', () => {
-      condenseConfigStub.callsFake(() => false)
-      treeConfigStub.callsFake(() => true)
-
-      const result = 'no-root-folders'
-      const state = getMockState(intialState)
-      const expectedState = getMockState({
-        ...defaultExpectedState,
-        result: result,
-      })
-
-      expect(state).not.to.eql(expectedState)
-      fetchFulfilled(state, getAction(result))
-      expect(state).to.eql(expectedState)
-    })
-
-    test('No Workspaces updates state as expected', () => {
-      condenseConfigStub.callsFake(() => false)
-      treeConfigStub.callsFake(() => true)
-
-      const result = 'no-workspaces'
-      const state = getMockState(intialState)
-      const expectedState = getMockState({
-        ...defaultExpectedState,
-        result: result,
-      })
-
-      expect(state).not.to.eql(expectedState)
-      fetchFulfilled(state, getAction(result))
-      expect(state).to.eql(expectedState)
-    })
-  })
-
   suite('Fulfilled (Success):', () => {
     const getAction = (
       rootFolders: WorkspaceStateRootFolder[]
-    ): WorkspaceThunkAction<FindAllRootFolderFiles, ActionMetaFulfilled> => {
+    ): FetchFulfilledAction<ConfigRootFolder, FetchRootFolderFiles> => {
       return {
-        meta: { arg: undefined, requestId: '', requestStatus: 'fulfilled' },
-        payload: { result: 'ok', rootFolders },
+        meta: { arg: rootFolder, requestId: '' },
+        payload: { rootFolder: rootFolders[0] },
         type: 'ws/list',
       }
     }
