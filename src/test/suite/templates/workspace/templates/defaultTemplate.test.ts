@@ -54,12 +54,14 @@ suite('Templates > Workspace > Templates: defaultTemplate()', () => {
       )
     })
 
-    test('Contains other expected meta tags', () => {
+    test('Contains workbench css script tag', () => {
       const result = defaultTemplate(templateVars, state)
-      expect(result).contains('<meta charset="UTF-8">')
-      expect(result).contains(
-        'meta name="viewport" content="width=device-width, initial-scale=1.0">'
-      )
+      expect(result).contains('<style id="workbench-css"')
+    })
+
+    test('Renders  a <title> tag', () => {
+      const result = defaultTemplate(templateVars, state)
+      expect(result).contains(`<title>Workspaces</title>`)
     })
   })
 

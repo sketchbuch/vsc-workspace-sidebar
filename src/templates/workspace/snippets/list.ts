@@ -15,7 +15,8 @@ export const rootPathErrors: FindFileResult[] = [
 
 export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
   const { rootFolders, search } = state
-  const { showTree } = renderVars
+  const { showTree, treeConfig } = renderVars
+  const { renderIndentGuides } = treeConfig
 
   return `
     <div class="list__list-wrapper">
@@ -27,7 +28,7 @@ export const list = (state: WorkspaceState, renderVars: RenderVars): string => {
 
           return `
             <section class="list__list-section" data-isclosed="${isClosed}">
-              <ul class="${getListClasses(isFileTree)}">
+              <ul class="${getListClasses(isFileTree)}" data-indent-guides="${renderIndentGuides}">
                 ${listContent({
                   isClosed,
                   isRootPathError: rootPathErrors.includes(result),

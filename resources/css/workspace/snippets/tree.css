@@ -24,7 +24,8 @@
   width: 18px;
 }
 
-.list__styled-list--tree:hover .list_branch-indent {
+.list__styled-list--tree[data-indent-guides='always'] .list_branch-indent,
+.list__styled-list--tree[data-indent-guides='onHover']:hover .list_branch-indent {
   border-left-color: var(--vscode-tree-indentGuidesStroke);
 }
 

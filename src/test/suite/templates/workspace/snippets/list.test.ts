@@ -1,6 +1,12 @@
 import { expect } from 'chai'
 import os from 'os'
 import * as sinon from 'sinon'
+import { RenderIndentGuides, WorkbenchConfig } from '../../../../../config/core'
+import {
+  CONFIG_WORKBENCH_TREE_EXPAND_MODE,
+  CONFIG_WORKBENCH_TREE_INDENT,
+  CONFIG_WORKBENCH_TREE_RENDER_INDENT_GUIDES,
+} from '../../../../../constants/config'
 import * as item from '../../../../../templates/workspace/snippets/itemFile'
 import * as itemFolder from '../../../../../templates/workspace/snippets/itemFolder'
 import { list, rootPathErrors } from '../../../../../templates/workspace/snippets/list'
@@ -100,5 +106,33 @@ suite('Templates > Workspace > Snippets: list()', () => {
       sinon.assert.notCalled(itemSpy)
       sinon.assert.notCalled(treeSpy)
     })
+  })
+
+  suite('Indent Guides', () => {
+    const initialTreeConfig: WorkbenchConfig = {
+      expandMode: CONFIG_WORKBENCH_TREE_EXPAND_MODE,
+      indent: CONFIG_WORKBENCH_TREE_INDENT,
+      renderIndentGuides: CONFIG_WORKBENCH_TREE_RENDER_INDENT_GUIDES,
+    }
+
+    const indentTypes: RenderIndentGuides[] = ['always', 'none', 'onHover']
+
+    const indentTest = (indentType: RenderIndentGuides) => {
+      test(`"${indentType}" set in data attribute correctly`, () => {
+        const mockRootFolders = getMockRootFolders({ showTree: false })
+        const mockState = getMockState({ ...mockRootFolders })
+        const mockRenderVars = getMockRenderVars({
+          showTree: true,
+          treeConfig: { ...initialTreeConfig, renderIndentGuides: indentType },
+        })
+
+        const result = list(mockState, mockRenderVars)
+
+        expect(result).to.be.a('string')
+        expect(result).contains(`data-indent-guides="${indentType}"`)
+      })
+    }
+
+    indentTypes.forEach((it) => indentTest(it))
   })
 })

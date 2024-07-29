@@ -7,8 +7,8 @@ import {
   CONFIG_WORKBENCH_TREE_RENDER_INDENT_GUIDES,
 } from '../constants/config'
 
-type ExpandModes = 'doubleClick' | 'singleClick'
-type RenderIndentGuides = 'always' | 'none' | 'onHover'
+export type ExpandModes = 'doubleClick' | 'singleClick'
+export type RenderIndentGuides = 'always' | 'none' | 'onHover'
 
 export type WorkbenchConfig = {
   expandMode: ExpandModes
