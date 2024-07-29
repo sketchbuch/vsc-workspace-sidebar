@@ -1,5 +1,6 @@
 import * as path from 'path'
 import { Uri } from 'vscode'
+import { WorkbenchConfig } from '../../config/core'
 import {
   CONFIG_CLEAN_LABELS,
   CONFIG_CONDENSE_FILETREE,
@@ -16,6 +17,15 @@ const baseUri = {
   authority: 'localhost',
 }
 
+export const getMockTreeConfig = (treeConfig: Partial<WorkbenchConfig> = {}): WorkbenchConfig => {
+  return {
+    expandMode: CONFIG_WORKBENCH_TREE_EXPAND_MODE,
+    indent: CONFIG_WORKBENCH_TREE_INDENT,
+    renderIndentGuides: CONFIG_WORKBENCH_TREE_RENDER_INDENT_GUIDES,
+    ...treeConfig,
+  }
+}
+
 export const getMockRenderVars = (renderVars: Partial<RenderVars> = {}): RenderVars => {
   return {
     cleanLabels: CONFIG_CLEAN_LABELS,
@@ -29,9 +39,7 @@ export const getMockRenderVars = (renderVars: Partial<RenderVars> = {}): RenderV
     showTree: CONFIG_SHOW_HIERARCHY,
     themeProcessorState: 'ready',
     treeConfig: {
-      expandMode: CONFIG_WORKBENCH_TREE_EXPAND_MODE,
-      indent: CONFIG_WORKBENCH_TREE_INDENT,
-      renderIndentGuides: CONFIG_WORKBENCH_TREE_RENDER_INDENT_GUIDES,
+      ...getMockTreeConfig(),
     },
     ...renderVars,
   }

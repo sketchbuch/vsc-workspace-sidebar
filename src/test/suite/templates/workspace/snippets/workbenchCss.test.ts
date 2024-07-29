@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { workbenchCss } from '../../../../../templates/workspace/snippets/workbenchCss'
 import { RenderVars } from '../../../../../webviews/webviews.interface'
-import { getMockRenderVars } from '../../../../mocks/mockRenderVars'
+import { getMockRenderVars, getMockTreeConfig } from '../../../../mocks/mockRenderVars'
 
 suite('Templates > Workspace > Snippets: workbenchCss()', () => {
   const nonce = 'nonce-wb-css'
@@ -11,7 +11,7 @@ suite('Templates > Workspace > Snippets: workbenchCss()', () => {
   test('Renders CSS correctly', () => {
     const testRenderVars: RenderVars = {
       ...mockRenderVars,
-      treeConfig: { ...mockRenderVars.treeConfig, indent },
+      treeConfig: getMockTreeConfig({ indent }),
     }
     const result = workbenchCss(nonce, testRenderVars)
 
