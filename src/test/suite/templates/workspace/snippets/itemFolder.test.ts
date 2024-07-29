@@ -15,11 +15,11 @@ import { getMockRootFolders, getMockState } from '../../../../mocks/mockState'
 
 suite('Templates > Workspace > Snippets: itemFolder()', () => {
   const DEPTH = 0
-  const FOLDER_PATH = 'supernatural/winchester'
+  const FOLDER_PATH = path.join('supernatural', 'winchester')
   const folder: FileTree = {
     compactedFolders: [],
     files: [],
-    folderPath: `${OS_HOMEFOLDER}/${FOLDER_PATH}`,
+    folderPath: path.join(OS_HOMEFOLDER, FOLDER_PATH),
     folderPathSegment: FOLDER_PATH,
     isRoot: false,
     label: ROOT_FOLDER,
@@ -87,7 +87,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
 
     expect(result).to.be.a('string')
     expect(result).contains(`data-folder="${folder.folderPathSegment}"`)
-    expect(result).contains(`title="~/${FOLDER_PATH}"`)
+    expect(result).contains(`title="${path.join('~', FOLDER_PATH)}"`)
     expect(result).contains(`data-depth="${DEPTH}"`)
     expect(result).contains(`<span class="list__title">${folder.label}</span>`)
     expect(result).contains('list__branch-list-item')
@@ -112,7 +112,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
 
     expect(result).to.be.a('string')
     expect(result).contains(`data-folder="${folder.folderPathSegment}"`)
-    expect(result).contains(`title="~/${FOLDER_PATH}"`)
+    expect(result).contains(`title="${path.join('~', FOLDER_PATH)}"`)
     expect(result).contains(`data-depth="${DEPTH}"`)
     expect(result).contains(`<span class="list__title">${folder.label}</span>`)
     expect(result).contains('list__branch-list-item')
@@ -140,7 +140,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
 
     expect(result).to.be.a('string')
     expect(result).contains(`data-folder="${folder.folderPathSegment}"`)
-    expect(result).contains(`title="~/${FOLDER_PATH}"`)
+    expect(result).contains(`title="${path.join('~', FOLDER_PATH)}"`)
     expect(result).contains(`data-depth="${DEPTH}"`)
     expect(result).contains(`<span class="list__title">${cleanedLabel}</span>`)
     expect(result).contains('list__branch-list-item')
@@ -168,7 +168,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
 
     expect(result).to.be.a('string')
     expect(result).contains(`data-folder="${folder.folderPathSegment}"`)
-    expect(result).contains(`title="~/${FOLDER_PATH}"`)
+    expect(result).contains(`title="${path.join('~', FOLDER_PATH)}"`)
     expect(result).contains(`data-depth="${DEPTH}"`)
     expect(result).contains(`<span class="list__title">${folder.label}</span>`)
     expect(result).contains('list__branch-list-item')
