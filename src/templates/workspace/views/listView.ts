@@ -17,7 +17,12 @@ export const listView = (state: WorkspaceState, renderVars: RenderVars): string 
   const isFolderOpen = wsType === 'folder'
 
   return `
-    <section class="view list" data-fileiconsactive="${fileIconsActive}" data-folderopen="${isFolderOpen}" data-showsearch="true" data-extws="${isExternalWs}">
+    <section 
+      class="view list" 
+      data-extws="${isExternalWs}"
+      data-fileiconsactive="${fileIconsActive}" 
+      data-folderopen="${isFolderOpen}" 
+    >
       ${externalWorkspace(state, renderVars)}
       ${folderList(state, wsFolders)}
       ${searchForm(state)}

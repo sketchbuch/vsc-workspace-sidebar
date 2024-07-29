@@ -2,18 +2,8 @@
   position: relative;
 }
 
-/* .list[data-showsearch='true'] .list__extws {
-  margin-top: var(--ext-workspace-sidebar__search-offset);
-} */
-
 .list__extws-title {
   margin: 0.7rem 0;
   padding: 0 var(--ext-workspace-sidebar__padding-h);
   padding-top: 0.5rem;
 }
-
-/* .list[data-showsearch='false'] .list__extws .list__extws-title {
-  margin-top: 0;
-  padding-top: 0;
-}
- */

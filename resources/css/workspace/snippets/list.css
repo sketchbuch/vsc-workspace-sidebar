@@ -11,9 +11,6 @@
 
 .list__list-wrapper {
   position: relative;
-}
-
-.list[data-showsearch='true'] .list__list-wrapper {
   padding-top: var(--ext-workspace-sidebar__search-offset);
 }
 
@@ -210,13 +207,8 @@
   padding-left: 40px;
 }
 
-.list[data-showsearch='true'] .list__styled-pusher {
+.list .list__styled-pusher {
   margin-top: var(--ext-workspace-sidebar__search-offset);
-}
-
-.list[data-showsearch='false'] .list__styled-pusher .list__styled-pusher-title {
-  margin-top: 0;
-  padding-top: 0;
 }
 
 .list__styled-pusher-divider {
