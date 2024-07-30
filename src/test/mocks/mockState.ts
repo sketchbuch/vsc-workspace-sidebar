@@ -1,6 +1,6 @@
 import { CONFIG_DEPTH } from '../../constants/config'
 import { getLastPathSegment } from '../../utils/fs/getLastPathSegment'
-import { initialSearchState, initialState } from '../../webviews/Workspace/store/workspaceSlice'
+import { initialSearchState, initialState } from '../../webviews/Workspace/store/initialStates'
 import {
   FindRootFolderFiles,
   SearchState,

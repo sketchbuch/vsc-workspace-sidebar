@@ -1,4 +1,4 @@
-import { getFileiconThemeConfig } from '../../config/core'
+import { getFileiconThemeConfig, getWorkbenchTreeConfig } from '../../config/core'
 import {
   getActionsConfig,
   getCleanLabelsConfig,
@@ -69,5 +69,6 @@ export const getRenderVars = (
     imgLightFolderUri,
     showTree: getShowTreeConfig(),
     themeProcessorState: themeData?.state ?? 'idle',
+    treeConfig: getWorkbenchTreeConfig(),
   }
 }

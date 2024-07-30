@@ -2,10 +2,10 @@ import { expect } from 'chai'
 import os from 'os'
 import * as sinon from 'sinon'
 import { CONFIG_DEPTH, CONFIG_EXCLUDE_HIDDEN_FODLERS } from '../../../../../constants/config'
-import { getItitialRootFolders } from '../../../../../webviews/Workspace/store/workspaceSlice'
+import { getInitialRootFolders } from '../../../../../webviews/Workspace/store/initialStates'
 import { OS_HOMEFOLDER, ROOT_FOLDER, ROOT_FOLDER_USERPATH } from '../../../../mocks/mockFileData'
 
-suite('Webviews > Workspace > Store > workspaceSlice > getItitialRootFolders()', () => {
+suite('Webviews > Workspace > Store > workspaceSlice > getInitialRootFolders()', () => {
   let osStub: sinon.SinonStub
 
   setup(() => {
@@ -17,12 +17,12 @@ suite('Webviews > Workspace > Store > workspaceSlice > getItitialRootFolders()',
   })
 
   test('Returns an empty array if folders', () => {
-    const result = getItitialRootFolders([])
+    const result = getInitialRootFolders([])
     expect(result).to.eql([])
   })
 
   test('Returns expected state root folder', () => {
-    const result = getItitialRootFolders([
+    const result = getInitialRootFolders([
       {
         excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
         depth: CONFIG_DEPTH,
