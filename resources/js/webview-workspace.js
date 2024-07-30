@@ -11,6 +11,7 @@
   const viewLinks = document.querySelectorAll('.view__link');
   const wsElements = document.querySelectorAll('.list__styled-item--unselected');
   const wsFolders = document.querySelectorAll('.list__branch-list-item-folder--closable');
+  const folderEvent = wbExpand && wbExpand === 'doubleClick' ? 'dblclick' : 'click';
 
   let searchTerm = '';
 
@@ -133,7 +134,7 @@
     });
 
     wsFolders.forEach((element) => {
-      element.addEventListener('click', handleFolderClick);
+      element.addEventListener(folderEvent, handleFolderClick);
     });
 
     if (folderSaveBtn) {
@@ -195,7 +196,7 @@
     });
 
     wsFolders.forEach((element) => {
-      element.removeEventListener('click', handleFolderClick);
+      element.removeEventListener(folderEvent, handleFolderClick);
     });
 
     if (folderSaveBtn) {

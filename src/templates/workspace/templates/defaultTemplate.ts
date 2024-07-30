@@ -11,6 +11,7 @@ import { fileIconCss } from '../../common/snippets/fileIconCss'
 import { metaTags } from '../../common/snippets/metaTags'
 import { getRenderVars } from '../../helpers/getRenderVars'
 import { workbenchCss } from '../snippets/workbenchCss'
+import { workbenchJs } from '../snippets/workbenchJs'
 import { errorView } from '../views/errorView'
 import { invalidView } from '../views/invalidView'
 import { listView } from '../views/listView'
@@ -58,6 +59,7 @@ export const defaultTemplate = (templateVars: TemplateVars, state: WorkspaceStat
 
       <body>
         ${content}
+        ${workbenchJs(nonce, renderVars)}
         <script nonce="${nonce}" id="ws-webview-js" src="${scriptFolderUri}/${FS_WEBVIEW_WORKSPACE_JS}"></script>
         <script nonce="${nonce}" id="codicons-js" src="${uiFolderUri}/${FS_WEBVIEW_UI_TOOLKIT_JS}" type="module"></script>
       </body>
