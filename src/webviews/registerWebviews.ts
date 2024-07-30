@@ -69,12 +69,10 @@ export const registerWebviews = (
           }
         }
       } else if (affectsConfiguration(WORKBENCH_CONFIG)) {
-        if (isTree) {
-          for (const { config, type } of workbenchConfigOptions) {
-            if (affectsConfiguration(config)) {
-              updateByType(type, workspaceViewProvider, isTree)
-              break
-            }
+        for (const { config, type } of workbenchConfigOptions) {
+          if (affectsConfiguration(config)) {
+            updateByType(type, workspaceViewProvider, isTree)
+            break
           }
         }
       }
