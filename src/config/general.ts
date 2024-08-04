@@ -2,6 +2,7 @@ import { workspace } from 'vscode'
 import {
   CONFIG_CLEAN_LABELS,
   CONFIG_DEPTH,
+  CONFIG_FOCUS_EXPLORER,
   CONFIG_SHOW_FILE_ICONS,
   CONFIG_SHOW_FILE_ICONS_CONFIG,
   ConfigActions,
@@ -23,6 +24,13 @@ export const getCleanLabelsConfig = (): boolean => {
 
 export const getDepthConfig = (): number => {
   return workspace.getConfiguration().get<number>('workspaceSidebar.depth') ?? CONFIG_DEPTH
+}
+
+export const getFocusExplorerConfig = (): boolean => {
+  return (
+    workspace.getConfiguration().get<boolean>('workspaceSidebar.focusExplorer') ??
+    CONFIG_FOCUS_EXPLORER
+  )
 }
 
 export const getShowFileiconConfig = (): boolean => {

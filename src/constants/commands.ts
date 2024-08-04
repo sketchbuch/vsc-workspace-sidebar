@@ -11,6 +11,7 @@ export const CMD_OPEN_SETTINGS = `${EXT}-settings`
 export const CMD_REFRESH = `${EXT}-refresh`
 
 // VS Code
+export const CMD_VSC_FOCUS_FILEVIEW = 'workbench.explorer.fileView.focus'
 export const CMD_VSC_OPEN_SETTINGS = 'workbench.action.openSettings'
 export const CMD_VSC_OPEN_WS = 'vscode.openFolder'
 export const CMD_VSC_SAVE_WS_AS = 'workbench.action.saveWorkspaceAs'

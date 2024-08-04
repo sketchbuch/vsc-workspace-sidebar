@@ -9,11 +9,12 @@ import {
   FileThemeProcessorState,
 } from 'vscode-file-theme-processor'
 import { getFoldersConfig } from '../../config/folders'
-import { getActionsConfig } from '../../config/general'
+import { getActionsConfig, getFocusExplorerConfig } from '../../config/general'
 import { getSearchCaseInsensitiveConfig, getSearchMatchStartConfig } from '../../config/search'
 import {
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,
+  CMD_VSC_FOCUS_FILEVIEW,
   CMD_VSC_OPEN_SETTINGS,
   CMD_VSC_SAVE_WS_AS,
   CMD_VSC_SET_CTX,
@@ -244,6 +245,14 @@ export class WorkspaceViewProvider
             }
 
             await executeCommand(cmd, payload, true)
+
+            if (cmd === CMD_OPEN_NEW_WIN) {
+              const focusExplorerConfig = getFocusExplorerConfig()
+
+              if (focusExplorerConfig) {
+                await executeCommand(CMD_VSC_FOCUS_FILEVIEW)
+              }
+            }
           }
           break
 
