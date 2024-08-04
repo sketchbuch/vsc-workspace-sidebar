@@ -246,12 +246,8 @@ export class WorkspaceViewProvider
 
             await executeCommand(cmd, payload, true)
 
-            if (cmd === CMD_OPEN_NEW_WIN) {
-              const focusExplorerConfig = getFocusExplorerConfig()
-
-              if (focusExplorerConfig) {
-                await executeCommand(CMD_VSC_FOCUS_FILEVIEW)
-              }
+            if (cmd === CMD_OPEN_NEW_WIN && getFocusExplorerConfig()) {
+              await executeCommand(CMD_VSC_FOCUS_FILEVIEW)
             }
           }
           break
