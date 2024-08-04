@@ -87,6 +87,12 @@
             "scope": "application",
             "type": "number"
           },
+          "workspaceSidebar.focusExplorer": {
+            "default": false,
+            "description": "%config.focusExplorer.description%",
+            "scope": "application",
+            "type": "boolean"
+          },
           "workspaceSidebar.showFileIcons": {
             "default": true,
             "markdownDescription": "%config.showFileIcons.markdownDescription%",

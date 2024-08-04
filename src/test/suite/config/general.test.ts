@@ -5,12 +5,14 @@ import {
   getActionsConfig,
   getCleanLabelsConfig,
   getDepthConfig,
+  getFocusExplorerConfig,
   getShowFileiconConfig,
   getShowFileiconsConfigConfig,
 } from '../../../config/general'
 import {
   CONFIG_CLEAN_LABELS,
   CONFIG_DEPTH,
+  CONFIG_FOCUS_EXPLORER,
   CONFIG_SHOW_FILE_ICONS,
   CONFIG_SHOW_FILE_ICONS_CONFIG,
   ConfigActions,
@@ -43,6 +45,10 @@ suite('Config > General:', () => {
 
   test('getDepthConfig() returns the default if no config value is set', () => {
     expect(getDepthConfig()).to.equal(CONFIG_DEPTH)
+  })
+
+  test('getFocusExplorerConfig() returns the default if no config value is set', () => {
+    expect(getFocusExplorerConfig()).to.equal(CONFIG_FOCUS_EXPLORER)
   })
 
   test('getShowFileiconConfig() returns the default if no config value is set', () => {

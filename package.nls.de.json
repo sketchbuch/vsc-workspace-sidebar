@@ -1,5 +1,4 @@
 {
-  "config.title": "Workspace Sidebar",
   "config.actions.cur-window": "Im aktuellen Fenster öffnen, Iconklicks werden in einem neuen Fenster geöffnet.",
   "config.actions.description": "Welche Aktion sollte beim Anklicken auf einen Arbeitsbereich ausgeführt werden?",
   "config.actions.new-window": "Im neuen Fenster öffnen, Iconklicks werden im aktuellen Fenster geöffnet.",
@@ -7,6 +6,7 @@
   "config.condenseFileTree.markdownDescription": "Komprimieren Sie der Ordnerhierarchie, um visuelles Störunegn von Ordnern zu reduzieren [Weitere Informationen finden Sie in der Dokumentation (Englisch)](https://github.com/sketchbuch/vsc-workspace-sidebar/blob/master/docs/Configuration.md#condense-folders).",
   "config.depth.description": "Wie weit Unterordner auch durchsucht werden. Nummernkreis: 0-25",
   "config.excludeHiddenFolders.description": "Schließen Sie versteckte Unterordner bei der Suche nach Arbeitsbereichen aus. Dies kann die Suche beschleunigen.",
+  "config.focusExplorer.description": "Wechseln zur Explorer-Ansicht, nachdem Sie einen Arbeitsbereich in einem neuen Fenster geöffnet haben",
   "config.folder.deprecationMessage": "Es werden jetzt mehrere Stammordner unterstützt. Bitte verwenden Sie stattdessen 'workspaceSidebar.rootFolders'. Diese Option wird in einer zukünftigen Version entfernt.",
   "config.folder.description": "Der Ordnerpfad, in dem nach Arbeitsbereichen gesucht werden soll. Falls leer, wird Ihr Home-Ordner benutzt.",
   "config.folders.excluded.markdownDescription": "Unterordner, die bei der Suche nach Arbeitsbereichen ausgeschlossen werden sollen. Beispiel: ```['folder', 'subfolder', '.hidden_folder']```",
@@ -23,6 +23,7 @@
   "config.title.folders": "Ordner",
   "config.title.search": "Suche",
   "config.title.treeview": "Ordnerhierarchie Ansicht",
+  "config.title": "Workspace Sidebar",
   "ext.cmd.wsList.collapse-all": "Ordner zuklappen",
   "ext.cmd.wsList.expand-all": "Ordner aufklappen",
   "ext.cmd.wsList.refresh": "Arbeitsbereiche neu einsammeln",

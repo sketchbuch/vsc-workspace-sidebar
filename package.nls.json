@@ -1,5 +1,4 @@
 {
-  "config.title": "Workspace Sidebar",
   "config.actions.cur-window": "Open in the current window, icon clicks will open in a new window.",
   "config.actions.description": "What action should be taken when clicking on a workspace in the sidebar?",
   "config.actions.new-window": "Open in a new window, icon clicks will open in the current window.",
@@ -7,6 +6,7 @@
   "config.condenseFileTree.markdownDescription": "Condense the file tree to reduce visual noise from folders. [See the documentation for more information](https://github.com/sketchbuch/vsc-workspace-sidebar/blob/master/docs/Configuration.md#condense-folders).",
   "config.depth.description": "What depth of subfolders should also be looked in. Range: 0-25",
   "config.excludeHiddenFolders.description": "Exclude hidden subfolders when searching for workspaces. This can speed up searching.",
+  "config.focusExplorer.description": "Switch to Explorer view after opening a workspace in a new window",
   "config.folder.deprecationMessage": "Multiple root folders are now supported. Please use 'workspaceSidebar.rootFolders' instead. This option will be removed in a future version.",
   "config.folder.description": "The folder to look in for workspace files - leave blank to default to your home folder.",
   "config.folders.excluded.markdownDescription": "Subfolders to exclude when looking for workspaces. Example: ```['folder', 'subfolder', '.hidden_folder']```",
@@ -23,6 +23,7 @@
   "config.title.folders": "Folders",
   "config.title.search": "Search",
   "config.title.treeview": "Tree View",
+  "config.title": "Workspace Sidebar",
   "ext.cmd.wsList.collapse-all": "Collapse folders",
   "ext.cmd.wsList.expand-all": "Expand folders",
   "ext.cmd.wsList.refresh": "Recollect all Workspaces",
