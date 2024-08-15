@@ -6,6 +6,7 @@ import {
   getExcludeHiddenFoldersConfig,
   getFoldersConfig,
   getRawFoldersConfig,
+  leadingAndTrailingWhiteSpaceRegex,
 } from '../../../config/folders'
 import {
   CONFIG_DEPTH,
@@ -157,5 +158,11 @@ suite('Config > Folders:', () => {
     })
 
     expect(getRawFoldersConfig()).to.eql(rootFolders)
+  })
+
+  test('leadingAndTrailingWhiteSpaceRegex regex removes whitespace from the start/end of string', () => {
+    const result = '   a test   '.replace(leadingAndTrailingWhiteSpaceRegex, '')
+
+    expect(result).to.equal('a test')
   })
 })

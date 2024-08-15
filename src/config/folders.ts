@@ -26,7 +26,7 @@ export const getRawFoldersConfig = (): ConfigRootFolderSettings[] => {
   return rootFolders
 }
 
-const leadingAndTrailingWhiteSpaceRegex = /^\s+|\s+$/g
+export const leadingAndTrailingWhiteSpaceRegex = /^\s+|\s+$/g
 
 export const getFoldersConfig = (): ConfigRootFolder[] => {
   const depth = getDepthConfig()
