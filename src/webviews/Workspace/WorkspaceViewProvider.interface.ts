@@ -12,6 +12,8 @@ export interface File {
 
 export type Files = File[]
 
+export type Uuid = string
+
 /**
  * Root folder object from settings.json
  */
@@ -34,6 +36,7 @@ export interface ConfigRootFolder {
    * Should hidden folders be searched? If absent, the default excludeHiddenFolders (workspaceSidebar.excludeHiddenFolders) will set here instead.
    */
   excludeHiddenFolders: boolean
+  id: Uuid
   path: string
 }
 

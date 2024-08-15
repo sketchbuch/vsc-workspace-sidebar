@@ -91,6 +91,8 @@ export class WorkspaceViewProvider
 
     const configFolders = getFoldersConfig()
 
+    console.log('### configFolders', configFolders)
+
     configFolders.forEach((folder) => {
       store.dispatch(fetch(folder)).then(() => {
         this.updateCache(store.getState().ws)

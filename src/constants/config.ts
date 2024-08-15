@@ -14,9 +14,11 @@ export const CONFIG_SEARCH_MATCH_START = false
 export const CONFIG_SHOW_FILE_ICONS = true
 export const CONFIG_SHOW_FILE_ICONS_CONFIG = {}
 export const CONFIG_SHOW_HIERARCHY = false
+export const CONFIG_UUID_ROOTFOLDERS_NS = '17aa6c8a-c835-4d8d-949b-29b48846551f'
 export const CONFIG_WORKBENCH_TREE_EXPAND_MODE = 'singleClick'
 export const CONFIG_WORKBENCH_TREE_INDENT = 10
 export const CONFIG_WORKBENCH_TREE_RENDER_INDENT_GUIDES = 'onHover'
+
 export enum ConfigActions {
   CURRENT_WINDOW = 'Current Window',
   NEW_WINDOW = 'New Window',
