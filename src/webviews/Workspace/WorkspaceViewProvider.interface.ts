@@ -12,6 +12,8 @@ export interface File {
 
 export type Files = File[]
 
+export type Uuid = string
+
 /**
  * Root folder object from settings.json
  */
@@ -34,6 +36,7 @@ export interface ConfigRootFolder {
    * Should hidden folders be searched? If absent, the default excludeHiddenFolders (workspaceSidebar.excludeHiddenFolders) will set here instead.
    */
   excludeHiddenFolders: boolean
+  id: Uuid
   path: string
 }
 
@@ -67,6 +70,10 @@ export interface WorkspaceRootFolderCache {
 }
 
 export interface WorkspaceCacheRootFolder {
+  /**
+   * The ID of the config returned by getFoldersConfig().
+   */
+  configId: Uuid
   depth: number
   folderPath: string
   files: WorkspaceFiles
@@ -191,6 +198,11 @@ export type WorkspaceStateRootFolder = {
    * The names of all folders that are closed.
    */
   closedFolders: string[]
+
+  /**
+   * The ID of the config returned by getFoldersConfig().
+   */
+  configId: Uuid
 
   /**
    * The files, converted to a form useable by this extension.

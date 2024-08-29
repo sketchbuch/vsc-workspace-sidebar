@@ -10,6 +10,11 @@ export const isExternalWs = (state: WorkspaceState): boolean => {
     for (let rf = 0; rf < rootFolders.length; rf++) {
       const rootFolder = rootFolders[rf]
 
+      // Could be external, but the root folder is loading so assume not external until loading finishes
+      if (selected.startsWith(rootFolder.folderPath) && rootFolder.result === 'loading') {
+        return false
+      }
+
       for (let cf = 0; cf < rootFolder.convertedFiles.length; cf++) {
         const { file } = rootFolder.convertedFiles[cf]
 

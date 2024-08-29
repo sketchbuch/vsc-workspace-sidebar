@@ -1,9 +1,11 @@
+import { v5 as uuidv5 } from 'uuid'
 import { workspace } from 'vscode'
 import {
   CONFIG_EXCLUDED_FOLDERS,
   CONFIG_EXCLUDE_HIDDEN_FODLERS,
   CONFIG_FOLDER,
   CONFIG_FOLDERS,
+  CONFIG_UUID_ROOTFOLDERS_NS,
 } from '../constants/config'
 import { getIntWithinBounds } from '../utils/numbers/getIntWithinBounds'
 import {
@@ -26,7 +28,7 @@ export const getRawFoldersConfig = (): ConfigRootFolderSettings[] => {
   return rootFolders
 }
 
-const leadingAndTrailingWhiteSpaceRegex = /^\s+|\s+$/g
+export const leadingAndTrailingWhiteSpaceRegex = /^\s+|\s+$/g
 
 export const getFoldersConfig = (): ConfigRootFolder[] => {
   const depth = getDepthConfig()
@@ -55,12 +57,14 @@ export const getFoldersConfig = (): ConfigRootFolder[] => {
           const hasDepth = eleDepth || eleDepth === 0
           const intEleDepth = hasDepth ? parseInt(eleDepth.toString()) : depth
 
+          const newDepth = Number.isNaN(intEleDepth) ? depth : getIntWithinBounds(intEleDepth)
+          const newExclude =
+            eleExcludeHidden === Boolean(eleExcludeHidden) ? eleExcludeHidden : excludeHiddenFolders
+
           folders.push({
-            excludeHiddenFolders:
-              eleExcludeHidden === Boolean(eleExcludeHidden)
-                ? eleExcludeHidden
-                : excludeHiddenFolders,
-            depth: Number.isNaN(intEleDepth) ? depth : getIntWithinBounds(intEleDepth),
+            excludeHiddenFolders: newExclude,
+            depth: newDepth,
+            id: uuidv5(`${newExclude}-${newDepth}-${cleanedPath}`, CONFIG_UUID_ROOTFOLDERS_NS),
             path: cleanedPath,
           })
         }

@@ -134,3 +134,4 @@ If you use this plugin and want to help support development, please [PayPal Me](
 ## Todo
 
 - Add tests for updateByType
+- If depth/excludeHidden change, we need to recollect workspaces
