@@ -15,7 +15,7 @@ export const list = (
   const homeDir = os.homedir()
   const showTree = getShowTreeConfig()
 
-  state.rootFolders = action.payload.map(({ depth, files, folderPath }) => {
+  state.rootFolders = action.payload.map(({ configId, depth, files, folderPath }) => {
     const folderName = getLastPathSegment(folderPath) || folderPath
     const convertedFiles = convertWsFiles(folderPath, files, state.selected)
     const visibleFiles = getVisibleFiles(convertedFiles, state.search)
@@ -28,6 +28,7 @@ export const list = (
     return {
       allFolders,
       closedFolders: [],
+      configId,
       convertedFiles,
       depth,
       files,

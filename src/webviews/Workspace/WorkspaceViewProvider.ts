@@ -37,12 +37,20 @@ import {
 } from './WorkspaceViewProvider.interface'
 import { getFolderCounts } from './helpers/getFolderCounts'
 import { getNewRootFolderConfig } from './helpers/getNewRootFolderConfig'
+import { reorderRootFolders } from './helpers/reorderRootFolders'
 import { fetch } from './store/fetch'
 import { workspaceSlice } from './store/workspaceSlice'
 
 const { executeCommand } = vscode.commands
-const { list, setFileTree, setSearch, setVisibleFiles, toggleFolderState, toggleFolderStateBulk } =
-  workspaceSlice.actions
+const {
+  list,
+  setFileTree,
+  setRootFolders,
+  setSearch,
+  setVisibleFiles,
+  toggleFolderState,
+  toggleFolderStateBulk,
+} = workspaceSlice.actions
 
 export class WorkspaceViewProvider
   implements vscode.WebviewViewProvider, FileThemeProcessorObserver
@@ -50,7 +58,7 @@ export class WorkspaceViewProvider
   public static readonly viewType = EXT_WEBVIEW_WS
   private _view?: vscode.WebviewView
   private _cssGenerator: CssGenerator
-  private readonly _version: string = '2.0.4'
+  private readonly _version: string = '2.1.0'
 
   constructor(
     private readonly _ctx: vscode.ExtensionContext,
@@ -91,12 +99,19 @@ export class WorkspaceViewProvider
 
     const configFolders = getFoldersConfig()
 
-    console.log('### configFolders', configFolders)
+    configFolders.forEach((folder, index) => {
+      const curRootFolders = store.getState().ws.rootFolders
+      const exists = curRootFolders.find((rf) => rf.configId === folder.id)
 
-    configFolders.forEach((folder) => {
-      store.dispatch(fetch(folder)).then(() => {
-        this.updateCache(store.getState().ws)
-      })
+      if (exists) {
+        const newRootFolders = reorderRootFolders(folder.id, index, exists, curRootFolders)
+        store.dispatch(setRootFolders(newRootFolders))
+        this.updateCache({ ...store.getState().ws, rootFolders: newRootFolders })
+      } else {
+        store.dispatch(fetch(folder)).then(() => {
+          this.updateCache(store.getState().ws)
+        })
+      }
     })
   }
 
@@ -379,6 +394,7 @@ export class WorkspaceViewProvider
               return [
                 ...allRoots,
                 {
+                  configId: curRoot.configId,
                   depth: curRoot.depth,
                   folderPath: curRoot.folderPath,
                   files: curRoot.files,

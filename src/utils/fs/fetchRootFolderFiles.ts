@@ -3,10 +3,12 @@ import { getExcludedFoldersConfig } from '../../config/folders'
 import {
   ConfigRootFolder,
   FindRootFolderFiles,
+  Uuid,
 } from '../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { findRootFolderFiles } from './findRootFolderFiles'
 
 export interface FetchRootFolderFiles {
+  configId: Uuid
   rootFolder: FindRootFolderFiles
 }
 
@@ -26,5 +28,5 @@ export const fetchRootFolderFiles = async (
     maxDepth: depth,
   })
 
-  return Promise.resolve({ rootFolder })
+  return Promise.resolve({ configId: configFolder.id, rootFolder })
 }

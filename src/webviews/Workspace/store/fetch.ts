@@ -40,7 +40,7 @@ export const fetchFulfilled = (
   action: FetchFulfilledAction<ConfigRootFolder, FetchRootFolderFiles>
 ) => {
   const {
-    payload: { rootFolder },
+    payload: { configId, rootFolder },
   } = action
 
   const homeDir = os.homedir()
@@ -48,7 +48,7 @@ export const fetchFulfilled = (
   const newRootFolders = getNewRootFolders(state.rootFolders)
   const { depth, files, folderPath, result } = rootFolder
 
-  state.rootFolders = newRootFolders.map((folder, index) => {
+  state.rootFolders = newRootFolders.map((folder) => {
     if (folder.folderPath === folderPath) {
       const folderName = getLastPathSegment(folderPath) || folderPath
       const convertedFiles = convertWsFiles(folderPath, files, state.selected)
@@ -60,6 +60,7 @@ export const fetchFulfilled = (
       return {
         allFolders,
         closedFolders: [],
+        configId,
         convertedFiles,
         depth,
         files,

@@ -6,6 +6,7 @@ import { invalid } from './invalid'
 import { list } from './list'
 import { loading } from './loading'
 import { setFileTree } from './setFileTree'
+import { setRootFolders } from './setRootFolders'
 import { setSearch } from './setSearch'
 import { setVisibleFiles } from './setVisibleFiles'
 import { toggleFolderState } from './toggleFolderState'
@@ -25,6 +26,7 @@ export const workspaceSlice = createSlice({
     list,
     loading,
     setFileTree,
+    setRootFolders,
     setSearch,
     setVisibleFiles,
     toggleFolderState,

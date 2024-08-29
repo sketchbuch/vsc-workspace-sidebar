@@ -2,7 +2,7 @@
   "name": "vsc-workspace-sidebar",
   "description": "An extension for VSCode to switch Workspaces with ease.",
   "displayName": "Workspace Sidebar",
-  "version": "2.0.4",
+  "version": "2.1.0",
   "activationEvents": [
     "onStartupFinished"
   ],
