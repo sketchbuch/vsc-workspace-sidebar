@@ -12,11 +12,6 @@ import { itemFile } from './itemFile'
 import { itemFolder } from './itemFolder'
 
 export const externalWorkspace = (state: WorkspaceState, renderVars: RenderVars): string => {
-  console.log('### externalWorkspace()')
-  console.log('###  - isExternalWs', renderVars.isExternalWs)
-  console.log('###  - selected', state.selected)
-  console.log('### =========')
-
   if (renderVars.isExternalWs) {
     const { selected } = state
     const { showTree } = renderVars

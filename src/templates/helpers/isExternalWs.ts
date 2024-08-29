@@ -18,8 +18,6 @@ export const isExternalWs = (state: WorkspaceState): boolean => {
       for (let cf = 0; cf < rootFolder.convertedFiles.length; cf++) {
         const { file } = rootFolder.convertedFiles[cf]
 
-        console.log('###  - file', file)
-
         if (isSelected(file, selected)) {
           return false
         }
