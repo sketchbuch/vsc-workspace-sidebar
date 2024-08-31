@@ -20,13 +20,14 @@ export const getInitialRootFolders = (
   configFolders: ConfigRootFolder[]
 ): WorkspaceStateRootFolder[] => {
   if (configFolders.length > 0) {
-    return configFolders.map<WorkspaceStateRootFolder>(({ depth, path }) => {
+    return configFolders.map<WorkspaceStateRootFolder>(({ depth, id, path }) => {
       const homeDir = os.homedir()
       const folderName = getLastPathSegment(path) || path
 
       return {
         allFolders: [],
         closedFolders: [],
+        configId: id,
         convertedFiles: [],
         depth,
         files: [],

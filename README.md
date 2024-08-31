@@ -135,3 +135,4 @@ If you use this plugin and want to help support development, please [PayPal Me](
 
 - Add tests for updateByType
 - If depth/excludeHidden change, we need to recollect workspaces
+- Fix tests

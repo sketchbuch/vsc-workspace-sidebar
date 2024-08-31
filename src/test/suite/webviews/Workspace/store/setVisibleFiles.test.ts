@@ -5,6 +5,7 @@ import * as foldersConfigs from '../../../../../config/folders'
 import * as treeConfigs from '../../../../../config/treeview'
 import { CONFIG_DEPTH, CONFIG_EXCLUDE_HIDDEN_FODLERS } from '../../../../../constants/config'
 import { setVisibleFiles } from '../../../../../webviews/Workspace/store/setVisibleFiles'
+import { ConfigRootFolder } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { ROOT_FOLDER_PATH } from '../../../../mocks/mockFileData'
 import { getMockRootFolders, getMockState } from '../../../../mocks/mockState'
 
@@ -19,13 +20,18 @@ suite('Webviews > Workspace > Store > setVisibleFiles()', () => {
       .stub(coreConfigs, 'getExplorerCompactFoldersConfig')
       .callsFake(() => true)
     condenseConfigStub = sinon.stub(treeConfigs, 'getCondenseFileTreeConfig').callsFake(() => true)
-    folderConfigStub = sinon.stub(foldersConfigs, 'getFoldersConfig').callsFake(() => [
-      {
-        path: ROOT_FOLDER_PATH,
-        depth: CONFIG_DEPTH,
-        excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
-      },
-    ])
+    folderConfigStub = sinon.stub(foldersConfigs, 'getFoldersConfig').callsFake(() => {
+      const configFolders: ConfigRootFolder[] = [
+        {
+          depth: CONFIG_DEPTH,
+          excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
+          id: 'root-folder-1',
+          path: ROOT_FOLDER_PATH,
+        },
+      ]
+
+      return configFolders
+    })
     treeConfigStub = sinon.stub(treeConfigs, 'getShowTreeConfig').callsFake(() => false)
   })
 
