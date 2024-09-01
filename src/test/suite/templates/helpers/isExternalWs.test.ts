@@ -39,4 +39,13 @@ suite('Templates > Helpers > isExternalWs():', () => {
 
     expect(isExternalWs(state)).to.be.false
   })
+
+  test('Returns false if selected starts with the root folder path and the root folder is loading', () => {
+    const mockRootFolders = getMockRootFolders()
+    mockRootFolders.rootFolders[0].result = 'loading'
+    const selected = file2.file
+    const state = getMockState({ ...mockRootFolders, selected })
+
+    expect(isExternalWs(state)).to.be.false
+  })
 })
