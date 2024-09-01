@@ -74,7 +74,7 @@ export const getMockRootFolders = (
     return {
       allFolders,
       closedFolders,
-      configId: `root-folder-${index}`,
+      configId: `root-folder-${index + 1}`,
       convertedFiles,
       depth: CONFIG_DEPTH,
       files,
