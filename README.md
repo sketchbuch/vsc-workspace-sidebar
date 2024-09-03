@@ -134,14 +134,6 @@ If you use this plugin and want to help support development, please [PayPal Me](
 ## Todo
 
 - Update Tests
- - config/folders
- - templates/helpers/isExternalWs
- - utils/fs/fetchrootFolderFiles
  - WS Provider
  - reorder root folders
- - store/fetch
- - store/list
- - store/setRootFolders
- - store/workspaceSlice
- - updateByType
 - If depth/excludeHidden change, we need to recollect workspaces

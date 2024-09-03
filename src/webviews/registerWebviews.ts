@@ -1,41 +1,15 @@
 import * as vscode from 'vscode'
 import { getShowTreeConfig } from '../config/treeview'
-import { WorkspaceViewProvider } from './Workspace/WorkspaceViewProvider'
 import {
   ConfigOptions,
-  ConfigOptionType,
   EXPLORER_CONFIG,
   explorerConfigOptions,
   WORKBENCH_CONFIG,
   workbenchConfigOptions,
   WS_CONFIG,
 } from './configOptions'
-
-export const updateByType = (
-  type: ConfigOptionType,
-  workspaceViewProvider: WorkspaceViewProvider,
-  isTree: boolean
-) => {
-  switch (type) {
-    case 'search':
-      workspaceViewProvider.updateSearch()
-      break
-
-    case 'tree':
-      if (isTree) {
-        workspaceViewProvider.updateFileTree()
-      }
-      break
-
-    case 'visible-files':
-      workspaceViewProvider.updateVisibleFiles()
-      break
-
-    default:
-      workspaceViewProvider.refresh(type === 'rerender')
-      break
-  }
-}
+import { updateByType } from './Workspace/helpers/updateByType'
+import { WorkspaceViewProvider } from './Workspace/WorkspaceViewProvider'
 
 export const registerWebviews = (
   context: vscode.ExtensionContext,
