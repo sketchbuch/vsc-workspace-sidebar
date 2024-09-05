@@ -18,9 +18,10 @@ import { getMockRootFolders, getMockSearchState, getMockState } from '../../../.
 
 suite('Webviews > Workspace > Store > list()', () => {
   const rootFolder: ConfigRootFolder = {
-    path: ROOT_FOLDER_PATH,
     depth: CONFIG_DEPTH,
     excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
+    id: 'root-folder-1',
+    path: ROOT_FOLDER_PATH,
   }
   let compactFoldersConfigStub: sinon.SinonStub
   let condenseConfigStub: sinon.SinonStub
@@ -34,13 +35,18 @@ suite('Webviews > Workspace > Store > list()', () => {
       .callsFake(() => false)
     condenseConfigStub = sinon.stub(treeConfigs, 'getCondenseFileTreeConfig').callsFake(() => true)
     osStub = sinon.stub(os, 'homedir').callsFake(() => OS_HOMEFOLDER)
-    rootFoldersConfigStub = sinon.stub(foldersConfigs, 'getFoldersConfig').callsFake(() => [
-      {
-        path: ROOT_FOLDER_PATH,
-        depth: CONFIG_DEPTH,
-        excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
-      },
-    ])
+    rootFoldersConfigStub = sinon.stub(foldersConfigs, 'getFoldersConfig').callsFake(() => {
+      const configFolders: ConfigRootFolder[] = [
+        {
+          depth: CONFIG_DEPTH,
+          excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
+          id: 'root-folder-1',
+          path: ROOT_FOLDER_PATH,
+        },
+      ]
+
+      return configFolders
+    })
     treeConfigStub = sinon.stub(treeConfigs, 'getShowTreeConfig').callsFake(() => false)
   })
 
@@ -57,7 +63,7 @@ suite('Webviews > Workspace > Store > list()', () => {
   ): FetchFulfilledAction<ConfigRootFolder, FetchRootFolderFiles> => {
     return {
       meta: { arg: rootFolder, requestId: '' },
-      payload: { rootFolder: rootFolders[0] },
+      payload: { configId: 'root-folder-1', rootFolder: rootFolders[0] },
       type: 'ws/list',
     }
   }

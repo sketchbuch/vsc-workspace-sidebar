@@ -65,7 +65,7 @@ export const getMockRootFolders = (
     ...config,
   }
 
-  const rootFolders = rootFoldersFiles.map(({ files, folderPath, result }) => {
+  const rootFolders = rootFoldersFiles.map(({ files, folderPath, result }, index) => {
     const convertedFiles = getMockConvertedFiles()
     const visibleFiles = getMockVisibleFiles(searchTerm, !showTree)
     const fileTree = showTree ? getMockFileTree(fileTreeType) : null
@@ -74,6 +74,7 @@ export const getMockRootFolders = (
     return {
       allFolders,
       closedFolders,
+      configId: `root-folder-${index + 1}`,
       convertedFiles,
       depth: CONFIG_DEPTH,
       files,

@@ -80,6 +80,7 @@ suite('Config > Folders:', () => {
       {
         depth: CONFIG_DEPTH,
         excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
+        id: 'fcf28855-b22a-50b6-a077-f3ab9c91f120',
         path: ROOT_FOLDER_PATH,
       },
     ])
@@ -105,14 +106,30 @@ suite('Config > Folders:', () => {
     })
 
     expect(getFoldersConfig()).to.eql([
-      { path: '~/Temp', depth: CONFIG_DEPTH_MIN, excludeHiddenFolders: false },
+      {
+        depth: CONFIG_DEPTH_MIN,
+        excludeHiddenFolders: false,
+        id: '713fc223-abe4-5bc9-8275-80775d9585eb',
+        path: '~/Temp',
+      },
       {
         path: '~/Öffentlich/VM Dev',
         depth: CONFIG_DEPTH_MAX,
+        id: '0d734a62-cefc-59dc-ba6f-1bb699f7bd9c',
         excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
       },
-      { path: '~/Notes', depth: 2, excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS },
-      { path: '~/Dev', depth: CONFIG_DEPTH, excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS },
+      {
+        depth: 2,
+        excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
+        id: '0a5c55f3-e4d0-5616-a63f-d13f679a9d6b',
+        path: '~/Notes',
+      },
+      {
+        depth: CONFIG_DEPTH,
+        excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
+        id: 'aa1b5b07-efb7-50d0-906b-c03040d88b7c',
+        path: '~/Dev',
+      },
     ])
   })
 

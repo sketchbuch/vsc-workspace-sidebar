@@ -3,6 +3,7 @@ import os from 'os'
 import * as sinon from 'sinon'
 import { CONFIG_DEPTH, CONFIG_EXCLUDE_HIDDEN_FODLERS } from '../../../../../constants/config'
 import { getInitialRootFolders } from '../../../../../webviews/Workspace/store/initialStates'
+import { WorkspaceStateRootFolder } from '../../../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { OS_HOMEFOLDER, ROOT_FOLDER, ROOT_FOLDER_USERPATH } from '../../../../mocks/mockFileData'
 
 suite('Webviews > Workspace > Store > workspaceSlice > getInitialRootFolders()', () => {
@@ -26,23 +27,25 @@ suite('Webviews > Workspace > Store > workspaceSlice > getInitialRootFolders()',
       {
         excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
         depth: CONFIG_DEPTH,
+        id: 'root-folder-1',
         path: ROOT_FOLDER_USERPATH,
       },
     ])
-    expect(result).to.eql([
-      {
-        allFolders: [],
-        closedFolders: [],
-        convertedFiles: [],
-        depth: CONFIG_DEPTH,
-        files: [],
-        fileTree: null,
-        folderName: ROOT_FOLDER,
-        folderPath: ROOT_FOLDER_USERPATH.replace(`~`, OS_HOMEFOLDER),
-        folderPathShort: ROOT_FOLDER_USERPATH.replace(OS_HOMEFOLDER, `~`),
-        result: 'loading',
-        visibleFiles: [],
-      },
-    ])
+    const expectedRootFolder: WorkspaceStateRootFolder = {
+      allFolders: [],
+      closedFolders: [],
+      configId: 'root-folder-1',
+      convertedFiles: [],
+      depth: CONFIG_DEPTH,
+      files: [],
+      fileTree: null,
+      folderName: ROOT_FOLDER,
+      folderPath: ROOT_FOLDER_USERPATH.replace(`~`, OS_HOMEFOLDER),
+      folderPathShort: ROOT_FOLDER_USERPATH.replace(OS_HOMEFOLDER, `~`),
+      result: 'loading',
+      visibleFiles: [],
+    }
+
+    expect(result).to.eql([expectedRootFolder])
   })
 })

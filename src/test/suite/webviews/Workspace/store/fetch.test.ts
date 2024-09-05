@@ -25,9 +25,10 @@ import { getMockRootFolders, getMockSearchState, getMockState } from '../../../.
 
 suite('Webviews > Workspace > Store > fetch()', () => {
   const rootFolder: ConfigRootFolder = {
-    path: ROOT_FOLDER_PATH,
     depth: CONFIG_DEPTH,
     excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
+    id: 'root-folder-1',
+    path: ROOT_FOLDER_PATH,
   }
   let compactFoldersConfigStub: sinon.SinonStub
   let condenseConfigStub: sinon.SinonStub
@@ -107,7 +108,10 @@ suite('Webviews > Workspace > Store > fetch()', () => {
     ): FetchFulfilledAction<ConfigRootFolder, FetchRootFolderFiles> => {
       return {
         meta: { arg: rootFolder, requestId: '' },
-        payload: { rootFolder: rootFolders[0] },
+        payload: {
+          configId: 'root-folder-1',
+          rootFolder: rootFolders[0],
+        },
         type: 'ws/list',
       }
     }
