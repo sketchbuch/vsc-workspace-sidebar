@@ -2,15 +2,16 @@ import { Uuid, WorkspaceStateRootFolder } from '../WorkspaceViewProvider.interfa
 
 export const reorderRootFolders = (
   configId: Uuid,
-  newIndex: number,
-  folder: WorkspaceStateRootFolder,
-  curRootFolders: WorkspaceStateRootFolder[]
+  configIndex: number,
+  rootFolder: WorkspaceStateRootFolder,
+  rootFolders: WorkspaceStateRootFolder[]
 ): WorkspaceStateRootFolder[] => {
-  const curIndex = curRootFolders.findIndex((rf) => rf.configId === configId)
-  const newRootFolders = [
-    ...curRootFolders.slice(0, curIndex),
-    ...curRootFolders.slice(curIndex + 1),
-  ]
+  if (rootFolders.length < 1) {
+    return [rootFolder]
+  }
 
-  return [...newRootFolders.slice(0, newIndex), folder, ...newRootFolders.slice(newIndex)]
+  const curIndex = rootFolders.findIndex((rf) => rf.configId === configId)
+  const newRootFolders = [...rootFolders.slice(0, curIndex), ...rootFolders.slice(curIndex + 1)]
+
+  return [...newRootFolders.slice(0, configIndex), rootFolder, ...newRootFolders.slice(configIndex)]
 }
