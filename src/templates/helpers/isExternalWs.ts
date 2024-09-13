@@ -12,8 +12,6 @@ export const isExternalWs = (state: WorkspaceState): boolean => {
 
       // Could be external, but the root folder is loading so assume not external until loading finishes
       if (selected.startsWith(rootFolder.folderPath) && rootFolder.result === 'loading') {
-        console.log('### 2')
-
         return false
       }
 

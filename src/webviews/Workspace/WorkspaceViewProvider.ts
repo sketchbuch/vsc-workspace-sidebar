@@ -34,6 +34,7 @@ import {
   WorkspaceRootFolderCache,
   WorkspaceRootFolderMachineCache,
   WorkspaceState,
+  WorkspaceStateRootFolder,
 } from './WorkspaceViewProvider.interface'
 import { getFolderCounts } from './helpers/getFolderCounts'
 import { getNewRootFolderConfig } from './helpers/getNewRootFolderConfig'
@@ -98,15 +99,30 @@ export class WorkspaceViewProvider
     await this._ctx.globalState.update(EXT_WSSTATE_CACHE, newCacheData)
 
     const configFolders = getFoldersConfig()
+    const curRootFolders = store.getState().ws.rootFolders
 
+    // Remove non-existant
+    const newRootFolders = configFolders.reduce<WorkspaceStateRootFolder[]>(
+      (allRootFolders, curRootFolder) => {
+        const exists = curRootFolders.find((rf) => rf.configId === curRootFolder.id)
+
+        if (exists) {
+          return [...allRootFolders, exists]
+        }
+
+        return allRootFolders
+      },
+      []
+    )
+
+    // Add or move
     configFolders.forEach((folder, index) => {
-      const curRootFolders = store.getState().ws.rootFolders
-      const exists = curRootFolders.find((rf) => rf.configId === folder.id)
+      const exists = newRootFolders.find((rf) => rf.configId === folder.id)
 
       if (exists) {
-        const newRootFolders = reorderRootFolders(folder.id, index, exists, curRootFolders)
-        store.dispatch(setRootFolders(newRootFolders))
-        this.updateCache({ ...store.getState().ws, rootFolders: newRootFolders })
+        const reorderedRootFolders = reorderRootFolders(folder.id, index, exists, newRootFolders)
+        store.dispatch(setRootFolders(reorderedRootFolders))
+        this.updateCache({ ...store.getState().ws, rootFolders: reorderedRootFolders })
       } else {
         store.dispatch(fetch(folder)).then(() => {
           this.updateCache(store.getState().ws)
