@@ -1,4 +1,8 @@
-import { ConfigRootFolder, WorkspaceStateRootFolder } from '../WorkspaceViewProvider.interface'
+import {
+  ConfigRootFolder,
+  Uuid,
+  WorkspaceStateRootFolder,
+} from '../WorkspaceViewProvider.interface'
 
 type UpdateRootFoldersProps = {
   /**
@@ -12,7 +16,20 @@ type UpdateRootFoldersProps = {
   rootFolders: WorkspaceStateRootFolder[]
 }
 
-type UpdateRootFolders = (props: UpdateRootFoldersProps) => WorkspaceStateRootFolder[]
+type UpdatedRootFolderExisting = {
+  id: Uuid
+  rootFolder: WorkspaceStateRootFolder
+  status: 'same' | 'changed'
+}
+
+type UpdatedRootFolderNew = {
+  id: Uuid
+  status: 'new'
+}
+
+export type UpdatedRootFolder = UpdatedRootFolderExisting | UpdatedRootFolderNew
+
+type UpdateRootFolders = (props: UpdateRootFoldersProps) => UpdatedRootFolder[]
 
 /**
  * Make sure we respect config rootfolders
@@ -21,5 +38,23 @@ type UpdateRootFolders = (props: UpdateRootFoldersProps) => WorkspaceStateRootFo
  * Reorder existing rootFolders.
  */
 export const updateRootFolders: UpdateRootFolders = ({ configFolders, rootFolders }) => {
-  return []
+  if (configFolders.length < 1) {
+    return []
+  }
+
+  const newRootFolders = configFolders.map<UpdatedRootFolder>((curConfigFolder) => {
+    const exists = rootFolders.find((rf) => rf.folderPathShort === curConfigFolder.path)
+
+    if (exists) {
+      if (exists.configId === curConfigFolder.id) {
+        return { id: exists.configId, rootFolder: exists, status: 'same' }
+      }
+
+      return { id: curConfigFolder.id, rootFolder: exists, status: 'changed' }
+    }
+
+    return { id: curConfigFolder.id, status: 'new' }
+  }, [])
+
+  return newRootFolders
 }
