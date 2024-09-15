@@ -12,7 +12,7 @@ type ReorderRootFoldersProps = {
   configIndex: number
 
   /**
-   * The current rootFolder being reordered as stored in state.
+   * The current rootFolder from state being reordered.
    */
   rootFolder: WorkspaceStateRootFolder
 
