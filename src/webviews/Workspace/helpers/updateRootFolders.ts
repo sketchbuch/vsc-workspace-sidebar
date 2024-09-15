@@ -43,14 +43,14 @@ export const updateRootFolders: UpdateRootFolders = ({ configFolders, rootFolder
   }
 
   const newRootFolders = configFolders.map<UpdatedRootFolder>((curConfigFolder) => {
-    const exists = rootFolders.find((rf) => rf.folderPathShort === curConfigFolder.path)
+    const existingFolder = rootFolders.find((rf) => rf.folderPathShort === curConfigFolder.path)
 
-    if (exists) {
-      if (exists.configId === curConfigFolder.id) {
-        return { id: exists.configId, rootFolder: exists, status: 'same' }
+    if (existingFolder) {
+      if (existingFolder.configId === curConfigFolder.id) {
+        return { id: existingFolder.configId, rootFolder: existingFolder, status: 'same' }
       }
 
-      return { id: curConfigFolder.id, rootFolder: exists, status: 'changed' }
+      return { id: curConfigFolder.id, rootFolder: existingFolder, status: 'changed' }
     }
 
     return { id: curConfigFolder.id, status: 'new' }
