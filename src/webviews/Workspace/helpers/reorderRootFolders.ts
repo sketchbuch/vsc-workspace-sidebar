@@ -1,11 +1,35 @@
 import { Uuid, WorkspaceStateRootFolder } from '../WorkspaceViewProvider.interface'
 
-export const reorderRootFolders = (
-  configId: Uuid,
-  configIndex: number,
-  rootFolder: WorkspaceStateRootFolder,
+type ReorderRootFoldersProps = {
+  /**
+   * The ID of the config rootFolder being reordered.
+   */
+  configId: Uuid
+
+  /**
+   * The index of the config rootFolder being reordered.
+   */
+  configIndex: number
+
+  /**
+   * The current rootFolder being reordered as stored in state.
+   */
+  rootFolder: WorkspaceStateRootFolder
+
+  /**
+   * The current rootFolders stored in state.
+   */
   rootFolders: WorkspaceStateRootFolder[]
-): WorkspaceStateRootFolder[] => {
+}
+
+type ReorderRootFolders = (props: ReorderRootFoldersProps) => WorkspaceStateRootFolder[]
+
+export const reorderRootFolders: ReorderRootFolders = ({
+  configId,
+  configIndex,
+  rootFolder,
+  rootFolders,
+}): WorkspaceStateRootFolder[] => {
   if (rootFolders.length < 1) {
     return [rootFolder]
   }

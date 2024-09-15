@@ -14,7 +14,12 @@ suite('Webviews > Workspace > Helpers > reorderRootFolders():', () => {
 
   test('Returns an array with just the rootFolder if there are no rootFolders', () => {
     const mockRootFolder = getMockRootFolders({ rootFoldersFiles }).rootFolders[0]
-    const result = reorderRootFolders('root-folder-1', 2, mockRootFolder, [])
+    const result = reorderRootFolders({
+      configId: 'root-folder-1',
+      configIndex: 2,
+      rootFolder: mockRootFolder,
+      rootFolders: [],
+    })
 
     expect(result).to.eql([mockRootFolder])
   })
@@ -24,35 +29,60 @@ suite('Webviews > Workspace > Helpers > reorderRootFolders():', () => {
 
     test('Returns an array with the first rootFolder moved to last element', () => {
       const mockRootFolder = mockRootFolders[0]
-      const result = reorderRootFolders('root-folder-1', 2, mockRootFolder, mockRootFolders)
+      const result = reorderRootFolders({
+        configId: 'root-folder-1',
+        configIndex: 2,
+        rootFolder: mockRootFolder,
+        rootFolders: mockRootFolders,
+      })
 
       expect(result).to.eql([mockRootFolders[1], mockRootFolders[2], mockRootFolder])
     })
 
     test('Returns an array with the first rootFolder moved to second element', () => {
       const mockRootFolder = mockRootFolders[0]
-      const result = reorderRootFolders('root-folder-1', 1, mockRootFolder, mockRootFolders)
+      const result = reorderRootFolders({
+        configId: 'root-folder-1',
+        configIndex: 1,
+        rootFolder: mockRootFolder,
+        rootFolders: mockRootFolders,
+      })
 
       expect(result).to.eql([mockRootFolders[1], mockRootFolder, mockRootFolders[2]])
     })
 
     test('Returns an array with the last rootFolder moved to first element', () => {
       const mockRootFolder = mockRootFolders[2]
-      const result = reorderRootFolders('root-folder-3', 0, mockRootFolder, mockRootFolders)
+      const result = reorderRootFolders({
+        configId: 'root-folder-3',
+        configIndex: 0,
+        rootFolder: mockRootFolder,
+        rootFolders: mockRootFolders,
+      })
 
       expect(result).to.eql([mockRootFolder, mockRootFolders[0], mockRootFolders[1]])
     })
 
     test('Returns an array with the last rootFolder moved to second element', () => {
       const mockRootFolder = mockRootFolders[2]
-      const result = reorderRootFolders('root-folder-3', 1, mockRootFolder, mockRootFolders)
+      const result = reorderRootFolders({
+        configId: 'root-folder-3',
+        configIndex: 1,
+        rootFolder: mockRootFolder,
+        rootFolders: mockRootFolders,
+      })
 
       expect(result).to.eql([mockRootFolders[0], mockRootFolder, mockRootFolders[1]])
     })
 
     test('Returns an array with the rootFolders left as is if nothing has been moved', () => {
       const mockRootFolder = mockRootFolders[1]
-      const result = reorderRootFolders('root-folder-2', 1, mockRootFolder, mockRootFolders)
+      const result = reorderRootFolders({
+        configId: 'root-folder-2',
+        configIndex: 1,
+        rootFolder: mockRootFolder,
+        rootFolders: mockRootFolders,
+      })
 
       expect(result).to.eql(mockRootFolders)
     })
@@ -63,14 +93,24 @@ suite('Webviews > Workspace > Helpers > reorderRootFolders():', () => {
 
     test('Returns an array with the first rootFolder moved to last element', () => {
       const mockRootFolder = mockRootFolders[0]
-      const result = reorderRootFolders('root-folder-1', 1, mockRootFolder, mockRootFolders)
+      const result = reorderRootFolders({
+        configId: 'root-folder-1',
+        configIndex: 1,
+        rootFolder: mockRootFolder,
+        rootFolders: mockRootFolders,
+      })
 
       expect(result).to.eql([mockRootFolders[1], mockRootFolder])
     })
 
     test('Returns an array with the last rootFolder moved to first element', () => {
       const mockRootFolder = mockRootFolders[1]
-      const result = reorderRootFolders('root-folder-2', 0, mockRootFolder, mockRootFolders)
+      const result = reorderRootFolders({
+        configId: 'root-folder-2',
+        configIndex: 0,
+        rootFolder: mockRootFolder,
+        rootFolders: mockRootFolders,
+      })
 
       expect(result).to.eql([mockRootFolder, mockRootFolders[0]])
     })

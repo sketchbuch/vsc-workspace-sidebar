@@ -107,12 +107,12 @@ export class WorkspaceViewProvider
       const pathFolder = curRootFolders.find((rf) => rf.folderPathShort === folder.path)
 
       if (pathFolder && pathFolder.configId === folder.id) {
-        const reorderedRootFolders = reorderRootFolders(
-          folder.id,
-          index,
-          pathFolder,
-          curRootFolders
-        )
+        const reorderedRootFolders = reorderRootFolders({
+          configId: folder.id,
+          configIndex: index,
+          rootFolder: pathFolder,
+          rootFolders: curRootFolders,
+        })
         store.dispatch(setRootFolders(reorderedRootFolders))
         this.updateCache({ ...store.getState().ws, rootFolders: reorderedRootFolders })
       } else {
