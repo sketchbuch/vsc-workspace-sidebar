@@ -34,7 +34,6 @@ import {
   WorkspaceRootFolderCache,
   WorkspaceRootFolderMachineCache,
   WorkspaceState,
-  WorkspaceStateRootFolder,
 } from './WorkspaceViewProvider.interface'
 import { getFolderCounts } from './helpers/getFolderCounts'
 import { getNewRootFolderConfig } from './helpers/getNewRootFolderConfig'
@@ -101,8 +100,30 @@ export class WorkspaceViewProvider
     const configFolders = getFoldersConfig()
     const curRootFolders = store.getState().ws.rootFolders
 
+    console.log('### configFolders', configFolders.length, configFolders)
+    console.log('### curRootFolders', curRootFolders.length, curRootFolders)
+
+    configFolders.forEach((folder, index) => {
+      const pathFolder = curRootFolders.find((rf) => rf.folderPathShort === folder.path)
+
+      if (pathFolder && pathFolder.configId === folder.id) {
+        const reorderedRootFolders = reorderRootFolders(
+          folder.id,
+          index,
+          pathFolder,
+          curRootFolders
+        )
+        store.dispatch(setRootFolders(reorderedRootFolders))
+        this.updateCache({ ...store.getState().ws, rootFolders: reorderedRootFolders })
+      } else {
+        store.dispatch(fetch(folder)).then(() => {
+          this.updateCache(store.getState().ws)
+        })
+      }
+    })
+
     // Remove non-existant
-    const newRootFolders = configFolders.reduce<WorkspaceStateRootFolder[]>(
+    /* const newRootFolders = configFolders.reduce<WorkspaceStateRootFolder[]>(
       (allRootFolders, curRootFolder) => {
         const exists = curRootFolders.find((rf) => rf.configId === curRootFolder.id)
 
@@ -113,10 +134,10 @@ export class WorkspaceViewProvider
         return allRootFolders
       },
       []
-    )
+    ) */
 
     // Add or move
-    configFolders.forEach((folder, index) => {
+    /* configFolders.forEach((folder, index) => {
       const exists = newRootFolders.find((rf) => rf.configId === folder.id)
 
       if (exists) {
@@ -128,7 +149,7 @@ export class WorkspaceViewProvider
           this.updateCache(store.getState().ws)
         })
       }
-    })
+    }) */
   }
 
   private getCache() {
