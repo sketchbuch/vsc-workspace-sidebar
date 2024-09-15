@@ -23,6 +23,7 @@ type UpdatedRootFolderExisting = {
 }
 
 type UpdatedRootFolderNew = {
+  configFolder: ConfigRootFolder
   id: Uuid
   status: 'new'
 }
@@ -46,14 +47,22 @@ export const updateRootFolders: UpdateRootFolders = ({ configFolders, rootFolder
     const rootFolder = rootFolders.find((rf) => rf.folderPathShort === curConfigFolder.path)
 
     if (rootFolder) {
-      if (rootFolder.configId === curConfigFolder.id) {
-        return { id: rootFolder.configId, rootFolder, status: 'same' }
+      const folderData: UpdatedRootFolderExisting = {
+        id: curConfigFolder.id,
+        rootFolder,
+        status: rootFolder.configId === curConfigFolder.id ? 'same' : 'changed',
       }
 
-      return { id: curConfigFolder.id, rootFolder, status: 'changed' }
+      return folderData
     }
 
-    return { id: curConfigFolder.id, status: 'new' }
+    const folderData: UpdatedRootFolderNew = {
+      configFolder: curConfigFolder,
+      id: curConfigFolder.id,
+      status: 'new',
+    }
+
+    return folderData
   }, [])
 
   return newRootFolders
