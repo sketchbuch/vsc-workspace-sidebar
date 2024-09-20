@@ -100,9 +100,6 @@ export class WorkspaceViewProvider
     const configFolders = getFoldersConfig()
     const curRootFolders = store.getState().ws.rootFolders
 
-    console.log('### configFolders', configFolders.length, configFolders)
-    console.log('### curRootFolders', curRootFolders.length, curRootFolders)
-
     configFolders.forEach((folder, index) => {
       const pathFolder = curRootFolders.find((rf) => rf.folderPathShort === folder.path)
 

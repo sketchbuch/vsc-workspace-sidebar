@@ -26,7 +26,9 @@ type GetDataProps = {
 
 type GetData = (props?: GetDataProps) => GetDataResult
 
-suite.only('Webviews > Workspace > Helpers > updateRootFolders():', () => {
+suite('Webviews > Workspace > Helpers > updateRootFolders():', () => {
+  const id = 'b4052f99-2c10-5f00-9aac-f46a2e087558'
+
   const getData: GetData = ({ itemCount } = { itemCount: 3, rootFolderData: [] }) => {
     const configFolders: ConfigRootFolder[] = [
       {
@@ -110,17 +112,41 @@ suite.only('Webviews > Workspace > Helpers > updateRootFolders():', () => {
   test('Returns an array of expected rootFolder data', () => {
     const { configFolders, expected, rootFolders } = getData()
     const result = updateRootFolders({ configFolders, rootFolders })
+    expect(result.length).to.equal(3)
     expect(result).to.eql(expected)
   })
 
   test('Returns an array of expected rootFolder data if there is a change', () => {
-    const id = 'b4052f99-2c10-5f00-9aac-f46a2e087558'
     const { configFolders, expected, rootFolders } = getData({ itemCount: 1 })
     const testConfigFolders = [{ ...configFolders[0], id }]
     const testExpected = [{ ...expected[0], status: 'changed', id }]
 
     const result = updateRootFolders({ configFolders: testConfigFolders, rootFolders })
     expect(result.length).to.equal(1)
+    expect(result).to.eql(testExpected)
+  })
+
+  test('Returns an array of expected rootFolder data if there is a new folder', () => {
+    const { configFolders, expected, rootFolders } = getData({ itemCount: 2 })
+    const testConfigFolders = [...configFolders]
+
+    testConfigFolders.push({
+      depth: CONFIG_DEPTH,
+      excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
+      id,
+      path: `${ROOT_FOLDER_USERPATH}${path.sep}folder_4`,
+    })
+    const testExpected = [
+      ...expected,
+      {
+        configFolder: testConfigFolders[2],
+        id,
+        status: 'new',
+      },
+    ]
+
+    const result = updateRootFolders({ configFolders: testConfigFolders, rootFolders })
+    expect(result.length).to.equal(3)
     expect(result).to.eql(testExpected)
   })
 })
