@@ -16,13 +16,13 @@ type UpdateRootFoldersProps = {
   rootFolders: WorkspaceStateRootFolder[]
 }
 
-type UpdatedRootFolderExisting = {
+export type UpdatedRootFolderExisting = {
   id: Uuid
   rootFolder: WorkspaceStateRootFolder
   status: 'same' | 'changed'
 }
 
-type UpdatedRootFolderNew = {
+export type UpdatedRootFolderNew = {
   configFolder: ConfigRootFolder
   id: Uuid
   status: 'new'

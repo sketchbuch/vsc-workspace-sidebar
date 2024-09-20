@@ -27,9 +27,7 @@ type GetDataProps = {
 type GetData = (props?: GetDataProps) => GetDataResult
 
 suite.only('Webviews > Workspace > Helpers > updateRootFolders():', () => {
-  const getData: GetData = (
-    { itemCount, rootFolderData } = { itemCount: 3, rootFolderData: [] }
-  ) => {
+  const getData: GetData = ({ itemCount } = { itemCount: 3, rootFolderData: [] }) => {
     const configFolders: ConfigRootFolder[] = [
       {
         depth: CONFIG_DEPTH,
@@ -50,7 +48,9 @@ suite.only('Webviews > Workspace > Helpers > updateRootFolders():', () => {
         path: `${ROOT_FOLDER_USERPATH}${path.sep}folder_3`,
       },
     ]
+
     const files = getMockFileList()
+
     const rootFoldersFiles: FindRootFolderFiles[] = [
       {
         depth: CONFIG_DEPTH,
@@ -71,9 +71,11 @@ suite.only('Webviews > Workspace > Helpers > updateRootFolders():', () => {
         result: 'ok',
       },
     ]
+
     const rootFolders = getMockRootFolders({ rootFoldersFiles }).rootFolders.map((rf, index) => {
       return { ...rf, configId: configFolders[index].id }
     })
+
     const expected: UpdatedRootFolder[] = [
       {
         id: rootFolders[0].configId,
@@ -111,11 +113,14 @@ suite.only('Webviews > Workspace > Helpers > updateRootFolders():', () => {
     expect(result).to.eql(expected)
   })
 
-  test.only('Returns an array of expected rootFolder data if there is a change', () => {
+  test('Returns an array of expected rootFolder data if there is a change', () => {
+    const id = 'b4052f99-2c10-5f00-9aac-f46a2e087558'
     const { configFolders, expected, rootFolders } = getData({ itemCount: 1 })
-    const testConfigFolders = [{ ...configFolders[0], id: 'b4052f99-2c10-5f00-9aac-f46a2e087558' }]
-    const testExpected = [{ ...expected, status: 'changed' }]
+    const testConfigFolders = [{ ...configFolders[0], id }]
+    const testExpected = [{ ...expected[0], status: 'changed', id }]
+
     const result = updateRootFolders({ configFolders: testConfigFolders, rootFolders })
+    expect(result.length).to.equal(1)
     expect(result).to.eql(testExpected)
   })
 })
