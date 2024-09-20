@@ -13,55 +13,67 @@ import {
 import { getMockFileList, ROOT_FOLDER_USERPATH } from '../../../../mocks/mockFileData'
 import { getMockRootFolders } from '../../../../mocks/mockState'
 
-type GetData = {
+type GetDataResult = {
   configFolders: ConfigRootFolder[]
   expected: UpdatedRootFolder[]
   rootFolders: WorkspaceStateRootFolder[]
 }
 
+type GetDataProps = {
+  itemCount: number
+  rootFolderData?: Pick<WorkspaceStateRootFolder, 'configId'>[]
+}
+
+type GetData = (props?: GetDataProps) => GetDataResult
+
 suite.only('Webviews > Workspace > Helpers > updateRootFolders():', () => {
-  const getData = (itemCount: number = 3): GetData => {
+  const getData: GetData = (
+    { itemCount, rootFolderData } = { itemCount: 3, rootFolderData: [] }
+  ) => {
     const configFolders: ConfigRootFolder[] = [
       {
         depth: CONFIG_DEPTH,
         excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
-        id: 'root-folder-1',
-        path: ROOT_FOLDER_USERPATH,
+        id: 'a6edc906-2f9f-5fb2-a373-efac406f0ef2',
+        path: `${ROOT_FOLDER_USERPATH}${path.sep}folder_1`,
       },
       {
         depth: CONFIG_DEPTH,
         excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
-        id: 'root-folder-2',
-        path: `${ROOT_FOLDER_USERPATH}${path.sep}test`,
+        id: '77d2a89c-6cc6-5569-a56e-154cf8f99075',
+        path: `${ROOT_FOLDER_USERPATH}${path.sep}folder_2`,
       },
       {
         depth: CONFIG_DEPTH,
         excludeHiddenFolders: CONFIG_EXCLUDE_HIDDEN_FODLERS,
-        id: 'root-folder-3',
-        path: `${ROOT_FOLDER_USERPATH}${path.sep}subtest`,
+        id: '70c89d11-ad22-51d8-aa6c-aa0301c1a513',
+        path: `${ROOT_FOLDER_USERPATH}${path.sep}folder_3`,
       },
     ]
+    const files = getMockFileList()
     const rootFoldersFiles: FindRootFolderFiles[] = [
       {
         depth: CONFIG_DEPTH,
-        files: getMockFileList(),
+        files,
         folderPath: configFolders[0].path,
         result: 'ok',
       },
       {
         depth: CONFIG_DEPTH,
-        files: getMockFileList(),
+        files,
         folderPath: configFolders[1].path,
         result: 'ok',
       },
       {
         depth: CONFIG_DEPTH,
-        files: getMockFileList(),
+        files,
         folderPath: configFolders[2].path,
         result: 'ok',
       },
     ]
-    const rootFolders = getMockRootFolders({ rootFoldersFiles }).rootFolders
+    const rootFolders = getMockRootFolders({ rootFoldersFiles }).rootFolders.map((rf, index) => {
+      return { ...rf, configId: configFolders[index].id }
+    })
     const expected: UpdatedRootFolder[] = [
       {
         id: rootFolders[0].configId,
@@ -99,7 +111,11 @@ suite.only('Webviews > Workspace > Helpers > updateRootFolders():', () => {
     expect(result).to.eql(expected)
   })
 
-  test('Returns an array of expected rootFolder data if there is a change', () => {
-    //const { configFolders, rootFolders } = getData()
+  test.only('Returns an array of expected rootFolder data if there is a change', () => {
+    const { configFolders, expected, rootFolders } = getData({ itemCount: 1 })
+    const testConfigFolders = [{ ...configFolders[0], id: 'b4052f99-2c10-5f00-9aac-f46a2e087558' }]
+    const testExpected = [{ ...expected, status: 'changed' }]
+    const result = updateRootFolders({ configFolders: testConfigFolders, rootFolders })
+    expect(result).to.eql(testExpected)
   })
 })
