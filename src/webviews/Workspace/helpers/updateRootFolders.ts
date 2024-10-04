@@ -1,3 +1,4 @@
+import { getInitialRootFolder } from '../store/initialStates'
 import {
   ConfigRootFolder,
   Uuid,
@@ -16,19 +17,12 @@ type UpdateRootFoldersProps = {
   rootFolders: WorkspaceStateRootFolder[]
 }
 
-export type UpdatedRootFolderExisting = {
-  id: Uuid
-  rootFolder: WorkspaceStateRootFolder
-  status: 'same' | 'changed'
-}
-
-export type UpdatedRootFolderNew = {
+export type UpdatedRootFolder = {
   configFolder: ConfigRootFolder
   id: Uuid
-  status: 'new'
+  rootFolder: WorkspaceStateRootFolder
+  status: 'changed' | 'new' | 'same'
 }
-
-export type UpdatedRootFolder = UpdatedRootFolderExisting | UpdatedRootFolderNew
 
 type UpdateRootFolders = (props: UpdateRootFoldersProps) => UpdatedRootFolder[]
 
@@ -43,27 +37,23 @@ export const updateRootFolders: UpdateRootFolders = ({ configFolders, rootFolder
     return []
   }
 
-  const newRootFolders = configFolders.map<UpdatedRootFolder>((curConfigFolder) => {
+  return configFolders.map<UpdatedRootFolder>((curConfigFolder) => {
     const rootFolder = rootFolders.find((rf) => rf.folderPathShort === curConfigFolder.path)
 
     if (rootFolder) {
-      const folderData: UpdatedRootFolderExisting = {
+      return {
+        configFolder: curConfigFolder,
         id: curConfigFolder.id,
         rootFolder,
         status: rootFolder.configId === curConfigFolder.id ? 'same' : 'changed',
       }
-
-      return folderData
     }
 
-    const folderData: UpdatedRootFolderNew = {
+    return {
       configFolder: curConfigFolder,
       id: curConfigFolder.id,
+      rootFolder: getInitialRootFolder(curConfigFolder),
       status: 'new',
     }
-
-    return folderData
   }, [])
-
-  return newRootFolders
 }

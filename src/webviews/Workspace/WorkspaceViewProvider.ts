@@ -100,61 +100,20 @@ export class WorkspaceViewProvider
     const configFolders = getFoldersConfig()
     const rootFolders = store.getState().ws.rootFolders
     const newRootFolderData = updateRootFolders({ configFolders, rootFolders })
-
-    newRootFolderData.forEach((folder) => {
-      console.log('### folder', folder)
-
-      if (folder.status === 'new') {
-      }
+    const reorderedRootFolders = newRootFolderData.map((folder) => {
+      return folder.rootFolder
     })
 
-    /* configFolders.forEach((folder, index) => {
-      const pathFolder = curRootFolders.find((rf) => rf.folderPathShort === folder.path)
+    this.updateCache({ ...store.getState().ws, rootFolders: reorderedRootFolders })
+    store.dispatch(setRootFolders(reorderedRootFolders))
 
-      if (pathFolder && pathFolder.configId === folder.id) {
-        const reorderedRootFolders = reorderRootFolders({
-          configId: folder.id,
-          configIndex: index,
-          rootFolder: pathFolder,
-          rootFolders: curRootFolders,
-        })
-        store.dispatch(setRootFolders(reorderedRootFolders))
-        this.updateCache({ ...store.getState().ws, rootFolders: reorderedRootFolders })
-      } else {
-        store.dispatch(fetch(folder)).then(() => {
+    newRootFolderData.forEach((folder) => {
+      if (folder.status !== 'same') {
+        store.dispatch(fetch(folder.configFolder)).then(() => {
           this.updateCache(store.getState().ws)
         })
       }
-    }) */
-
-    // Remove non-existant
-    /* const newRootFolders = configFolders.reduce<WorkspaceStateRootFolder[]>(
-      (allRootFolders, curRootFolder) => {
-        const exists = curRootFolders.find((rf) => rf.configId === curRootFolder.id)
-
-        if (exists) {
-          return [...allRootFolders, exists]
-        }
-
-        return allRootFolders
-      },
-      []
-    ) */
-
-    // Add or move
-    /* configFolders.forEach((folder, index) => {
-      const exists = newRootFolders.find((rf) => rf.configId === folder.id)
-
-      if (exists) {
-        const reorderedRootFolders = reorderRootFolders(folder.id, index, exists, newRootFolders)
-        store.dispatch(setRootFolders(reorderedRootFolders))
-        this.updateCache({ ...store.getState().ws, rootFolders: reorderedRootFolders })
-      } else {
-        store.dispatch(fetch(folder)).then(() => {
-          this.updateCache(store.getState().ws)
-        })
-      }
-    }) */
+    })
   }
 
   private getCache() {

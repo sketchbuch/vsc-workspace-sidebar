@@ -16,29 +16,35 @@ export const initialSearchState: SearchState = {
   term: '',
 }
 
+export const getInitialRootFolder = ({
+  id,
+  depth,
+  path,
+}: ConfigRootFolder): WorkspaceStateRootFolder => {
+  const homeDir = os.homedir()
+  const folderName = getLastPathSegment(path) || path
+
+  return {
+    allFolders: [],
+    closedFolders: [],
+    configId: id,
+    convertedFiles: [],
+    depth,
+    files: [],
+    fileTree: null,
+    folderName: folderName,
+    folderPath: path.replace(`~`, homeDir),
+    folderPathShort: path.replace(homeDir, `~`),
+    result: 'loading',
+    visibleFiles: [],
+  }
+}
+
 export const getInitialRootFolders = (
   configFolders: ConfigRootFolder[]
 ): WorkspaceStateRootFolder[] => {
   if (configFolders.length > 0) {
-    return configFolders.map<WorkspaceStateRootFolder>(({ depth, id, path }) => {
-      const homeDir = os.homedir()
-      const folderName = getLastPathSegment(path) || path
-
-      return {
-        allFolders: [],
-        closedFolders: [],
-        configId: id,
-        convertedFiles: [],
-        depth,
-        files: [],
-        fileTree: null,
-        folderName: folderName,
-        folderPath: path.replace(`~`, homeDir),
-        folderPathShort: path.replace(homeDir, `~`),
-        result: 'loading',
-        visibleFiles: [],
-      }
-    })
+    return configFolders.map<WorkspaceStateRootFolder>((cf) => getInitialRootFolder(cf))
   }
 
   return []

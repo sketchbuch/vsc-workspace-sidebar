@@ -5,6 +5,7 @@ import {
   UpdatedRootFolder,
   updateRootFolders,
 } from '../../../../../webviews/Workspace/helpers/updateRootFolders'
+import { getInitialRootFolder } from '../../../../../webviews/Workspace/store/initialStates'
 import {
   ConfigRootFolder,
   FindRootFolderFiles,
@@ -80,16 +81,19 @@ suite('Webviews > Workspace > Helpers > updateRootFolders():', () => {
 
     const expected: UpdatedRootFolder[] = [
       {
+        configFolder: configFolders[0],
         id: rootFolders[0].configId,
         rootFolder: rootFolders[0],
         status: 'same',
       },
       {
+        configFolder: configFolders[1],
         id: rootFolders[1].configId,
         rootFolder: rootFolders[1],
         status: 'same',
       },
       {
+        configFolder: configFolders[2],
         id: rootFolders[2].configId,
         rootFolder: rootFolders[2],
         status: 'same',
@@ -119,7 +123,9 @@ suite('Webviews > Workspace > Helpers > updateRootFolders():', () => {
   test('Returns an array of expected rootFolder data if there is a change', () => {
     const { configFolders, expected, rootFolders } = getData({ itemCount: 1 })
     const testConfigFolders = [{ ...configFolders[0], id }]
-    const testExpected = [{ ...expected[0], status: 'changed', id }]
+    const testExpected = [
+      { ...expected[0], status: 'changed', id, configFolder: { ...expected[0].configFolder, id } },
+    ]
 
     const result = updateRootFolders({ configFolders: testConfigFolders, rootFolders })
     expect(result.length).to.equal(1)
@@ -141,6 +147,7 @@ suite('Webviews > Workspace > Helpers > updateRootFolders():', () => {
       {
         configFolder: testConfigFolders[2],
         id,
+        rootFolder: getInitialRootFolder(testConfigFolders[2]),
         status: 'new',
       },
     ]
