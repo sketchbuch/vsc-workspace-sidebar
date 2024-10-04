@@ -37,7 +37,7 @@ import {
 } from './WorkspaceViewProvider.interface'
 import { getFolderCounts } from './helpers/getFolderCounts'
 import { getNewRootFolderConfig } from './helpers/getNewRootFolderConfig'
-import { reorderRootFolders } from './helpers/reorderRootFolders'
+import { updateRootFolders } from './helpers/updateRootFolders'
 import { fetch } from './store/fetch'
 import { workspaceSlice } from './store/workspaceSlice'
 
@@ -98,17 +98,16 @@ export class WorkspaceViewProvider
     await this._ctx.globalState.update(EXT_WSSTATE_CACHE, newCacheData)
 
     const configFolders = getFoldersConfig()
+    const state = store.getState().ws
+    const newRootFolderData = updateRootFolders({ configFolders, rootFolders: state.rootFolders })
+    const reorderedRootFolders = newRootFolderData.map((folder) => folder.rootFolder)
 
-    configFolders.forEach((folder, index) => {
-      const curRootFolders = store.getState().ws.rootFolders
-      const exists = curRootFolders.find((rf) => rf.configId === folder.id)
+    this.updateCache({ ...state, rootFolders: reorderedRootFolders })
+    store.dispatch(setRootFolders(reorderedRootFolders))
 
-      if (exists) {
-        const newRootFolders = reorderRootFolders(folder.id, index, exists, curRootFolders)
-        store.dispatch(setRootFolders(newRootFolders))
-        this.updateCache({ ...store.getState().ws, rootFolders: newRootFolders })
-      } else {
-        store.dispatch(fetch(folder)).then(() => {
+    newRootFolderData.forEach((folder) => {
+      if (folder.status !== 'same') {
+        store.dispatch(fetch(folder.configFolder)).then(() => {
           this.updateCache(store.getState().ws)
         })
       }

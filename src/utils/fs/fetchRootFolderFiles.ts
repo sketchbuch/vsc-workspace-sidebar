@@ -28,5 +28,7 @@ export const fetchRootFolderFiles = async (
     maxDepth: depth,
   })
 
-  return Promise.resolve({ configId: configFolder.id, rootFolder })
+  return new Promise((resolve) => {
+    setTimeout(() => resolve({ configId: configFolder.id, rootFolder }), 3000)
+  })
 }
