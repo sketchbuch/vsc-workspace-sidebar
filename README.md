@@ -130,7 +130,3 @@ If you are intersted in contributing:
 ## Support
 
 If you use this plugin and want to help support development, please [PayPal Me](https://www.paypal.com/paypalme/stephenbungert).
-
-## Todo
-
-- If depth/excludeHidden change, we need to recollect workspaces
