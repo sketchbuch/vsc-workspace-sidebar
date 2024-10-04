@@ -98,13 +98,11 @@ export class WorkspaceViewProvider
     await this._ctx.globalState.update(EXT_WSSTATE_CACHE, newCacheData)
 
     const configFolders = getFoldersConfig()
-    const rootFolders = store.getState().ws.rootFolders
-    const newRootFolderData = updateRootFolders({ configFolders, rootFolders })
-    const reorderedRootFolders = newRootFolderData.map((folder) => {
-      return folder.rootFolder
-    })
+    const state = store.getState().ws
+    const newRootFolderData = updateRootFolders({ configFolders, rootFolders: state.rootFolders })
+    const reorderedRootFolders = newRootFolderData.map((folder) => folder.rootFolder)
 
-    this.updateCache({ ...store.getState().ws, rootFolders: reorderedRootFolders })
+    this.updateCache({ ...state, rootFolders: reorderedRootFolders })
     store.dispatch(setRootFolders(reorderedRootFolders))
 
     newRootFolderData.forEach((folder) => {
