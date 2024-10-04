@@ -79,7 +79,14 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     const state = getMockState({ ...mockRootFolders })
     const renderVars = getMockRenderVars()
 
-    const result = tree({ branch: emptySubTree, depth: 0, closedFolders: [], state, renderVars })
+    const result = tree({
+      branch: emptySubTree,
+      closedFolders: [],
+      depth: 0,
+      renderVars,
+      result: 'ok',
+      state,
+    })
 
     expect(result).to.be.a('string')
     expect(result).to.be.empty
@@ -97,10 +104,11 @@ suite('Templates > Workspace > Snippets: tree()', () => {
 
     const result = tree({
       branch: closedSubTree,
-      depth: 0,
       closedFolders: [FOLDER1],
-      state,
+      depth: 0,
       renderVars,
+      result: 'no-workspaces',
+      state,
     })
 
     expect(result).to.be.a('string')
@@ -116,7 +124,14 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     const state = getMockState({ ...mockRootFolders })
     const renderVars = getMockRenderVars()
 
-    const result = tree({ branch: emptyRootTree, depth: 0, closedFolders: [], state, renderVars })
+    const result = tree({
+      branch: emptyRootTree,
+      closedFolders: [],
+      depth: 0,
+      renderVars,
+      result: 'no-workspaces',
+      state,
+    })
 
     expect(result).to.be.a('string')
 
@@ -131,7 +146,14 @@ suite('Templates > Workspace > Snippets: tree()', () => {
     const state = getMockState({ ...mockRootFolders })
     const renderVars = getMockRenderVars()
 
-    tree({ branch: closedSubTree, depth: 0, closedFolders: [FOLDER1], state, renderVars })
+    tree({
+      branch: closedSubTree,
+      closedFolders: [FOLDER1],
+      depth: 0,
+      renderVars,
+      result: 'ok',
+      state,
+    })
 
     sinon.assert.notCalled(sortSpy)
   })
@@ -143,10 +165,11 @@ suite('Templates > Workspace > Snippets: tree()', () => {
 
     tree({
       branch: mockRootFolders.rootFolders[0]?.fileTree!,
-      depth: 0,
       closedFolders: [],
-      state,
+      depth: 0,
       renderVars,
+      result: 'ok',
+      state,
     })
 
     sinon.assert.callCount(itemSpy, getMockFileList().length)

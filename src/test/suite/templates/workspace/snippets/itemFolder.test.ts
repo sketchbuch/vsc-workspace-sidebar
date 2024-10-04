@@ -82,6 +82,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
       folder,
       isClosed: false,
       renderVars: mockRenderVars,
+      result: 'ok',
       state: mockState,
     })
 
@@ -107,6 +108,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
       isClosed: false,
       isFolderError: true,
       renderVars: mockRenderVars,
+      result: 'nonexistent',
       state: mockState,
     })
 
@@ -135,6 +137,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
       folder: { ...folder, isRoot: true },
       isClosed: false,
       renderVars: { ...mockRenderVars, cleanLabels: true },
+      result: 'ok',
       state: mockState,
     })
 
@@ -163,6 +166,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
       folder: { ...folder, isRoot: true },
       isClosed: false,
       renderVars: testMockRenderVars,
+      result: 'ok',
       state: mockState,
     })
 
@@ -191,6 +195,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
       folder: { ...folder, isRoot: true },
       isClosed: false,
       renderVars: mockRenderVars,
+      result: 'ok',
       state: mockState,
     })
 
@@ -207,6 +212,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
         folder,
         isClosed: true,
         renderVars: mockRenderVars,
+        result: 'ok',
         state: mockState,
       })
 
@@ -223,6 +229,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
         folder,
         isClosed: true,
         renderVars: mockRenderVars,
+        result: 'ok',
         state: mockState,
       })
 
@@ -241,6 +248,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
         isClosable: true,
         isClosed: true,
         renderVars: mockRenderVars,
+        result: 'ok',
         state: mockState,
       })
 
@@ -257,6 +265,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
         isClosable: true,
         isClosed: false,
         renderVars: mockRenderVars,
+        result: 'ok',
         state: mockState,
       })
 
@@ -273,6 +282,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
         isClosable: false,
         isClosed: false,
         renderVars: mockRenderVars,
+        result: 'ok',
         state: mockState,
       })
 
@@ -287,6 +297,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
         folder,
         isClosed: false,
         renderVars: mockRenderVars,
+        result: 'ok',
         state: mockState,
       })
 
@@ -304,6 +315,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
         folder,
         isClosed: true,
         renderVars: mockRenderVars,
+        result: 'ok',
         state: {
           ...mockState,
           selected: path.join(folder.folderPath, 'Impala.code-workspace'),
@@ -324,6 +336,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
         folder: { ...folder, compactedFolders: [] },
         isClosed: false,
         renderVars: mockRenderVars,
+        result: 'ok',
         state: mockState,
       })
 
@@ -340,6 +353,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
         },
         isClosed: false,
         renderVars: mockRenderVars,
+        result: 'ok',
         state: mockState,
       })
 

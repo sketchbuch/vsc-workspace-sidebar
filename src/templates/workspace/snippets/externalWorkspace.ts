@@ -46,6 +46,7 @@ export const externalWorkspace = (state: WorkspaceState, renderVars: RenderVars)
               isClosable: false,
               isClosed: false,
               renderVars,
+              result: 'ok',
               state,
             })}
             ${itemFile({ depth: 0, file, state, renderVars })}

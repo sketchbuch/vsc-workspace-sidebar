@@ -1,6 +1,7 @@
 import { RenderVars } from '../../../webviews/webviews.interface'
 import {
   FileTree,
+  FindFileResult,
   WorkspaceState,
 } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { isFile } from '../../helpers/isFile'
@@ -13,10 +14,18 @@ export type TreeProps = {
   closedFolders: string[]
   depth: number
   renderVars: RenderVars
+  result: FindFileResult
   state: WorkspaceState
 }
 
-export const tree = ({ branch, closedFolders, depth, renderVars, state }: TreeProps): string => {
+export const tree = ({
+  branch,
+  closedFolders,
+  depth,
+  renderVars,
+  result,
+  state,
+}: TreeProps): string => {
   const { files, folderPathSegment, isRoot, sub } = branch
   const isClosed = !state.search.term && closedFolders.includes(folderPathSegment)
 
@@ -33,13 +42,13 @@ export const tree = ({ branch, closedFolders, depth, renderVars, state }: TreePr
   }
 
   return `
-    ${itemFolder({ folder: branch, depth, isClosed, state, renderVars })}
+    ${itemFolder({ folder: branch, depth, isClosed, state, result, renderVars })}
     ${children
       .map((child) => {
         if (isFile(child)) {
           return itemFile({ depth: fileDepth, file: child, renderVars, state })
         } else {
-          return tree({ branch: child, depth: treeDepth, closedFolders, state, renderVars })
+          return tree({ branch: child, depth: treeDepth, closedFolders, state, result, renderVars })
         }
       })
       .join('')}

@@ -42,6 +42,7 @@ export const listContent = ({
     },
     isClosed,
     renderVars,
+    result,
     state,
   }
 
@@ -71,6 +72,7 @@ export const listContent = ({
       depth: 0,
       renderVars,
       state,
+      result,
     })
   }
 
