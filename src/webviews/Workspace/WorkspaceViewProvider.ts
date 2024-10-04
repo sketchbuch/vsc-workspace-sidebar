@@ -76,10 +76,12 @@ export class WorkspaceViewProvider
   }
 
   private async deleteCache() {
+    console.log('### deleteCache() 1')
     let newCacheData: WorkspaceRootFolderCache | undefined
     const cachedData = this._ctx.globalState.get<WorkspaceRootFolderCache>(EXT_WSSTATE_CACHE)
 
     if (cachedData) {
+      console.log('### deleteCache() 1.1')
       const { caches } = cachedData
 
       if (caches && caches.length > 0) {
@@ -93,6 +95,7 @@ export class WorkspaceViewProvider
         }
       }
     }
+    console.log('### deleteCache() 2')
 
     await vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
     await this._ctx.globalState.update(EXT_WSSTATE_CACHE, newCacheData)
@@ -105,8 +108,11 @@ export class WorkspaceViewProvider
     this.updateCache({ ...state, rootFolders: reorderedRootFolders })
     store.dispatch(setRootFolders(reorderedRootFolders))
 
+    console.log('### deleteCache() 3')
+
     newRootFolderData.forEach((folder) => {
       if (folder.status !== 'same') {
+        console.log('### deleteCache() 4', folder.rootFolder.folderPath)
         store.dispatch(fetch(folder.configFolder)).then(() => {
           this.updateCache(store.getState().ws)
         })
@@ -435,8 +441,10 @@ export class WorkspaceViewProvider
 
   public refresh(isRerender = false) {
     if (isRerender) {
+      console.log('### refresh() 1')
       this.render()
     } else {
+      console.log('### refresh() 2')
       this.deleteCache()
     }
   }
