@@ -2,6 +2,7 @@ import * as os from 'os'
 import { cleanLabel } from '../../../utils/string/cleanLabel'
 import {
   FileTree,
+  FindFileResult,
   WorkspaceState,
 } from '../../../webviews/Workspace/WorkspaceViewProvider.interface'
 import { RenderVars } from '../../../webviews/webviews.interface'
@@ -17,6 +18,7 @@ export type ItemFolderProps = {
   isClosed: boolean
   isFolderError?: boolean
   renderVars: RenderVars
+  result: FindFileResult
   state: WorkspaceState
 }
 
@@ -27,6 +29,7 @@ export const itemFolder = ({
   isClosed,
   isFolderError = false,
   renderVars,
+  result,
   state,
 }: ItemFolderProps): string => {
   const homeDir = os.homedir()
@@ -58,7 +61,7 @@ export const itemFolder = ({
     },
   ]
 
-  if (isRoot) {
+  if (isRoot && result !== 'loading') {
     buttons.unshift({
       codicon: 'refresh',
       file: folderPathShort,
