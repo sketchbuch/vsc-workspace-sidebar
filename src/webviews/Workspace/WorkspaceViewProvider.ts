@@ -75,13 +75,11 @@ export class WorkspaceViewProvider
       .digest('hex')
   }
 
-  private async deleteCache() {
-    console.log('### deleteCache() 1')
+  private async deleteCache(refetchAll = false) {
     let newCacheData: WorkspaceRootFolderCache | undefined
     const cachedData = this._ctx.globalState.get<WorkspaceRootFolderCache>(EXT_WSSTATE_CACHE)
 
     if (cachedData) {
-      console.log('### deleteCache() 1.1')
       const { caches } = cachedData
 
       if (caches && caches.length > 0) {
@@ -95,7 +93,6 @@ export class WorkspaceViewProvider
         }
       }
     }
-    console.log('### deleteCache() 2')
 
     await vscode.commands.executeCommand(CMD_VSC_SET_CTX, EXT_LOADED, false)
     await this._ctx.globalState.update(EXT_WSSTATE_CACHE, newCacheData)
@@ -108,11 +105,8 @@ export class WorkspaceViewProvider
     this.updateCache({ ...state, rootFolders: reorderedRootFolders })
     store.dispatch(setRootFolders(reorderedRootFolders))
 
-    console.log('### deleteCache() 3')
-
     newRootFolderData.forEach((folder) => {
-      if (folder.status !== 'same') {
-        console.log('### deleteCache() 4', folder.rootFolder.folderPath)
+      if (refetchAll || folder.status !== 'same') {
         store.dispatch(fetch(folder.configFolder)).then(() => {
           this.updateCache(store.getState().ws)
         })
@@ -280,7 +274,7 @@ export class WorkspaceViewProvider
           }
           break
 
-        case Actions.ICON_CLICK_REFRESH:
+        case Actions.ICON_CLICK_REFETCH:
           if (payload) {
             const configFolders = getFoldersConfig()
             const folder = configFolders.find((folder) => folder.path === payload)
@@ -291,7 +285,7 @@ export class WorkspaceViewProvider
               })
             } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
               vscode.window.showErrorMessage(
-                `Unable to refresh rootfolder workspace. No match found for "${payload}"`
+                `Unable to refetch rootfolder workspace. No match found for "${payload}"`
               )
             }
           }
@@ -439,14 +433,16 @@ export class WorkspaceViewProvider
     }
   }
 
-  public refresh(isRerender = false) {
-    if (isRerender) {
-      console.log('### refresh() 1')
-      this.render()
-    } else {
-      console.log('### refresh() 2')
-      this.deleteCache()
-    }
+  public refetch() {
+    this.deleteCache()
+  }
+
+  public refetchAll() {
+    this.deleteCache(true)
+  }
+
+  public rerender() {
+    this.render()
   }
 
   public resolveWebviewView(webviewView: vscode.WebviewView) {

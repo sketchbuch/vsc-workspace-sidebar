@@ -8,7 +8,7 @@ import {
   CMD_FOCUS_SEARCH,
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,
-  CMD_REFRESH,
+  CMD_REFETCH_ALL,
   CMD_VSC_OPEN_WS,
 } from '../../../constants/commands'
 import { WorkspaceViewProvider } from '../../../webviews/Workspace/WorkspaceViewProvider'
@@ -70,14 +70,14 @@ suite('Commands > registerCommands()', () => {
     expect(execCall.args[2]).to.equal(true)
   })
 
-  test('CMD_REFRESH behaves as expected', () => {
-    const wsSpy = sinon.spy(ws, 'refresh')
+  test('CMD_REFETCH_ALL behaves as expected', () => {
+    const wsSpy = sinon.spy(ws, 'refetchAll')
     registerCommands(mockContext, ws)
 
     const regCall = regCmdStub.getCalls()[2]
     const callback = regCall.args[1]
     callback()
-    expect(regCall.args[0]).to.equal(CMD_REFRESH)
+    expect(regCall.args[0]).to.equal(CMD_REFETCH_ALL)
     sinon.assert.callCount(wsSpy, 1)
 
     wsSpy.restore()

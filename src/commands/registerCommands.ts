@@ -5,7 +5,7 @@ import {
   CMD_FOCUS_SEARCH,
   CMD_OPEN_CUR_WIN,
   CMD_OPEN_NEW_WIN,
-  CMD_REFRESH,
+  CMD_REFETCH_ALL,
   CMD_VSC_OPEN_WS,
 } from '../constants/commands'
 import { WorkspaceViewProvider } from '../webviews/Workspace/WorkspaceViewProvider'
@@ -29,8 +29,8 @@ export const registerCommands = (
   )
 
   context.subscriptions.push(
-    registerCommand(CMD_REFRESH, (): void => {
-      workspaceViewProvider.refresh()
+    registerCommand(CMD_REFETCH_ALL, (): void => {
+      workspaceViewProvider.refetchAll()
     })
   )
 

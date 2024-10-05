@@ -39,7 +39,6 @@ export const fetchFulfilled = (
   state: WorkspaceState,
   action: FetchFulfilledAction<ConfigRootFolder, FetchRootFolderFiles>
 ) => {
-  console.log('### fetchFulfilled() 1')
   const {
     payload: { configId, rootFolder },
   } = action
@@ -85,10 +84,8 @@ export const fetchPending = (
   state: WorkspaceState,
   action: FetchPendingAction<ConfigRootFolder>
 ) => {
-  console.log('### fetchPending() 1')
   state.rootFolders = state.rootFolders.map((rootFolder) => {
     if (rootFolder.folderPathShort === action.meta.arg.path) {
-      console.log('### fetchPending() 2')
       rootFolder.result = 'loading'
     }
 

@@ -3,7 +3,7 @@ export type ConfigOption = {
   type: ConfigOptionType
 }
 
-export type ConfigOptionType = 'search' | 'refresh' | 'rerender' | 'tree' | 'visible-files'
+export type ConfigOptionType = 'search' | 'refetch' | 'rerender' | 'tree' | 'visible-files'
 
 export type ConfigOptions = ConfigOption[]
 
@@ -21,12 +21,12 @@ export const workbenchConfigOptions: ConfigOptions = [
   { config: `${WORKBENCH_CONFIG}.tree.renderIndentGuides`, type: 'rerender' },
 ]
 
-export const refreshConfigOptions: ConfigOptions = [
-  { config: `${WS_CONFIG}.depth`, type: 'refresh' },
-  { config: `${WS_CONFIG}.folder`, type: 'refresh' },
-  { config: `${WS_CONFIG}.folders.excluded`, type: 'refresh' },
-  { config: `${WS_CONFIG}.rootFolders`, type: 'refresh' },
-  { config: `${WS_CONFIG}.excludeHiddenFolders`, type: 'refresh' },
+export const refetchConfigOptions: ConfigOptions = [
+  { config: `${WS_CONFIG}.depth`, type: 'refetch' },
+  { config: `${WS_CONFIG}.folder`, type: 'refetch' },
+  { config: `${WS_CONFIG}.folders.excluded`, type: 'refetch' },
+  { config: `${WS_CONFIG}.rootFolders`, type: 'refetch' },
+  { config: `${WS_CONFIG}.excludeHiddenFolders`, type: 'refetch' },
 ]
 
 export const rerenderConfigOptions: ConfigOptions = [
@@ -51,7 +51,7 @@ export const visibleFilesConfigOptions: ConfigOptions = [
 ]
 
 export const configOptions: ConfigOptions = [
-  ...refreshConfigOptions,
+  ...refetchConfigOptions,
   ...rerenderConfigOptions,
   ...searchConfigOptions,
   ...treeConfigOptions,

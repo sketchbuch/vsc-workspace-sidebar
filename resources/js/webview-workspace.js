@@ -5,7 +5,7 @@
   const addToFolderRootsBtn = document.querySelector('#addToFolderRoots');
   const newWindowIconBtns = document.querySelectorAll('.list__button[data-type="new-window"]');
   const filemanagerIconBtns = document.querySelectorAll('.list__button[data-type="open-filemanager"]');
-  const refreshIconBtns = document.querySelectorAll('.list__button[data-type="refresh-rootfolder"]');
+  const refreshIconBtns = document.querySelectorAll('.list__button[data-type="refetch-rootfolder"]');
   const searchOptions = document.querySelectorAll('.searchBox__options-button--toggle');
   const searchInput = document.querySelector('#searchWorkspaces');
   const viewLinks = document.querySelectorAll('.view__link');
@@ -50,7 +50,7 @@
 
   const handleRefreshIconClick = (event) => {
     event.stopPropagation();
-    sendMessage('ICON_CLICK_REFRESH', event.currentTarget.dataset.file);
+    sendMessage('ICON_CLICK_REFETCH', event.currentTarget.dataset.file);
   };
 
   const handleSaveFolderClick = () => {

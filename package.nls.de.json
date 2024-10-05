@@ -26,7 +26,7 @@
   "config.title": "Workspace Sidebar",
   "ext.cmd.wsList.collapse-all": "Ordner zuklappen",
   "ext.cmd.wsList.expand-all": "Ordner aufklappen",
-  "ext.cmd.wsList.refresh": "Arbeitsbereiche neu einsammeln",
+  "ext.cmd.wsList.refetch": "Arbeitsbereiche neu einsammeln",
   "ext.cmd.wsListItem.checkSettings": "Überprüfen Sie die Erweiterungseinstellungen",
   "ext.cmd.wsListItem.open.curWindow": "In aktuellem Fenster öffnen",
   "ext.cmd.wsListItem.open.newWindow": "In neuem Fenster öffnen",
@@ -104,7 +104,7 @@
           "ariaLabel": "Öffnen Sie den Ordner '{{label}}' in Ihrem Dateimanager",
           "tooltip": "Öffnen Sie den Ordner '{{label}}' in Ihrem Dateimanager"
         },
-        "refreshRootfolder": {
+        "refetchRootfolder": {
           "ariaLabel": "Arbeitsbereiche für '{{label}}' neu einsammeln",
           "tooltip": "Arbeitsbereiche für '{{label}}' neu einsammeln"
         }

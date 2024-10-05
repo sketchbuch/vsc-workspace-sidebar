@@ -27,12 +27,12 @@
         "title": "%ext.cmd.wsListItem.open.newWindow%"
       },
       {
-        "command": "vsc-workspace-sidebar-refresh",
+        "command": "vsc-workspace-sidebar-refetch",
         "icon": {
-          "light": "./resources/images/light/refresh.svg",
-          "dark": "./resources/images/dark/refresh.svg"
+          "light": "./resources/images/light/refetch.svg",
+          "dark": "./resources/images/dark/refetch.svg"
         },
-        "title": "%ext.cmd.wsList.refresh%"
+        "title": "%ext.cmd.wsList.refetch%"
       },
       {
         "command": "vsc-workspace-sidebar-settings",
@@ -221,7 +221,7 @@
           "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded"
         },
         {
-          "command": "vsc-workspace-sidebar-refresh",
+          "command": "vsc-workspace-sidebar-refetch",
           "group": "navigation@3",
           "when": "view == vsc-workspace-sidebar-webview-workspace && vsc-workspace-sidebar-list-loaded"
         }
