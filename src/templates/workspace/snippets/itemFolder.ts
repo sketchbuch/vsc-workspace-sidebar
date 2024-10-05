@@ -65,7 +65,7 @@ export const itemFolder = ({
     buttons.unshift({
       codicon: 'refresh',
       file: folderPathShort,
-      key: 'refresh-rootfolder',
+      key: 'refetch-rootfolder',
       label: visibleLabel,
     })
   }

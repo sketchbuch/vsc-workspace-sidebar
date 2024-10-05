@@ -4,7 +4,7 @@ import * as vscode from 'vscode'
 import * as treeConfigs from '../../../config/treeview'
 import {
   configOptions,
-  refreshConfigOptions,
+  refetchConfigOptions,
   rerenderConfigOptions,
   searchConfigOptions,
   treeConfigOptions,
@@ -21,8 +21,9 @@ import { mockThemeDataProvider } from '../../mocks/mockThemeDataProvider'
 suite('Webviews > registerWebviews()', () => {
   let configStub: sinon.SinonStub
   let mockContext: vscode.ExtensionContext
-  let refreshSpy: sinon.SinonSpy
+  let refetchSpy: sinon.SinonSpy
   let regWebviewStub: sinon.SinonStub
+  let rerenderSpy: sinon.SinonSpy
   let tdpSpy: sinon.SinonSpy
   let ws: WorkspaceViewProvider
 
@@ -32,13 +33,15 @@ suite('Webviews > registerWebviews()', () => {
 
     configStub = sinon.stub(vscode.workspace, 'onDidChangeConfiguration')
     mockContext = getMockContext()
-    refreshSpy = sinon.spy(ws, 'refresh')
+    refetchSpy = sinon.spy(ws, 'refetch')
     regWebviewStub = sinon.stub(vscode.window, 'registerWebviewViewProvider')
+    rerenderSpy = sinon.spy(ws, 'rerender')
   })
 
   teardown(() => {
     configStub.restore()
-    refreshSpy.restore()
+    refetchSpy.restore()
+    rerenderSpy.restore()
     regWebviewStub.restore()
     tdpSpy.restore()
   })
@@ -63,7 +66,7 @@ suite('Webviews > registerWebviews()', () => {
     return configOpt ? [configOpt] : []
   }
 
-  const testRefreshOption = (opt: string, isRerender: boolean) => {
+  const testRefetchOption = (opt: string) => {
     test(opt, () => {
       const affectsConfigSpy = getAffectsConfigSpy(opt)
       const configOpts = getConfigOptions(opt)
@@ -72,8 +75,20 @@ suite('Webviews > registerWebviews()', () => {
       callChangeConfigCallaback(affectsConfigSpy)
 
       sinon.assert.callCount(affectsConfigSpy, 2) // Check for WS_CONFIG and CONFIG_OPTION
-      sinon.assert.callCount(refreshSpy, 1)
-      expect(refreshSpy.getCalls()[0].args[0]).to.equal(isRerender)
+      sinon.assert.callCount(refetchSpy, 1)
+    })
+  }
+
+  const testRerenderOption = (opt: string) => {
+    test(opt, () => {
+      const affectsConfigSpy = getAffectsConfigSpy(opt)
+      const configOpts = getConfigOptions(opt)
+
+      registerWebviews(mockContext, ws, configOpts)
+      callChangeConfigCallaback(affectsConfigSpy)
+
+      sinon.assert.callCount(affectsConfigSpy, 2) // Check for WS_CONFIG and CONFIG_OPTION
+      sinon.assert.callCount(rerenderSpy, 1)
     })
   }
 
@@ -86,15 +101,15 @@ suite('Webviews > registerWebviews()', () => {
     sinon.assert.callCount(tdpSpy, 1)
   })
 
-  suite('Refresh config options:', () => {
-    refreshConfigOptions.forEach((opt) => {
-      testRefreshOption(opt.config, false)
+  suite('Refetch config options:', () => {
+    refetchConfigOptions.forEach((opt) => {
+      testRefetchOption(opt.config)
     })
   })
 
   suite('Rerender config options:', () => {
     rerenderConfigOptions.forEach((opt) => {
-      testRefreshOption(opt.config, true)
+      testRerenderOption(opt.config)
     })
   })
 

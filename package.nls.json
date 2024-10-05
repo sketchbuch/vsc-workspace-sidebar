@@ -26,7 +26,7 @@
   "config.title": "Workspace Sidebar",
   "ext.cmd.wsList.collapse-all": "Collapse folders",
   "ext.cmd.wsList.expand-all": "Expand folders",
-  "ext.cmd.wsList.refresh": "Recollect all Workspaces",
+  "ext.cmd.wsList.refetch": "Recollect all Workspaces",
   "ext.cmd.wsListItem.checkSettings": "Check the extension settings",
   "ext.cmd.wsListItem.open.curWindow": "Open in this window",
   "ext.cmd.wsListItem.open.newWindow": "Open in a new window",
@@ -104,7 +104,7 @@
           "ariaLabel": "Open folder containing '{{label}}' in your file manager",
           "tooltip": "Open folder containing '{{label}}' in your file manager"
         },
-        "refreshRootfolder": {
+        "refetchRootfolder": {
           "ariaLabel": "Recollect workspaces for '{{label}}'",
           "tooltip": "Recollect workspaces for '{{label}}'"
         }

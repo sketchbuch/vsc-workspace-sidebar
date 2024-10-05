@@ -21,8 +21,12 @@ export const updateByType = (
       workspaceViewProvider.updateVisibleFiles()
       break
 
+    case 'rerender':
+      workspaceViewProvider.rerender()
+      break
+
     default:
-      workspaceViewProvider.refresh(type === 'rerender')
+      workspaceViewProvider.refetch()
       break
   }
 }

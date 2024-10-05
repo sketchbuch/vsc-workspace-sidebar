@@ -65,14 +65,14 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
     }
   }
 
-  const getRefreshBtn = (label: string, renderVars: RenderVars): WorkspaceButton => {
+  const getRerenderBtn = (label: string, renderVars: RenderVars): WorkspaceButton => {
     return {
       ariaLabel: `Recollect workspaces for '${label}'`,
       codicon: 'refresh',
       file: folder.folderPath.replace(OS_HOMEFOLDER, `~`),
       renderVars: renderVars,
       tooltip: `Recollect workspaces for '${label}'`,
-      type: 'refresh-rootfolder',
+      type: 'refetch-rootfolder',
     }
   }
 
@@ -153,7 +153,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
 
     sinon.assert.callCount(btnSpy, 1)
     sinon.assert.calledWith(btnSpy, [
-      getRefreshBtn(cleanedLabel, mockRenderVars),
+      getRerenderBtn(cleanedLabel, mockRenderVars),
       getFileManagerBtn(cleanedLabel, mockRenderVars),
     ])
     sinon.assert.calledOnce(indentSpy)
@@ -183,7 +183,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
     sinon.assert.callCount(btnSpy, 1)
     sinon.assert.callCount(btnSpy, 1)
     sinon.assert.calledWith(btnSpy, [
-      getRefreshBtn(folder.label, testMockRenderVars),
+      getRerenderBtn(folder.label, testMockRenderVars),
       getFileManagerBtn(folder.label, testMockRenderVars),
     ])
     sinon.assert.calledOnce(indentSpy)

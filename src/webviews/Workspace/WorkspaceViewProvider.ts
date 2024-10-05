@@ -75,7 +75,7 @@ export class WorkspaceViewProvider
       .digest('hex')
   }
 
-  private async deleteCache() {
+  private async deleteCache(refetchAll = false) {
     let newCacheData: WorkspaceRootFolderCache | undefined
     const cachedData = this._ctx.globalState.get<WorkspaceRootFolderCache>(EXT_WSSTATE_CACHE)
 
@@ -106,7 +106,7 @@ export class WorkspaceViewProvider
     store.dispatch(setRootFolders(reorderedRootFolders))
 
     newRootFolderData.forEach((folder) => {
-      if (folder.status !== 'same') {
+      if (refetchAll || folder.status !== 'same') {
         store.dispatch(fetch(folder.configFolder)).then(() => {
           this.updateCache(store.getState().ws)
         })
@@ -274,7 +274,7 @@ export class WorkspaceViewProvider
           }
           break
 
-        case Actions.ICON_CLICK_REFRESH:
+        case Actions.ICON_CLICK_REFETCH:
           if (payload) {
             const configFolders = getFoldersConfig()
             const folder = configFolders.find((folder) => folder.path === payload)
@@ -285,7 +285,7 @@ export class WorkspaceViewProvider
               })
             } else if (this._ctx.extensionMode !== vscode.ExtensionMode.Production) {
               vscode.window.showErrorMessage(
-                `Unable to refresh rootfolder workspace. No match found for "${payload}"`
+                `Unable to refetch rootfolder workspace. No match found for "${payload}"`
               )
             }
           }
@@ -433,12 +433,16 @@ export class WorkspaceViewProvider
     }
   }
 
-  public refresh(isRerender = false) {
-    if (isRerender) {
-      this.render()
-    } else {
-      this.deleteCache()
-    }
+  public refetch() {
+    this.deleteCache()
+  }
+
+  public refetchAll() {
+    this.deleteCache(true)
+  }
+
+  public rerender() {
+    this.render()
   }
 
   public resolveWebviewView(webviewView: vscode.WebviewView) {

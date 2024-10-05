@@ -29,19 +29,19 @@ suite('Webviews > Workspace > WorkspaceViewProvider():', () => {
     stateSpy.restore()
   })
 
-  test('refresh() - Rerender', () => {
+  test('rerender() - Rerender', () => {
     ws.resolveWebviewView(getMockWebviewView())
-    ws.refresh(true)
+    ws.rerender()
 
     sinon.assert.called(dispatchSpy)
     sinon.assert.called(getHtmlSpy)
   })
 
-  test('refresh() - Refetch', () => {
+  test('refetch()', () => {
     const execCmdSpy = sinon.spy(vscode.commands, 'executeCommand')
 
     ws.resolveWebviewView(getMockWebviewView())
-    ws.refresh()
+    ws.refetch()
 
     sinon.assert.called(dispatchSpy)
     sinon.assert.called(getHtmlSpy)
