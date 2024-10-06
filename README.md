@@ -10,18 +10,24 @@ You can then easily change Workspaces or open another Workspace in a new window.
 
 ![Workspace Sidebar Preview](docs/images/preview/preview.gif)
 
-## What's new in v2.0.4?
+## What's new in v2.1.0?
 
-- Added space between root folders and made the root folder name more obvious via CSS changes. Also the root folders will now have their name cleaned if `workspaceSidebar.cleanLabels` is true
-- Adds additional information on the loading screen
-- Closed folders are now opened when searching
-- excludeHiddenFolders is no longer applied to the last folder in a rootFolder path.
-- Impoved the config watch to be more efficient
-- The wrong tooltip was used on some folders. This has been corrected
+[See a video showcasing the changes](https://www.youtube.com/@SketchBuchDev)
+
+- Root folder handling of changes to config has been improved:
+  - Results are shown as they come back, the extension no longer waits until all root folders have been collected.
+  - This means root folders show their loading state under their name - the global loading state has been removed.
+  - You can now refetch root folders on a per root folder basis
+  - The extension now is more selective about refetching and will only do it if some property has changed.
+  - Moving a root folder in the config no longer causes a refetch to occur
+- There is a new config option to focus the file explorer after opening a workspace in a new window. Closes [#173](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/173)
+- Several more explorer settings are now respected in rendering the tree/list that should make the sidebar look and behave more like other views in VSCode:
+  - expandMode
+  - indent
+  - renderIndentGuides
 - Updated documentation
 
-[See the Changelog](CHANGELOG.md) for more detailed information.
-
+[See the Changelog](CHANGELOG.md) for a complete version history.
 ## Features
 
 The extension works by searching the root folders for `.code-workspace` files, and then displaying them as either a list or a tree.
@@ -130,3 +136,7 @@ If you are intersted in contributing:
 ## Support
 
 If you use this plugin and want to help support development, please [PayPal Me](https://www.paypal.com/paypalme/stephenbungert).
+
+## Todo
+
+Check what happens if action click config is reversed and opening explorer view.
