@@ -90,7 +90,7 @@ export const itemFolder = ({
         <span class="list__text">
           <span class="list__title">${visibleLabel}</span>
         </span>
-        ${isFolderError ? '' : itemButtons(folderButtons)}
+        ${itemButtons(folderButtons)}
       </span>
     </li>
   `
