@@ -1,8 +1,13 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import * as os from 'os'
 import { getShowTreeConfig } from '../../../config/treeview'
+import { checkFile } from '../../../utils/fs/checkFile'
 import { getLastPathSegment } from '../../../utils/fs/getLastPathSegment'
-import { WorkspaceCacheRootFolders, WorkspaceState } from '../WorkspaceViewProvider.interface'
+import {
+  FindFileResult,
+  WorkspaceCacheRootFolders,
+  WorkspaceState,
+} from '../WorkspaceViewProvider.interface'
 import { convertWsFiles } from '../helpers/convertWsFiles'
 import { getAllFoldersFromTree } from '../helpers/getAllFoldersFromTree'
 import { getFileTree } from '../helpers/getFileTree'
@@ -23,7 +28,14 @@ export const list = (
     const allFolders =
       showTree && fileTree !== null ? getAllFoldersFromTree(fileTree) : [folderName]
 
-    const result = files.length < 1 ? 'no-workspaces' : 'ok'
+    const { isFile, isFolder } = checkFile(folderPath)
+    let result: FindFileResult = 'nonexistent'
+
+    if (isFolder) {
+      result = files.length < 1 ? 'no-workspaces' : 'ok'
+    } else if (isFile) {
+      result = 'is-file'
+    }
 
     return {
       allFolders,
