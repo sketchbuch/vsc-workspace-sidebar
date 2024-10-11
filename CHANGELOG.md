@@ -4,6 +4,20 @@
 
 [Back to Readme](README.md)
 
+## [2.1.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v2.0.40...v2.1.0) (2024-04-28)
+- Fixes [#197](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/197): List reducer assumes folderpath is valid and shows wrong status
+- Closes [#195](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/195): Root folders with an error need to show the refresh icon still
+- Fixes [#192](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/192): Fix refresh all
+- Fixes [#190](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/190): Hide refresh icon on root folders that are loading
+- Closes [#186](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/186): More robust testing of reordering of root folders
+- Closes [#184](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/184): If depth/excludeHidden change, recollect workspaces
+- Fixes [#183](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/183): Fix tests after changes
+- Adds [#180](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/180): Handle reordered rootfolders
+- Adds [#173](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/173): Display the explorer after opening a workspace in a new window
+- Adds [#172](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/172): Respect tree settings in list view
+- Adds [#170](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/170): Look into collecting workspaces async
+- Closes [#194](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/194): Updated docs for v2.1.0
+
 ## [2.0.4](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v2.0.0...v2.0.4) (2024-04-28)
 - Closes [#145](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/145): Adds additional information on the loading screen
 - Closes [#146](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/146): Updated documentation
