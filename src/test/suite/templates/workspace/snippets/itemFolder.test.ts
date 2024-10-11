@@ -122,7 +122,7 @@ suite('Templates > Workspace > Snippets: itemFolder()', () => {
     expect(result).contains('list__styled-item')
     expect(result).contains('list__branch-list-item-folder--closable')
 
-    sinon.assert.notCalled(btnSpy)
+    sinon.assert.calledOnce(btnSpy)
     sinon.assert.notCalled(iconClosedSpy)
     sinon.assert.notCalled(selectedIconSpy)
     sinon.assert.notCalled(iconClosedSpy)
