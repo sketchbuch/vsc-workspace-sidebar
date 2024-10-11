@@ -12,7 +12,7 @@ You can then easily change Workspaces or open another Workspace in a new window.
 
 ## What's new in v2.1.0?
 
-[See a video showcasing the changes](https://www.youtube.com/@SketchBuchDev)
+[See a video showcasing the changes](https://www.youtube.com/watch?v=MV8fOBUttec)
 
 - Root folder handling of changes to config has been improved:
   - Results are shown as they come back, the extension no longer waits until all root folders have been collected.
@@ -136,7 +136,3 @@ If you are intersted in contributing:
 ## Support
 
 If you use this plugin and want to help support development, please [PayPal Me](https://www.paypal.com/paypalme/stephenbungert).
-
-## Todo
-
-Check what happens if action click config is reversed and opening explorer view.

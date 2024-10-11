@@ -4,8 +4,6 @@
 
 [Back to Readme](../README.md)
 
-> **EXPERIMENTAL FEATURE**
-
 It is now possible to display file icon theme icons in both the list view and tree view. The idea is to display a matching language icon next to workspaces, i.e. flutter workspaces show the flutter icon next to the workspace label.
 
 There is no in-built API way to show file icons in VSCode Webviews, only in VSCode Treeviews. To make this possible, a custom NPM package was created ([vscode-file-theme-processor](https://www.npmjs.com/package/vscode-file-theme-processor)) which you can also use in your own webview extensions.

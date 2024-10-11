@@ -119,6 +119,9 @@ And these would match as follows:
 
   // Displays ts icon as "electron" matches due to deeper folders being checked first.
   /home/users/Dev/react/redux/electron/nextjs-app/na.code-workspace
+
+  // Displays react icon as "redux" in name matches
+  /home/users/Dev/vsc/redux.code-workspace
 ```
 
 [More information about file icons](./File%20Icon%20Themes.md)
