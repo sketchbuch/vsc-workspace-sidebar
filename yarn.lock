@@ -9041,10 +9041,10 @@ vscode-ext-localisation@^1.1.0:
   dependencies:
     path "^0.12.7"
 
-vscode-file-theme-processor@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/vscode-file-theme-processor/-/vscode-file-theme-processor-1.0.5.tgz#682f91de0aab1bbe594bb5efe3ef2c527866ac6e"
-  integrity sha512-Ol6Ei/e7lblGFFsJcGR3tvi3W8e1QcjNmI1Sv7zk2rN/7E7otbnUvXe7pvLK0SSMzx63CHgLqrBnqHI95WFUPg==
+vscode-file-theme-processor@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/vscode-file-theme-processor/-/vscode-file-theme-processor-1.0.8.tgz#e0762bfab23e7f7e6fabae53c57ce9ef9e7f482a"
+  integrity sha512-Tp+fflXrwXfFhPTWDdvXDL5Hb+i4qlmXZIea04GEvke4Hs9fdmVhhgjqdaCEyFBEELg8hUnyGOBQmS0LPKD5Uw==
   dependencies:
     json5 "^2.2.3"
 
