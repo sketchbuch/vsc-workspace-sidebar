@@ -58,7 +58,7 @@ export class WorkspaceViewProvider
   public static readonly viewType = EXT_WEBVIEW_WS
   private _view?: vscode.WebviewView
   private _cssGenerator: CssGenerator
-  private readonly _version: string = '2.1.0'
+  private readonly _version: string = '2.1.1'
 
   constructor(
     private readonly _ctx: vscode.ExtensionContext,
@@ -428,7 +428,7 @@ export class WorkspaceViewProvider
   }
 
   public notify(state: FileThemeProcessorState) {
-    if (this._view !== undefined && (state === 'ready' || state === 'loading')) {
+    if (this._view !== undefined) {
       this.render()
     }
   }
