@@ -428,7 +428,7 @@ export class WorkspaceViewProvider
   }
 
   public notify(state: FileThemeProcessorState) {
-    if (this._view !== undefined && (state === 'ready' || state === 'loading')) {
+    if (this._view !== undefined) {
       this.render()
     }
   }
