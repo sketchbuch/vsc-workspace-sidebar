@@ -4,6 +4,10 @@
 
 [Back to Readme](README.md)
 
+## [2.1.1](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v2.1.0...v2.1.1) (2024-12-25)
+- Fixes [#205](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/205): Loading indicator never removes if fileicon loading errors
+- Closes [#204](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/204): Default Fileicons are not loading anymore (v1.96.0)
+
 ## [2.1.0](https://github.com/sketchbuch/vsc-workspace-sidebar/compare/v2.0.40...v2.1.0) (2024-04-28)
 - Fixes [#197](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/197): List reducer assumes folderpath is valid and shows wrong status
 - Closes [#195](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/195): Root folders with an error need to show the refresh icon still

@@ -12,22 +12,11 @@ You can then easily change Workspaces or open another Workspace in a new window.
 
 ## What's new in v2.1.0?
 
-[See a video showcasing the changes](https://www.youtube.com/watch?v=MV8fOBUttec)
-
-- Root folder handling of changes to config has been improved:
-  - Results are shown as they come back, the extension no longer waits until all root folders have been collected.
-  - This means root folders show their loading state under their name - the global loading state has been removed.
-  - You can now refetch root folders on a per root folder basis
-  - The extension now is more selective about refetching and will only do it if some property has changed.
-  - Moving a root folder in the config no longer causes a refetch to occur
-- There is a new config option to focus the file explorer after opening a workspace in a new window. Closes [#173](https://github.com/sketchbuch/vsc-workspace-sidebar/issues/173)
-- Several more explorer settings are now respected in rendering the tree/list that should make the sidebar look and behave more like other views in VSCode:
-  - expandMode
-  - indent
-  - renderIndentGuides
-- Updated documentation
+- Fix never ending loading indicator for fileicons if there was an error collecting theme.
+- Fixed fileicons erroring of an extension didn't have contribution points in its package json.
 
 [See the Changelog](CHANGELOG.md) for a complete version history.
+
 ## Features
 
 The extension works by searching the root folders for `.code-workspace` files, and then displaying them as either a list or a tree.
