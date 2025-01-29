@@ -40,6 +40,7 @@ export const getMockContext = () => {
     } as vscode.Memento & { setKeysForSync(keys: string[]): void },
     globalStoragePath: '',
     globalStorageUri: {} as vscode.Uri,
+    languageModelAccessInformation: {} as vscode.LanguageModelAccessInformation,
     logPath: '',
     logUri: {} as vscode.Uri,
     secrets: {} as vscode.SecretStorage,
